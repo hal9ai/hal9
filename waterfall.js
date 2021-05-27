@@ -26,7 +26,6 @@
             - name: horizontal
               label: Horizontal
   deps: [
-    'chart-utils.js',
     'https://cdn.jsdelivr.net/npm/d3@6',
     'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1',
   ]
