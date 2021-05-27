@@ -29,9 +29,8 @@
     'chart-utils.js',
     'https://cdn.jsdelivr.net/npm/d3@6',
     'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1',
-    'https://cdn.jsdelivr.net/npm/d3-require@1'
   ]
-  author: @analyzer2004
+  author: analyzer2004
 **/
 
 if (y && !Array.isArray(y)) y = [y];
@@ -76,7 +75,7 @@ const chartdata = x && y.length
      data.forEach(v => {
        res.push({
          x: v.x,
-         y: convert(v[yv]),
+         y: parseFloat(v[yv]),
          z: `y${i}`,
        });
      });
