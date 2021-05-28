@@ -9,7 +9,7 @@
           value: field != null
 **/
 
-if (expression) {
+if (expression && field) {
   var filterexp = new Function('field', 'return ' + expression);
   data = data.filter(row => filterexp(row[field]));
 }
