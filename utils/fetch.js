@@ -19,7 +19,7 @@ const fetchWithTimeout = async function(resource, timeout) {
     return response;
   }
   catch (e) {
-    return null;
+    return e.toString();
   }
 }
 
@@ -37,9 +37,11 @@ const promiseAllInBatches = async (task, batchSize) => {
 data.map(e => {
   const promise = fetchWithTimeout(e[url], 20000)
     .then(e => {
-      if (!e) return { data: null };
+      if (typeof(e) == 'string') return { data: e };
       return e.arrayBuffer().then(x => {
-        return { data: 'data:' + e.headers.get('content-type') + ';base64,' + btoa(x) }
+        return {
+          data: 'data:' + e.headers.get('content-type') + ';base64,' + btoa(x),
+        }
       });
     })
 

@@ -7,7 +7,7 @@
       label: 'Columns'
       value:
         - control: 'number'
-          value: 5
+          value: 3
           lazy: true
 **/
 
@@ -30,4 +30,4 @@ for (idx in data) {
 }
 
 html.style.display = 'flex';
-html.style.overflow = 'hidden';
+html.style.overflow = 'auto';
