@@ -4,7 +4,7 @@
       label: 'Expression'
       value:
         - control: 'textbox'
-          value: row.id = 'Row ' + index
+          value: row.id = index
 **/
 
 if (expression) {
