@@ -5,26 +5,6 @@
       label: x
     - name: y
       label: y
-    - name: type
-      label: Type
-      value:
-        - control: select
-          value: normal
-          values:
-            - name: normal
-              label: Normal
-            - name: stacked
-              label: Stacked
-    - name: orientation
-      label: Orientation
-      value:
-        - control: select
-          value: vertical
-          values:
-            - name: vertical
-              label: Vertical
-            - name: horizontal
-              label: Horizontal
   deps: [
     'https://cdn.jsdelivr.net/npm/d3@6',
     'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1',
