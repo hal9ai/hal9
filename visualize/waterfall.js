@@ -99,7 +99,11 @@ const plot = Plot.plot({
     Plot.ruleY([0], {strokeDasharray: "1.5"}),
     plotLabel(waterfall.filter(d => d.delta >= 0), "-0.5em"),
     plotLabel(waterfall.filter(d => d.delta < 0), "1.5em")
-  ]
+  ],
+  style: {
+    background: hal9.isDark() ? "#222" : '',
+    color: hal9.isDark() ? "#aaa" : ''
+  },
 })
   
 html.appendChild(plot);
