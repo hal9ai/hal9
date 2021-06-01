@@ -7,7 +7,7 @@
 if (column) {
   if (!Array.isArray(data[0][column])) {
     data = data.map(e => {
-      e[column] = Array.from(e[column].toString());
+      e[column] = e[column] ? Array.from(e[column].toString()) : [];
       return e;
     })
   }
