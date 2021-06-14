@@ -1,16 +1,15 @@
 /**
+  input:
+    - data
+    - right
   params:
-    - name: left
-      label: 'Left'
-      value:
-        - control: dataset
-    - name: right
-      label: 'Right'
-      value:
-        - control: dataset
+    - field
+  deps:
+    - https://www.unpkg.com/@tidyjs/tidy/dist/umd/tidy.min.js
+  cache: true
 **/
 
-data = left.map((e, i) => {
-  return Object.assign(e, right[i]);
-});
+const joinby = {}
+joinby[field] = field;
 
+data = Tidy.tidy(data, Tidy.leftJoin(right, { by: joinby }));
