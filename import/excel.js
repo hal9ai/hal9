@@ -21,8 +21,39 @@
   cache: true
 **/
 
+const updateSheetControl = function(sheets) {
+  var params = hal9.getParams();
+  params['sheet'] = {
+    id: 2,
+    name: 'sheet',
+    label: 'Sheet',
+    value: [
+      {
+        control: 'select',
+        value: typeof(sheet) != 'undefined' ? sheet : '0',
+        values: sheets.map((e, idx) => Object.assign(e, { name: idx, label: e }))
+      }
+    ]
+  }
+  
+  //hal9.setParams(params);
+}
+
 file = file ? file : '';
 var type = /^hal9:|^data:/.test(file) ? 'file' : 'url';
+
+const fixCsvForD3 = csv => {
+  const first = csv.match(/.*\n/);
+  if (first && first[0].match(/,,/)) {
+    const fixed = first[0].replace('\n', '').split(',').map((e, idx) => {
+      if (e.length == 0) return 'Column' + idx;
+      return e;
+    });
+    return csv.replace(/.*\n/, fixed + '\n');
+  }
+
+  return csv;
+}
 
 const onParseCSV = buffer => {
   const arraybuffer = new Uint8Array(buffer);
@@ -33,9 +64,14 @@ const onParseCSV = buffer => {
   }
 
   const file = XLSX.read(binary, { type: 'binary' });
-  const csv = XLSX.utils.sheet_to_csv(file.Sheets[file.SheetNames[0]]);
 
-  data = d3.csvParse(csv);
+  updateSheetControl(file.SheetNames);
+  var sheetName = file.SheetNames[0];
+  if (typeof(sheet) != 'undefined') sheetName = file.SheetNames[sheet];
+  const csv = XLSX.utils.sheet_to_csv(file.Sheets[sheetName]);
+  const fixed = fixCsvForD3(csv);
+  
+  data = d3.csvParse(fixed);
 };
 
 var BASE64_MARKER = ';base64,';
