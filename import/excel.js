@@ -36,7 +36,7 @@ const updateSheetControl = function(sheets) {
     ]
   }
   
-  //hal9.setParams(params);
+  hal9.setParams(params);
 }
 
 file = file ? file : '';
