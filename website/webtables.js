@@ -67,6 +67,9 @@ await page.goto(url, {
   timeout: 10000 + scrollIters * 10
 });
 
+var log = [];
+page.on('console', message => log.push(message.text().toString()));
+
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 while(scrollIters > 1) {
   await page.evaluate(() => {
@@ -77,23 +80,21 @@ while(scrollIters > 1) {
   await sleep(100);
 }
 
-var [ table, log, error ]  = await page.evaluate((text, hasHeader) => {
-  var log = [];
-
+var [ table, error ]  = await page.evaluate((text, hasHeader) => {
   try {
     var element = [...document.querySelectorAll('*')].find(el => el.innerText && el.innerText.trim() === text.trim());
 
     if (!element) {
-      log.push('Could not find table with exact text in given row');
+      console.log('Could not find table with exact text in given row');
       element = [...document.querySelectorAll('*')].find(el => el.children.length == 0 && el.innerText && el.innerText.includes(text.trim()));
 
       if (!element) {
-        log.push('Could not find table with exact text in given leaf node');
+        console.log('Could not find table with exact text in given leaf node');
         element = [...document.querySelectorAll('*')].filter(el => el.innerText && el.innerText.includes(text.trim()));
         
         if (element.length == 0) {
-          log.push('Could not find table with the given text');
-          return [ '', log ];
+          console.log('Could not find table with the given text');
+          return [ '' ];
         }
 
         element = element[element.length - 1];
@@ -101,12 +102,12 @@ var [ table, log, error ]  = await page.evaluate((text, hasHeader) => {
     };
 
     if (element.tagName === 'TD' || element.tagName === 'TH') {
-      log.push('There is an actual table in html code');
+      console.log('There is an actual table in html code');
 
       const table = element.closest('table');
       if (!table) {
-        log.push('Could not find closest table');
-        return [ '', log ];
+        console.log('Could not find closest table');
+        return [ '' ];
       }
 
       var [header, ...rows] = [...table.querySelectorAll('tr')];
@@ -114,7 +115,7 @@ var [ table, log, error ]  = await page.evaluate((text, hasHeader) => {
         rows = [...table.querySelectorAll('tr')];
 
         if (rows.length > 0) {
-          log.push('Header has ' + rows[0].querySelectorAll('td, th').length + ' columns');
+          console.log('Header has ' + rows[0].querySelectorAll('td, th').length + ' columns');
         }
       }
 
@@ -128,7 +129,7 @@ var [ table, log, error ]  = await page.evaluate((text, hasHeader) => {
         }))
         .filter(r => r.length > 0)
       
-      log.push('Found ' + tableRows.length + ' rows in table');
+      console.log('Found ' + tableRows.length + ' rows in table');
 
       var textHeader = [...header.querySelectorAll('td, th')]
         .map(el => el.innerText.replace(/\n/g, ' '))
@@ -137,18 +138,18 @@ var [ table, log, error ]  = await page.evaluate((text, hasHeader) => {
         textHeader = colsIndexes.map((i) => 'column' + (i+1)).join('§');
       }
 
-      return [ textHeader + '\n' + tableRows.map(e => e.join('§')).join('\n'), log ];
+      return [ textHeader + '\n' + tableRows.map(e => e.join('§')).join('\n') ];
     } else {
-      log.push('Text is not inside a td element so we want to guess the table structure for ' + element.nodeName);
+      console.log('Text is not inside a td element so we want to guess the table structure for ' + element.nodeName);
 
       const textClassName = element.classList[0];
 
       if (!textClassName) {
-        log.push('Tables without classes are unsupported');
-        return [ '', log ];
+        console.log('Tables without classes are unsupported');
+        return [ '' ];
       }
 
-      log.push('Using class ' + textClassName + ' to extract data');
+      console.log('Using class ' + textClassName + ' to extract data');
 
       // Get all desired elements and their parents structure
       const allElements = [...document.querySelectorAll(`${element.tagName}.${textClassName}`)];
@@ -237,12 +238,12 @@ var [ table, log, error ]  = await page.evaluate((text, hasHeader) => {
         }).join('§');
       }).join('\n');
 
-      return [ csv, log ];
+      return [ csv ];
     }
   }
   catch(e) {
-    log.push(e.toString());
-    return [ '', log, e.toString() ];
+    console.log(e.toString());
+    return [ '', e.toString() ];
   }
 }, text, hasHeader == 'yes');
 

@@ -22,6 +22,7 @@
   output:
     - data
     - screenshot
+    - log
   environment: worker
   cache: true
 **/
@@ -53,6 +54,9 @@ await page.goto(url, {
   timeout: 10000 + scrollIters * 10
 });
 
+var log = [];
+page.on('console', message => log.push(message.text().toString()));
+
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 var images = [];
@@ -74,6 +78,8 @@ while(scrollIters > 0) {
     var images = sortedKeys.length ? allImages[sortedKeys[0]] : [];
 
     window.scrollTo(0, document.documentElement.scrollTop + document.body.offsetHeight/2);
+
+    console.log('Found ' + images.length + ' images in scroll iteration ' + scrollIters);
 
     return { images: images, scrollIters: scrollIters };
   }, minSize, scrollIters);
