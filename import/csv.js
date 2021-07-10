@@ -23,6 +23,10 @@
       value:
         - control: 'textbox'
           value: ''
+    - name: filter
+      label: Filter
+      value:
+        - control: 'textbox'
   deps: [ 'https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js' ]
   cache: true
 **/
@@ -49,7 +53,11 @@ if (csv) {
     csv = withsplit.join('\n');
   }
   data = dsvParser.parse(csv);
-  data = data.filter(d => typeof(d) !== 'undefined')
+  data = data.filter(d => {
+    debugger;
+    if (typeof(d) === 'undefined') return false;
+    if (filter && JSON.stringify(d).includes(filter)) return true;
+  })
 } else {
   data = '';
 }
