@@ -1,49 +1,66 @@
 /**
-  output: [ html ]
-  deps:
-    - https://cdn.jsdelivr.net/npm/vega@5
-    - https://cdn.jsdelivr.net/npm/vega-lite@4
-    - https://cdn.jsdelivr.net/npm/vega-lite-api@4
-    - https://cdn.jsdelivr.net/npm/vega-tooltip
+  output: [html]
+  params: [lon, lat, size]
+  deps: [
+    'chart-utils.js',
+    'https://unpkg.com/leaflet@1.7.1/dist/leaflet.js',
+  ]
 **/
 
-const width = html.offsetWidth;
-const height = html.offsetHeight;
+const link = document.createElement('link');
+link.rel = 'stylesheet';
+link.href = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css';
+html.appendChild(link);
 
-const options = {
-    config: {
-    },
-    init: (view) => {
-        view.tooltip(new vegaTooltip.Handler().call);
-    },
-    view: {
-        loader: vega.loader({
-        baseURL: "https://cdn.jsdelivr.net/npm/vega-datasets@2/",
-        }),
-        renderer: "canvas",
-    },
-};
+const chartdata = lat && lon
+ ? data.map(v => ({
+     lat: convert(v[lat]),
+     lon: convert(v[lon]),
+     size: convert(v[size]),
+   }))
+ : [];
 
-vl.register(vega, vegaLite, options);
- 
-vl.markSquare({ size: 2, opacity: 1 })
-    .data('https://cdn.jsdelivr.net/npm/vega-datasets@2/data/zipcodes.csv')
-    .transform(vl.calculate('substring(datum.zip_code, 0, 1)').as('digit'))
-    .project(
-        vl.projection('albersUsa')
-    )
-    .encode(
-        vl.longitude().fieldQ('longitude'),
-        vl.latitude().fieldQ('latitude'),
-        vl.color().fieldN('digit')
-    )
-    .width(width)
-    .height(Math.floor(width / 1.75))
-    .autosize({type: 'fit-x', contains: 'padding'})
-    .config({view: {stroke: null}})
-    .render()
-    .then(viewElement => {
-        html.appendChild(viewElement);
-    });
+let container = html.querySelector('#map');
 
-html.innerText = ' ';  
+if (!container) {
+  container = document.createElement('div');
+  container.id = '#map';
+  container.style.width = `${html.clientWidth}px`;
+  container.style.height = `${html.clientHeight}px`;
+  html.appendChild(container);
+}
+
+const bounds = L.latLngBounds(chartdata.map((v) => [v.lon, v.lat]));
+
+if (bounds.isValid()) {
+  const map = L.map(container).fitBounds(bounds);
+
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' }
+  ).addTo(map);
+
+  const radiusRange = { min: 5, max: 20 };
+  const sizes = chartdata.map(d => d.size);
+  const sizeRange = { min: Math.min(...sizes), max: Math.max(...sizes) };
+
+  const getRadius = v => {
+    return radiusRange.min + ((v - sizeRange.min) / (sizeRange.max - sizeRange.min)) * (radiusRange.max - radiusRange.min);
+  };
+
+  const getTooltip = v =>
+    `lon: ${Math.round(v.lon * 100) / 100}<br/>` +
+    `lat: ${Math.round(v.lat * 100) / 100}` +
+    (v.size ? `<br/>size: ${Math.round(getRadius(v.size) * 100) / 100}` : '');
+
+  chartdata.forEach(v => {
+    L.circle([v.lon, v.lat], {
+      color: '#3e6597',
+      fillColor: '#3e6597',
+      fillOpacity: 0.8,
+      weight: v.size ? getRadius(v.size) : 10,
+    })
+    .bindTooltip(getTooltip(v))
+    .addTo(map);
+  });
+}
