@@ -30,7 +30,7 @@ if (!container) {
   html.appendChild(container);
 }
 
-const bounds = L.latLngBounds(chartdata.map((v) => [v.lon, v.lat]));
+const bounds = L.latLngBounds(chartdata.map((v) => [v.lat, v.lon]));
 
 if (bounds.isValid()) {
   const map = L.map(container).fitBounds(bounds);
@@ -54,7 +54,7 @@ if (bounds.isValid()) {
     (v.size ? `<br/>size: ${Math.round(getRadius(v.size) * 100) / 100}` : '');
 
   chartdata.forEach(v => {
-    L.circle([v.lon, v.lat], {
+    L.circle([v.lat, v.lon], {
       color: '#3e6597',
       fillColor: '#3e6597',
       fillOpacity: 0.8,
