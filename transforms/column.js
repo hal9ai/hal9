@@ -4,5 +4,6 @@
       label: Field
   
 **/
-
-data = data.map(function(row, index){return row[field];})
+if (field) {
+  data = data.map(function(row, index){return row[field];})
+}
