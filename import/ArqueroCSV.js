@@ -47,7 +47,7 @@ if (type === 'url' && file != '') {
 }
 
 if (csv) {
-  data = aq.fromCSV(text= csv, delimiter = seperator);
+  data = aq.fromCSV(text= csv, delimiter = separator);
 } else {
   data = '';
 }
