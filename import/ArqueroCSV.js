@@ -34,7 +34,7 @@
 file = file ? file : '';
 var type = /^hal9:|^data:/.test(file) ? 'file' : 'url';
 
-const dsvParser = d3.dsvFormat(separator || ',');
+// const dsvParser = d3.dsvFormat(separator || ',');
 
 let csv = '';
 
