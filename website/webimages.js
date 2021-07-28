@@ -5,7 +5,7 @@
       label: 'URL'
       value:
         - control: 'textbox'
-          value: 'https://en.wikipedia.org/wiki/List_of_most_expensive_paintings'
+          value: 'https://en.wikipedia.org/wiki/Car_classification'
           lazy: true
     - name: minSize
       label: 'Minimum Size'
