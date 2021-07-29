@@ -40,14 +40,17 @@ field = Array.isArray(field) ? field : ( field == undefined ? [] : [ field ]);
 group = Array.isArray(group) ? group : ( group == undefined ? [] : [ group ]);
 
 const summarizerMap = {
-  deviation: ,
-  first: Tidy.first,
-  last: Tidy.last,
-  max: Tidy.max,
-  mean: field => (e => d3.mean(d3.map(e, z => z[field]))),
-  median: Tidy.median,
-  min: Tidy.min,
-  count: x => (e => e.length),
-  sum: Tidy.sum,
-  variance: Tidy.variance
+  deviation: op.stddev,
+  first: op.first_value,
+  last: op.last_value,
+  max: op.max,
+  mean: op.mean,
+  median: op.median,
+  min: op.min,
+  count: op.count,
+  sum: op.sum,
+  variance: op.variance
 };
+
+
+
