@@ -52,5 +52,12 @@ const summarizerMap = {
   variance: op.variance
 };
 
-
-
+var rollUpDict = {};
+if (field.length == 0 )
+  data = data.group(group).count()
+else {
+  for (var i = 0; i <= field.length; i++) {
+    rollUpDict[summarizer+'('+field[i]+')'] = summarizerMap(field[i]) 
+  }
+  data = data.group(group).rollup(rollUpDict)
+}
