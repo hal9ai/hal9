@@ -40,24 +40,24 @@ field = Array.isArray(field) ? field : ( field == undefined ? [] : [ field ]);
 group = Array.isArray(group) ? group : ( group == undefined ? [] : [ group ]);
 
 const summarizerMap = {
-  deviation: op.stddev,
-  first: op.first_value,
-  last: op.last_value,
-  max: op.max,
-  mean: op.mean,
-  median: op.median,
-  min: op.min,
-  count: op.count,
-  sum: op.sum,
-  variance: op.variance
+  deviation: aq.op.stdev,
+  first: aq.op.first_value,
+  last: aq.op.last_value,
+  max: aq.op.max,
+  mean: aq.op.mean,
+  median: aq.op.median,
+  min: aq.op.min,
+  count: aq.op.count,
+  sum: aq.op.sum,
+  variance: aq.op.variance
 };
 
 var rollUpDict = {};
 if (field.length == 0 )
-  data = data.group(group).count()
+  data = data.groupby(group).count()
 else {
   for (var i = 0; i <= field.length; i++) {
     rollUpDict[summarizer+'('+field[i]+')'] = summarizerMap(field[i]) 
   }
-  data = data.group(group).rollup(rollUpDict)
+  data = data.groupby(group).rollup(rollUpDict)
 }
