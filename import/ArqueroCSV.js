@@ -28,7 +28,7 @@
       value:
         - control: 'textbox'
   deps: [ "https://cdn.jsdelivr.net/npm/arquero@latest" ]
-  cache: false
+  cache: true
 **/
 
 file = file ? file : '';
