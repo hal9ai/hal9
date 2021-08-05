@@ -12,5 +12,5 @@
 **/
 
 if (expression && column) {
-  data = data.derive(column: data => expression;
+  data = data.derive({column: data => expression});
 }
