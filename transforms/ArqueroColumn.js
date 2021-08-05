@@ -5,5 +5,5 @@
   
 **/
 if (field) {
-  data = data.map(function(row, index){return row[field];})
+  data = data.column(field)
 }
