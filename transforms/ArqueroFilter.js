@@ -10,5 +10,6 @@
 **/
 
 if (expression && field) {
-  data = data.filter(data => expression)
+  aq.addFunction('fieldExp', field => expression)
+  data = data.params({field: field}).filter(data => fieldExp(data[field])
 }
