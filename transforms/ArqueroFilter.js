@@ -11,5 +11,5 @@
 
 if (expression && field) {
   aq.addFunction('fieldExp', field => expression)
-  data = data.params({column: field}).filter(data => $.fieldExp(data[$.column])
+  data = data.params({column: field}).filter(data => $.fieldExp(data[$.column]))
 }
