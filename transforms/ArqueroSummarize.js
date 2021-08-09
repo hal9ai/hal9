@@ -56,8 +56,8 @@ var rollUpDict = {};
 if (field.length == 0 )
   data = data.groupby(group).count()
 else {
-  for (var i = 0; i <= field.length; i++) {
-    rollUpDict[summarizer+'('+field[i]+')'] = summarizerMap(field[i]) 
+  for (var i = 0; i < field.length; i++) {
+    rollUpDict[summarizer+'('+field[i]+')'] = summarizerMap[summarizer](field[i]) 
   }
   data = data.groupby(group).rollup(rollUpDict)
 }
