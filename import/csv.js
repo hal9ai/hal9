@@ -55,7 +55,6 @@ if (csv) {
   data = dsvParser.parse(csv);
   data = data.filter(d => {
     if (typeof(d) === 'undefined') return false;
-    debugger
     if (filter === undefined || JSON.stringify(d).includes(filter)) return true;
   })
 } else {

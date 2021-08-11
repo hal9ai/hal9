@@ -1,6 +1,23 @@
 /**
   output: [html]
-  params: [x, y, color, size]
+  params: 
+    - x
+    - y
+    - color
+    - size
+    - name: palette
+      label: D3 Palette
+      value:
+        - control: paletteSelect
+          value: schemeTableau10
+          values:
+            - schemeTableau10
+            - schemeAccent
+            - schemeDark2
+            - schemePaired
+            - schemeSet1
+            - schemeSet2
+            - schemeSet3
   deps: [
     'chart-utils.js',
     'https://cdn.jsdelivr.net/npm/d3@6',
@@ -17,17 +34,39 @@ const chartdata = x && y
    }))
  : [];
 
-const chart = Plot.dot(
-  chartdata, {
-    x: x ? "x" : [],
-    y: y ? "y" : [],
-    r: size ? "size" : 5,
-    fill: color ? "color" : d3.schemeTableau10[0],
-  }
-);
+const getTitle = d => {
+  const x = Math.round(d.x * 100) / 100;
+  const y = Math.round(d.y * 100) / 100;
 
+  const size = d.size ? Math.round(d.size * 100) / 100 : 0;
+  const color = typeof d.color === 'string' ? d.color : Math.round(d.color * 100) / 100;
+
+  const title = `x: ${x}\ny: ${y}` +
+    (d.size ? `\nradius: ${size}` : '') +
+    (d.color ? `\ncolor: ${color}` : '');
+
+  return title;
+};
+
+var colorUniques = data.map(e => e[color]).filter((v, i, a) => a.indexOf(v) === i);
+const legend = createLegend({ names: colorUniques, colors: d3[palette] });
+legend.style.color = hal9.isDark() ? 'white' : '';
+html.appendChild(legend);
+
+var plotScheme = palette.replace('scheme','');
 html.appendChild(Plot.plot({
-  marks: [chart],
+  marks: [colorUniques.map((_, i) => {
+    if (i != 0) {
+      debugger
+    }
+    return Plot.dot(chartdata, {
+      x: x ? 'x' : [],
+      y: y ? 'y' : [],
+      r: size ? 'size' : 5,
+      fill: color ? 'color' : d3.schemeTableau10[0],
+      title: d => getTitle(d),
+    })
+  })],
   x: {
     grid: true,
     inset: 10,
@@ -40,7 +79,11 @@ html.appendChild(Plot.plot({
   width: html.clientWidth,
   height: html.clientHeight,
   style: {
-    background: hal9.isDark() ? "#222" : '',
-    color: hal9.isDark() ? "white" : ''
+    background: hal9.isDark() ? '#222' : '',
+    color: hal9.isDark() ? 'white' : '',
+    fillOpacity: 1,
+  },
+  color: {
+    scheme: color ? plotScheme : undefined,
   },
 }));
