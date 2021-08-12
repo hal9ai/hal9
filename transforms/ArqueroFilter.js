@@ -10,6 +10,8 @@
 **/
 
 if (expression && field) {
-  aq.addFunction('fieldExp', field => expression, { override: true })
+  var filterexp = new Function('field', 'return ' + expression);
+  aq.addFunction('fieldExp', field => filterexp(field), { override: true })
   data = data.params({column: field}).filter(data => $.fieldExp(data[$.column]))
 }
+
