@@ -5,6 +5,7 @@
     - y
     - color
     - size
+    - label
     - name: palette
       label: D3 Palette
       value:
@@ -31,6 +32,7 @@ const chartdata = x && y
      y: convert(v[y]),
      color: convert(v[color]),
      size: convert(v[size]),
+     label: v[label] ? (v[label].substring(0, 10) + (v[label].length > 10 ? '...' : '')) : '',
    }))
  : [];
 
@@ -51,14 +53,12 @@ const getTitle = d => {
 var colorUniques = data.map(e => e[color]).filter((v, i, a) => a.indexOf(v) === i);
 const legend = createLegend({ names: colorUniques, colors: d3[palette] });
 legend.style.color = hal9.isDark() ? 'white' : '';
-html.appendChild(legend);
+
+if (color) html.appendChild(legend);
 
 var plotScheme = palette.replace('scheme','');
 html.appendChild(Plot.plot({
   marks: [colorUniques.map((_, i) => {
-    if (i != 0) {
-      debugger
-    }
     return Plot.dot(chartdata, {
       x: x ? 'x' : [],
       y: y ? 'y' : [],
@@ -66,7 +66,9 @@ html.appendChild(Plot.plot({
       fill: color ? 'color' : d3.schemeTableau10[0],
       title: d => getTitle(d),
     })
-  })],
+  }),
+  Plot.text(chartdata, {x: "x", y: "y", text: d => d.label, dy: -10})
+  ],
   x: {
     grid: true,
     inset: 10,
