@@ -10,7 +10,7 @@ Hal9 provides a platform to develop Artificial Intelligence solutions with web t
 
 Here is a quick example that showcases a data pipeline which reads a CSV and plots a line chart. Notice that each pipeline step contains a reference to the source to execute and the parameters associated to each step.
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
