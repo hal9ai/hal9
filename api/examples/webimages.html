@@ -1,0 +1,93 @@
+<html>
+  <script src="../dist/hal9.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.1.1/d3.min.js"></script> 
+  <script src="webimages.js"></script>
+  <style>
+    html, body{
+      width: 100%;
+      height: 100%;
+      padding: 0px;
+      margin: 0px;
+    }
+    #graph {
+      width: 100%;
+      height: 100%;
+    }
+    .node {
+      position: absolute;
+      background-size: cover;
+    }
+  </style>
+  <body>
+    <div id="graph"></div>  
+    <script>
+      (async function() {
+        var data = [];
+        try {
+          const url = window.location.search.length > 1 ? window.location.search.substr(1) : 'https://en.wikipedia.org/wiki/Architecture';
+          data = (await hal9.run(webimages, { url: url })).data;
+        }
+        catch (e) {
+          document.body.innerText = e;
+          return;
+        }
+
+        data = data.map((e, i) => ({ id: (i == 0 ? 'root' : 'root.' + i), value: null, img: e.url }))
+
+        // https://bl.ocks.org/shimizu/79409cca5bcc57c32ddae0a5f0a1a564
+        // License: Released under the The MIT License.
+        
+        var width = document.querySelector("#graph").clientWidth;
+        var height = document.querySelector("#graph").clientHeight;
+        var div = d3.select("#graph").append("div").attr("width", width).attr("height", height);
+
+        setInterval(draw, 6000);
+        draw();
+        
+        function draw() {
+          randomize();
+                  
+          var stratify = d3.stratify()
+            .parentId(function(d) {return d.id.substring(0, d.id.lastIndexOf(".")); });
+
+          var root = stratify(data).sum(function(d) { return d.value ;});
+
+          var treemap = d3.treemap()
+            .tile(d3.treemapBinary)
+            .size([width, height])
+            .padding(1)
+            .round(true);        
+
+          treemap(root);
+          drawTreemap(root);
+        }
+        
+        function randomize() {
+          data.filter(function(d){ return d.id !== "root" ; })
+            .forEach(function(d){
+                d.value = ~~(d3.randomLogNormal(0.4, 1)());
+            });
+        }
+        
+        function drawTreemap(root) {
+          var node = div.selectAll(".node").data(root.children);
+            
+          var newNode = node.enter()
+            .append("a")
+              .attr("class", "node")
+              .attr("href", d => d.data.img)
+              .attr("target", "_blank")
+            .style("background-image", d => "url(" + d.data.img + ")");
+
+          node.merge(newNode)
+            .transition()
+            .duration(1000)
+            .style("left", function(d) { return d.x0 + "px" ;})
+            .style("top", function(d) { return d.y0 + "px" ;})
+            .style("width", function(d) { return (d.x1 - d.x0) + "px" ;})
+            .style("height", function(d) { return (d.y1 - d.y0) + "px" ;});
+        }
+      })()
+    </script>
+  </body>
+</html>

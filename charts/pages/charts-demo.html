@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Charts Demo</title>
+
+  <link rel="stylesheet" href="../styles/charts.txt.css">
+
+  <script src="../vendor/d3.v6.min.txt.js"></script>
+  <script src="../vendor/d3-sankey.min.txt.js"></script>
+
+  <script src="../scripts/chart.txt.js"></script>
+  <script src="../scripts/grid-chart.txt.js"></script>
+  <script src="../scripts/xy-chart.txt.js"></script>
+  <script src="../scripts/line-chart.txt.js"></script>
+  <script src="../scripts/bubble-chart.txt.js"></script>
+  <script src="../scripts/bar-chart.txt.js"></script>
+  <script src="../scripts/histogram-chart.txt.js"></script>
+  <script src="../scripts/error-bar-chart.txt.js"></script>
+  <script src="../scripts/treemap-chart.txt.js"></script>
+  <script src="../scripts/heatmap-chart.txt.js"></script>
+  <script src="../scripts/sankey-chart.txt.js"></script>
+  <script src="../scripts/index.js"></script>
+</head>
+<body>
+  <main>
+    <h1>D3.js Charts Demo</h1>
+
+    <h2>Line Chart</h2>
+    <div class="d3-chart d3-line-chart"></div>
+    <div class="docs">
+      <div>
+        <strong>Creating a chart.</strong> We need a <span class="code">div</span> element with predefined width and height (the charts don't control it but adjusts to any changings automatically). The following code creates a line chart like above:
+      </div>
+      <div class="code">
+        const $lineChart = $container.querySelector('.d3-line-chart');
+        <br/>
+        const lineChart = new LineChart(data, {});
+        <br/><br/>
+        lineChart.appendTo($lineChart);
+      </div>
+      <div>
+        <strong>Initial parameters.</strong> Constructor is called with two parameters: <span class="code">data: Array</span> and <span class="code">params: Object</span>. Data is a table, each row is one point on the result chart. Params are additional settings for the chart. We can set the name of X or Y axis or margin inside the chart. Full params for line chart:
+      </div>
+      <div class="code">
+        {
+        <br/>&nbsp;&nbsp;margin: {
+        <br/>&nbsp;&nbsp;&nbsp;&nbsp;top: number,
+        <br/>&nbsp;&nbsp;&nbsp;&nbsp;right: number,
+        <br/>&nbsp;&nbsp;&nbsp;&nbsp;bottom: number,
+        <br/>&nbsp;&nbsp;&nbsp;&nbsp;left: number
+        <br/>&nbsp;&nbsp;},
+        <br/>&nbsp;&nbsp;x: string,
+        <br/>&nbsp;&nbsp;y: string,
+        <br/>}
+      </div>
+      <div>Any changes to data or params (with methods <span class="code">chart.setData</span> and <span class="code">chart.setParameter</span>) forces the chart to rerender.<br/>Default params values are:</div>
+      <div class="code">
+        margin = { top: 25, right: 25, bottom: 25, left: 25 };
+        <br/>x = 'x';
+        <br/>y = 'y';
+      </div>
+      <div>
+        <div><strong>Colors.</strong> Currently there is no way to change colors for charts. They are selected automatically from <span class="code">d3.schemeCategory10</span> colors array.</div>
+        <br/>
+        <div>
+          <strong>X axis.</strong> X axis values can be numbers or dates. The format is checked with the first point. Line, bubble and error bar charts support numeric and datetime axes.
+        </div>
+      </div>
+    </div>
+
+    <h2>Bubble Chart</h2>
+    <div class="d3-chart d3-bubble-chart"></div>
+    <div class="docs">
+      <div>
+        For the most part bubble chart works as line chart with the same data format and similar constructor and parameters. The main changings includes defining color and size of markers.
+      </div>
+      <br/>
+      <div>
+        <strong>Colors.</strong> Color of markers can be used to display an additional data column. The name of column should be defined in params object: <span class="code">{ color: 'color' }</span>. The other additional parameter is the color palette. It is set with an array of two colors: <span class="code">{ palette: ['red', 'yellow'] }</span>. If no color column was provided then they are selected automatically from default color scheme. There is no way to set different palettes for different data series.
+      </div>
+      <br/>
+      <div>
+        <strong>Size.</strong> Other data column can also be mapped with size of markers. To enable this feature the name of the column should be passed in params object: <span class="code">{ size: 'size' }</span>. Size range can also be defined in params: <span class="code">{ sizeRange: [10, 20] }</span>. The values are the radiuses of smallest and biggest markers in pixels (default range is [5, 10]).
+      </div>
+    </div>
+
+    <h2>Bar Chart</h2>
+    <div class="d3-chart d3-bar-chart"></div>
+    <div class="docs">
+      <div>
+        <strong>Data.</strong> Can be of single or multiple series. For each X point there should be a array of objects representing each data series: <span class="code">y: [{ key: string, value: number }, ...]</span>. Key is the name of series.
+      </div>
+      <br/>
+      <div>
+        <strong>Params</strong> Special parameter <span class="code">padding</span> sets paddings between groups of bars. Default is <span class="code">0.1</span>. Parameter <span class="code">stacked</span> if true makes bar chart with multiple series a stacked one. if false or not set the bars are grouped.
+      </div>
+      <div>
+        <button class="update-btn update-bar-type">Change type</button>
+      </div>
+    </div>
+
+    <h2>Histogram Chart</h2>
+    <div class="d3-chart d3-histogram-chart"></div>
+    <div class="docs">
+      <div>
+        <strong>Params.</strong> Parameter <span class="code">padding</span> is used to set paddings between bars and is defined in pixels. Default value is <span class="code">1</span>. Parameter <span class="code">thresholds</span> defines the number of bins to divide data to. Default is <span class="code">10</span>.
+      </div>
+    </div>
+
+    <h2>Error Bars Chart</h2>
+    <div class="d3-chart d3-error-bar-chart"></div>
+    <div class="docs">
+      <div>Shows simple statistics for sets of values.</div>
+      <br/>
+      <div>
+        <strong>Params.</strong> Parameter <span class="code">padding</span> is used to set paddings between bars. Default value is <span class="code">0.1</span>. Color and color palette can be specified like in bubble chart.
+      </div>
+    </div>
+
+    <h2>Treemap Chart</h2>
+    <div class="d3-chart d3-treemap-chart"></div>
+    <div class="docs">
+      <div>
+        <strong>Data.</strong> Is an object with hierarchical structure. Each node has <span class="code">name</span> and <span class="code">children</span> fields. Each end node also has <span class="code">value</span> field that will be visualized as the size of the area in treemap.
+      </div>
+      <br/>
+      <div>
+        <strong>Params.</strong> Parameter <span class="code">padding</span> is used to set paddings between rectangles and is defined in pixels. Default value is <span class="code">1</span>.
+      </div>
+    </div>
+
+    <h2>Heatmap Chart</h2>
+    <div class="d3-chart d3-heatmap-chart"></div>
+    <div class="docs">
+      <div>
+        <strong>Data.</strong> Is an object where rows are keys for the series. For each row there is an object where keys are columns. The values are coded with <span class="code">color</span> parameter.
+      </div>
+      <br/>
+      <div>
+        <strong>Params.</strong> Palette can be specified like in bubble chart: <span class="code">{ palette: ['#ffffff', 'blue'] }</span>
+      </div>
+    </div>
+
+    <h2>Sankey Chart</h2>
+    <div class="d3-chart d3-sankey-chart"></div>
+    <div class="docs">
+      <div>
+        <strong>Params.</strong> The <span class="code">data</span> is an object with an array of <span class="code">nodes</span> and <span class="code">links</span>. Each node is an object: <span class="code">{ id: number, node: string }</span>. Each link is an object <span class="code">{ target: number, source: number, value: number }</span> where target and source are ids of nodes. There is a parameter <span class="code">nodeWidth</span> to set constant width of each node. Default value is 20 pixels.
+      </div>
+    </div>
+  </main>
+</body>
+</html>
+

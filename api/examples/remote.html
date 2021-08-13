@@ -1,0 +1,12 @@
+<html>
+  <script src="../dist/hal9.js"></script>
+  <body>
+    <script>
+      hal9.run(function() {
+        return 'The meaning of life: ' + 42;
+      }).then(function(res) {
+        document.body.innerText = res;
+      });
+    </script>
+  </body>
+</html>
