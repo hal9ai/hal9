@@ -14,15 +14,15 @@ Here is a quick example that showcases a data pipeline which reads a CSV and plo
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="hal9.js"></script> 
+    <script src="../dist/hal9.js"></script> 
   </head>
   <body>
-    <div id="output"></div>
+    <div id="output" style="margin: auto; width: 800px; height: 400px;"></div>
     <script>
       hal9.run([
         hal9.step('import/csv.js', { file: 'https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv' }),
-        hal9.step('visualize/linechart.js', { x: 'Date', y: [ 'AAPL.Open', 'AAPL.High' ] })
-      ], 'output');
+        hal9.step('visualize/linechart.js', { x: 'Date', y: [ 'AAPL.Open', 'AAPL.High' ] }, 'output')
+      ]);
     </script>
   </body>
 </html>
