@@ -1,0 +1,1926 @@
+{
+  "id": 1717635,
+  "steps": [
+    {
+      "id": 909,
+      "name": "importcsv",
+      "label": "CSV",
+      "params": {
+        "file": {
+          "id": 1,
+          "static": true,
+          "value": [
+            {
+              "control": "fileload",
+              "links": [
+                {
+                  "name": "url",
+                  "label": "Insert link"
+                },
+                {
+                  "name": "file",
+                  "label": "Load file"
+                }
+              ],
+              "selected": "url",
+              "fileExt": ".csv",
+              "value": "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/country_data/United%20States.csv",
+              "id": 0
+            }
+          ],
+          "name": "file",
+          "label": "File"
+        },
+        "separator": {
+          "id": 3,
+          "static": true,
+          "value": [
+            {
+              "control": "textbox",
+              "value": ",",
+              "id": 2
+            }
+          ],
+          "name": "separator",
+          "label": "Separator"
+        },
+        "skip": {
+          "id": 5,
+          "static": true,
+          "value": [
+            {
+              "control": "textbox",
+              "value": "",
+              "id": 4
+            }
+          ],
+          "name": "skip",
+          "label": "Skip"
+        }
+      },
+      "error": "",
+      "metadata": {
+        "input": [],
+        "params": [
+          {
+            "name": "file",
+            "label": "File",
+            "value": [
+              {
+                "control": "fileload",
+                "links": [
+                  {
+                    "name": "url",
+                    "label": "Insert link"
+                  },
+                  {
+                    "name": "file",
+                    "label": "Load file"
+                  }
+                ],
+                "selected": "url",
+                "fileExt": ".csv",
+                "value": "https://raw.githubusercontent.com/javierluraschi/datasets/datasets/aapl/data.csv",
+                "id": 0
+              }
+            ]
+          },
+          {
+            "name": "separator",
+            "label": "Separator",
+            "value": [
+              {
+                "control": "textbox",
+                "value": ",",
+                "id": 1
+              }
+            ]
+          },
+          {
+            "name": "skip",
+            "label": "Skip",
+            "value": [
+              {
+                "control": "textbox",
+                "value": "",
+                "id": 2
+              }
+            ]
+          }
+        ],
+        "deps": [
+          "https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js"
+        ],
+        "cache": true,
+        "environment": null,
+        "invalid": null,
+        "output": [
+          "data"
+        ]
+      },
+      "script": "/**\n  input: []\n  params:\n    - name: file\n      label: 'File'\n      value:\n        - control: 'fileload'\n          links:\n            - name: 'url'\n              label: 'Insert link'\n            - name: 'file'\n              label: 'Load file'\n          selected: 'url'\n          fileExt: '.csv'\n          value: 'https://raw.githubusercontent.com/javierluraschi/datasets/datasets/aapl/data.csv'\n    - name: separator\n      label: 'Separator'\n      value:\n        - control: 'textbox'\n          value: ','\n    - name: skip\n      label: 'Skip'\n      value:\n        - control: 'textbox'\n          value: ''\n  deps: [ 'https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js' ]\n  cache: true\n**/\n\nfile = file ? file : '';\nvar type = /^hal9:|^data:/.test(file) ? 'file' : 'url';\n\nconst dsvParser = d3.dsvFormat(separator || ',');\n\nlet csv = '';\n\nif (type === 'url' && file != '') {\n  const res = await fetch(file);\n  csv = await res.text();\n} else {\n  file = atob(file.replace(/^.*;base64,/, ''));\n  csv = file;\n}\n\nif (csv) {\n  if (skip) {\n    var withsplit = csv.split('\\n');\n    withsplit.splice(0, skip);\n    csv = withsplit.join('\\n');\n  }\n  data = dsvParser.parse(csv);\n  data = data.filter(d => typeof(d) !== 'undefined')\n} else {\n  data = '';\n}\n"
+    },
+    {
+      "id": 915,
+      "name": "filter",
+      "label": "Filter",
+      "params": {
+        "field": {
+          "id": 0,
+          "name": "field",
+          "label": "field",
+          "static": false,
+          "value": [
+            {
+              "id": 15,
+              "name": "total_vaccinations",
+              "label": "total_vaccinations"
+            }
+          ]
+        },
+        "expression": {
+          "id": 2,
+          "static": true,
+          "value": [
+            {
+              "control": "textbox",
+              "value": "field.length > 0",
+              "id": 1
+            }
+          ],
+          "name": "expression",
+          "label": "Expression"
+        }
+      },
+      "error": "",
+      "metadata": {
+        "params": [
+          {
+            "name": "field",
+            "label": "field"
+          },
+          {
+            "name": "expression",
+            "label": "Expression",
+            "value": [
+              {
+                "control": "textbox",
+                "value": "field != null",
+                "id": 0
+              }
+            ]
+          }
+        ],
+        "input": [
+          "data"
+        ],
+        "deps": [],
+        "environment": null,
+        "cache": false,
+        "invalid": null,
+        "output": [
+          "data"
+        ]
+      },
+      "script": "/**\n  params:\n    - field\n    - name: expression\n      label: 'Expression'\n      value:\n        - control: 'textbox'\n          value: field != null\n**/\n\nif (expression) {\n  var filterexp = new Function('field', 'return ' + expression);\n  data = data.filter(row => filterexp(row[field]));\n}\n"
+    },
+    {
+      "id": 914,
+      "name": "regressionpredict",
+      "label": "Regression",
+      "params": {
+        "x": {
+          "id": 0,
+          "static": false,
+          "value": [],
+          "name": "x",
+          "label": "Y"
+        },
+        "y": {
+          "id": 1,
+          "static": false,
+          "value": [
+            {
+              "id": 14,
+              "name": "total_vaccinations",
+              "label": "total_vaccinations"
+            }
+          ],
+          "name": "y",
+          "label": "Y"
+        },
+        "type": {
+          "id": 3,
+          "static": true,
+          "value": [
+            {
+              "control": "select",
+              "value": "sigmoid",
+              "values": [
+                {
+                  "name": "linear",
+                  "label": "Linear"
+                },
+                {
+                  "name": "exponential",
+                  "label": "Exponential"
+                },
+                {
+                  "name": "logarithmic",
+                  "label": "Logarithmic"
+                },
+                {
+                  "name": "power",
+                  "label": "Power"
+                },
+                {
+                  "name": "sigmoid",
+                  "label": "Sigmoid"
+                },
+                {
+                  "name": "polynomial",
+                  "label": "Polynomial"
+                }
+              ],
+              "id": 2
+            }
+          ],
+          "name": "type",
+          "label": "Type"
+        },
+        "predictions": {
+          "id": 5,
+          "static": true,
+          "value": [
+            {
+              "control": "range",
+              "value": "87",
+              "min": 0,
+              "max": 100,
+              "id": 4
+            }
+          ],
+          "name": "predictions",
+          "label": "Predictions"
+        }
+      },
+      "error": "",
+      "metadata": {
+        "params": [
+          {
+            "name": "x",
+            "label": "Y"
+          },
+          {
+            "name": "y",
+            "label": "Y"
+          },
+          {
+            "name": "type",
+            "label": "Type",
+            "value": [
+              {
+                "control": "select",
+                "value": "linear",
+                "values": [
+                  {
+                    "name": "linear",
+                    "label": "Linear"
+                  },
+                  {
+                    "name": "exponential",
+                    "label": "Exponential"
+                  },
+                  {
+                    "name": "logarithmic",
+                    "label": "Logarithmic"
+                  },
+                  {
+                    "name": "power",
+                    "label": "Power"
+                  },
+                  {
+                    "name": "sigmoid",
+                    "label": "Sigmoid"
+                  },
+                  {
+                    "name": "polynomial",
+                    "label": "Polynomial"
+                  }
+                ],
+                "id": 0
+              }
+            ]
+          },
+          {
+            "name": "predictions",
+            "label": "Predictions",
+            "value": [
+              {
+                "control": "range",
+                "value": 0,
+                "min": 0,
+                "max": 100,
+                "id": 1
+              }
+            ]
+          }
+        ],
+        "output": [
+          "data",
+          "html"
+        ],
+        "deps": [
+          "chart-utils.js",
+          "https://cdn.jsdelivr.net/npm/d3@6",
+          "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1"
+        ],
+        "input": [
+          "data"
+        ],
+        "environment": null,
+        "cache": false,
+        "invalid": null
+      },
+      "script": "/**\n  params:\n    - name: x\n      label: Y\n    - name: y\n      label: Y\n    - name: type\n      label: Type\n      value:\n        - control: select\n          value: linear\n          values:\n            - name: linear\n              label: Linear    \n            - name: exponential\n              label: Exponential\n            - name: logarithmic\n              label: Logarithmic\n            - name: power\n              label: Power\n            - name: sigmoid\n              label: Sigmoid\n            - name: polynomial\n              label: Polynomial\n    - name: predictions\n      label: Predictions\n      value:\n        - control: range\n          value: 0\n          min: 0\n          max: 100\n  output:\n    - data\n    - html\n  deps:\n    - 'chart-utils.js'\n    - 'https://cdn.jsdelivr.net/npm/d3@6'\n    - 'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1'\n**/\n\ntf.setBackend('cpu');\n\nif (!x) {\n  var x = '_id';\n  data.map((e,i) => Object.assign(e, { '_id': i }))\n}\n\n// Train\n\nconst trainX = tf.tensor1d(data.map(e => convert(e[x])));\nconst trainY = tf.tensor1d(data.map(e => convert(e[y])));\n\nconst [maxX, minX] = [trainX.max(), trainX.min()];\nconst normX = trainX.sub(minX).div(maxX.sub(minX));\nconst [maxY, minY] = [trainY.max(), trainY.min()];\nconst normY = trainY.sub(minY).div(maxY.sub(minY));\n\nconst learningRate = 0.3;\nconst epochs = 100;\n\nvar regressions = {\n  linear: () => {\n    const m = tf.variable(tf.scalar(Math.random()));\n    const b = tf.variable(tf.scalar(Math.random()));\n    return (x) => m.mul(x).add(b);\n  },\n  exponential: () => {\n    const a = tf.variable(tf.scalar(Math.random()));\n    const b = tf.variable(tf.scalar(Math.random()));\n    return (x) => b.mul(x).exp().mul(a);\n  },\n  logarithmic: () => {\n    const a = tf.variable(tf.scalar(Math.random()));\n    const b = tf.variable(tf.scalar(Math.random()));\n    return (x) => x.add(a).log().mul(b);\n  },\n  power: () => {\n    const a = tf.variable(tf.scalar(Math.random()));\n    const b = tf.variable(tf.scalar(Math.random()));\n    return (x) => x.pow(b).mul(a);\n  },\n  sigmoid: () => {\n    const a = tf.variable(tf.scalar(Math.random()));\n    const b = tf.variable(tf.scalar(Math.random()));\n    const c = tf.variable(tf.scalar(Math.random()));\n    const d = tf.variable(tf.scalar(Math.random()));\n    return (x) => x.mul(a).add(b).sigmoid().mul(c).add(d);\n  },\n  polynomial: () => {\n    const a = tf.variable(tf.scalar(Math.random()));\n    const b = tf.variable(tf.scalar(Math.random()));\n    const c = tf.variable(tf.scalar(Math.random()));\n    return (x) => x.sqrt().mul(a).add(b.mul(x)).add(c);\n  }\n}\n\nconst predict = regressions[type]();\n\nconst loss = (pred, actual) => pred.sub(actual).square().mean();\nconst optimizer = tf.train.adam(learningRate);\n\nfor (let idx = 0; idx < epochs; idx++) {\n  tf.tidy(() => {\n    optimizer.minimize(function() { \n      const predsYs = predict(normX); \n      stepLoss = loss(predsYs, normY);   \n      return stepLoss; \n    }); \n  });\n}\n\n// Predict\n\nvar current = convert(data[data.length-1][x]);\nvar increment = data[data.length-1][x] - data[data.length-2][x];\nvar predTotal = Math.round(1.0 * data.length * predictions / 100);\nfor (var idx = 0; idx < predTotal; idx++) {\n  current += increment;\n  var futureRow = Object.fromEntries(Object.keys(data[data.length - 1]).map(e => [e, null]));\n  futureRow[x] = current;\n  data.push(futureRow);\n}\n\nvar predsX = tf.tensor1d(data.map(e => convert(e[x])));\nvar predsNormX = predsX.sub(minX).div(maxX.sub(minX));\nvar normPreds = predict(predsNormX);\nvar preds = normPreds.mul(maxY.sub(minY)).add(minY).dataSync();\n\ndata = data.map((e, i) => {\n  e['prediction(' + y + ')'] = preds[i];\n  return e;\n});\n\n// Chart\n\nif (y && !Array.isArray(y)) y = [y];\nif (!y) { y = [] } else { y.push('prediction(' + y + ')') };\n\nconst chartdata = x && y.length\n ? data.map(v => {\n     const value = { x: convert(v[x]) };\n     y.map((yv, i) => {\n       value[`y${i}`] = convert(v[yv]);\n     });\n     return value;\n   })\n : [];\n\nhtml.appendChild(Plot.plot({\n  marks: [\n    Plot.line(chartdata, {\n      x: x ? \"x\" : [],\n      y: `y1`,\n      stroke: d3.schemeTableau10[1],\n      strokeWidth: 3,\n      strokeDasharray: \"2,3\"\n    }),\n    Plot.line(chartdata, {\n      x: x ? \"x\" : [],\n      y: `y0`,\n      stroke: d3.schemeTableau10[0],\n      strokeWidth: 3,\n    })\n  ],\n  x: { grid: true },\n  y: {\n    grid: true,\n    tickFormat: (d) => (d > 1000 ? d3.format('~s')(d) : d),\n  },\n  width: html.clientWidth,\n  height: html.clientHeight,\n  style: {\n    background: hal9.isDark() ? \"#222\" : '',\n    color: hal9.isDark() ? \"white\" : ''\n  },\n}));\n"
+    }
+  ],
+  "params": {
+    "909": {
+      "file": {
+        "id": 1,
+        "static": true,
+        "value": [
+          {
+            "control": "fileload",
+            "links": [
+              {
+                "name": "url",
+                "label": "Insert link"
+              },
+              {
+                "name": "file",
+                "label": "Load file"
+              }
+            ],
+            "selected": "url",
+            "fileExt": ".csv",
+            "value": "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/country_data/United%20States.csv",
+            "id": 0
+          }
+        ],
+        "name": "file",
+        "label": "File"
+      },
+      "separator": {
+        "id": 3,
+        "static": true,
+        "value": [
+          {
+            "control": "textbox",
+            "value": ",",
+            "id": 2
+          }
+        ],
+        "name": "separator",
+        "label": "Separator"
+      },
+      "skip": {
+        "id": 5,
+        "static": true,
+        "value": [
+          {
+            "control": "textbox",
+            "value": "",
+            "id": 4
+          }
+        ],
+        "name": "skip",
+        "label": "Skip"
+      }
+    },
+    "914": {
+      "x": {
+        "id": 0,
+        "static": false,
+        "value": [],
+        "name": "x",
+        "label": "Y"
+      },
+      "y": {
+        "id": 1,
+        "static": false,
+        "value": [
+          {
+            "id": 14,
+            "name": "total_vaccinations",
+            "label": "total_vaccinations"
+          }
+        ],
+        "name": "y",
+        "label": "Y"
+      },
+      "type": {
+        "id": 3,
+        "static": true,
+        "value": [
+          {
+            "control": "select",
+            "value": "sigmoid",
+            "values": [
+              {
+                "name": "linear",
+                "label": "Linear"
+              },
+              {
+                "name": "exponential",
+                "label": "Exponential"
+              },
+              {
+                "name": "logarithmic",
+                "label": "Logarithmic"
+              },
+              {
+                "name": "power",
+                "label": "Power"
+              },
+              {
+                "name": "sigmoid",
+                "label": "Sigmoid"
+              },
+              {
+                "name": "polynomial",
+                "label": "Polynomial"
+              }
+            ],
+            "id": 2
+          }
+        ],
+        "name": "type",
+        "label": "Type"
+      },
+      "predictions": {
+        "id": 5,
+        "static": true,
+        "value": [
+          {
+            "control": "range",
+            "value": "87",
+            "min": 0,
+            "max": 100,
+            "id": 4
+          }
+        ],
+        "name": "predictions",
+        "label": "Predictions"
+      }
+    },
+    "915": {
+      "field": {
+        "id": 0,
+        "name": "field",
+        "label": "field",
+        "static": false,
+        "value": [
+          {
+            "id": 15,
+            "name": "total_vaccinations",
+            "label": "total_vaccinations"
+          }
+        ]
+      },
+      "expression": {
+        "id": 2,
+        "static": true,
+        "value": [
+          {
+            "control": "textbox",
+            "value": "field.length > 0",
+            "id": 1
+          }
+        ],
+        "name": "expression",
+        "label": "Expression"
+      }
+    }
+  },
+  "outputs": {
+    "909": [
+      {
+        "id": 0,
+        "name": "location",
+        "label": "location"
+      },
+      {
+        "id": 1,
+        "name": "date",
+        "label": "date"
+      },
+      {
+        "id": 2,
+        "name": "vaccine",
+        "label": "vaccine"
+      },
+      {
+        "id": 3,
+        "name": "source_url",
+        "label": "source_url"
+      },
+      {
+        "id": 4,
+        "name": "total_vaccinations",
+        "label": "total_vaccinations"
+      },
+      {
+        "id": 5,
+        "name": "people_vaccinated",
+        "label": "people_vaccinated"
+      },
+      {
+        "id": 6,
+        "name": "people_fully_vaccinated",
+        "label": "people_fully_vaccinated"
+      }
+    ],
+    "914": [
+      {
+        "id": 0,
+        "name": "location",
+        "label": "location"
+      },
+      {
+        "id": 1,
+        "name": "date",
+        "label": "date"
+      },
+      {
+        "id": 2,
+        "name": "vaccine",
+        "label": "vaccine"
+      },
+      {
+        "id": 3,
+        "name": "source_url",
+        "label": "source_url"
+      },
+      {
+        "id": 4,
+        "name": "total_vaccinations",
+        "label": "total_vaccinations"
+      },
+      {
+        "id": 5,
+        "name": "people_vaccinated",
+        "label": "people_vaccinated"
+      },
+      {
+        "id": 6,
+        "name": "people_fully_vaccinated",
+        "label": "people_fully_vaccinated"
+      },
+      {
+        "id": 7,
+        "name": "_id",
+        "label": "_id"
+      },
+      {
+        "id": 8,
+        "name": "prediction(total_vaccinations)",
+        "label": "prediction(total_vaccinations)"
+      }
+    ],
+    "915": [
+      {
+        "id": 0,
+        "name": "location",
+        "label": "location"
+      },
+      {
+        "id": 1,
+        "name": "date",
+        "label": "date"
+      },
+      {
+        "id": 2,
+        "name": "vaccine",
+        "label": "vaccine"
+      },
+      {
+        "id": 3,
+        "name": "source_url",
+        "label": "source_url"
+      },
+      {
+        "id": 4,
+        "name": "total_vaccinations",
+        "label": "total_vaccinations"
+      },
+      {
+        "id": 5,
+        "name": "people_vaccinated",
+        "label": "people_vaccinated"
+      },
+      {
+        "id": 6,
+        "name": "people_fully_vaccinated",
+        "label": "people_fully_vaccinated"
+      }
+    ]
+  },
+  "errors": {
+    "909": "",
+    "914": "",
+    "915": ""
+  },
+  "scripts": {
+    "0": "/** deps: [ 'iris.txt.js' ] **/\ndata = iris;",
+    "803": "/**\n  input: []\n  params:\n    - name: file\n      label: 'File'\n      value:\n        - control: 'fileload'\n          links:\n            - name: 'url'\n              label: 'Insert link'\n            - name: 'file'\n              label: 'Load file'\n          selected: 'url'\n          fileExt: '.csv'\n          value: 'https://raw.githubusercontent.com/javierluraschi/datasets/datasets/aapl/data.csv'\n    - name: separator\n      label: 'Separator'\n      value:\n        - control: 'textbox'\n          value: ','\n    - name: skip\n      label: 'Skip'\n      value:\n        - control: 'textbox'\n          value: ''\n  deps: [ 'https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js' ]\n  cache: true\n**/\n\nfile = file ? file : '';\nvar type = /^hal9:|^data:/.test(file) ? 'file' : 'url';\n\nconst dsvParser = d3.dsvFormat(separator || ',');\n\nlet csv = '';\n\nif (type === 'url' && file != '') {\n  const res = await fetch(file);\n  csv = await res.text();\n} else {\n  file = atob(file.replace(/^.*;base64,/, ''));\n  csv = file;\n}\n\nif (csv) {\n  if (skip) {\n    var withsplit = csv.split('\\n');\n    withsplit.splice(0, skip);\n    csv = withsplit.join('\\n');\n  }\n  data = dsvParser.parse(csv);\n  data = data.filter(d => typeof(d) !== 'undefined')\n} else {\n  data = '';\n}\n",
+    "804": "/**\n  params: [ data, html, x, y ]\n  deps: [ 'd3.v6.min.js', 'chart.js', 'grid-chart.js', 'xy-chart.js', 'line-chart.js', 'chart-utils.js' ]\n**/\n\nif (!Array.isArray(y)) y = [ y ];\n\nvar style = document. createElement('style');\nhtml.appendChild(style);\nstyle.type = 'text/css';\nstyle.appendChild(document.createTextNode(`\n.d3-line {\n  fill: none;\n}\n\n.d3-axis-gridline {\n  stroke: #666;\n  shape-rendering: crispEdges;\n  stroke-width: 0.2px;\n}\n`));\n\nvar chartdata = [];\nfor (let i = 0; i < data.length; i++) {\n  chartdata.push({\n    x: convert(data[i][x]),\n    values: y.map(ye => {\n      return { key: ye, value:  convert(data[i][ye]) };\n    })\n  });\n}\n\nconst chart = new LineChart(chartdata, { y: 'values', color: '#aa00ff', size: 2, margin: { top: 25, right: 25, bottom: 25, left: 50 } });\nchart.appendTo(wrapper(html));\n",
+    "805": "/**\n  params:\n    - data\n    - field\n    - name: expression\n      label: 'Expression'\n      value:\n        - control: 'textbox'\n          value: new Date(field)\n**/\n\nif (expression) {\n  var mapexpr = new Function('field', 'return ' + expression);\n  data = data.map(row => {\n    row[field] = mapexpr(row[field])\n    return row;\n  });\n}\n\n",
+    "806": "/**\n  params: [ data, html, x, y ]\n  deps: [ 'd3.v6.min.js', 'chart.js', 'grid-chart.js', 'xy-chart.js', 'line-chart.js', 'chart-utils.js' ]\n**/\n\nif (!Array.isArray(y)) y = [ y ];\n\nvar style = document. createElement('style');\nhtml.appendChild(style);\nstyle.type = 'text/css';\nstyle.appendChild(document.createTextNode(`\n.d3-line {\n  fill: none;\n}\n\n.d3-axis-gridline {\n  stroke: #666;\n  shape-rendering: crispEdges;\n  stroke-width: 0.2px;\n}\n`));\n\nvar chartdata = [];\nfor (let i = 0; i < data.length; i++) {\n  chartdata.push({\n    x: convert(data[i][x]),\n    values: y.map(ye => {\n      return { key: ye, value:  convert(data[i][ye]) };\n    })\n  });\n}\n\nconst chart = new LineChart(chartdata, { y: 'values', color: '#aa00ff', size: 2, margin: { top: 25, right: 25, bottom: 25, left: 50 } });\nchart.appendTo(wrapper(html));\n",
+    "807": "/**\n  params:\n    - data\n    - name: window\n      label: Window\n    - name: prediction\n      label: Prediction\n    - name: epochs\n      label: Epochs\n      value:\n        - control: range\n          value: 1\n          min: 1\n          max: 20\n    - name: trainingsize\n      label: Training Size\n      value:\n        - control: range\n          value: 98\n          min: 70\n          max: 100\n  output:\n    - data\n    - model\n    - stats\n  cache: true\n**/\n\nif (!prediction || !window) throw('Prediction and Window parameters are required.');\n\nlet inputs = data.map(e => e[window]);\nlet outputs = data.map(e => parseFloat(e[prediction]));\n\nlet windowsize = data[0][window].length;\nlet learningrate = 0.01;\nlet hiddenlayers = 4;\n\nasync function trainModel(X, Y, window_size, n_epochs, learning_rate, n_layers, callback) {\n  const input_layer_shape  = window_size;\n  const input_layer_neurons = 100;\n\n  const rnn_input_layer_features = 10;\n  const rnn_input_layer_timesteps = input_layer_neurons / rnn_input_layer_features;\n\n  const rnn_input_shape  = [rnn_input_layer_features, rnn_input_layer_timesteps];\n  const rnn_output_neurons = 20;\n\n  const rnn_batch_size = window_size;\n\n  const output_layer_shape = rnn_output_neurons;\n  const output_layer_neurons = 1;\n\n  const model = tf.sequential();\n\n  const xs = tf.tensor2d(X, [X.length, X[0].length]);\n  const ys = tf.tensor2d(Y, [Y.length, 1]).reshape([Y.length, 1]);\n\n  model.add(tf.layers.dense({units: input_layer_neurons, inputShape: [input_layer_shape]}));\n  model.add(tf.layers.reshape({targetShape: rnn_input_shape}));\n\n  let lstm_cells = [];\n  for (let index = 0; index < n_layers; index++) {\n       lstm_cells.push(tf.layers.lstmCell({units: rnn_output_neurons}));\n  }\n\n  model.add(tf.layers.rnn({\n    cell: lstm_cells,\n    inputShape: rnn_input_shape,\n    returnSequences: false\n  }));\n\n  model.add(tf.layers.dense({units: output_layer_neurons, inputShape: [output_layer_shape]}));\n\n  model.compile({\n    optimizer: tf.train.adam(learning_rate),\n    loss: 'meanSquaredError'\n  });\n\n  const stats = await model.fit(xs, ys,\n    { batchSize: rnn_batch_size, epochs: n_epochs, callbacks: {\n      onEpochEnd: async (epoch, log) => {\n        callback(epoch, log);\n      }\n    }\n  });\n\n  return { model: model, stats: stats };\n}\n\ninputs = inputs.slice(0, Math.floor(trainingsize / 100 * inputs.length));\noutputs = outputs.slice(0, Math.floor(trainingsize / 100 * outputs.length));\n\nlet callback = function(epoch, log) {\n  /* (epoch , log.loss) */\n};\n\ninputs = inputs.map((input, i) => {\n  const min = Math.min(...input);\n  const max = Math.max(...input);\n  input = input.map(e => (e - min) / (max - min));\n  outputs[i] = (outputs[i] - min) / (max - min);\n\n  return input;\n});\n\nvar results = await trainModel(inputs, outputs, windowsize, epochs, learningrate, hiddenlayers, callback);\nstats = results.stats;\n\nconst modelpath = 'localstorage://timeseriesmodel';\nawait results.model.save(modelpath);\n\nvar model = {};\nfor (let i = 0; i < localStorage.length; i++) {\n  var key = localStorage.key(i);\n  if (key.includes('timeseriesmodel/')) model[key] = localStorage.getItem(key);\n}\n",
+    "808": "/**\n  params: [ data, html, x, y ]\n  deps: [ 'd3.v6.min.js', 'chart.js', 'grid-chart.js', 'xy-chart.js', 'line-chart.js', 'chart-utils.js' ]\n**/\n\nif (!Array.isArray(y)) y = [ y ];\n\nvar style = document. createElement('style');\nhtml.appendChild(style);\nstyle.type = 'text/css';\nstyle.appendChild(document.createTextNode(`\n.d3-line {\n  fill: none;\n}\n\n.d3-axis-gridline {\n  stroke: #666;\n  shape-rendering: crispEdges;\n  stroke-width: 0.2px;\n}\n`));\n\nvar chartdata = [];\nfor (let i = 0; i < data.length; i++) {\n  chartdata.push({\n    x: convert(data[i][x]),\n    values: y.map(ye => {\n      return { key: ye, value:  convert(data[i][ye]) };\n    })\n  });\n}\n\nconst chart = new LineChart(chartdata, { y: 'values', color: '#aa00ff', size: 2, margin: { top: 25, right: 25, bottom: 25, left: 50 } });\nchart.appendTo(wrapper(html));\n",
+    "809": "/**\n  params:\n    - data\n  output:\n    - data\n    - clipboard\n**/\n\nclipboard = JSON.parse(JSON.stringify(data))\n",
+    "810": "/**\n  params:\n    - clipboard\n**/\n\ndata = clipboard\n",
+    "811": "/**\n  params:\n    - data\n    - sma\n    - name: window\n      label: Window Size\n      value:\n        - control: range\n          value: 20\n          min: 1\n          max: 100\n**/\n\nif (!Array.isArray(sma)) sma = sma ? [ sma ] : [];\n\nlet sums = sma.map(e => 0.00);\n\nfor (let i = 0; i < data.length; i++) {\n  for (let j = 0; j < sma.length; j++) {\n    sums[j] += parseFloat(data[i][sma[j]]);\n    if (i - window >= 0) sums[j] -= parseFloat(data[i - window][sma[j]]);\n\n    data[i]['sma' + sma[j]] = sums[j] / Math.min(window, i + 1);\n  }\n}\n",
+    "812": "/**\n  params:\n    - data\n    - window\n    - name: size\n      label: Size\n      value:\n        - control: range\n          value: 20\n          min: 1\n          max: 100\n**/\n\nif (!Array.isArray(window)) window = window ? [ window ] : [];\n\nvar columns = window.map(column => data.map(e => e[column]));\n\ndata = data.map((row, i) => {\n  for (var idx = 0; idx < columns.length; idx++) {\n    var column = columns[idx];\n    row['window' + window[idx]] = (new Array(...column)).splice(i - size, size);\n  }\n  return row;\n});\n\ndata = data.splice(size);\n",
+    "813": "/**\n  params:\n    - data\n    - name: window\n      label: Window\n    - name: prediction\n      label: Prediction\n    - name: epochs\n      label: Epochs\n      value:\n        - control: range\n          value: 1\n          min: 1\n          max: 20\n    - name: trainingsize\n      label: Training Size\n      value:\n        - control: range\n          value: 98\n          min: 70\n          max: 100\n  output:\n    - data\n    - model\n    - stats\n  cache: true\n**/\n\nif (!prediction || !window) throw('Prediction and Window parameters are required.');\n\nlet inputs = data.map(e => e[window]);\nlet outputs = data.map(e => parseFloat(e[prediction]));\n\nlet windowsize = data[0][window].length;\nlet learningrate = 0.01;\nlet hiddenlayers = 4;\n\nasync function trainModel(X, Y, window_size, n_epochs, learning_rate, n_layers, callback) {\n  const input_layer_shape  = window_size;\n  const input_layer_neurons = 100;\n\n  const rnn_input_layer_features = 10;\n  const rnn_input_layer_timesteps = input_layer_neurons / rnn_input_layer_features;\n\n  const rnn_input_shape  = [rnn_input_layer_features, rnn_input_layer_timesteps];\n  const rnn_output_neurons = 20;\n\n  const rnn_batch_size = window_size;\n\n  const output_layer_shape = rnn_output_neurons;\n  const output_layer_neurons = 1;\n\n  const model = tf.sequential();\n\n  const xs = tf.tensor2d(X, [X.length, X[0].length]);\n  const ys = tf.tensor2d(Y, [Y.length, 1]).reshape([Y.length, 1]);\n\n  model.add(tf.layers.dense({units: input_layer_neurons, inputShape: [input_layer_shape]}));\n  model.add(tf.layers.reshape({targetShape: rnn_input_shape}));\n\n  let lstm_cells = [];\n  for (let index = 0; index < n_layers; index++) {\n       lstm_cells.push(tf.layers.lstmCell({units: rnn_output_neurons}));\n  }\n\n  model.add(tf.layers.rnn({\n    cell: lstm_cells,\n    inputShape: rnn_input_shape,\n    returnSequences: false\n  }));\n\n  model.add(tf.layers.dense({units: output_layer_neurons, inputShape: [output_layer_shape]}));\n\n  model.compile({\n    optimizer: tf.train.adam(learning_rate),\n    loss: 'meanSquaredError'\n  });\n\n  const stats = await model.fit(xs, ys,\n    { batchSize: rnn_batch_size, epochs: n_epochs, callbacks: {\n      onEpochEnd: async (epoch, log) => {\n        callback(epoch, log);\n      }\n    }\n  });\n\n  return { model: model, stats: stats };\n}\n\ninputs = inputs.slice(0, Math.floor(trainingsize / 100 * inputs.length));\noutputs = outputs.slice(0, Math.floor(trainingsize / 100 * outputs.length));\n\nlet callback = function(epoch, log) {\n  /* (epoch , log.loss) */\n};\n\ninputs = inputs.map((input, i) => {\n  const min = Math.min(...input);\n  const max = Math.max(...input);\n  input = input.map(e => (e - min) / (max - min));\n  outputs[i] = (outputs[i] - min) / (max - min);\n\n  return input;\n});\n\nvar results = await trainModel(inputs, outputs, windowsize, epochs, learningrate, hiddenlayers, callback);\nstats = results.stats;\n\nconst modelpath = 'localstorage://timeseriesmodel';\nawait results.model.save(modelpath);\n\nvar model = {};\nfor (let i = 0; i < localStorage.length; i++) {\n  var key = localStorage.key(i);\n  if (key.includes('timeseriesmodel/')) model[key] = localStorage.getItem(key);\n}\n",
+    "814": "/**\n  params:\n    - data\n    - model\n    - window\n    - name: predictions\n      label: Predictions\n      value:\n        - control: range\n          value: 0\n          min: 0\n          max: 100\n  cache: true\n**/\n\nif (!Array.isArray(window)) window = [ window ];\nif (!model) throw('Prediction requires previous step to train a model');\n\nfor (var key in model) {\n  localStorage.setItem(key, model[key]);\n}\n\nconst modelpath = 'localstorage://timeseriesmodel';\n\nmodel = await tf.loadLayersModel(modelpath);\n\nfunction normalize(win) {\n    const min = Math.min(...win);\n    const max = Math.max(...win);\n    return win.map(e => (e - min) / (max - min));\n};\n\nvar newData = [];\n\nfor (var winidx = 0; winidx < window.length; winidx ++) {\n  var winsrc = window[winidx];\n\n  const predictedResults = model.predict(\n    tf.tensor2d(\n      data.map(e => normalize(e[winsrc])),\n      [ data.length, data[0][winsrc].length ]\n    )\n  );\n\n  const results = Array.from(await predictedResults.dataSync());\n\n  var min = 0;\n  var max = 0;\n  data = data.map((e, i) => {\n    const win = e[winsrc];\n    min = Math.min(...win);\n    max = Math.max(...win);\n    \n    var pred = {}\n    pred['prediction' + winsrc] = (results[i] * (max - min)) + min;\n\n    return Object.assign(e, pred);\n  });\n\n  var futureWindow = normalize(data[data.length - 1][winsrc]);\n  futureWindow.splice(0, 1);\n  futureWindow.push(results[results.length - 1]);\n\n  for (var idx = 0; idx < predictions; idx++) {\n    var futurePrediction = model.predict(tf.tensor2d([ normalize(futureWindow) ], [ 1, futureWindow.length ]));\n    var futureResults = Array.from(await futurePrediction.dataSync());\n\n    const denormalized = (futureResults[0] * (max - min)) + min;\n    var futureRow = Object.fromEntries(Object.keys(data[data.length - 1]).map(e => [e, null]));\n\n    if (newData.length <= idx) {\n      var pred = { }\n      pred[winsrc] = futureWindow;\n      pred['prediction' + winsrc] = denormalized;\n\n      newData.push(Object.assign(futureRow, pred));\n    }\n    else {\n      newData[idx][winsrc] = futureWindow;\n      newData[idx]['prediction' + winsrc] = denormalized;\n    }\n\n    futureWindow.splice(0, 1);\n    futureWindow.push(futureResults[0]);\n\n    // adjust min/max window to allow for further into the future predictions\n    if (max < denormalized) {\n      min = min + (denormalized - max);\n      max = denormalized;\n    }\n    if (min > denormalized) {\n      max = max - (min - denormalized);\n      min = denormalized;\n    }\n  }\n}\n\nfor (var idx = 0; idx < newData.length; idx++) {\n  data.push(newData[idx]);\n}",
+    "815": "/**\n  params:\n    - data\n    - name: field\n      label: Field\n    - name: start\n      label: Start\n      value:\n        - control: 'textbox'\n          value: 1\n    - name: increment\n      label: Increment\n      value:\n        - control: 'textbox'\n          value: 1\n    - name: increment\n      label: Increment\n      value:\n        - control: 'textbox'\n          value: 1\n    - name: replace\n      label: Replace\n      value:\n        - control: select\n          value: always\n          values:\n            - { name: always, label: 'Always' }\n            - { name: nulls, label: 'Nulls' }\n**/\n\ncurrent = start ? parseInt(start) : null;\nincrement = increment ? parseInt(increment) : (data[1][field] - data[0][field]);\nfield = field ? field : 'id';\n\nvar last = 0;\nfor (var idx = 0; idx < data.length; idx++) {\n  if (replace === 'always' || data[idx][field] === null) {\n    if (current === null) current = last + increment;\n    data[idx][field] = current;\n    current += increment;\n  }\n\n  last = data[idx][field];\n}\n",
+    "909": "/**\n  input: []\n  params:\n    - name: file\n      label: 'File'\n      value:\n        - control: 'fileload'\n          links:\n            - name: 'url'\n              label: 'Insert link'\n            - name: 'file'\n              label: 'Load file'\n          selected: 'url'\n          fileExt: '.csv'\n          value: 'https://raw.githubusercontent.com/javierluraschi/datasets/datasets/aapl/data.csv'\n    - name: separator\n      label: 'Separator'\n      value:\n        - control: 'textbox'\n          value: ','\n    - name: skip\n      label: 'Skip'\n      value:\n        - control: 'textbox'\n          value: ''\n  deps: [ 'https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js' ]\n  cache: true\n**/\n\nfile = file ? file : '';\nvar type = /^hal9:|^data:/.test(file) ? 'file' : 'url';\n\nconst dsvParser = d3.dsvFormat(separator || ',');\n\nlet csv = '';\n\nif (type === 'url' && file != '') {\n  const res = await fetch(file);\n  csv = await res.text();\n} else {\n  file = atob(file.replace(/^.*;base64,/, ''));\n  csv = file;\n}\n\nif (csv) {\n  if (skip) {\n    var withsplit = csv.split('\\n');\n    withsplit.splice(0, skip);\n    csv = withsplit.join('\\n');\n  }\n  data = dsvParser.parse(csv);\n  data = data.filter(d => typeof(d) !== 'undefined')\n} else {\n  data = '';\n}\n",
+    "910": "/**\n  params:\n    - field\n    - name: expression\n      label: 'Expression'\n      value:\n        - control: 'textbox'\n          value: new Date(field)\n**/\n\nif (expression) {\n  var mapexpr = new Function('field', 'return ' + expression);\n  data = data.map(row => {\n    row[field] = mapexpr(row[field])\n    return row;\n  });\n}\n\n",
+    "911": "/**\n  params:\n    - field\n    - name: expression\n      label: 'Expression'\n      value:\n        - control: 'textbox'\n          value: field != null\n**/\n\nif (expression) {\n  var filterexp = new Function('field', 'return ' + expression);\n  data = data.filter(row => filterexp(row[field]));\n}\n",
+    "912": "/**\n  params:\n    - name: x\n      label: X\n    - name: y\n      label: Y\n    - name: type\n      label: Type\n      value:\n        - control: select\n          value: linear\n          values:\n            - name: linear\n              label: Linear    \n            - name: exponential\n              label: Exponential\n            - name: logarithmic\n              label: Logarithmic\n            - name: power\n              label: Power\n            - name: polynomial\n              label: Polynomial\n    - name: predictions\n      label: Predictions\n      value:\n        - control: range\n          value: 0\n          min: 0\n          max: 100\n  output:\n    - html\n    - data\n    - model\n  deps:\n    - https://cdnjs.cloudflare.com/ajax/libs/regression/2.0.1/regression.js\n    - 'chart-utils.js'\n    - 'https://cdn.jsdelivr.net/npm/d3@6'\n    - 'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1'\n**/\n\n// Train\n\nif (!x) {\n  var x = '_id';\n  data.map((e,i) => Object.assign(e, { '_id': i }))\n}\n\nvar pairs = data.map(r => [convert(r[x]), convert(r[y])]);\nvar model = regression[type](pairs, { order: 3, precision: 16 });\n\ndelete model.points\n\nmodel.type = type;\nmodel.predict = model.predict.toString()\n\n// Predict\n\nif (!model) throw('Prediction requires previous step to train a regression model');\n\nvar current = convert(data[data.length-1][x]);\nvar increment = data[data.length-1][x] - data[data.length-2][x];\nfor (var idx = 0; idx < predictions; idx++) {\n  current += increment;\n  var futureRow = Object.fromEntries(Object.keys(data[data.length - 1]).map(e => [e, null]));\n  futureRow[x] = current;\n  data.push(futureRow);\n}\n\nconst dataX = data.map(e => e[x]);\n\nconst paramsMap = {\n  linear: [ 'gradient', 'intercept', 'na' ],\n  exponential: [ 'coeffA', 'coeffB', 'na'  ],\n  logarithmic: [ 'coeffA', 'coeffB', 'na'  ],\n  power: [ 'coeffA', 'coeffB', 'na'  ],\n  polynomial: [ 'na', 'na', 'coefficients'  ]\n}\nconst params = paramsMap[model.type];\n\nvar paramA = model.equation[0];\nvar paramB = model.equation[1];\nvar paramC = model.equation;\n\nconst predict = new Function(\n    'round',\n    'options',\n    params[0],\n    params[1],\n    params[2],\n    'return ' + model.predict)(\n  regression._round,\n  {\n    precision: 6\n  },\n  paramA,\n  paramB,\n  paramC\n);\n\ndata = data.map((e, i) => {\n  e['prediction(' + y + ')'] = predict(e[x])[1];\n  return e;\n});\n\n// Chart\n\nif (y && !Array.isArray(y)) y = [y];\nif (!y) { y = [] } else { y.push('prediction(' + y + ')') };\n\nconst chartdata = x && y.length\n ? data.map(v => {\n     const value = { x: convert(v[x]) };\n     y.map((yv, i) => {\n       value[`y${i}`] = convert(v[yv]);\n     });\n     return value;\n   })\n : [];\n\nhtml.appendChild(Plot.plot({\n  marks: [y.map((_, i) =>\n    Plot.line(chartdata, {\n      x: x ? \"x\" : [],\n      y: `y${i}`,\n      stroke: d3.schemeTableau10[i],\n    })\n  )],\n  x: { grid: true },\n  y: {\n    grid: true,\n    tickFormat: (d) => (d > 1000 ? d3.format('~s')(d) : d),\n  },\n  width: html.clientWidth,\n  height: html.clientHeight,\n  style: {\n    background: hal9.isDark() ? \"#222\" : '',\n    color: hal9.isDark() ? \"white\" : ''\n  },\n}));\n",
+    "913": "/**\n  params:\n    - field\n    - name: expression\n      label: 'Expression'\n      value:\n        - control: 'textbox'\n          value: field != null\n**/\n\nif (expression) {\n  var filterexp = new Function('field', 'return ' + expression);\n  data = data.filter(row => filterexp(row[field]));\n}\n",
+    "914": "/**\n  params:\n    - name: x\n      label: Y\n    - name: y\n      label: Y\n    - name: type\n      label: Type\n      value:\n        - control: select\n          value: linear\n          values:\n            - name: linear\n              label: Linear    \n            - name: exponential\n              label: Exponential\n            - name: logarithmic\n              label: Logarithmic\n            - name: power\n              label: Power\n            - name: sigmoid\n              label: Sigmoid\n            - name: polynomial\n              label: Polynomial\n    - name: predictions\n      label: Predictions\n      value:\n        - control: range\n          value: 0\n          min: 0\n          max: 100\n  output:\n    - data\n    - html\n  deps:\n    - 'chart-utils.js'\n    - 'https://cdn.jsdelivr.net/npm/d3@6'\n    - 'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1'\n**/\n\ntf.setBackend('cpu');\n\nif (!x) {\n  var x = '_id';\n  data.map((e,i) => Object.assign(e, { '_id': i }))\n}\n\n// Train\n\nconst trainX = tf.tensor1d(data.map(e => convert(e[x])));\nconst trainY = tf.tensor1d(data.map(e => convert(e[y])));\n\nconst [maxX, minX] = [trainX.max(), trainX.min()];\nconst normX = trainX.sub(minX).div(maxX.sub(minX));\nconst [maxY, minY] = [trainY.max(), trainY.min()];\nconst normY = trainY.sub(minY).div(maxY.sub(minY));\n\nconst learningRate = 0.3;\nconst epochs = 100;\n\nvar regressions = {\n  linear: () => {\n    const m = tf.variable(tf.scalar(Math.random()));\n    const b = tf.variable(tf.scalar(Math.random()));\n    return (x) => m.mul(x).add(b);\n  },\n  exponential: () => {\n    const a = tf.variable(tf.scalar(Math.random()));\n    const b = tf.variable(tf.scalar(Math.random()));\n    return (x) => b.mul(x).exp().mul(a);\n  },\n  logarithmic: () => {\n    const a = tf.variable(tf.scalar(Math.random()));\n    const b = tf.variable(tf.scalar(Math.random()));\n    return (x) => x.add(a).log().mul(b);\n  },\n  power: () => {\n    const a = tf.variable(tf.scalar(Math.random()));\n    const b = tf.variable(tf.scalar(Math.random()));\n    return (x) => x.pow(b).mul(a);\n  },\n  sigmoid: () => {\n    const a = tf.variable(tf.scalar(Math.random()));\n    const b = tf.variable(tf.scalar(Math.random()));\n    const c = tf.variable(tf.scalar(Math.random()));\n    const d = tf.variable(tf.scalar(Math.random()));\n    return (x) => x.mul(a).add(b).sigmoid().mul(c).add(d);\n  },\n  polynomial: () => {\n    const a = tf.variable(tf.scalar(Math.random()));\n    const b = tf.variable(tf.scalar(Math.random()));\n    const c = tf.variable(tf.scalar(Math.random()));\n    return (x) => x.sqrt().mul(a).add(b.mul(x)).add(c);\n  }\n}\n\nconst predict = regressions[type]();\n\nconst loss = (pred, actual) => pred.sub(actual).square().mean();\nconst optimizer = tf.train.adam(learningRate);\n\nfor (let idx = 0; idx < epochs; idx++) {\n  tf.tidy(() => {\n    optimizer.minimize(function() { \n      const predsYs = predict(normX); \n      stepLoss = loss(predsYs, normY);   \n      return stepLoss; \n    }); \n  });\n}\n\n// Predict\n\nvar current = convert(data[data.length-1][x]);\nvar increment = data[data.length-1][x] - data[data.length-2][x];\nvar predTotal = Math.round(1.0 * data.length * predictions / 100);\nfor (var idx = 0; idx < predTotal; idx++) {\n  current += increment;\n  var futureRow = Object.fromEntries(Object.keys(data[data.length - 1]).map(e => [e, null]));\n  futureRow[x] = current;\n  data.push(futureRow);\n}\n\nvar predsX = tf.tensor1d(data.map(e => convert(e[x])));\nvar predsNormX = predsX.sub(minX).div(maxX.sub(minX));\nvar normPreds = predict(predsNormX);\nvar preds = normPreds.mul(maxY.sub(minY)).add(minY).dataSync();\n\ndata = data.map((e, i) => {\n  e['prediction(' + y + ')'] = preds[i];\n  return e;\n});\n\n// Chart\n\nif (y && !Array.isArray(y)) y = [y];\nif (!y) { y = [] } else { y.push('prediction(' + y + ')') };\n\nconst chartdata = x && y.length\n ? data.map(v => {\n     const value = { x: convert(v[x]) };\n     y.map((yv, i) => {\n       value[`y${i}`] = convert(v[yv]);\n     });\n     return value;\n   })\n : [];\n\nhtml.appendChild(Plot.plot({\n  marks: [\n    Plot.line(chartdata, {\n      x: x ? \"x\" : [],\n      y: `y1`,\n      stroke: d3.schemeTableau10[1],\n      strokeWidth: 3,\n      strokeDasharray: \"2,3\"\n    }),\n    Plot.line(chartdata, {\n      x: x ? \"x\" : [],\n      y: `y0`,\n      stroke: d3.schemeTableau10[0],\n      strokeWidth: 3,\n    })\n  ],\n  x: { grid: true },\n  y: {\n    grid: true,\n    tickFormat: (d) => (d > 1000 ? d3.format('~s')(d) : d),\n  },\n  width: html.clientWidth,\n  height: html.clientHeight,\n  style: {\n    background: hal9.isDark() ? \"#222\" : '',\n    color: hal9.isDark() ? \"white\" : ''\n  },\n}));\n",
+    "915": "/**\n  params:\n    - field\n    - name: expression\n      label: 'Expression'\n      value:\n        - control: 'textbox'\n          value: field != null\n**/\n\nif (expression) {\n  var filterexp = new Function('field', 'return ' + expression);\n  data = data.filter(row => filterexp(row[field]));\n}\n"
+  },
+  "state": {
+    "steps": {
+      "909": {
+        "cache": {
+          "hashes": {
+            "inputs": "99914b932bd37a50b983c5e7c90ae93b",
+            "script": "9bf0c6fbd203bbf44cf10133466714db",
+            "params": "3a1aaf0ed87a7a7c3da5ad97560dfff8"
+          },
+          "result": {
+            "data": [
+              {
+                "location": "United States",
+                "date": "2020-12-20",
+                "vaccine": "Pfizer/BioNTech",
+                "source_url": "https://www.cdc.gov/coronavirus/2019-ncov/vaccines/index.html",
+                "total_vaccinations": "556208",
+                "people_vaccinated": "556208",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2020-12-21",
+                "vaccine": "Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "614117",
+                "people_vaccinated": "614117",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2020-12-23",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "1008025",
+                "people_vaccinated": "1008025",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2020-12-26",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "1944585",
+                "people_vaccinated": "1944585",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2020-12-28",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "2127143",
+                "people_vaccinated": "2127143",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2020-12-30",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "2794588",
+                "people_vaccinated": "2794588",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-02",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "4225756",
+                "people_vaccinated": "4225756",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-04",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "4563260",
+                "people_vaccinated": "4563260",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-05",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "4836469",
+                "people_vaccinated": "4836469",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-06",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "5306797",
+                "people_vaccinated": "5306797",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-07",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "5919418",
+                "people_vaccinated": "5919418",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-08",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "6688231",
+                "people_vaccinated": "6688231",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-11",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "8987322",
+                "people_vaccinated": "8987322",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-12",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "9327138",
+                "people_vaccinated": "9327138",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-13",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "10278462",
+                "people_vaccinated": "",
+                "people_fully_vaccinated": ""
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-14",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "11148991",
+                "people_vaccinated": "9690757",
+                "people_fully_vaccinated": "1342086"
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-15",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "12279180",
+                "people_vaccinated": "10595866",
+                "people_fully_vaccinated": "1610524"
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-19",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "15707588",
+                "people_vaccinated": "13595803",
+                "people_fully_vaccinated": "2023124"
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-20",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "16525281",
+                "people_vaccinated": "14270441",
+                "people_fully_vaccinated": "2161419"
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-21",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "17546374",
+                "people_vaccinated": "15053257",
+                "people_fully_vaccinated": "2394961"
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-22",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "19107959",
+                "people_vaccinated": "16243093",
+                "people_fully_vaccinated": "2756953"
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-23",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "20537990",
+                "people_vaccinated": "17390345",
+                "people_fully_vaccinated": "3027865"
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-24",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "21848655",
+                "people_vaccinated": "18502131",
+                "people_fully_vaccinated": "3216836"
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-25",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "22734243",
+                "people_vaccinated": "19252279",
+                "people_fully_vaccinated": "3346390"
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-26",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "23540994",
+                "people_vaccinated": "19902237",
+                "people_fully_vaccinated": "3481921"
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-27",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "24652634",
+                "people_vaccinated": "20687970",
+                "people_fully_vaccinated": "3801053"
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-28",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "26193682",
+                "people_vaccinated": "21698606",
+                "people_fully_vaccinated": "4263056"
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-29",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "27884661",
+                "people_vaccinated": "22858318",
+                "people_fully_vaccinated": "4780888"
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-30",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "29577902",
+                "people_vaccinated": "24064165",
+                "people_fully_vaccinated": "5259693"
+              },
+              {
+                "location": "United States",
+                "date": "2021-01-31",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "31123299",
+                "people_vaccinated": "25201143",
+                "people_fully_vaccinated": "5657142"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-01",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "32222402",
+                "people_vaccinated": "26023153",
+                "people_fully_vaccinated": "5927847"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-02",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "32780860",
+                "people_vaccinated": "26440836",
+                "people_fully_vaccinated": "6064792"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-03",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "33878254",
+                "people_vaccinated": "27154956",
+                "people_fully_vaccinated": "6436931"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-04",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "35203710",
+                "people_vaccinated": "27905197",
+                "people_fully_vaccinated": "6926050"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-05",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "36819212",
+                "people_vaccinated": "28909497",
+                "people_fully_vaccinated": "7503864"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-06",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "39037964",
+                "people_vaccinated": "30250964",
+                "people_fully_vaccinated": "8317180"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-07",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "41210937",
+                "people_vaccinated": "31579100",
+                "people_fully_vaccinated": "9147185"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-08",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "42417617",
+                "people_vaccinated": "32340146",
+                "people_fully_vaccinated": "9518015"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-09",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "43206190",
+                "people_vaccinated": "32867213",
+                "people_fully_vaccinated": "9840429"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-10",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "44769970",
+                "people_vaccinated": "33783384",
+                "people_fully_vaccinated": "10469514"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-11",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "46390270",
+                "people_vaccinated": "34723964",
+                "people_fully_vaccinated": "11188782"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-12",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "48410558",
+                "people_vaccinated": "35834855",
+                "people_fully_vaccinated": "12085830"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-13",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "50641884",
+                "people_vaccinated": "37056122",
+                "people_fully_vaccinated": "13082172"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-14",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "52884356",
+                "people_vaccinated": "38292270",
+                "people_fully_vaccinated": "14077440"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-16",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "55220364",
+                "people_vaccinated": "39670551",
+                "people_fully_vaccinated": "15015434"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-17",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "56281827",
+                "people_vaccinated": "40268009",
+                "people_fully_vaccinated": "15471536"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-18",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "57737767",
+                "people_vaccinated": "41021049",
+                "people_fully_vaccinated": "16162358"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-19",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "59585043",
+                "people_vaccinated": "41977401",
+                "people_fully_vaccinated": "17039118"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-20",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "61289500",
+                "people_vaccinated": "42809595",
+                "people_fully_vaccinated": "17895667"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-21",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "63090634",
+                "people_vaccinated": "43628092",
+                "people_fully_vaccinated": "18865319"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-22",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "64177474",
+                "people_vaccinated": "44138118",
+                "people_fully_vaccinated": "19438495"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-23",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "65032083",
+                "people_vaccinated": "44544969",
+                "people_fully_vaccinated": "19882544"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-24",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "66464947",
+                "people_vaccinated": "45237143",
+                "people_fully_vaccinated": "20607261"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-25",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "68274117",
+                "people_vaccinated": "46074392",
+                "people_fully_vaccinated": "21555117"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-26",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "70454064",
+                "people_vaccinated": "47184199",
+                "people_fully_vaccinated": "22613359"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-27",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "72806180",
+                "people_vaccinated": "48435536",
+                "people_fully_vaccinated": "23698627"
+              },
+              {
+                "location": "United States",
+                "date": "2021-02-28",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "75236003",
+                "people_vaccinated": "49772180",
+                "people_fully_vaccinated": "24779920"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-01",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "76899987",
+                "people_vaccinated": "50732997",
+                "people_fully_vaccinated": "25466405"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-02",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "78631601",
+                "people_vaccinated": "51755447",
+                "people_fully_vaccinated": "26162122"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-03",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "80540474",
+                "people_vaccinated": "52855579",
+                "people_fully_vaccinated": "26957804"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-04",
+                "vaccine": "Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "82572848",
+                "people_vaccinated": "54035670",
+                "people_fully_vaccinated": "27795980"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-05",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "85008094",
+                "people_vaccinated": "55547697",
+                "people_fully_vaccinated": "28701201"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-06",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "87912323",
+                "people_vaccinated": "57358849",
+                "people_fully_vaccinated": "29776160"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-07",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "90351750",
+                "people_vaccinated": "58873710",
+                "people_fully_vaccinated": "30686881"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-08",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "92089852",
+                "people_vaccinated": "60005231",
+                "people_fully_vaccinated": "31493040"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-09",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "93692598",
+                "people_vaccinated": "61088527",
+                "people_fully_vaccinated": "32102061"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-10",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "95721290",
+                "people_vaccinated": "62451150",
+                "people_fully_vaccinated": "32904161"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-11",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "98203893",
+                "people_vaccinated": "64071674",
+                "people_fully_vaccinated": "33863127"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-12",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "101128005",
+                "people_vaccinated": "65965305",
+                "people_fully_vaccinated": "35000159"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-13",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "105703501",
+                "people_vaccinated": "68884011",
+                "people_fully_vaccinated": "36929777"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-14",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "107060274",
+                "people_vaccinated": "69784210",
+                "people_fully_vaccinated": "37459269"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-15",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "109081860",
+                "people_vaccinated": "71054445",
+                "people_fully_vaccinated": "38335432"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-16",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "110737856",
+                "people_vaccinated": "72135616",
+                "people_fully_vaccinated": "39042345"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-17",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "113037627",
+                "people_vaccinated": "73669956",
+                "people_fully_vaccinated": "39989196"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-18",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "115730008",
+                "people_vaccinated": "75495716",
+                "people_fully_vaccinated": "40981464"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-19",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "118313818",
+                "people_vaccinated": "77230061",
+                "people_fully_vaccinated": "41934629"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-20",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "121441497",
+                "people_vaccinated": "79367225",
+                "people_fully_vaccinated": "43036818"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-21",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "124481412",
+                "people_vaccinated": "81415769",
+                "people_fully_vaccinated": "44141228"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-22",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "126509736",
+                "people_vaccinated": "82772416",
+                "people_fully_vaccinated": "44910946"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-23",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "128217029",
+                "people_vaccinated": "83930495",
+                "people_fully_vaccinated": "45533962"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-24",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "130473853",
+                "people_vaccinated": "85472166",
+                "people_fully_vaccinated": "46365515"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-25",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "133305295",
+                "people_vaccinated": "87343622",
+                "people_fully_vaccinated": "47419832"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-26",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "136684688",
+                "people_vaccinated": "89559225",
+                "people_fully_vaccinated": "48695172"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-27",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "140180735",
+                "people_vaccinated": "91707729",
+                "people_fully_vaccinated": "50141769"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-28",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "143462691",
+                "people_vaccinated": "93631163",
+                "people_fully_vaccinated": "51593564"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-29",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "145812835",
+                "people_vaccinated": "95015762",
+                "people_fully_vaccinated": "52614231"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-30",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "147602345",
+                "people_vaccinated": "96044046",
+                "people_fully_vaccinated": "53423486"
+              },
+              {
+                "location": "United States",
+                "date": "2021-03-31",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "150273292",
+                "people_vaccinated": "97593290",
+                "people_fully_vaccinated": "54607041"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-01",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "153631404",
+                "people_vaccinated": "99565311",
+                "people_fully_vaccinated": "56089614"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-02",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "157606463",
+                "people_vaccinated": "101804762",
+                "people_fully_vaccinated": "57984785"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-03",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "161688422",
+                "people_vaccinated": "104213478",
+                "people_fully_vaccinated": "59858146"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-04",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "165053746",
+                "people_vaccinated": "106214924",
+                "people_fully_vaccinated": "61416536"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-05",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "167187795",
+                "people_vaccinated": "107515428",
+                "people_fully_vaccinated": "62392065"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-06",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "168592075",
+                "people_vaccinated": "108301234",
+                "people_fully_vaccinated": "63016976"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-07",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "171476655",
+                "people_vaccinated": "109995734",
+                "people_fully_vaccinated": "64422618"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-08",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "174879716",
+                "people_vaccinated": "112046611",
+                "people_fully_vaccinated": "66203123"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-09",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "178837781",
+                "people_vaccinated": "114436039",
+                "people_fully_vaccinated": "68202458"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-10",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "183467709",
+                "people_vaccinated": "117142879",
+                "people_fully_vaccinated": "70692645"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-11",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "187047131",
+                "people_vaccinated": "119242902",
+                "people_fully_vaccinated": "72630892"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-12",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "189692045",
+                "people_vaccinated": "120848490",
+                "people_fully_vaccinated": "74066085"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-13",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "192282781",
+                "people_vaccinated": "122295530",
+                "people_fully_vaccinated": "75322283"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-14",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "194791836",
+                "people_vaccinated": "123917385",
+                "people_fully_vaccinated": "76681252"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-15",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "198317040",
+                "people_vaccinated": "125822868",
+                "people_fully_vaccinated": "78498290"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-16",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "202282923",
+                "people_vaccinated": "127743096",
+                "people_fully_vaccinated": "80609818"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-17",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "205871913",
+                "people_vaccinated": "129494179",
+                "people_fully_vaccinated": "82471151"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-18",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "209406814",
+                "people_vaccinated": "131247546",
+                "people_fully_vaccinated": "84263408"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-19",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "211581309",
+                "people_vaccinated": "132321628",
+                "people_fully_vaccinated": "85365180"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-20",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "213388238",
+                "people_vaccinated": "133266995",
+                "people_fully_vaccinated": "86223506"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-21",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "215951909",
+                "people_vaccinated": "134445595",
+                "people_fully_vaccinated": "87592646"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-22",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "218947643",
+                "people_vaccinated": "135791031",
+                "people_fully_vaccinated": "89245776"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-23",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "222322230",
+                "people_vaccinated": "137234889",
+                "people_fully_vaccinated": "91175995"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-24",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "225640460",
+                "people_vaccinated": "138644724",
+                "people_fully_vaccinated": "93078040"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-25",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "228661408",
+                "people_vaccinated": "139978480",
+                "people_fully_vaccinated": "94772329"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-26",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "230768454",
+                "people_vaccinated": "140969663",
+                "people_fully_vaccinated": "95888088"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-27",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "232407669",
+                "people_vaccinated": "141751857",
+                "people_fully_vaccinated": "96747454"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-28",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "234639414",
+                "people_vaccinated": "142692987",
+                "people_fully_vaccinated": "98044421"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-29",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "237360493",
+                "people_vaccinated": "143793565",
+                "people_fully_vaccinated": "99668945"
+              },
+              {
+                "location": "United States",
+                "date": "2021-04-30",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "240159677",
+                "people_vaccinated": "144894586",
+                "people_fully_vaccinated": "101407318"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-01",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "243463471",
+                "people_vaccinated": "146239208",
+                "people_fully_vaccinated": "103422555"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-02",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "245591469",
+                "people_vaccinated": "147047012",
+                "people_fully_vaccinated": "104774652"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-03",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "246780203",
+                "people_vaccinated": "147517734",
+                "people_fully_vaccinated": "105523520"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-04",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "247769049",
+                "people_vaccinated": "147894671",
+                "people_fully_vaccinated": "106168588"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-05",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "249566820",
+                "people_vaccinated": "148562891",
+                "people_fully_vaccinated": "107346533"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-06",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "251973752",
+                "people_vaccinated": "149462265",
+                "people_fully_vaccinated": "108926627"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-07",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "254779333",
+                "people_vaccinated": "150416559",
+                "people_fully_vaccinated": "110874920"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-08",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "257347205",
+                "people_vaccinated": "151315505",
+                "people_fully_vaccinated": "112626771"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-09",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "259716989",
+                "people_vaccinated": "152116936",
+                "people_fully_vaccinated": "114258244"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-10",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "261599381",
+                "people_vaccinated": "152819904",
+                "people_fully_vaccinated": "115530780"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-11",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "263132561",
+                "people_vaccinated": "153448316",
+                "people_fully_vaccinated": "116576359"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-12",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "264680844",
+                "people_vaccinated": "153986312",
+                "people_fully_vaccinated": "117647439"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-13",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "266596486",
+                "people_vaccinated": "154624231",
+                "people_fully_vaccinated": "118987308"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-14",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "268438666",
+                "people_vaccinated": "155251852",
+                "people_fully_vaccinated": "120258637"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-15",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "270832342",
+                "people_vaccinated": "156217367",
+                "people_fully_vaccinated": "121768268"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-16",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "272925411",
+                "people_vaccinated": "157132234",
+                "people_fully_vaccinated": "122999721"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-17",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "274411901",
+                "people_vaccinated": "157827208",
+                "people_fully_vaccinated": "123828224"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-18",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "275535207",
+                "people_vaccinated": "158365411",
+                "people_fully_vaccinated": "124455693"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-19",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "277290173",
+                "people_vaccinated": "159174963",
+                "people_fully_vaccinated": "125453423"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-20",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "279397250",
+                "people_vaccinated": "160177820",
+                "people_fully_vaccinated": "126605166"
+              },
+              {
+                "location": "United States",
+                "date": "2021-05-21",
+                "vaccine": "Johnson&Johnson, Moderna, Pfizer/BioNTech",
+                "source_url": "https://covid.cdc.gov/covid-data-tracker/#vaccinations",
+                "total_vaccinations": "281595351",
+                "people_vaccinated": "161278336",
+                "people_fully_vaccinated": "127778250"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

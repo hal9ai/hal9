@@ -1,0 +1,112 @@
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: Helvetica Neue, sans-serif;
+  font-size: 14px;
+}
+
+main {
+  width: 100%;
+  padding: 1em 4em;
+}
+
+.d3-chart {
+  width: 700px;
+  height: 400px;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.d3-axis path.domain {
+  fill: white;
+}
+
+.d3-line {
+  fill: none;
+}
+
+.d3-axis-gridline {
+  stroke: #666;
+  shape-rendering: crispEdges;
+  stroke-width: 0.2px;
+}
+
+.d3-error-bar line,
+.d3-error-bar rect {
+  stroke-width: 1px;
+  stroke: black;
+}
+
+.d3-treemap text {
+  font-size: 12px;
+  fill: white;
+}
+
+.d3-sankey-links path {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .1;
+}
+.d3-sankey-links path:hover {
+  stroke-opacity: .4;
+}
+
+/* Docs styles */
+.docs {
+  max-width: 600px;
+  margin-top: 5px;
+  line-height: 1.3em;
+}
+.code {
+  display: inline-block;
+  font-family: monospace;
+  background-color: #eee;
+  border-radius: 2px;
+  padding: 0 4px;
+}
+div.code {
+  margin: 6px 0 12px 0;
+  padding-top: 4px;
+  padding-bottom: 6px;
+}
+
+/* Demo styles */
+.params-line {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.params-line div {
+  margin-right: 10px;
+}
+.params-line div:first-child {
+  width: 90px;
+}
+.params-line input {
+  width: 100px;
+  margin-right: 20px;
+  border: 1px solid #999;
+  border-radius: 2px;
+  outline: none;
+}
+.params-line input.--selected {
+  border: 2px solid skyblue;
+}
+.update-btn {
+  padding: 4px 6px;
+  margin-top: 10px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.update-btn:hover {
+  border-color: #999;
+}
