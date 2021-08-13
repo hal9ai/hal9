@@ -12,5 +12,7 @@
 **/
 
 if (expression && column) {
-  data = data.derive({column: data => expression});
+    var mapExp = new Function('data', 'return '+ expression);
+    data = data.derive({column: aq.escape(data => mapExp(data))});
+    data = data.rename({column : column});
 }
