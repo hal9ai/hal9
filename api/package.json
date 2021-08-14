@@ -1,7 +1,7 @@
 {
-  "name": "hal9ai",
-  "version": "0.0.1",
-  "description": "Hal9.js: Composable machine-learning pipelines",
+  "name": "hal9",
+  "version": "0.0.2",
+  "description": "Hal9: Composable machine-learning pipelines",
   "main": "index.js",
   "repository": "https://github.com/hal9ai/hal9ai",
   "author": "Hal9 Inc",
@@ -12,8 +12,6 @@
     "watch": "webpack --watch"
   },
   "dependencies": {
-    "@analytics/google-analytics": "^0.5.2",
-    "analytics": "^0.7.5",
     "raw-loader": "^4.0.2"
   },
   "devDependencies": {
