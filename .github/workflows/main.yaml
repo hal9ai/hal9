@@ -22,6 +22,12 @@ jobs:
         working-directory: api
       - run: yarn build
         working-directory: api
+      - run: |
+          npm set init.author.name "Javier Luraschi"
+          npm set init.author.email "javier@hal9.ai"
+          npm adduser
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
