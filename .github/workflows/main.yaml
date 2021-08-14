@@ -15,19 +15,13 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '15.x'
-          registry-url: 'https://npm.pkg.github.com'
+          registry-url: 'https://registry.npmjs.org'
           scope: '@hal9ai'
       - run: yarn install
       - run: yarn install
         working-directory: api
       - run: yarn build
         working-directory: api
-      - run: |
-          npm set init.author.name "Javier Luraschi"
-          npm set init.author.email "javier@hal9.ai"
-          npm adduser
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
