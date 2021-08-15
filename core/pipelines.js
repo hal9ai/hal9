@@ -293,7 +293,7 @@ export const fetchScripts = async (steps /*: steps */) => {
     return (async (step) => {
       if (step.url && !fetchedScripts[step.url]) {
         const fullUrl = step.url.startsWith('http://') || step.url.startsWith('https://');
-        const url = fullUrl ? step.url : 'https://raw.githubusercontent.com/hal9ai/hal9ai/main/' + step.url;
+        const url = fullUrl ? step.url : 'https://raw.githubusercontent.com/hal9ai/hal9ai/main/scripts/' + step.url;
         const response = await fetch(url);
         fetchedScripts[step.url] = await response.text();
       }
