@@ -20,4 +20,4 @@ Here is a quick example that showcases a data pipeline to read a CSV and plot a 
 </html>
 ```
 
-![](examples/csvplot.png)
+![](https://github.com/hal9ai/hal9ai/raw/main/api/examples/csvplot.png)
