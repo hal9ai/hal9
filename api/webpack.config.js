@@ -1,11 +1,16 @@
 const path = require('path');
 const package = require('./package.json');
 const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    'hal9': './src/index.js',
+    'hal9.min': './src/index.js',
+  },
+  devtool: "source-map",
   output: {
-    filename: 'hal9.js',
+    filename: '[name].js',
     library: {
       name: 'hal9',
       type: 'umd2',
@@ -19,7 +24,7 @@ module.exports = {
       VERSION: JSON.stringify(package.version),
       HAL9ENV: JSON.stringify(process.env.HAL9_ENV ? process.env.HAL9_ENV : 'dev'),
       HAL9HOST: JSON.stringify('api')
-    })
+    }),
   ],
   module: {
     rules: [
@@ -39,4 +44,10 @@ module.exports = {
       },
     ],
   },
+  optimization: {
+    minimize: true,
+    minimizer: [new UglifyJsPlugin({
+      include: /\.min\.js$/
+    })]
+  }
 };

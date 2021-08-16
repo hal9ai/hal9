@@ -75,8 +75,6 @@ import * as executors from './executors/executors';
 import * as store from './pipelinestore.js';
 import * as api from './api.js';
 
-import * as tf from '@tensorflow/tfjs';
-// import initSqlJs from 'sql.js/dist/sql-wasm-debug.js';
 var gloablDeps = {};
 
 /*::
@@ -295,7 +293,7 @@ export const fetchScripts = async (steps /*: steps */) => {
     return (async (step) => {
       if (step.url && !fetchedScripts[step.url]) {
         const fullUrl = step.url.startsWith('http://') || step.url.startsWith('https://');
-        const url = fullUrl ? step.url : 'https://raw.githubusercontent.com/hal9ai/hal9ai/main/' + step.url;
+        const url = fullUrl ? step.url : 'https://raw.githubusercontent.com/hal9ai/hal9ai/main/scripts/' + step.url;
         const response = await fetch(url);
         fetchedScripts[step.url] = await response.text();
       }
@@ -326,35 +324,7 @@ const stepGetDefinition = (pipeline, step) => {
   return step;
 }
 
-export const getGlobalDeps = async () => {
-  if (Object.keys(gloablDeps).length == 0) {
-    var options = {};
-    if (typeof(window) !== 'undefined' && window.location && window.location.protocol && window.location.protocol === 'file:') {
-      options = {
-        locateFile: file => {
-          return `https://sql.js.org/dist/${file}`;
-        }
-      }
-    };
-
-    var sql = null;
-    var db = null;
-    try {
-      // sql = await initSqlJs(options);
-      // db = new sql.Database();
-    }
-    catch {
-      console.log('Failed to initialize SQL.js');
-    }
-
-    gloablDeps = {
-      sql: sql,
-      db: db
-    }
-  }
-
-  gloablDeps.tf = tf;
-  
+export const getGlobalDeps = async () => {  
   return gloablDeps;
 }
 

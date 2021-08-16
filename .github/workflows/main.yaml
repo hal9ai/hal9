@@ -1,0 +1,28 @@
+name: CI
+   
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest 
+    permissions: 
+      contents: read
+      packages: write 
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '15.x'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@hal9ai'
+      - run: yarn install
+      - run: yarn install
+        working-directory: api
+      - run: yarn build
+        working-directory: api
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        working-directory: api
