@@ -1,7 +1,10 @@
 /**
   output: [ html ]
   params: [ x, y, z, category ]
-  deps: [ 'three.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js', 'https://threejs.org/examples/js/controls/OrbitControls.js' ]
+  deps:
+    - https://cdnjs.cloudflare.com/ajax/libs/three.js/r126/three.min.js
+    - https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js
+    - https://threejs.org/examples/js/controls/OrbitControls.js
 **/
 
 // Create an empty scene
