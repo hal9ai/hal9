@@ -1,5 +1,9 @@
 /**
   params:
+    - name: column
+      label: Column
+      value:
+        - control: 'textbox'
     - name: expression
       label: 'Expression'
       value:
@@ -7,9 +11,8 @@
           value: row.id = index
 **/
 
-if (expression) {
-  var mapexpr = new Function('row', 'index', expression + '; return row;');
-  data = data.map((row, index) => {
-    return mapexpr(row, index);
-  });
+if (expression && column) {
+    var mapExp = new Function('data', 'return '+ expression);
+    data = data.derive({column: aq.escape(data => mapExp(data))});
+    data = data.rename({column : column});
 }

@@ -7,11 +7,18 @@
           value: 50
           min: 1
           max: 100
+    - name: withReplacement
+      label: With Replacement
+      value:
+        - control: select
+          value: True
+          values:
+            - name: True
+              label: True
+            - name: False
+              label: False        
+
   cache: true
 **/
 
-sampled = [];
-for (var idx = 0; idx < data.length; idx++) {
-  if (Math.random() <= samplesize / 100.0) sampled.push(data[idx]);
-}
-data = sampled;
+data = data.sample(aq.frac(samplesize/100), {replace: withReplacement})

@@ -23,18 +23,12 @@
       value:
         - control: 'textbox'
           value: ''
-    - name: filter
-      label: Filter
-      value:
-        - control: 'textbox'
-  deps: [ 'https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js' ]
+  deps: [ "https://cdn.jsdelivr.net/npm/arquero@latest" ]
   cache: true
 **/
 
 file = file ? file : '';
 var type = /^hal9:|^data:/.test(file) ? 'file' : 'url';
-
-const dsvParser = d3.dsvFormat(separator || ',');
 
 let csv = '';
 
@@ -47,16 +41,7 @@ if (type === 'url' && file != '') {
 }
 
 if (csv) {
-  if (skip) {
-    var withsplit = csv.split('\n');
-    withsplit.splice(0, skip);
-    csv = withsplit.join('\n');
-  }
-  data = dsvParser.parse(csv);
-  data = data.filter(d => {
-    if (typeof(d) === 'undefined') return false;
-    if (filter === undefined || JSON.stringify(d).includes(filter)) return true;
-  })
+  data = aq.fromCSV(text= csv, delimiter = separator);
 } else {
   data = '';
 }

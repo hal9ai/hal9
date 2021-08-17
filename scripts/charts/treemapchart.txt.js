@@ -25,6 +25,14 @@
   ]
 **/
 
+const groupBy = (values, key) =>
+  values.reduce((res, v) => {
+    res[v[key]] = res[v[key]] || [];
+    res[v[key]].push(v);
+
+    return res;
+  }, {});
+
 const groupedData = groupBy(data, label);
 const chartData = {
   name: 'root',
