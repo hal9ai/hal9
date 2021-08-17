@@ -1,9 +1,9 @@
 {
   "name": "hal9",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license" : "MIT",
   "description": "Hal9: Composable machine-learning pipelines",
-  "main": "index.js",
+  "main": "dist/hal9.js",
   "repository": "https://github.com/hal9ai/hal9ai",
   "author": "Hal9 Inc",
   "scripts": {

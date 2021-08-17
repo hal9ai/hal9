@@ -1,6 +1,8 @@
-import * as environment from '../../core/utils/environment';
-import * as workers from '../../core/workers';
-import * as pipelines from '../../core/pipelines';
+import * as environment from '../core/utils/environment';
+import * as workers from '../core/workers';
+import * as pipelines from '../core/pipelines';
+import * as datasets from '../core/datasets';
+import clone from '../core/utils/clone';
 
 const runRemote = async (lambda, context) => {
   if (typeof(lambda) != 'function') {
@@ -49,7 +51,7 @@ const runSteps = async (steps, context) => {
   return runPipeline(pipeline, context);
 }
 
-export const run = async (pipeline, context) => {
+export async function run(pipeline, context) {
   var type = typeof(pipeline);
   if (Array.isArray(pipeline)) type = 'array';
 
@@ -62,7 +64,7 @@ export const run = async (pipeline, context) => {
 };
 
 
-export const step = (url, params, output) => {
+export function step(url, params, output) {
   return {
     url: url,
     params: params,
@@ -71,6 +73,14 @@ export const step = (url, params, output) => {
 };
 
 export default {
-  run,
-  step,
+  run: run,
+  step: step,
+  environment: environment,
+  workers: workers,
+  pipelines: pipelines,
+  datasets: datasets,
+  utils: {
+    clone: clone
+  }
 };
+
