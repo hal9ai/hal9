@@ -10,43 +10,10 @@ type func = (...args: Array<any>) => any;
 type header = { params: Array<string>, deps: Array<string> };
 */
 
-import d3v6mintxt from '../charts/vendor/d3.v6.min.txt.js';
-import d3sankeymintxt from '../charts/vendor/d3-sankey.min.txt.js';
-import chartutils from '../charts/utils/chart-utils.txt.js';
-import barcharttxt from '../charts/scripts/bar-chart.txt.js';
-import bubblecharttxt from '../charts/scripts/bubble-chart.txt.js';
-import charttxt from '../charts/scripts/chart.txt.js';
-import errorbarcharttxt from '../charts/scripts/error-bar-chart.txt.js';
-import gridcharttxt from '../charts/scripts/grid-chart.txt.js';
-import heatmapcharttxt from '../charts/scripts/heatmap-chart.txt.js';
-import histogramcharttxt from '../charts/scripts/histogram-chart.txt.js';
 import iristxt from '../scripts/datasets/iris.txt.js';
-import linecharttxt from '../charts/scripts/line-chart.txt.js';
-import sankeycharttxt from '../charts/scripts/sankey-chart.txt.js';
-import treemapcharttxt from '../charts/scripts/treemap-chart.txt.js';
-import xycharttxt from '../charts/scripts/xy-chart.txt.js';
-
-import regressiontxt from '../scripts/vendor/regression/r201/regression.min.txt.js'
-import threejstxt from '../scripts/vendor/threejs/r126/three.min.txt.js'
 
 const depsLocal = {
-  'd3.v6.min.js': d3v6mintxt,
-  'd3-sankey.min.txt.js': d3sankeymintxt,
-  'bar-chart.js': barcharttxt,
-  'bubble-chart.js': bubblecharttxt,
-  'chart.js': charttxt,
-  'chart-utils.js': chartutils,
-  'error-bar-chart.js': errorbarcharttxt,
-  'grid-chart.js': gridcharttxt,
-  'heatmap-chart.js': heatmapcharttxt,
-  'histogram-chart.js': histogramcharttxt,
   'iris.txt.js': iristxt,
-  'line-chart.js': linecharttxt,
-  'sankey-chart.js': sankeycharttxt,
-  'treemap-chart.js': treemapcharttxt,
-  'xy-chart.js': xycharttxt,
-  'three.min.js': threejstxt,
-  'regression.js': regressiontxt,
 };
 
 var depsCache = {};
