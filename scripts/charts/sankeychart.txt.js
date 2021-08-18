@@ -20,13 +20,14 @@
             - schemeSet1
             - schemeSet2
             - schemeSet3
-  deps: [
-    'chart-utils.js',
-    'https://cdn.jsdelivr.net/npm/d3@6',
-    'https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3',
-    'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1',
-  ]
+  deps:
+    - https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js
+    - https://cdn.jsdelivr.net/npm/d3@6
+    - https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3
+    - https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1
 **/
+
+data = await hal9.utils.toRows(data);
 
 const uniques = { source: {}, nodes: {} };
 
@@ -59,8 +60,8 @@ for (i in uniques.source) {
   for (j in targets) {
     if (i != j) {
       sankey.links.push({
-        source: convert(i),
-        target: convert(j),
+        source: hal9.utils.convert(i),
+        target: hal9.utils.convert(j),
         value: targets[j],
       });
     }

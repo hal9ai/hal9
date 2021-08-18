@@ -13,31 +13,32 @@
       label: Close
     - name: levels
       label: Horizontal levels
-  deps: [
-    'chart-utils.js',
-    'https://cdn.jsdelivr.net/npm/d3@6',
-    'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1',
-  ]
+  deps:
+    - https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js
+    - https://cdn.jsdelivr.net/npm/d3@6
+    - https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1
 **/
+
+data = await hal9.utils.toRows(data);
 
 if (levels && !Array.isArray(levels)) levels = [levels];
 if (!levels) levels = [];
 
 const chartdata = x && min && max
   ? data.map(v => {
-      const minval = v[min] ? convert(v[min]) : 0;
-      const maxval = v[max] ? convert(v[max]) : 0;
+      const minval = v[min] ? hal9.utils.convert(v[min]) : 0;
+      const maxval = v[max] ? hal9.utils.convert(v[max]) : 0;
 
       const value = {
-        x: convert(v[x]),
+        x: hal9.utils.convert(v[x]),
         min: minval,
         max: maxval,
-        open: open && v[open] ? convert(v[open]) : null,
-        close: close && v[close] ? convert(v[close]) : null,
+        open: open && v[open] ? hal9.utils.convert(v[open]) : null,
+        close: close && v[close] ? hal9.utils.convert(v[close]) : null,
       };
 
       levels.forEach(l => {
-        value[`levels_${l}`] = convert(v[l]);
+        value[`levels_${l}`] = hal9.utils.convert(v[l]);
       });
 
       return value;

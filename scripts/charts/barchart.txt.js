@@ -38,12 +38,13 @@
             - schemeSet1
             - schemeSet2
             - schemeSet3
-  deps: [
-    'chart-utils.js',
-    'https://cdn.jsdelivr.net/npm/d3@6',
-    'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1',
-  ]
+  deps:
+    - https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js
+    - https://cdn.jsdelivr.net/npm/d3@6
+    - https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1
 **/
+
+data = await hal9.utils.toRows(data);
  
 if (y && !Array.isArray(y)) y = [y];
 if (!y) y = [];
@@ -53,7 +54,7 @@ const chartdata = x && y.length
      data.forEach(v => {
        res.push({
          x: v[x],
-         y: convert(v[yv]),
+         y: hal9.utils.convert(v[yv]),
          z: yv,
        });
      });
@@ -84,7 +85,7 @@ const group = type === 'stacked'
       { [distAxis]: 'z', [valueAxis]: 'y', fill: 'z', title: d => getTitle(d) }
     );
 
-const legend = createLegend({ names: y, colors: d3[palette] });
+const legend = hal9.utils.createLegend({ names: y, colors: d3[palette] });
 const marks = x && y.length ? [Plot[`bar${valueAxisName}`](chartdata, group)] : [];
 const plot = Plot.plot({
   marks,

@@ -35,15 +35,16 @@
             - schemeSet1
             - schemeSet2
             - schemeSet3
-  deps: [
-    'chart-utils.js',
-    'https://cdn.jsdelivr.net/npm/d3@6',
-    'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1',
-  ]
+  deps:
+    - https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js
+    - https://cdn.jsdelivr.net/npm/d3@6
+    - https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1
 **/
 
+data = await hal9.utils.toRows(data);
+
 const chartdata = x
-  ? data.map(v => ({ x: convert(v[x]), color: convert(v[color]) }))
+  ? data.map(v => ({ x: hal9.utils.convert(v[x]), color: hal9.utils.convert(v[color]) }))
   : [];
 
 const barAxis = orientation === 'vertical' ? 'x' : 'y';
@@ -62,7 +63,7 @@ const getTitle = d => {
 }
 
 const colors = [...new Set(chartdata.map(d => d.color))].filter(Boolean).sort((a, b) => a - b);
-const legend = createLegend({
+const legend = hal9.utils.createLegend({
   names: colors,
   colors: d3[palette],
 });

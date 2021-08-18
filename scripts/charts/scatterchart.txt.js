@@ -19,19 +19,20 @@
             - schemeSet1
             - schemeSet2
             - schemeSet3
-  deps: [
-    'chart-utils.js',
-    'https://cdn.jsdelivr.net/npm/d3@6',
-    'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1',
-  ]
+  deps:
+    - https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js
+    - https://cdn.jsdelivr.net/npm/d3@6
+    - https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1
 **/
+
+data = await hal9.utils.toRows(data);
 
 const chartdata = x && y
  ? data.map(v => ({
-     x: convert(v[x]),
-     y: convert(v[y]),
-     color: convert(v[color]),
-     size: convert(v[size]),
+     x: hal9.utils.convert(v[x]),
+     y: hal9.utils.convert(v[y]),
+     color: hal9.utils.convert(v[color]),
+     size: hal9.utils.convert(v[size]),
      label: v[label] ? (v[label].substring(0, 10) + (v[label].length > 10 ? '...' : '')) : '',
    }))
  : [];
@@ -51,7 +52,7 @@ const getTitle = d => {
 };
 
 var colorUniques = data.map(e => e[color]).filter((v, i, a) => a.indexOf(v) === i);
-const legend = createLegend({ names: colorUniques, colors: d3[palette] });
+const legend = hal9.utils.createLegend({ names: colorUniques, colors: d3[palette] });
 legend.style.color = hal9.isDark() ? 'white' : '';
 
 if (color) html.appendChild(legend);

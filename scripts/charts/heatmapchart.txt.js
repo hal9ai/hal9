@@ -21,19 +21,20 @@
               colors: ['#ffffff', '#59a14f']
             - name: violet
               colors: ['#ffffff', '#af7aa1']
-  deps: [
-    'chart-utils.js',
-    'https://cdn.jsdelivr.net/npm/d3@6',
-    'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1',
-  ]
+  deps:
+    - https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js
+    - https://cdn.jsdelivr.net/npm/d3@6
+    - https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1
 **/
+
+data = await hal9.utils.toRows(data);
 
 // calculate counts to get mean value between duplicates
 const countsdata = x && y && value
   ? data.reduce((res, v) => {
-      const vx = convert(v[x]);
-      const vy = convert(v[y]);
-      const vv = convert(v[value]);
+      const vx = hal9.utils.convert(v[x]);
+      const vy = hal9.utils.convert(v[y]);
+      const vv = hal9.utils.convert(v[value]);
       const key = `${vx}_${vy}`;
 
       res[key] = res[key] || { x: vx, y: vy, value: 0, count: 0 };
