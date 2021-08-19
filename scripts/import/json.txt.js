@@ -19,6 +19,7 @@
         - control: 'textbox'
           value: 'data'
   cache: true
+  deps: ['https://cdn.jsdelivr.net/npm/arquero@latest']  
 **/
 
 file = file ? file : '';
@@ -35,3 +36,4 @@ if (type === 'url' && file != '') {
 }
 
 data = extractexpr(data);
+data = aq.from(data);

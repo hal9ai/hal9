@@ -4,4 +4,4 @@
     - clipboard
 **/
 
-clipboard = JSON.parse(JSON.stringify(data))
+clipboard = data

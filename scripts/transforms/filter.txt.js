@@ -11,7 +11,5 @@
 
 if (expression && field) {
   var filterexp = new Function('field', 'return ' + expression);
-  aq.addFunction('fieldExp', field => filterexp(field), { override: true })
-  data = data.params({column: field}).filter(data => $.fieldExp(data[$.column]))
+  data = data.params({field}).filter(aq.escape((data, $)=> filterexp(data[$.field])));
 }
-
