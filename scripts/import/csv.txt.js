@@ -23,7 +23,8 @@
       value:
         - control: 'textbox'
           value: ''
-  deps: [ "https://cdn.jsdelivr.net/npm/arquero@latest" ]
+  deps:
+    - https://cdn.jsdelivr.net/npm/arquero@latest
   cache: true
 **/
 

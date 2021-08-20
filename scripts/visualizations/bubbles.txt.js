@@ -17,16 +17,17 @@
             - schemeSet2
             - schemeSet3
   deps: [
-    'chart-utils.js',
+    'https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js'
   ]
 **/
+data = await hal9.utils.toRows(data);
 
 if (data.length > 1000) {
   throw(`Up to 1000 data points are supported in this visualization, but ${data.length} provided.`);
 }
 
-const sizes = data.map(e => convert(e[size]))
+const sizes = data.map(e => hal9.utils.convert(e[size]))
 const sizeRange = size
   ? { min: Math.min(...sizes), max: Math.max(...sizes) }
   : { min: 1, max: 1 };
