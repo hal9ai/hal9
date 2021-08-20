@@ -36,7 +36,7 @@ import jointxt from '../scripts/transforms/join.txt.js';
 import fetchtxt from '../scripts/transforms/fetch.txt.js';
 import filtertxt from '../scripts/transforms/filter.txt.js';
 import gathertxt from '../scripts/transforms/gather.txt.js';
-import maptxt from '../scripts/transforms/map.txt.js';
+import derivetxt from '../scripts/transforms/derive.txt.js';
 import pyodidetxt from '../scripts/transforms/pyodide.txt.js';
 import rangetxt from '../scripts/transforms/range.txt.js';
 import sampletxt from '../scripts/transforms/sample.txt.js';
@@ -117,7 +117,7 @@ const scripts = {
   gather: { script:  gathertxt, language: 'js' },
   join: { script:  jointxt, language: 'js' },
   range: { script:  rangetxt, language: 'js' },
-  map: { script:  maptxt, language: 'js' },
+  derive: { script:  derivetxt, language: 'js' },
   pyodide: { script:  pyodidetxt, language: 'js' },
   sample: { script:  sampletxt, language: 'js' },
   select: { script:  selecttxt, language: 'js' },
