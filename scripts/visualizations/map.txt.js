@@ -2,11 +2,11 @@
   output: [html]
   params: [lon, lat, size]
   deps: [
-    'chart-utils.js',
+    'https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js',
     'https://unpkg.com/leaflet@1.7.1/dist/leaflet.js',
   ]
 **/
-
+data = await hal9.utils.toRows(data);
 const link = document.createElement('link');
 link.rel = 'stylesheet';
 link.href = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css';
@@ -14,9 +14,9 @@ html.appendChild(link);
 
 const chartdata = lat && lon
  ? data.map(v => ({
-     lat: convert(v[lat]),
-     lon: convert(v[lon]),
-     size: convert(v[size]),
+     lat: hal9.utils.convert(v[lat]),
+     lon: hal9.utils.convert(v[lon]),
+     size: hal9.utils.convert(v[size]),
    }))
  : [];
 
