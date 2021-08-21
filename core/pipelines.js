@@ -9,8 +9,8 @@ import imagestxt from '../scripts/import/images.txt.js';
 import webcamtxt from '../scripts/import/webcam.txt.js';
 import airbnbtxt from '../scripts/import/airbnb.txt.js';
 
-import webtablestxt from '../scripts/import/webtables.txt.js';
-import webimagestxt from '../scripts/import/webimages.txt.js';
+import webtablestxt from '../scripts/import/web table.txt.js';
+import webimagestxt from '../scripts/import/web images.txt.js';
 
 import bubblestxt from '../scripts/visualizations/bubbles.txt.js';
 import gallerytxt from '../scripts/visualizations/gallery.txt';
