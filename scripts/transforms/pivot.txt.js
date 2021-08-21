@@ -38,7 +38,9 @@
     - https://d3js.org/d3-array.v2.min.js
     - https://www.unpkg.com/@tidyjs/tidy/dist/umd/tidy.min.js
     - https://cdn.jsdelivr.net/npm/arquero@latest
+    - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
 **/
+data = await hal9.utils.toArquero(data);
 rows = Array.isArray(rows) ? rows : ( rows == undefined ? [] : [ rows ]);
 values = Array.isArray(values) ? values : ( values == undefined ? [] : [ values ]);
 columns = Array.isArray(columns) ? columns : ( columns == undefined ? [] : [ columns ]);
