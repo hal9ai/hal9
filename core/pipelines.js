@@ -423,22 +423,9 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
 
   var outputs = undefined;
   if (result.data) {
-    // isArquero
-    if (result.data && typeof(result.data.columnNames) === 'function') {
-      outputs = result.data.columnNames().map((col, idx) => {
-        return { id: idx, name: col, label: col };
-      })
-    }
-    else if (result.data && typeof(result.data.col_data_tensor) === 'object') {
-      outputs = result.data.columns.map((col, idx) => {
-        return { id: idx, name: col, label: col };
-      });
-    }
-    else {
-      outputs = dataframe.columns(result.data).map((col, idx) => {
-        return { id: idx, name: col, label: col };
-      });
-    }
+    outputs = dataframe.columns(result.data).map((col, idx) => {
+      return { id: idx, name: col, label: col };
+    });
   }
   setOutputs(pipeline, step.id, outputs);
 
