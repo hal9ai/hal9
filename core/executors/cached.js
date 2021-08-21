@@ -4,21 +4,18 @@ import * as snippets from '../snippets';
 import RemoteExecutor from './remote'
 import LocalExecutor from './local'
 
+import * as dataframe from '../utils/dataframe';
 import clone from '../utils/clone';
 
 import md5 from 'crypto-js/md5';
 
 import { isElectron } from '../utils/environment'
 
-const isArquero = (e) => e && typeof(e.columnNames) === 'function';
-
-const isDanfo = (e) => e && typeof(e.col_data_tensor) === 'object';
-
 const smartclone = (entries) => {
   var cloned = {};
   Object.keys(entries).map(name => {
-    if (isArquero(entries[name]) || isDanfo(entries[name])) {
-      cloned[name] = entries[name];
+    if (dataframe.isDataFrame(entries[name])) {
+      cloned[name] = dataframe.clone(entries[name]);
     }
     else {
       cloned[name] = clone(entries[name]);
