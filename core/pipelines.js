@@ -392,7 +392,7 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
     result = await executor.runStep();
 
     // truncate data if needed
-    if (result && result.data && context.maxRows && result.data.length && result.data.length > context.maxRows) {
+    if (result && result.data && Array.isArray(result.data) && context.maxRows && result.data.length && result.data.length > context.maxRows) {
       details.truncated = { truncation: context.maxRows };
 
       result.data.splice(context.maxRows);
@@ -731,6 +731,17 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /* number */) 
       if (meta.state == 'session') {
         delete pipeline.state.steps[stepid];
       }
+
+      // serialize dataframes
+      if (pipeline.state.steps[stepid]) {
+        var state = pipeline.state.steps[stepid];
+
+        Object.keys(state).forEach(name => {
+          if (dataframe.isDataFrame(state[name])) {
+            state[name] = dataframe.serialize(pipeline.state[name]);
+          }
+        });
+      }
     }
   }
 
@@ -740,7 +751,27 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /* number */) 
 export const load = (pipeline /*: pipeline */) /*: pipelineid */ => {
   var pipelineid = store.add(pipeline);
 
-  if (pipeline.state) {
+  // deserialize dataframes
+  if (pipeline.state && pipeline.state.steps) {
+    Object.keys(pipeline.state.steps).forEach(step => {
+      var stepState = pipeline.state.steps[step];
+      Object.keys(stepState).forEach(name => {
+        if (name === 'cache' && stepState['cache'].result) {
+          var stepResults = stepState['cache'].result;
+          Object.keys(stepResults).forEach(name => {
+            if (dataframe.isSerialized(stepResults[name])) {
+              stepResults[name] = dataframe.deserialiaze(stepResults[name]);
+            }
+          });
+        }
+        else {
+          if (dataframe.isSerialized(stepState[name])) {
+            stepState[name] = dataframe.deserialiaze(stepState[name]);
+          }
+        }
+      });
+    });
+
     pipelinesState[pipelineid] = pipeline.state;
     pipelinesStateCount++;
   }

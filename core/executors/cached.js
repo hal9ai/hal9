@@ -13,7 +13,7 @@ import { isElectron } from '../utils/environment'
 
 const smartclone = (entries) => {
   var cloned = {};
-  Object.keys(entries).map(name => {
+  Object.keys(entries).forEach(name => {
     if (dataframe.isDataFrame(entries[name])) {
       cloned[name] = dataframe.clone(entries[name]);
     }

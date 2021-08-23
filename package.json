@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "arquero": "^4.8.4",
     "buffer": "^6.0.3",
     "compare-versions": "^3.6.0",
     "copy-webpack-plugin": "4.6.0",
