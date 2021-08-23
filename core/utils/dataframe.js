@@ -10,7 +10,9 @@ const arqueroClone = (e) => e;
 
 const arqueroSerialize = (e) => e;
 
-const arqueroDeserialize = (e) => aq.table(JSON.parse(e).data);
+const arqueroDeserialize = (e) => {
+  return aq.table(JSON.parse(e.replace(/undefined/g, 'null')).data);
+}
 
 const arqueroIsSerialized = (e) => /{\"schema\":/g.test(e)
 
