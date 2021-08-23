@@ -5,8 +5,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: {
-    'hal9': './index.js',
-    'hal9.min': './index.js',
+    'hal9': './src/api/index.js',
+    'hal9.min': './src/api/index.js',
   },
   devtool: "source-map",
   output: {

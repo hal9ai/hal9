@@ -1,69 +1,69 @@
 // @flow
 
-import importcsvtxt from '../scripts/import/csv.txt.js';
-import importjsontxt from '../scripts/import/json.txt.js';
-import importexceltxt from '../scripts/import/excel.txt.js';
-import twittertxt from '../scripts/import/twitter.txt.js';
-import iristxt from '../scripts/import/iris.txt.js';
-import imagestxt from '../scripts/import/images.txt.js';
-import webcamtxt from '../scripts/import/webcam.txt.js';
-import airbnbtxt from '../scripts/import/airbnb.txt.js';
+import importcsvtxt from '../../scripts/import/csv.txt.js';
+import importjsontxt from '../../scripts/import/json.txt.js';
+import importexceltxt from '../../scripts/import/excel.txt.js';
+import twittertxt from '../../scripts/import/twitter.txt.js';
+import iristxt from '../../scripts/import/iris.txt.js';
+import imagestxt from '../../scripts/import/images.txt.js';
+import webcamtxt from '../../scripts/import/webcam.txt.js';
+import airbnbtxt from '../../scripts/import/airbnb.txt.js';
 
-import webtablestxt from '../scripts/import/web table.txt.js';
-import webimagestxt from '../scripts/import/web images.txt.js';
+import webtablestxt from '../../scripts/import/web table.txt.js';
+import webimagestxt from '../../scripts/import/web images.txt.js';
 
-import bubblestxt from '../scripts/visualizations/bubbles.txt.js';
-import gallerytxt from '../scripts/visualizations/gallery.txt';
-import networktxt from '../scripts/visualizations/network.txt.js';
-import threejstxt from '../scripts/visualizations/three.txt.js';
-import tweetstxt from '../scripts/visualizations/tweets.txt.js';
-import wordcloudtxt from '../scripts/visualizations/wordcloud.txt.js';
-import mapcharttxt from '../scripts/visualizations/map.txt.js';
+import bubblestxt from '../../scripts/visualizations/bubbles.txt.js';
+import gallerytxt from '../../scripts/visualizations/gallery.txt';
+import networktxt from '../../scripts/visualizations/network.txt.js';
+import threejstxt from '../../scripts/visualizations/three.txt.js';
+import tweetstxt from '../../scripts/visualizations/tweets.txt.js';
+import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
+import mapcharttxt from '../../scripts/visualizations/map.txt.js';
 
-import barcharttxt from '../scripts/charts/barchart.txt.js';
-import scattercharttxt from '../scripts/charts/scatterchart.txt.js';
-import errorbarcharttxt from '../scripts/charts/errorbarchart.txt.js';
-import heatmapcharttxt from '../scripts/charts/heatmapchart.txt.js';
-import histogramcharttxt from '../scripts/charts/histogramchart.txt.js';
-import linecharttxt from '../scripts/charts/linechart.txt.js';
-import sankeycharttxt from '../scripts/charts/sankeychart.txt.js';
-import treemapcharttxt from '../scripts/charts/treemapchart.txt.js';
-import waterfallcharttxt from '../scripts/charts/waterfallchart.txt.js';
+import barcharttxt from '../../scripts/charts/barchart.txt.js';
+import scattercharttxt from '../../scripts/charts/scatterchart.txt.js';
+import errorbarcharttxt from '../../scripts/charts/errorbarchart.txt.js';
+import heatmapcharttxt from '../../scripts/charts/heatmapchart.txt.js';
+import histogramcharttxt from '../../scripts/charts/histogramchart.txt.js';
+import linecharttxt from '../../scripts/charts/linechart.txt.js';
+import sankeycharttxt from '../../scripts/charts/sankeychart.txt.js';
+import treemapcharttxt from '../../scripts/charts/treemapchart.txt.js';
+import waterfallcharttxt from '../../scripts/charts/waterfallchart.txt.js';
 
-import converttxt from '../scripts/transforms/convert.txt.js';
-import explodetxt from '../scripts/transforms/explode.txt.js';
-import jointxt from '../scripts/transforms/join.txt.js';
-import fetchtxt from '../scripts/transforms/fetch.txt.js';
-import filtertxt from '../scripts/transforms/filter.txt.js';
-import gathertxt from '../scripts/transforms/gather.txt.js';
-import derivetxt from '../scripts/transforms/derive.txt.js';
-import pyodidetxt from '../scripts/transforms/pyodide.txt.js';
-import rangetxt from '../scripts/transforms/range.txt.js';
-import sampletxt from '../scripts/transforms/sample.txt.js';
-import selecttxt from '../scripts/transforms/select.txt.js';
-import sorttxt from '../scripts/transforms/sort.txt.js';
-import smatxt from '../scripts/transforms/sma.txt.js';
-import slicetxt from '../scripts/transforms/slice.txt.js';
-import summarizetxt from '../scripts/transforms/summarize.txt.js';
-import subsprevtxt from '../scripts/transforms/subsprev.txt.js';
-import sqltxt from '../scripts/transforms/sql.txt.js';
-import windowtxt from '../scripts/transforms/window.txt.js';
-import columntxt from '../scripts/transforms/column.txt.js';
+import converttxt from '../../scripts/transforms/convert.txt.js';
+import explodetxt from '../../scripts/transforms/explode.txt.js';
+import jointxt from '../../scripts/transforms/join.txt.js';
+import fetchtxt from '../../scripts/transforms/fetch.txt.js';
+import filtertxt from '../../scripts/transforms/filter.txt.js';
+import gathertxt from '../../scripts/transforms/gather.txt.js';
+import derivetxt from '../../scripts/transforms/derive.txt.js';
+import pyodidetxt from '../../scripts/transforms/pyodide.txt.js';
+import rangetxt from '../../scripts/transforms/range.txt.js';
+import sampletxt from '../../scripts/transforms/sample.txt.js';
+import selecttxt from '../../scripts/transforms/select.txt.js';
+import sorttxt from '../../scripts/transforms/sort.txt.js';
+import smatxt from '../../scripts/transforms/sma.txt.js';
+import slicetxt from '../../scripts/transforms/slice.txt.js';
+import summarizetxt from '../../scripts/transforms/summarize.txt.js';
+import subsprevtxt from '../../scripts/transforms/subsprev.txt.js';
+import sqltxt from '../../scripts/transforms/sql.txt.js';
+import windowtxt from '../../scripts/transforms/window.txt.js';
+import columntxt from '../../scripts/transforms/column.txt.js';
 
-import linearpredicttxt from '../scripts/predict/linear.txt.js';
-import mobilenettxt from '../scripts/predict/mobilenet.txt.js';
-import timeseriespredicttxt from '../scripts/predict/timeseries.txt.js';
-import regressionpredicttxt from '../scripts/predict/regression.txt.js';
-import sentimenttxt from '../scripts/predict/sentiment.txt.js';
+import linearpredicttxt from '../../scripts/predict/linear.txt.js';
+import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
+import timeseriespredicttxt from '../../scripts/predict/timeseries.txt.js';
+import regressionpredicttxt from '../../scripts/predict/regression.txt.js';
+import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
 
-import linearmodeltxt from '../scripts/models/linear.txt.js';
-import timeseriesmodeltxt from '../scripts/models/timeseries.txt.js';
+import linearmodeltxt from '../../scripts/models/linear.txt.js';
+import timeseriesmodeltxt from '../../scripts/models/timeseries.txt.js';
 
-import websitetxt from '../scripts/export/website.txt.js';
+import websitetxt from '../../scripts/export/website.txt.js';
 
-import copytxt from '../scripts/utils/copy.txt.js';
-import pastetxt from '../scripts/utils/paste.txt.js';
-import shelltxt from '../scripts/utils/shell.txt.js';
+import copytxt from '../../scripts/utils/copy.txt.js';
+import pastetxt from '../../scripts/utils/paste.txt.js';
+import shelltxt from '../../scripts/utils/shell.txt.js';
 
 import * as snippets from './snippets';
 import * as operations from './utils/operations';

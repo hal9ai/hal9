@@ -1,4 +1,17 @@
 {
+  "name": "hal9",
+  "version": "0.0.11",
+  "license" : "MIT",
+  "description": "Hal9: Composable machine-learning pipelines",
+  "main": "dist/hal9.js",
+  "repository": "https://github.com/hal9ai/hal9ai",
+  "author": "Hal9 Inc",
+  "scripts": {
+    "build": "webpack --mode=production",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production",
+    "watch": "webpack --watch"
+  },
   "dependencies": {
     "arquero": "^4.8.4",
     "buffer": "^6.0.3",
@@ -7,6 +20,16 @@
     "crypto-js": "^4.0.0",
     "js-yaml": "^3.14.1",
     "rfdc": "^1.1.4",
-    "showdown": "^1.9.1"
+    "showdown": "^1.9.1",
+    "raw-loader": "^4.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.0",
+    "@babel/preset-env": "^7.14.1",
+    "@webpack-cli/generators": "^2.0.0",
+    "babel-loader": "^8.2.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.6.0"
   }
 }

@@ -10,7 +10,7 @@ type func = (...args: Array<any>) => any;
 type header = { params: Array<string>, deps: Array<string> };
 */
 
-import iristxt from '../scripts/datasets/iris.txt.js';
+import iristxt from '../../scripts/datasets/iris.txt.js';
 
 const depsLocal = {
   'iris.txt.js': iristxt,
