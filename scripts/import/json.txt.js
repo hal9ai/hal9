@@ -36,4 +36,3 @@ if (type === 'url' && file != '') {
 }
 
 data = extractexpr(data);
-data = aq.from(data);

@@ -33,10 +33,11 @@
     - data
     - html
   deps:
-    - 'chart-utils.js'
+    - https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js
     - 'https://cdn.jsdelivr.net/npm/d3@6'
     - 'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1'
 **/
+data = await hal9.utils.toRows(data);
 
 tf.setBackend('cpu');
 
@@ -47,8 +48,8 @@ if (!x) {
 
 // Train
 
-const trainX = tf.tensor1d(data.map(e => convert(e[x])));
-const trainY = tf.tensor1d(data.map(e => convert(e[y])));
+const trainX = tf.tensor1d(data.map(e => hal9.utils.convert(e[x])));
+const trainY = tf.tensor1d(data.map(e => hal9.utils.convert(e[y])));
 
 const [maxX, minX] = [trainX.max(), trainX.min()];
 const normX = trainX.sub(minX).div(maxX.sub(minX));
@@ -111,7 +112,7 @@ for (let idx = 0; idx < epochs; idx++) {
 
 // Predict
 
-var current = convert(data[data.length-1][x]);
+var current = hal9.utils.convert(data[data.length-1][x]);
 var increment = data[data.length-1][x] - data[data.length-2][x];
 var predTotal = Math.round(1.0 * data.length * predictions / 100);
 for (var idx = 0; idx < predTotal; idx++) {
@@ -121,7 +122,7 @@ for (var idx = 0; idx < predTotal; idx++) {
   data.push(futureRow);
 }
 
-var predsX = tf.tensor1d(data.map(e => convert(e[x])));
+var predsX = tf.tensor1d(data.map(e => hal9.utils.convert(e[x])));
 var predsNormX = predsX.sub(minX).div(maxX.sub(minX));
 var normPreds = predict(predsNormX);
 var preds = normPreds.mul(maxY.sub(minY)).add(minY).dataSync();
@@ -138,9 +139,9 @@ if (!y) { y = [] } else { y.push('prediction(' + y + ')') };
 
 const chartdata = x && y.length
  ? data.map(v => {
-     const value = { x: convert(v[x]) };
+     const value = { x: hal9.utils.convert(v[x]) };
      y.map((yv, i) => {
-       value[`y${i}`] = convert(v[yv]);
+       value[`y${i}`] = hal9.utils.convert(v[yv]);
      });
      return value;
    })

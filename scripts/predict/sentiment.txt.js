@@ -1,9 +1,13 @@
 /**
+  deps:
+    - https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js
   params:
     - name: sentiment
       label: Sentiment
   cache: true
 **/
+
+data = await hal9.utils.toRows(data);
 
 const PAD_INDEX = 0;
 const OOV_INDEX = 2;
