@@ -28,7 +28,7 @@ Here is a quick example that showcases a data pipeline to read a CSV and plot a 
 </html>
 ```
 
-![](api/examples/csvplot.png)
+![](examples/csvplot.png)
 
 Please join our **Slack** group to help you get started, request access by sending us an email to `info@hal9.ai`.
 
