@@ -1,6 +1,6 @@
 
 export default function(html) {
-  var script = '\nif (html) html.innerHTML = `' + html + '`;\n\n';
+  var script = '\nif (html) html.innerHTML = `' + html.replace(/`/g, '\\`').replace(/\${/g, '\\${') + '`;\n\n';
 
   script +=  `
     const scripts = [...html.getElementsByTagName('script')];
