@@ -17,4 +17,5 @@ a.innerHTML = 'Download data as CSV!'
 a.style.display = 'block';
 a.style.marginTop = '45%';
 
+html.style.textAlign = 'center';
 html.appendChild(a);
