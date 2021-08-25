@@ -65,6 +65,8 @@ import copytxt from '../../scripts/utils/copy.txt.js';
 import pastetxt from '../../scripts/utils/paste.txt.js';
 import shelltxt from '../../scripts/utils/shell.txt.js';
 
+import exportcsvtxt from '../../scripts/export/csv.txt.js';
+
 import * as snippets from './snippets';
 import * as operations from './utils/operations';
 import * as dataframe from './utils/dataframe';
@@ -156,12 +158,14 @@ const scripts = {
   sankeychart: { script:  sankeycharttxt, language: 'js' },
   treemapchart: { script:  treemapcharttxt, language: 'js' },
   waterfallchart: { script:  waterfallcharttxt, language: 'js' },
-  // export
+  // website
   website: { script:  websitetxt, language: 'js' },
   // utils
   copy: { script:  copytxt, language: 'js' },
   paste: { script:  pastetxt, language: 'js' },
   shell: { script:  shelltxt, language: 'js' },
+  // export
+  exportcsv: { script:  exportcsvtxt, language: 'js' },
 }
 
 var pipelinesStateCount = 0;
