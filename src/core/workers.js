@@ -24,7 +24,7 @@ const serverInfo = async function() {
 
 const getWorkerUrl = async () => {
   
-  const workersListUrl = environment.getServerUrl() + '/workers';
+  const workersListUrl = environment.getServerUrl() + '/api/workers';
 
   var res = await fetch(workersListUrl)
   if (!res.ok) {
