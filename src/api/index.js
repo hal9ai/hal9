@@ -3,6 +3,8 @@ import * as workers from '../core/workers';
 import * as pipelines from '../core/pipelines';
 import * as datasets from '../core/datasets';
 
+import LocalExecutor from '../../core/executors/local';
+
 import clone from '../core/utils/clone';
 import functions from '../core/utils/functions';
 
@@ -84,6 +86,9 @@ export default {
   utils: {
     clone: clone,
     functions: functions,
+  },
+  executors: {
+    LocalExecutor: LocalExecutor
   }
 };
 
