@@ -1,3 +1,6 @@
+
+var userHal9Env = undefined;
+
 export const isElectron = () => {
   return window && window.process != undefined && window.process.type == 'renderer';
 }
@@ -15,11 +18,17 @@ export const isIOS = () => {
   ].includes(navigator.platform);
 }
 
+export const setEnv = (env) => {
+  userHal9Env = env;
+}
+
 export const isDevelopment = () => {
   return (!isElectron() && window.location.origin == 'file://') || window.location.origin.includes('//localhost');
 }
 
 export const getId = () => {
+  if (userHal9Env) return userHal9Env;
+
   var hal9env = typeof(HAL9ENV) != 'undefined' ? HAL9ENV : 'dev';
 
   if (typeof(process) != 'undefined' && process.env.HAL9_ENV) {
@@ -32,5 +41,8 @@ export const getId = () => {
 
 export const getServerUrl = () => {
   const hal9env = getId();
+
+  if (hal9env == 'prod') return 'https://hal9.com';
+
   return isDevelopment() ? 'http://localhost:5000' : 'https://' + hal9env + 'srv.hal9.ai';
 }
