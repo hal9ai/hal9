@@ -2,7 +2,9 @@ import * as environment from '../core/utils/environment';
 import * as workers from '../core/workers';
 import * as pipelines from '../core/pipelines';
 import * as datasets from '../core/datasets';
+
 import clone from '../core/utils/clone';
+import functions from '../core/utils/functions';
 
 const runRemote = async (lambda, context) => {
   if (typeof(lambda) != 'function') {
@@ -80,7 +82,8 @@ export default {
   pipelines: pipelines,
   datasets: datasets,
   utils: {
-    clone: clone
+    clone: clone,
+    functions: functions,
   }
 };
 
