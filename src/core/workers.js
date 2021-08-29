@@ -15,7 +15,7 @@ const preflight = async function(workerUrl) {
 
 const serverInfo = async function() {
   const serverUrl = environment.getServerUrl();
-  var res = await fetch(serverUrl + '/info', {
+  var res = await fetch(serverUrl + '/api/info', {
     method: 'GET'
   });
 
