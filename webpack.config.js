@@ -17,6 +17,7 @@ module.exports = {
       export: 'default',
     },
     path: path.resolve(__dirname, 'dist'),
+    globalObject: 'this',
   },
   mode: 'none',
   plugins: [
