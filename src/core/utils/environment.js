@@ -2,7 +2,7 @@
 var userHal9Env = undefined;
 
 export const isElectron = () => {
-  return window && window.process != undefined && window.process.type == 'renderer';
+  return typeof(window) != 'undefined' && window.process != undefined && window.process.type == 'renderer';
 }
 
 export const isIOS = () => {
