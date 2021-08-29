@@ -3,7 +3,7 @@ import * as workers from '../core/workers';
 import * as pipelines from '../core/pipelines';
 import * as datasets from '../core/datasets';
 
-import LocalExecutor from '../../core/executors/local';
+import LocalExecutor from '../core/executors/local';
 
 import clone from '../core/utils/clone';
 import functions from '../core/utils/functions';
