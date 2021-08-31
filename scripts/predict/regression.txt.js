@@ -116,7 +116,13 @@ var current = hal9.utils.convert(data[data.length-1][x]);
 var increment = data[data.length-1][x] - data[data.length-2][x];
 var predTotal = Math.round(1.0 * data.length * predictions / 100);
 for (var idx = 0; idx < predTotal; idx++) {
-  current += increment;
+  if (typeof current.getMonth === 'function') {
+    current = new Date(current.getTime() + increment);
+  }
+  else {
+    current += increment;
+  }
+
   var futureRow = Object.fromEntries(Object.keys(data[data.length - 1]).map(e => [e, null]));
   futureRow[x] = current;
   data.push(futureRow);
