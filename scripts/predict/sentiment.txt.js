@@ -1,12 +1,12 @@
 /**
   deps:
-    - https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js
+    - https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js
     - https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js
   params:
     - name: sentiment
       label: Sentiment
   cache: true
-**/
+**/ 
 
 data = await hal9.utils.toRows(data);
 
