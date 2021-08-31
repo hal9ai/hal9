@@ -1,6 +1,6 @@
 import Executor from './definition';
 import * as snippets from '../snippets';
-import * as localparams from './localparams';
+import * as localparams from './params';
 import * as interpreter from '../interpreters/interpreter';
 
 import clone from '../utils/clone';
@@ -9,15 +9,10 @@ import * as datasets from '../datasets';
 export default class LocalExecutor extends Executor {
   async runStep() {
     const context = this.context['html'] ? { html: this.context['html'](this.step) } : {};
-    const params = localparams.paramsForFunction(this.params, this.inputs, this.deps, context);
+    var params = localparams.paramsForFunction(this.params, this.inputs, this.deps, context);
 
     // retrieve cached hal9 datasets
-    for (var paramName in params) {
-      const param = params[paramName];
-      if (typeof(param) == 'string' && param.startsWith('hal9:text/dataurl')) {
-        params[paramName] = datasets.get(param);
-      }
-    }
+    params = localparams.fetchDatasets(params);
 
     const interpreted = interpreter.interpret(this.script, this.language);
     var result = await snippets.runFunction(interpreted, params);

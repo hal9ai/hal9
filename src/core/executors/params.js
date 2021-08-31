@@ -23,3 +23,14 @@ export const paramsForFunction = (params, inputs, deps, context) => {
 
   return result;
 }
+
+export const fetchDatasets = (params) => {
+  for (var paramName in params) {
+    const param = params[paramName];
+    if (typeof(param) == 'string' && param.startsWith('hal9:text/dataurl')) {
+      params[paramName] = datasets.get(param);
+    }
+  }
+
+  return params;
+}
