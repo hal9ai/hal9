@@ -34,7 +34,8 @@
     - screenshot
     - log
   environment: worker
-  deps: ['d3.v6.min.js']
+  deps:
+    - https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js
   cache: true
 **/
 
