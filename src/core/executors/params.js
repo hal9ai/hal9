@@ -1,3 +1,5 @@
+import * as datasets from '../datasets';
+
 export const paramsForFunction = (params, inputs, deps, context) => {
   const dictWithScalars = (d) => Object.fromEntries(
     Object.keys(d).map(e => {
