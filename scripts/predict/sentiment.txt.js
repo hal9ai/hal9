@@ -1,13 +1,14 @@
 /**
   deps:
     - https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js
-    - https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js
+    - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
   params:
     - name: sentiment
       label: Sentiment
   cache: true
 **/ 
 
+tf.disposeVariables();
 data = await hal9.utils.toRows(data);
 
 const PAD_INDEX = 0;
@@ -96,5 +97,6 @@ function processSentiment(text) {
 
   return score;
 }
-
-data = data.map(e => Object.assign(e, { sentiment: processSentiment(e[sentiment]) }))
+if (sentiment) {
+    data = data.map(e => Object.assign(e, { sentiment: processSentiment(e[sentiment]) }))
+}
