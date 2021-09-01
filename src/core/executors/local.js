@@ -4,7 +4,6 @@ import * as localparams from './params';
 import * as interpreter from '../interpreters/interpreter';
 
 import clone from '../utils/clone';
-import * as datasets from '../datasets';
 
 export default class LocalExecutor extends Executor {
   async runStep() {
