@@ -23,6 +23,8 @@ export const setEnv = (env) => {
 }
 
 export const isDevelopment = () => {
+  if (typeof(window) == 'undefined') return false;
+
   return (!isElectron() && window.location.origin == 'file://') || window.location.origin.includes('//localhost');
 }
 
