@@ -44,7 +44,7 @@ export const getServerUrl = () => {
 
   if (isDevelopment()) return 'http://localhost:5000';
 
-  if (hal9env == 'prod') return 'https://hal9.com';
+  if (hal9env == 'prod') return 'https://api.hal9.com';
 
   return 'https://' + hal9env + 'srv.hal9.ai';
 }
