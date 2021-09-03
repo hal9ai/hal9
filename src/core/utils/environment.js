@@ -48,5 +48,5 @@ export const getServerUrl = () => {
 
   if (hal9env == 'prod') return 'https://api.hal9.com';
 
-  return 'https://' + hal9env + 'srv.hal9.ai';
+  return 'https://devel.hal9.com';
 }
