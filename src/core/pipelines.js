@@ -55,6 +55,8 @@ import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
 import timeseriespredicttxt from '../../scripts/predict/timeseries.txt.js';
 import regressionpredicttxt from '../../scripts/predict/regression.txt.js';
 import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
+import bodypixtxt from '../../scripts/predict/bodypix.txt.js';
+import knntxt from '../../scripts/predict/knn.txt.js';
 
 import linearmodeltxt from '../../scripts/models/linear.txt.js';
 import timeseriesmodeltxt from '../../scripts/models/timeseries.txt.js';
@@ -145,6 +147,8 @@ const scripts = {
   timeseriespredict: { script:  timeseriespredicttxt, language: 'js' },
   regressionpredict: { script:  regressionpredicttxt, language: 'js' },
   sentiment: { script:  sentimenttxt, language: 'js' },
+  bodypix: { script:  bodypixtxt, language: 'js' },
+  knn: { script:  knntxt, language: 'js' },
   // train
   timeseriesmodel: { script:  timeseriesmodeltxt, language: 'js' },
   linearmodel: { script:  linearmodeltxt, language: 'js' },

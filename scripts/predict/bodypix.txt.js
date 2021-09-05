@@ -19,6 +19,7 @@
     - https://cdn.jsdelivr.net/npm/arquero@latest
   cache: true
 **/
+
 tf.disposeVariables();
 if (images) {
   data = await hal9.utils.toRows(data);
