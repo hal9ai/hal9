@@ -50,7 +50,6 @@ import sqltxt from '../../scripts/transforms/sql.txt.js';
 import windowtxt from '../../scripts/transforms/window.txt.js';
 import columntxt from '../../scripts/transforms/column.txt.js';
 
-import linearpredicttxt from '../../scripts/predict/linear.txt.js';
 import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
 import timeseriespredicttxt from '../../scripts/predict/timeseries.txt.js';
 import regressionpredicttxt from '../../scripts/predict/regression.txt.js';
@@ -58,7 +57,6 @@ import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
 import bodypixtxt from '../../scripts/predict/bodypix.txt.js';
 import knntxt from '../../scripts/predict/knn.txt.js';
 
-import linearmodeltxt from '../../scripts/models/linear.txt.js';
 import timeseriesmodeltxt from '../../scripts/models/timeseries.txt.js';
 
 import websitetxt from '../../scripts/export/website.txt.js';
@@ -142,7 +140,6 @@ const scripts = {
   mapchart: { script:  mapcharttxt, language: 'js' },
   gallery: { script:  gallerytxt, language: 'html' },
   // predictions
-  linearpredict: { script:  linearpredicttxt, language: 'js' },
   mobilenet: { script:  mobilenettxt, language: 'js' },
   timeseriespredict: { script:  timeseriespredicttxt, language: 'js' },
   regressionpredict: { script:  regressionpredicttxt, language: 'js' },
@@ -151,7 +148,6 @@ const scripts = {
   knn: { script:  knntxt, language: 'js' },
   // train
   timeseriesmodel: { script:  timeseriesmodeltxt, language: 'js' },
-  linearmodel: { script:  linearmodeltxt, language: 'js' },
   // charts
   barchart: { script:  barcharttxt, language: 'js' },
   scatterchart: { script:  scattercharttxt, language: 'js' },
