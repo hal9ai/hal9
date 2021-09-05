@@ -23,6 +23,8 @@ export const setEnv = (env) => {
 }
 
 export const isDevelopment = () => {
+  if (typeof(window) == 'undefined') return false;
+
   return (!isElectron() && window.location.origin == 'file://') || window.location.origin.includes('//localhost');
 }
 
@@ -44,7 +46,7 @@ export const getServerUrl = () => {
 
   if (isDevelopment()) return 'http://localhost:5000';
 
-  if (hal9env == 'prod') return 'https://hal9.com';
+  if (hal9env == 'prod') return 'https://api.hal9.com';
 
-  return 'https://' + hal9env + 'srv.hal9.ai';
+  return 'https://api.devel.hal9.com';
 }
