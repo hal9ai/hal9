@@ -31,18 +31,32 @@ export default class IFrameExecutor extends Executor {
     var content = `
       <script>
         async function runAsync(body, params) {
-          params.html = () => document.body;
+          params.html = document.body;
           var block = new Function("return " + body)();
           return await block(params);
         };
+
+        function postError(message, url, line) {
+          const error = { message: message, url: url, line: line }
+          window.parent.postMessage({ secret: ${secret}, error: error }, '*');
+        }
+
+        window.onerror = function (message, url, line) {
+          postError(message, url, line);
+        }
 
         window.addEventListener('message', event => {
           if (!event.data || event.data.secret != ${secret}) return;
 
           (async function() {
-            const result = await runAsync(event.data.body, event.data.params);
+            try {
+              const result = await runAsync(event.data.body, event.data.params);
 
-            window.parent.postMessage({ secret: ${secret}, result: result, html: document.body.innerText > 0 }, '*');
+              window.parent.postMessage({ secret: ${secret}, result: result, html: document.body.innerText.length > 0 }, '*');
+            }
+            catch(e) {
+              postError(e.message);
+            }
           })();
         }); 
       </script>
@@ -65,6 +79,11 @@ export default class IFrameExecutor extends Executor {
         window.removeEventListener('message', onResult);
 
         if (!event.data.html) iframe.remove();
+
+        if (event.data.error) {
+          reject(event.data.error);
+          return;
+        }
 
         accept(event.data.result);
       };
