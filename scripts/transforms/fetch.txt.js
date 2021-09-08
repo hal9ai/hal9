@@ -1,10 +1,29 @@
 /**
-  params: [ url ]
+  params:
+    - name: url
+      label: URL
+    - name: resize
+      label: Resize
+      value:
+        - control: select
+          value: no
+          values:
+            - name: no
+              label: No
+            - name: 64
+              label: 64px
+            - name: 128
+              label: 128px
+            - name: 256
+              label: 256px
+            
   environment: worker
   cache: true
 **/
 
 var downloads = [];
+
+if (!url) throw 'Specify the URL field to fetch from';
 
 const fetchWithTimeout = async function(resource, timeout) {
   try {
@@ -34,20 +53,42 @@ const promiseAllInBatches = async (task, batchSize) => {
   return results;
 }
 
+const contentTypeMap = {
+  'image/jpeg': 'jpeg',
+  'image/png': 'png',
+  'image/gif': 'gif'
+}
+
+async function resizeImage(ab, type, size) {
+  const buffer = Buffer.from(ab, 'binary');
+  let src = new Sharp(buffer);
+
+  const mapped = contentTypeMap[type];
+  if (!mapped) throw 'Type ' + type + ' is unsupported';
+
+  await src[mapped]();
+  await src.resize(size, null);
+  const rb = await src.toBuffer();
+  return rb;
+}
+
 data.map(e => {
-  const promise = fetchWithTimeout(e[url], 20000)
-    .then(e => {
-      if (typeof(e) == 'string') return { data: e };
-      return e.arrayBuffer().then(x => {
-        return {
-          data: 'data:' + e.headers.get('content-type') + ';base64,' + btoa(x),
-        }
-      });
-    })
+  const promise = async function() {
+    var fetched = await fetchWithTimeout(e[url], 20000);
+    if (typeof(fetched) == 'string') return { data: fetched };
 
-  downloads.push(promise);
+    var ab = await fetched.arrayBuffer();
+    const contentType = fetched.headers.get('content-type');
+    
+    if (resize !== 'no') ab = await resizeImage(ab, contentType, parseInt(resize));
+    return {
+      data: 'data:' + contentType + ';base64,' + btoa(ab),
+    }
+  };
+
+  downloads.push(promise());
 });
-
+ 
 const downloaded = await promiseAllInBatches(downloads, 10)
   .then((data) => data)
   .catch((error) => data.map(e => {
