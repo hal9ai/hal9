@@ -2,7 +2,7 @@ import defaultClone from './clone';
 
 import * as aq from 'arquero';
 
-const arqueroTest = (e) => e && typeof(e.columnNames) === 'function';
+const arqueroTest = (e) => e && typeof(e._data) === 'object';
 
 const arqueroColumns = (e) => e.columnNames();
 
@@ -16,6 +16,15 @@ const arqueroDeserialize = (e) => {
 
 const arqueroIsSerialized = (e) => /{\"schema\":/g.test(e)
 
+const arqueroEnsure = (e) => {
+  var columns = {};
+  var data = event.data.result.data._data;
+
+  Object.keys(data).forEach(e => columns[e] = data[e].data);
+
+  return aq.table(columns);
+}
+
 
 const danfoTest = (e) => e && typeof(e.col_data_tensor) === 'object';
 
@@ -27,7 +36,9 @@ const danfoSerialize = (e) => e;
 
 const danfoDeserialize = (e) => e;
 
-const danfoIsSerialized = (e) => false
+const danfoIsSerialized = (e) => false;
+
+const danfoEnsure = (e) => e;
 
 
 const arrayTest = (e) => Array.isArray(e) && (e.length == 0 || typeof(e[0]) == 'object');
@@ -40,7 +51,9 @@ const arraySerialize = (e) => e;
 
 const arrayDeserialize = (e) => e;
 
-const arrayIsSerialized = (e) => false
+const arrayIsSerialized = (e) => false;
+
+const arrayEnsure = (e) => e;
 
 
 const generalized = [
@@ -51,6 +64,7 @@ const generalized = [
     serialize: arqueroSerialize,
     deserialiaze: arqueroDeserialize,
     serialized: arqueroIsSerialized,
+    ensure: arqueroEnsure,
   },
   {
     test: danfoTest,
@@ -59,6 +73,7 @@ const generalized = [
     serialize: danfoSerialize,
     deserialiaze: danfoDeserialize,
     serialized: danfoIsSerialized,
+    ensure: danfoEnsure,
   },
   {
     test: arrayTest,
@@ -67,6 +82,7 @@ const generalized = [
     serialize: arraySerialize,
     deserialiaze: arrayDeserialize,
     serialized: arrayIsSerialized,
+    ensure: arrayEnsure,
   },
 ];
 
@@ -98,5 +114,10 @@ export const deserialiaze = (df) => {
 export const isSerialized = (df) => {
   const type = generalized.find(maybe => maybe.serialized(df));
   return type ? true : false;
+}
+
+export const ensure = (df) => {
+  const type = generalized.find(maybe => maybe.test(df));
+  return type ? type.ensure(df) : [];
 }
 
