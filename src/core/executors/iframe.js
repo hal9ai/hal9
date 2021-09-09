@@ -30,7 +30,6 @@ export default class IFrameExecutor extends Executor {
     iframe.style.width = '100%';
     iframe.style.height = '100%';
 
-
     var deps = '<!-- No Hal9 dependencies -->';
     if (header.deps) deps = header.deps.map(dep => `      <script src='${dep}'></script>`).join('\n');
 
@@ -45,8 +44,7 @@ export default class IFrameExecutor extends Executor {
         };
 
         function postError(message, url, line) {
-          const error = { message: message, url: url, line: line }
-          window.parent.postMessage({ secret: ${secret}, error: error }, '*');
+          window.parent.postMessage({ secret: ${secret}, error: message }, '*');
         }
 
         window.onerror = function (message, url, line) {
