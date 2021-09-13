@@ -1,7 +1,7 @@
 import * as workers from './workers'
 import * as environment from './utils/environment'
 
-async runPipelineRemote(pipelineid) {
+export const runPipelineRemote = async (pipelineid) => {
   var workerUrl = await workers.getValidWorkerUrl();
   const pipelineurl = environment.getServerUrl() + '/?sharedPipeline=' + pipelineid;
 
