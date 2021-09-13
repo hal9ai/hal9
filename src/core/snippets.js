@@ -66,11 +66,11 @@ export const parseParams = (code /*: string */) /*: flatparams */ => {
   return header.params;
 }
 
-export const getFunctionBody = async function(code /*: string */, params /*: params */) /*: string */ {
+export const getFunctionBody = async function(code /*: string */, params /*: params */, nodeps /*: boolean */) /*: string */ {
   const name = 'snippet' + Math.floor(Math.random() * 10000000);
 
   const header = parseHeader(code);
-  const deps = header.deps;
+  const deps = !nodeps ? header.deps : [];
   const output = header.output;
 
   const depscode = await Promise.all(deps.map(dep => {
@@ -103,7 +103,7 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
 }
 
 export const getFunction = async function(code /*: string */, params /*: params */) /*: Promise<func> */ {
-  const body = await getFunctionBody(code, params);
+  const body = await getFunctionBody(code, params, false);
 
   // $FlowFixMe
   return new Function("return " + body)();

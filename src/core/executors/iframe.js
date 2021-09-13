@@ -6,18 +6,21 @@ import * as interpreter from '../interpreters/interpreter';
 import clone from '../utils/clone';
 import * as datasets from '../datasets';
 
+import * as dataframe from '../utils/dataframe';
+
 export default class IFrameExecutor extends Executor {
   async runStep() {
     if (!Object.keys(this.context).includes('html'))
       throw('Steps using \'iframe\' environment require \'html\' callback');
 
     const context = { html: html };
-    var params = localparams.paramsForFunction(this.params, this.inputs, this.deps, context);
+    var params = localparams.paramsForFunction(this.params, this.inputs, {}, context);
 
     params = localparams.fetchDatasets(params);
 
     const interpreted = interpreter.interpret(this.script, this.language);
-    var funcBody = await snippets.getFunctionBody(interpreted, params);
+    var funcBody = await snippets.getFunctionBody(interpreted, params, true);
+    const header = snippets.parseHeader(interpreted);
 
     var html = this.context['html'](this.step);
    
@@ -27,22 +30,39 @@ export default class IFrameExecutor extends Executor {
     iframe.style.width = '100%';
     iframe.style.height = '100%';
 
+    var deps = '<!-- No Hal9 dependencies -->';
+    if (header.deps) deps = header.deps.map(dep => `      <script src='${dep}'></script>`).join('\n');
+
     var secret = Math.random();
     var content = `
+      ${deps}
       <script>
         async function runAsync(body, params) {
-          params.html = () => document.body;
+          params.html = document.body;
           var block = new Function("return " + body)();
           return await block(params);
         };
+
+        function postError(message, url, line) {
+          window.parent.postMessage({ secret: ${secret}, error: message }, '*');
+        }
+
+        window.onerror = function (message, url, line) {
+          postError(message, url, line);
+        }
 
         window.addEventListener('message', event => {
           if (!event.data || event.data.secret != ${secret}) return;
 
           (async function() {
-            const result = await runAsync(event.data.body, event.data.params);
+            try {
+              const result = await runAsync(event.data.body, event.data.params);
 
-            window.parent.postMessage({ secret: ${secret}, result: result, html: document.body.innerText > 0 }, '*');
+              window.parent.postMessage({ secret: ${secret}, result: result, html: document.body.innerText.length > 0 }, '*');
+            }
+            catch(e) {
+              postError(e.message);
+            }
           })();
         }); 
       </script>
@@ -66,6 +86,11 @@ export default class IFrameExecutor extends Executor {
 
         if (!event.data.html) iframe.remove();
 
+        if (event.data.error) {
+          reject(event.data.error);
+          return;
+        }
+
         accept(event.data.result);
       };
 
@@ -75,6 +100,13 @@ export default class IFrameExecutor extends Executor {
     params.html = params.hal9 = 'iframe';
     iframe.contentWindow.postMessage({ secret: secret, body: funcBody, params: params }, '*');
     var result = await waitResponse;
+
+    // data frames can loose their prototype functions when crossing the iframe boundary
+    Object.keys(result).forEach(key => {
+      if (dataframe.isDataFrame(result[key])) {
+        result[key] = dataframe.ensure(result[key]);
+      }
+    })
 
     /*
     if (this.callbacks && this.callbacks.onInvalidate) {

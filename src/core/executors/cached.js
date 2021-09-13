@@ -1,13 +1,14 @@
 import Executor from './definition'
-import * as snippets from '../snippets';
+import * as snippets from '../snippets'
 
 import RemoteExecutor from './remote'
 import LocalExecutor from './local'
+import IframeExecutor from './iframe'
 
-import * as dataframe from '../utils/dataframe';
-import clone from '../utils/clone';
+import * as dataframe from '../utils/dataframe'
+import clone from '../utils/clone'
 
-import md5 from 'crypto-js/md5';
+import md5 from 'crypto-js/md5'
 
 import { isElectron } from '../utils/environment'
 
@@ -59,13 +60,15 @@ export default class CachedExecutor extends Executor {
         metadata.environment = isElectron() ? undefined : 'worker';
       }
 
-      var executor = null;
-      if (metadata.environment === 'worker') {
-        executor = new RemoteExecutor(this.inputs, this.step, this.context, this.script, this.params, this.deps, this.state, this.callbacks);
-      }
-      else {
-        executor = new LocalExecutor(this.inputs, this.step, this.context, this.script, this.params, this.deps, this.state, this.callbacks);
-      }
+      var executorClass = null;
+      if (metadata.environment === 'worker')
+        executorClass = RemoteExecutor;
+      else if (metadata.environment === 'iframe')
+        executorClass = IframeExecutor;
+      else
+        executorClass = LocalExecutor;
+
+      var executor = new executorClass(this.inputs, this.step, this.context, this.script, this.params, this.deps, this.state, this.language, this.callbacks);
 
       result = await executor.runStep();
     }
