@@ -16,7 +16,8 @@
               label: 128px
             - name: 256
               label: 256px
-            
+            - name: 512
+              label: 512px
   environment: worker
   cache: true
 **/
@@ -56,7 +57,8 @@ const promiseAllInBatches = async (task, batchSize) => {
 const contentTypeMap = {
   'image/jpeg': 'jpeg',
   'image/png': 'png',
-  'image/gif': 'gif'
+  'image/gif': 'gif',
+  'image/webp': 'webp',
 }
 
 async function resizeImage(ab, type, size) {
@@ -68,8 +70,10 @@ async function resizeImage(ab, type, size) {
 
   await src[mapped]();
   await src.resize(size, null);
+  const metadata = await src.metadata();
+  if (metadata.icc) delete metadata.icc; 
   const rb = await src.toBuffer();
-  return rb;
+  return [ rb, metadata ];
 }
 
 data.map(e => {
@@ -80,9 +84,13 @@ data.map(e => {
     var ab = await fetched.arrayBuffer();
     const contentType = fetched.headers.get('content-type');
     
-    if (resize !== 'no') ab = await resizeImage(ab, contentType, parseInt(resize));
+    var metadata = undefined;
+    if (resize !== 'no')
+      [ ab, metadata ] = await resizeImage(ab, contentType, parseInt(resize));
+    
     return {
       data: 'data:' + contentType + ';base64,' + btoa(ab),
+      metadata: metadata
     }
   };
 
