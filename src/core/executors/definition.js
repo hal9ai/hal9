@@ -1,6 +1,7 @@
 
 export default class Executor {
-  constructor(inputs, step, context, script, params, deps, state, language, callbacks, pipelinename) {
+  constructor(metadata, inputs, step, context, script, params, deps, state, language, callbacks, pipelinename) {
+    this.metadata = metadata;
     this.inputs = inputs;
     this.step = step;
     this.context = context;

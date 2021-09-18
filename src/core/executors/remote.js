@@ -7,7 +7,7 @@ export default class RemoteExecutor extends Executor {
 
     var res = await fetch(workerUrl + '/execute', {
       method: 'POST',
-      body: JSON.stringify({ operation: 'runstep', params: [ this.inputs, this.step, this.context, this.script, this.params, this.language, this.pipelinename ] }),
+      body: JSON.stringify({ operation: 'runstep', params: [ this.metadata, this.inputs, this.step, this.context, this.script, this.params, this.language, this.pipelinename ] }),
       headers: { 'Content-Type': 'application/json' }
     });
 

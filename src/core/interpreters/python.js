@@ -1,7 +1,18 @@
 
-export default function(script, params, inputs, deps, context) {
+export default function(script, header) {
+
+  const params = header.params ? header.params.map(e => e.name) : [];
+  const inputs = header.input ? header.input : [];
+
+  const paramsAll = params;
+  paramsAll.push(...inputs);
+
+  const paramNodeDef = paramsAll.map(e => `${e}: ${e}`).join(', ');
+
+  const paramPythonDef = paramsAll.map(e => `${e} = hal9__params['${e}']`).join('\r\n');
+
   return  `
-const params = { data: data };
+const params = { ${paramNodeDef} };
 
 const readFileAsync = util.promisify(fs.readFile)
 const writeFileAsync = util.promisify(fs.writeFile)
@@ -25,7 +36,7 @@ hal9__params = {}
 with open('\${paramsname}') as json_file:
   hal9__params = json.load(json_file)
   
-data = hal9__params['data']
+${paramPythonDef}
 
 ${script}
 

@@ -11,15 +11,15 @@ export const executorFromMetadata = (metadata, inputs, step, context, script, pa
   }
 
   if (metadata.cache) {
-    return new CachedExecutor(inputs, step, context, script, params, deps, state, language, callbacks, pipelinename);
+    return new CachedExecutor(metadata, inputs, step, context, script, params, deps, state, language, callbacks, pipelinename);
   }
   else if (metadata.environment === 'worker') {
-    return new RemoteExecutor(inputs, step, context, script, params, deps, state, language, callbacks, pipelinename);
+    return new RemoteExecutor(metadata, inputs, step, context, script, params, deps, state, language, callbacks, pipelinename);
   }
   else if (metadata.environment === 'iframe') {
-    return new IFrameExecutor(inputs, step, context, script, params, deps, state, language, callbacks, pipelinename);
+    return new IFrameExecutor(metadata, inputs, step, context, script, params, deps, state, language, callbacks, pipelinename);
   }
   else {
-    return new LocalExecutor(inputs, step, context, script, params, deps, state, language, callbacks, pipelinename);
+    return new LocalExecutor(metadata, inputs, step, context, script, params, deps, state, language, callbacks, pipelinename);
   }
 }
