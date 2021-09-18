@@ -5,21 +5,21 @@ import IFrameExecutor from './iframe'
 
 import { isElectron } from '../utils/environment'
 
-export const executorFromMetadata = (metadata, inputs, step, context, script, params, deps, state, language, callbacks) => {
+export const executorFromMetadata = (metadata, inputs, step, context, script, params, deps, state, language, callbacks, pipelinename) => {
   if (metadata.environment === 'desktop') {
     metadata.environment = isElectron() ? undefined : 'worker';
   }
 
   if (metadata.cache) {
-    return new CachedExecutor(inputs, step, context, script, params, deps, state, language, callbacks);
+    return new CachedExecutor(inputs, step, context, script, params, deps, state, language, callbacks, pipelinename);
   }
   else if (metadata.environment === 'worker') {
-    return new RemoteExecutor(inputs, step, context, script, params, deps, state, language, callbacks);
+    return new RemoteExecutor(inputs, step, context, script, params, deps, state, language, callbacks, pipelinename);
   }
   else if (metadata.environment === 'iframe') {
-    return new IFrameExecutor(inputs, step, context, script, params, deps, state, language, callbacks);
+    return new IFrameExecutor(inputs, step, context, script, params, deps, state, language, callbacks, pipelinename);
   }
   else {
-    return new LocalExecutor(inputs, step, context, script, params, deps, state, language, callbacks);
+    return new LocalExecutor(inputs, step, context, script, params, deps, state, language, callbacks, pipelinename);
   }
 }

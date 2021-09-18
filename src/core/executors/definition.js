@@ -1,6 +1,6 @@
 
 export default class Executor {
-  constructor(inputs, step, context, script, params, deps, state, language, callbacks) {
+  constructor(inputs, step, context, script, params, deps, state, language, callbacks, pipelinename) {
     this.inputs = inputs;
     this.step = step;
     this.context = context;
@@ -10,6 +10,7 @@ export default class Executor {
     this.state = state;
     this.language = language;
     this.callbacks = callbacks;
+    this.pipelinename = pipelinename;
   }
 
   async runStep() {
