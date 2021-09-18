@@ -8,7 +8,7 @@ const languageMap = {
   markdown: markdown,
   html: html,
   python: python,
-  rstats: rstats,
+  r: rstats,
   pyodide: pyodide
 }
 
