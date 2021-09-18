@@ -68,7 +68,7 @@ export default class CachedExecutor extends Executor {
       else
         executorClass = LocalExecutor;
 
-      var executor = new executorClass(this.inputs, this.step, this.context, this.script, this.params, this.deps, this.state, this.language, this.callbacks);
+      var executor = new executorClass(this.inputs, this.step, this.context, this.script, this.params, this.deps, this.state, this.language, this.callbacks, this.pipelinename);
 
       result = await executor.runStep();
     }

@@ -2,6 +2,7 @@ import * as environment from '../core/utils/environment';
 import * as workers from '../core/workers';
 import * as pipelines from '../core/pipelines';
 import * as datasets from '../core/datasets';
+import * as pipelineremote from '../core/pipelineremote';
 
 import LocalExecutor from '../core/executors/local';
 
@@ -62,6 +63,7 @@ export async function run(pipeline, context) {
   var dispatch = {
     'function': runRemote,
     'array': runSteps,
+    'string': pipelineremote.runPipelineRemote,
   }
 
   await dispatch[type](pipeline, context);

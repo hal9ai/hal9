@@ -34,10 +34,23 @@ const fixHeaderEncoding = (header /* string */) /*: string */ => {
 export const parseHeader = (code /*: string */) /*: header */ => {
   const error = 'Code requires YAML parameters like /** params: [ param1, param2, param3 ] **/';
 
-  const headers = code.match(/\/\*\*(.|[\r\n])*\*\*\//g);
-  if (!headers || headers.length == 0) return { params: [], input: [ 'data' ], deps: [], output: [ 'data' ] };
+  var header = null;
+  var headers = code.match(/\/\*\*(.|[\r\n])+\*\*\//g);
+  if (!headers || headers.length == 0) {
+    // attempt with python/rstats comments
+    headers = code.match(/##(.|[\r\n])+##/g);
 
-  var header = headers[0].replace(/(^\/\*\*)|(\*\*\/$)/g, '');
+    if (!headers || headers.length == 0) {
+      return { params: [], input: [ 'data' ], deps: [], output: [ 'data' ] };
+    }
+    else {
+      header = headers[0].replace(/((^|[\r\n])##)/g, '');
+    }
+  }
+  else {
+    header = headers[0].replace(/(^\/\*\*)|(\*\*\/$)/g, '');
+  }
+
   var invalid = null;
   var parsed = {};
 

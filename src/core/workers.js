@@ -22,9 +22,10 @@ const serverInfo = async function() {
   return res.json();
 }
 
-const getWorkerUrl = async () => {
+const getWorkerUrl = async (pipelinename) => {
   
-  const workersListUrl = environment.getServerUrl() + '/api/workers';
+  const workerListArguments = !pipelinename ? '' : '?p=' + pipelinename;
+  const workersListUrl = environment.getServerUrl() + '/api/workers' + workerListArguments;
 
   var res = await fetch(workersListUrl)
   if (!res.ok) {
@@ -39,7 +40,7 @@ const getWorkerUrl = async () => {
   return workerUrl;
 }
 
-export const getValidWorkerUrl = async function() {
+export const getValidWorkerUrl = async function(pipelinename) {
   var workerUrl = null;
   var shouldRetry = true;
   var retryCount = 5;
@@ -49,7 +50,7 @@ export const getValidWorkerUrl = async function() {
     let sleepDuration = 5000;
 
     try {
-      workerUrl = await getWorkerUrl();
+      workerUrl = await getWorkerUrl(pipelinename);
     } catch (error) {
       details = 'Failed to get workers url.';
       console.log(details);

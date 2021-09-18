@@ -391,7 +391,8 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
       deps,
       state,
       script.language,
-      callbacks);
+      callbacks,
+      pipeline.metadata ? pipeline.metadata.name : undefined);
 
     result = await executor.runStep();
 

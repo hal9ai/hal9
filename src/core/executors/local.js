@@ -13,7 +13,7 @@ export default class LocalExecutor extends Executor {
     // retrieve cached hal9 datasets
     params = localparams.fetchDatasets(params);
 
-    const interpreted = interpreter.interpret(this.script, this.language);
+    const interpreted = interpreter.interpret(this.script, this.language, this.params, this.inputs, this.deps, context);
     var result = await snippets.runFunction(interpreted, params);
 
     if (this.callbacks && this.callbacks.onInvalidate) {
