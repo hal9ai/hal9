@@ -48,7 +48,7 @@ with open('\${outputname}', 'w') as json_file:
   json.dump(hal9__output, json_file)
 \`);
 
-const { stdout, stderr } = await exec('python3 ' + scriptname, { timeout: 5000 } );
+const { stdout, stderr } = await exec('python3 ' + scriptname, { timeout: 30000 } );
 
 const rawoutput = await readFileAsync(outputname)
 const output = JSON.parse(rawoutput);

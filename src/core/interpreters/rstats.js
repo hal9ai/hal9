@@ -42,7 +42,7 @@ hal9__output = list(data = data)
 jsonlite::write_json(hal9__output, '\${outputname}', pretty = FALSE)
 \`);
 
-const { stdout, stderr } = await exec('Rscript ' + scriptname, { timeout: 5000 } );
+const { stdout, stderr } = await exec('Rscript ' + scriptname, { timeout: 30000 } );
 
 const rawoutput = await readFileAsync(outputname)
 const output = JSON.parse(rawoutput);
