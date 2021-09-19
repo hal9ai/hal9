@@ -284,6 +284,9 @@ const createInt = (steps /*: steps */, previous /*: pipeline */ ) /*: pipeline *
     }
 
     setParamsInt(pipeline, step.id, params);
+
+    const preStep = previous.steps ? previous.steps.filter(e => e.id === pipeline.steps[idx].id) : [];
+    pipeline.steps[idx].language = preStep.length == 1 ? preStep[0].language : undefined;
   });
 
   return pipeline;
