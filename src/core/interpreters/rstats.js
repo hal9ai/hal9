@@ -31,11 +31,6 @@ const scriptname = path.resolve(scriptpath, 'code.py');
 const outputname = path.resolve(scriptpath, 'output.json');
 await writeFileAsync(scriptname, \`
 
-if (length(which(installed.packages()[, "Package"] == "jsonlite")) == 0) {
-  options(repos = c(CRAN = paste0("http://cran.", "r", "studio", ".com")))
-  install.packages("jsonlite")
-}
-
 hal9__params = jsonlite::read_json('\${paramsname}')
   
 ${paramRDef}
