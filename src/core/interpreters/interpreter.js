@@ -8,12 +8,12 @@ const languageMap = {
   markdown: markdown,
   html: html,
   python: python,
-  rstats: rstats,
+  r: rstats,
   pyodide: pyodide
 }
 
-export const interpret = (script, language, params, inputs, deps, context) => {
+export const interpret = (script, language, header) => {
   const interpreter = languageMap[language];
 
-  return interpreter ? interpreter(script, params, inputs, deps, context) : script;
+  return interpreter ? interpreter(script, header) : script;
 }

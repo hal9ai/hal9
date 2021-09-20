@@ -44,7 +44,7 @@ export const parseHeader = (code /*: string */) /*: header */ => {
       return { params: [], input: [ 'data' ], deps: [], output: [ 'data' ] };
     }
     else {
-      header = headers[0].replace(/((^|[\r\n])##)/g, '');
+      header = headers[0].replace(/(^##)/g, '').replace(/([\r\n]##)/g, '\r\n');
     }
   }
   else {

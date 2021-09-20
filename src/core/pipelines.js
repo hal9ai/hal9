@@ -64,6 +64,8 @@ import websitetxt from '../../scripts/export/website.txt.js';
 import copytxt from '../../scripts/utils/copy.txt.js';
 import pastetxt from '../../scripts/utils/paste.txt.js';
 import shelltxt from '../../scripts/utils/shell.txt.js';
+import pythontxt from '../../scripts/utils/python.txt';
+import rstatstxt from '../../scripts/utils/rstats.txt';
 
 import exportcsvtxt from '../../scripts/export/csv.txt.js';
 
@@ -164,6 +166,8 @@ const scripts = {
   copy: { script:  copytxt, language: 'js' },
   paste: { script:  pastetxt, language: 'js' },
   shell: { script:  shelltxt, language: 'js' },
+  python: { script:  pythontxt, language: 'python' },
+  r: { script:  rstatstxt, language: 'r' },
   // export
   exportcsv: { script:  exportcsvtxt, language: 'js' },
 }
@@ -280,6 +284,9 @@ const createInt = (steps /*: steps */, previous /*: pipeline */ ) /*: pipeline *
     }
 
     setParamsInt(pipeline, step.id, params);
+
+    const preStep = previous.steps ? previous.steps.filter(e => e.id === pipeline.steps[idx].id) : [];
+    pipeline.steps[idx].language = preStep.length == 1 ? preStep[0].language : undefined;
   });
 
   return pipeline;
