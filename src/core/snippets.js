@@ -35,15 +35,17 @@ export const parseHeader = (code /*: string */) /*: header */ => {
   const error = 'Code requires YAML parameters like /** params: [ param1, param2, param3 ] **/';
 
   var header = null;
+  var hashtagHeader = false;
   var headers = code.match(/\/\*\*(.|[\r\n])+\*\*\//g);
   if (!headers || headers.length == 0) {
     // attempt with python/rstats comments
-    headers = code.match(/##(.|[\r\n])+##/g);
+    headers = code.match(/(##[^#\n]+[\r\n])+/g);
 
     if (!headers || headers.length == 0) {
       return { params: [], input: [ 'data' ], deps: [], output: [ 'data' ] };
     }
     else {
+      hashtagHeader = true;
       header = headers[0].replace(/(^##)/g, '').replace(/([\r\n]##)/g, '\r\n');
     }
   }
@@ -60,7 +62,13 @@ export const parseHeader = (code /*: string */) /*: header */ => {
     parsed = yaml.safeLoad(header);
   }
   catch(e) {
-    invalid = e.toString();
+    if (hashtagHeader && !header.includes(':')) {
+      // markdown blocks use ## so we ignore errors when is not an actual header
+      return { params: [], input: [ 'data' ], deps: [], output: [ 'data' ] };
+    }
+    else {
+      invalid = e.toString();
+    }
   }
 
   return Object.assign(parsed, {
