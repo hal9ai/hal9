@@ -9,7 +9,7 @@ export default function(script, header) {
 
   const paramNodeDef = paramsAll.map(e => `${e}: ${e}`).join(', ');
 
-  const paramRDef = paramsAll.map(e => `${e} = hal9__params['${e}']`).join('\r\n');
+  const paramRDef = paramsAll.map(e => `${e} = hal9__params[['${e}']]`).join('\r\n');
 
   return  `
 const params = { ${paramNodeDef} };
@@ -27,7 +27,7 @@ Object.keys(params).map(e => paramsserial[e] = params[e])
 const paramsname = path.resolve(scriptpath, 'params.json');
 await writeFileAsync(paramsname, JSON.stringify(paramsserial));
 
-const scriptname = path.resolve(scriptpath, 'code.py');
+const scriptname = path.resolve(scriptpath, 'code.R');
 const outputname = path.resolve(scriptpath, 'output.json');
 await writeFileAsync(scriptname, \`
 
