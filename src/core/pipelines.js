@@ -66,6 +66,7 @@ import pastetxt from '../../scripts/utils/paste.txt.js';
 import shelltxt from '../../scripts/utils/shell.txt.js';
 import pythontxt from '../../scripts/utils/python.txt';
 import rstatstxt from '../../scripts/utils/rstats.txt';
+import tojsontxt from '../../scripts/utils/tojson.txt';
 
 import exportcsvtxt from '../../scripts/export/csv.txt.js';
 
@@ -168,6 +169,7 @@ const scripts = {
   shell: { script:  shelltxt, language: 'js' },
   python: { script:  pythontxt, language: 'python' },
   r: { script:  rstatstxt, language: 'r' },
+  tojson: { script: tojsontxt, language: 'js' },
   // export
   exportcsv: { script:  exportcsvtxt, language: 'js' },
 }
