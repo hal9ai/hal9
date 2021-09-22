@@ -37,7 +37,7 @@ export const getId = () => {
     hal9env = process.env.HAL9_ENV
   }
 
-  // either 'local', 'dev' or 'alpha'
+  // either 'local', 'dev' or 'prod'
   return hal9env;
 }
 
