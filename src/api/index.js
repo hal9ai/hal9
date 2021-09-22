@@ -38,11 +38,11 @@ const runRemote = async (lambda, context) => {
 const runPipeline = async (pipelineid, context) => {
   var updated = await pipelines.run(
     pipelineid,
-    {
+    Object.assign(context, {
       html: function(step) {
         return step.html ? document.getElementById(step.html) : undefined;
       }
-    },
+    }),
     function(pipeline, step, result, error, details) {
     }
   );

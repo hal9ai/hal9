@@ -382,6 +382,17 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
       if (!Object.keys(params).includes(param)) params[param] = clone(paramsDefault[param]);
     });
 
+    // add context parameters
+    if (typeof(window) != 'undefined' && window.hal9 && window.hal9.params) context.params = window.hal9.params;
+    if (context.params) {
+      var paramIdx = Object.keys(params).length > 0 ? Math.max(...Object.keys(params).map(e => params[e].id ? params[e].id : 0)) : 0;
+      Object.keys(context.params).forEach(param => {
+        params[param] = { id: paramIdx++, name: param, label: param, value: [{
+          value: clone(context.params[param]) 
+        }] };
+      });
+    }
+
     const deps = await getGlobalDeps();
 
     // add hal9 api to deps
