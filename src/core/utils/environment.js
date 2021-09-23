@@ -50,3 +50,20 @@ export const getServerUrl = () => {
 
   return 'https://api.devel.hal9.com';
 }
+
+export const getWebsiteUrl = () => {
+  const id = getId();
+  const map = {
+    local: 'http://localhost:5000',
+    dev: 'https://devel.hal9.com',
+    prod: 'https://hal9.com',
+  };
+
+  if (!map[id]) throw 'The environment \'' + id + '\' is not mapped to a frontend server.'
+
+  return map[id];
+}
+
+export const getLibraryUrl = () => {
+  return getWebsiteUrl() + '/hal9.web.js';
+}

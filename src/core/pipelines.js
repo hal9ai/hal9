@@ -74,6 +74,7 @@ import * as snippets from './snippets';
 import * as operations from './utils/operations';
 import * as dataframe from './utils/dataframe';
 import clone from './utils/clone';
+import * as environment from './utils/environment'
 
 import * as executors from './executors/executors';
 
@@ -842,12 +843,13 @@ export const invalidateStep = (pipelineid /*: pipelineid */, sid /*: number */) 
 }
 
 export const getHtml = (pipelineid /* pipelineid */) /* string */ => {
+  const libraryUrl = environment.getLibraryUrl();
   return `<script>
   var embedid = 'hal9' + (Math.floor(1000 * Math.random()));
   var host = document.createElement('div'); host.id = embedid; host.style = 'width: 100%; height: 100%; max-width: 100%; max-height: 100%;';
   document.currentScript.parentElement.appendChild(host);
   var hal9script = document.createElement('script');
-  hal9script.setAttribute('src','https://alpha.hal9.ai/web/hal9.web.js');
+  hal9script.setAttribute('src','${libraryUrl}');
   document.head.appendChild(hal9script);
   window.hal9 = { mode: 'embedded', id: embedid, pipeline: '` + btoa(unescape(encodeURIComponent(getSaveText(pipelineid, 0)))) + `' };
 </script>`
