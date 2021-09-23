@@ -33,6 +33,7 @@
     - data
     - html
   deps:
+    - https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js
     - https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js
     - 'https://cdn.jsdelivr.net/npm/d3@6'
     - 'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1'
