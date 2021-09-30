@@ -71,7 +71,20 @@ function fileToMediaType(name) {
 
 data = output.data;
 var files = {};
-fileslist.map(e => files[e] = 'data:' + fileToMediaType(e) + ';base64,' + fs.readFileSync(path.resolve(scriptpath, e), { encoding: 'base64' }));
+var plots = [];
+var plot = null;
+
+fileslist.map(e => {
+  const media = fileToMediaType(e);
+  const dataurl = 'data:' + media + ';base64,' + fs.readFileSync(path.resolve(scriptpath, e), { encoding: 'base64' });
+  if (media != 'text/plain') {
+    plot = dataurl;
+    plots.push(dataurl);
+  }
+  else
+    files[e] = dataurl;
+});
+
 
 fs.rmSync(scriptpath, { recursive: true });
   `;
