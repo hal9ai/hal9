@@ -18,7 +18,7 @@ export default class IFrameExecutor extends Executor {
 
     params = localparams.fetchDatasets(params);
 
-    const interpreted = interpreter.interpret(this.script, this.language);
+    const interpreted = interpreter.interpret(this.script, this.language, this.context);
     var funcBody = await snippets.getFunctionBody(interpreted, params, true);
     const header = snippets.parseHeader(interpreted);
 

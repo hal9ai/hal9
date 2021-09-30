@@ -1,5 +1,5 @@
 
-export default function(script, header) {
+export default function(script, header, context) {
 
   const params = header.params ? header.params.map(e => e.name) : [];
   const inputs = header.input ? header.input : [];
@@ -25,6 +25,7 @@ const scriptpath = path.resolve('./rscript/', Math.random().toString());
 if (!fs.existsSync(scriptpath)) fs.mkdirSync(scriptpath);
 
 params["hal9__scriptpath"] = scriptpath;
+params["hal9__context"] = hal9__context;
 
 const paramsname = path.resolve(scriptpath, 'params.json');
 await writeFileAsync(paramsname, JSON.stringify(params));
@@ -35,7 +36,12 @@ await writeFileAsync(scriptname, \`
 
 hal9__params = jsonlite::read_json('\${paramsname}')
 
-options(device = function() png(file.path(hal9__params$hal9__scriptpath, 'hal9__plot%03d.png')))
+hal9__size <- list(
+  width = ifelse(is.null(hal9__params$hal9__context$width) || hal9__params$hal9__context$width == 0, 640, hal9__params$hal9__context$width),
+  height = ifelse(is.null(hal9__params$hal9__context$height) || hal9__params$hal9__context$height == 0, 480, hal9__params$hal9__context$height)
+)
+
+options(device = function() png(file.path(hal9__params$hal9__scriptpath, 'hal9__plot%03d.png'), width = 2 * hal9__size$width, height = 2 * hal9__size$height, res = 326))
   
 ${paramRDef}
 
