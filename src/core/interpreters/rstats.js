@@ -34,7 +34,7 @@ const scriptname = path.resolve(scriptpath, 'code.R');
 const outputname = path.resolve(scriptpath, 'output.json');
 await writeFileAsync(scriptname, \`
 
-hal9__params = jsonlite::read_json('\${paramsname}')
+hal9__params = jsonlite::read_json('\${paramsname}', simplifyVector = TRUE)
 
 hal9__size <- list(
   width = ifelse(is.null(hal9__params$hal9__context$width) || hal9__params$hal9__context$width == 0, 640, hal9__params$hal9__context$width),
