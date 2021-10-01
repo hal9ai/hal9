@@ -14,7 +14,7 @@ export default class IFrameExecutor extends Executor {
       throw('Steps using \'iframe\' environment require \'html\' callback');
 
     const context = { html: html };
-    var params = localparams.paramsForFunction(this.params, this.inputs, {}, context);
+    var params = localparams.paramsForFunction(this.params, this.inputs, {});
 
     params = localparams.fetchDatasets(params);
 

@@ -1,6 +1,6 @@
 import * as datasets from '../datasets';
 
-export const paramsForFunction = (params, inputs, deps, context) => {
+export const paramsForFunction = (params, inputs, deps) => {
   const dictWithScalars = (d) => Object.fromEntries(
     Object.keys(d).map(e => {
       var value = undefined;
@@ -21,7 +21,6 @@ export const paramsForFunction = (params, inputs, deps, context) => {
 
   result = Object.assign(result, inputs);
   result = Object.assign(result, deps);
-  result = Object.assign(result, context);
 
   return result;
 }
