@@ -60,6 +60,9 @@ export const parseHeader = (code /*: string */) /*: header */ => {
 
   try {
     parsed = yaml.safeLoad(header);
+
+    // no header, give default
+    if (parsed === null) parsed = {};
   }
   catch(e) {
     if (hashtagHeader && !header.includes(':')) {
