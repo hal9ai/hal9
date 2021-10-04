@@ -36,6 +36,7 @@ const runRemote = async (lambda, context) => {
 };
 
 const runPipeline = async (pipelineid, context) => {
+  if (!context) context = {};
   var updated = await pipelines.run(
     pipelineid,
     Object.assign(context, {
