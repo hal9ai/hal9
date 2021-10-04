@@ -401,7 +401,8 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
     const deps = await getGlobalDeps();
 
     // add hal9 api to deps
-    deps['hal9'] = api.create(pipelineid, sid, context);
+    var hal9 = (typeof(window) != 'undefined' && window.hal9) ? window.hal9 :  {};
+    deps['hal9'] = Object.assign(hal9, api.create(pipelineid, sid, context));
 
     const script = scriptFromStep(pipeline, step);
     const executor = executors.executorFromMetadata(
