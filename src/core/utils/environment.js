@@ -51,6 +51,16 @@ export const getServerUrl = () => {
   return 'https://api.devel.hal9.com';
 }
 
+export const getServerCachedUrl = () => {
+  const hal9env = getId();
+
+  if (userHal9Env === 'local' || isDevelopment()) return 'http://localhost:5000';
+
+  if (hal9env == 'prod') return 'https://hal9.com';
+
+  return 'https://devel.hal9.com';
+}
+
 export const getWebsiteUrl = () => {
   const id = getId();
   const map = {
