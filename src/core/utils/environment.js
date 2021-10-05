@@ -64,7 +64,7 @@ export const getServerUrl = () => {
 export const getServerCachedUrl = () => {
   const hal9env = getId();
 
-  if (isOtherDevelopment()) return isOtherDevelopment();
+  if (isOtherDevelopment()) return isOtherDevelopment() + ':5000';
 
   if (userHal9Env === 'local' || isDevelopment()) return 'http://localhost:5000';
 
