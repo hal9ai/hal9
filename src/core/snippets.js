@@ -10,8 +10,6 @@ type func = (...args: Array<any>) => any;
 type header = { params: Array<string>, deps: Array<string> };
 */
 
-import iristxt from '../../scripts/datasets/iris.txt.js';
-
 var depsCache = {};
 
 const fixHeaderEncoding = (header /* string */) /*: string */ => {
