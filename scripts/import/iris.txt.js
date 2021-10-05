@@ -1,6 +1,3 @@
-/**
-**/
-
 var data = [
   {
       "Sepal.Length": 5.1,
