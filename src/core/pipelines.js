@@ -272,12 +272,6 @@ const createInt = (steps /*: steps */, previous /*: pipeline */ ) /*: pipeline *
 
     if (step.params) {
       params = step.params;
-      Object.keys(params).forEach(e => {
-        var val = step.params[e];
-        var valArray =  Array.isArray(val) ? val : [ val ];
-        var valEntries = valArray.map(e => ({ value: e }));
-        params[e] = { value: valEntries, name: e };
-      });
     }
 
     if (step.id === undefined) {
@@ -575,13 +569,18 @@ export const updateStep = (pipelineid /*: pipelineid */, step /*: step */) /*: v
 export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step */ => {
   var pipeline = store.get(pipelineid);
 
+  var maxId = getMaxId(pipelineid);
   if (typeof(step.id) === 'undefined') {
-    step.id = (getMaxId(pipelineid) + 1)
+    step.id = maxId + 1;
   }
 
   // avoid overlaping with library scripts defined in pipeline.vue
   if (step.id < 10000) {
-    step.id = 10000
+    step.id = step.id + 10000
+  }
+
+  if (step.id < maxId) {
+    step.id = maxId + 1;
   }
 
   if (typeof(step.name) === 'undefined') {
@@ -592,9 +591,19 @@ export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step
     step.label = step.name;
   }
 
+  if (step.params) {
+    pipeline.params[step.id] = step.params;
+  }
+
   pipeline.steps.push(step);
 
   return step;
+}
+
+export const removeStep = (pipelineid /*: pipelineid */, step /*: step */) /*: void */ => {
+  var pipeline = store.get(pipelineid);
+
+  pipeline.steps = pipeline.steps.filter(e => e.id != step.id)
 }
 
 export const moveStep = (pipelineid /*: pipelineid */, stepid /*: stepid */, change /* number */) /*: void */ => {
