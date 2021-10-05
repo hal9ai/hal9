@@ -33,7 +33,7 @@ export const isOtherDevelopment = () => {
   if (typeof(window) == 'undefined') return null;
 
   if (window.location.origin.includes('mshome.net'))
-    return window.location.origin;
+    return window.location.protocol + "//" + window.location.hostname;
 }
 
 export const getId = () => {
