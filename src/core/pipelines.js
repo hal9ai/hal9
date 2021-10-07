@@ -66,6 +66,7 @@ import pastetxt from '../../scripts/utils/paste.txt.js';
 import shelltxt from '../../scripts/utils/shell.txt.js';
 import pythontxt from '../../scripts/utils/python.txt';
 import rstatstxt from '../../scripts/utils/rstats.txt';
+import tojsontxt from '../../scripts/utils/tojson.txt';
 
 import exportcsvtxt from '../../scripts/export/csv.txt.js';
 
@@ -73,6 +74,7 @@ import * as snippets from './snippets';
 import * as operations from './utils/operations';
 import * as dataframe from './utils/dataframe';
 import clone from './utils/clone';
+import * as environment from './utils/environment'
 
 import * as executors from './executors/executors';
 
@@ -102,74 +104,75 @@ type blocks = Array<block>;
 
 const scripts = {
   // import
-  iris: { script: iristxt, language: 'js' },
-  images: { script:  imagestxt, language: 'js' },
-  importcsv: { script:  importcsvtxt, language: 'js' },
-  importjson: { script:  importjsontxt, language: 'js' },
-  importexcel: { script:  importexceltxt, language: 'js' },
-  twitter: { script:  twittertxt, language: 'js' },
-  webcam: { script:  webcamtxt, language: 'js' },
-  airbnb: { script:  airbnbtxt, language: 'js' },
+  iris: { script: iristxt, language: 'javascript' },
+  images: { script:  imagestxt, language: 'javascript' },
+  importcsv: { script:  importcsvtxt, language: 'javascript' },
+  importjson: { script:  importjsontxt, language: 'javascript' },
+  importexcel: { script:  importexceltxt, language: 'javascript' },
+  twitter: { script:  twittertxt, language: 'javascript' },
+  webcam: { script:  webcamtxt, language: 'javascript' },
+  airbnb: { script:  airbnbtxt, language: 'javascript' },
   // webscraping
-  webtables: { script:  webtablestxt, language: 'js' },
-  webimages: { script:  webimagestxt, language: 'js' },
+  webtables: { script:  webtablestxt, language: 'javascript' },
+  webimages: { script:  webimagestxt, language: 'javascript' },
   // transforms
-  convert: { script:  converttxt, language: 'js' },
-  explode: { script:  explodetxt, language: 'js' },
-  fetch: { script:  fetchtxt, language: 'js' },
-  filter: { script:  filtertxt, language: 'js' },
-  gather: { script:  gathertxt, language: 'js' },
-  join: { script:  jointxt, language: 'js' },
-  range: { script:  rangetxt, language: 'js' },
-  derive: { script:  derivetxt, language: 'js' },
-  pyodide: { script:  pyodidetxt, language: 'js' },
-  sample: { script:  sampletxt, language: 'js' },
-  select: { script:  selecttxt, language: 'js' },
-  slice: { script:  slicetxt, language: 'js' },
-  summarize: { script:  summarizetxt, language: 'js' },
-  sort: { script:  sorttxt, language: 'js' },
-  sma: { script:  smatxt, language: 'js' },
-  sql: { script:  sqltxt, language: 'js' },
-  subsprev: { script:  subsprevtxt, language: 'js' },
-  window: { script:  windowtxt, language: 'js' },
-  column: { script:  columntxt, language: 'js' },
+  convert: { script:  converttxt, language: 'javascript' },
+  explode: { script:  explodetxt, language: 'javascript' },
+  fetch: { script:  fetchtxt, language: 'javascript' },
+  filter: { script:  filtertxt, language: 'javascript' },
+  gather: { script:  gathertxt, language: 'javascript' },
+  join: { script:  jointxt, language: 'javascript' },
+  range: { script:  rangetxt, language: 'javascript' },
+  derive: { script:  derivetxt, language: 'javascript' },
+  pyodide: { script:  pyodidetxt, language: 'javascript' },
+  sample: { script:  sampletxt, language: 'javascript' },
+  select: { script:  selecttxt, language: 'javascript' },
+  slice: { script:  slicetxt, language: 'javascript' },
+  summarize: { script:  summarizetxt, language: 'javascript' },
+  sort: { script:  sorttxt, language: 'javascript' },
+  sma: { script:  smatxt, language: 'javascript' },
+  sql: { script:  sqltxt, language: 'javascript' },
+  subsprev: { script:  subsprevtxt, language: 'javascript' },
+  window: { script:  windowtxt, language: 'javascript' },
+  column: { script:  columntxt, language: 'javascript' },
   // visualizations
-  bubbles: { script:  bubblestxt, language: 'js' },
-  network: { script:  networktxt, language: 'js' },
-  threejs: { script:  threejstxt, language: 'js' },
-  tweets: { script:  tweetstxt, language: 'js' },
-  wordcloud: { script:  wordcloudtxt, language: 'js' },
-  mapchart: { script:  mapcharttxt, language: 'js' },
+  bubbles: { script:  bubblestxt, language: 'javascript' },
+  network: { script:  networktxt, language: 'javascript' },
+  threejs: { script:  threejstxt, language: 'javascript' },
+  tweets: { script:  tweetstxt, language: 'javascript' },
+  wordcloud: { script:  wordcloudtxt, language: 'javascript' },
+  mapchart: { script:  mapcharttxt, language: 'javascript' },
   gallery: { script:  gallerytxt, language: 'html' },
   // predictions
-  mobilenet: { script:  mobilenettxt, language: 'js' },
-  timeseriespredict: { script:  timeseriespredicttxt, language: 'js' },
-  regressionpredict: { script:  regressionpredicttxt, language: 'js' },
-  sentiment: { script:  sentimenttxt, language: 'js' },
-  bodypix: { script:  bodypixtxt, language: 'js' },
-  knn: { script:  knntxt, language: 'js' },
+  mobilenet: { script:  mobilenettxt, language: 'javascript' },
+  timeseriespredict: { script:  timeseriespredicttxt, language: 'javascript' },
+  regressionpredict: { script:  regressionpredicttxt, language: 'javascript' },
+  sentiment: { script:  sentimenttxt, language: 'javascript' },
+  bodypix: { script:  bodypixtxt, language: 'javascript' },
+  knn: { script:  knntxt, language: 'javascript' },
   // train
-  timeseriesmodel: { script:  timeseriesmodeltxt, language: 'js' },
+  timeseriesmodel: { script:  timeseriesmodeltxt, language: 'javascript' },
   // charts
-  barchart: { script:  barcharttxt, language: 'js' },
-  scatterchart: { script:  scattercharttxt, language: 'js' },
-  errorbarchart: { script:  errorbarcharttxt, language: 'js' },
-  heatmapchart: { script:  heatmapcharttxt, language: 'js' },
-  histogramchart: { script:  histogramcharttxt, language: 'js' },
-  linechart: { script:  linecharttxt, language: 'js' },
-  sankeychart: { script:  sankeycharttxt, language: 'js' },
-  treemapchart: { script:  treemapcharttxt, language: 'js' },
-  waterfallchart: { script:  waterfallcharttxt, language: 'js' },
+  barchart: { script:  barcharttxt, language: 'javascript' },
+  scatterchart: { script:  scattercharttxt, language: 'javascript' },
+  errorbarchart: { script:  errorbarcharttxt, language: 'javascript' },
+  heatmapchart: { script:  heatmapcharttxt, language: 'javascript' },
+  histogramchart: { script:  histogramcharttxt, language: 'javascript' },
+  linechart: { script:  linecharttxt, language: 'javascript' },
+  sankeychart: { script:  sankeycharttxt, language: 'javascript' },
+  treemapchart: { script:  treemapcharttxt, language: 'javascript' },
+  waterfallchart: { script:  waterfallcharttxt, language: 'javascript' },
   // website
-  website: { script:  websitetxt, language: 'js' },
+  website: { script:  websitetxt, language: 'javascript' },
   // utils
-  copy: { script:  copytxt, language: 'js' },
-  paste: { script:  pastetxt, language: 'js' },
-  shell: { script:  shelltxt, language: 'js' },
+  copy: { script:  copytxt, language: 'javascript' },
+  paste: { script:  pastetxt, language: 'javascript' },
+  shell: { script:  shelltxt, language: 'javascript' },
   python: { script:  pythontxt, language: 'python' },
   r: { script:  rstatstxt, language: 'r' },
+  tojson: { script: tojsontxt, language: 'javascript' },
   // export
-  exportcsv: { script:  exportcsvtxt, language: 'js' },
+  exportcsv: { script:  exportcsvtxt, language: 'javascript' },
 }
 
 var pipelinesStateCount = 0;
@@ -265,14 +268,10 @@ const createInt = (steps /*: steps */, previous /*: pipeline */ ) /*: pipeline *
   steps.forEach((step, idx) => {
     var params = paramsFromStep(pipeline, step);
 
+    if (!step.language || step.language == 'js') step.language = 'javascript';
+
     if (step.params) {
       params = step.params;
-      Object.keys(params).forEach(e => {
-        var val = step.params[e];
-        var valArray =  Array.isArray(val) ? val : [ val ];
-        var valEntries = valArray.map(e => ({ value: e }));
-        params[e] = { value: valEntries, name: e };
-      });
     }
 
     if (step.id === undefined) {
@@ -382,10 +381,22 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
       if (!Object.keys(params).includes(param)) params[param] = clone(paramsDefault[param]);
     });
 
+    // add context parameters
+    if (typeof(window) != 'undefined' && window.hal9 && window.hal9.params) context.params = window.hal9.params;
+    if (context.params) {
+      var paramIdx = Object.keys(params).length > 0 ? Math.max(...Object.keys(params).map(e => params[e].id ? params[e].id : 0)) : 0;
+      Object.keys(context.params).forEach(param => {
+        params[param] = { id: paramIdx++, name: param, label: param, value: [{
+          value: clone(context.params[param]) 
+        }] };
+      });
+    }
+
     const deps = await getGlobalDeps();
 
     // add hal9 api to deps
-    deps['hal9'] = api.create(pipelineid, sid, context);
+    var hal9 = (typeof(window) != 'undefined' && window.hal9) ? window.hal9 :  {};
+    deps['hal9'] = Object.assign(hal9, api.create(pipelineid, sid, context));
 
     const script = scriptFromStep(pipeline, step);
     const executor = executors.executorFromMetadata(
@@ -558,13 +569,18 @@ export const updateStep = (pipelineid /*: pipelineid */, step /*: step */) /*: v
 export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step */ => {
   var pipeline = store.get(pipelineid);
 
+  var maxId = getMaxId(pipelineid);
   if (typeof(step.id) === 'undefined') {
-    step.id = (getMaxId(pipelineid) + 1)
+    step.id = maxId + 1;
   }
 
   // avoid overlaping with library scripts defined in pipeline.vue
   if (step.id < 10000) {
-    step.id = 10000
+    step.id = step.id + 10000
+  }
+
+  if (step.id < maxId) {
+    step.id = maxId + 1;
   }
 
   if (typeof(step.name) === 'undefined') {
@@ -575,9 +591,19 @@ export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step
     step.label = step.name;
   }
 
+  if (step.params) {
+    pipeline.params[step.id] = step.params;
+  }
+
   pipeline.steps.push(step);
 
   return step;
+}
+
+export const removeStep = (pipelineid /*: pipelineid */, step /*: step */) /*: void */ => {
+  var pipeline = store.get(pipelineid);
+
+  pipeline.steps = pipeline.steps.filter(e => e.id != step.id)
 }
 
 export const moveStep = (pipelineid /*: pipelineid */, stepid /*: stepid */, change /* number */) /*: void */ => {
@@ -829,12 +855,13 @@ export const invalidateStep = (pipelineid /*: pipelineid */, sid /*: number */) 
 }
 
 export const getHtml = (pipelineid /* pipelineid */) /* string */ => {
+  const libraryUrl = environment.getLibraryUrl();
   return `<script>
   var embedid = 'hal9' + (Math.floor(1000 * Math.random()));
   var host = document.createElement('div'); host.id = embedid; host.style = 'width: 100%; height: 100%; max-width: 100%; max-height: 100%;';
   document.currentScript.parentElement.appendChild(host);
   var hal9script = document.createElement('script');
-  hal9script.setAttribute('src','https://alpha.hal9.ai/web/hal9.web.js');
+  hal9script.setAttribute('src','${libraryUrl}');
   document.head.appendChild(hal9script);
   window.hal9 = { mode: 'embedded', id: embedid, pipeline: '` + btoa(unescape(encodeURIComponent(getSaveText(pipelineid, 0)))) + `' };
 </script>`

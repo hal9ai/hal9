@@ -7,13 +7,18 @@ import clone from '../utils/clone';
 
 export default class LocalExecutor extends Executor {
   async runStep() {
-    const context = this.context['html'] ? { html: this.context['html'](this.step) } : {};
-    var params = localparams.paramsForFunction(this.params, this.inputs, this.deps, context);
+    var params = localparams.paramsForFunction(this.params, this.inputs, this.deps);
+
+    // add html to params
+    params['html'] = this.context['html'] ? this.context['html'](this.step) : this.context['html'];
 
     // retrieve cached hal9 datasets
     params = localparams.fetchDatasets(params);
 
-    const interpreted = interpreter.interpret(this.script, this.language, this.metadata);
+    // add context to params
+    params['hal9__context'] = this.context;
+
+    const interpreted = interpreter.interpret(this.script, this.language, this.metadata, this.context);
     var result = await snippets.runFunction(interpreted, params);
 
     if (this.callbacks && this.callbacks.onInvalidate) {

@@ -36,13 +36,14 @@ const runRemote = async (lambda, context) => {
 };
 
 const runPipeline = async (pipelineid, context) => {
+  if (!context) context = {};
   var updated = await pipelines.run(
     pipelineid,
-    {
+    Object.assign(context, {
       html: function(step) {
         return step.html ? document.getElementById(step.html) : undefined;
       }
-    },
+    }),
     function(pipeline, step, result, error, details) {
     }
   );
@@ -56,6 +57,10 @@ const runSteps = async (steps, context) => {
   return runPipeline(pipeline, context);
 }
 
+export function create(steps) {
+  return pipelines.create(steps);
+}
+
 export async function run(pipeline, context) {
   var type = typeof(pipeline);
   if (Array.isArray(pipeline)) type = 'array';
@@ -64,14 +69,25 @@ export async function run(pipeline, context) {
     'function': runRemote,
     'array': runSteps,
     'string': pipelineremote.runPipelineRemote,
+    'number': runPipeline,
   }
 
   await dispatch[type](pipeline, context);
 };
 
-
+var maxStepId = 0;
 export function step(url, params, output) {
+
+  // convert param values to pipeline params
+  Object.keys(params).forEach(e => {
+    var val = params[e];
+    var valArray =  Array.isArray(val) ? val : [ val ];
+    var valEntries = valArray.map(e => ({ value: e }));
+    params[e] = { value: valEntries, name: e };
+  });
+
   return {
+    id: maxStepId++,
     url: url,
     params: params,
     html: output
@@ -81,6 +97,7 @@ export function step(url, params, output) {
 export default {
   run: run,
   step: step,
+  create: create,
   environment: environment,
   workers: workers,
   pipelines: pipelines,

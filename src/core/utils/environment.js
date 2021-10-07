@@ -25,7 +25,15 @@ export const setEnv = (env) => {
 export const isDevelopment = () => {
   if (typeof(window) == 'undefined') return false;
 
-  return (!isElectron() && window.location.origin == 'file://') || window.location.origin.includes('//localhost');
+  return (!isElectron() && window.location.origin == 'file://') ||
+    window.location.origin.includes('//localhost');
+}
+
+export const isOtherDevelopment = () => {
+  if (typeof(window) == 'undefined') return null;
+
+  if (window.location.origin.includes('mshome.net'))
+    return window.location.protocol + "//" + window.location.hostname;
 }
 
 export const getId = () => {
@@ -37,16 +45,47 @@ export const getId = () => {
     hal9env = process.env.HAL9_ENV
   }
 
-  // either 'local', 'dev' or 'alpha'
+  // either 'local', 'dev' or 'prod'
   return hal9env;
 }
 
 export const getServerUrl = () => {
   const hal9env = getId();
 
+  if (isOtherDevelopment()) return isOtherDevelopment() + ':5000';
+
   if (userHal9Env === 'local' || isDevelopment()) return 'http://localhost:5000';
 
   if (hal9env == 'prod') return 'https://api.hal9.com';
 
   return 'https://api.devel.hal9.com';
+}
+
+export const getServerCachedUrl = () => {
+  const hal9env = getId();
+
+  if (isOtherDevelopment()) return isOtherDevelopment() + ':5000';
+
+  if (userHal9Env === 'local' || isDevelopment()) return 'http://localhost:5000';
+
+  if (hal9env == 'prod') return 'https://hal9.com';
+
+  return 'https://devel.hal9.com';
+}
+
+export const getWebsiteUrl = () => {
+  const id = getId();
+  const map = {
+    local: 'http://localhost:5000',
+    dev: 'https://devel.hal9.com',
+    prod: 'https://hal9.com',
+  };
+
+  if (!map[id]) throw 'The environment \'' + id + '\' is not mapped to a frontend server.'
+
+  return map[id];
+}
+
+export const getLibraryUrl = () => {
+  return getWebsiteUrl() + '/hal9.web.js';
 }

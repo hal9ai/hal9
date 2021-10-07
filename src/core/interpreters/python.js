@@ -1,5 +1,5 @@
 
-export default function(script, header) {
+export default function(script, header, context) {
 
   const params = header.params ? header.params.map(e => e.name) : [];
   const inputs = header.input ? header.input : [];

@@ -12,8 +12,8 @@ const languageMap = {
   pyodide: pyodide
 }
 
-export const interpret = (script, language, header) => {
+export const interpret = (script, language, header, context) => {
   const interpreter = languageMap[language];
 
-  return interpreter ? interpreter(script, header) : script;
+  return interpreter ? interpreter(script, header, context) : script;
 }

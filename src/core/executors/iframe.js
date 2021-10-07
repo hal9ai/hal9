@@ -14,11 +14,11 @@ export default class IFrameExecutor extends Executor {
       throw('Steps using \'iframe\' environment require \'html\' callback');
 
     const context = { html: html };
-    var params = localparams.paramsForFunction(this.params, this.inputs, {}, context);
+    var params = localparams.paramsForFunction(this.params, this.inputs, {});
 
     params = localparams.fetchDatasets(params);
 
-    const interpreted = interpreter.interpret(this.script, this.language);
+    const interpreted = interpreter.interpret(this.script, this.language, this.context);
     var funcBody = await snippets.getFunctionBody(interpreted, params, true);
     const header = snippets.parseHeader(interpreted);
 
