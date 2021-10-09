@@ -835,6 +835,11 @@ export const getGlobal = (pipelineid /*: pipelineid */, name /*: string */) => /
   return pipeline.globals[name];
 }
 
+export const setGlobal = (pipelineid /*: pipelineid */, name /*: string */, data /*: Object */) => /*: void */ {
+  var pipeline = store.get(pipelineid);
+  pipeline.globals[name] = data;
+}
+
 const getGlobals = (pipeline /*: pipeline */) => /*: Object */ {
   return pipeline.globals;
 }
