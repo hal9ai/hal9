@@ -591,6 +591,9 @@ export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step
     step.label = step.name;
   }
 
+  var params = paramsFromStep(pipeline, step);
+  step.params = params;
+
   if (step.params) {
     pipeline.params[step.id] = step.params;
   }
