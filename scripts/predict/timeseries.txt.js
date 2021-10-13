@@ -14,7 +14,7 @@
           min: 0
           max: 100
   deps:
-    - https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js
+    - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
   cache: true
 **/
 data = await hal9.utils.toRows(data);

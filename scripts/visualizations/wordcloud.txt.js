@@ -4,7 +4,7 @@
   deps: [
     'https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js',
     'https://cdn.rawgit.com/jasondavies/d3-cloud/v1.2.1/build/d3.layout.cloud.js',
-    'https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js'
+    'https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js'
   ]
 **/
 
