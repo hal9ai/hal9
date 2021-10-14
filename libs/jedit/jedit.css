@@ -65,6 +65,10 @@
     width: 100%;
   }
 
+  .jedit-table-empty {
+    text-align: center;
+  }
+
   .jedit-table-header {
     font-weight: 600;
   }

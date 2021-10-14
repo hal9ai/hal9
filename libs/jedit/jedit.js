@@ -173,6 +173,12 @@ function appendTableRows(tableEl, json, types, keys, max, start, colStart, colEn
 }
 
 async function buildTable(parentEl, json, max, colStart) {
+  if (json.length == 0) {
+    parentEl.innerHTML = 'No results :(';
+    parentEl.className = 'jedit-table-empty';
+    return;
+  }
+
   var tableEl = createTable(parentEl, 'jedit-table');
   var keys = Object.keys(json[0]);
 
