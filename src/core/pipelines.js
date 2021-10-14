@@ -81,6 +81,9 @@ import * as executors from './executors/executors';
 import * as store from './pipelinestore.js';
 import * as api from './api.js';
 
+import * as datatable from '../../libs/jedit/jedit.js';
+import datatablecss from "../../libs/jedit/jedit.css";
+
 var gloablDeps = {};
 
 /*::
@@ -458,30 +461,80 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
   return error === '';
 }
 
+export const preparePartial = (pipeline, context, partial, renderid) => {
+  const html = context.html;
+  if (typeof(html) === 'object') {
+    const isFullView = renderid === null || renderid === undefined;
+
+    const oneHasHtml = pipeline.steps.map(step => {
+      var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
+      return header && header.output && header.output.filter(e => e == 'html').length > 0;
+    }).filter(e => e).length > 0;
+
+    // add support for viewing data tables
+    if (!isFullView || !oneHasHtml) {
+      if (!oneHasHtml) {
+        renderid = pipeline.steps[pipeline.steps.length - 1].id;
+      }
+
+      var step = stepFromId(pipeline, renderid);
+      var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
+      const hasHtml = header && header.output && header.output.filter(e => e == 'html').length > 0;
+      if (!hasHtml) {
+        return function(pipeline, step, result, error, details) {
+          html.innerHTML = '';
+
+          if (!document.getElementById('hal9__datatable__style')) {
+            var style = document.createElement('style');
+            style.innerHTML = datatablecss;
+            style.id = 'hal9__datatable__style';
+            document.head.appendChild(style);
+          }
+
+          datatable.build(html, getGlobal(pipeline, result.data));
+
+          partial(pipeline, step, result, error, details);
+        }
+      }
+    }
+  }
+
+  return partial;
+}
+
 export const prepareContext = (pipeline, context, stepstopid) => {
   const html = context.html;
   if (typeof(html) === 'object') {
     html.innerHTML = '';
 
+    const isFullView = stepstopid === null || stepstopid === undefined;
+
+    // add support for generating html blocks
     context.html = (step) => {
       var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
-      const isFullView = stepstopid === null || stepstopid === undefined;
       const hasHtml = header && header.output && header.output.filter(e => e == 'html').length > 0;
 
-      if ((isFullView && hasHtml) || stepstopid == step.id) {
+      if (isFullView && hasHtml) {
         const output = html.querySelector(':scope .hal9-step-' + step.id);
         if (output) return output;
 
         var container = document.createElement('div');
         container.className = 'hal9-step-' + step.id;
         container.style.width = '100%';
+        container.style.height = html.offsetHeight + 'px';
+        
+        html.appendChild(container);
 
-        if (stepstopid === undefined) {
-          container.style.height = '300px';
-        }
-        else {
-          container.style.height = '100%';
-        }
+        return container;
+      }
+      else if (stepstopid == step.id) {
+        const output = html.querySelector(':scope .hal9-step-' + step.id);
+        if (output) return output;
+
+        var container = document.createElement('div');
+        container.className = 'hal9-step-' + step.id;
+        container.style.width = '100%';
+        container.style.height = '100%';
 
         html.appendChild(container);
 
@@ -514,6 +567,7 @@ export const run = async (pipelineid /*: pipeline */, context /* context */, par
 
   await fetchScripts(pipeline.steps);
 
+  partial = preparePartial(pipeline, context, partial, stepstopid);
   prepareContext(pipeline, context, stepstopid);
 
   pipeline.errors = {};
