@@ -115,7 +115,14 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
 
   const injectdebug = (typeof(window) != 'undefined' && window.hal9 && window.hal9.debug) ? 'debugger;\n' : '';
 
-  const vars = Object.keys(params).map((param) => 'var ' + param + ' = _hal9_params[\'' + param + '\'];').join('\n');
+  const vars = Object.keys(params).map((param) => {
+    if (param === 'hal9') {
+      return 'var hal9 = Object.assign(window.hal9 ? window.hal9 : {}, _hal9_params[\'hal9\']);'
+    }
+    else {
+      return 'var ' + param + ' = _hal9_params[\'' + param + '\'];'
+    }
+  }).join('\n');
   const body = 'async function ' + name + '(_hal9_params)' + ' {\n' + 
       injectdebug +
       vars + '\n\n' + code + '\n' +
