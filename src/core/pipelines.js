@@ -458,11 +458,63 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
   return error === '';
 }
 
+export const prepareContext = (pipeline, context, stepstopid) => {
+  const html = context.html;
+  if (typeof(html) === 'object') {
+    html.innerHTML = '';
+
+    context.html = (step) => {
+      var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
+      const isFullView = stepstopid === null || stepstopid === undefined;
+      const hasHtml = header && header.output && header.output.filter(e => e == 'html').length > 0;
+
+      if ((isFullView && hasHtml) || stepstopid == step.id) {
+        const output = html.querySelector(':scope .hal9-step-' + step.id);
+        if (output) return output;
+
+        var container = document.createElement('div');
+        container.className = 'hal9-step-' + step.id;
+        container.style.width = '100%';
+
+        if (stepstopid === undefined) {
+          container.style.height = '300px';
+        }
+        else {
+          container.style.height = '100%';
+        }
+
+        html.appendChild(container);
+
+        return container;
+      }
+      else {
+        const sandbox = html.querySelector(':scope .hal9-step-sandbox');
+        if (sandbox) {
+          sandbox.innerHTML = '';
+          return sandbox;
+        }
+
+        var container = document.createElement('div');
+        container.className = 'hal9-step-sandbox';
+        container.style.width = '0';
+        container.style.height = '0';
+        container.style.position = 'absolute';
+        container.style.display = 'none';
+        html.appendChild(container);
+
+        return container;
+      }
+    }
+  }
+}
+
 export const run = async (pipelineid /*: pipeline */, context /* context */, partial, stepstopid /* stepid */ ) /*: void */ => {
   var pipeline = store.get(pipelineid);
   if (!pipeline || pipeline.length == 0) return;
 
   await fetchScripts(pipeline.steps);
+
+  prepareContext(pipeline, context, stepstopid);
 
   pipeline.errors = {};
   pipeline.error = undefined;
