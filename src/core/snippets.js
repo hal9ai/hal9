@@ -84,6 +84,13 @@ export const parseParams = (code /*: string */) /*: flatparams */ => {
   return header.params;
 }
 
+const upgradeDep = (dep) => {
+  if (dep == 'https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js')
+    return 'https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js'
+
+  return dep;
+} 
+
 export const getFunctionBody = async function(code /*: string */, params /*: params */, nodeps /*: boolean */) /*: string */ {
   const name = 'snippet' + Math.floor(Math.random() * 10000000);
 
@@ -92,7 +99,7 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
   const output = header.output;
   
   for (var depidx in deps) {
-    var dep = deps[depidx];
+    var dep = upgradeDep(deps[depidx]);
     if (!Object.keys(depsCache).includes(dep) || depsCache[dep] === 'loading') {
       var promise = null;
       if (depsCache[dep] === 'loading') {
