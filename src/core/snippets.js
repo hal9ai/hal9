@@ -93,19 +93,39 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
   
   for (var depidx in deps) {
     var dep = deps[depidx];
-    if (!Object.keys(depsCache).includes(dep)) {
-      var promise = new Promise((accept, reject) => {
-        var script = document.createElement('script');
-        script.src = dep;
-        document.head.appendChild(script);
-        script.addEventListener("load", function(event) {
-          depsCache[dep] = true;
-          accept();
+    if (!Object.keys(depsCache).includes(dep) || depsCache[dep] === 'loading') {
+      var promise = null;
+      if (depsCache[dep] === 'loading') {
+        promise = new Promise((accept, reject) => {
+          var check = () => {
+            if (depsCache[dep] === 'loading') {
+              setTimeout(check, 100);
+            }
+            else {
+              if (depsCache[dep] === 'loaded')
+                accept();
+              else
+                reject();
+            }
+          }
+        })
+      }
+      else {
+        promise = new Promise((accept, reject) => {
+          var script = document.createElement('script');
+          depsCache[dep] = 'loading';
+          script.src = dep;
+          document.head.appendChild(script);
+          script.addEventListener("load", function(event) {
+            depsCache[dep] = 'loaded';
+            accept();
+          });
+          script.addEventListener("error", function(event) {
+            depsCache[dep] = 'error';
+            reject();
+          });
         });
-        script.addEventListener("error", function(event) {
-          reject();
-        });
-      });
+      }
 
       await promise;
     }
