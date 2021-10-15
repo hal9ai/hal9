@@ -81,6 +81,8 @@ import * as executors from './executors/executors';
 import * as store from './pipelinestore.js';
 import * as api from './api.js';
 
+import * as languages from './interpreters/languages'
+
 import * as datatable from '../../libs/jedit/jedit.js';
 import datatablecss from "../../libs/jedit/jedit.css";
 
@@ -461,15 +463,20 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
   return error === '';
 }
 
+const stepHasHtml = (pipeline, step) => {
+  const langInfo = languages.getLanguageInfo(step.language);
+  if (langInfo.html) return true;
+
+  var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
+  return header && header.output && header.output.filter(e => e == 'html').length > 0;
+}
+
 export const preparePartial = (pipeline, context, partial, renderid) => {
   const html = context.html;
   if (typeof(html) === 'object') {
     const isFullView = renderid === null || renderid === undefined;
 
-    const oneHasHtml = pipeline.steps.map(step => {
-      var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
-      return header && header.output && header.output.filter(e => e == 'html').length > 0;
-    }).filter(e => e).length > 0;
+    const oneHasHtml = pipeline.steps.map(step => stepHasHtml(pipeline, step)).filter(e => e).length > 0;
 
     // add support for viewing data tables
     if (!isFullView || !oneHasHtml) {
@@ -479,7 +486,7 @@ export const preparePartial = (pipeline, context, partial, renderid) => {
 
       var step = stepFromId(pipeline, renderid);
       var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
-      const hasHtml = header && header.output && header.output.filter(e => e == 'html').length > 0;
+      const hasHtml = stepHasHtml(pipeline, step);
       if (!hasHtml) {
         return function(pipeline, step, result, error, details) {
           html.innerHTML = '';
@@ -512,7 +519,10 @@ export const prepareContext = (pipeline, context, stepstopid) => {
     // add support for generating html blocks
     context.html = (step) => {
       var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
-      const hasHtml = header && header.output && header.output.filter(e => e == 'html').length > 0;
+      var hasHtml = header && header.output && header.output.filter(e => e == 'html').length > 0;
+
+      const langInfo = languages.getLanguageInfo(step.language);
+      if (langInfo.html) hasHtml = true;
 
       if (isFullView && hasHtml) {
         const output = html.querySelector(':scope .hal9-step-' + step.id);
@@ -521,7 +531,13 @@ export const prepareContext = (pipeline, context, stepstopid) => {
         var container = document.createElement('div');
         container.className = 'hal9-step-' + step.id;
         container.style.width = '100%';
-        container.style.height = html.offsetHeight + 'px';
+
+        if (langInfo.height) {
+          container.style.height = langInfo.height;
+        }
+        else {
+          container.style.height = html.offsetHeight + 'px';
+        }
         
         html.appendChild(container);
 

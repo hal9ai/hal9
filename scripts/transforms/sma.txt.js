@@ -8,8 +8,11 @@
           value: 20
           min: 1
           max: 100
+  deps:
+    - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
 **/
 
+data = await hal9.utils.toRows(data);
 if (!Array.isArray(sma)) sma = sma ? [ sma ] : [];
 
 let sums = sma.map(e => 0.00);
