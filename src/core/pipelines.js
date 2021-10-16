@@ -472,8 +472,9 @@ const stepHasHtml = (pipeline, step) => {
 }
 
 export const preparePartial = (pipeline, context, partial, renderid) => {
-  const html = context.html;
+  var html = context.html;
   if (typeof(html) === 'object') {
+    html = html.shadowRoot ? html.shadowRoot : html;
     const isFullView = renderid === null || renderid === undefined;
 
     const oneHasHtml = pipeline.steps.map(step => stepHasHtml(pipeline, step)).filter(e => e).length > 0;
@@ -491,12 +492,10 @@ export const preparePartial = (pipeline, context, partial, renderid) => {
         return function(pipeline, step, result, error, details) {
           html.innerHTML = '';
 
-          if (!document.getElementById('hal9__datatable__style')) {
-            var style = document.createElement('style');
-            style.innerHTML = datatablecss;
-            style.id = 'hal9__datatable__style';
-            document.head.appendChild(style);
-          }
+          var style = document.createElement('style');
+          style.innerHTML = datatablecss;
+          style.id = 'hal9__datatable__style';
+          html.appendChild(style);
 
           datatable.build(html, getGlobal(pipeline, result.data));
 
@@ -510,8 +509,12 @@ export const preparePartial = (pipeline, context, partial, renderid) => {
 }
 
 export const prepareContext = (pipeline, context, stepstopid) => {
-  const html = context.html;
-  if (typeof(html) === 'object') {
+  const parent = context.html;
+  if (typeof(parent) === 'object') {
+    const height = parent.offsetHeight;
+
+    parent.innerHTML = '';
+    const html = parent.shadowRoot ? parent.shadowRoot : parent.attachShadow({mode: 'open'});
     html.innerHTML = '';
 
     const isFullView = stepstopid === null || stepstopid === undefined;
@@ -536,7 +539,7 @@ export const prepareContext = (pipeline, context, stepstopid) => {
           container.style.height = langInfo.height;
         }
         else {
-          container.style.height = html.offsetHeight + 'px';
+          container.style.height = height + 'px';
         }
         
         html.appendChild(container);
