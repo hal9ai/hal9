@@ -688,10 +688,11 @@ export const updateStep = (pipelineid /*: pipelineid */, step /*: step */) /*: v
 }
 
 export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step */ => {
+  step = clone(step);
   var pipeline = store.get(pipelineid);
 
   var maxId = getMaxId(pipelineid);
-  if (typeof(step.id) === 'undefined') {
+  if (typeof(step.id) === 'undefined' || step.id <= maxId) {
     step.id = maxId + 1;
   }
 
@@ -945,11 +946,18 @@ export const getMaxId = (pipelineid /*: pipelineid */) /*: number */ => {
   var pipeline = store.get(pipelineid);
   
   var max = 0
-  const maxid = (max, arr) => Math.max(max, Math.max(...arr.map(e => e.id)));
+  const maxid = (max, arr) => {
+    const arrIds = arr.map(e => e.id);
+    return Math.max(max, arrIds.length == 0 ? 0 : Math.max(...arrIds));
+  }
 
-  if (pipeline.params) max = Math.max(...Object.keys(pipeline.params).map(e => parseInt(e)));
+  const paramIds = Object.keys(pipeline.params).map(e => parseInt(e));
+  if (pipeline.params) max = !paramIds || paramIds.length == 0 ? 0 : Math.max(...paramIds);
+
   if (pipeline.steps) max = maxid(max, pipeline.steps);
-  if (pipeline.scripts) max = Math.max(...Object.keys(pipeline.scripts).map(e => parseInt(e)));
+
+  const scriptIds = Object.keys(pipeline.scripts).map(e => parseInt(e));
+  if (pipeline.scripts) max = !scriptIds || scriptIds.length == 0 ? max : Math.max(...scriptIds);
 
   return max;
 }
