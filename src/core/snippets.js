@@ -142,14 +142,11 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
 
   const injectdebug = (typeof(window) != 'undefined' && window.hal9 && window.hal9.debug) ? 'debugger;\n' : '';
 
-  const vars = Object.keys(params).map((param) => {
-    if (param === 'hal9') {
-      return 'var hal9 = Object.assign(window.hal9 ? window.hal9 : {}, _hal9_params[\'hal9\']);'
-    }
-    else {
+  const vars = Object.keys(params)
+    .map((param) => {
       return 'var ' + param + ' = _hal9_params[\'' + param + '\'];'
-    }
-  }).join('\n');
+    }).join('\n');
+  
   const body = 'async function ' + name + '(_hal9_params)' + ' {\n' + 
       injectdebug +
       vars + '\n\n' + code + '\n' +
@@ -168,6 +165,8 @@ export const getFunction = async function(code /*: string */, params /*: params 
 
 export const runFunction = async function(code /*: string */, params /*: params */) /*: void */ {
   const op = await getFunction(code, params);
+
+  params['hal9'] = Object.assign(typeof(window) != 'undefined' && window.hal9 ? window.hal9 : {}, params['hal9']);
 
   // $FlowFixMe
   return op(params);
