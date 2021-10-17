@@ -1,7 +1,4 @@
 /**
-  output:
-    - data
-    - html
   params:
     - name: prediction
       label: Prediction
@@ -100,9 +97,7 @@ if(prediction) {
   await model.fit(xs, ys, {
     epochs: parseInt(epochs),
     batchSize: window,
-    // verbose: true,
     callbacks: async (epoch, log) => {
-      debugger;
       console.log('Accuracy', logs.acc);
     },
   });
