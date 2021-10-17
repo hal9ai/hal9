@@ -20,6 +20,11 @@
       value:
         - control: number
           value: 1
+    - name: predictions
+      label: Predictions
+      value:
+        - control: number
+          value: 1
   cache: true
   deps:
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
@@ -30,8 +35,9 @@
 **/
 
 data = await hal9.utils.toArquero(data);
-
+  
 window = parseInt(window);
+predictions = parseInt(predictions);
 
 tf.setBackend('cpu');
 tf.disposeVariables();
@@ -40,13 +46,13 @@ if(prediction) {
   // Moving average
   data = data.params({prediction}).derive({ sma: aq.rolling((d, $) => op.average(d[$.prediction]), [window, 0]) });
   data = data.rename({ sma : "sma" + prediction });
- 
+
   // Window 
   var smacol = data.array("sma" + prediction) 
-  var windowarray=[] 
-  for(let i=0; i < smacol.length; i++) {
+  var windowarray = [];
+  for(let i = 0; i < smacol.length; i++) {
     windowarray.push(
-      data.slice(i - window, i).array('sma' + prediction)
+      data.slice(i - window, i + predictions).array('sma' + prediction)
     )
   }
 
@@ -54,26 +60,33 @@ if(prediction) {
   data = data.rename({ window: "window" + prediction });
  
   // Model 
-  var y = data.array("sma" + prediction)
-  var x = data.array("window" + prediction) 
-
+  var allwindows = data.array("window" + prediction) 
+  
   // Normalize X
   x_train = [];
+  x_predict = [];
   y_train = [];
-  x.forEach((x_input, i) => {
+  x_train_max = data.count().array('count')[0] - predictions;
+  allwindows.forEach((win, i) => {
+    const x_input = win.slice(0, window);
     const min = Math.min(...x_input);
     const max = Math.max(...x_input);
-    
-    x_train.push(x_input.map(e => (e - min) / (max - min)));
 
-    var val = (y[i] - min) / (max-min);
-    y_train.push(val);
+    const x_elem = x_input.map(e => (e - min) / (max - min));
+    x_predict.push(x_elem);
+
+    if (i < x_train_max) {
+      x_train.push(x_elem);
+
+      const y_output = win.slice(window, window + predictions);
+      y_train.push(y_output.map(e => (e - min) / (max - min)));
+    }
   });
-
+  
   const model = tf.sequential();
   model.add(tf.layers.lstm({ units: parseInt(units), returnSequences: false, inputShape:[window, 1] }));
   model.add(tf.layers.dropout(0.2))
-  model.add(tf.layers.dense({ units: 1, activation: 'relu' }));
+  model.add(tf.layers.dense({ units: predictions, activation: 'relu' }));
   
   model.compile({
     loss: 'meanSquaredError',
@@ -82,30 +95,39 @@ if(prediction) {
   });
   
   const xs = tf.tensor(x_train).reshape([-1, window, 1])
-  const ys = tf.tensor(y_train).reshape([-1, 1]);
+  const ys = tf.tensor(y_train).reshape([-1, predictions]);
 
   await model.fit(xs, ys, {
     epochs: parseInt(epochs),
     batchSize: window,
-    verbose: true,
+    // verbose: true,
     callbacks: async (epoch, log) => {
-      debugger
+      debugger;
       console.log('Accuracy', logs.acc);
     },
   });
 
-  const predictions = model.predict(xs).dataSync();
+  const xp = tf.tensor(x_predict).reshape([-1, window, 1])
+
+  const results = model.predict(xp).arraySync();
+  if (results.length != allwindows.length) throw('Expecting window with ' + results.length + ' rows but got ' + allwindows.length);
 
   data = data.assign({
-    prediction: predictions.map((e, i) => {
-      const min = Math.min(...x[i]);
-      const max = Math.max(...x[i]);
+    prediction: results.map((e, i) => {
+      const win = allwindows[i];
+      const x_input = win.slice(0, window);
 
-      return e * (max-min) + min;
+      const min = Math.min(...x_input);
+      const max = Math.max(...x_input);
+
+      if (i < x_train_max) {
+        return e[0] * (max - min) + min;
+      }
+      else {
+        return results[x_train_max][i - x_train_max] * (max - min) + min;
+      }
     })
   });
-
-  
 
   data = data.select(aq.not('window' + prediction));
 }
