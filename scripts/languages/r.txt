@@ -2,4 +2,4 @@
 ## environment: worker
 ##
 
-data = c(1,2,3)
+data <- "Hello from R!"

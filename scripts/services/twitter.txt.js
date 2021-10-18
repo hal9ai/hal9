@@ -6,15 +6,20 @@
       value:
         - control: 'textbox'
           value: tensorflow
+    - name: key
+      label: 'Twitter Key'
+      value:
+        - control: 'textbox'
+    - name: secret
+      label: 'Twitter Secret'
+      value:
+        - control: 'textbox'
   environment: worker
   cache: true
 **/
 
 var error = undefined;
 var token = '';
-
-var key = 'BQk4RE8wd7dOmJUEDOe1Pv0Xe';
-var secret = 'ykVCD9QguMTaYSkJ8vYPKh0lPJCRrV4IddYemq56rlz0hYkoNm';
 
 var operations = {
   search: async function(token) {
