@@ -474,7 +474,6 @@ const stepHasHtml = (pipeline, step) => {
 export const preparePartial = (pipeline, context, partial, renderid) => {
   var html = context.html;
   if (typeof(html) === 'object') {
-    html = html.shadowRoot ? html.shadowRoot : html;
     const isFullView = renderid === null || renderid === undefined;
 
     const oneHasHtml = pipeline.steps.map(step => stepHasHtml(pipeline, step)).filter(e => e).length > 0;
@@ -490,6 +489,7 @@ export const preparePartial = (pipeline, context, partial, renderid) => {
       const hasHtml = stepHasHtml(pipeline, step);
       if (!hasHtml) {
         return function(pipeline, step, result, error, details) {
+          html = html.shadowRoot ? html.shadowRoot : html;
           html.innerHTML = '';
 
           var style = document.createElement('style');
