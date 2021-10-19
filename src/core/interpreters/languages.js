@@ -5,6 +5,7 @@ const languageInfo = {
   },
   html: {
     html: true,
+    height: 'auto'
   },
   python: {
     html: false,
