@@ -21,7 +21,7 @@
     - name: skip
       label: 'Skip'
       value:
-        - control: 'textbox'
+        - control: 'number'
           value: ''
   deps:
     - https://cdn.jsdelivr.net/npm/arquero@latest
@@ -39,6 +39,11 @@ if (type === 'url' && file != '') {
 } else {
   file = atob(file.replace(/^.*;base64,/, ''));
   csv = file;
+}
+
+if (skip) {
+  const lines = csv.split('\n');
+  csv = lines.slice(skip).join('\n');
 }
 
 if (csv) {
