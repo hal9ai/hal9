@@ -621,6 +621,9 @@ export const getParams = (pipelineid /*: pipelineid */, sid /*: stepid */) /*: p
 
 const setParamsInt = (pipeline /*: pipeline */, sid /*: stepid */, params /*: params */) /*: void */ => {
   pipeline.params[sid] = clone(params);
+
+  const stepIdx = stepIdxFromId(pipeline, sid);
+  if (stepIdx !== -1) pipeline.steps[stepIdx].params = clone(params);
 }
 
 export const setParams = (pipelineid /*: pipelineid */, sid /*: stepid */, params /*: params */) /*: void */ => {
