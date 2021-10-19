@@ -57,6 +57,9 @@ import tojsontxt from '../../scripts/utils/tojson.txt';
 
 import exportcsvtxt from '../../scripts/export/csv.txt.js';
 
+import airbnbtxt from '../../scripts/services/airbnb.txt.js';
+import twittertxt from '../../scripts/services/twitter.txt.js';
+
 import htmltxt from '../../scripts/languages/html.txt';
 import markdowntxt from '../../scripts/languages/markdown.txt';
 import pyodidetxt from '../../scripts/languages/pyodide.txt.js';
@@ -169,8 +172,8 @@ const scripts = {
   exportcsv: { script:  exportcsvtxt, language: 'javascript' },
 
   // services
-  airbnb: { script:  exportcsvtxt, language: 'javascript' },
-  twitter: { script:  exportcsvtxt, language: 'javascript' },
+  airbnb: { script:  airbnbtxt, language: 'javascript' },
+  twitter: { script:  twittertxt, language: 'javascript' },
 
   // languages
   html: { script:  htmltxt, language: 'html' },
