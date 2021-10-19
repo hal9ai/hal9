@@ -66,6 +66,9 @@ import pyodidetxt from '../../scripts/languages/pyodide.txt.js';
 import pythontxt from '../../scripts/languages/python.txt';
 import rtxt from '../../scripts/languages/r.txt';
 
+import vuetxt from '../../scripts/frameworks/vue.txt';
+import reacttxt from '../../scripts/frameworks/react.txt';
+
 import * as snippets from './snippets';
 import * as operations from './utils/operations';
 import * as dataframe from './utils/dataframe';
@@ -181,6 +184,10 @@ const scripts = {
   pyodide: { script:  pyodidetxt, language: 'javascript' },
   python: { script:  pythontxt, language: 'python' },
   r: { script:  rtxt, language: 'r' },
+
+  // frameworks
+  vue: { script:  vuetxt, language: 'html' },
+  react: { script:  reacttxt, language: 'html' },
 }
 
 var pipelinesStateCount = 0;
