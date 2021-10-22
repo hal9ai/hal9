@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="jedit.css">
+  </head>
+  <body onload="load()">
+    <div id="jedit" style="width: 100%; overflow-x: auto; width: 100px;" class="jsedit"></div>
+    <script type="module">
+      import * as jedit from '/jedit.js';
+
+      window.buildHtml = function buildHtml(el, json) {
+        jedit.buildHtml(el, json, 100000);
+      }
+    </script>
+    <script>
+      async function load() {
+        var data = await fetch ('https://raw.githubusercontent.com/d3/d3-hierarchy/master/test/data/flare.json');
+        data = await fetch ('https://raw.githubusercontent.com/domoritz/maps/master/data/iris.json');
+
+        var json = await data.json();
+        build(document.getElementById('jedit'), json);
+      }
+    </script>
+  </body>
+</html>

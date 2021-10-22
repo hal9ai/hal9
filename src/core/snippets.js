@@ -84,6 +84,13 @@ export const parseParams = (code /*: string */) /*: flatparams */ => {
   return header.params;
 }
 
+const upgradeDep = (dep) => {
+  if (dep == 'https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js')
+    return 'https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js'
+
+  return dep;
+} 
+
 export const getFunctionBody = async function(code /*: string */, params /*: params */, nodeps /*: boolean */) /*: string */ {
   const name = 'snippet' + Math.floor(Math.random() * 10000000);
 
@@ -92,20 +99,40 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
   const output = header.output;
   
   for (var depidx in deps) {
-    var dep = deps[depidx];
-    if (!Object.keys(depsCache).includes(dep)) {
-      var promise = new Promise((accept, reject) => {
-        var script = document.createElement('script');
-        script.src = dep;
-        document.head.appendChild(script);
-        script.addEventListener("load", function(event) {
-          depsCache[dep] = true;
-          accept();
+    var dep = upgradeDep(deps[depidx]);
+    if (!Object.keys(depsCache).includes(dep) || depsCache[dep] === 'loading') {
+      var promise = null;
+      if (depsCache[dep] === 'loading') {
+        promise = new Promise((accept, reject) => {
+          var check = () => {
+            if (depsCache[dep] === 'loading') {
+              setTimeout(check, 100);
+            }
+            else {
+              if (depsCache[dep] === 'loaded')
+                accept();
+              else
+                reject();
+            }
+          }
+        })
+      }
+      else {
+        promise = new Promise((accept, reject) => {
+          var script = document.createElement('script');
+          depsCache[dep] = 'loading';
+          script.src = dep;
+          document.head.appendChild(script);
+          script.addEventListener("load", function(event) {
+            depsCache[dep] = 'loaded';
+            accept();
+          });
+          script.addEventListener("error", function(event) {
+            depsCache[dep] = 'error';
+            reject();
+          });
         });
-        script.addEventListener("error", function(event) {
-          reject();
-        });
-      });
+      }
 
       await promise;
     }
@@ -115,7 +142,11 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
 
   const injectdebug = (typeof(window) != 'undefined' && window.hal9 && window.hal9.debug) ? 'debugger;\n' : '';
 
-  const vars = Object.keys(params).map((param) => 'var ' + param + ' = _hal9_params[\'' + param + '\'];').join('\n');
+  const vars = Object.keys(params)
+    .map((param) => {
+      return 'var ' + param + ' = _hal9_params[\'' + param + '\'];'
+    }).join('\n');
+  
   const body = 'async function ' + name + '(_hal9_params)' + ' {\n' + 
       injectdebug +
       vars + '\n\n' + code + '\n' +
@@ -134,6 +165,8 @@ export const getFunction = async function(code /*: string */, params /*: params 
 
 export const runFunction = async function(code /*: string */, params /*: params */) /*: void */ {
   const op = await getFunction(code, params);
+
+  params['hal9'] = Object.assign(typeof(window) != 'undefined' && window.hal9 ? window.hal9 : {}, params['hal9']);
 
   // $FlowFixMe
   return op(params);

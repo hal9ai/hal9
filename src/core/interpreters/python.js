@@ -27,7 +27,7 @@ Object.keys(params).map(e => paramsserial[e] = params[e])
 const paramsname = path.resolve(scriptpath, 'params.json');
 await writeFileAsync(paramsname, JSON.stringify(paramsserial));
 
-const scriptname = path.resolve(scriptpath, 'code.py');
+const scriptname = path.resolve(scriptpath, 'hal9code.py');
 const outputname = path.resolve(scriptpath, 'output.json');
 await writeFileAsync(scriptname, \`
 import json

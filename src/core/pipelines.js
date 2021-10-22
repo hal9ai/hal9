@@ -3,20 +3,17 @@
 import importcsvtxt from '../../scripts/import/csv.txt.js';
 import importjsontxt from '../../scripts/import/json.txt.js';
 import importexceltxt from '../../scripts/import/excel.txt.js';
-import twittertxt from '../../scripts/import/twitter.txt.js';
 import iristxt from '../../scripts/import/iris.txt.js';
 import imagestxt from '../../scripts/import/images.txt.js';
 import webcamtxt from '../../scripts/import/webcam.txt.js';
-import airbnbtxt from '../../scripts/import/airbnb.txt.js';
 
-import webtablestxt from '../../scripts/import/web table.txt.js';
-import webimagestxt from '../../scripts/import/web images.txt.js';
+import webtablestxt from '../../scripts/import/webtable.txt.js';
+import webimagestxt from '../../scripts/import/webimages.txt.js';
 
 import bubblestxt from '../../scripts/visualizations/bubbles.txt.js';
 import gallerytxt from '../../scripts/visualizations/gallery.txt';
 import networktxt from '../../scripts/visualizations/network.txt.js';
 import threejstxt from '../../scripts/visualizations/three.txt.js';
-import tweetstxt from '../../scripts/visualizations/tweets.txt.js';
 import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
 import mapcharttxt from '../../scripts/visualizations/map.txt.js';
 
@@ -37,17 +34,14 @@ import fetchtxt from '../../scripts/transforms/fetch.txt.js';
 import filtertxt from '../../scripts/transforms/filter.txt.js';
 import gathertxt from '../../scripts/transforms/gather.txt.js';
 import derivetxt from '../../scripts/transforms/derive.txt.js';
-import pyodidetxt from '../../scripts/transforms/pyodide.txt.js';
 import rangetxt from '../../scripts/transforms/range.txt.js';
 import sampletxt from '../../scripts/transforms/sample.txt.js';
 import selecttxt from '../../scripts/transforms/select.txt.js';
 import sorttxt from '../../scripts/transforms/sort.txt.js';
-import smatxt from '../../scripts/transforms/sma.txt.js';
 import slicetxt from '../../scripts/transforms/slice.txt.js';
 import summarizetxt from '../../scripts/transforms/summarize.txt.js';
 import subsprevtxt from '../../scripts/transforms/subsprev.txt.js';
 import sqltxt from '../../scripts/transforms/sql.txt.js';
-import windowtxt from '../../scripts/transforms/window.txt.js';
 import columntxt from '../../scripts/transforms/column.txt.js';
 
 import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
@@ -57,18 +51,23 @@ import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
 import bodypixtxt from '../../scripts/predict/bodypix.txt.js';
 import knntxt from '../../scripts/predict/knn.txt.js';
 
-import timeseriesmodeltxt from '../../scripts/models/timeseries.txt.js';
-
-import websitetxt from '../../scripts/export/website.txt.js';
-
 import copytxt from '../../scripts/utils/copy.txt.js';
 import pastetxt from '../../scripts/utils/paste.txt.js';
-import shelltxt from '../../scripts/utils/shell.txt.js';
-import pythontxt from '../../scripts/utils/python.txt';
-import rstatstxt from '../../scripts/utils/rstats.txt';
 import tojsontxt from '../../scripts/utils/tojson.txt';
 
 import exportcsvtxt from '../../scripts/export/csv.txt.js';
+
+import airbnbtxt from '../../scripts/services/airbnb.txt.js';
+import twittertxt from '../../scripts/services/twitter.txt.js';
+
+import htmltxt from '../../scripts/languages/html.txt';
+import markdowntxt from '../../scripts/languages/markdown.txt';
+import pyodidetxt from '../../scripts/languages/pyodide.txt.js';
+import pythontxt from '../../scripts/languages/python.txt';
+import rtxt from '../../scripts/languages/r.txt';
+
+import vuetxt from '../../scripts/frameworks/vue.txt';
+import reacttxt from '../../scripts/frameworks/react.txt';
 
 import * as snippets from './snippets';
 import * as operations from './utils/operations';
@@ -80,6 +79,11 @@ import * as executors from './executors/executors';
 
 import * as store from './pipelinestore.js';
 import * as api from './api.js';
+
+import * as languages from './interpreters/languages'
+
+import * as datatable from '../../libs/jedit/jedit.js';
+import datatablecss from "../../libs/jedit/jedit.css";
 
 var gloablDeps = {};
 
@@ -109,12 +113,12 @@ const scripts = {
   importcsv: { script:  importcsvtxt, language: 'javascript' },
   importjson: { script:  importjsontxt, language: 'javascript' },
   importexcel: { script:  importexceltxt, language: 'javascript' },
-  twitter: { script:  twittertxt, language: 'javascript' },
   webcam: { script:  webcamtxt, language: 'javascript' },
-  airbnb: { script:  airbnbtxt, language: 'javascript' },
+
   // webscraping
   webtables: { script:  webtablestxt, language: 'javascript' },
   webimages: { script:  webimagestxt, language: 'javascript' },
+
   // transforms
   convert: { script:  converttxt, language: 'javascript' },
   explode: { script:  explodetxt, language: 'javascript' },
@@ -124,25 +128,23 @@ const scripts = {
   join: { script:  jointxt, language: 'javascript' },
   range: { script:  rangetxt, language: 'javascript' },
   derive: { script:  derivetxt, language: 'javascript' },
-  pyodide: { script:  pyodidetxt, language: 'javascript' },
   sample: { script:  sampletxt, language: 'javascript' },
   select: { script:  selecttxt, language: 'javascript' },
   slice: { script:  slicetxt, language: 'javascript' },
   summarize: { script:  summarizetxt, language: 'javascript' },
   sort: { script:  sorttxt, language: 'javascript' },
-  sma: { script:  smatxt, language: 'javascript' },
   sql: { script:  sqltxt, language: 'javascript' },
   subsprev: { script:  subsprevtxt, language: 'javascript' },
-  window: { script:  windowtxt, language: 'javascript' },
   column: { script:  columntxt, language: 'javascript' },
+
   // visualizations
   bubbles: { script:  bubblestxt, language: 'javascript' },
   network: { script:  networktxt, language: 'javascript' },
   threejs: { script:  threejstxt, language: 'javascript' },
-  tweets: { script:  tweetstxt, language: 'javascript' },
   wordcloud: { script:  wordcloudtxt, language: 'javascript' },
   mapchart: { script:  mapcharttxt, language: 'javascript' },
   gallery: { script:  gallerytxt, language: 'html' },
+
   // predictions
   mobilenet: { script:  mobilenettxt, language: 'javascript' },
   timeseriespredict: { script:  timeseriespredicttxt, language: 'javascript' },
@@ -150,8 +152,9 @@ const scripts = {
   sentiment: { script:  sentimenttxt, language: 'javascript' },
   bodypix: { script:  bodypixtxt, language: 'javascript' },
   knn: { script:  knntxt, language: 'javascript' },
+
   // train
-  timeseriesmodel: { script:  timeseriesmodeltxt, language: 'javascript' },
+
   // charts
   barchart: { script:  barcharttxt, language: 'javascript' },
   scatterchart: { script:  scattercharttxt, language: 'javascript' },
@@ -162,17 +165,29 @@ const scripts = {
   sankeychart: { script:  sankeycharttxt, language: 'javascript' },
   treemapchart: { script:  treemapcharttxt, language: 'javascript' },
   waterfallchart: { script:  waterfallcharttxt, language: 'javascript' },
-  // website
-  website: { script:  websitetxt, language: 'javascript' },
+
   // utils
   copy: { script:  copytxt, language: 'javascript' },
   paste: { script:  pastetxt, language: 'javascript' },
-  shell: { script:  shelltxt, language: 'javascript' },
-  python: { script:  pythontxt, language: 'python' },
-  r: { script:  rstatstxt, language: 'r' },
   tojson: { script: tojsontxt, language: 'javascript' },
+
   // export
   exportcsv: { script:  exportcsvtxt, language: 'javascript' },
+
+  // services
+  airbnb: { script:  airbnbtxt, language: 'javascript' },
+  twitter: { script:  twittertxt, language: 'javascript' },
+
+  // languages
+  html: { script:  htmltxt, language: 'html' },
+  markdown: { script:  markdowntxt, language: 'markdown' },
+  pyodide: { script:  pyodidetxt, language: 'javascript' },
+  python: { script:  pythontxt, language: 'python' },
+  r: { script:  rtxt, language: 'r' },
+
+  // frameworks
+  vue: { script:  vuetxt, language: 'html' },
+  react: { script:  reacttxt, language: 'html' },
 }
 
 var pipelinesStateCount = 0;
@@ -395,8 +410,7 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
     const deps = await getGlobalDeps();
 
     // add hal9 api to deps
-    var hal9 = (typeof(window) != 'undefined' && window.hal9) ? window.hal9 :  {};
-    deps['hal9'] = Object.assign(hal9, api.create(pipelineid, sid, context));
+    deps['hal9'] = api.create(pipelineid, sid, context);
 
     const script = scriptFromStep(pipeline, step);
     const executor = executors.executorFromMetadata(
@@ -459,11 +473,131 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
   return error === '';
 }
 
+const stepHasHtml = (pipeline, step) => {
+  const langInfo = languages.getLanguageInfo(step.language);
+  if (langInfo.html) return true;
+
+  var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
+  return header && header.output && header.output.filter(e => e == 'html').length > 0;
+}
+
+export const preparePartial = (pipeline, context, partial, renderid) => {
+  var html = context.html;
+  if (typeof(html) === 'object') {
+    const isFullView = renderid === null || renderid === undefined;
+
+    const oneHasHtml = pipeline.steps.map(step => stepHasHtml(pipeline, step)).filter(e => e).length > 0;
+
+    // add support for viewing data tables
+    if (!isFullView || !oneHasHtml) {
+      if (!oneHasHtml) {
+        renderid = pipeline.steps[pipeline.steps.length - 1].id;
+      }
+
+      var step = stepFromId(pipeline, renderid);
+      var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
+      const hasHtml = stepHasHtml(pipeline, step);
+      if (!hasHtml) {
+        return function(pipeline, step, result, error, details) {
+          html = html.shadowRoot ? html.shadowRoot : html;
+          html.innerHTML = '';
+
+          var style = document.createElement('style');
+          style.innerHTML = datatablecss;
+          style.id = 'hal9__datatable__style';
+          html.appendChild(style);
+
+          datatable.build(html, getGlobal(pipeline, result.data));
+
+          partial(pipeline, step, result, error, details);
+        }
+      }
+    }
+  }
+
+  return partial;
+}
+
+export const prepareContext = (pipeline, context, stepstopid) => {
+  const parent = context.html;
+  if (typeof(parent) === 'object') {
+    const height = parent.offsetHeight;
+
+    parent.innerHTML = '';
+    const html = parent.shadowRoot ? parent.shadowRoot : parent.attachShadow({mode: 'open'});
+    html.innerHTML = '';
+
+    const isFullView = stepstopid === null || stepstopid === undefined;
+
+    // add support for generating html blocks
+    context.html = (step) => {
+      var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
+      var hasHtml = header && header.output && header.output.filter(e => e == 'html').length > 0;
+
+      const langInfo = languages.getLanguageInfo(step.language);
+      if (langInfo.html) hasHtml = true;
+
+      if (isFullView && hasHtml) {
+        const output = html.querySelector(':scope .hal9-step-' + step.id);
+        if (output) return output;
+
+        var container = document.createElement('div');
+        container.className = 'hal9-step-' + step.id;
+        container.style.width = '100%';
+
+        if (langInfo.height) {
+          container.style.height = langInfo.height;
+        }
+        else {
+          container.style.height = height + 'px';
+        }
+        
+        html.appendChild(container);
+
+        return container;
+      }
+      else if (stepstopid == step.id) {
+        const output = html.querySelector(':scope .hal9-step-' + step.id);
+        if (output) return output;
+
+        var container = document.createElement('div');
+        container.className = 'hal9-step-' + step.id;
+        container.style.width = '100%';
+        container.style.height = '100%';
+
+        html.appendChild(container);
+
+        return container;
+      }
+      else {
+        const sandbox = html.querySelector(':scope .hal9-step-sandbox');
+        if (sandbox) {
+          sandbox.innerHTML = '';
+          return sandbox;
+        }
+
+        var container = document.createElement('div');
+        container.className = 'hal9-step-sandbox';
+        container.style.width = '0';
+        container.style.height = '0';
+        container.style.position = 'absolute';
+        container.style.display = 'none';
+        html.appendChild(container);
+
+        return container;
+      }
+    }
+  }
+}
+
 export const run = async (pipelineid /*: pipeline */, context /* context */, partial, stepstopid /* stepid */ ) /*: void */ => {
   var pipeline = store.get(pipelineid);
   if (!pipeline || pipeline.length == 0) return;
 
   await fetchScripts(pipeline.steps);
+
+  partial = preparePartial(pipeline, context, partial, stepstopid);
+  prepareContext(pipeline, context, stepstopid);
 
   pipeline.errors = {};
   pipeline.error = undefined;
@@ -497,6 +631,9 @@ export const getParams = (pipelineid /*: pipelineid */, sid /*: stepid */) /*: p
 
 const setParamsInt = (pipeline /*: pipeline */, sid /*: stepid */, params /*: params */) /*: void */ => {
   pipeline.params[sid] = clone(params);
+
+  const stepIdx = stepIdxFromId(pipeline, sid);
+  if (stepIdx !== -1) pipeline.steps[stepIdx].params = clone(params);
 }
 
 export const setParams = (pipelineid /*: pipelineid */, sid /*: stepid */, params /*: params */) /*: void */ => {
@@ -567,10 +704,11 @@ export const updateStep = (pipelineid /*: pipelineid */, step /*: step */) /*: v
 }
 
 export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step */ => {
+  step = clone(step);
   var pipeline = store.get(pipelineid);
 
   var maxId = getMaxId(pipelineid);
-  if (typeof(step.id) === 'undefined') {
+  if (typeof(step.id) === 'undefined' || step.id <= maxId) {
     step.id = maxId + 1;
   }
 
@@ -591,9 +729,16 @@ export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step
     step.label = step.name;
   }
 
+  var params = paramsFromStep(pipeline, step);
+  step.params = params;
+
   if (step.params) {
     pipeline.params[step.id] = step.params;
   }
+
+  const scriptInfo = scriptFromStep(pipeline, step);
+  step.script = scriptInfo.script;
+  step.language = scriptInfo.language;
 
   pipeline.steps.push(step);
 
@@ -821,11 +966,18 @@ export const getMaxId = (pipelineid /*: pipelineid */) /*: number */ => {
   var pipeline = store.get(pipelineid);
   
   var max = 0
-  const maxid = (max, arr) => Math.max(max, Math.max(...arr.map(e => e.id)));
+  const maxid = (max, arr) => {
+    const arrIds = arr.map(e => e.id);
+    return Math.max(max, arrIds.length == 0 ? 0 : Math.max(...arrIds));
+  }
 
-  if (pipeline.params) max = Math.max(...Object.keys(pipeline.params).map(e => parseInt(e)));
+  const paramIds = Object.keys(pipeline.params).map(e => parseInt(e));
+  if (pipeline.params) max = !paramIds || paramIds.length == 0 ? 0 : Math.max(...paramIds);
+
   if (pipeline.steps) max = maxid(max, pipeline.steps);
-  if (pipeline.scripts) max = Math.max(...Object.keys(pipeline.scripts).map(e => parseInt(e)));
+
+  const scriptIds = Object.keys(pipeline.scripts).map(e => parseInt(e));
+  if (pipeline.scripts) max = !scriptIds || scriptIds.length == 0 ? max : Math.max(...scriptIds);
 
   return max;
 }
@@ -833,6 +985,11 @@ export const getMaxId = (pipelineid /*: pipelineid */) /*: number */ => {
 export const getGlobal = (pipelineid /*: pipelineid */, name /*: string */) => /*: Object */ {
   var pipeline = store.get(pipelineid);
   return pipeline.globals[name];
+}
+
+export const setGlobal = (pipelineid /*: pipelineid */, name /*: string */, data /*: Object */) => /*: void */ {
+  var pipeline = store.get(pipelineid);
+  pipeline.globals[name] = data;
 }
 
 const getGlobals = (pipeline /*: pipeline */) => /*: Object */ {

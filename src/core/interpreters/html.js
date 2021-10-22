@@ -4,6 +4,8 @@ export default function(html) {
 
   script +=  `
     const scripts = [...html.getElementsByTagName('script')];
+
+    var hasUnknownType = false;
     for (var idx in scripts) {
       const script = scripts[idx];
 
@@ -44,11 +46,24 @@ export default function(html) {
 
         await loaded;
       }
-      else {
-        const fn = new Function(Object.keys(_hal9_params), script.innerHTML);
+      else if (!script.type || script.type == 'text/javascript' || script.type == 'text/jsx' || script.type == 'text/jsx' || script.type == 'text/babel') {
+        var code = script.innerHTML;
+
+        debugger;
+        if (script.type == 'text/jsx' || script.type == 'text/babel')
+          code = Babel.transform(code, { presets: ['env', 'react'] }).code;
+
+        const fn = new Function(Object.keys(_hal9_params), code);
         fn(...Object.values(_hal9_params));
       }
+      else {
+        hasUnknownType = true;
+      }
     };
+
+    if (hasUnknownType) {
+      window.dispatchEvent(new Event('DOMContentLoaded'));
+    }
   `;
 
   return script;

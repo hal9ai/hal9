@@ -6,8 +6,11 @@ import clone from './utils/clone';
 export const create = (pipelineid, sid, context) => {
   return {
     // Retrieves the current pipeline as embedable html
+    setHtml: function(html) {
+      this.html = html;
+    },
     getHtml: function() {
-      return pipelines.getHtml(pipelineid);
+      return this.html;
     },
     // Saves some state for the current pipeline step
     setState: function(state) {
@@ -35,9 +38,6 @@ export const create = (pipelineid, sid, context) => {
     // Is UI running in dark mode?
     isDark: function() {
       return context.dark;
-    },
-    terminal: async function(cmd) {
-      if (context.execProcess) context.execProcess(cmd);
     },
     getParams: function() {
       return pipelines.getParams(pipelineid, sid);

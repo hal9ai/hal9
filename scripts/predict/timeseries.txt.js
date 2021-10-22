@@ -1,111 +1,128 @@
 /**
-  input:
-    - data
-    - model
   params:
-    - window
     - name: prediction
       label: Prediction
+    - name: window
+      label: Window Size
+      value:
+        - control: number
+          value: 20
+    - name: units
+      label: Units
+      value:
+        - control: number
+          value: 12
+    - name: epochs
+      label: Epochs
+      value:
+        - control: number
+          value: 1
     - name: predictions
       label: Predictions
       value:
-        - control: range
-          value: 0
-          min: 0
-          max: 100
-  deps:
-    - https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js
+        - control: number
+          value: 1
   cache: true
+  deps:
+    - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
+    - https://cdn.jsdelivr.net/npm/arquero@latest
+    - https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.8.3/dist/tf.js
+    - 'https://cdn.jsdelivr.net/npm/d3@6'
+    - 'https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1'
 **/
-data = await hal9.utils.toRows(data);
 
-if (!Array.isArray(window)) window = [ window ];
-if (!model) throw('Prediction requires previous step to train a model');
+data = await hal9.utils.toArquero(data);
+  
+window = parseInt(window);
+predictions = parseInt(predictions);
 
-for (var key in model) {
-  localStorage.setItem(key, model[key]);
-}
+tf.setBackend('cpu');
+tf.disposeVariables();
 
-const modelpath = 'localstorage://timeseriesmodel';
+if(prediction) {
+  // Moving average
+  data = data.params({prediction}).derive({ sma: aq.rolling((d, $) => op.average(d[$.prediction]), [window, 0]) });
+  data = data.rename({ sma : "sma" + prediction });
 
-model = await tf.loadLayersModel(modelpath);
-
-function normalize(win) {
-    const min = Math.min(...win);
-    const max = Math.max(...win);
-    return win.map(e => (e - min) / (max - min));
-};
-
-function denormalize(win, min, max) {
-    return win.map(e => (e * (max - min)) + min);
-};
-
-var newData = [];
-
-for (var winidx = 0; winidx < window.length; winidx ++) {
-  var winsrc = window[winidx];
-
-  const predictedResults = model.predict(
-    tf.tensor2d(
-      data.map(e => normalize(e[winsrc])),
-      [ data.length, data[0][winsrc].length ]
+  // Window 
+  var smacol = data.array("sma" + prediction) 
+  var windowarray = [];
+  for(let i = 0; i < smacol.length; i++) {
+    windowarray.push(
+      data.slice(i - window, i + predictions).array('sma' + prediction)
     )
-  );
+  }
 
-  const results = Array.from(await predictedResults.dataSync());
+  data = data.assign({ window: windowarray }).slice(window);
+  data = data.rename({ window: "window" + prediction });
+ 
+  // Model 
+  var allwindows = data.array("window" + prediction) 
+  
+  // Normalize X
+  x_train = [];
+  x_predict = [];
+  y_train = [];
+  x_train_max = data.count().array('count')[0] - predictions;
+  allwindows.forEach((win, i) => {
+    const x_input = win.slice(0, window);
+    const min = Math.min(...x_input);
+    const max = Math.max(...x_input);
 
-  var min = 0;
-  var max = 0;
-  data = data.map((e, i) => {
-    const win = e[winsrc];
-    min = Math.min(...win);
-    max = Math.max(...win);
-    
-    var pred = {}
-    pred['prediction' + winsrc] = (results[i] * (max - min)) + min;
+    const x_elem = x_input.map(e => (e - min) / (max - min));
+    x_predict.push(x_elem);
 
-    return Object.assign(e, pred);
+    if (i < x_train_max) {
+      x_train.push(x_elem);
+
+      const y_output = win.slice(window, window + predictions);
+      y_train.push(y_output.map(e => (e - min) / (max - min)));
+    }
+  });
+  
+  const model = tf.sequential();
+  model.add(tf.layers.lstm({ units: parseInt(units), returnSequences: false, inputShape:[window, 1] }));
+  model.add(tf.layers.dropout(0.2))
+  model.add(tf.layers.dense({ units: predictions, activation: 'relu' }));
+  
+  model.compile({
+    loss: 'meanSquaredError',
+    optimizer: 'sgd',
+    metrics: ['accuracy']
+  });
+  
+  const xs = tf.tensor(x_train).reshape([-1, window, 1])
+  const ys = tf.tensor(y_train).reshape([-1, predictions]);
+
+  await model.fit(xs, ys, {
+    epochs: parseInt(epochs),
+    batchSize: window,
+    callbacks: async (epoch, log) => {
+      console.log('Accuracy', logs.acc);
+    },
   });
 
-  var futureWindow = data[data.length - 1][winsrc];
-  futureWindow.splice(0, 1);
-  futureWindow.push(data[results.length - 1][prediction]);
+  const xp = tf.tensor(x_predict).reshape([-1, window, 1])
 
-  var futureWindowNorm = normalize(futureWindow);
-  min = Math.min(...futureWindow);
-  max = Math.max(...futureWindow);
+  const results = model.predict(xp).arraySync();
+  if (results.length != allwindows.length) throw('Expecting window with ' + results.length + ' rows but got ' + allwindows.length);
 
-  for (var idx = 0; idx < predictions; idx++) {
-    var futurePrediction = model.predict(tf.tensor2d([ normalize(futureWindowNorm) ], [ 1, futureWindowNorm.length ]));
-    var futureResults = Array.from(await futurePrediction.dataSync());
+  data = data.assign({
+    prediction: results.map((e, i) => {
+      const win = allwindows[i];
+      const x_input = win.slice(0, window);
 
-    const denormalized = (futureResults[0] * (max - min)) + min;
+      const min = Math.min(...x_input);
+      const max = Math.max(...x_input);
 
-    var futureRow = Object.fromEntries(Object.keys(data[data.length - 1]).map(e => [e, null]));
+      if (i < x_train_max) {
+        return e[0] * (max - min) + min;
+      }
+      else {
+        return results[x_train_max][i - x_train_max] * (max - min) + min;
+      }
+    })
+  });
 
-    if (newData.length <= idx) {
-      var pred = { }
-      pred[winsrc] = denormalize(futureWindowNorm);
-      pred['prediction' + winsrc] = denormalized;
-
-      newData.push(Object.assign(futureRow, pred));
-    }
-    else {
-      newData[idx][winsrc] = denormalize(futureWindowNorm);
-      newData[idx]['prediction' + winsrc] = denormalized;
-    }
-
-    futureDenormalizedWindow = denormalize(futureWindowNorm, min, max);
-    futureDenormalizedWindow.splice(0, 1);
-    futureDenormalizedWindow.push(denormalized);
-
-    min = Math.min(...futureDenormalizedWindow);
-    max = Math.max(...futureDenormalizedWindow);
-
-    futureWindowNorm = normalize(futureDenormalizedWindow);
-  }
-}
-
-for (var idx = 0; idx < newData.length; idx++) {
-  data.push(newData[idx]);
+  data = data.select(aq.not('window' + prediction));
 }

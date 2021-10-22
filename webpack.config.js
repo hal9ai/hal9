@@ -43,6 +43,10 @@ module.exports = {
           'raw-loader',
         ],
       },
+      {
+        test: /\.css$/i,
+        use: [ 'css-loader' ],
+      },
     ],
   },
   optimization: {

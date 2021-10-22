@@ -2,7 +2,7 @@
   output: [html]
   params: [lon, lat, size]
   deps: [
-    'https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js',
+    'https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js',
     'https://unpkg.com/leaflet@1.7.1/dist/leaflet.js',
   ]
 **/

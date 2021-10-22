@@ -1,0 +1,19 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+<div class="hello">
+  {{ hello }}
+</div>
+
+<script>
+  var app = new Vue({
+    el: html.getElementsByClassName('hello')[0],
+    data: {
+      hello: 'Hello from Vue!',
+    }
+  })
+</script>
+
+<style>
+  .hello {
+  }
+</style>
