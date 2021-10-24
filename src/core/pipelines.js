@@ -1,11 +1,11 @@
 // @flow
 
+import iristxt from '../../scripts/import/iris.txt.js';
+import imagestxt from '../../scripts/import/images.txt.js';
+
 import importcsvtxt from '../../scripts/import/csv.txt.js';
 import importjsontxt from '../../scripts/import/json.txt.js';
 import importexceltxt from '../../scripts/import/excel.txt.js';
-import iristxt from '../../scripts/import/iris.txt.js';
-import imagestxt from '../../scripts/import/images.txt.js';
-import webcamtxt from '../../scripts/import/webcam.txt.js';
 
 import webtablestxt from '../../scripts/import/webtable.txt.js';
 import webimagestxt from '../../scripts/import/webimages.txt.js';
@@ -43,6 +43,7 @@ import summarizetxt from '../../scripts/transforms/summarize.txt.js';
 import subsprevtxt from '../../scripts/transforms/subsprev.txt.js';
 import sqltxt from '../../scripts/transforms/sql.txt.js';
 import columntxt from '../../scripts/transforms/column.txt.js';
+import imputetxt from '../../scripts/transforms/impute.txt.js';
 
 import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
 import timeseriespredicttxt from '../../scripts/predict/timeseries.txt.js';
@@ -54,6 +55,7 @@ import knntxt from '../../scripts/predict/knn.txt.js';
 import copytxt from '../../scripts/utils/copy.txt.js';
 import pastetxt from '../../scripts/utils/paste.txt.js';
 import tojsontxt from '../../scripts/utils/tojson.txt';
+import webcamtxt from '../../scripts/import/webcam.txt.js';
 
 import exportcsvtxt from '../../scripts/export/csv.txt.js';
 
@@ -136,6 +138,7 @@ const scripts = {
   sql: { script:  sqltxt, language: 'javascript' },
   subsprev: { script:  subsprevtxt, language: 'javascript' },
   column: { script:  columntxt, language: 'javascript' },
+  impute: { script: imputetxt, language: 'javascript' },
 
   // visualizations
   bubbles: { script:  bubblestxt, language: 'javascript' },
