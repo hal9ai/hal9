@@ -49,7 +49,6 @@ export default function(html) {
       else if (!script.type || script.type == 'text/javascript' || script.type == 'text/jsx' || script.type == 'text/jsx' || script.type == 'text/babel') {
         var code = script.innerHTML;
 
-        debugger;
         if (script.type == 'text/jsx' || script.type == 'text/babel')
           code = Babel.transform(code, { presets: ['env', 'react'] }).code;
 
