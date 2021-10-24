@@ -32,7 +32,6 @@ import explodetxt from '../../scripts/transforms/explode.txt.js';
 import jointxt from '../../scripts/transforms/join.txt.js';
 import fetchtxt from '../../scripts/transforms/fetch.txt.js';
 import filtertxt from '../../scripts/transforms/filter.txt.js';
-import gathertxt from '../../scripts/transforms/gather.txt.js';
 import derivetxt from '../../scripts/transforms/derive.txt.js';
 import rangetxt from '../../scripts/transforms/range.txt.js';
 import sampletxt from '../../scripts/transforms/sample.txt.js';
@@ -126,7 +125,6 @@ const scripts = {
   explode: { script:  explodetxt, language: 'javascript' },
   fetch: { script:  fetchtxt, language: 'javascript' },
   filter: { script:  filtertxt, language: 'javascript' },
-  gather: { script:  gathertxt, language: 'javascript' },
   join: { script:  jointxt, language: 'javascript' },
   range: { script:  rangetxt, language: 'javascript' },
   derive: { script:  derivetxt, language: 'javascript' },
