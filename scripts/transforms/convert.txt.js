@@ -2,6 +2,7 @@
   params:
     - name: field
       label: Field
+      single: true
     - name: expression
       label: 'Expression'
       value:

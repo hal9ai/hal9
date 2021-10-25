@@ -1,11 +1,11 @@
 // @flow
 
+import iristxt from '../../scripts/import/iris.txt.js';
+import imagestxt from '../../scripts/import/images.txt.js';
+
 import importcsvtxt from '../../scripts/import/csv.txt.js';
 import importjsontxt from '../../scripts/import/json.txt.js';
 import importexceltxt from '../../scripts/import/excel.txt.js';
-import iristxt from '../../scripts/import/iris.txt.js';
-import imagestxt from '../../scripts/import/images.txt.js';
-import webcamtxt from '../../scripts/import/webcam.txt.js';
 
 import webtablestxt from '../../scripts/import/webtable.txt.js';
 import webimagestxt from '../../scripts/import/webimages.txt.js';
@@ -32,7 +32,6 @@ import explodetxt from '../../scripts/transforms/explode.txt.js';
 import jointxt from '../../scripts/transforms/join.txt.js';
 import fetchtxt from '../../scripts/transforms/fetch.txt.js';
 import filtertxt from '../../scripts/transforms/filter.txt.js';
-import gathertxt from '../../scripts/transforms/gather.txt.js';
 import derivetxt from '../../scripts/transforms/derive.txt.js';
 import rangetxt from '../../scripts/transforms/range.txt.js';
 import sampletxt from '../../scripts/transforms/sample.txt.js';
@@ -43,6 +42,7 @@ import summarizetxt from '../../scripts/transforms/summarize.txt.js';
 import subsprevtxt from '../../scripts/transforms/subsprev.txt.js';
 import sqltxt from '../../scripts/transforms/sql.txt.js';
 import columntxt from '../../scripts/transforms/column.txt.js';
+import imputetxt from '../../scripts/transforms/impute.txt.js';
 
 import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
 import timeseriespredicttxt from '../../scripts/predict/timeseries.txt.js';
@@ -54,6 +54,7 @@ import knntxt from '../../scripts/predict/knn.txt.js';
 import copytxt from '../../scripts/utils/copy.txt.js';
 import pastetxt from '../../scripts/utils/paste.txt.js';
 import tojsontxt from '../../scripts/utils/tojson.txt';
+import webcamtxt from '../../scripts/import/webcam.txt.js';
 
 import exportcsvtxt from '../../scripts/export/csv.txt.js';
 
@@ -124,7 +125,6 @@ const scripts = {
   explode: { script:  explodetxt, language: 'javascript' },
   fetch: { script:  fetchtxt, language: 'javascript' },
   filter: { script:  filtertxt, language: 'javascript' },
-  gather: { script:  gathertxt, language: 'javascript' },
   join: { script:  jointxt, language: 'javascript' },
   range: { script:  rangetxt, language: 'javascript' },
   derive: { script:  derivetxt, language: 'javascript' },
@@ -136,6 +136,7 @@ const scripts = {
   sql: { script:  sqltxt, language: 'javascript' },
   subsprev: { script:  subsprevtxt, language: 'javascript' },
   column: { script:  columntxt, language: 'javascript' },
+  impute: { script: imputetxt, language: 'javascript' },
 
   // visualizations
   bubbles: { script:  bubblestxt, language: 'javascript' },
