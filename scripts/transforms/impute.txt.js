@@ -8,10 +8,6 @@
         - control: select
           value: zero
           values:
-            - name: first
-              label: First
-            - name: last
-              label: Last
             - name: max
               label: Max
             - name: mean
@@ -42,11 +38,14 @@ var rollUpDict = {};
 if (field.length == 0 )
   data = data
 else {
-  if (method = 'zero') {
+  if (method == 'zero') {
     for (var i = 0; i < field.length; i++) {
       rollUpDict[field[i]] = () => 0 
     }
+    console.log(rollUpDict)
+    data = data.impute(rollUpDict)
   } else {
+    data.params({method, methodMap, field})
     for (var i = 0; i < field.length; i++) {
       rollUpDict[field[i]] = methodMap[method](field[i]) 
     }
