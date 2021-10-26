@@ -642,6 +642,11 @@ export const setParams = (pipelineid /*: pipelineid */, sid /*: stepid */, param
   setParamsInt(pipeline, sid, params);
 }
 
+export const stepIdFromIdx = (pipelineid /*: pipelineid */, index /*: number */) /*: number */ => {
+  var pipeline = store.get(pipelineid);
+  return pipeline.steps[index].id;
+}
+
 export const mergeParams = (pipelineid /*: pipelineid */, sid /*: stepid */, params /*: params */) /*: void */ => {
   if (!params) return;
 
