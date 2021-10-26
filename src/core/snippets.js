@@ -91,13 +91,7 @@ const upgradeDep = (dep) => {
   return dep;
 } 
 
-export const getFunctionBody = async function(code /*: string */, params /*: params */, nodeps /*: boolean */) /*: string */ {
-  const name = 'snippet' + Math.floor(Math.random() * 10000000);
-
-  const header = parseHeader(code);
-  const deps = !nodeps ? header.deps : [];
-  const output = header.output;
-  
+const loadDepsForBrowser = async function(deps, params) {
   for (var depidx in deps) {
     var dep = upgradeDep(deps[depidx]);
     if (!Object.keys(depsCache).includes(dep) || depsCache[dep] === 'loading') {
@@ -138,6 +132,36 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
     }
   };
 
+  return '';
+}
+
+const loadDepsForJS = async function(deps, params) {
+  const depscode = await Promise.all(deps.map(dep => {
+    if (Object.keys(depsCache).includes(dep))
+      return Promise.resolve(depsCache[dep]);
+    else {
+      const fetchFunc = typeof fetch === 'function' ? fetch : params.fetch;
+      return fetchFunc(dep).then(resp => resp.text());
+    }
+  }));
+
+  deps.map((dep, idx) => {
+    depsCache[dep] = depscode[idx];
+  });
+
+  return depscode.join('\n') + '\n\n';
+}
+
+export const getFunctionBody = async function(code /*: string */, params /*: params */, nodeps /*: boolean */) /*: string */ {
+  const name = 'snippet' + Math.floor(Math.random() * 10000000);
+
+  const header = parseHeader(code);
+  const deps = !nodeps ? header.deps : [];
+  const output = header.output;
+  
+  const loadDependencies = typeof(window) != 'undefined' ? loadDepsForBrowser : loadDepsForJS;
+  const depscode =await loadDependencies(deps, params);
+
   const returns = '{ ' + output.map((e) => e + ': ' + e).join(', ') + ' }';
 
   const injectdebug = (typeof(window) != 'undefined' && window.hal9 && window.hal9.debug) ? 'debugger;\n' : '';
@@ -149,7 +173,7 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
   
   const body = 'async function ' + name + '(_hal9_params)' + ' {\n' + 
       injectdebug +
-      vars + '\n\n' + code + '\n' +
+      vars + '\n\n' + depscode + code + '\n' +
       'return '+  returns + ';\n' +
     '}';
 

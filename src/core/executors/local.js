@@ -11,7 +11,7 @@ export default class LocalExecutor extends Executor {
 
     // add html to params
     params['html'] = this.context['html'] ? this.context['html'](this.step) : this.context['html'];
-    this.deps.hal9.setHtml(params['html']);
+    if (this.deps && this.deps.hal9) this.deps.hal9.setHtml(params['html']);
 
     // retrieve cached hal9 datasets
     params = localparams.fetchDatasets(params);
