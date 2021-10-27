@@ -508,7 +508,37 @@ export const preparePartial = (pipeline, context, partial, renderid) => {
           style.id = 'hal9__datatable__style';
           html.appendChild(style);
 
-          datatable.build(html, getGlobal(pipeline, result.data));
+          var area = document.createElement('div');
+          
+          var tabs = document.createElement('div');
+          tabs.style.display = 'flex';
+          tabs.style.flexDirection = 'row';
+          html.appendChild(tabs);
+          if (Object.keys(result).length > 1) {
+            Object.keys(result).forEach((r, tabIdx) => {
+              var tab = document.createElement('a');
+              tab.href = '#';
+              tab.style.paddingRight = '6px';
+              tab.style.textDecoration = 'none';
+              tab.style.color = '#528efd';
+              tab.innerText = r;
+              tab.onclick = () => {
+                for (let i = 0; i < area.children.length; i++) area.children[i].style.display = 'none';
+                area.children[tabIdx].style.display = 'block';
+              };
+
+              tabs.appendChild(tab);
+            });
+          }
+
+          html.appendChild(area);
+          Object.keys(result).forEach((r, idx) => {
+            var output = document.createElement('div');
+            if (idx > 0) output.style.display = 'none';
+            area.appendChild(output);
+
+            datatable.build(output, getGlobal(pipeline, result[r]));
+          });
 
           partial(pipeline, step, result, error, details);
         }
