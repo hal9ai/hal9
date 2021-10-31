@@ -29,7 +29,12 @@ const getWorkerUrl = async (pipelinename) => {
 
   var res = await fetch(workersListUrl)
   if (!res.ok) {
-    throw 'Failed to retrieve worker list: ' + res.statusText;
+    var json = null;
+    try {
+      json = await res.json();
+    }
+    catch(e) {}
+    throw json ? json : 'Failed to retrieve worker list: ' + res.statusText;
     return;
   }
 
@@ -52,7 +57,7 @@ export const getValidWorkerUrl = async function(pipelinename) {
     try {
       workerUrl = await getWorkerUrl(pipelinename);
     } catch (error) {
-      details = 'Failed to get workers url.';
+      details = error;
       console.log(details);
       sleepDuration = 5000;
     }
