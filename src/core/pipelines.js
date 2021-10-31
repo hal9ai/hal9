@@ -66,6 +66,7 @@ import markdowntxt from '../../scripts/languages/markdown.txt';
 import pyodidetxt from '../../scripts/languages/pyodide.txt.js';
 import pythontxt from '../../scripts/languages/python.txt';
 import rtxt from '../../scripts/languages/r.txt';
+import javascripttxt from '../../scripts/languages/javascript.txt';
 
 import vuetxt from '../../scripts/frameworks/vue.txt';
 import reacttxt from '../../scripts/frameworks/react.txt';
@@ -185,6 +186,7 @@ const scripts = {
   pyodide: { script:  pyodidetxt, language: 'javascript' },
   python: { script:  pythontxt, language: 'python' },
   r: { script:  rtxt, language: 'r' },
+  javascript: { script: javascripttxt, language: 'javascript' },
 
   // frameworks
   vue: { script:  vuetxt, language: 'html' },
