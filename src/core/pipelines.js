@@ -557,7 +557,7 @@ export const prepareContext = (pipeline, context, stepstopid) => {
     const height = parent.offsetHeight;
 
     parent.innerHTML = '';
-    const html = parent.shadowRoot ? parent.shadowRoot : parent.attachShadow({mode: 'open'});
+    const html = parent.shadowRoot ? parent.shadowRoot : (context.shadow === false ? parent : parent.attachShadow({mode: 'open'}));
     html.innerHTML = '';
 
     const isFullView = stepstopid === null || stepstopid === undefined;
