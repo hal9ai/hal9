@@ -14,7 +14,7 @@ export default class RemoteExecutor extends Executor {
       headers: Object.assign(
         { 'Content-Type': 'application/json' },
         this.context.headers
-      }
+      )
     });
 
     if (!res.ok) {
