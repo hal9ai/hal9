@@ -1,75 +1,89 @@
 // @flow
 
-import iristxt from '../../scripts/import/iris.txt.js';
+// import scripts
 import imagestxt from '../../scripts/import/images.txt.js';
-
 import importcsvtxt from '../../scripts/import/csv.txt.js';
-import importjsontxt from '../../scripts/import/json.txt.js';
 import importexceltxt from '../../scripts/import/excel.txt.js';
+import importjsontxt from '../../scripts/import/json.txt.js';
+import iristxt from '../../scripts/import/iris.txt.js';
+import webcamtxt from '../../scripts/import/webcam.txt.js';
 
-import webtablestxt from '../../scripts/import/webtable.txt.js';
+// webscraping scripts
 import webimagestxt from '../../scripts/import/webimages.txt.js';
+import webtablestxt from '../../scripts/import/webtable.txt.js';
 
-import bubblestxt from '../../scripts/visualizations/bubbles.txt.js';
-import gallerytxt from '../../scripts/visualizations/gallery.txt';
-import networktxt from '../../scripts/visualizations/network.txt.js';
-import threejstxt from '../../scripts/visualizations/three.txt.js';
-import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
-import mapcharttxt from '../../scripts/visualizations/map.txt.js';
+// transform scripts
+import assigntxt from '../../scripts/transforms/assign.txt.js';
+import columntxt from '../../scripts/transforms/column.txt.js';
+import converttxt from '../../scripts/transforms/convert.txt.js';
+import derivetxt from '../../scripts/transforms/derive.txt.js';
+import droptxt from '../../scripts/transforms/drop.txt.js';
+import explodetxt from '../../scripts/transforms/explode.txt.js';
+import fetchtxt from '../../scripts/transforms/fetch.txt.js';
+import filtertxt from '../../scripts/transforms/filter.txt.js';
+import foldtxt from '../../scripts/transforms/fold.txt.js';
+import imputetxt from '../../scripts/transforms/impute.txt.js';
+import jointxt from '../../scripts/transforms/join.txt.js';
+import pivottxt from '../../scripts/transforms/pivot.txt.js';
+import rangetxt from '../../scripts/transforms/range.txt.js';
+import sampletxt from '../../scripts/transforms/sample.txt.js';
+import selecttxt from '../../scripts/transforms/select.txt.js';
+import slicetxt from '../../scripts/transforms/slice.txt.js';
+import sorttxt from '../../scripts/transforms/sort.txt.js';
+import sqltxt from '../../scripts/transforms/sql.txt.js';
+import subsprevtxt from '../../scripts/transforms/subsprev.txt.js';
+import summarizetxt from '../../scripts/transforms/summarize.txt.js';
 
+// chart scripts
 import barcharttxt from '../../scripts/charts/barchart.txt.js';
-import scattercharttxt from '../../scripts/charts/scatterchart.txt.js';
 import errorbarcharttxt from '../../scripts/charts/errorbarchart.txt.js';
 import heatmapcharttxt from '../../scripts/charts/heatmapchart.txt.js';
 import histogramcharttxt from '../../scripts/charts/histogramchart.txt.js';
 import linecharttxt from '../../scripts/charts/linechart.txt.js';
 import sankeycharttxt from '../../scripts/charts/sankeychart.txt.js';
+import scattercharttxt from '../../scripts/charts/scatterchart.txt.js';
 import treemapcharttxt from '../../scripts/charts/treemapchart.txt.js';
 import waterfallcharttxt from '../../scripts/charts/waterfallchart.txt.js';
 
-import converttxt from '../../scripts/transforms/convert.txt.js';
-import explodetxt from '../../scripts/transforms/explode.txt.js';
-import jointxt from '../../scripts/transforms/join.txt.js';
-import fetchtxt from '../../scripts/transforms/fetch.txt.js';
-import filtertxt from '../../scripts/transforms/filter.txt.js';
-import derivetxt from '../../scripts/transforms/derive.txt.js';
-import rangetxt from '../../scripts/transforms/range.txt.js';
-import sampletxt from '../../scripts/transforms/sample.txt.js';
-import selecttxt from '../../scripts/transforms/select.txt.js';
-import sorttxt from '../../scripts/transforms/sort.txt.js';
-import slicetxt from '../../scripts/transforms/slice.txt.js';
-import summarizetxt from '../../scripts/transforms/summarize.txt.js';
-import subsprevtxt from '../../scripts/transforms/subsprev.txt.js';
-import sqltxt from '../../scripts/transforms/sql.txt.js';
-import columntxt from '../../scripts/transforms/column.txt.js';
-import imputetxt from '../../scripts/transforms/impute.txt.js';
+// visualization scripts
+import bubblestxt from '../../scripts/visualizations/bubbles.txt.js';
+import gallerytxt from '../../scripts/visualizations/gallery.txt';
+import mapcharttxt from '../../scripts/visualizations/map.txt.js';
+import networktxt from '../../scripts/visualizations/network.txt.js';
+import threejstxt from '../../scripts/visualizations/three.txt.js';
+import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
 
-import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
-import timeseriespredicttxt from '../../scripts/predict/timeseries.txt.js';
-import regressionpredicttxt from '../../scripts/predict/regression.txt.js';
-import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
+// prediction scripts
 import bodypixtxt from '../../scripts/predict/bodypix.txt.js';
 import knntxt from '../../scripts/predict/knn.txt.js';
+import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
+import regressionpredicttxt from '../../scripts/predict/regression.txt.js';
+import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
+import timeseriespredicttxt from '../../scripts/predict/timeseries.txt.js';
 
+// util scripts
 import copytxt from '../../scripts/utils/copy.txt.js';
 import pastetxt from '../../scripts/utils/paste.txt.js';
 import tojsontxt from '../../scripts/utils/tojson.txt';
-import webcamtxt from '../../scripts/import/webcam.txt.js';
 
+// export scripts
 import exportcsvtxt from '../../scripts/export/csv.txt.js';
 
+// service scripts
 import airbnbtxt from '../../scripts/services/airbnb.txt.js';
 import twittertxt from '../../scripts/services/twitter.txt.js';
 
+// language scripts
 import htmltxt from '../../scripts/languages/html.txt';
+import javascripttxt from '../../scripts/languages/javascript.txt';
 import markdowntxt from '../../scripts/languages/markdown.txt';
 import pyodidetxt from '../../scripts/languages/pyodide.txt.js';
 import pythontxt from '../../scripts/languages/python.txt';
 import rtxt from '../../scripts/languages/r.txt';
-import javascripttxt from '../../scripts/languages/javascript.txt';
 
-import vuetxt from '../../scripts/frameworks/vue.txt';
+// framework scripts
 import reacttxt from '../../scripts/frameworks/react.txt';
+import vuetxt from '../../scripts/frameworks/vue.txt';
 
 import * as snippets from './snippets';
 import * as operations from './utils/operations';
@@ -110,63 +124,67 @@ type blocks = Array<block>;
 
 const scripts = {
   // import
-  iris: { script: iristxt, language: 'javascript' },
   images: { script:  imagestxt, language: 'javascript' },
   importcsv: { script:  importcsvtxt, language: 'javascript' },
-  importjson: { script:  importjsontxt, language: 'javascript' },
   importexcel: { script:  importexceltxt, language: 'javascript' },
+  importjson: { script:  importjsontxt, language: 'javascript' },
+  iris: { script: iristxt, language: 'javascript' },
   webcam: { script:  webcamtxt, language: 'javascript' },
 
   // webscraping
-  webtables: { script:  webtablestxt, language: 'javascript' },
   webimages: { script:  webimagestxt, language: 'javascript' },
+  webtables: { script:  webtablestxt, language: 'javascript' },
 
   // transforms
+  assign: { script:  assigntxt, language: 'javascript' },
+  column: { script:  columntxt, language: 'javascript' },
   convert: { script:  converttxt, language: 'javascript' },
+  derive: { script:  derivetxt, language: 'javascript' },
+  drop: { script:  droptxt, language: 'javascript' },
   explode: { script:  explodetxt, language: 'javascript' },
   fetch: { script:  fetchtxt, language: 'javascript' },
   filter: { script:  filtertxt, language: 'javascript' },
+  fold: { script:  foldtxt, language: 'javascript' },
+  impute: { script: imputetxt, language: 'javascript' },
   join: { script:  jointxt, language: 'javascript' },
+  pivot: { script:  pivottxt, language: 'javascript' },
   range: { script:  rangetxt, language: 'javascript' },
-  derive: { script:  derivetxt, language: 'javascript' },
   sample: { script:  sampletxt, language: 'javascript' },
   select: { script:  selecttxt, language: 'javascript' },
   slice: { script:  slicetxt, language: 'javascript' },
-  summarize: { script:  summarizetxt, language: 'javascript' },
   sort: { script:  sorttxt, language: 'javascript' },
   sql: { script:  sqltxt, language: 'javascript' },
   subsprev: { script:  subsprevtxt, language: 'javascript' },
-  column: { script:  columntxt, language: 'javascript' },
-  impute: { script: imputetxt, language: 'javascript' },
-
-  // visualizations
-  bubbles: { script:  bubblestxt, language: 'javascript' },
-  network: { script:  networktxt, language: 'javascript' },
-  threejs: { script:  threejstxt, language: 'javascript' },
-  wordcloud: { script:  wordcloudtxt, language: 'javascript' },
-  mapchart: { script:  mapcharttxt, language: 'javascript' },
-  gallery: { script:  gallerytxt, language: 'html' },
-
-  // predictions
-  mobilenet: { script:  mobilenettxt, language: 'javascript' },
-  timeseriespredict: { script:  timeseriespredicttxt, language: 'javascript' },
-  regressionpredict: { script:  regressionpredicttxt, language: 'javascript' },
-  sentiment: { script:  sentimenttxt, language: 'javascript' },
-  bodypix: { script:  bodypixtxt, language: 'javascript' },
-  knn: { script:  knntxt, language: 'javascript' },
-
-  // train
+  summarize: { script:  summarizetxt, language: 'javascript' },
 
   // charts
   barchart: { script:  barcharttxt, language: 'javascript' },
-  scatterchart: { script:  scattercharttxt, language: 'javascript' },
   errorbarchart: { script:  errorbarcharttxt, language: 'javascript' },
   heatmapchart: { script:  heatmapcharttxt, language: 'javascript' },
   histogramchart: { script:  histogramcharttxt, language: 'javascript' },
   linechart: { script:  linecharttxt, language: 'javascript' },
   sankeychart: { script:  sankeycharttxt, language: 'javascript' },
+  scatterchart: { script:  scattercharttxt, language: 'javascript' },
   treemapchart: { script:  treemapcharttxt, language: 'javascript' },
   waterfallchart: { script:  waterfallcharttxt, language: 'javascript' },
+
+  // visualizations
+  bubbles: { script:  bubblestxt, language: 'javascript' },
+  gallery: { script:  gallerytxt, language: 'html' },
+  mapchart: { script:  mapcharttxt, language: 'javascript' },
+  network: { script:  networktxt, language: 'javascript' },
+  threejs: { script:  threejstxt, language: 'javascript' },
+  wordcloud: { script:  wordcloudtxt, language: 'javascript' },
+
+  // predictions
+  bodypix: { script:  bodypixtxt, language: 'javascript' },
+  knn: { script:  knntxt, language: 'javascript' },
+  mobilenet: { script:  mobilenettxt, language: 'javascript' },
+  regressionpredict: { script:  regressionpredicttxt, language: 'javascript' },
+  sentiment: { script:  sentimenttxt, language: 'javascript' },
+  timeseriespredict: { script:  timeseriespredicttxt, language: 'javascript' },
+
+  // train
 
   // utils
   copy: { script:  copytxt, language: 'javascript' },
@@ -182,15 +200,15 @@ const scripts = {
 
   // languages
   html: { script:  htmltxt, language: 'html' },
+  javascript: { script: javascripttxt, language: 'javascript' },
   markdown: { script:  markdowntxt, language: 'markdown' },
   pyodide: { script:  pyodidetxt, language: 'javascript' },
   python: { script:  pythontxt, language: 'python' },
   r: { script:  rtxt, language: 'r' },
-  javascript: { script: javascripttxt, language: 'javascript' },
 
   // frameworks
-  vue: { script:  vuetxt, language: 'html' },
   react: { script:  reacttxt, language: 'html' },
+  vue: { script:  vuetxt, language: 'html' },
 }
 
 var pipelinesStateCount = 0;
