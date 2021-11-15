@@ -39,11 +39,15 @@ export const create = (pipelineid, sid, context) => {
     isDark: function() {
       return context.dark;
     },
-    getParams: function() {
-      return pipelines.getParams(pipelineid, sid);
+    getParams: function(index) {
+      const sidCurrent = index == undefined ? sid : pipelines.stepIdFromIdx(pipelineid, index);
+
+      return pipelines.getParams(pipelineid, sidCurrent);
     },
-    setParams: function(params) {
-      pipelines.setParams(pipelineid, sid, params);
+    setParams: function(params, index) {
+      const sidCurrent = index == undefined ? sid : pipelines.stepIdFromIdx(pipelineid, index);
+
+      pipelines.setParams(pipelineid, sidCurrent, params);
       if (context.invalidateSteps) {
         context.invalidateSteps();
       }

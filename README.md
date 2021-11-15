@@ -30,7 +30,7 @@ Here is a quick example that showcases a data pipeline to read a CSV and plot a 
 
 ![](examples/csvplot.png)
 
-Please join our **Slack** group to help you get started, request access by sending us an email to `info@hal9.ai`.
+Please [join our **Slack** group](https://join.slack.com/t/hal9workspace/shared_invite/zt-xuowx9dw-r3Nr6UuVkSbHVaDS0HhUHA) to help you get started.
 
 Feel free to use our development environment [devel.hal9.ai](https://devel.hal9.ai); however, this environment produces daily builds and is not recommended for production use..
 

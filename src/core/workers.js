@@ -5,31 +5,40 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const preflight = async function(workerUrl) {
+const preflight = async function(workerUrl, headers) {
   return await fetch(workerUrl + '/execute', {
     method: 'POST',
     body: JSON.stringify({ operation: 'preflight' }),
-    headers: { 'Content-Type': 'application/json' }
+    headers: Object.assign({ 'Content-Type': 'application/json' }, headers)
   });
 }
 
-const serverInfo = async function() {
+const serverInfo = async function(headers) {
   const serverUrl = environment.getServerUrl();
   var res = await fetch(serverUrl + '/api/info', {
-    method: 'GET'
+    method: 'GET',
+    headers: headers
   });
 
   return res.json();
 }
 
-const getWorkerUrl = async (pipelinename) => {
+const getWorkerUrl = async (pipelinename, headers) => {
   
   const workerListArguments = !pipelinename ? '' : '?p=' + pipelinename;
   const workersListUrl = environment.getServerUrl() + '/api/workers' + workerListArguments;
 
-  var res = await fetch(workersListUrl)
+  var res = await fetch(workersListUrl, {
+    headers: headers
+  });
+
   if (!res.ok) {
-    throw 'Failed to retrieve worker list: ' + res.statusText;
+    var json = null;
+    try {
+      json = await res.json();
+    }
+    catch(e) {}
+    throw json ? json : 'Failed to retrieve worker list: ' + res.statusText;
     return;
   }
 
@@ -40,7 +49,7 @@ const getWorkerUrl = async (pipelinename) => {
   return workerUrl;
 }
 
-export const getValidWorkerUrl = async function(pipelinename) {
+export const getValidWorkerUrl = async function(pipelinename, headers) {
   var workerUrl = null;
   var shouldRetry = true;
   var retryCount = 5;
@@ -50,20 +59,20 @@ export const getValidWorkerUrl = async function(pipelinename) {
     let sleepDuration = 5000;
 
     try {
-      workerUrl = await getWorkerUrl(pipelinename);
+      workerUrl = await getWorkerUrl(pipelinename, headers);
     } catch (error) {
-      details = 'Failed to get workers url.';
+      details = error;
       console.log(details);
       sleepDuration = 5000;
     }
 
     // get server version
-    const info = await serverInfo();
+    const info = await serverInfo(headers);
     if (compareVersions(info.version, '0.0.142') < 0) {
       return workerUrl;
     }
 
-    var res = await preflight(workerUrl);
+    var res = await preflight(workerUrl, headers);
     if (res.status == 503) {
       let message = null;
       try {

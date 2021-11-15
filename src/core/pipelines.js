@@ -66,6 +66,7 @@ import markdowntxt from '../../scripts/languages/markdown.txt';
 import pyodidetxt from '../../scripts/languages/pyodide.txt.js';
 import pythontxt from '../../scripts/languages/python.txt';
 import rtxt from '../../scripts/languages/r.txt';
+import javascripttxt from '../../scripts/languages/javascript.txt';
 
 import vuetxt from '../../scripts/frameworks/vue.txt';
 import reacttxt from '../../scripts/frameworks/react.txt';
@@ -185,6 +186,7 @@ const scripts = {
   pyodide: { script:  pyodidetxt, language: 'javascript' },
   python: { script:  pythontxt, language: 'python' },
   r: { script:  rtxt, language: 'r' },
+  javascript: { script: javascripttxt, language: 'javascript' },
 
   // frameworks
   vue: { script:  vuetxt, language: 'html' },
@@ -452,7 +454,7 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
   }
   catch(e) {
     console.log(e);
-    error = e.toString();
+    error = e;
   }
 
   setErrors(pipeline, step.id, error);
@@ -508,7 +510,37 @@ export const preparePartial = (pipeline, context, partial, renderid) => {
           style.id = 'hal9__datatable__style';
           html.appendChild(style);
 
-          datatable.build(html, getGlobal(pipeline, result.data));
+          var area = document.createElement('div');
+          
+          var tabs = document.createElement('div');
+          tabs.style.display = 'flex';
+          tabs.style.flexDirection = 'row';
+          html.appendChild(tabs);
+          if (Object.keys(result).length > 1) {
+            Object.keys(result).forEach((r, tabIdx) => {
+              var tab = document.createElement('a');
+              tab.href = '#';
+              tab.style.paddingRight = '6px';
+              tab.style.textDecoration = 'none';
+              tab.style.color = '#528efd';
+              tab.innerText = r;
+              tab.onclick = () => {
+                for (let i = 0; i < area.children.length; i++) area.children[i].style.display = 'none';
+                area.children[tabIdx].style.display = 'block';
+              };
+
+              tabs.appendChild(tab);
+            });
+          }
+
+          html.appendChild(area);
+          Object.keys(result).forEach((r, idx) => {
+            var output = document.createElement('div');
+            if (idx > 0) output.style.display = 'none';
+            area.appendChild(output);
+
+            datatable.build(output, getGlobal(pipeline, result[r]));
+          });
 
           partial(pipeline, step, result, error, details);
         }
@@ -525,7 +557,7 @@ export const prepareContext = (pipeline, context, stepstopid) => {
     const height = parent.offsetHeight;
 
     parent.innerHTML = '';
-    const html = parent.shadowRoot ? parent.shadowRoot : parent.attachShadow({mode: 'open'});
+    const html = parent.shadowRoot ? parent.shadowRoot : (context.shadow === false ? parent : parent.attachShadow({mode: 'open'}));
     html.innerHTML = '';
 
     const isFullView = stepstopid === null || stepstopid === undefined;
@@ -640,6 +672,11 @@ const setParamsInt = (pipeline /*: pipeline */, sid /*: stepid */, params /*: pa
 export const setParams = (pipelineid /*: pipelineid */, sid /*: stepid */, params /*: params */) /*: void */ => {
   var pipeline = store.get(pipelineid);
   setParamsInt(pipeline, sid, params);
+}
+
+export const stepIdFromIdx = (pipelineid /*: pipelineid */, index /*: number */) /*: number */ => {
+  var pipeline = store.get(pipelineid);
+  return pipeline.steps[index].id;
 }
 
 export const mergeParams = (pipelineid /*: pipelineid */, sid /*: stepid */, params /*: params */) /*: void */ => {
