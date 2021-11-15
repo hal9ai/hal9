@@ -10,5 +10,5 @@
 data = await hal9.utils.toArquero(data);
 if (column) {
   data = data.params({column}).derive({ ra: aq.rolling((d, $) => aq.op.sum(d[$.column])) });
- data = data.rename({ ra : 'rollingSum_'+column });
+  data = data.rename({ ra : 'rollingSum_' + column });
 }

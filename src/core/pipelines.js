@@ -26,6 +26,7 @@ import imputetxt from '../../scripts/transforms/impute.txt.js';
 import jointxt from '../../scripts/transforms/join.txt.js';
 import pivottxt from '../../scripts/transforms/pivot.txt.js';
 import rangetxt from '../../scripts/transforms/range.txt.js';
+import rollingsumtxt from '../../scripts/transforms/rollingsum.txt.js';
 import sampletxt from '../../scripts/transforms/sample.txt.js';
 import selecttxt from '../../scripts/transforms/select.txt.js';
 import slicetxt from '../../scripts/transforms/slice.txt.js';
@@ -149,6 +150,7 @@ const scripts = {
   join: { script:  jointxt, language: 'javascript' },
   pivot: { script:  pivottxt, language: 'javascript' },
   range: { script:  rangetxt, language: 'javascript' },
+  rollingsum: { script:  rollingsumtxt, language: 'javascript' },
   sample: { script:  sampletxt, language: 'javascript' },
   select: { script:  selecttxt, language: 'javascript' },
   slice: { script:  slicetxt, language: 'javascript' },
