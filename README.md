@@ -1,6 +1,8 @@
 
 # Hal9
 
+[<img src="https://img.shields.io/badge/slack-@hal9ai/hal9ai-yellow.svg?logo=slack">](https://join.slack.com/t/hal9workspace/shared_invite/zt-xuowx9dw-r3Nr6UuVkSbHVaDS0HhUHA) 
+
 Hal9 provides a platform to develop Artificial Intelligence solutions with web technologies. This repo contains the open source components that power [hal9.ai](https://hal9.ai) which consist of:
 
 - A `hal9.js` library which allows you to compose pipelines using less code.
