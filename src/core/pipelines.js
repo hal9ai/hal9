@@ -53,6 +53,7 @@ import mapcharttxt from '../../scripts/visualizations/map.txt.js';
 import networktxt from '../../scripts/visualizations/network.txt.js';
 import threejstxt from '../../scripts/visualizations/three.txt.js';
 import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
+import simpletabletxt from '../../scripts/visualizations/simpletable.txt';
 
 // prediction scripts
 import bodypixtxt from '../../scripts/predict/bodypix.txt.js';
@@ -177,6 +178,7 @@ const scripts = {
   network: { script:  networktxt, language: 'javascript' },
   threejs: { script:  threejstxt, language: 'javascript' },
   wordcloud: { script:  wordcloudtxt, language: 'javascript' },
+  table: { script:  simpletabletxt, language: 'html' },
 
   // predictions
   bodypix: { script:  bodypixtxt, language: 'javascript' },

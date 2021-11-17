@@ -1,0 +1,61 @@
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+<style>
+  .wrapper {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+</style>
+
+<div class="wrapper">
+  <table class="simpletable">
+  </table>
+</div>
+
+<script type="text/javascript">
+  /**
+    params:
+      - name: searchable
+        label: Searchable
+        value:
+          - control: select
+            value: no
+            values:
+              - name: yes
+                label: Yes
+              - name: no
+                label: No
+      - name: perPage
+        label: 'Rows'
+        value:
+          - control: 'number'
+            value: '5'
+            lazy: true
+  **/
+  var headings = [];
+  var transformed = [];
+
+  debugger;
+  if (data.length > 0) {
+    headings = Object.keys(data[0])
+    transformed = data.map(e => Object.values(e))
+  }
+
+  const table = html.getElementsByClassName("simpletable")[0];
+  const dataTable = new simpleDatatables.DataTable(table, {
+    searchable: searchable === 'yes',
+    fixedHeight: true,
+    header: true,
+    paging: true,
+    perPage: parseInt(perPage),
+    footer: false,
+    layout: {
+      top: "{search}",
+      bottom: "{info}{pager}"
+    },
+    data: {
+      headings: headings,
+      data: transformed
+    }
+  })
+</script>
