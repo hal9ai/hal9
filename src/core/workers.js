@@ -25,7 +25,7 @@ const serverInfo = async function(headers) {
 
 const getWorkerUrl = async (pipelinename, headers) => {
   
-  const workerListArguments = !pipelinename ? '' : '?p=' + pipelinename;
+  const workerListArguments = !pipelinename ? '' : '?path=' + pipelinename;
   const workersListUrl = environment.getServerUrl() + '/api/workers' + workerListArguments;
 
   var res = await fetch(workersListUrl, {
