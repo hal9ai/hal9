@@ -1,5 +1,7 @@
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js"></script>
+
 <style>
   .wrapper {
     margin-left: 20px;
@@ -32,30 +34,32 @@
             value: '5'
             lazy: true
   **/
-  var headings = [];
-  var transformed = [];
+  (async function() {
+    var headings = [];
+    var transformed = [];
 
-  debugger;
-  if (data.length > 0) {
-    headings = Object.keys(data[0])
-    transformed = data.map(e => Object.values(e))
-  }
-
-  const table = html.getElementsByClassName("simpletable")[0];
-  const dataTable = new simpleDatatables.DataTable(table, {
-    searchable: searchable === 'yes',
-    fixedHeight: true,
-    header: true,
-    paging: true,
-    perPage: parseInt(perPage),
-    footer: false,
-    layout: {
-      top: "{search}",
-      bottom: "{info}{pager}"
-    },
-    data: {
-      headings: headings,
-      data: transformed
+    data = await hal9.utils.toRows(data);
+    if (data.length > 0) {
+      headings = Object.keys(data[0])
+      transformed = data.map(e => Object.values(e))
     }
-  })
+
+    const table = html.getElementsByClassName("simpletable")[0];
+    const dataTable = new simpleDatatables.DataTable(table, {
+      searchable: searchable === 'yes',
+      fixedHeight: true,
+      header: true,
+      paging: true,
+      perPage: parseInt(perPage),
+      footer: false,
+      layout: {
+        top: "{search}",
+        bottom: "{info}{pager}"
+      },
+      data: {
+        headings: headings,
+        data: transformed
+      }
+    })
+  })();
 </script>
