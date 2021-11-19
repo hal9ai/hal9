@@ -53,7 +53,7 @@ const summarizerMap = {
   mean: aq.op.mean,
   median: aq.op.median,
   min: aq.op.min,
-  count: aq.op.count,
+  count: aq.op.valid,
   sum: aq.op.sum,
   variance: aq.op.variance,
   any: aq.op.any
