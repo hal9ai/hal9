@@ -15,7 +15,7 @@ a.href = URL.createObjectURL(file);
 a.download = 'data.csv';
 a.innerHTML = 'Download data as CSV!'
 a.style.display = 'block';
-a.style.marginTop = '45%';
 
+html.style.height = '50px';
 html.style.textAlign = 'center';
 html.appendChild(a);
