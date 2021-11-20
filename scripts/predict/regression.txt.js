@@ -74,7 +74,9 @@ var regressions = {
   logarithmic: () => {
     const a = tf.variable(tf.scalar(Math.random()));
     const b = tf.variable(tf.scalar(Math.random()));
-    return (x) => x.add(a).log().mul(b);
+    const c = tf.variable(tf.scalar(Math.random()));
+    const d = tf.variable(tf.scalar(Math.random()));
+    return (x) => x.mul(c).add(a).log().mul(b).add(d);
   },
   power: () => {
     const a = tf.variable(tf.scalar(Math.random()));
@@ -92,7 +94,7 @@ var regressions = {
     const a = tf.variable(tf.scalar(Math.random()));
     const b = tf.variable(tf.scalar(Math.random()));
     const c = tf.variable(tf.scalar(Math.random()));
-    return (x) => x.sqrt().mul(a).add(b.mul(x)).add(c);
+    return (x) => x.mul(x).mul(a).add(b.mul(x)).add(c);
   }
 }
 
