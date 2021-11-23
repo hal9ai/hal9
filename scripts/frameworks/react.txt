@@ -6,11 +6,16 @@
 
 <script type="text/jsx">
   const parent = html.getElementsByClassName('reacthost')[0];
-  
-  class Greeting extends React.Component {
-    render() {
-        return (<p>Hello world</p>);
-    }
+  const { useState, useCallback } = React
+      
+  function Greeting() {
+    const [count, setCount] = useState(0);
+
+    return (
+      <div>
+        <p onClick={() => setCount(count + 1)}>Hello World: {count} Times</p>
+      </div>
+    );
   }
 
   ReactDOM.render(
