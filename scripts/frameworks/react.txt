@@ -1,17 +1,20 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone@7.9.6/babel.js"></script>
   
-<div class="hello"></div>
+<div class="reacthost"></div>
+
 <script type="text/jsx">
-  var Greeting = React.createClass({
-    render: function() {
-      return (
-        <p>Hello from React!</p>
-      )
+  const parent = html.getElementsByClassName('reacthost')[0];
+  
+  class Greeting extends React.Component {
+    render() {
+        return (<p>Hello world</p>);
     }
-  });
-  React.render(
-    <Greeting/>,
-    html.getElementsByClassName('hello')[0]
+  }
+
+  ReactDOM.render(
+    <Greeting />,
+    parent
   );
 </script>
