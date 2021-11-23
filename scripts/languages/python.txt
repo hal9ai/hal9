@@ -1,5 +1,7 @@
 ##
+## input: []
 ## environment: worker
+## cache: true
 ##
 
 import numpy
