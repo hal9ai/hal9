@@ -49,6 +49,7 @@ const plot = Plot.plot({
   x: {
     grid: true,
     inset: 10,
+    domain: chartdata.map(e => e['x']),
   },
   y: {
     grid: true,

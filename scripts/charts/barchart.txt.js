@@ -105,6 +105,7 @@ const plot = Plot.plot({
   },
   [`f${distAxis}`]: {
     label: null,
+    domain: chartdata.map(e => e['x']),
   },
   width: html.clientWidth,
   height: html.clientHeight,
