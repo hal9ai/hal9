@@ -1,12 +1,29 @@
 import Executor from './definition';
 import * as workers from '../workers';
 
+const toRowsFromArquero = function(x) {
+  var rows = [];
+  x.scan(function(i, data) {
+    const row = Object.fromEntries(Object.keys(data).map(e => [e, data[e].get(i)]));
+    rows.push(row);
+  }, true);
+
+  return rows;
+}
+
 export default class RemoteExecutor extends Executor {
   async runStep() {
     const html = this.context['html'] ? this.context['html'](this.step) : null;
     const size = html ? { width: html.offsetWidth, height: html.offsetHeight } : { width: 640, height: 480 };
 
     var workerUrl = await workers.getValidWorkerUrl(this.pipelinename, this.context.headers);
+
+    // remove arquero objects which don't serialize nicely
+    Object.keys(this.inputs).forEach(input => {
+      if (typeof(this.inputs[input].columns) == 'function') {
+        this.inputs[input] = toRowsFromArquero(this.inputs[input]);
+      }
+    })
 
     var res = await fetch(workerUrl + '/execute', {
       method: 'POST',
