@@ -40,7 +40,7 @@ const runPipeline = async (pipelineid, context) => {
   var updated = await pipelines.run(
     pipelineid,
     Object.assign(context, {
-      html: function(step) {
+      html: context.html ? context.html : function(step) {
         return step.html ? document.getElementById(step.html) : undefined;
       }
     }),
@@ -94,6 +94,11 @@ export function step(url, params, output) {
   }
 };
 
+export function load(raw) {
+  const pipeline = JSON.parse(decodeURIComponent(escape(atob(raw))));
+  return pipelines.load(pipeline);
+}
+
 export default {
   run: run,
   step: step,
@@ -102,6 +107,7 @@ export default {
   workers: workers,
   pipelines: pipelines,
   datasets: datasets,
+  load: load,
   utils: {
     clone: clone,
     functions: functions,
