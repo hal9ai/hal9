@@ -1073,15 +1073,13 @@ export const invalidateStep = (pipelineid /*: pipelineid */, sid /*: number */) 
 
 export const getHtml = (pipelineid /* pipelineid */) /* string */ => {
   const libraryUrl = environment.getLibraryUrl();
-  return `<script>
-  var embedid = 'hal9' + (Math.floor(1000 * Math.random()));
-  var host = document.createElement('div'); host.id = embedid; host.style = 'width: 100%; height: 100%; max-width: 100%; max-height: 100%;';
-  document.currentScript.parentElement.appendChild(host);
-  var hal9script = document.createElement('script');
-  hal9script.setAttribute('src','${libraryUrl}');
-  document.head.appendChild(hal9script);
-  window.hal9 = { mode: 'embedded', id: embedid, pipeline: '` + btoa(unescape(encodeURIComponent(getSaveText(pipelineid, 0)))) + `' };
-</script>`
+  return `<script src="${libraryUrl}">
+<div id='hal9app' style="min-width: 600px; min-height: 400px;"></div>
+<script>
+  var raw = '` + btoa(unescape(encodeURIComponent(getSaveText(pipelineid, 0)))) + `';
+
+  hal9.run(hal9.load(raw), { html: document.getElementById('hal9app') });
+</script>`;
 }
 
 export const updateMetadata = (pipelineid /*: pipelineid */, metadata /*: object */) /*: void */ => {
