@@ -1073,7 +1073,7 @@ export const invalidateStep = (pipelineid /*: pipelineid */, sid /*: number */) 
 
 export const getHtml = (pipelineid /* pipelineid */) /* string */ => {
   const libraryUrl = environment.getLibraryUrl();
-  return `<script src="${libraryUrl}">
+  return `<script src="${libraryUrl}"></script>
 <div id='hal9app' style="min-width: 600px; min-height: 400px;"></div>
 <script>
   var raw = '` + btoa(unescape(encodeURIComponent(getSaveText(pipelineid, 0)))) + `';
