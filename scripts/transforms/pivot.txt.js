@@ -62,11 +62,9 @@ const summarizerMap = {
 var valueDict = {};
 if (values.length == 0 ) {
   valueDict = {value: aq.op.count(rows[0])};
-  console.log(valueDict);
 } else {
   for (var i = 0; i < values.length; i++) {
     valueDict[summarizer+'('+values[i]+')'] = summarizerMap[summarizer](values[i]) 
   }
-  console.log(valueDict);
 }
 data = data.groupby(rows).pivot(columns, valueDict);
