@@ -73,6 +73,7 @@ import exportcsvtxt from '../../scripts/export/csv.txt.js';
 
 // service scripts
 import airbnbtxt from '../../scripts/services/airbnb.txt.js';
+import reddittxt from '../../scripts/services/reddit.txt.js';
 import twittertxt from '../../scripts/services/twitter.txt.js';
 
 // language scripts
@@ -200,6 +201,7 @@ const scripts = {
 
   // services
   airbnb: { script:  airbnbtxt, language: 'javascript' },
+  reddit: { script:  reddittxt, language: 'javascript' },
   twitter: { script:  twittertxt, language: 'javascript' },
 
   // languages
