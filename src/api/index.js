@@ -99,6 +99,28 @@ export function load(raw) {
   return pipelines.load(pipeline);
 }
 
+export async function fetchPipeline(url) {
+  const user = 'hal9';
+  const pipelinename = 'top-movies';
+  const pipelineInfo = `https://api.hal9.com/api/users/${user}/pipelines/${pipelinename}`;
+
+  var serverId = environment.getId();
+  let s3Name = (environment.isDevelopment() || serverId == 'dev' ? 'devel' : serverId) + 'hal9';
+
+  const infoResp = await fetch(pipelineInfo, {
+  });
+
+  const infoData = await infoResp.json();
+
+  const filename = infoData.filename;
+  const downloadUrl = `https://${s3Name}.s3.us-west-2.amazonaws.com/pipeline/${filename}.pln`;
+
+  const pipelineResp = await fetch(downloadUrl, {
+  });
+
+  return await pipelineResp.json();
+}
+
 export default {
   run: run,
   step: step,
@@ -108,6 +130,7 @@ export default {
   pipelines: pipelines,
   datasets: datasets,
   load: load,
+  fetch: fetchPipeline,
   utils: {
     clone: clone,
     functions: functions,

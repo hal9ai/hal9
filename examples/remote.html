@@ -1,12 +1,16 @@
+<!DOCTYPE html>
 <html>
-  <script src="../dist/hal9.js"></script>
+  <head>
+    <script src="../dist/hal9.js"></script> 
+  </head>
   <body>
+    <div id="output" style="margin: auto; width: 800px; height: 400px;"></div>
     <script>
-      hal9.run(function() {
-        return 'The meaning of life: ' + 42;
-      }).then(function(res) {
-        document.body.innerText = res;
-      });
+      (async function() {
+        var pipeline = await hal9.fetch('https://hal9.com/hal9/top-movies');
+
+        hal9.run(pipeline, { html: document.getElementById('output') });
+      })();
     </script>
   </body>
 </html>
