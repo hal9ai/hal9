@@ -104,8 +104,8 @@ export async function fetchPipeline(url) {
   const pipelinename = 'top-movies';
   const pipelineInfo = `https://api.hal9.com/api/users/${user}/pipelines/${pipelinename}`;
 
-  var serverId = environment.getId();
-  let s3Name = (environment.isDevelopment() || serverId == 'dev' ? 'devel' : serverId) + 'hal9';
+  var serverId = 'prod';
+  let s3Name = serverId + 'hal9';
 
   const infoResp = await fetch(pipelineInfo, {
   });
