@@ -99,9 +99,9 @@ export function load(raw) {
   return pipelines.load(pipeline);
 }
 
-export async function fetchPipeline(url) {
-  const user = 'hal9';
-  const pipelinename = 'top-movies';
+export async function fetchPipeline(pipelinepath) {
+  const user = pipelinepath.split('/')[0];
+  const pipelinename = pipelinepath.split('/')[1];
   const pipelineInfo = `https://api.hal9.com/api/users/${user}/pipelines/${pipelinename}`;
 
   var serverId = 'prod';

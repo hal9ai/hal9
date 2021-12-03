@@ -1084,6 +1084,17 @@ export const getHtml = (pipelineid /* pipelineid */) /* string */ => {
 </script>`;
 }
 
+export const getHtmlRemote = (pipelinepath /* pipelinepath */) /* string */ => {
+  const libraryUrl = environment.getLibraryUrl();
+  return `<script src="${libraryUrl}"></script>
+<div id='hal9app' style="min-width: 600px; min-height: 400px;"></div>
+<script>
+  var raw = hal9.fetchPipeline('` + pipelinepath + `');
+
+  hal9.run(hal9.load(raw), { html: document.getElementById('hal9app') });
+</script>`;
+}
+
 export const updateMetadata = (pipelineid /*: pipelineid */, metadata /*: object */) /*: void */ => {
   var pipeline = store.get(pipelineid);
   pipeline.metadata = metadata;
