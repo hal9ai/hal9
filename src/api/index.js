@@ -95,7 +95,7 @@ export function step(url, params, output) {
 };
 
 export function load(raw) {
-  const pipeline = JSON.parse(decodeURIComponent(escape(atob(raw))));
+  const pipeline = typeof(raw) === 'string' ? JSON.parse(decodeURIComponent(escape(atob(raw)))) : raw;
   return pipelines.load(pipeline);
 }
 
