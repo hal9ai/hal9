@@ -105,7 +105,7 @@ export async function fetchPipeline(pipelinepath) {
   const serverurl = environment.getServerUrl();
   const pipelineInfo = `${serverurl}/api/users/${user}/pipelines/${pipelinename}`;
 
-  var serverId = 'prod';
+  var serverId = environment.getId();
   let s3Name = serverId + 'hal9';
 
   const infoResp = await fetch(pipelineInfo, {

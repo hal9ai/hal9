@@ -1087,7 +1087,7 @@ export const getHtml = (pipelineid /* pipelineid */) /* string */ => {
 export const getHtmlRemote = (pipelinepath /* pipelinepath */) /* string */ => {
   const libraryUrl = environment.getLibraryUrl();
   const env = environment.getId();
-  const setenv = env != 'prod' ? '\n    hal9.environment.setEnv(\'${env}\')' : '';
+  const setenv = env != 'prod' ? `\n    hal9.environment.setEnv('${env}')` : '';
 
   return `<script src="${libraryUrl}"></script>
 <div id='hal9app' style="min-width: 600px; min-height: 400px;"></div>
