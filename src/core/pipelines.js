@@ -1086,11 +1086,13 @@ export const getHtml = (pipelineid /* pipelineid */) /* string */ => {
 
 export const getHtmlRemote = (pipelinepath /* pipelinepath */) /* string */ => {
   const libraryUrl = environment.getLibraryUrl();
+  const env = hal9.environment.getId();
+  const setenv = env != 'prod' ? '\n    hal9.environment.setEnv(\'${env}\')' : '';
+
   return `<script src="${libraryUrl}"></script>
 <div id='hal9app' style="min-width: 600px; min-height: 400px;"></div>
-<script>
-  var raw = hal9.fetchPipeline('` + pipelinepath + `');
-
+<script>{$maybedevel}
+  var raw = hal9.fetch('` + pipelinepath + `');
   hal9.run(hal9.load(raw), { html: document.getElementById('hal9app') });
 </script>`;
 }

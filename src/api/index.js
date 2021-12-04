@@ -102,7 +102,8 @@ export function load(raw) {
 export async function fetchPipeline(pipelinepath) {
   const user = pipelinepath.split('/')[0];
   const pipelinename = pipelinepath.split('/')[1];
-  const pipelineInfo = `https://api.hal9.com/api/users/${user}/pipelines/${pipelinename}`;
+  const serverurl = environment.getServerUrl();
+  const pipelineInfo = `${serverurl}/api/users/${user}/pipelines/${pipelinename}`;
 
   var serverId = 'prod';
   let s3Name = serverId + 'hal9';
