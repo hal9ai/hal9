@@ -1091,7 +1091,7 @@ export const getHtmlRemote = (pipelinepath /* pipelinepath */) /* string */ => {
 
   return `<script src="${libraryUrl}"></script>
 <div id='hal9app' style="min-width: 600px; min-height: 400px;"></div>
-<script>${maybedevel}
+<script>${setenv}
   var raw = hal9.fetch('` + pipelinepath + `');
   hal9.run(hal9.load(raw), { html: document.getElementById('hal9app') });
 </script>`;
