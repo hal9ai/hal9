@@ -119,7 +119,7 @@ export async function fetchPipeline(pipelinepath) {
   const pipelineResp = await fetch(downloadUrl, {
   });
 
-  return JSON.parse(await pipelineResp.text());
+  return JSON.parse(await pipelineResp.json());
 }
 
 export default {
