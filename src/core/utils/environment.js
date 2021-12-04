@@ -87,5 +87,5 @@ export const getWebsiteUrl = () => {
 }
 
 export const getLibraryUrl = () => {
-  return 'https://cdn.jsdelivr.net/npm/hal9@0.0.112/dist/hal9.min.js';
+  return 'https://cdn.jsdelivr.net/npm/hal9@0.0.113/dist/hal9.min.js';
 }
