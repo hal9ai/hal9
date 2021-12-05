@@ -160,9 +160,9 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
   const output = header.output;
   
   const loadDependencies = typeof(window) != 'undefined' ? loadDepsForBrowser : loadDepsForJS;
-  const depscode =await loadDependencies(deps, params);
+  const depscode = await loadDependencies(deps, params);
 
-  const returns = '{ ' + output.map((e) => e + ': ' + e).join(', ') + ' }';
+  const returns = '{ ' + output.filter(e => e != 'html').map((e) => e + ': ' + e).join(', ') + ' }';
 
   const injectdebug = (typeof(window) != 'undefined' && window.hal9 && window.hal9.debug) ? 'debugger;\n' : '';
 
