@@ -52,11 +52,11 @@ export const getId = () => {
 export const getServerUrl = () => {
   const hal9env = getId();
 
+  if (hal9env == 'prod') return 'https://api.hal9.com';
+
   if (isOtherDevelopment()) return isOtherDevelopment() + ':5000';
 
   if (userHal9Env === 'local' || isDevelopment()) return 'http://localhost:5000';
-
-  if (hal9env == 'prod') return 'https://api.hal9.com';
 
   return 'https://api.devel.hal9.com';
 }
@@ -64,11 +64,11 @@ export const getServerUrl = () => {
 export const getServerCachedUrl = () => {
   const hal9env = getId();
 
+  if (hal9env == 'prod') return 'https://hal9.com';
+
   if (isOtherDevelopment()) return isOtherDevelopment() + ':5000';
 
   if (userHal9Env === 'local' || isDevelopment()) return 'http://localhost:5000';
-
-  if (hal9env == 'prod') return 'https://hal9.com';
 
   return 'https://devel.hal9.com';
 }
