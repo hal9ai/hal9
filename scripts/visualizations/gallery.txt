@@ -9,6 +9,7 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <script>
   /**
@@ -25,19 +26,23 @@
             lazy: true
   **/
 
-  var app = new Vue({
-    el: html.querySelector('.gallery'),
-    data: {
-      params: { image: image, label: label },
-      total: parseFloat(columns)
-    },
-    computed: {
-      columns: function() {
-        var total = this.total;
-        columns = [...Array(total)].map(e => []);
-        data.forEach((e, i) => columns[i % total].push(e));
-        return columns;
+  (async function() {
+    data = await hal9.utils.toRows(data);
+
+    var app = new Vue({
+      el: html.querySelector('.gallery'),
+      data: {
+        params: { image: image, label: label },
+        total: parseFloat(columns)
+      },
+      computed: {
+        columns: function() {
+          var total = this.total;
+          columns = [...Array(total)].map(e => []);
+          data.forEach((e, i) => columns[i % total].push(e));
+          return columns;
+        }
       }
-    }
-  })
+    })
+  })()
 </script>
