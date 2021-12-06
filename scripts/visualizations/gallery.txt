@@ -2,7 +2,7 @@
   <div v-for="column in columns" style="flex-direction: column;" :style="{ width: 100 / columns.length + '%' }">
     <div v-for="image in column" style="width: 100%; position: relative;">
         <img :src="image[params.image]" style="width: 100%">
-        <div style="position: absolute; word-break: break-all; max-height: 32px; bottom: 5px; color: white; width: 100%; background: #00000050; padding: 4px">
+        <div style="position: absolute; word-break: break-all; max-height: 32px; bottom: 5px; color: white; width: 100%; background: #00000050; padding: 4px" v-if="image[params.label]">
             {{ image[params.label] }}
         </div>
     </div>
