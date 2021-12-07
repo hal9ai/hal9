@@ -16,6 +16,16 @@
             - schemeSet1
             - schemeSet2
             - schemeSet3
+    - name: domainx
+      label: Domain
+      value:
+        - control: select
+          value: auto
+          values:
+            - name: auto
+              label: Auto
+            - name: all
+              label: All
   deps:
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
     - https://cdn.jsdelivr.net/npm/d3@6
@@ -49,7 +59,7 @@ const plot = Plot.plot({
   x: {
     grid: true,
     inset: 10,
-    domain: chartdata.map(e => e['x']),
+    domain: domainx == 'auto' ? undefined : chartdata.map(e => e['x'])
   },
   y: {
     grid: true,
