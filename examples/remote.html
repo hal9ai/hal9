@@ -7,7 +7,7 @@
     <div id="output" style="margin: auto; width: 800px; height: 400px;"></div>
     <script>
       (async function() {
-        var pipeline = await hal9.fetch('hal9/top-movies');
+        var pipeline = hal9.load(await hal9.fetch('hal9/top-movies'));
 
         hal9.run(pipeline, { html: document.getElementById('output') });
       })();
