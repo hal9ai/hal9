@@ -104,8 +104,6 @@ import * as languages from './interpreters/languages'
 import * as datatable from '../../libs/jedit/jedit.js';
 import datatablecss from "../../libs/jedit/jedit.css";
 
-var gloablDeps = {};
-
 /*::
 type paramid = number;
 type param = { id: paramid, name: string, label: string, value: Array<Object> };
@@ -339,7 +337,7 @@ export const create = (steps /*: steps */) /*: pipelineid */ => {
   return pipelineid;
 }
 
-export const fetchScripts = async (steps /*: steps */) => {
+const fetchScripts = async (steps /*: steps */) => {
   if (!steps) return;
   await Promise.all(steps.map(step => {
     return (async (step) => {
@@ -374,10 +372,6 @@ const stepGetDefinition = (pipeline, step) => {
     step.script = pipeline.scripts[step.id];
 
   return step;
-}
-
-export const getGlobalDeps = async () => {  
-  return gloablDeps;
 }
 
 export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, context /* context */, partial) /*: boolean */ => {
@@ -434,7 +428,7 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
       });
     }
 
-    const deps = await getGlobalDeps();
+    const deps = {};
 
     // add hal9 api to deps
     deps['hal9'] = api.create(pipelineid, sid, context);
@@ -508,7 +502,7 @@ const stepHasHtml = (pipeline, step) => {
   return header && header.output && header.output.filter(e => e == 'html').length > 0;
 }
 
-export const preparePartial = (pipeline, context, partial, renderid) => {
+const preparePartial = (pipeline, context, partial, renderid) => {
   var html = context.html;
   if (typeof(html) === 'object') {
     const isFullView = renderid === null || renderid === undefined;
@@ -575,7 +569,7 @@ export const preparePartial = (pipeline, context, partial, renderid) => {
   return partial;
 }
 
-export const prepareContext = (pipeline, context, stepstopid) => {
+const prepareContext = (pipeline, context, stepstopid) => {
   const parent = context.html;
   if (typeof(parent) === 'object') {
     const height = parent.offsetHeight;
@@ -698,7 +692,7 @@ export const setParams = (pipelineid /*: pipelineid */, sid /*: stepid */, param
   setParamsInt(pipeline, sid, params);
 }
 
-export const stepIdFromIdx = (pipelineid /*: pipelineid */, index /*: number */) /*: number */ => {
+const stepIdFromIdx = (pipelineid /*: pipelineid */, index /*: number */) /*: number */ => {
   var pipeline = store.get(pipelineid);
   return pipeline.steps[index].id;
 }
@@ -714,7 +708,7 @@ const paramNameFromId = (pipeline /*: pipeline */, sid /*: stepid */, pid /*: pa
   return Object.keys(pipeline.params[sid]).filter(key => pipeline.params[sid][key].id == pid)[0];
 }
 
-export const mergeParam = (pipelineid /*: pipelineid */, sid /*: stepid */, pid /*: paramid */, field /*: Object */) /*: void */ => {
+const mergeParam = (pipelineid /*: pipelineid */, sid /*: stepid */, pid /*: paramid */, field /*: Object */) /*: void */ => {
   var pipeline = store.get(pipelineid);
 
   field = clone(field);
@@ -727,12 +721,12 @@ export const mergeParam = (pipelineid /*: pipelineid */, sid /*: stepid */, pid 
   pipeline.params[sid][pname].value[valueIdx] = field;
 }
 
-export const updateParamField = (pipelineid /*: pipelineid */, sid /*: stepid */, param /*: string */, fidx /* number */, update /*: param */) => {
+const updateParamField = (pipelineid /*: pipelineid */, sid /*: stepid */, param /*: string */, fidx /* number */, update /*: param */) => {
   var pipeline = store.get(pipelineid);
   pipeline.params[sid][param].value[fidx] = Object.assign(pipeline.params[sid][param].value[fidx], update);
 }
 
-export const getFields = (pipelineid /*: pipelineid */) => {
+const getFields = (pipelineid /*: pipelineid */) => {
   var pipeline = store.get(pipelineid);
 
   return pipeline.steps.flatMap(step => {
@@ -866,7 +860,7 @@ export const getStep = (pipelineid /*: pipelineid */, sid /*: number */) /* step
   return stepFromId(pipeline, sid);
 }
 
-export const prevStep = (pipelineid /*: pipelineid */, sid /*: number */) /* step */ => {
+const prevStep = (pipelineid /*: pipelineid */, sid /*: number */) /* step */ => {
   var pipeline = store.get(pipelineid);
   return clone(stepFromId(pipeline, sid, -1));
 }
@@ -922,29 +916,29 @@ export const getHashable = (pipelineid /*: pipelineid */) /*: string */ => {
   return JSON.stringify({ definition: getDefinition(pipeline), stateId: pipelinesStateCount });
 }
 
-export const setState = (pipelineid /*: pipelineid */, sid /*: number */, state /*: Object */) /*: void */ => {
+const setState = (pipelineid /*: pipelineid */, sid /*: number */, state /*: Object */) /*: void */ => {
   if (!pipelinesState[pipelineid]) pipelinesState[pipelineid] = { steps: {} };
   pipelinesState[pipelineid].steps[sid] = state;
   pipelinesStateCount++;
 }
 
-export const getState = (pipelineid /*: pipelineid */, sid /*: number */) /*: Object */ => {
+const getState = (pipelineid /*: pipelineid */, sid /*: number */) /*: Object */ => {
   if (!pipelinesState[pipelineid]) return {};
   return pipelinesState[pipelineid].steps[sid];
 }
 
-export const clearState = (pipelineid /*: pipelineid */) /*: void */ => {
+const clearState = (pipelineid /*: pipelineid */) /*: void */ => {
   pipelinesState[pipelineid] = { steps: {} };
   pipelinesStateCount++;
 }
 
-export const setCallback = (pipelineid /*: pipelineid */, sid /*: number */, name /* string */, callback /*: Object */) /*: void */ => {
+const setCallback = (pipelineid /*: pipelineid */, sid /*: number */, name /* string */, callback /*: Object */) /*: void */ => {
   if (!pipelinesCallbacks[pipelineid]) pipelinesCallbacks[pipelineid] = { steps: {} };
   if (!pipelinesCallbacks[pipelineid].steps[sid]) pipelinesCallbacks[pipelineid].steps[sid] = {}
   pipelinesCallbacks[pipelineid].steps[sid][name] = callback;
 }
 
-export const getCallback = (pipelineid /*: pipelineid */, sid /*: number */) /*: Object */ => {
+const getCallback = (pipelineid /*: pipelineid */, sid /*: number */) /*: Object */ => {
   if (!pipelinesCallbacks[pipelineid]) return null;
   if (!pipelinesCallbacks[pipelineid].steps[sid]) return null;
   return pipelinesCallbacks[pipelineid].steps[sid][name];

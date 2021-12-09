@@ -29,7 +29,7 @@ export const isDevelopment = () => {
     window.location.origin.includes('//localhost');
 }
 
-export const isOtherDevelopment = () => {
+const isOtherDevelopment = () => {
   if (typeof(window) == 'undefined') return null;
 
   if (window.location.origin.includes('mshome.net'))
