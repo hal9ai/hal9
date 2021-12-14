@@ -67,6 +67,8 @@ import timeseriespredicttxt from '../../scripts/predict/timeseries.txt.js';
 import copytxt from '../../scripts/utils/copy.txt.js';
 import pastetxt from '../../scripts/utils/paste.txt.js';
 import tojsontxt from '../../scripts/utils/tojson.txt';
+import ziptomaptxt from '../../scripts/utils/ziptomap.txt';
+import citytomaptxt from '../../scripts/utils/citytomap.txt';
 
 // export scripts
 import exportcsvtxt from '../../scripts/export/csv.txt.js';
@@ -193,6 +195,8 @@ const scripts = {
   copy: { script:  copytxt, language: 'javascript' },
   paste: { script:  pastetxt, language: 'javascript' },
   tojson: { script: tojsontxt, language: 'javascript' },
+  ziptomap: { script: ziptomaptxt, language: 'javascript' },
+  citytomap: { script: citytomaptxt, language: 'javascript' },
 
   // export
   exportcsv: { script:  exportcsvtxt, language: 'javascript' },
