@@ -1,6 +1,6 @@
 /**
   output: [html]
-  params: [lon, lat, size]
+  params: [lon, lat, size, label]
   deps: [
     'https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js',
     'https://unpkg.com/leaflet@1.7.1/dist/leaflet.js',
@@ -17,6 +17,7 @@ const chartdata = lat && lon
      lat: hal9.utils.convert(v[lat]),
      lon: hal9.utils.convert(v[lon]),
      size: hal9.utils.convert(v[size]),
+     label: v[label],
    }))
  : [];
 
@@ -50,8 +51,9 @@ if (bounds.isValid()) {
 
   const getTooltip = v =>
     `lon: ${Math.round(v.lon * 100) / 100}<br/>` +
-    `lat: ${Math.round(v.lat * 100) / 100}` +
-    (v.size ? `<br/>size: ${Math.round(getRadius(v.size) * 100) / 100}` : '');
+    `lat: ${Math.round(v.lat * 100) / 100}<br/>` +
+    (v.size ? `size: ${v.size}<br/>` : '') +
+    (v.label ? `label: ${v.label}<br/>` : '');
 
   chartdata.forEach(v => {
     L.circle([v.lat, v.lon], {
