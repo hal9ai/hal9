@@ -920,13 +920,13 @@ export const getHashable = (pipelineid /*: pipelineid */) /*: string */ => {
   return JSON.stringify({ definition: getDefinition(pipeline), stateId: pipelinesStateCount });
 }
 
-const setState = (pipelineid /*: pipelineid */, sid /*: number */, state /*: Object */) /*: void */ => {
+export const setState = (pipelineid /*: pipelineid */, sid /*: number */, state /*: Object */) /*: void */ => {
   if (!pipelinesState[pipelineid]) pipelinesState[pipelineid] = { steps: {} };
   pipelinesState[pipelineid].steps[sid] = state;
   pipelinesStateCount++;
 }
 
-const getState = (pipelineid /*: pipelineid */, sid /*: number */) /*: Object */ => {
+export const getState = (pipelineid /*: pipelineid */, sid /*: number */) /*: Object */ => {
   if (!pipelinesState[pipelineid]) return {};
   return pipelinesState[pipelineid].steps[sid];
 }
