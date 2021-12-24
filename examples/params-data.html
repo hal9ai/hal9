@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../dist/hal9.js"></script> 
+  </head>
+  <body>
+    <div id="output" style="margin: auto; width: 800px; height: 400px;"></div>
+    <script>
+      hal9.run([
+        hal9.step('import/csv.txt.js', { file: 'https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv' }),
+        hal9.step('charts/linechart.txt.js', { x: 'Date', y: [ 'AAPL.Open', 'AAPL.High' ] }, 'output')
+      ], {
+        params: {
+          data: [
+            {"Date":"2015-02-17T00:00:00.000Z","AAPL.Open":127.489998,"AAPL.High":128.880005,"AAPL.Low":126.919998,"AAPL.Close":127.830002,"AAPL.Volume":63152400,"AAPL.Adjusted":122.905254,"dn":106.7410523,"mavg":117.9276669,"up":129.1142814,"direction":"Increasing"},
+            {"Date":"2015-02-18T00:00:00.000Z","AAPL.Open":127.629997,"AAPL.High":128.779999,"AAPL.Low":127.449997,"AAPL.Close":128.720001,"AAPL.Volume":44891700,"AAPL.Adjusted":123.760965,"dn":107.842423,"mavg":118.9403335,"up":130.0382439,"direction":"Increasing"},
+            {"Date":"2015-02-19T00:00:00.000Z","AAPL.Open":128.479996,"AAPL.High":129.029999,"AAPL.Low":128.330002,"AAPL.Close":128.449997,"AAPL.Volume":37362400,"AAPL.Adjusted":123.501363,"dn":108.8942449,"mavg":119.8891668,"up":130.8840887,"direction":"Decreasing"}
+          ]
+        }
+      });
+    </script>
+  </body>
+</html>

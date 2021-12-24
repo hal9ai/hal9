@@ -426,9 +426,16 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
     if (context.params) {
       var paramIdx = Object.keys(params).length > 0 ? Math.max(...Object.keys(params).map(e => params[e].id ? params[e].id : 0)) : 0;
       Object.keys(context.params).forEach(param => {
-        params[param] = { id: paramIdx++, name: param, label: param, value: [{
-          value: clone(context.params[param]) 
-        }] };
+        if (input[param]) {
+          input[param] = clone(context.params[param]);
+          delete context.params[param];
+        }
+        else if (params[param]) {
+          params[param] = { id: paramIdx++, name: param, label: param, value: [{
+            value: clone(context.params[param]) 
+          }] };
+          delete context.params[param];
+        }
       });
     }
 
