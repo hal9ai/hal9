@@ -62,7 +62,7 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 var images = [];
 
 while(scrollIters > 0) {
-  const result = await page.evaluate((minSize, scrollIters) => {
+  const result = await page.evaluate((minSize, scrollIters, height) => {
     const allImages = [...document.querySelectorAll('img')]
       .filter(img => img.src && (minSize == 0 || (img.clientWidth > minSize && img.clientHeight > minSize)))
       .map(img => ({ class: img.classList[0] || '', src: img.src }))
@@ -77,12 +77,12 @@ while(scrollIters > 0) {
 
     var images = sortedKeys.length ? allImages[sortedKeys[0]] : [];
 
-    window.scrollTo(0, document.documentElement.scrollTop + document.body.offsetHeight/2);
+    window.scrollTo(0, document.documentElement.scrollTop + height/2);
 
     console.log('Found ' + images.length + ' images in scroll iteration ' + scrollIters);
 
     return { images: images, scrollIters: scrollIters };
-  }, minSize, scrollIters);
+  }, minSize, scrollIters, height);
 
   scrollIters--;
   images.push(...result.images)
