@@ -703,7 +703,7 @@ export const setParams = (pipelineid /*: pipelineid */, sid /*: stepid */, param
   setParamsInt(pipeline, sid, params);
 }
 
-const stepIdFromIdx = (pipelineid /*: pipelineid */, index /*: number */) /*: number */ => {
+export const stepIdFromIdx = (pipelineid /*: pipelineid */, index /*: number */) /*: number */ => {
   var pipeline = store.get(pipelineid);
   return pipeline.steps[index].id;
 }
