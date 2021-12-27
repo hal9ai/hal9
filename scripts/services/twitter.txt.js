@@ -6,14 +6,29 @@
       value:
         - control: 'textbox'
           value: tensorflow
+          lazy: true
     - name: key
       label: 'Twitter Key'
       value:
         - control: 'textbox'
+          lazy: true
     - name: secret
       label: 'Twitter Secret'
       value:
         - control: 'textbox'
+          lazy: true
+    - name: type
+      label: Type
+      value:
+        - control: select
+          value: mixed
+          values:
+            - name: mixed
+              label: Mixed
+            - name: recent
+              label: Recent
+            - name: popular
+              label: Popular
   environment: worker
   cache: true
 **/
@@ -24,7 +39,7 @@ var token = '';
 var operations = {
   search: async function(token) {
     // see https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-rule
-    var res = await fetch('https://api.twitter.com/1.1/search/tweets.json?q=' + search + '&result_type=recent&count=100', {
+    var res = await fetch('https://api.twitter.com/1.1/search/tweets.json?q=' + search + '&result_type=' + type + '&count=100', {
       headers: { 'Authorization': 'Bearer ' + token }
     });
 
