@@ -540,8 +540,13 @@ const preparePartial = (pipeline, context, partial, renderid) => {
           html.appendChild(style);
 
           var area = document.createElement('div');
+          area.style.width = area.style.maxWidth = "100%";
+          area.style.overflow = 'hidden';
           
           var tabs = document.createElement('div');
+          tabs.style.width = tabs.style.maxWidth = "100%";
+          tabs.style.overflow = 'hidden';
+
           tabs.style.display = 'flex';
           tabs.style.flexDirection = 'row';
           html.appendChild(tabs);
