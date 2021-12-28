@@ -38,6 +38,34 @@
             - schemeSet1
             - schemeSet2
             - schemeSet3
+    - name: fontsize
+      label: Font Size
+      value:
+        - control: range
+          value: 16
+          min: 5
+          max: 20
+    - name: tickrotation
+      label: Tick Rotation
+      value:
+        - control: range
+          value: 0
+          min: 0
+          max: 90
+    - name: marginleft
+      label: Margin left
+      value:
+        - control: range
+          value: 30
+          min: 20
+          max: 200
+    - name: marginbottom
+      label: Margin Bottom
+      value:
+        - control: range
+          value: 30
+          min: 20
+          max: 200
   deps:
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
     - https://cdn.jsdelivr.net/npm/d3@6
@@ -102,17 +130,22 @@ const plot = Plot.plot({
   facet: {
     data: chartdata,
     [distAxis]: 'x',
+    marginBottom: marginbottom,
   },
   [`f${distAxis}`]: {
     label: null,
     domain: chartdata.map(e => e['x']),
+    tickRotate: tickrotation,
   },
   width: html.clientWidth,
   height: html.clientHeight,
   marginTop: 30,
+  marginLeft: parseInt(marginleft),
+  marginBottom: marginbottom,
   style: {
     background: hal9.isDark() ? '#222' : '',
-    color: hal9.isDark() ? 'white' : ''
+    color: hal9.isDark() ? 'white' : '',
+    fontSize: parseInt(fontsize),
   },
 });
 

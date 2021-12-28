@@ -1,6 +1,29 @@
 /**
   output: [html]
-  params: [x, y]
+  params:
+    - x
+    - y
+    - name: fontsize
+      label: Font Size
+      value:
+        - control: range
+          value: 10
+          min: 5
+          max: 20
+    - name: marginleft
+      label: Margin left
+      value:
+        - control: range
+          value: 40
+          min: 20
+          max: 200
+    - name: marginbottom
+      label: Margin Bottom
+      value:
+        - control: range
+          value: 30
+          min: 20
+          max: 200
   deps:
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
     - https://cdn.jsdelivr.net/npm/d3@6
@@ -116,13 +139,13 @@ const plot = Plot.plot({
   style: {
     background: hal9.isDark() ? '#222' : '#fff',
     color: hal9.isDark() ? '#aaa' : '#333',
-    fontSize: 10,
+    fontSize: parseInt(fontsize),
   },
   caption: null,
-  marginBottom: 30,
-  marginLeft: 40,
   marginRight: 20,
   marginTop: 20,
+  marginLeft: parseInt(marginleft),
+  marginBottom: parseInt(marginbottom),
 });
 
 html.appendChild(plot);
