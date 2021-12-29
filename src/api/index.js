@@ -3,40 +3,40 @@ import * as environment from '../core/utils/environment';
 import * as datasets from '../core/datasets';
 import LocalExecutor from '../core/executors/local';
 import * as pipelines from '../core/pipelines';
+import * as iframe from './iframe';
 
 import clone from '../core/utils/clone';
 import functions from '../core/utils/functions';
 
-const runRemote = async (lambda, context) => {
-  return await native.runRemote(lambda, context);
-};
-
-const runPipeline = async (pipelineid, context) => {
-  return await native.runPipeline(pipelineid, context);
-}
-
-const runSteps = async (steps, context) => {
-  return await native.runSteps(steps, context);
+var api = native;
+function init(options) {
+  if (options.iframe) {
+    api = iframe;
+    return iframe.init(options);
+  }
+  else {
+    api = native;
+  }
 }
 
 function create(steps) {
-  return native.create(steps);
+  return api.create(steps);
 }
 
 async function run(pipeline, context) {
-  return await native.run(pipeline, context);
+  return await api.run(pipeline, context);
 };
 
 function step(url, params, output) {
-  return native.step(url, params, output);
+  return api.step(url, params, output);
 };
 
 function load(raw) {
-  return native.load(raw);
+  return api.load(raw);
 }
 
 async function fetchPipeline(pipelinepath) {
-  return await native.fetchPipeline(pipelinepath);
+  return await api.fetchPipeline(pipelinepath);
 }
 
 function setEnv(env) {
@@ -44,6 +44,7 @@ function setEnv(env) {
 }
 
 export default {
+  init: init,
   create: create,
   step: step,
   load: load,

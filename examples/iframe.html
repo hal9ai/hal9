@@ -6,13 +6,18 @@
   <body>
     <div id="output" style="margin: auto; width: 800px; height: 400px;"></div>
     <script>
-      hal9.run([
-        hal9.step('import/csv.txt.js', { file: 'https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv' }),
-        hal9.step('charts/linechart.txt.js', { x: 'Date', y: [ 'AAPL.Open', 'AAPL.High' ] }, 'output')
-      ], {
-        iframe: true,
-        api: '../dist/hal9.js'
-      });
+      (async () => {
+        await hal9.init({
+          iframe: true,
+          html: document.getElementById('output'),
+          api: 'http://localhost:8000/dist/hal9.js'
+        });
+
+        hal9.run([
+          await hal9.step('import/csv.txt.js', { file: 'https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv' }),
+          await hal9.step('charts/linechart.txt.js', { x: 'Date', y: [ 'AAPL.Open', 'AAPL.High' ] }, 'output')
+        ]);
+      })();
     </script>
   </body>
 </html>

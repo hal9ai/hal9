@@ -29,7 +29,7 @@ const runRemote = async (lambda, context) => {
   return await res.json();
 };
 
-const runPipeline = async (pipelineid, context) => {
+export const runPipeline = async (pipelineid, context) => {
   if (!context) context = {};
   var updated = await pipelines.run(
     pipelineid,

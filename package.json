@@ -12,7 +12,8 @@
     "build:prod": "webpack --mode=production",
     "watch": "webpack --watch",
     "test": "tape test/**/*.test.js",
-    "check": "yarn flow check"
+    "check": "yarn flow check",
+    "web": "python -m SimpleHTTPServer 8000"
   },
   "dependencies": {
     "arquero": "^4.8.4",
