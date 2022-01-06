@@ -96,4 +96,6 @@
   }
 
   .jedit-table-entry-wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
