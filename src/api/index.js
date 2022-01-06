@@ -39,8 +39,149 @@ async function fetchPipeline(pipelinepath) {
   return await api.fetchPipeline(pipelinepath);
 }
 
-function setEnv(env) {
+async function setEnv(env) {
+  const userEnv = environment.getUserEnv();
+  if (userEnv) {
+    await api.setEnv(userEnv);
+  }
+
   return environment.setEnv(env);
+}
+
+async function datasetsSave(dataurl) {
+  return await api.datasetsSave(dataurl);
+}
+
+async function pipelinesCreate(steps) {
+  return await api.pipelinesCreate(steps);
+}
+
+async function pipelinesUpdate(pipelineid, steps) {
+  return await api.pipelinesUpdate(pipelineid, steps);
+}
+
+async function pipelinesRemove(pipelineid) {
+  return await api.pipelinesRemove(pipelineid);
+}
+
+async function pipelinesRunStep(pipelineid, sid, context, partial) {
+  return await api.pipelinesRunStep(pipelineid, sid, context, partial);
+}
+
+async function pipelinesRun(pipelineid, context, partial, stepstopid) {
+  return await api.pipelinesRun(pipelineid, context, partial, stepstopid);
+}
+
+async function pipelinesGetError(pipelineid) {
+  return await api.pipelinesGetError(pipelineid);
+}
+
+async function pipelinesGetParams(pipelineid, sid) {
+  return await api.pipelinesGetParams(pipelineid, sid);
+}
+
+async function pipelinesSetParams(pipelineid, sid, params) {
+  return await api.pipelinesSetParams(pipelineid, sid, params);
+}
+
+async function pipelinesMergeParams(pipelineid, sid, params) {
+  return await api.pipelinesMergeParams(pipelineid, sid, params);
+}
+
+async function pipelinesGetSteps(pipelineid) {
+  return await api.pipelinesGetSteps(pipelineid);
+}
+
+async function pipelinesUpdateStep(pipelineid, step) {
+  return await api.pipelinesUpdateStep(pipelineid, step);
+}
+
+async function pipelinesAddStep(pipelineid, step) {
+  return await api.pipelinesAddStep(pipelineid, step);
+}
+
+async function pipelinesRemoveStep(pipelineid, step) {
+  return await api.pipelinesRemoveStep(pipelineid, step);
+}
+
+async function pipelinesMoveStep(pipelineid, stepid, change) {
+  return await api.pipelinesMoveStep(pipelineid, stepid, change);
+}
+
+async function pipelinesGetNested(pipelineid) {
+  return await api.pipelinesGetNested(pipelineid);
+}
+
+async function pipelinesGetStep(pipelineid, sid) {
+  return await api.pipelinesGetStep(pipelineid, sid);
+}
+
+async function pipelinesGetSources(pipelineid, sid) {
+  return await api.pipelinesGetSources(pipelineid, sid);
+}
+
+async function pipelinesGetStepError(pipelineid, sid) {
+  return await api.pipelinesGetStepError(pipelineid, sid);
+}
+
+async function pipelinesSetScript(pipelineid, sid, script) {
+  return await api.pipelinesSetScript(pipelineid, sid, script);
+}
+
+async function pipelinesGetScript(pipelineid, sid) {
+  return await api.pipelinesGetScript(pipelineid, sid);
+}
+
+async function pipelinesGetHashable(pipelineid) {
+  return await api.pipelinesGetHashable(pipelineid);
+}
+
+async function pipelinesGetSaveText(pipelineid, padding) {
+  return await api.pipelinesGetSaveText(pipelineid, padding);
+}
+
+async function pipelinesLoad(pipeline) {
+  return await api.pipelinesLoad(pipeline);
+}
+
+async function pipelinesGetMaxId(pipelineid) {
+  return await api.pipelinesGetMaxId(pipelineid);
+}
+
+async function pipelinesGetGlobal(pipelineid, name) {
+  return await api.pipelinesGetGlobal(pipelineid, name);
+}
+
+async function pipelinesSetGlobal(pipelineid, name, data) {
+  return await api.pipelinesSetGlobal(pipelineid, name, data);
+}
+
+async function pipelinesGetGlobalNames(pipelineid) {
+  return await api.pipelinesGetGlobalNames(pipelineid);
+}
+
+async function pipelinesGetGlobals(pipelineid) {
+  return await api.pipelinesGetGlobals(pipelineid);
+}
+
+async function pipelinesInvalidateStep(pipelineid, sid) {
+  return await api.pipelinesInvalidateStep(pipelineid, sid);
+}
+
+async function pipelinesGetHtml(pipelineid) {
+  return await api.pipelinesGetHtml(pipelineid);
+}
+
+async function pipelinesGetHtmlRemote(pipelinepath) {
+  return await api.pipelinesGetHtmlRemote(pipelinepath);
+}
+
+async function pipelinesUpdateMetadata(pipelineid, metadata) {
+  return await api.pipelinesUpdateMetadata(pipelineid, metadata);
+}
+
+async function pipelinesGetMetadata(pipelineid) {
+  return await api.pipelinesGetMetadata(pipelineid);
 }
 
 export default {
@@ -63,52 +204,52 @@ export default {
     getLibraryUrl: environment.getLibraryUrl
   },
 
-  pipelines: {
-    create: pipelines.create,
-    update: pipelines.update,
-    remove: pipelines.remove,
-    runStep: pipelines.runStep,
-    run: pipelines.run,
-    getError: pipelines.getError,
-    getParams: pipelines.getParams,
-    setParams: pipelines.setParams,
-    mergeParams: pipelines.mergeParams,
-    getSteps: pipelines.getSteps,
-    updateStep: pipelines.updateStep,
-    addStep: pipelines.addStep,
-    removeStep: pipelines.removeStep,
-    moveStep: pipelines.moveStep,
-    getNested: pipelines.getNested,
-    getStep: pipelines.getStep,
-    getSources: pipelines.getSources,
-    getStepError: pipelines.getStepError,
-    setScript: pipelines.setScript,
-    getScript: pipelines.getScript,
-    getHashable: pipelines.getHashable,
-    getSaveText: pipelines.getSaveText,
-    load: pipelines.load,
-    getMaxId: pipelines.getMaxId,
-    getGlobal: pipelines.getGlobal,
-    setGlobal: pipelines.setGlobal,
-    getGlobalNames: pipelines.getGlobalNames,
-    invalidateStep: pipelines.invalidateStep,
-    getHtml: pipelines.getHtml,
-    getHtmlRemote: pipelines.getHtmlRemote,
-    updateMetadata: pipelines.updateMetadata,
-    getMetadata: pipelines.getMetadata,
-  },
-
   datasets: {
-    save: datasets.save,
-  },
-
-  utils: {
-    clone: clone,
-    functions: functions,
+    save: datasetsSave,
   },
 
   executors: {
     LocalExecutor: LocalExecutor,
-  }
+  },
+
+  utils: {
+    clone: clone,
+  },
+
+  pipelines: {
+    create: pipelinesCreate,
+    update: pipelinesUpdate,
+    remove: pipelinesRemove,
+    runStep: pipelinesRunStep,
+    run: pipelinesRun,
+    getError: pipelinesGetError,
+    getParams: pipelinesGetParams,
+    setParams: pipelinesSetParams,
+    mergeParams: pipelinesMergeParams,
+    getSteps: pipelinesGetSteps,
+    updateStep: pipelinesUpdateStep,
+    addStep: pipelinesAddStep,
+    removeStep: pipelinesRemoveStep,
+    moveStep: pipelinesMoveStep,
+    getNested: pipelinesGetNested,
+    getStep: pipelinesGetStep,
+    getSources: pipelinesGetSources,
+    getStepError: pipelinesGetStepError,
+    setScript: pipelinesSetScript,
+    getScript: pipelinesGetScript,
+    getHashable: pipelinesGetHashable,
+    getSaveText: pipelinesGetSaveText,
+    load: pipelinesLoad,
+    getMaxId: pipelinesGetMaxId,
+    getGlobal: pipelinesGetGlobal,
+    setGlobal: pipelinesSetGlobal,
+    getGlobalNames: pipelinesGetGlobalNames,
+    getGlobals: pipelinesGetGlobals,
+    invalidateStep: pipelinesInvalidateStep,
+    getHtml: pipelinesGetHtml,
+    getHtmlRemote: pipelinesGetHtmlRemote,
+    updateMetadata: pipelinesUpdateMetadata,
+    getMetadata: pipelinesGetMetadata,
+  },
 };
 

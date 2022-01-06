@@ -1064,7 +1064,7 @@ export const setGlobal = (pipelineid /*: pipelineid */, name /*: string */, data
   pipeline.globals[name] = data;
 }
 
-const getGlobals = (pipeline /*: pipeline */) => /*: Object */ {
+export const getGlobals = (pipeline /*: pipeline */) => /*: Object */ {
   return pipeline.globals;
 }
 

@@ -2,6 +2,7 @@ import * as environment from '../core/utils/environment';
 import * as workers from '../core/workers';
 import * as pipelines from '../core/pipelines';
 import * as pipelineremote from '../core/pipelineremote';
+import * as datasets from '../core/datasets';
 
 const runRemote = async (lambda, context) => {
   if (typeof(lambda) != 'function') {
@@ -114,4 +115,143 @@ export async function fetchPipeline(pipelinepath) {
   });
 
   return JSON.parse(await pipelineResp.json());
+}
+
+export async function setEnv(env) {
+}
+
+export async function datasetsSave(dataurl) {
+  return datasets.save(dataurl);
+}
+
+export async function pipelinesCreate(steps) {
+  return await pipelines.create(steps);
+}
+
+export async function pipelinesUpdate(pipelineid, steps) {
+  return await pipelines.update(pipelineid, steps);
+}
+
+export async function pipelinesRemove(pipelineid) {
+  return await pipelines.remove(pipelineid);
+}
+
+export async function pipelinesRunStep(pipelineid, sid, context, partial) {
+  return await pipelines.runStep(pipelineid, sid, context, partial);
+}
+
+export async function pipelinesRun(pipelineid, context, partial, stepstopid) {
+  return await pipelines.run(pipelineid, context, partial, stepstopid);
+}
+
+export async function pipelinesGetError(pipelineid) {
+  return await pipelines.getError(pipelineid);
+}
+
+export async function pipelinesGetParams(pipelineid, sid) {
+  return await pipelines.getParams(pipelineid, sid);
+}
+
+export async function pipelinesSetParams(pipelineid, sid, params) {
+  return await pipelines.setParams(pipelineid, sid, params);
+}
+
+export async function pipelinesMergeParams(pipelineid, sid, params) {
+  return await pipelines.mergeParams(pipelineid, sid, params);
+}
+
+export async function pipelinesGetSteps(pipelineid) {
+  return await pipelines.getSteps(pipelineid);
+}
+
+export async function pipelinesUpdateStep(pipelineid, step) {
+  return await pipelines.updateStep(pipelineid, step);
+}
+
+export async function pipelinesAddStep(pipelineid, step) {
+  return await pipelines.addStep(pipelineid, step);
+}
+
+export async function pipelinesRemoveStep(pipelineid, step) {
+  return await pipelines.removeStep(pipelineid, step);
+}
+
+export async function pipelinesMoveStep(pipelineid, stepid, change) {
+  return await pipelines.moveStep(pipelineid, stepid, change);
+}
+
+export async function pipelinesGetNested(pipelineid) {
+  return await pipelines.getNested(pipelineid);
+}
+
+export async function pipelinesGetStep(pipelineid, sid) {
+  return await pipelines.getStep(pipelineid, sid);
+}
+
+export async function pipelinesGetSources(pipelineid, sid) {
+  return await pipelines.getSources(pipelineid, sid);
+}
+
+export async function pipelinesGetStepError(pipelineid, sid) {
+  return await pipelines.getStepError(pipelineid, sid);
+}
+
+export async function pipelinesSetScript(pipelineid, sid, script) {
+  return await pipelines.setScript(pipelineid, sid, script);
+}
+
+export async function pipelinesGetScript(pipelineid, sid) {
+  return await pipelines.getScript(pipelineid, sid);
+}
+
+export async function pipelinesGetHashable(pipelineid) {
+  return await pipelines.getHashable(pipelineid);
+}
+
+export async function pipelinesGetSaveText(pipelineid, padding) {
+  return await pipelines.getSaveText(pipelineid, padding);
+}
+
+export async function pipelinesLoad(pipeline) {
+  return await pipelines.load(pipeline);
+}
+
+export async function pipelinesGetMaxId(pipelineid) {
+  return await pipelines.getMaxId(pipelineid);
+}
+
+export async function pipelinesGetGlobal(pipelineid, name) {
+  return await pipelines.getGlobal(pipelineid, name);
+}
+
+export async function pipelinesSetGlobal(pipelineid, name, data) {
+  return await pipelines.setGlobal(pipelineid, name, data);
+}
+
+export async function pipelinesGetGlobalNames(pipelineid) {
+  return await pipelines.getGlobalNames(pipelineid);
+}
+
+export async function pipelinesGetGlobals(pipelineid) {
+  return await pipelines.getGlobals(pipelineid);
+}
+
+export async function pipelinesInvalidateStep(pipelineid, sid) {
+  return await pipelines.invalidateStep(pipelineid, sid);
+}
+
+export async function pipelinesGetHtml(pipelineid) {
+  return await pipelines.getHtml(pipelineid);
+}
+
+export async function pipelinesGetHtmlRemote(pipelinepath) {
+  return await pipelines.getHtmlRemote(pipelinepath);
+}
+
+export async function pipelinesUpdateMetadata(pipelineid, metadata) {
+  return await pipelines.updateMetadata(pipelineid, metadata);
+}
+
+export async function pipelinesGetMetadata(pipelineid) {
+  return await pipelines.getMetadata(pipelineid);
 }

@@ -22,6 +22,10 @@ export const setEnv = (env) => {
   userHal9Env = env;
 }
 
+export const getUserEnv = (env) => {
+  return userHal9Env;
+}
+
 export const isDevelopment = () => {
   if (typeof(window) == 'undefined') return false;
 
