@@ -5,13 +5,19 @@
       label: 'URL'
       value:
         - control: 'textbox'
-          value: 'https://news.ycombinator.com/'
+          value: 'https://news.hal9.com/'
           lazy: true
-    - name: text
-      label: 'Table Text'
+    - name: className
+      label: 'Selector Query'
       value:
         - control: 'textbox'
-          value: '1.'
+          value: '.text-left h3, .text-left p, .newsletter-feed a img'
+          lazy: true
+    - name: columnName
+      label: 'Column Name'
+      value:
+        - control: 'textbox'
+          value: 'title, date, image'
           lazy: true
     - name: hasHeader
       label: 'Has Header'
@@ -43,8 +49,6 @@
   deps: ['https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js']
   cache: true
 **/
-
-const className = '.we-truncate--interactive';
 
 const browser = await puppeteer.launch({
   headless: true,
@@ -88,16 +92,44 @@ while(!scrollClick && scrollIters > 1) {
 }
 
 async function extractTable() {
-  return page.evaluate((text, className) => {
+  return page.evaluate((className, columnName) => {
     try {
       console.log('Extracting class ' + className);
+
+      var allClasses = className.split(',')
+      var totalClasses = allClasses.length;
+      var columnNames = columnName.split(',')
+      if (columnName.length > 0) console.log('Using ' + columnNames + ' column names');
+
       var resultStructure = [...document.querySelectorAll(className)]
 
       console.log('Found ' + resultStructure.length + ' elements');
 
-      var csv = 'text\n' + resultStructure.map((_, i) => {
-        return _.innerText.replace(/\n/g, ' ')
-      }).join('\n');
+      var header = 'text\n';
+      if (totalClasses > 1) {
+        console.log('Found ' + totalClasses + ' classes');
+
+        header = [...new Array(totalClasses)].map((e, i) => {
+          if (columnName.length > 0 && i <= columnNames.length) return columnNames[i];
+          return 'text' + i
+        }).join('§') + '\n';
+      }
+
+      const chunk = (arr, size) =>
+      Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
+        arr.slice(i * size, i * size + size)
+      );
+
+      var csv = header + chunk(resultStructure, totalClasses)
+        .map(group => {
+          return group.map((_) => {
+            if (_.nodeName == 'IMG') return _.src;
+            if (_.nodeName == 'A') return _.href;
+            return _.innerText.replace(/\n/g, ' ')
+          })
+        })
+        .map(group => group.join('§'))
+        .join('\n');
 
       console.log('Retrieved ' + csv.length + ' characters');
 
@@ -107,7 +139,7 @@ async function extractTable() {
       console.log(e.toString());
       return [ '', e.toString() ];
     }
-  }, text, className)
+  }, className, columnName)
 }
 
 await sleep(1000);
@@ -139,7 +171,7 @@ if (scrollClick) {
   }
 }
 
-// if (error) throw error;
+if (error) throw error;
 
 await page.screenshot({ path: `screenshot.jpg`, fullPage: true });
 
