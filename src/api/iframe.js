@@ -15,17 +15,18 @@ export const init = async (options) => {
   const iframehtml = `
     <script src='${options.api}'></script>
     <script>
+      var postID = -1;
       async function runAsync(body, params) {
         var block = new Function("params", "return (async (params) => " + body + ")")();
         return await block(params);
       };
 
-      function postError(message, url, line) {
-        window.parent.postMessage({ secret: ${secret}, error: message }, '*');
+      function postError(id, message, url, line) {
+        window.parent.postMessage({ secret: ${secret}, id: id, error: message + ' (' + url + '#' + line + ')' }, '*');
       }
 
       window.onerror = function (message, url, line) {
-        postError(message, url, line);
+        postError(postID, message, url, line);
       }
 
       window.addEventListener('message', event => {
@@ -33,12 +34,13 @@ export const init = async (options) => {
 
         (async function() {
           try {
+            postID = event.data.id;
           	const result = await runAsync(event.data.body, event.data.params);
 
-            window.parent.postMessage({ secret: ${secret}, result: result, html: document.body.innerText.length > 0 }, '*');
+            window.parent.postMessage({ secret: ${secret}, id: event.data.id, result: result, html: document.body.innerText.length > 0 }, '*');
           }
           catch(e) {
-            postError(e.message);
+            postError(event.data.id, e.message);
           }
         })();
       }); 
@@ -60,42 +62,52 @@ export const init = async (options) => {
 
   config = {
     iframe: iframe,
-    secret: secret
+    secret: secret,
+    postId: 0
   };
 }
 
 const post = async (code, params) => {
-  const secret = config.secret;
-  const iframe = config.iframe;
+  try {
+    const secret = config.secret;
+    const iframe = config.iframe;
+    const postId = config.postId++;
 
-  var waitResponse = new Promise((accept, reject) => {
-    var onResult = function(e) {
-      if (!event.data || event.data.secret != secret) return;
+    var waitResponse = new Promise((accept, reject) => {
+      var onResult = function(e) {
+        if (!event.data || event.data.secret != secret || event.data.id != postId) return;
 
-      window.removeEventListener('message', onResult);
+        window.removeEventListener('message', onResult);
 
-      if (event.data.error) {
-        reject(event.data.error);
-        return;
-      }
+        if (event.data.error) {
+          reject(event.data.error);
+          return;
+        }
 
-      accept(event.data.result);
-    };
+        accept(event.data.result);
+      };
 
-    var responseListener = window.addEventListener('message', onResult);
-  });
+      var responseListener = window.addEventListener('message', onResult);
+    });
 
-  iframe.contentWindow.postMessage({ secret: secret, body: code, params: params }, '*');
-  var result = await waitResponse;
+    iframe.contentWindow.postMessage({ secret: secret, id: postId, body: code, params: params }, '*');
+    var result = await waitResponse;
 
-  // data frames can loose their prototype functions when crossing the iframe boundary
-  Object.keys(result).forEach(key => {
-    if (dataframe.isDataFrame(result[key])) {
-      result[key] = dataframe.ensure(result[key]);
+    // data frames can loose their prototype functions when crossing the iframe boundary
+    if (typeof(result) == 'object') {
+      Object.keys(result).forEach(key => {
+        if (dataframe.isDataFrame(result[key])) {
+          result[key] = dataframe.ensure(result[key]);
+        }
+      })
     }
-  })
 
-  return result;
+    return result;
+  }
+  catch(e) {
+    console.log('Hal9 iFrame Error: ' + e + '. Call: ' + code);
+    throw e;
+  }
 }
 
 export const create = async (pipelineid, context) => {
