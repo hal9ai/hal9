@@ -17,7 +17,7 @@
       label: 'Column Name'
       value:
         - control: 'textbox'
-          value: 'title, date, image'
+          value: 'image, title, date'
           lazy: true
     - name: hasHeader
       label: 'Has Header'
@@ -43,12 +43,13 @@
           lazy: true
   output:
     - data
-    - screenshot
     - log
   environment: worker
   deps: ['https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js']
   cache: true
 **/
+
+columnName = columnName ? columnName : '';
 
 const browser = await puppeteer.launch({
   headless: true,
@@ -98,7 +99,7 @@ async function extractTable() {
 
       var allClasses = className.split(',')
       var totalClasses = allClasses.length;
-      var columnNames = columnName.split(',')
+      var columnNames = columnName ? columnName.split(',') : [];
       if (columnName.length > 0) console.log('Using ' + columnNames + ' column names');
 
       var resultStructure = [...document.querySelectorAll(className)]
@@ -110,7 +111,7 @@ async function extractTable() {
         console.log('Found ' + totalClasses + ' classes');
 
         header = [...new Array(totalClasses)].map((e, i) => {
-          if (columnName.length > 0 && i <= columnNames.length) return columnNames[i];
+          if (columnName.length > 0 && i <= columnNames.length) return columnNames[i].trim();
           return 'text' + i
         }).join('§') + '\n';
       }
