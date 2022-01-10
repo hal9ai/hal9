@@ -13,41 +13,54 @@ export const init = async (options) => {
 
   var secret = Math.random();
   const iframehtml = `
-    <script src='${options.api}'></script>
-    <script>
-      var postID = -1;
-      async function runAsync(body, params) {
-        var block = new Function("params", "return (async (params) => " + body + ")")();
-        return await block(params);
-      };
-
-      function postError(id, message, url, line) {
-        window.parent.postMessage({ secret: ${secret}, id: id, error: message + ' (' + url + '#' + line + ')' }, '*');
-      }
-
-      window.onerror = function (message, url, line) {
-        postError(postID, message, url, line);
-      }
-
-      window.addEventListener('message', event => {
-        if (!event.data || event.data.secret != ${secret}) return;
-
-        (async function() {
-          try {
-            postID = event.data.id;
-          	const result = await runAsync(event.data.body, event.data.params);
-
-            window.parent.postMessage({ secret: ${secret}, id: event.data.id, result: result, html: document.body.innerText.length > 0 }, '*');
+    <!DOCTYPE html>
+    <html style="height: 100%">
+      <head>
+        <script src='${options.api}'></script>
+        <script>
+          var postID = -1;
+          function enableDebug() {
+            window.hal9cfg = { debug: { iframe: true } };
           }
-          catch(e) {
-            postError(event.data.id, e.message);
+
+          async function runAsync(body, params) {
+            if (typeof(window) != 'undefined' && window.hal9cfg && window.hal9cfg.debug && window.hal9cfg.debug.iframe) {
+              debugger;
+            }
+
+            var block = new Function("params", "return (async (params) => { " + "return " + body + "})")();
+            return await block(params);
+          };
+
+          function postError(id, message, url, line) {
+            window.parent.postMessage({ secret: ${secret}, id: id, error: message + ' (' + url + ' ' + line + ')' }, '*');
           }
-        })();
-      }); 
-    </script>
-    <body>
-    	<div id="output" style="width: 100%; height: 100%;"></div>
-    </body>
+
+          window.onerror = function (message, url, line) {
+            postError(postID, message, url, line);
+          }
+
+          window.addEventListener('message', event => {
+            if (!event.data || event.data.secret != ${secret}) return;
+
+            (async function() {
+              try {
+                postID = event.data.id;
+              	const result = await runAsync(event.data.body, event.data.params);
+
+                window.parent.postMessage({ secret: ${secret}, id: event.data.id, result: result, html: document.body.innerText.length > 0 }, '*');
+              }
+              catch(e) {
+                postError(event.data.id, e.message);
+              }
+            })();
+          }); 
+        </script>
+      </head>
+      <body style="height: 100%">
+      	<div id="output" style="width: 100%; height: 100%;"></div>
+      </body>
+    </html>
   `;
 
   iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(iframehtml);
@@ -69,6 +82,11 @@ export const init = async (options) => {
 
 const post = async (code, params) => {
   try {
+    if (typeof(window) != 'undefined' && window.hal9 && window.hal9.debug && window.hal9.debug.iframe) {
+      window.hal9.debug.iframe = false;
+      await post("enableDebug()", []);
+    }
+
     const secret = config.secret;
     const iframe = config.iframe;
     const postId = config.postId++;
@@ -301,7 +319,7 @@ export async function pipelinesGetScript(pipelineid, sid) {
 }
 
 export async function pipelinesGetHashable(pipelineid) {
-  return await post("hal9.pipelines.getHashable(pipelineid)", {
+  return await post("hal9.pipelines.getHashable(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
