@@ -19,8 +19,8 @@ export const init = async (options) => {
         <script src='${options.api}'></script>
         <script>
           var postID = -1;
-          function enableDebug() {
-            window.hal9cfg = { debug: { iframe: true } };
+          function enableDebug(config) {
+            window.hal9cfg = { debug: config };
           }
 
           async function runAsync(body, params) {
@@ -82,9 +82,10 @@ export const init = async (options) => {
 
 const post = async (code, params) => {
   try {
-    if (typeof(window) != 'undefined' && window.hal9 && window.hal9.debug && window.hal9.debug.iframe) {
-      window.hal9.debug.iframe = false;
-      await post("enableDebug()", []);
+    if (typeof(window) != 'undefined' && window.hal9 && window.hal9.debug) {
+      const config = window.hal9.debug;
+      window.hal9.debug = undefined;
+      await post("enableDebug(" + JSON.stringify(config) + ")", []);
     }
 
     const secret = config.secret;

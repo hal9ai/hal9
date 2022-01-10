@@ -106,6 +106,8 @@ import * as languages from './interpreters/languages'
 import * as datatable from '../../libs/jedit/jedit.js';
 import datatablecss from "../../libs/jedit/jedit.css";
 
+import { debugIf } from './utils/debug'
+
 /*::
 type paramid = number;
 type param = { id: paramid, name: string, label: string, value: Array<Object> };
@@ -658,6 +660,8 @@ const prepareContext = (pipeline, context, stepstopid) => {
 }
 
 export const run = async (pipelineid /*: pipeline */, context /* context */, partial, stepstopid /* stepid */ ) /*: void */ => {
+  debugIf('run');
+
   var pipeline = store.get(pipelineid);
   if (!pipeline || pipeline.length == 0) return;
 
