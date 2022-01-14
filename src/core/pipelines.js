@@ -588,7 +588,11 @@ const preparePartial = (pipeline, context, partial, renderid) => {
 }
 
 const prepareContext = (pipeline, context, stepstopid) => {
-  const parent = context.html;
+  var parent = context.html;
+  if (typeof(parent) === 'string') {
+    parent = document.getElementById(parent);
+  }
+
   if (typeof(parent) === 'object') {
     const height = parent.offsetHeight;
 
