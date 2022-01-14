@@ -1,8 +1,11 @@
 import * as dataframe from '../core/utils/dataframe';
 
 var config = {};
+var fnCallbacks = [];
 
 export const init = async (options) => {
+  fnCallbacks = [];
+
   const html = options.html;
   html.innerHTML = '';
 
@@ -42,6 +45,23 @@ export const init = async (options) => {
 
           window.addEventListener('message', event => {
             if (!event.data || event.data.secret != ${secret}) return;
+
+            const deserializeFunction = (target) => {
+              if (typeof(target) == 'object' && target) {
+                Object.keys(target).forEach(key => {
+                  if (typeof(target[key]) === 'string' && target[key].startsWith('___hal9___function___callback___')) {
+                    const callbackid = parseInt(target[key].replace('___hal9___function___callback___', ''));
+                    target[key] = function () {
+                      window.parent.postMessage({ secret: ${secret}, id: event.data.id, callbackid: callbackid, params: JSON.parse(JSON.stringify(arguments)) }, '*');
+                    };
+                  }
+                  else {
+                    deserializeFunction(target[key]);
+                  }
+                })
+              }
+            }
+            deserializeFunction(event.data.params);
 
             (async function() {
               try {
@@ -96,6 +116,11 @@ const post = async (code, params) => {
       var onResult = function(e) {
         if (!event.data || event.data.secret != secret || event.data.id != postId) return;
 
+        if (event.data.callbackid !== undefined) {
+          fnCallbacks[event.data.callbackid](...Object.values(event.data.params));
+          return;
+        }
+
         window.removeEventListener('message', onResult);
 
         if (event.data.error) {
@@ -108,6 +133,22 @@ const post = async (code, params) => {
 
       var responseListener = window.addEventListener('message', onResult);
     });
+
+    // handle callbacks with custom serializer
+    const serializeFunctions = (target) => {
+      if (typeof(target) == 'object' && target) {
+        Object.keys(target).forEach(key => {
+          if (typeof(target[key]) === 'function') {
+            fnCallbacks.push(target[key]);
+            target[key] = '___hal9___function___callback___' + (fnCallbacks.length - 1);
+          }
+          else {
+            serializeFunctions(target[key]);
+          }
+        })
+      }
+    }
+    serializeFunctions(params);
 
     iframe.contentWindow.postMessage({ secret: secret, id: postId, body: code, params: params }, '*');
     var result = await waitResponse;
