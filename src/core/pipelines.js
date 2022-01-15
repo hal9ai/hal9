@@ -589,9 +589,6 @@ const preparePartial = (pipeline, context, partial, renderid) => {
 
 const prepareContext = (pipeline, context, stepstopid) => {
   var parent = context.html;
-  if (typeof(parent) === 'string') {
-    parent = document.getElementById(parent);
-  }
 
   if (typeof(parent) === 'object') {
     const height = parent.offsetHeight;
@@ -670,6 +667,10 @@ export const run = async (pipelineid /*: pipeline */, context /* context */, par
   if (!pipeline || pipeline.length == 0) return;
 
   await fetchScripts(pipeline.steps);
+
+  if (typeof(context.html) === 'string') {
+    context.html = document.getElementById(context.html);
+  }
 
   partial = preparePartial(pipeline, context, partial, stepstopid);
   prepareContext(pipeline, context, stepstopid);
