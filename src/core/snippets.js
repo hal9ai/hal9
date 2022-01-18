@@ -152,10 +152,10 @@ const loadDepsForJS = async function(deps, params) {
   return depscode.join('\n') + '\n\n';
 }
 
-export const getFunctionBody = async function(code /*: string */, params /*: params */, nodeps /*: boolean */) /*: string */ {
+export const getFunctionBody = async function(code /*: string */, params /*: params */, nodeps /*: boolean */, header /*: header */) /*: string */ {
   const name = 'snippet' + Math.floor(Math.random() * 10000000);
 
-  const header = parseHeader(code);
+  header = header ? header : parseHeader(code);
   const deps = !nodeps ? header.deps : [];
   const output = header.output;
   
@@ -180,15 +180,15 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
   return body;
 }
 
-export const getFunction = async function(code /*: string */, params /*: params */) /*: Promise<func> */ {
-  const body = await getFunctionBody(code, params, false);
+export const getFunction = async function(code /*: string */, params /*: params */, header /*: header */) /*: Promise<func> */ {
+  const body = await getFunctionBody(code, params, false, header);
 
   // $FlowFixMe
   return new Function("return " + body)();
 }
 
-export const runFunction = async function(code /*: string */, params /*: params */) /*: void */ {
-  const op = await getFunction(code, params);
+export const runFunction = async function(code /*: string */, params /*: params */, header /*: header */) /*: void */ {
+  const op = await getFunction(code, params, header);
 
   params['hal9'] = Object.assign(typeof(window) != 'undefined' && window.hal9 ? window.hal9 : {}, params['hal9']);
 

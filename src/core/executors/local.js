@@ -20,7 +20,7 @@ export default class LocalExecutor extends Executor {
     params['hal9__context'] = this.context;
 
     const interpreted = interpreter.interpret(this.script, this.language, this.metadata, this.context);
-    var result = await snippets.runFunction(interpreted, params);
+    var result = await snippets.runFunction(interpreted.script, params, interpreted.header);
 
     if (this.callbacks && this.callbacks.onInvalidate) {
       this.callbacks.onInvalidate(Object.assign({}, this.params, this.inputs));

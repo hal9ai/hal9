@@ -3,6 +3,7 @@ import html from './html';
 import python from './python';
 import rstats from './rstats';
 import pyodide from './pyodide';
+import * as snippets from '../snippets';
 
 const languageMap = {
   markdown: markdown,
@@ -15,5 +16,11 @@ const languageMap = {
 export const interpret = (script, language, header, context) => {
   const interpreter = languageMap[language];
 
-  return interpreter ? interpreter(script, header, context) : script;
+  const result = interpreter ? interpreter(script, header, context) : { script: script };
+
+  if (!result.header) {
+    result.header = header ? header : snippets.parseHeader(code);
+  }
+
+  return result;
 }

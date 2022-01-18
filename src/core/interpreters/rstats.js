@@ -14,7 +14,7 @@ export default function(script, header, context) {
 
   const paramRDef = paramsAll.map(e => `${e} = hal9__params[['${e}']]`).join('\r\n');
 
-  return  `
+  const interpreted = `
 const params = { ${paramNodeDef} };
 
 const readFileAsync = util.promisify(fs.readFile)
@@ -88,5 +88,9 @@ fileslist.map(e => {
 
 fs.rmSync(scriptpath, { recursive: true });
   `;
+
+  return {
+    script: interpreted
+  } 
 }
 

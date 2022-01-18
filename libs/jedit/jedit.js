@@ -57,6 +57,10 @@ function isDanfo(json) {
   return json && typeof(json.col_data_tensor) === 'object';
 }
 
+function isPyodide(json) {
+  return json && json.type === 'DataFrame';
+}
+
 async function fetchTimeout(resource, options, timeout) {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeout);
@@ -259,6 +263,12 @@ async function buildDanfo(parentEl, table, max) {
   buildTable(parentEl, rows, max);
 }
 
+async function buildPyodide(parentEl, table, max) {
+  var rows = JSON.parse(table.to_json(undefined, 'records'))
+
+  buildTable(parentEl, rows, max);
+}
+
 function buildImage(parentEl, json, max) {
   var linkEl = createElem(parentEl, 'a', 'jedit-image-link');
   linkEl.href = json;
@@ -322,6 +332,7 @@ async function buildHtml(parentEl, json, max, type, root) {
   if (!type) {
     type = 'unknown';
     if (isArquero(json)) type = 'arquero';
+    else if (isPyodide(json)) type = 'pyodide';
     else if (isDanfo(json)) type = 'danfo';
     else if (isTable(json)) type = 'table';
     else if (Array.isArray(json) && json.length > 0 && typeof(json[0]) != 'object') type = 'array';
@@ -343,6 +354,7 @@ async function buildHtml(parentEl, json, max, type, root) {
     link: buildLink,
     arquero: buildArquero,
     danfo: buildDanfo,
+    pyodide: buildPyodide,
   }
 
   await typeDispatch[type](parentEl, json, max);

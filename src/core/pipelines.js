@@ -212,7 +212,7 @@ const scripts = {
   html: { script:  htmltxt, language: 'html' },
   javascript: { script: javascripttxt, language: 'javascript' },
   markdown: { script:  markdowntxt, language: 'markdown' },
-  pyodide: { script:  pyodidetxt, language: 'javascript' },
+  pyodide: { script:  pyodidetxt, language: 'pyodide' },
   python: { script:  pythontxt, language: 'python' },
   r: { script:  rtxt, language: 'r' },
 

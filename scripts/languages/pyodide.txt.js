@@ -1,14 +1,8 @@
-/**
-  deps: [ 'https://pyodide-cdn2.iodide.io/v0.15.0/full/pyodide.js' ]
-**/
-
-await languagePluginLoader;
-self.pyodide.loadPackage(['numpy']);
-
-data = await self.pyodide.runPythonAsync(`
+##
+## deps: [ 'numpy', 'pandas' ]
+##
 
 import numpy as np
+import pandas as pd
 
-np.arange(15).reshape(3, 5)
-
-`)
+data = pd.DataFrame({'Name':['Tom', 'Nick', ], 'Age':[ 56, 33 ]})

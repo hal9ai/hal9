@@ -65,5 +65,7 @@ export default function(html) {
     }
   `;
 
-  return script;
+  return {
+    script: script
+  };
 }

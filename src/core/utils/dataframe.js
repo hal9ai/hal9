@@ -2,7 +2,7 @@ import defaultClone from './clone';
 
 import * as aq from 'arquero';
 
-const arqueroTest = (e) => e && typeof(e._data) === 'object';
+const arqueroTest = (e) => e && typeof(e.toJs) !== 'function' && typeof(e._data) === 'object';
 
 const arqueroColumns = (e) => e.columnNames();
 
@@ -56,6 +56,21 @@ const arrayIsSerialized = (e) => false;
 const arrayEnsure = (e) => e;
 
 
+const pyodideTest = (e) => e && e.type === 'DataFrame';
+
+const pyodideColumns = (e) => e.columns.values.tolist().toJs();
+
+const pyodideClone = defaultClone;
+
+const pyodideSerialize = (e) => e;
+
+const pyodideDeserialize = (e) => e;
+
+const pyodideIsSerialized = (e) => false;
+
+const pyodideEnsure = (e) => e;
+
+
 const generalized = [
   {
     test: arqueroTest,
@@ -83,6 +98,15 @@ const generalized = [
     deserialiaze: arrayDeserialize,
     serialized: arrayIsSerialized,
     ensure: arrayEnsure,
+  },
+  {
+    test: pyodideTest,
+    columns: pyodideColumns,
+    clone: pyodideClone,
+    serialize: pyodideSerialize,
+    deserialiaze: pyodideDeserialize,
+    serialized: pyodideIsSerialized,
+    ensure: pyodideEnsure,
   },
 ];
 
