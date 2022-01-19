@@ -1,5 +1,7 @@
+import { debuggerIf } from '../utils/debug'
 
 export default function(script, header, context) {
+  const debugcode = debuggerIf('interpret');
 
   const params = header.params ? header.params.map(e => e.name) : [];
   const inputs = header.input ? header.input : [];
@@ -14,7 +16,7 @@ export default function(script, header, context) {
 
   const paramRDef = paramsAll.map(e => `${e} = hal9__params[['${e}']]`).join('\r\n');
 
-  const interpreted = `
+  const interpreted = `${debugcode}
 const params = { ${paramNodeDef} };
 
 const readFileAsync = util.promisify(fs.readFile)

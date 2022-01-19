@@ -250,7 +250,10 @@ function buildArquero(parentEl, table, max) {
   var subset = table.slice(0, Math.min(500, table.numRows()));
   var rows = [];
   subset.scan(function(i, data) {
-    const row = Object.fromEntries(Object.keys(data).map(e => [e, data[e].get(i)]));
+    const row = Object.fromEntries(Object.keys(data).map(e => {
+      var val = data[e].get(i);
+      return [e, val]
+    }));
     rows.push(row);
   }, true);
 
