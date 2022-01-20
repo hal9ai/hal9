@@ -48,7 +48,7 @@ export default function(script, header, context) {
   `;
 
   header.deps = [
-    'https://cdn.jsdelivr.net/npm/hal9-utils@0latest/dist/hal9-utils.min.js',
+    'https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js',
     'https://cdn.jsdelivr.net/pyodide/v0.19.0/full/pyodide.js'
   ];
 
