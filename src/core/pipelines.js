@@ -1,7 +1,7 @@
 // @flow
 
 // import scripts
-import financialimporttxt from '../../scripts/import/financialimport.txt.js'; 
+import stockstxt from '../../scripts/import/stocks.txt.js'; 
 import imagestxt from '../../scripts/import/images.txt.js';
 import importcsvtxt from '../../scripts/import/csv.txt.js';
 import importexceltxt from '../../scripts/import/excel.txt.js';
@@ -133,7 +133,7 @@ type blocks = Array<block>;
 
 const scripts = {
   // import
-  financialimport: { script:  financialimporttxt, language: 'javascript' },
+  stocks: { script:  stockstxt, language: 'javascript' },
   images: { script:  imagestxt, language: 'javascript' },
   importcsv: { script:  importcsvtxt, language: 'javascript' },
   importexcel: { script:  importexceltxt, language: 'javascript' },
