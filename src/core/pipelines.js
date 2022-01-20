@@ -149,7 +149,7 @@ const scripts = {
 
   // webscraping
   webimages: { script: webimagestxt, language: 'javascript' },
-  webselector: { script: webimagestxt, language: 'javascript' },
+  webselector: { script: webselectortxt, language: 'javascript' },
   webtables: { script: webtablestxt, language: 'javascript' },
 
   // transforms
