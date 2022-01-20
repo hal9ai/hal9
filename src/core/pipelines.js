@@ -1,11 +1,13 @@
 // @flow
 
 // import scripts
+import financialimporttxt from '../../scripts/import/financialimport.txt.js'; 
 import imagestxt from '../../scripts/import/images.txt.js';
 import importcsvtxt from '../../scripts/import/csv.txt.js';
 import importexceltxt from '../../scripts/import/excel.txt.js';
 import importjsontxt from '../../scripts/import/json.txt.js';
 import iristxt from '../../scripts/import/iris.txt.js';
+import videoframestxt from '../../scripts/import/videoframes.txt.js';
 import webcamtxt from '../../scripts/import/webcam.txt.js';
 
 // webscraping scripts
@@ -75,6 +77,8 @@ import exportcsvtxt from '../../scripts/export/csv.txt.js';
 
 // service scripts
 import airbnbtxt from '../../scripts/services/airbnb.txt.js';
+import bigquerytxt from '../../scripts/services/bigquery.txt.js';
+import googlesheetstxt from '../../scripts/services/googlesheets.txt.js';
 import reddittxt from '../../scripts/services/reddit.txt.js';
 import twittertxt from '../../scripts/services/twitter.txt.js';
 
@@ -129,11 +133,13 @@ type blocks = Array<block>;
 
 const scripts = {
   // import
+  financialimport: { script:  financialimporttxt, language: 'javascript' },
   images: { script:  imagestxt, language: 'javascript' },
   importcsv: { script:  importcsvtxt, language: 'javascript' },
   importexcel: { script:  importexceltxt, language: 'javascript' },
   importjson: { script:  importjsontxt, language: 'javascript' },
   iris: { script: iristxt, language: 'javascript' },
+  videoframes: { script: videoframestxt, language: 'javascript' },
   webcam: { script:  webcamtxt, language: 'javascript' },
 
   // webscraping
@@ -205,6 +211,8 @@ const scripts = {
 
   // services
   airbnb: { script:  airbnbtxt, language: 'javascript' },
+  bigquery: { script:  bigquerytxt, language: 'javascript' },
+  googlesheets: { script: googlesheetstxt, language: 'javascript' },
   reddit: { script:  reddittxt, language: 'javascript' },
   twitter: { script:  twittertxt, language: 'javascript' },
 
