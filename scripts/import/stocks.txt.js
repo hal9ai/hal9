@@ -1,205 +1,135 @@
 /**
   input: [ ]
   output: [ data ]
-  params:  
-    - name: limit
-      label: 'Limit '
-      value:
-        - control: 'number'     
-          value: '10'
-          lazy: true
+  params:
     - name: stock
-      label: 'Stock Name '
+      label: 'Stock Name'
       value:
         - control: 'textbox'
           value: 'MSFT'
           lazy: true
-    - name: anqu
-      label: 'Annual/Quarter'
+    - name: statistic
+      label: 'Statistic to Fetch'
       value:
         - control: 'select'
-          value: 'ann'
+          value: 'historicalPriceFull'
           values:
-            - name: ann
-              label: Annual
-            - name: quar
-              label: Quarterly
-    - name: api
-      label: 'Service to fetch'
-      value:
-        - control: 'select'
-          value: 'cfgg'
-          values:
-            - name: is
-              label: Income Statement
-            - name: cfs
-              label: Cash Flow Statement 
-            - name: bss
-              label: Balance Sheet Statement            
-            - name: isar
-              label: Income Statements as reported
-            - name: bssar
-              label: Balance Sheet Statement as reported
-            - name: cfsar
-              label: Cash Flow Statement as reported
-            - name: ffsar
-              label: Full Financial Statement as reported
-            - name: cseti
-              label: Canadian Stock Exchange TSX (SEDAR) income
-            - name: eis
-              label: Euronext income statements    
-            - name: xgis
-              label: XETRA (Bundesanzeiger) Germany income statements
-            - name: nseois
-              label: National Stock Exchange of India income statements
-            - name: lseis
-              label: London Stock Exchange (Companies house) income statements 
-            - name: meis
-              label: Moscow Exchange (MOEX) income statements
-            - name: hheis
-              label: Hong Kong Exchange (SEHK) income statements
-            - name: aseis
-              label: Australian Stock Exchange (ASX) income statements
-            - name: nseis
-              label: Norway stock exchange (OSE) income statements
-            - name: seis
-              label: Swiss Exchange (SIX) income statements
-            - name: isg
-              label: Income statements growth
-            - name: absg
-              label: Annual balance sheet growth
-            - name: acfsg
+            - name: annualIncome
+              label: Annual income statements
+            - name: annualIncomeReported
+              label: Annual income statements as reported
+            - name: annualIncomeGrowth
+              label: Annual income statements growth
+            - name: quarterlyIncome
+              label: Quarterly income statements
+            - name: quarterlyIncomeReported
+              label: Quarterly income statements as reported
+            - name: annualBalance
+              label: Annual balance sheet statements
+            - name: annualBalanceReported
+              label: Annual balance sheet statements as reported
+            - name: annualBalanceGrowth
+              label: Annual balance sheet statements growth
+            - name: quarterlyBalance
+              label: Quarterly balance sheet statements
+            - name: quarterlyBalanceReported
+              label: Quarterly balance sheet statements as reported
+            - name: annualCash
+              label: Annual cash flow statements
+            - name: annualCashReported
+              label: Annual cash flow statements as reported
+            - name: annualCashGrowth
               label: Annual cash flow statements growth
-            - name: ckm
-              label: Company Key Metrics
-            - name: cfgg
-              label: Company Financial Growth
-    - name: key
+            - name: quarterlyCash
+              label: Quarterly cash flow statements
+            - name: quarterlyCashReported
+              label: Quarterly cash flow statements as reported
+            - name: annualFullReported
+              label: Annual full financial statement as reported
+            - name: quarterlyFullReported
+              label: Quarterly full financial statement as reported
+            - name: historicalPriceFull
+              label: Daily stock historical prices with change and volume
+    - name: limit
+      label: 'Limit Results'
+      value:
+        - control: 'number'
+          value: 10
+          lazy: true
+    - name: apiKey
       label: 'API Key'
       value:
-        - control: 'textbox'     
+        - control: 'textbox'
           value: '9e3bc7683c9510385d246533a1e1c559'
           lazy: true
   deps:
-    - https://apis.google.com/js/client.js
-    - https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
-    - https://cdn.jsdelivr.net/npm/apache-arrow@latest
     - https://cdn.jsdelivr.net/npm/arquero@latest
   cache: true
 **/
 
-let url = '';
+// Data provided by Financial Modeling Prep
+// https://financialmodelingprep.com/developer/docs/
 
-if (api == 'is') {
-  if (anqu == 'ann') {
-    url = `https://financialmodelingprep.com/api/v3/income-statement/${stock}?limit=${limit}&apikey=${key}`;
-  }
-  else if (anqu == 'quar') {
-    url = `https://financialmodelingprep.com/api/v3/income-statement/${stock}?period=quarter&limit=${limit}&apikey=${key}`;
-  }
-}
-else if (api == 'cfs') {
-  if (anqu == 'ann') {
-    url = `https://financialmodelingprep.com/api/v3/cash-flow-statement/${stock}?apikey=${key}&limit=${limit}`;
-  }
-  else if (anqu == 'quar') {
-    url = `https://financialmodelingprep.com/api/v3/cash-flow-statement/${stock}?period=quarter&limit=${limit}&apikey=${key}`;
-  }
-}
-else if (api == 'bss') {
-  if (anqu == 'ann') {
-    url = `https://financialmodelingprep.com/api/v3/balance-sheet-statement/${stock}?limit=${limit}&apikey=${key}`;
-  }
-  else if (anqu == 'quar') {
-    url = `https://financialmodelingprep.com/api/v3/balance-sheet-statement/${stock}?period=quarter&limit=${limit}&apikey=${key}`;
-  }
-}
-else if (api == 'isar') {
-  if (anqu == 'ann') {
-    url = `https://financialmodelingprep.com/api/v3/income-statement-as-reported/${stock}?limit=${limit}&apikey=${key}`;
-  }
-  else if (anqu == 'quar') {
-    url = `https://financialmodelingprep.com/api/v3/income-statement-as-reported/${stock}?period=quarter&limit=${limit}&apikey=${key}`;
-  }
-}
-else if (api == 'bssar') {
-  if (anqu == 'ann') {
-    url = `https://financialmodelingprep.com/api/v3/balance-sheet-statement-as-reported/${stock}?limit=${limit}&apikey=${key}`;
-  }
-  else if (anqu == 'quar') {
-    url = `https://financialmodelingprep.com/api/v3/balance-sheet-statement-as-reported/${stock}?period=quarter&limit=${limit}&apikey=${key}`;
-  }
-}
-else if (api == 'cfsar') {
-  if (anqu == 'ann') {
-    url = `https://financialmodelingprep.com/api/v3/cash-flow-statement-as-reported/${stock}?limit=${limit}&apikey=${key}`;
-  }
-  else if (anqu == 'quar') {
-    url = `https://financialmodelingprep.com/api/v3/cash-flow-statement-as-reported/${stock}?period=quarter&limit=${limit}&apikey=${key}`;
-  }
-}
-else if (api == 'ffsar') {
-  if (anqu == 'ann') {
-    url = `https://financialmodelingprep.com/api/v3/financial-statement-full-as-reported/${stock}?apikey=${key}`;
-  }
-  else if (anqu == 'quar') {
-    url = `https://financialmodelingprep.com/api/v3/financial-statement-full-as-reported/${stock}?period=quarter&apikey=${key}`;
-  }
-}
-else if (api == 'cseti') {
-  url = `https://financialmodelingprep.com/api/v3/income-statement/RY.TO?limit=${limit}&apikey=${key}`;
-}
-else if (api == 'eis') {
-  url = `https://financialmodelingprep.com/api/v3/income-statement/EDF.PA?limit=${limit}&apikey=${key}`;
-}
-else if (api == 'xgis') {
-  url = `https://financialmodelingprep.com/api/v3/income-statement/SAP.DE?limit=${limit}&apikey=${key}`;
-}
-else if (api == 'nseois') {
-  url = `https://financialmodelingprep.com/api/v3/income-statement/RELIANCE.NS?limit=${limit}&apikey=${key}`;
-}
-else if (api == 'lseis') {
-  url = `https://financialmodelingprep.com/api/v3/income-statement/GLEN.L?limit=${limit}&apikey=${key}`;
-}
-else if (api == 'meis') {
-  url = `https://financialmodelingprep.com/api/v3/income-statement/GAZP.ME?limit=${limit}&apikey=${key}`;
-}
-else if (api == 'hheis') {
-  url = `https://financialmodelingprep.com/api/v3/income-statement/1797.HK?limit=${limit}&apikey=${key}`;
-}
-else if (api == 'aseis') {
-  url = `https://financialmodelingprep.com/api/v3/income-statement/APT.AX?limit=${limit}&apikey=${key}`;
-}
-else if (api == 'nseis') {
-  url = `https://financialmodelingprep.com/api/v3/income-statement/BON.OL?limit=${limit}&apikey=${key}`;
-}
-else if (api == 'seis') {
-  url = `https://financialmodelingprep.com/api/v3/income-statement/FHZN.SW?limit=${limit}&apikey=${key}`;
-}
-else if (api == 'isg') {
-  url = `https://financialmodelingprep.com/api/v3/income-statement-growth/${stock}?limit=${limit}&apikey=${key}`;
-}
-else if (api == 'absg') {
-  url = `https://financialmodelingprep.com/api/v3/balance-sheet-statement-growth/${stock}?limit=${limit}&apikey=${key}`;
-}
-else if (api == 'acfsg') {
-  url = `https://financialmodelingprep.com/api/v3/cash-flow-statement-growth/${stock}?limit=${limit}&apikey=${key}`;
-}
-else if (api == 'ckm') {
-  if (anqu == 'ann') {
-    url = `https://financialmodelingprep.com/api/v3/key-metrics/${stock}?limit=${limit}&apikey=${key}`;
-  }
-  else if (anqu == 'quar') {
-    url = `https://financialmodelingprep.com/api/v3/key-metrics/${stock}?period=quarter&limit=${limit}&apikey=${key}`;
-  }
-}
-else if (api == 'cfgg') {
-  if (anqu == 'ann') {
-    url = `https://financialmodelingprep.com/api/v3/financial-growth/${stock}?limit=${limit}&apikey=${key}`;
-  }
-  else if (anqu == 'quar') {
-    url = `https://financialmodelingprep.com/api/v3/financial-growth/${stock}?period=quarter&limit=${limit}&apikey=${key}`;
-  }
+const baseUrl = 'https://financialmodelingprep.com/api/v3';
+let url;
+
+switch (statistic) {
+  case 'annualIncome':
+    url = `${baseUrl}/income-statement/${stock}?limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'annualIncomeReported':
+    url = `${baseUrl}/income-statement-as-reported/${stock}?limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'annualIncomeGrowth':
+    url = `${baseUrl}/income-statement-growth/${stock}?limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'quarterlyIncome':
+    url = `${baseUrl}/income-statement/${stock}?period=quarter&limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'quarterlyIncomeReported':
+    url = `${baseUrl}/income-statement-as-reported/${stock}?period=quarter&limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'annualBalance':
+    url = `${baseUrl}/balance-sheet-statement/${stock}?limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'annualBalanceReported':
+    url = `${baseUrl}/balance-sheet-statement-as-reported/${stock}?limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'annualBalanceGrowth':
+    url = `${baseUrl}/balance-sheet-statement-growth/${stock}?limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'quarterlyBalance':
+    url = `${baseUrl}/balance-sheet-statement/${stock}?period=quarter&limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'quarterlyBalanceReported':
+    url = `${baseUrl}/balance-sheet-statement-as-reported/${stock}?period=quarter&limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'annualCash':
+    url = `${baseUrl}/cash-flow-statement/${stock}?limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'annualCashReported':
+    url = `${baseUrl}/cash-flow-statement-as-reported/${stock}?limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'annualCashGrowth':
+    url = `${baseUrl}/cash-flow-statement-growth/${stock}?limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'quarterlyCash':
+    url = `${baseUrl}/cash-flow-statement/${stock}?period=quarter&limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'quarterlyCashReported':
+    url = `${baseUrl}/cash-flow-statement-as-reported/${stock}?period=quarter&limit=${limit}&apikey=${apiKey}`;
+    break;
+  case 'annualFullReported':
+    url = `${baseUrl}/financial-statement-full-as-reported/${stock}?apikey=${apiKey}`;
+    break;
+  case 'quarterlyFullReported':
+    url = `${baseUrl}/financial-statement-full-as-reported/${stock}?period=quarter&apikey=${apiKey}`;
+    break;
+  case 'historicalPriceFull':
+    url = `${baseUrl}/historical-price-full/${stock}?apikey=${apiKey}`;
+    break;
+  default:
+    throw 'Requested statistic not recognized';
 }
 
 data = await fetch(url, {
@@ -207,5 +137,9 @@ data = await fetch(url, {
 }).then(
   res => res.json()
 );
+
+if (statistic === 'historicalPriceFull') {
+  data = data.historical;
+}
 
 data = aq.from(data);
