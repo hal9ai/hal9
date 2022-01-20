@@ -1,17 +1,20 @@
 // @flow
 
 // import scripts
-import stockstxt from '../../scripts/import/stocks.txt.js'; 
+import graphqltxt from '../../scripts/import/graphql.txt.js';
 import imagestxt from '../../scripts/import/images.txt.js';
 import importcsvtxt from '../../scripts/import/csv.txt.js';
 import importexceltxt from '../../scripts/import/excel.txt.js';
 import importjsontxt from '../../scripts/import/json.txt.js';
 import iristxt from '../../scripts/import/iris.txt.js';
+import mysqltxt from '../../scripts/import/mysql.txt.js';
+import stockstxt from '../../scripts/import/stocks.txt.js';
 import videoframestxt from '../../scripts/import/videoframes.txt.js';
 import webcamtxt from '../../scripts/import/webcam.txt.js';
 
 // webscraping scripts
 import webimagestxt from '../../scripts/import/webimages.txt.js';
+import webselectortxt from '../../scripts/import/webselector.txt.js';
 import webtablestxt from '../../scripts/import/webtable.txt.js';
 
 // transform scripts
@@ -133,100 +136,103 @@ type blocks = Array<block>;
 
 const scripts = {
   // import
-  stocks: { script:  stockstxt, language: 'javascript' },
-  images: { script:  imagestxt, language: 'javascript' },
-  importcsv: { script:  importcsvtxt, language: 'javascript' },
-  importexcel: { script:  importexceltxt, language: 'javascript' },
-  importjson: { script:  importjsontxt, language: 'javascript' },
+  graphql: { script: graphqltxt, language: 'javascript' },
+  images: { script: imagestxt, language: 'javascript' },
+  importcsv: { script: importcsvtxt, language: 'javascript' },
+  importexcel: { script: importexceltxt, language: 'javascript' },
+  importjson: { script: importjsontxt, language: 'javascript' },
   iris: { script: iristxt, language: 'javascript' },
+  mysql: { script: mysqltxt, language: 'javascript' },
+  stocks: { script: stockstxt, language: 'javascript' },
   videoframes: { script: videoframestxt, language: 'javascript' },
-  webcam: { script:  webcamtxt, language: 'javascript' },
+  webcam: { script: webcamtxt, language: 'javascript' },
 
   // webscraping
-  webimages: { script:  webimagestxt, language: 'javascript' },
-  webtables: { script:  webtablestxt, language: 'javascript' },
+  webimages: { script: webimagestxt, language: 'javascript' },
+  webselector: { script: webimagestxt, language: 'javascript' },
+  webtables: { script: webtablestxt, language: 'javascript' },
 
   // transforms
-  assign: { script:  assigntxt, language: 'javascript' },
-  column: { script:  columntxt, language: 'javascript' },
-  convert: { script:  converttxt, language: 'javascript' },
-  derive: { script:  derivetxt, language: 'javascript' },
-  drop: { script:  droptxt, language: 'javascript' },
-  explode: { script:  explodetxt, language: 'javascript' },
-  fetch: { script:  fetchtxt, language: 'javascript' },
-  filter: { script:  filtertxt, language: 'javascript' },
-  fold: { script:  foldtxt, language: 'javascript' },
+  assign: { script: assigntxt, language: 'javascript' },
+  column: { script: columntxt, language: 'javascript' },
+  convert: { script: converttxt, language: 'javascript' },
+  derive: { script: derivetxt, language: 'javascript' },
+  drop: { script: droptxt, language: 'javascript' },
+  explode: { script: explodetxt, language: 'javascript' },
+  fetch: { script: fetchtxt, language: 'javascript' },
+  filter: { script: filtertxt, language: 'javascript' },
+  fold: { script: foldtxt, language: 'javascript' },
   impute: { script: imputetxt, language: 'javascript' },
-  join: { script:  jointxt, language: 'javascript' },
-  pivot: { script:  pivottxt, language: 'javascript' },
-  range: { script:  rangetxt, language: 'javascript' },
-  rollingsum: { script:  rollingsumtxt, language: 'javascript' },
-  sample: { script:  sampletxt, language: 'javascript' },
-  select: { script:  selecttxt, language: 'javascript' },
-  slice: { script:  slicetxt, language: 'javascript' },
-  sort: { script:  sorttxt, language: 'javascript' },
-  sql: { script:  sqltxt, language: 'javascript' },
-  subsprev: { script:  subsprevtxt, language: 'javascript' },
-  summarize: { script:  summarizetxt, language: 'javascript' },
+  join: { script: jointxt, language: 'javascript' },
+  pivot: { script: pivottxt, language: 'javascript' },
+  range: { script: rangetxt, language: 'javascript' },
+  rollingsum: { script: rollingsumtxt, language: 'javascript' },
+  sample: { script: sampletxt, language: 'javascript' },
+  select: { script: selecttxt, language: 'javascript' },
+  slice: { script: slicetxt, language: 'javascript' },
+  sort: { script: sorttxt, language: 'javascript' },
+  sql: { script: sqltxt, language: 'javascript' },
+  subsprev: { script: subsprevtxt, language: 'javascript' },
+  summarize: { script: summarizetxt, language: 'javascript' },
 
   // charts
-  barchart: { script:  barcharttxt, language: 'javascript' },
-  errorbarchart: { script:  errorbarcharttxt, language: 'javascript' },
-  heatmapchart: { script:  heatmapcharttxt, language: 'javascript' },
-  histogramchart: { script:  histogramcharttxt, language: 'javascript' },
-  linechart: { script:  linecharttxt, language: 'javascript' },
-  sankeychart: { script:  sankeycharttxt, language: 'javascript' },
-  scatterchart: { script:  scattercharttxt, language: 'javascript' },
-  treemapchart: { script:  treemapcharttxt, language: 'javascript' },
-  waterfallchart: { script:  waterfallcharttxt, language: 'javascript' },
+  barchart: { script: barcharttxt, language: 'javascript' },
+  errorbarchart: { script: errorbarcharttxt, language: 'javascript' },
+  heatmapchart: { script: heatmapcharttxt, language: 'javascript' },
+  histogramchart: { script: histogramcharttxt, language: 'javascript' },
+  linechart: { script: linecharttxt, language: 'javascript' },
+  sankeychart: { script: sankeycharttxt, language: 'javascript' },
+  scatterchart: { script: scattercharttxt, language: 'javascript' },
+  treemapchart: { script: treemapcharttxt, language: 'javascript' },
+  waterfallchart: { script: waterfallcharttxt, language: 'javascript' },
 
   // visualizations
-  bubbles: { script:  bubblestxt, language: 'javascript' },
-  gallery: { script:  gallerytxt, language: 'html' },
-  mapchart: { script:  mapcharttxt, language: 'javascript' },
-  network: { script:  networktxt, language: 'javascript' },
-  threejs: { script:  threejstxt, language: 'javascript' },
-  wordcloud: { script:  wordcloudtxt, language: 'javascript' },
-  table: { script:  simpletabletxt, language: 'html' },
+  bubbles: { script: bubblestxt, language: 'javascript' },
+  gallery: { script: gallerytxt, language: 'html' },
+  mapchart: { script: mapcharttxt, language: 'javascript' },
+  network: { script: networktxt, language: 'javascript' },
+  threejs: { script: threejstxt, language: 'javascript' },
+  wordcloud: { script: wordcloudtxt, language: 'javascript' },
+  table: { script: simpletabletxt, language: 'html' },
 
   // predictions
-  bodypix: { script:  bodypixtxt, language: 'javascript' },
-  knn: { script:  knntxt, language: 'javascript' },
-  mobilenet: { script:  mobilenettxt, language: 'javascript' },
-  regressionpredict: { script:  regressionpredicttxt, language: 'javascript' },
-  sentiment: { script:  sentimenttxt, language: 'javascript' },
-  timeseriespredict: { script:  timeseriespredicttxt, language: 'javascript' },
+  bodypix: { script: bodypixtxt, language: 'javascript' },
+  knn: { script: knntxt, language: 'javascript' },
+  mobilenet: { script: mobilenettxt, language: 'javascript' },
+  regressionpredict: { script: regressionpredicttxt, language: 'javascript' },
+  sentiment: { script: sentimenttxt, language: 'javascript' },
+  timeseriespredict: { script: timeseriespredicttxt, language: 'javascript' },
 
   // train
 
   // utils
-  copy: { script:  copytxt, language: 'javascript' },
-  paste: { script:  pastetxt, language: 'javascript' },
+  copy: { script: copytxt, language: 'javascript' },
+  paste: { script: pastetxt, language: 'javascript' },
   tojson: { script: tojsontxt, language: 'javascript' },
   ziptomap: { script: ziptomaptxt, language: 'javascript' },
   citytomap: { script: citytomaptxt, language: 'javascript' },
 
   // export
-  exportcsv: { script:  exportcsvtxt, language: 'javascript' },
+  exportcsv: { script: exportcsvtxt, language: 'javascript' },
 
   // services
-  airbnb: { script:  airbnbtxt, language: 'javascript' },
-  bigquery: { script:  bigquerytxt, language: 'javascript' },
+  airbnb: { script: airbnbtxt, language: 'javascript' },
+  bigquery: { script: bigquerytxt, language: 'javascript' },
   googlesheets: { script: googlesheetstxt, language: 'javascript' },
-  reddit: { script:  reddittxt, language: 'javascript' },
-  twitter: { script:  twittertxt, language: 'javascript' },
+  reddit: { script: reddittxt, language: 'javascript' },
+  twitter: { script: twittertxt, language: 'javascript' },
 
   // languages
-  html: { script:  htmltxt, language: 'html' },
+  html: { script: htmltxt, language: 'html' },
   javascript: { script: javascripttxt, language: 'javascript' },
-  markdown: { script:  markdowntxt, language: 'markdown' },
-  pyodide: { script:  pyodidetxt, language: 'pyodide' },
-  python: { script:  pythontxt, language: 'python' },
-  r: { script:  rtxt, language: 'r' },
+  markdown: { script: markdowntxt, language: 'markdown' },
+  pyodide: { script: pyodidetxt, language: 'pyodide' },
+  python: { script: pythontxt, language: 'python' },
+  r: { script: rtxt, language: 'r' },
 
   // frameworks
-  react: { script:  reacttxt, language: 'html' },
-  vue: { script:  vuetxt, language: 'html' },
+  react: { script: reacttxt, language: 'html' },
+  vue: { script: vuetxt, language: 'html' },
 }
 
 var pipelinesStateCount = 0;
