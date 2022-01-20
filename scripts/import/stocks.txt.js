@@ -1,39 +1,34 @@
 /**
   input: [ ]
   output: [ data ]
-  params:    
-    - name: key
-      label: 'API Key'
-      value:
-        - control: 'textbox'     
-
+  params:  
     - name: limit
       label: 'Limit '
       value:
         - control: 'number'     
-
+          value: '10'
+          lazy: true
     - name: stock
       label: 'Stock Name '
       value:
-        - control: 'textbox'     
-
+        - control: 'textbox'
+          value: 'MSFT'
+          lazy: true
     - name: anqu
       label: 'Annual/Quarter'
       value:
         - control: 'select'
-          value: ''
+          value: 'ann'
           values:
             - name: ann
               label: Annual
             - name: quar
               label: Quarterly
-
-
     - name: api
       label: 'Service to fetch'
       value:
         - control: 'select'
-          value: ''
+          value: 'cfgg'
           values:
             - name: is
               label: Income Statement
@@ -79,16 +74,12 @@
               label: Company Key Metrics
             - name: cfgg
               label: Company Financial Growth
-            - name: ouapi
-              label: Optional URL API 
-            
-    - name: urlopt
-      label: 'API URL( optional ) '
+    - name: key
+      label: 'API Key'
       value:
         - control: 'textbox'     
-
-
-
+          value: '9e3bc7683c9510385d246533a1e1c559'
+          lazy: true
   deps:
     - https://apis.google.com/js/client.js
     - https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
@@ -210,11 +201,11 @@ else if (api == 'cfgg') {
     url = `https://financialmodelingprep.com/api/v3/financial-growth/${stock}?period=quarter&limit=${limit}&apikey=${key}`;
   }
 }
-else if (api == 'ouapi') {
-  url = urlopt;
-}
 
 data = await fetch(url, {
   method: 'GET'
-}).then(res => res.json());
+}).then(
+  res => res.json()
+);
+
 data = aq.from(data);
