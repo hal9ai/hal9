@@ -22,7 +22,7 @@ export default function(script, header, context) {
   plot = 'data:image/png;base64,' + hal9__base64.b64encode(hal9__buf.read()).decode('UTF-8')
   `;
 
-  if (!output.incldues('plot')) {
+  if (!output.includes('plot')) {
     plotimportcode = plotexportcode = '';
   }
 
