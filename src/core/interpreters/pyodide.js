@@ -60,8 +60,6 @@ export default function(script, header, context) {
   const interpreted =  `
     ${debugcode}
 
-    ${plotimportcode}
-
     if (!self.pyodide) {
       self.pyodide = await loadPyodide({ indexURL : "https://cdn.jsdelivr.net/pyodide/v0.19.0/full/" });
     }
@@ -71,11 +69,9 @@ export default function(script, header, context) {
     ${paramscode}
     ${importcode}
 
-    await self.pyodide.runPythonAsync(\`${pyconvertcode}\n ${script}\`)
+    await self.pyodide.runPythonAsync(\`${plotimportcode}\n ${pyconvertcode}\n ${script}\n ${plotexportcode}\`)
 
     ${outputcode}
-
-    ${plotexportcode}
   `;
 
   header.deps = [
