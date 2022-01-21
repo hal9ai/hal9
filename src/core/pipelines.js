@@ -399,7 +399,7 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
   const step = stepFromId(pipeline, sid);
   var result = {};
 
-  var globals = getGlobals(pipeline);
+  var globals = getGlobalsInt(pipeline);
   var state = getState(pipelineid, step.id);
   var callbacks = getCallbacks(pipelineid, step.id);
   var details = {};
@@ -1087,8 +1087,13 @@ export const setGlobal = (pipelineid /*: pipelineid */, name /*: string */, data
   pipeline.globals[name] = data;
 }
 
-export const getGlobals = (pipeline /*: pipeline */) => /*: Object */ {
+const getGlobalsInt = (pipeline /*: pipeline */) => /*: Object */ {
   return pipeline.globals;
+}
+
+export const getGlobals = (pipelineid /*: pipelineid */) => /*: Object */ {
+  var pipeline = store.get(pipelineid);
+  return getGlobalsInt(pipeline);
 }
 
 export const getGlobalNames = (pipelineid /* pipelineid */) => /*: Array<string> */ {
