@@ -1,6 +1,8 @@
 import { debuggerIf } from '../utils/debug'
 
 export default function(script, header, context) {
+
+  const params = header.params ? header.params.map(e => e.name) : [];
   const input = header.input ? header.input : [];
   const output = header.output ? header.output : [ 'data' ];
 
@@ -23,6 +25,7 @@ export default function(script, header, context) {
   }`;
 
   const inputcode = input.map(e => "self.pyodide.globals.set('" + e + "', await convertToPy(" + e + "));").join('\n');
+  const paramscode = params.map(e => "self.pyodide.globals.set('" + e + "', " + e + ");").join('\n');
   const importcode = header.deps && header.deps.length > 0 ? ("await self.pyodide.loadPackage([ " + header.deps.map(e => "'" + e + "'").join(', ') + " ]);\n") : '';
 
   const outputcode = output.map(e => e + " = self.pyodide.globals.get('" + e + "')").join('\n');
@@ -40,6 +43,7 @@ export default function(script, header, context) {
 
     ${jsconvertcode}
     ${inputcode}
+    ${paramscode}
     ${importcode}
 
     await self.pyodide.runPythonAsync(\`${pyconvertcode}\n ${script}\`)
