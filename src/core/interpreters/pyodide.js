@@ -8,19 +8,15 @@ export default function(script, header, context) {
 
   const debugcode = debuggerIf('interpret');
 
-  var plotimportcode = `
-  import io as hal9__io
-  import base64 as hal9__base64
-  import matplotlib.pyplot as hal9__plt
-  hal9__fig, hal9__ax = hal9__plt.subplots()
-  `;
+  var plotimportcode = `import io as hal9__io
+import base64 as hal9__base64
+import matplotlib.pyplot as hal9__plt
+hal9__fig, hal9__ax = hal9__plt.subplots()`;
 
-  var plotexportcode = `
-  hal9__buf = hal9__io.BytesIO()
-  hal9__fig.savefig(hal9__buf, format='png')
-  hal9__buf.seek(0)
-  plot = 'data:image/png;base64,' + hal9__base64.b64encode(hal9__buf.read()).decode('UTF-8')
-  `;
+  var plotexportcode = `hal9__buf = hal9__io.BytesIO()
+hal9__fig.savefig(hal9__buf, format='png')
+hal9__buf.seek(0)
+plot = 'data:image/png;base64,' + hal9__base64.b64encode(hal9__buf.read()).decode('UTF-8')`;
 
   if (!output.includes('plot')) {
     plotimportcode = plotexportcode = '';
@@ -69,7 +65,7 @@ export default function(script, header, context) {
     ${paramscode}
     ${importcode}
 
-    await self.pyodide.runPythonAsync(\`${plotimportcode}\n ${pyconvertcode}\n ${script}\n ${plotexportcode}\`)
+    await self.pyodide.runPythonAsync(\`${plotimportcode}\n${pyconvertcode}\n${script}\n${plotexportcode}\`)
 
     ${outputcode}
   `;
