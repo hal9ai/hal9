@@ -6,10 +6,11 @@
         label: Website URL
         value:
           - control: textbox
+            lazy: true
             value: https://hal9ai.github.io/hal9ai/examples/website.html
 **/
 
-data = JSON.parse(JSON.stringify(data));
+data = typeof(data) != 'undefined' ? JSON.parse(JSON.stringify(data)) : null;
 
 const iframe = document.createElement('iframe');
 
