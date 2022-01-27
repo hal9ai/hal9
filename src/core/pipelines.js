@@ -1162,3 +1162,8 @@ export const abort = async(pipelineid /*: pipelineid */) /*: void */ => {
   var pipeline = store.get(pipelineid);
   pipeline.aborted = true;
 }
+
+export const isAborted = async(pipelineid /*: pipelineid */) /*: boolean */ => {
+  var pipeline = store.get(pipelineid);
+  return pipeline.aborted === true;
+}

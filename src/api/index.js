@@ -189,6 +189,10 @@ async function pipelinesAbort(pipelineid) {
   return await api.pipelinesAbort(pipelineid);
 }
 
+async function pipelinesIsAborted(pipelineid) {
+  return await api.pipelinesIsAborted(pipelineid);
+}
+
 export default {
   init: init,
   create: create,
@@ -261,6 +265,7 @@ export default {
     updateMetadata: pipelinesUpdateMetadata,
     getMetadata: pipelinesGetMetadata,
     abort: pipelinesAbort,
+    isAborted: pipelinesIsAborted,
   },
 };
 

@@ -51,6 +51,9 @@ export const create = (pipelineid, sid, context) => {
       if (context.invalidateSteps) {
         context.invalidateSteps();
       }
+    },
+    isAborted: async function() {
+      return pipelines.isAborted(pipelineid);
     }
   }
 }

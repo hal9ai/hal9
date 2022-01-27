@@ -259,3 +259,7 @@ export async function pipelinesGetMetadata(pipelineid) {
 export async function pipelinesAbort(pipelineid) {
   return await pipelines.abort(pipelineid);
 }
+
+export async function pipelinesIsAborted(pipelineid) {
+  return await pipelines.isAborted(pipelineid);
+}

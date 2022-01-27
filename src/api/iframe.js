@@ -458,3 +458,8 @@ export async function pipelinesAbort(pipelineid) {
   })
 }
 
+export async function pipelinesIsAborted(pipelineid) {
+  return await post("hal9.pipelines.isAborted(params.pipelineid)", {
+    pipelineid: pipelineid,
+  })
+}

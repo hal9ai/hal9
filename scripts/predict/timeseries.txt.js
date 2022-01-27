@@ -97,10 +97,19 @@ if(prediction) {
   await model.fit(xs, ys, {
     epochs: parseInt(epochs),
     batchSize: window,
-    callbacks: async (epoch, log) => {
-      console.log('Accuracy', logs.acc);
-    },
+    callbacks: {
+      onBatchEnd: async (batch, logs) => {
+        console.log('Accuracy', logs.acc);
+        if (hal9.isAborted && await hal9.isAborted())
+          model.stopTraining = true; 
+      },
+      onEpochEnd: async (epoch, logs) => {
+      }
+    }
   });
+
+  if (hal9.isAborted && await hal9.isAborted())
+    throw "Training stopped"
 
   const xp = tf.tensor(x_predict).reshape([-1, window, 1])
 
