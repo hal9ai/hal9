@@ -30,7 +30,7 @@ Here is a quick example that showcases a data pipeline to read a CSV and plot a 
 </html>
 ```
 
-![](examples/csvplot.png)
+![](docs/examples/csvplot.png)
 
 Please [join our **Slack** group](https://join.slack.com/t/hal9workspace/shared_invite/zt-xuowx9dw-r3Nr6UuVkSbHVaDS0HhUHA) to help you get started.
 
