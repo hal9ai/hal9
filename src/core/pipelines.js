@@ -97,6 +97,9 @@ import rtxt from '../../scripts/languages/r.txt';
 import reacttxt from '../../scripts/frameworks/react.txt';
 import vuetxt from '../../scripts/frameworks/vue.txt';
 
+// control scripts
+import websitectrltxt from '../../scripts/controls/website.txt.js';
+
 import * as snippets from './snippets';
 import * as operations from './utils/operations';
 import * as dataframe from './utils/dataframe';
@@ -233,6 +236,9 @@ const scripts = {
   // frameworks
   react: { script: reacttxt, language: 'html' },
   vue: { script: vuetxt, language: 'html' },
+
+  // controls
+  website: { script: websitectrltxt, language: 'javascript' }
 }
 
 var pipelinesStateCount = 0;
@@ -396,6 +402,9 @@ const stepGetDefinition = (pipeline, step) => {
 
 export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, context /* context */, partial) /*: boolean */ => {
   var pipeline = store.get(pipelineid);
+
+  if (pipeline.aborted) throw 'Pipeline stopped before finishing'
+
   const step = stepFromId(pipeline, sid);
   var result = {};
 
@@ -678,6 +687,8 @@ export const run = async (pipelineid /*: pipeline */, context /* context */, par
   debugIf('run');
 
   var pipeline = store.get(pipelineid);
+  pipeline.aborted = undefined;
+
   if (!pipeline || pipeline.length == 0) return;
 
   await fetchScripts(pipeline.steps);
@@ -1145,4 +1156,9 @@ export const updateMetadata = (pipelineid /*: pipelineid */, metadata /*: object
 export const getMetadata = (pipelineid /*: pipelineid */) /*: object */ => {
   var pipeline = store.get(pipelineid);
   return clone(pipeline.metadata);
+}
+
+export const abort = async(pipelineid /*: pipelineid */) /*: void */ => {
+  var pipeline = store.get(pipelineid);
+  pipeline.aborted = true;
 }

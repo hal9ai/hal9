@@ -443,3 +443,18 @@ export async function pipelinesGetMetadata(pipelineid) {
     pipelineid: pipelineid,
   })
 }
+
+export async function remoteInput() {
+  throw 'This API should only be used from third party sites';
+}
+
+export async function remoteOutput(result) {
+  return 'This API should only be used from third party sites';
+}
+
+export async function pipelinesAbort(pipelineid) {
+  return await post("hal9.pipelines.abort(params.pipelineid)", {
+    pipelineid: pipelineid,
+  })
+}
+

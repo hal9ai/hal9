@@ -255,3 +255,7 @@ export async function pipelinesUpdateMetadata(pipelineid, metadata) {
 export async function pipelinesGetMetadata(pipelineid) {
   return await pipelines.getMetadata(pipelineid);
 }
+
+export async function pipelinesAbort(pipelineid) {
+  return await pipelines.abort(pipelineid);
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../dist/hal9.js"></script> 
+  </head>
+  <body>
+    <div id="input" style="margin: auto; width: 800px; height: 400px;"></div>
+    <script>
+      (async () => {
+        const input = await hal9.remote.input({ wait: true });
+
+        document.getElementById('input').innerText = JSON.stringify(input);
+
+        input.data = [ { result: 'Hello from site' } ];
+
+        hal9.remote.output(input);
+      })();
+    </script>
+  </body>
+</html>

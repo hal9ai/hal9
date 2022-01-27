@@ -4,6 +4,7 @@ import * as datasets from '../core/datasets';
 import LocalExecutor from '../core/executors/local';
 import * as pipelines from '../core/pipelines';
 import * as iframe from './iframe';
+import * as remote from '../remote/remote.js';
 
 import clone from '../core/utils/clone';
 import functions from '../core/utils/functions';
@@ -184,6 +185,10 @@ async function pipelinesGetMetadata(pipelineid) {
   return await api.pipelinesGetMetadata(pipelineid);
 }
 
+async function pipelinesAbort(pipelineid) {
+  return await api.pipelinesAbort(pipelineid);
+}
+
 export default {
   init: init,
   create: create,
@@ -191,6 +196,11 @@ export default {
   load: load,
   fetch: fetchPipeline,
   run: run,
+
+  remote: {
+    input: remote.remoteInput,
+    output: remote.remoteOutput,
+  },
 
   environment: {
     isElectron: environment.isElectron,
@@ -250,6 +260,7 @@ export default {
     getHtmlRemote: pipelinesGetHtmlRemote,
     updateMetadata: pipelinesUpdateMetadata,
     getMetadata: pipelinesGetMetadata,
+    abort: pipelinesAbort,
   },
 };
 
