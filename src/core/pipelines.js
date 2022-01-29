@@ -42,6 +42,7 @@ import summarizetxt from '../../scripts/transforms/summarize.txt.js';
 
 // chart scripts
 import barcharttxt from '../../scripts/charts/barchart.txt.js';
+import boxplotcharttxt from '../../scripts/charts/boxplotchart.txt.js';
 import errorbarcharttxt from '../../scripts/charts/errorbarchart.txt.js';
 import heatmapcharttxt from '../../scripts/charts/heatmapchart.txt.js';
 import histogramcharttxt from '../../scripts/charts/histogramchart.txt.js';
@@ -59,7 +60,6 @@ import networktxt from '../../scripts/visualizations/network.txt.js';
 import threejstxt from '../../scripts/visualizations/three.txt.js';
 import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
 import simpletabletxt from '../../scripts/visualizations/simpletable.txt';
-import boxplottxt from '../../scripts/visualizations/boxplot.txt.js'
 
 // prediction scripts
 import bodypixtxt from '../../scripts/predict/bodypix.txt.js';
@@ -68,7 +68,9 @@ import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
 import regressionpredicttxt from '../../scripts/predict/regression.txt.js';
 import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
 import timeseriespredicttxt from '../../scripts/predict/timeseries.txt.js';
-import shapirotxt from '../../scripts/statTests/shapiro.txt'
+
+// statTest scripts
+import shapirotxt from '../../scripts/statTests/shapiro.txt.js';
 
 // util scripts
 import copytxt from '../../scripts/utils/copy.txt.js';
@@ -182,6 +184,7 @@ const scripts = {
 
   // charts
   barchart: { script: barcharttxt, language: 'javascript' },
+  boxplotchart: { script: boxplotcharttxt, language: 'pyodide' },
   errorbarchart: { script: errorbarcharttxt, language: 'javascript' },
   heatmapchart: { script: heatmapcharttxt, language: 'javascript' },
   histogramchart: { script: histogramcharttxt, language: 'javascript' },
@@ -208,7 +211,8 @@ const scripts = {
   sentiment: { script: sentimenttxt, language: 'javascript' },
   timeseriespredict: { script: timeseriespredicttxt, language: 'javascript' },
 
-  // train
+  // statTests
+  shapiro: { script: shapirotxt, language: 'pyodide' },
 
   // utils
   copy: { script: copytxt, language: 'javascript' },
