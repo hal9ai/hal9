@@ -79,6 +79,7 @@ import citytomaptxt from '../../scripts/utils/citytomap.txt';
 
 // export scripts
 import exportcsvtxt from '../../scripts/export/csv.txt.js';
+import exporttexttxt from '../../scripts/export/text.txt.js';
 
 // service scripts
 import airbnbtxt from '../../scripts/services/airbnb.txt.js';
@@ -164,7 +165,6 @@ const scripts = {
   derive: { script: derivetxt, language: 'javascript' },
   drop: { script: droptxt, language: 'javascript' },
   explode: { script: explodetxt, language: 'javascript' },
-  fetch: { script: fetchtxt, language: 'javascript' },
   filter: { script: filtertxt, language: 'javascript' },
   fold: { script: foldtxt, language: 'javascript' },
   impute: { script: imputetxt, language: 'javascript' },
@@ -214,11 +214,13 @@ const scripts = {
   copy: { script: copytxt, language: 'javascript' },
   paste: { script: pastetxt, language: 'javascript' },
   tojson: { script: tojsontxt, language: 'javascript' },
+  fetch: { script: fetchtxt, language: 'javascript' },
   ziptomap: { script: ziptomaptxt, language: 'javascript' },
   citytomap: { script: citytomaptxt, language: 'javascript' },
 
   // export
   exportcsv: { script: exportcsvtxt, language: 'javascript' },
+  exporttext: { script: exporttexttxt, language: 'javascript' },
 
   // services
   airbnb: { script: airbnbtxt, language: 'javascript' },
