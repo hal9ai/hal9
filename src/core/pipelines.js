@@ -59,6 +59,7 @@ import networktxt from '../../scripts/visualizations/network.txt.js';
 import threejstxt from '../../scripts/visualizations/three.txt.js';
 import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
 import simpletabletxt from '../../scripts/visualizations/simpletable.txt';
+import boxplottxt from '../../scripts/visualizations/boxplot.txt.js'
 
 // prediction scripts
 import bodypixtxt from '../../scripts/predict/bodypix.txt.js';
@@ -67,6 +68,7 @@ import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
 import regressionpredicttxt from '../../scripts/predict/regression.txt.js';
 import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
 import timeseriespredicttxt from '../../scripts/predict/timeseries.txt.js';
+import shapirotxt from '../../scripts/statTests/shapiro.txt'
 
 // util scripts
 import copytxt from '../../scripts/utils/copy.txt.js';
