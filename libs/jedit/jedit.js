@@ -234,7 +234,8 @@ function buildString(parentEl, json, max) {
 
 function buildRootString(parentEl, json, max) {
   var divKeyEl = createElem(parentEl, 'div', 'jedit-contained jedit-string');
-  divKeyEl.style.minHeight = '100%';
+  divKeyEl.style.minHeight = divKeyEl.style.maxHeight = divKeyEl.style.height = '100%';
+  divKeyEl.style.whiteSpace = 'normal';
   divKeyEl.style.overflowY = 'auto';
   divKeyEl.innerText = json;
 }
