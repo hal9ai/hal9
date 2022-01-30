@@ -1,10 +1,11 @@
 ##
-##  input: [ data ]
-##  output: [ data ]
-##  params:
-##    - group
-##    - target
-##  deps: [ 'numpy', 'pandas', 'scipy' ]
+## input: [ data ]
+## output: [ data ]
+## params:
+##   - group
+##   - target
+## deps: [ 'numpy', 'pandas', 'scipy' ]
+## cache: true
 ##
 
 import numpy as np

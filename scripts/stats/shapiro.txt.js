@@ -9,6 +9,7 @@
 ##      - control: textbox
 ##        value: 0.05
 ## output: ['testresult']
+## cache: true
 ##
 
 import numpy as np
