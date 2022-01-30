@@ -70,7 +70,7 @@ import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
 import timeseriespredicttxt from '../../scripts/predict/timeseries.txt.js';
 
 // statTest scripts
-import shapirotxt from '../../scripts/statTests/shapiro.txt.js';
+import shapirotxt from '../../scripts/stats/shapiro.txt.js';
 
 // util scripts
 import copytxt from '../../scripts/utils/copy.txt.js';
@@ -211,7 +211,7 @@ const scripts = {
   sentiment: { script: sentimenttxt, language: 'javascript' },
   timeseriespredict: { script: timeseriespredicttxt, language: 'javascript' },
 
-  // statTests
+  // stats
   shapiro: { script: shapirotxt, language: 'pyodide' },
 
   // utils
