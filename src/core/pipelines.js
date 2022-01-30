@@ -69,8 +69,9 @@ import regressionpredicttxt from '../../scripts/predict/regression.txt.js';
 import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
 import timeseriespredicttxt from '../../scripts/predict/timeseries.txt.js';
 
-// statTest scripts
+// stats scripts
 import shapirotxt from '../../scripts/stats/shapiro.txt.js';
+import abtesttxt from '../../scripts/stats/abtest.txt.js';
 
 // util scripts
 import copytxt from '../../scripts/utils/copy.txt.js';
@@ -213,6 +214,7 @@ const scripts = {
 
   // stats
   shapiro: { script: shapirotxt, language: 'pyodide' },
+  abtest: { script: abtesttxt, language: 'pyodide' },
 
   // utils
   copy: { script: copytxt, language: 'javascript' },
