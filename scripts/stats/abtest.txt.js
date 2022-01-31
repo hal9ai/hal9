@@ -1,6 +1,6 @@
 ##
 ## input: [ data ]
-## output: [ data ]
+## output: [ 'testresult' ]
 ## params:
 ##   - group
 ##   - target
@@ -74,6 +74,5 @@ def AB_Test(dataframe, group, target):
 
     return temp
 
-data = AB_Test(dataframe=data, group = group, target = target)
-data.to_json(orient = 'records')
+testresult = AB_Test(dataframe=data, group = group, target = target)
 
