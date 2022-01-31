@@ -1,12 +1,16 @@
 import { debuggerIf } from '../utils/debug'
 
-export default function(html) {
+export default function(html, header, context) {
   const debugcode = debuggerIf('interpret');
+
+  const output = header.output ? header.output : [ 'data' ];
+  const outputdict = output.filter(e => e != 'html').map((e) => e + ': ' + e).join(', ');
 
   var script = debugcode + '\nif (html) html.innerHTML = `' + html.replace(/`/g, '\\`').replace(/\${/g, '\\${') + '`;\n\n';
 
   script +=  `
     const scripts = [...html.getElementsByTagName('script')];
+    var result = null;
 
     var hasUnknownType = false;
     for (var idx in scripts) {
@@ -52,11 +56,18 @@ export default function(html) {
       else if (!script.type || script.type == 'text/javascript' || script.type == 'text/jsx' || script.type == 'text/jsx' || script.type == 'text/babel') {
         var code = script.innerHTML;
 
+        if (!script.type || script.type == 'text/javascript') {
+          code = code + "\\n" +
+            "return { ${outputdict} };"
+        }
+
         if (script.type == 'text/jsx' || script.type == 'text/babel')
           code = Babel.transform(code, { presets: ['env', 'react'] }).code;
 
         const fn = new Function(Object.keys(_hal9_params), code);
-        fn(...Object.values(_hal9_params));
+
+        if (!result)
+          result = await fn(...Object.values(_hal9_params));
       }
       else {
         hasUnknownType = true;
@@ -66,6 +77,8 @@ export default function(html) {
     if (hasUnknownType) {
       window.dispatchEvent(new Event('DOMContentLoaded'));
     }
+
+    return result;
   `;
 
   return {
