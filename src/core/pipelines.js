@@ -37,7 +37,6 @@ import sampletxt from '../../scripts/transforms/sample.txt.js';
 import selecttxt from '../../scripts/transforms/select.txt.js';
 import slicetxt from '../../scripts/transforms/slice.txt.js';
 import sorttxt from '../../scripts/transforms/sort.txt.js';
-import sqltxt from '../../scripts/transforms/sql.txt.js';
 import subsprevtxt from '../../scripts/transforms/subsprev.txt.js';
 import summarizetxt from '../../scripts/transforms/summarize.txt.js';
 
@@ -181,7 +180,6 @@ const scripts = {
   select: { script: selecttxt, language: 'javascript' },
   slice: { script: slicetxt, language: 'javascript' },
   sort: { script: sorttxt, language: 'javascript' },
-  sql: { script: sqltxt, language: 'javascript' },
   subsprev: { script: subsprevtxt, language: 'javascript' },
   summarize: { script: summarizetxt, language: 'javascript' },
 
