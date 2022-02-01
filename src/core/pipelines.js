@@ -11,6 +11,7 @@ import mysqltxt from '../../scripts/import/mysql.txt.js';
 import stockstxt from '../../scripts/import/stocks.txt.js';
 import videoframestxt from '../../scripts/import/videoframes.txt.js';
 import webcamtxt from '../../scripts/import/webcam.txt.js';
+import sqlitetxt from '../../scripts/import/sqlite.txt.js';
 
 // webscraping scripts
 import webimagestxt from '../../scripts/import/webimages.txt.js';
@@ -155,6 +156,7 @@ const scripts = {
   stocks: { script: stockstxt, language: 'javascript' },
   videoframes: { script: videoframestxt, language: 'javascript' },
   webcam: { script: webcamtxt, language: 'javascript' },
+  sqlite: { script: sqlitetxt, language: 'javascript' },
 
   // webscraping
   webimages: { script: webimagestxt, language: 'javascript' },
