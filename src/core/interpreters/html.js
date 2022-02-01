@@ -78,7 +78,7 @@ export default function(html, header, context) {
       window.dispatchEvent(new Event('DOMContentLoaded'));
     }
 
-    return result;
+    return result ? result : {};
   `;
 
   return {
