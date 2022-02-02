@@ -60,7 +60,7 @@ const pyodideTest = (e) => e && e.type === 'DataFrame';
 
 const pyodideColumns = (e) => e.columns.values.tolist().toJs();
 
-const pyodideClone = defaultClone;
+const pyodideClone = (e) => JSON.parse(e.to_json(undefined, 'records'));
 
 const pyodideSerialize = (e) => e;
 
