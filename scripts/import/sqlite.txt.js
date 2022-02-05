@@ -45,4 +45,18 @@ const config = {
 const SQL = await initSqlJs(config);
 const db = new SQL.Database(new Uint8Array(sqlBuffer));
 
-data = db.exec(query);
+let sqldata = db.exec(query);
+
+let columnHeaders = sqldata[0].columns;
+let rows = sqldata[0].values;
+
+let jsonArray = [];
+for (let rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+  let obj = {};
+  for (let columnIndex = 0; columnIndex < rows[rowIndex].length; columnIndex++) {
+    obj[columnHeaders[columnIndex]] = rows[rowIndex][columnIndex];
+  }
+  jsonArray.push(obj);
+}
+
+data = aq.from(jsonArray);

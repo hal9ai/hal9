@@ -76,9 +76,9 @@ import abtesttxt from '../../scripts/stats/abtest.txt.js';
 // util scripts
 import copytxt from '../../scripts/utils/copy.txt.js';
 import pastetxt from '../../scripts/utils/paste.txt.js';
-import tojsontxt from '../../scripts/utils/tojson.txt';
-import ziptomaptxt from '../../scripts/utils/ziptomap.txt';
-import citytomaptxt from '../../scripts/utils/citytomap.txt';
+import tojsontxt from '../../scripts/utils/tojson.txt.js';
+import ziptomaptxt from '../../scripts/utils/ziptomap.txt.js';
+import citytomaptxt from '../../scripts/utils/citytomap.txt.js';
 
 // export scripts
 import exportcsvtxt from '../../scripts/export/csv.txt.js';
@@ -87,6 +87,7 @@ import exporttexttxt from '../../scripts/export/text.txt.js';
 // service scripts
 import airbnbtxt from '../../scripts/services/airbnb.txt.js';
 import bigquerytxt from '../../scripts/services/bigquery.txt.js';
+import datagrabiotxt from '../../scripts/services/datagrabio.txt';
 import googlesheetstxt from '../../scripts/services/googlesheets.txt.js';
 import reddittxt from '../../scripts/services/reddit.txt.js';
 import twittertxt from '../../scripts/services/twitter.txt.js';
@@ -231,6 +232,7 @@ const scripts = {
   // services
   airbnb: { script: airbnbtxt, language: 'javascript' },
   bigquery: { script: bigquerytxt, language: 'javascript' },
+  datagrabio: { script: datagrabiotxt, language: 'html' },
   googlesheets: { script: googlesheetstxt, language: 'javascript' },
   reddit: { script: reddittxt, language: 'javascript' },
   twitter: { script: twittertxt, language: 'javascript' },
