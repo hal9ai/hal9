@@ -6,16 +6,15 @@
   <p>
     This block uses <a href="https://chrome.google.com/webstore/detail/datagrab/kfonioidcoibmccipgaihpkjiakcadkh?source=hal9"
                         target="_blank">datagrab.io</a>
-    to scrape arbitrary data from web pages. So first, install the Chrome extension if you don't already have it:
+    to scrape arbitrary data from web pages. Therefore, first install the Chrome extension if you don't already have it:
   </p>
-  <button v-on:click="extensionWindow" class="btn btn-warning">Install DataGrab extension</button>
+  <button v-on:click="extensionWindow" class="btn btn-warning" style="width:190px">Install Extension</button>
 
   <h2>Step 2</h2>
-  <img src="https://drive.google.com/uc?export=view&id=1mKaZxtxJ4wZyKb66hy6yoXIkXTUiuvdi">
-  <p>Use the DataGrab Chrome extension to export results as CSV or JSON, and then import them here:</p>
-  <label class="btn btn-warning" style="width:200px">
-    Click to upload file
-    <input style="opacity:0" type="file" @change="onFileChange">
+  <p>Use the Chrome extension to export results as CSV or JSON, and then import them here:</p>
+  <label class="btn btn-warning" style="width:190px">
+    Import File
+    <input style="opacity:0; max-height: 0" type="file" @change="onFileChange">
   </label>
 </div>
 
