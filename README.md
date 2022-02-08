@@ -1,7 +1,7 @@
 
 # Hal9
 
-[<img src="https://img.shields.io/badge/slack-@hal9ai/hal9ai-yellow.svg?logo=slack">](https://join.slack.com/t/hal9workspace/shared_invite/zt-xuowx9dw-r3Nr6UuVkSbHVaDS0HhUHA) 
+[<img src="https://img.shields.io/discord/939331860092301312">](https://discord.gg/jP8W48EVa3) 
 
 Hal9 provides a platform to develop Artificial Intelligence solutions with web technologies. This repo contains the open source components that power [hal9.ai](https://hal9.ai) which consist of:
 
@@ -32,7 +32,7 @@ Here is a quick example that showcases a data pipeline to read a CSV and plot a 
 
 ![](docs/examples/csvplot.png)
 
-Please [join our **Slack** group](https://join.slack.com/t/hal9workspace/shared_invite/zt-xuowx9dw-r3Nr6UuVkSbHVaDS0HhUHA) to help you get started.
+Please [join **Hal9's Discord** server](https://discord.gg/jP8W48EVa3) to help you get started.
 
 Feel free to use our development environment [devel.hal9.ai](https://devel.hal9.ai); however, this environment produces daily builds and is not recommended for production use..
 
