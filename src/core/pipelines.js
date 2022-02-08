@@ -107,6 +107,9 @@ import vuetxt from '../../scripts/frameworks/vue.txt';
 // control scripts
 import websitectrltxt from '../../scripts/controls/website.txt.js';
 
+// business scripts
+import churntxt from '../../scripts/business/churn.txt.js';
+
 import * as snippets from './snippets';
 import * as operations from './utils/operations';
 import * as dataframe from './utils/dataframe';
@@ -250,7 +253,10 @@ const scripts = {
   vue: { script: vuetxt, language: 'html' },
 
   // controls
-  website: { script: websitectrltxt, language: 'javascript' }
+  website: { script: websitectrltxt, language: 'javascript' },
+
+  // controls
+  churn: { script: churntxt, language: 'pyodide' },
 }
 
 var pipelinesStateCount = 0;
