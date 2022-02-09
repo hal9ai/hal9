@@ -10,7 +10,9 @@ export const executorFromMetadata = (metadata, inputs, step, context, script, pa
     metadata.environment = isElectron() ? undefined : 'worker';
   }
 
-  if (metadata.cache) {
+  const hasOutput = metadata.output && metadata.output.includes('html');
+
+  if (metadata.cache && !hasOutput) {
     return new CachedExecutor(metadata, inputs, step, context, script, params, deps, state, language, callbacks, pipelinename);
   }
   else if (metadata.environment === 'worker') {

@@ -75,7 +75,8 @@ export const parseHeader = (code /*: string */) /*: header */ => {
     environment: parsed.environment ? parsed.environment : null,
     cache: parsed.cache === true,
     invalid: invalid,
-    output: parsed.output ? parsed.output : [ 'data' ]
+    output: parsed.output ? parsed.output : [ 'data' ],
+    visible: parsed.visible,
   });
 }
 

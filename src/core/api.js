@@ -54,6 +54,9 @@ export const create = (pipelineid, sid, context) => {
     },
     isAborted: async function() {
       return pipelines.isAborted(pipelineid);
+    },
+    isDocument: function() {
+      return context.stopid === null || context.stopid === undefined;
     }
   }
 }

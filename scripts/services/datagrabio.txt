@@ -16,6 +16,9 @@
     Import File
     <input style="opacity:0; max-height: 0" type="file" @change="onFileChange">
   </label>
+  <p v-if="hasData" style="margin-top: 10px">
+    Your data was imported.
+  </p>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js"></script>
@@ -24,46 +27,54 @@
 <script>
   /**
     output: [ data, html ]
+    cache: true
+    visible: false
   **/
 
   var state = hal9.getState();
   state = state ? state : {};
   data = state && state.data ? state.data : [];
 
-  (async () => {
+  if (!hal9.isDocument()) {
+    (async () => {
 
-    var app = new Vue({
-      el: html.querySelector('.DataGrabio'),
-      data: {
-      },
-      methods: {
-        extensionWindow: function (event) {
-          popup = window.open('https://chrome.google.com/webstore/detail/datagrab/kfonioidcoibmccipgaihpkjiakcadkh?source=hal9,', 'micpopup', 'height=400px, width=500px');
+      var app = new Vue({
+        el: html.querySelector('.DataGrabio'),
+        data: {
+          hasData: !!data
         },
-        onFileChange(e) {
-          let files = e.target.files || e.dataTransfer.files;
-          if (!(files.length)) {
-            return;
-          }
-          let file = files[0];
-          let reader = new FileReader();
-          reader.onload = function () {
-            let dataAsString = reader.result;
-            if (file.name.endsWith('.json')) {
-              jsonData = JSON.parse(dataAsString);
-              state.data = aq.from(jsonData);
-              hal9.setState(state);
+        methods: {
+          extensionWindow: function (event) {
+            popup = window.open('https://chrome.google.com/webstore/detail/datagrab/kfonioidcoibmccipgaihpkjiakcadkh?source=hal9,', 'micpopup', 'height=400px, width=500px');
+          },
+          onFileChange(e) {
+            let files = e.target.files || e.dataTransfer.files;
+            if (!(files.length)) {
+              return;
             }
-            else if (file.name.endsWith('.csv')) {
-              state.data = aq.fromCSV(dataAsString);
-              hal9.setState(state);
+            let file = files[0];
+            let reader = new FileReader();
+            reader.onload = function () {
+              let dataAsString = reader.result;
+              if (file.name.endsWith('.json')) {
+                jsonData = JSON.parse(dataAsString);
+                state.data = aq.from(jsonData);
+                hal9.setState(state);
+              }
+              else if (file.name.endsWith('.csv')) {
+                state.data = aq.fromCSV(dataAsString);
+                hal9.setState(state);
+              }
+              hal9.invalidate();
             }
-            hal9.invalidate();
-          }
-          reader.readAsText(file);
-        },
-      }
-    });
+            reader.readAsText(file);
+          },
+        }
+      });
+    }
+    )();
   }
-  )();
+  else {
+    html.querySelector('.DataGrabio').innerHTML = ''
+  }
 </script>

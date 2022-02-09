@@ -1071,6 +1071,13 @@ export const load = (pipeline /*: pipeline */) /*: pipelineid */ => {
             }
           });
         }
+        else if (name === 'api') {
+          Object.keys(stepState['api']).forEach(apiname => {
+            if (dataframe.isSerialized(stepState['api'][apiname])) {
+              stepState['api'][apiname] = dataframe.deserialiaze(stepState['api'][apiname]);
+            }
+          });
+        }
         else {
           if (dataframe.isSerialized(stepState[name])) {
             stepState[name] = dataframe.deserialiaze(stepState[name]);
