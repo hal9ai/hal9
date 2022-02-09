@@ -52,7 +52,7 @@ const chartdata = x && y
  ? data.map(v => ({
      x: hal9.utils.convert(v[x]),
      y: hal9.utils.convert(v[y]),
-     color: hal9.utils.convert(v[color]),
+     color: v[color] + '',
      size: hal9.utils.convert(v[size]),
      label: v[label] ? (v[label].substring(0, 10) + (v[label].length > 10 ? '...' : '')) : '',
    }))
