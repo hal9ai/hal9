@@ -14,7 +14,8 @@
           fileExt: '.mp4'
   output: [ data, html ]
   deps: [ 'https://cdn.jsdelivr.net/npm/arquero@latest' ]
-  cache: session
+  cache: true
+  state: session
 **/
 
 data = data ? data : [];
