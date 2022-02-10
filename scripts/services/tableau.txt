@@ -40,7 +40,7 @@
       var app = new Vue({
         el: html.querySelector('.tableau'),
         data: {
-          hasData: false
+          hasData: data.length == 0
         },
         methods: {
           onFileChange(e) {
@@ -56,7 +56,6 @@
                 state.data = aq.fromCSV(dataAsString);
                 hal9.setState(state);
               }
-              app.hasData = true;
               hal9.invalidate();
             }
             reader.readAsText(file);
