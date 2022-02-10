@@ -33,6 +33,10 @@
 
 data = await hal9.utils.toRows(data);
 
+if (data.length > 10000) {
+  throw(`Up to 10,000 data points are supported for this visualization, but ${data.length} were provided.`);
+}
+
 if (y && !Array.isArray(y)) y = [y];
 if (!y) y = [];
 

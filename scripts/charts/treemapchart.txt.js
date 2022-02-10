@@ -47,6 +47,10 @@
 
 data = await hal9.utils.toRows(data);
 
+if (data.length > 10000) {
+  throw(`Up to 10,000 data points are supported for this visualization, but ${data.length} were provided.`);
+}
+
 const groupBy = (values, key) =>
   values.reduce((res, v) => {
     res[v[key]] = res[v[key]] || [];

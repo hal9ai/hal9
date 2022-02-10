@@ -50,6 +50,10 @@
 
 data = await hal9.utils.toRows(data);
 
+if (data.length > 10000) {
+  throw(`Up to 10,000 data points are supported for this visualization, but ${data.length} were provided.`);
+}
+
 // calculate counts to get mean value between duplicates
 const countsdata = x && y && value
   ? data.reduce((res, v) => {

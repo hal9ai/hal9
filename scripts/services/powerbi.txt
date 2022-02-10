@@ -1,17 +1,16 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
       integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<div class="DataGrabio" style="display: flex;">
-<div id="extensionbtn">
+<div class="powerBI" style="display: flex;">
+<div>
   <h2>Step 1</h2>
   <p>
-    This block uses <a href="https://chrome.google.com/webstore/detail/datagrab/kfonioidcoibmccipgaihpkjiakcadkh?source=hal9"
-                        target="_blank">datagrab.io</a>
-    to scrape arbitrary data from web pages. Therefore, first install the Chrome extension if you don't already have it:
+    Export your data from <a href="https://app.powerbi.com/home" target="_blank">Power BI</a> as a CSV file.
   </p>
-  <button v-on:click="extensionWindow" class="btn btn-warning" style="width:190px">Install Extension</button>
 
   <h2>Step 2</h2>
-  <p>Use the Chrome extension to export results as CSV or JSON, and then import them here:</p>
+  <p>
+    Import your CSV file from PowerBI here:
+  </p>
   <label class="btn btn-warning" style="width:190px">
     Import File
     <input style="opacity:0; max-height: 0" type="file" @change="onFileChange">
@@ -28,7 +27,6 @@
   /**
     output: [ data, html ]
     cache: true
-    visible: false
   **/
 
   var state = hal9.getState();
@@ -39,14 +37,11 @@
     (async () => {
 
       var app = new Vue({
-        el: html.querySelector('.DataGrabio'),
+        el: html.querySelector('.powerBI'),
         data: {
           hasData: false
         },
         methods: {
-          extensionWindow: function (event) {
-            popup = window.open('https://chrome.google.com/webstore/detail/datagrab/kfonioidcoibmccipgaihpkjiakcadkh?source=hal9,', 'micpopup', 'height=400px, width=500px');
-          },
           onFileChange(e) {
             let files = e.target.files || e.dataTransfer.files;
             if (!(files.length)) {
@@ -56,12 +51,7 @@
             let reader = new FileReader();
             reader.onload = function () {
               let dataAsString = reader.result;
-              if (file.name.endsWith('.json')) {
-                jsonData = JSON.parse(dataAsString);
-                state.data = aq.from(jsonData);
-                hal9.setState(state);
-              }
-              else if (file.name.endsWith('.csv')) {
+              if (file.name.endsWith('.csv')) {
                 state.data = aq.fromCSV(dataAsString);
                 hal9.setState(state);
               }
@@ -76,6 +66,6 @@
     )();
   }
   else {
-    html.querySelector('.DataGrabio').innerHTML = ''
+    html.querySelector('.powerBI').innerHTML = ''
   }
 </script>

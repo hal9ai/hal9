@@ -89,7 +89,9 @@ import airbnbtxt from '../../scripts/services/airbnb.txt.js';
 import bigquerytxt from '../../scripts/services/bigquery.txt.js';
 import datagrabiotxt from '../../scripts/services/datagrabio.txt';
 import googlesheetstxt from '../../scripts/services/googlesheets.txt.js';
+import powerbitxt from '../../scripts/services/powerbi.txt';
 import reddittxt from '../../scripts/services/reddit.txt.js';
+import tableautxt from '../../scripts/services/tableau.txt';
 import twittertxt from '../../scripts/services/twitter.txt.js';
 
 // language scripts
@@ -237,7 +239,9 @@ const scripts = {
   bigquery: { script: bigquerytxt, language: 'javascript' },
   datagrabio: { script: datagrabiotxt, language: 'html' },
   googlesheets: { script: googlesheetstxt, language: 'javascript' },
+  powerbi: { script: powerbitxt, language: 'html' },
   reddit: { script: reddittxt, language: 'javascript' },
+  tableau: { script: tableautxt, language: 'html' },
   twitter: { script: twittertxt, language: 'javascript' },
 
   // languages

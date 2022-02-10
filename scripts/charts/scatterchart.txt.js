@@ -48,6 +48,10 @@
 
 data = await hal9.utils.toRows(data);
 
+if (data.length > 10000) {
+  throw(`Up to 10,000 data points are supported for this visualization, but ${data.length} were provided.`);
+}
+
 const chartdata = x && y
  ? data.map(v => ({
      x: hal9.utils.convert(v[x]),
