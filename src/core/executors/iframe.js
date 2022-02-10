@@ -18,8 +18,12 @@ export default class IFrameExecutor extends Executor {
     params = localparams.fetchDatasets(params);
 
     const interpreted = interpreter.interpret(this.script, this.language, this.context);
-    var funcBody = await snippets.getFunctionBody(interpreted.script, params, true);
-    const header = snippets.parseHeader(interpreted.script);
+    const script = `
+      var html = document.body;
+    ` + interpreted.script;
+
+    var funcBody = await snippets.getFunctionBody(script, params, true);
+    const header = snippets.parseHeader(this.script);
     header.deps.push(...(interpreted.header.deps ? interpreted.header.deps : []));
 
     var html = this.context['html'](this.step);
@@ -29,6 +33,8 @@ export default class IFrameExecutor extends Executor {
     iframe.style.border = 'none';
     iframe.style.width = '100%';
     iframe.style.height = '100%';
+
+    iframe.setAttribute('sandbox', 'allow-scripts');
 
     var deps = '<!-- No Hal9 dependencies -->';
     if (header.deps) deps = header.deps.map(dep => `      <script src='${dep}'></script>`).join('\n');
@@ -82,8 +88,6 @@ export default class IFrameExecutor extends Executor {
       var onResult = function(e) {
         if (!event.data || event.data.secret != secret) return;
 
-        window.removeEventListener('message', onResult);
-
         if (!event.data.html) iframe.remove();
 
         if (event.data.error) {
@@ -96,6 +100,13 @@ export default class IFrameExecutor extends Executor {
 
       var responseListener = window.addEventListener('message', onResult);
     });
+
+    var observer = new MutationObserver(function (e) {
+      if (e.filter(e => e.removedNodes && e.removedNodes[0] == html).length > 0) {
+        window.removeEventListener('message', onResult);
+      }
+    });
+    observer.observe(html.parentNode, { childList: true });
 
     params.html = params.hal9 = 'iframe';
     iframe.contentWindow.postMessage({ secret: secret, body: funcBody, params: params }, '*');

@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="https://unpkg.com/x-data-spreadsheet@1.1.5/dist/xspreadsheet.css">
+<script src="https://unpkg.com/x-data-spreadsheet@1.1.5/dist/xspreadsheet.js"></script>
+
+<div id="xspreadsheet"></div>
+<script>
+  /**
+    output: [ html ]
+    environment: iframe
+  **/
+
+  data = data ? data : []
+  const rows = { len: 10 + 2 * data.length };
+  if (data.length > 0) {
+    const columns = Object.keys(data[0]);
+
+    rows[0] = {
+      cells: columns.map((e, idx) => {
+        return { text: columns[idx], style: 0 };
+      })
+    };
+
+    for (let i = 0; i < data.length; i += 1) {
+      rows[i + 1] = {
+        cells: columns.map((e, idx) => {
+          return { text: data[i][columns[idx]] };
+        })
+      };
+    }
+  }
+  
+  var xs = x_spreadsheet('#xspreadsheet', {
+    showToolbar: true,
+    showGrid: true,
+    showContextmenu: true,
+  })
+    .loadData([{
+      name: 'data',
+      rows: rows,
+      styles: [
+        {
+          align: 'center',
+          font: { bold: true }
+        },
+      ],
+    }])
+    .change((cdata) => {
+      console.log('>>>', xs.getData());
+    });
+</script>
