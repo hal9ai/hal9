@@ -12,20 +12,17 @@
             - name: int
               label: Integer
             - name: float
-              label: Float
+              label: Decimal
             - name: string
               label: String
             - name: date
               label: Date
             - name: bool
-              label: Boolean
-
+              label: True/False
     - name: charactersToRemove
       label: Remove Characters
       value:
         - control: 'textbox'
-
-
   deps:
     - https://cdn.jsdelivr.net/npm/arquero@latest
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js 
