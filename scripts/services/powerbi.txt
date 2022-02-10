@@ -31,7 +31,8 @@
 
   var state = hal9.getState();
   state = state ? state : {};
-  data = state && state.data ? state.data : [];
+  const hasData = state && state.data;
+  data = hasData ? state.data : [];
 
   if (!hal9.isDocument()) {
     (async () => {
@@ -39,7 +40,7 @@
       var app = new Vue({
         el: html.querySelector('.powerBI'),
         data: {
-          hasData: data.length == 0
+          hasData: hasData
         },
         methods: {
           onFileChange(e) {
@@ -55,6 +56,7 @@
                 state.data = aq.fromCSV(dataAsString);
                 hal9.setState(state);
               }
+              app.hasData = true;
               hal9.invalidate();
             }
             reader.readAsText(file);
