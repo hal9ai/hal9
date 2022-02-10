@@ -38,7 +38,6 @@
 
   if (!hal9.isDocument()) {
     (async () => {
-      debugger;
       var app = new Vue({
         el: html.querySelector('.DataGrabio'),
         data: {
