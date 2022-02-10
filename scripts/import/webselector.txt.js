@@ -151,10 +151,15 @@ if (scrollClick) {
   
   while(scrollIters > 0) {
     var stop = await page.evaluate((scrollClick) => {
-      var click = document.getElementsByClassName(scrollClick);
-      var end = click.length == 0 || click[0].disabled == true;
+      console.log('About to click ' + scrollClick);
+      
+      var click = document.querySelector(scrollClick);
+      var end = !click || click.disabled == true;
 
-      if (!end) click[0].click();
+      if (!end) {
+        click.click();
+        console.log('Clicked ' + scrollClick);
+      }
       return end;
     }, scrollClick);
     if (stop) break;
