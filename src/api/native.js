@@ -97,7 +97,7 @@ export function load(raw) {
 export async function fetchPipeline(pipelinepath) {
   const user = pipelinepath.split('/')[0];
   const pipelinename = pipelinepath.split('/')[1];
-  const serverurl = environment.getServerUrl();
+  const serverurl = environment.getServerCachedUrl();
   const pipelineInfo = `${serverurl}/api/users/${user}/pipelines/${pipelinename}`;
 
   var serverId = environment.getId();
