@@ -43,6 +43,7 @@ import summarizetxt from '../../scripts/transforms/summarize.txt.js';
 // chart scripts
 import barcharttxt from '../../scripts/charts/barchart.txt.js';
 import boxplotcharttxt from '../../scripts/charts/boxplotchart.txt.js';
+import violinplotcharttxt from '../../scripts/charts/violinplotchart.txt'
 import errorbarcharttxt from '../../scripts/charts/errorbarchart.txt.js';
 import heatmapcharttxt from '../../scripts/charts/heatmapchart.txt.js';
 import histogramcharttxt from '../../scripts/charts/histogramchart.txt.js';
@@ -195,6 +196,7 @@ const scripts = {
   errorbarchart: { script: errorbarcharttxt, language: 'javascript' },
   heatmapchart: { script: heatmapcharttxt, language: 'javascript' },
   histogramchart: { script: histogramcharttxt, language: 'javascript' },
+  violinchart: {script: violinplotcharttxt, language: 'pyodide'},
   linechart: { script: linecharttxt, language: 'javascript' },
   sankeychart: { script: sankeycharttxt, language: 'javascript' },
   scatterchart: { script: scattercharttxt, language: 'javascript' },
