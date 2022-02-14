@@ -62,7 +62,7 @@ import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
 import simpletabletxt from '../../scripts/visualizations/simpletable.txt';
 
 // prediction scripts
-import bodypixtxt from '../../scripts/predict/bodypix.txt.js';
+import movenettxt from '../../scripts/predict/movenet.txt.js';
 import knntxt from '../../scripts/predict/knn.txt.js';
 import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
 import regressionpredicttxt from '../../scripts/predict/regression.txt.js';
@@ -211,7 +211,8 @@ const scripts = {
   table: { script: simpletabletxt, language: 'html' },
 
   // predictions
-  bodypix: { script: bodypixtxt, language: 'javascript' },
+  bodypix: { script: movenettxt, language: 'javascript' },
+  movenet: { script: movenettxt, language: 'javascript' },
   knn: { script: knntxt, language: 'javascript' },
   mobilenet: { script: mobilenettxt, language: 'javascript' },
   regressionpredict: { script: regressionpredicttxt, language: 'javascript' },
