@@ -14,6 +14,7 @@ export default class IFrameExecutor extends Executor {
       throw('Steps using \'iframe\' environment require \'html\' callback');
 
     var params = localparams.paramsForFunction(this.params, this.inputs, {});
+    const hal9api = this.deps.hal9;
 
     params = localparams.fetchDatasets(params);
 
@@ -45,6 +46,11 @@ export default class IFrameExecutor extends Executor {
       <script>
         async function runAsync(body, params) {
           params.html = document.body;
+          params.hal9 = {
+            setResult: (r) => {
+              window.parent.postMessage({ secret: ${secret}, result: r, html: document.body.innerText.length > 0, invalidate: true }, '*');
+            }
+          }
           var block = new Function("return " + body)();
           return await block(params);
         };
@@ -95,7 +101,17 @@ export default class IFrameExecutor extends Executor {
           return;
         }
 
-        accept(event.data.result);
+        if (event.data.invalidate) {
+          hal9api.setState({ result: event.data.result });
+          hal9api.invalidate();
+        }
+        else {
+          const state = hal9api.getState();
+          if (state && state.result)
+            accept(state.result)
+          else
+            accept(event.data.result);
+        }
       };
 
       var responseListener = window.addEventListener('message', onResult);
