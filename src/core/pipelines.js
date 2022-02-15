@@ -340,20 +340,24 @@ const metadataFromStepScript = (pipeline /* pipeline */, step /*: step */) /* me
 }
 
 const createInt = (steps /*: steps */, previous /*: pipeline */ ) /*: pipeline */ => {
+  steps = clone(steps);
+
+  var newscripts = previous && previous.scripts ? previous.scripts : {},
+  newscripts = Object.fromEntries(Object.entries(newscripts).filter(([k,v]) => steps.map(e => e.id.toString()).includes(k)));
+
   const pipeline = {
     id: previous.id ? previous.id : Math.floor(Math.random() * 10000000),
     steps: [],
     params: {},
     outputs: {},
     errors: {},
-    scripts: previous && previous.scripts ? previous.scripts : {},
+    scripts: newscripts,
     globals: {},
     error: undefined,
     version: '0.0.1',
     metadata: clone(previous.metadata),
   };
 
-  steps = clone(steps);
   pipeline.steps = steps;
 
   steps.forEach((step, idx) => {
