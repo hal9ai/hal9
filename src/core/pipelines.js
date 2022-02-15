@@ -1115,7 +1115,7 @@ export const getMaxId = (pipelineid /*: pipelineid */) /*: number */ => {
   if (pipeline.steps) max = maxid(max, pipeline.steps);
 
   const scriptIds = Object.keys(pipeline.scripts).map(e => parseInt(e));
-  if (pipeline.scripts) max = !scriptIds || scriptIds.length == 0 ? max : Math.max(...scriptIds);
+  if (pipeline.scripts) max = !scriptIds || scriptIds.length == 0 ? max : Math.max(max, Math.max(...scriptIds));
 
   return max;
 }
