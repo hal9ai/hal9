@@ -19,7 +19,7 @@ export default class LocalExecutor extends Executor {
     // add context to params
     params['hal9__context'] = this.context;
 
-    const interpreted = interpreter.interpret(this.script, this.language, this.metadata, this.context);
+    const interpreted = await interpreter.interpret(this.script, this.language, this.metadata, this.context);
     var result = await snippets.runFunction(interpreted.script, params, interpreted.header);
 
     if (this.callbacks && this.callbacks.onInvalidate) {

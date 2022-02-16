@@ -13,10 +13,10 @@ const languageMap = {
   pyodide: pyodide
 }
 
-export const interpret = (script, language, header, context) => {
+export const interpret = async (script, language, header, context) => {
   const interpreter = languageMap[language];
 
-  const result = interpreter ? interpreter(script, header, context) : { script: script };
+  const result = interpreter ? await interpreter(script, header, context) : { script: script };
 
   if (!result.header) {
     result.header = header ? header : snippets.parseHeader(code);

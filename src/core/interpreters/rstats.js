@@ -1,6 +1,6 @@
 import { debuggerIf } from '../utils/debug'
 
-export default function(script, header, context) {
+export default async function(script, header, context) {
   const debugcode = debuggerIf('interpret');
 
   const params = header.params ? header.params.map(e => e.name) : [];

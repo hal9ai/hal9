@@ -1,7 +1,5 @@
 import defaultClone from './clone';
 
-import * as aq from 'arquero';
-
 const arqueroTest = (e) => e && typeof(e.toJs) !== 'function' && typeof(e._data) === 'object';
 
 const arqueroColumns = (e) => e.columnNames();
@@ -10,13 +8,21 @@ const arqueroClone = (e) => e;
 
 const arqueroSerialize = (e) => e;
 
+const arqueroRoot = () => {
+  typeof(window) != 'undefined' && window.aq ? window.aq : null;
+  if (!aq) throw 'Arquero is not available';
+  return aq;
+}
+
 const arqueroDeserialize = (e) => {
+  const aq = arqueroRoot();
   return aq.table(JSON.parse(e.replace(/undefined/g, 'null')).data);
 }
 
 const arqueroIsSerialized = (e) => /{\"schema\":/g.test(e)
 
 const arqueroEnsure = (e) => {
+  const aq = arqueroRoot();
   var columns = {};
   var data = event.data.result.data._data;
 

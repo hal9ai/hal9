@@ -53,7 +53,7 @@ export const parseHeader = (code /*: string */) /*: header */ => {
   header = fixHeaderEncoding(header);
 
   try {
-    parsed = yaml.safeLoad(header);
+    parsed = yaml.load(header);
 
     // no header, give default
     if (parsed === null) parsed = {};
@@ -92,7 +92,7 @@ const upgradeDep = (dep) => {
   return dep;
 } 
 
-const loadDepsForBrowser = async function(deps, params) {
+export const loadDepsForBrowser = async function(deps, params) {
   for (var depidx in deps) {
     var dep = upgradeDep(deps[depidx]);
     if (!Object.keys(depsCache).includes(dep) || depsCache[dep] === 'loading') {

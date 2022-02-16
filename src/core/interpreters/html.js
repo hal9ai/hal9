@@ -1,6 +1,6 @@
 import { debuggerIf } from '../utils/debug'
 
-export default function(html, header, context) {
+export default async function(html, header, context) {
   const debugcode = debuggerIf('interpret');
 
   const output = header.output ? header.output : [ 'data' ];
