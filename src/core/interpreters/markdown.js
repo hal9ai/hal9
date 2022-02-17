@@ -1,12 +1,12 @@
 import { debuggerIf } from '../utils/debug'
-import { loadDepsForBrowser } from '../snippets'
+import { loadScripts } from '../utils/scriptloader'
 
 export default async function(markdown) {
   const debugcode = debuggerIf('interpret');
 
-  await loadDepsForBrowser([
+  await loadScripts([
     'https://cdnjs.cloudflare.com/ajax/libs/showdown/2.0.0/showdown.min.js'
-  ], {});
+  ]);
 
   var showdown = null;
   if (typeof(window) != 'undefined') showdown = window.showdown;
