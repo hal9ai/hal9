@@ -155,11 +155,11 @@ const post = async (code, params) => {
 
     // data frames can loose their prototype functions when crossing the iframe boundary
     if (typeof(result) == 'object') {
-      Object.keys(result).forEach(key => {
+      for (const key of Object.keys(result)) {
         if (dataframe.isDataFrame(result[key])) {
-          result[key] = dataframe.ensure(result[key]);
+          result[key] = await dataframe.ensure(result[key]);
         }
-      })
+      }
     }
 
     return result;

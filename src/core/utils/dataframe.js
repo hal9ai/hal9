@@ -1,4 +1,5 @@
 import defaultClone from './clone';
+import { loadScripts } from './scriptloader';
 
 const arqueroTest = (e) => e && typeof(e.toJs) !== 'function' && typeof(e._data) === 'object';
 
@@ -8,21 +9,29 @@ const arqueroClone = (e) => e;
 
 const arqueroSerialize = (e) => e;
 
-const arqueroRoot = () => {
-  typeof(window) != 'undefined' && window.aq ? window.aq : null;
-  if (!aq) throw 'Arquero is not available';
+const arqueroRoot = async () => {
+  if (typeof(window) == 'undefined' && !aq) {
+    throw 'Arquero is not available';
+  }
+
+  var aq = window.aq ? window.aq : null;
+  if (!aq) {
+    await loadScripts([ 'https://cdn.jsdelivr.net/npm/arquero@latest' ]);
+    aq = window.aq;
+  }
+
   return aq;
 }
 
-const arqueroDeserialize = (e) => {
-  const aq = arqueroRoot();
+const arqueroDeserialize = async (e) => {
+  const aq = await arqueroRoot();
   return aq.table(JSON.parse(e.replace(/undefined/g, 'null')).data);
 }
 
 const arqueroIsSerialized = (e) => /{\"schema\":/g.test(e)
 
-const arqueroEnsure = (e) => {
-  const aq = arqueroRoot();
+const arqueroEnsure = async (e) => {
+  const aq = await arqueroRoot();
   var columns = {};
   var data = event.data.result.data._data;
 
@@ -146,8 +155,8 @@ export const isSerialized = (df) => {
   return type ? true : false;
 }
 
-export const ensure = (df) => {
+export const ensure = async (df) => {
   const type = generalized.find(maybe => maybe.test(df));
-  return type ? type.ensure(df) : [];
+  return type ? await type.ensure(df) : [];
 }
 

@@ -1,6 +1,7 @@
 // @flow
 
 import yaml from 'js-yaml';
+import { loadScripts } from './utils/scriptloader';
 
 /*::
 type params = { [key: string]: Array<string> };
@@ -9,8 +10,6 @@ type deps = Array<string>;
 type func = (...args: Array<any>) => any;
 type header = { params: Array<string>, deps: Array<string> };
 */
-
-var depsCache = {};
 
 const fixHeaderEncoding = (header /* string */) /*: string */ => {
   // To fix issues like pasting code from email clients, which use nbsp (160).
@@ -85,74 +84,6 @@ export const parseParams = (code /*: string */) /*: flatparams */ => {
   return header.params;
 }
 
-const upgradeDep = (dep) => {
-  if (dep == 'https://cdn.jsdelivr.net/npm/hal9-utils@0.0.4/dist/hal9-utils.min.js')
-    return 'https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js'
-
-  return dep;
-} 
-
-export const loadDepsForBrowser = async function(deps, params) {
-  for (var depidx in deps) {
-    var dep = upgradeDep(deps[depidx]);
-    if (!Object.keys(depsCache).includes(dep) || depsCache[dep] === 'loading') {
-      var promise = null;
-      if (depsCache[dep] === 'loading') {
-        promise = new Promise((accept, reject) => {
-          var check = () => {
-            if (depsCache[dep] === 'loading') {
-              setTimeout(check, 100);
-            }
-            else {
-              if (depsCache[dep] === 'loaded')
-                accept();
-              else
-                reject();
-            }
-          }
-        })
-      }
-      else {
-        promise = new Promise((accept, reject) => {
-          var script = document.createElement('script');
-          depsCache[dep] = 'loading';
-          script.src = dep;
-          document.head.appendChild(script);
-          script.addEventListener("load", function(event) {
-            depsCache[dep] = 'loaded';
-            accept();
-          });
-          script.addEventListener("error", function(event) {
-            depsCache[dep] = 'error';
-            reject();
-          });
-        });
-      }
-
-      await promise;
-    }
-  };
-
-  return '';
-}
-
-const loadDepsForJS = async function(deps, params) {
-  const depscode = await Promise.all(deps.map(dep => {
-    if (Object.keys(depsCache).includes(dep))
-      return Promise.resolve(depsCache[dep]);
-    else {
-      const fetchFunc = typeof fetch === 'function' ? fetch : params.fetch;
-      return fetchFunc(dep).then(resp => resp.text());
-    }
-  }));
-
-  deps.map((dep, idx) => {
-    depsCache[dep] = depscode[idx];
-  });
-
-  return depscode.join('\n') + '\n\n';
-}
-
 export const getFunctionBody = async function(code /*: string */, params /*: params */, nodeps /*: boolean */, header /*: header */) /*: string */ {
   const name = 'snippet' + Math.floor(Math.random() * 10000000);
 
@@ -160,8 +91,7 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
   const deps = !nodeps ? header.deps : [];
   const output = header.output;
   
-  const loadDependencies = typeof(window) != 'undefined' ? loadDepsForBrowser : loadDepsForJS;
-  const depscode = await loadDependencies(deps, params);
+  const depscode = await loadScripts(deps, params.fetch);
 
   const returns = '{ ' + output.filter(e => e != 'html').map((e) => e + ': ' + e).join(', ') + ' }';
 

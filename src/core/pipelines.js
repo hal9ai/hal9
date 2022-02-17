@@ -1066,36 +1066,36 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /* number */) 
   return JSON.stringify(pipeline, null, padding === undefined ? 2 : padding);
 }
 
-export const load = (pipeline /*: pipeline */) /*: pipelineid */ => {
+export const load = async (pipeline /*: pipeline */) /*: pipelineid */ => {
   var pipelineid = store.add(pipeline);
 
   // deserialize dataframes
   if (pipeline.state && pipeline.state.steps) {
-    Object.keys(pipeline.state.steps).forEach(step => {
+    for (const step of Object.keys(pipeline.state.steps)) {
       var stepState = pipeline.state.steps[step];
-      Object.keys(stepState).forEach(name => {
+      for (const name of Object.keys(stepState)) {
         if (name === 'cache' && stepState['cache'].result) {
           var stepResults = stepState['cache'].result;
-          Object.keys(stepResults).forEach(name => {
-            if (dataframe.isSerialized(stepResults[name])) {
-              stepResults[name] = dataframe.deserialiaze(stepResults[name]);
+          for (const name of Object.keys(stepResults)) {
+            if (await dataframe.isSerialized(stepResults[name])) {
+              stepResults[name] = await dataframe.deserialiaze(stepResults[name]);
             }
-          });
+          };
         }
         else if (name === 'api') {
-          Object.keys(stepState['api']).forEach(apiname => {
-            if (dataframe.isSerialized(stepState['api'][apiname])) {
-              stepState['api'][apiname] = dataframe.deserialiaze(stepState['api'][apiname]);
+          for (const apiname of Object.keys(stepState['api'])) {
+            if (await dataframe.isSerialized(stepState['api'][apiname])) {
+              stepState['api'][apiname] = await dataframe.deserialiaze(stepState['api'][apiname]);
             }
-          });
+          };
         }
         else {
-          if (dataframe.isSerialized(stepState[name])) {
-            stepState[name] = dataframe.deserialiaze(stepState[name]);
+          if (await dataframe.isSerialized(stepState[name])) {
+            stepState[name] = await dataframe.deserialiaze(stepState[name]);
           }
         }
-      });
-    });
+      };
+    };
 
     pipelinesState[pipelineid] = pipeline.state;
     pipelinesStateCount++;
@@ -1179,7 +1179,7 @@ export const getHtmlRemote = (pipelinepath /* pipelinepath */) /* string */ => {
 <script>${setenv}
   (async function() {
     var raw = await hal9.fetch('` + pipelinepath + `');
-    hal9.run(hal9.load(raw), { html: document.getElementById('hal9app') });
+    hal9.run(await hal9.load(raw), { html: document.getElementById('hal9app') });
   })();
 </script>`;
 }

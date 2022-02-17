@@ -129,11 +129,11 @@ export default class IFrameExecutor extends Executor {
     var result = await waitResponse;
 
     // data frames can loose their prototype functions when crossing the iframe boundary
-    Object.keys(result).forEach(key => {
+    for (const key of Object.keys(result)) {
       if (dataframe.isDataFrame(result[key])) {
-        result[key] = dataframe.ensure(result[key]);
+        result[key] = await dataframe.ensure(result[key]);
       }
-    })
+    }
 
     /*
     if (this.callbacks && this.callbacks.onInvalidate) {

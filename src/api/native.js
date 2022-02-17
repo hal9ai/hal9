@@ -89,9 +89,9 @@ export function step(url, params, output) {
   }
 };
 
-export function load(raw) {
+export async function load(raw) {
   const pipeline = typeof(raw) === 'string' ? JSON.parse(decodeURIComponent(escape(atob(raw)))) : raw;
-  return pipelines.load(pipeline);
+  return await pipelines.load(pipeline);
 }
 
 export async function fetchPipeline(pipelinepath) {

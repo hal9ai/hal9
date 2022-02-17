@@ -32,8 +32,8 @@ function step(url, params, output) {
   return api.step(url, params, output);
 };
 
-function load(raw) {
-  return api.load(raw);
+async function load(raw) {
+  return await api.load(raw);
 }
 
 async function fetchPipeline(pipelinepath) {
