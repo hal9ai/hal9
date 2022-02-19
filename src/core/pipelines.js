@@ -48,9 +48,11 @@ import errorbarcharttxt from '../../scripts/charts/errorbarchart.txt.js';
 import heatmapcharttxt from '../../scripts/charts/heatmapchart.txt.js';
 import histogramcharttxt from '../../scripts/charts/histogramchart.txt.js';
 import linecharttxt from '../../scripts/charts/linechart.txt.js';
+import radialbarstxt from '../../scripts/charts/radialbars.txt.js';
 import sankeycharttxt from '../../scripts/charts/sankeychart.txt.js';
 import scattercharttxt from '../../scripts/charts/scatterchart.txt.js';
 import treemapcharttxt from '../../scripts/charts/treemapchart.txt.js';
+import wafflecharttxt from '../../scripts/charts/wafflechart.txt.js';
 import waterfallcharttxt from '../../scripts/charts/waterfallchart.txt.js';
 
 // visualization scripts
@@ -196,11 +198,13 @@ const scripts = {
   errorbarchart: { script: errorbarcharttxt, language: 'javascript' },
   heatmapchart: { script: heatmapcharttxt, language: 'javascript' },
   histogramchart: { script: histogramcharttxt, language: 'javascript' },
-  violinchart: {script: violinplotcharttxt, language: 'pyodide'},
+  violinchart: { script: violinplotcharttxt, language: 'pyodide' },
   linechart: { script: linecharttxt, language: 'javascript' },
+  radialbars: { script: radialbarstxt, language: 'javascript' },
   sankeychart: { script: sankeycharttxt, language: 'javascript' },
   scatterchart: { script: scattercharttxt, language: 'javascript' },
   treemapchart: { script: treemapcharttxt, language: 'javascript' },
+  wafflechart: { script: wafflecharttxt, language: 'javascript' },
   waterfallchart: { script: waterfallcharttxt, language: 'javascript' },
 
   // visualizations
@@ -300,15 +304,15 @@ const paramsFromScript = (script /*: string */) /*: params */ => {
 
   var idx = 0;
   var retparams = Object.fromEntries(codeparams.map((e) => {
-    if (typeof(e) === 'string')
-      return [ e, { id: idx++, name: e, label: e, static: false, value: [] } ];
+    if (typeof (e) === 'string')
+      return [e, { id: idx++, name: e, label: e, static: false, value: [] }];
     else if (e === null)
-      return [ '', { id: idx++, static: false, value: [] } ];
+      return ['', { id: idx++, static: false, value: [] }];
     else {
       if (e.value) {
         e.value.map(e => Object.assign(e, { id: idx++ }));
       }
-      return [ e.name, Object.assign({ id: idx++, static: !!e.value, value: [] }, e) ]
+      return [e.name, Object.assign({ id: idx++, static: !!e.value, value: [] }, e)]
     }
   }));
 
@@ -321,7 +325,7 @@ const metadataFromScript = (script /*: string */) /* metadata */ => {
   var id = 0;
   if (header.params) {
     header.params = header.params.map(e => {
-      if (typeof(e) === 'string')
+      if (typeof (e) === 'string')
         return { name: e, label: e };
       else {
         if (e.value) {
@@ -339,11 +343,11 @@ const metadataFromStepScript = (pipeline /* pipeline */, step /*: step */) /* me
   return metadataFromScript(scriptFromStep(pipeline, step).script);
 }
 
-const createInt = (steps /*: steps */, previous /*: pipeline */ ) /*: pipeline */ => {
+const createInt = (steps /*: steps */, previous /*: pipeline */) /*: pipeline */ => {
   steps = clone(steps);
 
   var newscripts = previous && previous.scripts ? previous.scripts : {},
-  newscripts = Object.fromEntries(Object.entries(newscripts).filter(([k,v]) => steps.map(e => e.id.toString()).includes(k)));
+    newscripts = Object.fromEntries(Object.entries(newscripts).filter(([k, v]) => steps.map(e => e.id.toString()).includes(k)));
 
   const pipeline = {
     id: previous.id ? previous.id : Math.floor(Math.random() * 10000000),
@@ -429,7 +433,7 @@ const stepGetDefinition = (pipeline, step) => {
   return step;
 }
 
-export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, context /* context */, partial) /*: boolean */ => {
+export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, context /* context */, partial) /*: boolean */ => {
   var pipeline = store.get(pipelineid);
 
   if (pipeline.aborted) throw 'Pipeline stopped before finishing'
@@ -455,15 +459,15 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
     // assign only globals being used to prevent cache invalidations
     for (var inputidx in metadata.input) {
       const inputName = metadata.input[inputidx];
-      input[inputName] =  undefined;
-      if (typeof(globals[inputName]) !== 'undefined') input[inputName] = globals[inputName];
+      input[inputName] = undefined;
+      if (typeof (globals[inputName]) !== 'undefined') input[inputName] = globals[inputName];
     }
 
     // upgrade old pipelines, can be removed eventually
     if (!pipeline.version) {
       for (var paramidx in metadata.params) {
         const param = metadata.params[paramidx];
-        if (typeof(globals[param.name]) !== 'undefined') input[param.name] = globals[param.name];
+        if (typeof (globals[param.name]) !== 'undefined') input[param.name] = globals[param.name];
       }
     }
 
@@ -476,7 +480,7 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
     });
 
     // add context parameters
-    if (typeof(window) != 'undefined' && window.hal9 && window.hal9.params) context.params = window.hal9.params;
+    if (typeof (window) != 'undefined' && window.hal9 && window.hal9.params) context.params = window.hal9.params;
     if (context.params) {
       var paramIdx = Object.keys(params).length > 0 ? Math.max(...Object.keys(params).map(e => params[e].id ? params[e].id : 0)) : 0;
       Object.keys(context.params).forEach(param => {
@@ -485,9 +489,11 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
           delete context.params[param];
         }
         else if (params[param]) {
-          params[param] = { id: paramIdx++, name: param, label: param, value: [{
-            value: clone(context.params[param]) 
-          }] };
+          params[param] = {
+            id: paramIdx++, name: param, label: param, value: [{
+              value: clone(context.params[param])
+            }]
+          };
           delete context.params[param];
         }
       });
@@ -535,7 +541,7 @@ export const runStep = async(pipelineid /*: pipeline */, sid /*: number */, cont
       globals[resultname] = resultentry;
     }
   }
-  catch(e) {
+  catch (e) {
     console.log(e);
     error = e;
   }
@@ -569,7 +575,7 @@ const stepHasHtml = (pipeline, step) => {
 
 const preparePartial = (pipeline, context, partial, renderid) => {
   var html = context.html;
-  if (typeof(html) === 'object') {
+  if (typeof (html) === 'object') {
     const isFullView = renderid === null || renderid === undefined;
 
     const oneHasHtml = pipeline.steps.map(step => stepHasHtml(pipeline, step)).filter(e => e).length > 0;
@@ -584,7 +590,7 @@ const preparePartial = (pipeline, context, partial, renderid) => {
       var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
       const hasHtml = stepHasHtml(pipeline, step);
       if (!hasHtml) {
-        return function(pipeline, step, result, error, details) {
+        return function (pipeline, step, result, error, details) {
           html = html.shadowRoot ? html.shadowRoot : html;
           html.innerHTML = '';
 
@@ -596,7 +602,7 @@ const preparePartial = (pipeline, context, partial, renderid) => {
           var area = document.createElement('div');
           area.style.width = area.style.maxWidth = "100%";
           area.style.overflow = 'hidden';
-          
+
           var tabs = document.createElement('div');
           tabs.style.width = tabs.style.maxWidth = "100%";
           tabs.style.overflow = 'hidden';
@@ -642,11 +648,11 @@ const preparePartial = (pipeline, context, partial, renderid) => {
 const prepareContext = (pipeline, context, stepstopid) => {
   var parent = context.html;
 
-  if (typeof(parent) === 'object') {
+  if (typeof (parent) === 'object') {
     const height = parent.offsetHeight;
 
     parent.innerHTML = '';
-    const html = parent.shadowRoot ? parent.shadowRoot : (context.shadow === false ? parent : parent.attachShadow({mode: 'open'}));
+    const html = parent.shadowRoot ? parent.shadowRoot : (context.shadow === false ? parent : parent.attachShadow({ mode: 'open' }));
     html.innerHTML = '';
 
     const isFullView = stepstopid === null || stepstopid === undefined;
@@ -673,7 +679,7 @@ const prepareContext = (pipeline, context, stepstopid) => {
         else {
           container.style.height = height + 'px';
         }
-        
+
         html.appendChild(container);
 
         return container;
@@ -712,7 +718,7 @@ const prepareContext = (pipeline, context, stepstopid) => {
   }
 }
 
-export const run = async (pipelineid /*: pipeline */, context /* context */, partial, stepstopid /* stepid */ ) /*: void */ => {
+export const run = async (pipelineid /*: pipeline */, context /* context */, partial, stepstopid /* stepid */) /*: void */ => {
   debugIf('run');
 
   var pipeline = store.get(pipelineid);
@@ -722,7 +728,7 @@ export const run = async (pipelineid /*: pipeline */, context /* context */, par
 
   await fetchScripts(pipeline.steps);
 
-  if (typeof(context.html) === 'string') {
+  if (typeof (context.html) === 'string') {
     context.html = document.getElementById(context.html);
   }
 
@@ -843,7 +849,7 @@ export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step
   var pipeline = store.get(pipelineid);
 
   var maxId = getMaxId(pipelineid);
-  if (typeof(step.id) === 'undefined' || step.id <= maxId) {
+  if (typeof (step.id) === 'undefined' || step.id <= maxId) {
     step.id = maxId + 1;
   }
 
@@ -856,11 +862,11 @@ export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step
     step.id = maxId + 1;
   }
 
-  if (typeof(step.name) === 'undefined') {
+  if (typeof (step.name) === 'undefined') {
     step.name = 'unnamed';
   }
 
-  if (typeof(step.label) === 'undefined') {
+  if (typeof (step.label) === 'undefined') {
     step.label = step.name;
   }
 
@@ -899,7 +905,7 @@ export const moveStep = (pipelineid /*: pipelineid */, stepid /*: stepid */, cha
   else if (change > 0 && index < pipeline.steps.length - 1) {
     var step = pipeline.steps[index + 1];
     pipeline.steps[index + 1] = pipeline.steps[index];
-    pipeline.steps[index ] = step;
+    pipeline.steps[index] = step;
   }
 
   return step;
@@ -1106,7 +1112,7 @@ export const load = async (pipeline /*: pipeline */) /*: pipelineid */ => {
 
 export const getMaxId = (pipelineid /*: pipelineid */) /*: number */ => {
   var pipeline = store.get(pipelineid);
-  
+
   var max = 0
   const maxid = (max, arr) => {
     const arrIds = arr.map(e => e.id);
@@ -1148,7 +1154,7 @@ export const getGlobalNames = (pipelineid /* pipelineid */) => /*: Array<string>
   return Object.keys(pipeline.globals);
 }
 
-const setGlobals = (pipeline /*: pipeline */, globals /*: Object */ ) => {
+const setGlobals = (pipeline /*: pipeline */, globals /*: Object */) => {
   pipeline.globals = globals;
 }
 
@@ -1194,12 +1200,12 @@ export const getMetadata = (pipelineid /*: pipelineid */) /*: object */ => {
   return clone(pipeline.metadata);
 }
 
-export const abort = async(pipelineid /*: pipelineid */) /*: void */ => {
+export const abort = async (pipelineid /*: pipelineid */) /*: void */ => {
   var pipeline = store.get(pipelineid);
   pipeline.aborted = true;
 }
 
-export const isAborted = async(pipelineid /*: pipelineid */) /*: boolean */ => {
+export const isAborted = async (pipelineid /*: pipelineid */) /*: boolean */ => {
   var pipeline = store.get(pipelineid);
   return pipeline.aborted === true;
 }

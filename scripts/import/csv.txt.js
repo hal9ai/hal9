@@ -37,7 +37,7 @@ if (type === 'url' && file != '') {
   const res = await fetch(file);
   csv = await res.text();
 } else {
-  file = atob(file.replace(/^.*;base64,/, ''));
+  file = decodeURIComponent(escape(atob(file.replace(/^.*;base64,/, ''))));
   csv = file;
 }
 
@@ -47,7 +47,7 @@ if (skip) {
 }
 
 if (csv) {
-  data = aq.fromCSV(text= csv, delimiter = separator);
+  data = aq.fromCSV(text = csv, delimiter = separator);
 } else {
   data = '';
 }
