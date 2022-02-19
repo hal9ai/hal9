@@ -104,7 +104,7 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
   
   const body = 'async function ' + name + '(_hal9_params)' + ' {\n' + 
       injectdebug +
-      vars + '\n\n' + depscode + code + '\n' +
+      vars + '\n\n' + (depscode ? depscode : '') + code + '\n' +
       'return '+  returns + ';\n' +
     '}';
 
