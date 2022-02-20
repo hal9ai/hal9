@@ -1,8 +1,13 @@
 /**
   output: [ html ]
   params: [ from, to ]
-  deps: [ 'https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js' ]
+  deps:
+    - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
+    - https://cdn.jsdelivr.net/npm/d3@6
+    - https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1
 **/
+
+data = await hal9.utils.toRows(data);
 
 if (data.length > 1000) {
   throw('Up to 1000 data points are supported in this visualization, but ' + data.length + ' provided.');
