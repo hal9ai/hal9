@@ -28,7 +28,9 @@
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
     - https://cdn.jsdelivr.net/npm/d3@6
     - https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1
-  author: analyzer2004
+  credit:
+    - name: analyzer2004
+    - url: https://twitter.com/analyzer2004
 **/
 
 data = await hal9.utils.toRows(data);

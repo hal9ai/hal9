@@ -1,31 +1,33 @@
 /**
-  output: [html]
+  output: [ html ]
   params:
-    - x
-    - y
-    - name: isDataCurrency
-      label: 'Currency data'
+    - name: x
+      label: Label
+    - name: y
+      label: Value
+    - name: palette
+      label: D3 Palette
       value:
-        - control: 'select'
-          value: ''
+        - control: paletteSelect
+          value: schemeTableau10
           values:
-            - name: true
-              label: Yes
-            - name: false
-              label: No
-    - name: minRadiuslabel
-      label: 'Minradius'
-      value:
-        - control: 'textbox'
-          value: '10'
-
+            - schemeTableau10
+            - schemeAccent
+            - schemeDark2
+            - schemePaired
+            - schemeSet1
+            - schemeSet2
+            - schemeSet3
   deps:
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
     - https://cdn.jsdelivr.net/npm/d3@6
-  author: analyzer2004
+  credit:
+    - name: analyzer2004
+    - url: https://twitter.com/analyzer2004
 **/
 
 data = await hal9.utils.toRows(data);
+barThinkness = Math.min(100 / data.length, 20);
 
 let chartData = data.map(d => {
   return {
@@ -34,66 +36,70 @@ let chartData = data.map(d => {
   }
 })
 
-//Color for each bar
-let color = d3.scaleOrdinal(d3.schemeTableau10)
+// color for each bar
+let color = d3.scaleOrdinal(d3[palette])
   .domain(chartData.map(d => d[x]))
 
-//sequence func for chartdata
+// sequence func for chartdata
 let seq = (length) => Array.apply(null, { length: length }).map((d, i) => i);
 
-//Max value of chartdata
+// max value of chartdata
 let maxValue = d3.max(chartData.map(d => d.values));
 
-//Sizes for the chart 
-let width = html.clientWidth + 900;
+// sizes for the chart 
+let width = html.clientWidth;
+let height = html.clientHeight;
 
-let height = html.clientHeight + chartData.length * 50;
+let margin = ({ top: 20, left: 0, bottom: 30, right: 30 });
 
-
-let margin = ({ top: 30, left: 0, bottom: 0, right: 0 });
-
-//bars
-let bar = ({ width: 12, padding: 8 });
+// bars
+let bar = ({ width: barThinkness, padding: 4 });
+let radialStart = 3 * width / 4 - margin.right;
+console.log('radialStart: ' + radialStart)
 let triangle = ({ width: bar.width / 2, height: bar.width, padding: 2, num: 3 });
-let start = ({ left: 100, right: 350, padding: 5 });
+let triangleAllWidth = triangle.width + 2 * triangle.padding;
+console.log('triangle.width ' + triangle.width)
+let start = ({ left: 100, right: null, padding: 6 });
 let numOfBars = chartData.length;
 
-//bars inner radius, max_min radius
-let innerRadius = i => minRadius + (bar.width + bar.padding) * i;
-let outerRadius = i => innerRadius(i) + bar.width
+// bars inner radius, max_min radius
+let barsTotalHeight = data.length * (bar.width + bar.padding);
+let maxRadius = Math.max(Math.min(width / 4, height / 3), barsTotalHeight);
+let maxCircle = barsTotalHeight >= maxRadius ? 0.5 : 1.5;
+let outerRadius = i => maxRadius - (bar.width + bar.padding) * i;
+let innerRadius = i => outerRadius(i) - bar.width;
 
-let minRadius = parseFloat(minRadiuslabel);
-let maxRadius = outerRadius(numOfBars - 1);
+let minRadius = innerRadius(data.length - 1);
 
 let deg = a => a * 180 / Math.PI;
 
-//arc function
+// arc function
 let arc = (d, i) => d3.arc()
   .innerRadius(innerRadius(i))
   .outerRadius(outerRadius(i))
   .startAngle(0)
   .endAngle(x_scaler(d.values))()
 
-//axisarc
+// axisarc
 let axisArc = i => d3.arc()
-  .innerRadius(innerRadius(i) - bar.padding / 2)
-  .outerRadius(innerRadius(i) - bar.padding / 2)
+  .innerRadius(outerRadius(i) + bar.padding / 2)
+  .outerRadius(outerRadius(i) + bar.padding / 2)
   .startAngle(0)
-  .endAngle(1.5 * Math.PI)()
+  .endAngle(maxCircle * Math.PI)()
 
 let x_scaler = d3.scaleLinear()
   .domain([0, maxValue * 1.05])
-  .range([0, 1.5 * Math.PI])
+  .range([0, maxCircle * Math.PI])
 
-//title for the chart
-let title = g => g.append("title").text(d => `${y} - ${d[x]}\n${d3.format("$,.2f")(d.values)}`);
+// title for the chart
+let title = g => g.append("title").text(d => `${y} - ${d[x]}\n${d3.format(",.2f")(d.values)}`);
 
 let restore = () => {
   parts.start.transition().duration(500).attr("opacity", 1);
   parts.bar.transition().duration(500).attr("opacity", 1);
 }
 
-//highlight the bar
+// highlight the bar
 let highlight = (e, d) => {
   parts.start.transition().duration(500).attr("opacity", a => a === d ? 1 : 0.5);
   parts.bar.transition().duration(500).attr("opacity", a => a === d ? 1 : 0.5);
@@ -101,38 +107,24 @@ let highlight = (e, d) => {
 
 let parts = ({ start: null, bar: null })
 
-//draw radial bars
+// draw radial bars
 drawRadialBars = (g, tspace) => {
   const ticks = x_scaler.ticks(15).slice(1, -1);
   ticks.push(maxValue * 1.05);
-  g.attr("transform", `translate(${tspace},${maxRadius + margin.top})`);
+  g.attr("transform", `translate(${radialStart}, ${maxRadius + margin.top})`);
 
-  if (isDataCurrency.length !== 0) {
-    const marks = g.append("g")
-      .selectAll(".tick")
-      .data(ticks)
-      .join("g")
-      .attr("class", "tick")
-      .attr("transform", d => `rotate(${deg(x_scaler(d)) - 90})`)
-      .call(g => g.append("line").attr("x1", minRadius - bar.padding / 2).attr("x2", maxRadius + bar.padding / 2))
-      .call(g => g.append("text")
-        .attr("class", "tick")
-        .attr("transform", d => `translate(${maxRadius + bar.padding * 1.5},0)`)
-        .text(x_scaler.tickFormat(1, "$.1s")));
-  }
-  else {
-    const marks = g.append("g")
-      .selectAll(".tick")
-      .data(ticks)
-      .join("g")
-      .attr("class", "tick")
-      .attr("transform", d => `rotate(${deg(x_scaler(d)) - 90})`)
-      .call(g => g.append("line").attr("x1", minRadius - bar.padding / 2).attr("x2", maxRadius + bar.padding / 2))
-      .call(g => g.append("text")
-        .attr("class", "tick")
-        .attr("transform", d => `translate(${maxRadius + bar.padding * 1.5},0)`)
-        .text(x_scaler.tickFormat(1, ".1s")));
-  }
+const marks = g.append("g")
+  .selectAll(".tick")
+  .data(ticks)
+  .join("g")
+  .attr("class", "tick")
+  .attr("transform", d => `rotate(${deg(x_scaler(d)) - 90})`)
+  .call(g => g.append("line").attr("x1", maxRadius - bar.padding / 2).attr("x2", maxRadius + bar.padding / 2))
+  .call(g => g.append("text")
+    .attr("class", "tick")
+    .attr("transform", d => `translate(${maxRadius + bar.padding * 1.5},0)`)
+    .text(x_scaler.tickFormat(1, ".1s")));
+
   const bars = g.selectAll(".bar")
     .data(chartData)
     .join("g")
@@ -142,62 +134,53 @@ drawRadialBars = (g, tspace) => {
     .call(g => g.append("path").attr("d", arc))
     .call(g => g.append("circle")
       .attr("r", bar.width / 2)
-      .attr("cx", (d, i) => innerRadius(i) + bar.width / 2)
+      .attr("cx", (d, i) => outerRadius(i) - bar.width / 2)
       .attr("transform", (d, i) => `rotate(${deg(x_scaler(d.values)) - 90})`))
     .call(title)
-    .on("mouseover", highlight)
+    .on("mouseover", bar.width > 5 ? highlight : undefined)
     .on("mouseout", restore);
-
-  g.selectAll(".track")
-    .data(seq(chartData.length + 1))
-    .join("path")
-    .attr("class", "track")
-    .attr("stroke", "#ccc")
-    .attr("d", axisArc);
 
   parts.bar = bars;
 }
 
-//draw startlines
+// draw startlines
 drawStartLines = g => {
   const starts = g.selectAll(".start")
     .data(chartData)
     .join("g")
     .attr("opacity", 1)
     .attr("fill", d => color(d[x]))
-    .attr("transform", (d, i) => `translate(${bar.width},${innerRadius(numOfBars - 1 - i) - minRadius + margin.top})`)
+    .attr("transform", (d, i) => `translate(${bar.width + margin.left}, ${ maxRadius - outerRadius(i) + margin.top})`)
     .call(g => g.append("circle").attr("cy", bar.width / 2).attr("r", bar.width / 2))
     .call(g => g.append("rect").attr("width", start.left).attr("height", bar.width))
     .call(title)
     .on("mouseover", highlight)
     .on("mouseout", restore);
-  if (isDataCurrency.length !== 0) {
+
     var texts = starts.append("text")
       .attr("class", "start")
       .attr("font-weight", "bold")
       .attr("alignment-baseline", "hanging")
       .attr("dx", start.left + start.padding)
-      .attr("dy", 4)
-      .text(d => `${d[x]} ${d3.format("$.2s")(d.values)}`);
-  }
-  else {
-    var texts = starts.append("text")
-      .attr("class", "start")
-      .attr("font-weight", "bold")
-      .attr("alignment-baseline", "hanging")
-      .attr("dx", start.left + start.padding)
-      .attr("dy", 4)
+      .attr("dy", 2)
       .text(d => `${d[x]} ${d3.format(".2s")(d.values)}`);
 
-  }
   var widths = texts.nodes().map(d => d.getComputedTextLength());
 
   const ext = d3.extent(widths);
   const min = ext[0], max = ext[1];
   starts.append("rect")
-    .attr("width", (d, i) => start.right + (max - widths[i]))
+    .attr("width", (d, i) => radialStart - (widths[i] + start.left + start.padding) - triangle.num * triangleAllWidth - 3 / 2 * bar.width - margin.left)
     .attr("height", bar.width)
-    .attr("transform", (d, i) => `translate(${widths[i] + start.left + start.padding * 2},0)`)
+    .attr("transform", (d, i) => `translate(${widths[i] + start.left + start.padding * 2}, 0)`)
+
+  const startTriangle = radialStart - triangle.num * triangleAllWidth;
+  starts.append("g")
+    .selectAll("polygon")
+    .data(seq(triangle.num))
+    .join("polygon")
+    .attr("points", `0,2 ${triangle.width},${triangle.width} 0,${triangle.height - 2}`)
+    .attr("transform", (d, i) => `translate(${startTriangle - bar.width + i * (triangle.width + triangle.padding) + 2 * triangle.padding - margin.left},0)`);
 
   const startLength = start.left + start.right + start.padding * 2 + max + bar.width + (triangle.num ? 3 : 0);
   starts.append("g")
@@ -207,31 +190,38 @@ drawStartLines = g => {
     .attr("points", `0,2 ${triangle.width},${triangle.width} 0,${triangle.height - 2}`)
     .attr("transform", (d, i) => `translate(${startLength - bar.width + i * (triangle.width + triangle.padding)},0)`);
 
-  const y = d => innerRadius(d) - bar.padding / 2 - minRadius + margin.top,
+  g.selectAll(".track")
+    .data(seq(chartData.length + 1))
+    .join("path")
+    .attr("class", "track")
+    .attr("stroke", "#ccc")
+    .attr("d", axisArc)
+    .attr("transform", `translate(${radialStart}, ${maxRadius + margin.top})`);
+
+  const y = d => innerRadius(d) + bar.width + bar.padding / 2 - minRadius + margin.top,
     tspace = startLength + (triangle.width + triangle.padding) * triangle.num;
   g.selectAll("line")
     .data(seq(numOfBars + 1))
     .join("line")
     .attr("stroke", "#ccc")
     .attr("x1", bar.width).attr("y1", y)
-    .attr("x2", tspace).attr("y2", y);
+    .attr("x2", radialStart).attr("y2", y);
 
   parts.start = starts;
 
   return tspace;
 }
 
-//chart svg
+// chart svg
 const svg = d3.create("svg")
-  .attr("font-size", "10pt")
+  .attr("font-size", (barThinkness * 0.7) + "pt")
   .attr("cursor", "default")
   .attr("viewBox", [0, 0, width, height]);
 
 document.body.append(svg.node());
 
-var tspace = 0;
-svg.append("g").call(g => tspace = drawStartLines(g));
-svg.append("g").call(g => drawRadialBars(g, tspace));
+svg.append("g").call(g => drawStartLines(g));
+svg.append("g").call(g => drawRadialBars(g));
 
-
-html.appendChild(svg.node());
+const svgEl = svg.node();
+html.appendChild(svgEl);
