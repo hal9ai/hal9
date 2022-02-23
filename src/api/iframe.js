@@ -77,7 +77,7 @@ export const init = async (options) => {
           }); 
         </script>
       </head>
-      <body style="height: 100%">
+      <body style="height: 100%; margin: 0;">
       	<div id="output" style="width: 100%; height: 100%;"></div>
       </body>
     </html>
