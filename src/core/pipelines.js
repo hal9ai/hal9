@@ -48,21 +48,22 @@ import errorbarcharttxt from '../../scripts/charts/errorbarchart.txt.js';
 import heatmapcharttxt from '../../scripts/charts/heatmapchart.txt.js';
 import histogramcharttxt from '../../scripts/charts/histogramchart.txt.js';
 import linecharttxt from '../../scripts/charts/linechart.txt.js';
-import radialbarstxt from '../../scripts/charts/radialbars.txt.js';
 import sankeycharttxt from '../../scripts/charts/sankeychart.txt.js';
 import scattercharttxt from '../../scripts/charts/scatterchart.txt.js';
 import treemapcharttxt from '../../scripts/charts/treemapchart.txt.js';
-import wafflecharttxt from '../../scripts/charts/wafflechart.txt.js';
-import waterfallcharttxt from '../../scripts/charts/waterfallchart.txt.js';
 
 // visualization scripts
 import bubblestxt from '../../scripts/visualizations/bubbles.txt.js';
+import funneltxt from '../../scripts/visualizations/funnel.txt.js';
 import gallerytxt from '../../scripts/visualizations/gallery.txt';
 import mapcharttxt from '../../scripts/visualizations/map.txt.js';
 import networktxt from '../../scripts/visualizations/network.txt.js';
-import threejstxt from '../../scripts/visualizations/three.txt.js';
-import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
+import radialbarstxt from '../../scripts/charts/radialbars.txt.js';
 import simpletabletxt from '../../scripts/visualizations/simpletable.txt';
+import threejstxt from '../../scripts/visualizations/three.txt.js';
+import wafflecharttxt from '../../scripts/charts/wafflechart.txt.js';
+import waterfallcharttxt from '../../scripts/charts/waterfallchart.txt.js';
+import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
 
 // prediction scripts
 import movenettxt from '../../scripts/predict/movenet.txt.js';
@@ -200,20 +201,21 @@ const scripts = {
   histogramchart: { script: histogramcharttxt, language: 'javascript' },
   violinchart: { script: violinplotcharttxt, language: 'pyodide' },
   linechart: { script: linecharttxt, language: 'javascript' },
-  radialbars: { script: radialbarstxt, language: 'javascript' },
   sankeychart: { script: sankeycharttxt, language: 'javascript' },
   scatterchart: { script: scattercharttxt, language: 'javascript' },
   treemapchart: { script: treemapcharttxt, language: 'javascript' },
-  wafflechart: { script: wafflecharttxt, language: 'javascript' },
-  waterfallchart: { script: waterfallcharttxt, language: 'javascript' },
 
   // visualizations
   bubbles: { script: bubblestxt, language: 'javascript' },
+  funnel: { script: funneltxt, language: 'javascript' },
   gallery: { script: gallerytxt, language: 'html' },
   mapchart: { script: mapcharttxt, language: 'javascript' },
   network: { script: networktxt, language: 'javascript' },
+  radialbars: { script: radialbarstxt, language: 'javascript' },
   threejs: { script: threejstxt, language: 'javascript' },
+  wafflechart: { script: wafflecharttxt, language: 'javascript' },
   wordcloud: { script: wordcloudtxt, language: 'javascript' },
+  waterfallchart: { script: waterfallcharttxt, language: 'javascript' },
   table: { script: simpletabletxt, language: 'html' },
 
   // predictions
