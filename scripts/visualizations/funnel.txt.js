@@ -25,6 +25,18 @@
         label: Yes
       - name: 'false'
         label: No
+  - name: funnelType
+    label: Show Percent
+    value:
+    - control: select
+      value: '2d'
+      values:
+      - name: '2d'
+        label: '2D'
+      - name: '3d'
+        label: '3D'
+      - name: 'flat'
+        label: Flat
   - name: palette
     label: D3 Palette
     value:
@@ -665,7 +677,7 @@ new FunnelChart(svg)
   .size([ html.offsetWidth, html.offsetHeight ])
   .options({ 
   palette: d3[palette], 
-  style: '2d',
+  style: funnelType,
   showPercentage: showPercentSelection == 'true',
   percentage: 'first'
   })
