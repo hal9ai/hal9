@@ -206,7 +206,7 @@ export const runPipeline = async (pipelineid, context) => {
 }
 
 export async function setEnv(env) {
-  return await post("hal9.setEnv(params.env)", {
+  return await post("hal9.environment.setEnv(params.env)", {
     env: env,
   });
 }

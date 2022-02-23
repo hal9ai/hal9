@@ -41,10 +41,7 @@ async function fetchPipeline(pipelinepath) {
 }
 
 async function setEnv(env) {
-  const userEnv = environment.getUserEnv();
-  if (userEnv) {
-    await api.setEnv(userEnv);
-  }
+  await api.setEnv(env);
 
   return environment.setEnv(env);
 }
