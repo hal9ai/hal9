@@ -58,11 +58,11 @@ import funneltxt from '../../scripts/visualizations/funnel.txt.js';
 import gallerytxt from '../../scripts/visualizations/gallery.txt';
 import mapcharttxt from '../../scripts/visualizations/map.txt.js';
 import networktxt from '../../scripts/visualizations/network.txt.js';
-import radialbarstxt from '../../scripts/charts/radialbars.txt.js';
+import radialbarstxt from '../../scripts/visualizations/radialbars.txt.js';
 import simpletabletxt from '../../scripts/visualizations/simpletable.txt';
 import threejstxt from '../../scripts/visualizations/three.txt.js';
-import wafflecharttxt from '../../scripts/charts/wafflechart.txt.js';
-import waterfallcharttxt from '../../scripts/charts/waterfallchart.txt.js';
+import wafflecharttxt from '../../scripts/visualizations/waffle.txt.js';
+import waterfallcharttxt from '../../scripts/visualizations/waterfall.txt.js';
 import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
 
 // prediction scripts
