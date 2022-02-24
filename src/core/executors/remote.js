@@ -20,7 +20,7 @@ export default class RemoteExecutor extends Executor {
 
     // remove arquero objects which don't serialize nicely
     Object.keys(this.inputs).forEach(input => {
-      if (typeof(this.inputs[input].columns) == 'function') {
+      if (this.inputs[input] && typeof(this.inputs[input].columns) == 'function') {
         this.inputs[input] = toRowsFromArquero(this.inputs[input]);
       }
     })
