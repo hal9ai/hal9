@@ -113,7 +113,7 @@ export const init = async (options) => {
   };
 }
 
-const post = async (code, params) => {
+const post = async (code, params, options = {}) => {
   try {
     if (typeof(window) != 'undefined' && window.hal9 && window.hal9.debug) {
       const config = window.hal9.debug;
@@ -134,7 +134,7 @@ const post = async (code, params) => {
           return;
         }
 
-        window.removeEventListener('message', onResult);
+        if (!options.longlisten) window.removeEventListener('message', onResult);
 
         if (event.data.error) {
           reject(event.data.error);
@@ -146,6 +146,15 @@ const post = async (code, params) => {
 
       var responseListener = window.addEventListener('message', onResult);
     });
+
+    if (options.longlisten) {
+      var observer = new MutationObserver(function (e) {
+        if (e.filter(e => e.removedNodes && e.removedNodes[0] == iframe).length > 0) {
+          window.removeEventListener('message', onResult);
+        }
+      });
+      observer.observe(iframe.parentNode, { childList: true });
+    }
 
     // handle callbacks with custom serializer
     const serializeFunctions = (target) => {
@@ -208,6 +217,8 @@ export const run = async (pipeline, context) => {
 	return await post("hal9.run(params.pipeline, params.context)", {
     pipeline: pipeline,
     context: context,
+  }, {
+    longlisten: true
   })
 }
 
@@ -215,6 +226,8 @@ export const runPipeline = async (pipelineid, context) => {
   return await post("hal9.runPipeline(params.pipelineid, params.context)", {
     pipelineid: pipelineid,
     context: context,
+  }, {
+    longlisten: true
   })
 }
 
@@ -264,6 +277,8 @@ export async function pipelinesRun(pipelineid, context, partial, stepstopid) {
     context: context,
     partial: partial,
     stepstopid: stepstopid,
+  }, {
+    longlisten: true
   })
 }
 
