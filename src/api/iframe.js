@@ -76,14 +76,27 @@ export const init = async (options) => {
             })();
           }); 
         </script>
+        <style>
+          body {
+            height: 100%;
+            margin: 0;
+            font-family: Helvetica, sans-serif;
+            color: #4a4a4a;
+            line-height: 1.25;
+            font-weight: 200;
+          }
+          h1, h2 {
+            font-weight: 400;
+          }
+        </style>
       </head>
-      <body style="height: 100%; margin: 0;">
+      <body>
       	<div id="output" style="width: 100%; height: 100%;"></div>
       </body>
     </html>
   `;
 
-  iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(iframehtml);
+  iframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(iframehtml);
 
   var waitLoad = new Promise((accept, reject) => {
     iframe.addEventListener('load', accept);
