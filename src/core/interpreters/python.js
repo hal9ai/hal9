@@ -47,7 +47,11 @@ hal9__output = {
 }
 
 with open('\${outputname}', 'w') as json_file:
-  json.dump(hal9__output, json_file)
+  json.dump(
+    hal9__output,
+    json_file,
+    default = lambda df: json.loads(df.to_json(orient = 'records'))
+  )
 \`);
 
 const { stdout, stderr } = await exec('python3 ' + scriptname, { timeout: 30000 } );
