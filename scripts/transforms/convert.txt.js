@@ -67,6 +67,9 @@ if ((dataType === 'int') || (dataType === 'float')) {
         result = parseFloat(result);
       }
     }
+    else if (typeof result.getMonth === 'function') {
+      result = result.getTime();
+    }
     return result;
   });
 }
