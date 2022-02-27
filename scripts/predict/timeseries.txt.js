@@ -21,7 +21,7 @@
       label: Predictions
       value:
         - control: number
-          value: 1
+          value: 10
   cache: true
   deps:
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
@@ -112,9 +112,11 @@ if(prediction) {
     throw "Training stopped"
 
   const xp = tf.tensor(x_predict).reshape([-1, window, 1])
-
+  
   const results = model.predict(xp).arraySync();
   if (results.length != allwindows.length) throw('Expecting window with ' + results.length + ' rows but got ' + allwindows.length);
+
+  var futurePredictions = []
 
   data = data.assign({
     prediction: results.map((e, i) => {
@@ -124,14 +126,22 @@ if(prediction) {
       const min = Math.min(...x_input);
       const max = Math.max(...x_input);
 
-      if (i < x_train_max) {
-        return e[0] * (max - min) + min;
+      if (i == 49) debugger;;
+      if (i == results.length - 1){
+        const last = results.length - 1;
+        for (let j = 1; j < predictions; j++) {
+          futurePredictions.push(results[last][j] * (max - min) + min);
+        }
       }
-      else {
-        return results[x_train_max][i - x_train_max] * (max - min) + min;
-      }
+
+      return e[0] * (max - min) + min;
     })
   });
+
+  const predtable = aq.table({ prediction: futurePredictions });
+
+  //data = data.select(['Year', 'prediction']);
+  data = data.union(predtable)
 
   data = data.select(aq.not('window' + prediction));
 }
