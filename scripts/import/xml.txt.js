@@ -38,16 +38,31 @@ if (type === 'url' && file != '') {
   xml = await res.text();
 } else {
   file = atob(file.replace(/^.*;base64,/, ''));
-  console.log(typeof file)
   xml = file;
-  console.log(file)
 }
 
 if (xml) {
-  console.log(typeof xml, 'second')
-  j = xmlToJSON.parseString(xml)
+  var parser = new DOMParser();
+  var xmlDoc = parser.parseFromString(xml, 'text/xml');
 
-  data = aq.fromJSON(text = j);
+  const base = xmlDoc.getElementsByTagName(root)[0];
+
+  data = [];
+  for (var i = 0; i < base.childNodes.length; i++) {
+    var row = {};
+    var elem = base.childNodes[i];
+
+    if (elem.nodeName != rowname) continue;
+
+    for (var j = 0; j < elem.childNodes.length; j++) {
+      var val = elem.childNodes[j];
+      if (val.nodeType !== xmlDoc.ELEMENT_NODE || val.childNodes.length == 0) continue;
+
+      row[val.nodeName] = val.childNodes[0].nodeValue;
+    }
+
+    data.push(row)
+  }
 } else {
   data = '';
 }
