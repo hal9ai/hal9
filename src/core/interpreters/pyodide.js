@@ -72,7 +72,7 @@ plot = 'data:image/png;base64,' + hal9__base64.b64encode(hal9__buf.read()).decod
 
   header.deps = [
     'https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js?v=0.0.15',
-    'https://cdn.jsdelivr.net/pyodide/dev/full/pyodide.js?v=dev-0.20.0'
+    'https://cdn.jsdelivr.net/pyodide/v0.19.1/full/pyodide.js?v=0.19.1'
   ];
 
   return {
