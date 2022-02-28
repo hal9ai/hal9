@@ -71,7 +71,13 @@ import knntxt from '../../scripts/predict/knn.txt.js';
 import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
 import regressionpredicttxt from '../../scripts/predict/regression.txt.js';
 import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
-import timeseriespredicttxt from '../../scripts/predict/timeseries.txt.js';
+
+// prediction / timeseries scripts
+import autoregressivetxt from '../../scripts/timeseries/autoregressive.txt.js';
+import lstmtxt from '../../scripts/timeseries/lstm.txt.js';
+import movingaveragetxt from '../../scripts/timeseries/movingaverage.txt.js';
+import prophettxt from '../../scripts/timeseries/prophet.txt.js';
+import seasonalitytxt from '../../scripts/timeseries/seasonality.txt.js';
 
 // stats scripts
 import shapirotxt from '../../scripts/stats/shapiro.txt.js';
@@ -225,7 +231,13 @@ const scripts = {
   mobilenet: { script: mobilenettxt, language: 'javascript' },
   regressionpredict: { script: regressionpredicttxt, language: 'javascript' },
   sentiment: { script: sentimenttxt, language: 'javascript' },
-  timeseriespredict: { script: timeseriespredicttxt, language: 'javascript' },
+
+  // prediction / time
+  timeauto: { script: autoregressivetxt, language: 'pyodide' },
+  timelstm: { script: lstmtxt, language: 'javascript' },
+  timemovingaverage: { script: movingaveragetxt, language: 'javascript' },
+  timeprophet: { script: prophettxt, language: 'python' },
+  timeseasonality: { script: seasonalitytxt, language: 'pyodide' },
 
   // stats
   shapiro: { script: shapirotxt, language: 'pyodide' },

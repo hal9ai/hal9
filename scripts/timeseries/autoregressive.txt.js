@@ -19,6 +19,6 @@ data['date2'] = data['Month']
 
 data = data.set_index("Month")
 
-# data = SARIMAX(data[predictfield], order=(3, 1, 1)).fit()
+data = SARIMAX(data[predictfield], order=(3, 1, 1)).fit()
 
-data = 123
+data['predictions'] = model.predict()
