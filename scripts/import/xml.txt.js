@@ -12,13 +12,19 @@
               label: 'Load file'
           selected: 'url'
           fileExt: '.xml'
-          value: 'https://raw.githubusercontent.com/Emilianopp/School/master/t.xml?token=GHSAT0AAAAAABOQGH4SANBI46OKOTGQWGMOYQGUFUQ'
-    
-  deps: [
-      'https://cdn.jsdelivr.net/npm/arquero@latest',
-    'https://cdn.jsdelivr.net/npm/xmltojson@latest'
-    ] 
-
+          value: https://feeds.simplecast.com/54nAGcIl
+    - name: root
+      label: Root Element
+      value:
+        - control: textbox
+          value: channel
+    - name: rowname
+      label: Row Element
+      value:
+        - control: textbox
+          value: item
+  deps:
+    - https://cdn.jsdelivr.net/npm/arquero@latest
   cache: true
 **/
 
