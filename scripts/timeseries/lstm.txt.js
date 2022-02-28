@@ -126,7 +126,6 @@ if(prediction) {
       const min = Math.min(...x_input);
       const max = Math.max(...x_input);
 
-      if (i == 49) debugger;;
       if (i == results.length - 1){
         const last = results.length - 1;
         for (let j = 1; j < predictions; j++) {
@@ -140,7 +139,6 @@ if(prediction) {
 
   const predtable = aq.table({ prediction: futurePredictions });
 
-  //data = data.select(['Year', 'prediction']);
   data = data.union(predtable)
 
   data = data.select(aq.not('window' + prediction));
