@@ -57,7 +57,7 @@ plot = 'data:image/png;base64,' + hal9__base64.b64encode(hal9__buf.read()).decod
     ${debugcode}
 
     if (!self.pyodide) {
-      self.pyodide = await loadPyodide({ indexURL : "https://cdn.jsdelivr.net/pyodide/dev/full/" });
+      self.pyodide = await loadPyodide({ indexURL : "https://cdn.jsdelivr.net/pyodide/v0.19.1/full/" });
     }
 
     ${jsconvertcode}
