@@ -233,7 +233,7 @@ const scripts = {
   sentiment: { script: sentimenttxt, language: 'javascript' },
 
   // prediction / time
-  timeauto: { script: autoregressivetxt, language: 'pyodide' },
+  timeauto: { script: autoregressivetxt, language: 'python' },
   timelstm: { script: lstmtxt, language: 'javascript' },
   timemovingaverage: { script: movingaveragetxt, language: 'javascript' },
   timeprophet: { script: prophettxt, language: 'python' },

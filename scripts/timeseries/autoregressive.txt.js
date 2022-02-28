@@ -4,7 +4,8 @@
 ##     label: Date
 ##   - name: predictfield
 ##     label: Predict
-## deps: [ 'numpy', 'pandas', 'statsmodels' ]
+## environment: worker
+## cache: true
 ##
 
 import numpy as np
@@ -13,12 +14,14 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 
 data = pd.DataFrame(data)
 
-data['Month'] = pd.to_datetime(data[datefield], unit ='s')
+data[datefield] = pd.to_datetime(data[datefield])
 
-data['date2'] = data['Month']
+data['date__hal9'] = data[datefield]
 
-data = data.set_index("Month")
+data = data.set_index(datefield)
 
-data = SARIMAX(data[predictfield], order=(3, 1, 1)).fit()
+model = SARIMAX(data[predictfield], order=(3, 1, 1)).fit()
 
 data['predictions'] = model.predict()
+
+data = data.rename({ 'date__hal9': datefield }, axis = 1)
