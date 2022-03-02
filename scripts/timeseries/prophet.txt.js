@@ -15,6 +15,9 @@ from prophet import Prophet
 
 data = pd.DataFrame(data)
 
+data[datefield] = pd.to_datetime(data[datefield], errors='coerce')
+data[datefield] = data[datefield].dt.strftime('%Y-%m-%d')
+
 data = data.assign(ds = lambda x: x[datefield])
 data = data.assign(y = lambda x: x[predictfield])
 
