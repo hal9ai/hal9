@@ -272,3 +272,7 @@ export async function screenshotCapture(output, options = {}) {
 export async function screenshotResize(sourceImageData, width, height) {
   return await screenshot.resize(sourceImageData, width, height);
 }
+
+export function htmlSetContainerStyle(name, value) {
+  
+}

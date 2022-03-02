@@ -506,3 +506,7 @@ export async function screenshotResize(sourceImageData, width, height) {
     height: height
   })
 }
+
+export function htmlSetContainerStyle(name, value) {
+  config.iframe.style[name] = value;
+}

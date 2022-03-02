@@ -198,6 +198,10 @@ async function screenshotResize(sourceImageData, width, height) {
   return await api.screenshotResize(sourceImageData, width, height);
 }
 
+function htmlSetContainerStyle(name, value) {
+  return api.htmlSetContainerStyle(name, value);
+}
+
 export default {
   init: init,
   create: create,
@@ -276,6 +280,10 @@ export default {
   screenshot: {
     capture: screenshotCapture,
     resize: screenshotResize,
+  },
+
+  html: {
+    setContainerStyle: htmlSetContainerStyle,
   }
 };
 
