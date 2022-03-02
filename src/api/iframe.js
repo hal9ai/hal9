@@ -491,3 +491,18 @@ export async function pipelinesIsAborted(pipelineid) {
     pipelineid: pipelineid,
   })
 }
+
+export async function screenshotCapture(output, options = {}) {
+  return await post("hal9.screenshot.capture(params.output, params.options)", {
+    output: output,
+    options: options
+  })
+}
+
+export async function screenshotResize(sourceImageData, width, height) {
+  return await post("hal9.screenshot.resize(params.sourceImageData, params.width, params.height)", {
+    sourceImageData: sourceImageData,
+    width: width,
+    height: height
+  })
+}

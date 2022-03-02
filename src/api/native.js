@@ -3,6 +3,7 @@ import * as workers from '../core/workers';
 import * as pipelines from '../core/pipelines';
 import * as pipelineremote from '../core/pipelineremote';
 import * as datasets from '../core/datasets';
+import * as screenshot from '../core/utils/screenshot';
 
 const runRemote = async (lambda, context) => {
   if (typeof(lambda) != 'function') {
@@ -262,4 +263,12 @@ export async function pipelinesAbort(pipelineid) {
 
 export async function pipelinesIsAborted(pipelineid) {
   return await pipelines.isAborted(pipelineid);
+}
+
+export async function screenshotCapture(output, options = {}) {
+  return await screenshot.capture(output, options);
+}
+
+export async function screenshotResize(sourceImageData, width, height) {
+  return await screenshot.resize(sourceImageData, width, height);
 }

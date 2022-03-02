@@ -74,3 +74,12 @@ export const loadScripts = async function(deps, _fetch) {
   else
     await loadDepsForJS(deps, _fetch);
 }
+
+export const loadScriptObject = async function(url, object) {
+  await loadScripts([ url ]);
+
+  var loaded = null;
+  if (typeof(window) != 'undefined') loaded = window[object];
+
+  return loaded;
+}

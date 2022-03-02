@@ -190,6 +190,14 @@ async function pipelinesIsAborted(pipelineid) {
   return await api.pipelinesIsAborted(pipelineid);
 }
 
+async function screenshotCapture(output, options = {}) {
+  return await api.screenshotCapture(output, options);
+}
+
+async function screenshotResize(sourceImageData, width, height) {
+  return await api.screenshotResize(sourceImageData, width, height);
+}
+
 export default {
   init: init,
   create: create,
@@ -264,5 +272,10 @@ export default {
     abort: pipelinesAbort,
     isAborted: pipelinesIsAborted,
   },
+
+  screenshot: {
+    capture: screenshotCapture,
+    resize: screenshotResize,
+  }
 };
 
