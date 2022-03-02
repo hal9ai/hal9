@@ -7,11 +7,13 @@
     output: [ html, data ]
   **/
 
+  var xsEl = document.getElementById('xspreadsheet');
+
   const state = hal9.getState()
   if (state && state.data) data = state.data
 
   data = data ? data : []
-  const rows = { len: 10 + 2 * data.length };
+  const rows = { len: 50 + 2 * data.length };
   if (data.length > 0) {
     const columns = Object.keys(data[0]);
 
@@ -31,9 +33,11 @@
   }
   
   var xs = x_spreadsheet('#xspreadsheet', {
-    showToolbar: true,
+    showToolbar: false,
     showGrid: true,
-    showContextmenu: true,
+    showContextmenu: false,
+    showBottomBar: false,
+    extendToolbar: false,
   })
     .loadData([{
       name: 'data',
@@ -64,13 +68,11 @@
 
       hal9.setState({ data: data });
       hal9.invalidate();
-      console.log('>>>', xs.getData());
     });
 
-  var xsEl = document.getElementById('xspreadsheet');
   var observer = new MutationObserver(function (e) {
     if (e.filter(e => e.removedNodes && e.removedNodes[0] == xsEl).length > 0) {
-      console.log('@### Removed')
+      delete xs;
     }
   });
   observer.observe(xsEl.parentNode, { childList: true });
