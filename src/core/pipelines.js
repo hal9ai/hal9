@@ -117,6 +117,7 @@ import reacttxt from '../../scripts/frameworks/react.txt';
 import vuetxt from '../../scripts/frameworks/vue.txt';
 
 // control scripts
+import spreadsheetctrltxt from '../../scripts/controls/spreadsheet.txt';
 import websitectrltxt from '../../scripts/controls/website.txt.js';
 
 // business scripts
@@ -278,6 +279,7 @@ const scripts = {
   vue: { script: vuetxt, language: 'html' },
 
   // controls
+  spreadsheet: { script: spreadsheetctrltxt, language: 'html' },
   website: { script: websitectrltxt, language: 'javascript' },
 
   // controls
