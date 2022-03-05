@@ -8,15 +8,53 @@ export default async function(script, header, context) {
 
   const debugcode = debuggerIf('interpret');
 
-  var plotimportcode = `import io as hal9__io
+  var plotimportcode = `
+import io as hal9__io
 import base64 as hal9__base64
 import matplotlib.pyplot as hal9__plt
-hal9__fig, hal9__ax = hal9__plt.subplots()`;
+hal9__fig, hal9__ax = hal9__plt.subplots()
+
+class Capture(list):
+  def __enter__(self):
+    import sys
+    from io import StringIO 
+    self._stdout = sys.stdout
+    sys.stdout = self._stringio = StringIO()
+    return self
+  def __exit__(self, *args):
+    import sys
+    self.extend(self._stringio.getvalue().splitlines())
+    del self._stringio
+    sys.stdout = self._stdout
+hal9__log = Capture().__enter__()
+`;
 
   var plotexportcode = `hal9__buf = hal9__io.BytesIO()
 hal9__fig.savefig(hal9__buf, format='png')
 hal9__buf.seek(0)
-plot = 'data:image/png;base64,' + hal9__base64.b64encode(hal9__buf.read()).decode('UTF-8')`;
+plot = 'data:image/png;base64,' + hal9__base64.b64encode(hal9__buf.read()).decode('UTF-8')
+`;
+
+  var prepycode = `
+class Capture(list):
+  def __enter__(self):
+    import sys
+    from io import StringIO 
+    self._stdout = sys.stdout
+    sys.stdout = self._stringio = StringIO()
+    return self
+  def __exit__(self, *args):
+    import sys
+    self.extend(self._stringio.getvalue().splitlines())
+    del self._stringio
+    sys.stdout = self._stdout
+hal9__log = Capture().__enter__()
+`;
+
+  var postpycode = `
+hal9__log.__exit__()
+log = '\\\\n'.join(hal9__log)
+`;
 
   if (!output.includes('plot')) {
     plotimportcode = plotexportcode = '';
@@ -65,7 +103,7 @@ plot = 'data:image/png;base64,' + hal9__base64.b64encode(hal9__buf.read()).decod
     ${paramscode}
     ${importcode}
 
-    await self.pyodide.runPythonAsync(\`${plotimportcode}\n${pyconvertcode}\n${script}\n${plotexportcode}\`)
+    await self.pyodide.runPythonAsync(\`${prepycode}${plotimportcode}\n${pyconvertcode}\n${script}\n${plotexportcode}${postpycode}\`)
 
     ${outputcode}
   `;
