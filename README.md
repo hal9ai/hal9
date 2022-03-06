@@ -1,7 +1,7 @@
 
 # Hal9
 
-[<img src="https://img.shields.io/discord/939331860092301312">](https://discord.gg/jP8W48EVa3) 
+[<img src="https://img.shields.io/discord/939331860092301312">](https://discord.gg/jP8W48EVa3) [![](https://data.jsdelivr.com/v1/package/npm/hal9/badge)](https://www.jsdelivr.com/package/npm/hal9)
 
 Hal9 provides a platform to develop Artificial Intelligence solutions with web technologies. This repo contains the open source components that power [hal9.ai](https://hal9.ai) which consist of:
 
