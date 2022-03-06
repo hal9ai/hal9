@@ -51,12 +51,12 @@ const loadDepsForBrowser = async function(deps) {
   return '';
 }
 
-const loadDepsForJS = async function(deps, params) {
+const loadDepsForJS = async function(deps) {
   const depscode = await Promise.all(deps.map(dep => {
     if (Object.keys(depsCache).includes(dep))
       return Promise.resolve(depsCache[dep]);
     else {
-      const fetchFunc = typeof fetch === 'function' ? fetch : params.fetch;
+      const fetchFunc = typeof fetch === 'function' ? fetch : global.fetch;
       return fetchFunc(dep).then(resp => resp.text());
     }
   }));
@@ -68,11 +68,11 @@ const loadDepsForJS = async function(deps, params) {
   return depscode.join('\n') + '\n\n';
 }
 
-export const loadScripts = async function(deps, _fetch) {
+export const loadScripts = async function(deps) {
   if (typeof(window) != 'undefined')
-    await loadDepsForBrowser(deps);
+    return await loadDepsForBrowser(deps);
   else
-    await loadDepsForJS(deps, _fetch);
+    return await loadDepsForJS(deps);
 }
 
 export const loadScriptObject = async function(url, object) {

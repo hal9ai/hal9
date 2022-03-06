@@ -91,7 +91,8 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
   const deps = !nodeps ? header.deps : [];
   const output = header.output;
   
-  const depscode = await loadScripts(deps, params.fetch);
+  const depscode = await loadScripts(deps);
+  console.log(depscode);
 
   const returns = '{ ' + output.filter(e => e != 'html').map((e) => e + ': ' + e).join(', ') + ' }';
 
