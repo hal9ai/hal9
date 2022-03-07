@@ -89,7 +89,7 @@ log = '\\\\n'.join(hal9__log)
 
   const pyconvertcode = input.map(e => `if (hasattr(${e}, 'to_py')):
   ${e} = ${e}.to_py()
-  `)
+  `).join('\n');
 
   const interpreted =  `
     ${debugcode}
