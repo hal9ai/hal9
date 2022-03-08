@@ -53,6 +53,10 @@ export const getId = () => {
   return hal9env;
 }
 
+const getLocalhostServerUrl = () => {
+  return (window?.location.origin.startsWith('https://localhost') ? 'https://localhost:5000' : 'http://localhost:5000');
+};
+
 export const getServerUrl = () => {
   const hal9env = getId();
 
@@ -60,7 +64,7 @@ export const getServerUrl = () => {
 
   if (isOtherDevelopment()) return isOtherDevelopment() + ':5000';
 
-  if (userHal9Env === 'local' || isDevelopment()) return 'http://localhost:5000';
+  if (userHal9Env === 'local' || isDevelopment()) return getLocalhostServerUrl();
 
   return 'https://api.devel.hal9.com';
 }
@@ -72,7 +76,7 @@ export const getServerCachedUrl = () => {
 
   if (isOtherDevelopment()) return isOtherDevelopment() + ':5000';
 
-  if (userHal9Env === 'local' || isDevelopment()) return 'http://localhost:5000';
+  if (userHal9Env === 'local' || isDevelopment()) return getLocalhostServerUrl();
 
   return 'https://devel.hal9.com';
 }
