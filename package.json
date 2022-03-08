@@ -1,6 +1,6 @@
 {
   "name": "hal9",
-  "version": "0.1.23",
+  "version": "0.1.24",
   "license": "MIT",
   "description": "Hal9: Composable machine-learning pipelines",
   "main": "dist/hal9.js",
@@ -13,7 +13,7 @@
     "watch": "webpack --watch",
     "test": "tape test/**/*.test.js",
     "check": "yarn flow check",
-    "web": "python -m SimpleHTTPServer 8000"
+    "web": "python3 -m http.server 8000"
   },
   "dependencies": {
     "buffer": "^6.0.3",
