@@ -54,7 +54,8 @@ export const getId = () => {
 }
 
 const getLocalhostServerUrl = () => {
-  return (window?.location.origin.startsWith('https://localhost') ? 'https://localhost:5000' : 'http://localhost:5000');
+  const isHttps = ((typeof(window) !== 'undefined') && (window.location.protocol === 'https:'));
+  return (isHttps ? 'https://localhost:5000' : 'http://localhost:5000');
 };
 
 export const getServerUrl = () => {
