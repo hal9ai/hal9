@@ -13,7 +13,7 @@
           selected: 'url'
           type: 'buffer'
           fileExt: '.xls, .xlsx'
-          value: 'https://file-examples-com.github.io/uploads/2017/02/file_example_XLSX_100.xlsx'
+          value: 'https://prodhal9.s3.us-west-2.amazonaws.com/users/7be30db96302d198035cec0d76c8ce7a_46079/file_example_XLSX_100.csv'
   deps: [
     'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.12.4/xlsx.core.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js'
