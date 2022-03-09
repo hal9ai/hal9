@@ -1,10 +1,13 @@
 import { debuggerIf } from '../utils/debug'
 
+const reservedOutput = [ 'stdout', 'stderr' ];
+
 export default async function(script, header, context) {
   const debugcode = debuggerIf('interpret');
 
   const params = header.params ? header.params.map(e => e.name) : [];
   const inputs = header.input ? header.input : [];
+  const output = header.output ? header.output : [ 'data' ];
 
   // escape script
   script = script.replace(/`/g, '\\\`');
@@ -15,6 +18,13 @@ export default async function(script, header, context) {
   const paramNodeDef = paramsAll.map(e => `${e}: ${e}`).join(', ');
 
   const paramRDef = paramsAll.map(e => `${e} = hal9__params[['${e}']]`).join('\r\n');
+
+  const routputcode = output
+    .filter(e => !reservedOutput.includes(e))
+    .map(e => e + " = " + e).join(',\n');
+  const jsoutputcode = output
+    .filter(e => !reservedOutput.includes(e))
+    .map(e => "" + e + " = output." + e).join('\n');
 
   const interpreted = `${debugcode}
 const params = { ${paramNodeDef} };
@@ -49,7 +59,9 @@ ${paramRDef}
 
 ${script}
 
-hal9__output = list(data = data)
+hal9__output = list(
+  ${routputcode}
+)
 
 jsonlite::write_json(hal9__output, '\${outputname}', pretty = FALSE)
 \`);
@@ -71,7 +83,8 @@ function fileToMediaType(name) {
   return extMediaType[ext] ? extMediaType[ext] : 'text/plain';
 }
 
-data = output.data;
+${jsoutputcode}
+
 var files = {};
 var plots = [];
 var plot = null;
