@@ -26,18 +26,20 @@ export const getUserEnv = (env) => {
   return userHal9Env;
 }
 
-export const isDevelopment = () => {
-  if (typeof(window) == 'undefined') return false;
-
-  return (!isElectron() && window.location.origin == 'file://') ||
-    window.location.origin.includes('//localhost');
-}
-
 const isOtherDevelopment = () => {
   if (typeof(window) == 'undefined') return null;
 
   if (window.location.origin.includes('mshome.net'))
     return window.location.protocol + "//" + window.location.hostname;
+}
+
+export const isDevelopment = () => {
+  if (isOtherDevelopment()) return true;
+
+  if (typeof(window) == 'undefined') return false;
+
+  return (!isElectron() && window.location.origin == 'file://') ||
+    window.location.origin.includes('//localhost');
 }
 
 export const getId = () => {
