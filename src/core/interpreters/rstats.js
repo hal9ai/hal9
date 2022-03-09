@@ -9,6 +9,8 @@ export default async function(script, header, context) {
   const inputs = header.input ? header.input : [];
   const output = header.output ? header.output : [ 'data' ];
 
+  const canThrow = !output.includes('stderr');
+
   // escape script
   script = script.replace(/`/g, '\\\`');
 
@@ -66,10 +68,33 @@ hal9__output = list(
 jsonlite::write_json(hal9__output, '\${outputname}', pretty = FALSE)
 \`);
 
-const { stdout, stderr } = await exec('Rscript ' + scriptname, { timeout: 30000 } );
+var stdout = '';
+var stderr = '';
+var error = null;
+var output = {};
 
-const rawoutput = await readFileAsync(outputname)
-const output = JSON.parse(rawoutput);
+var forked = new Promise((accept, reject) => {
+  const spawned = spawn('Rscript', [ scriptname ], { timeout: 30000 });
+
+  spawned.stdout.on('data', (data) => {
+    stdout = stdout + data;
+  });
+
+  spawned.stderr.on('data', (data) => {
+    stderr = stderr + data;
+  });
+
+  spawned.on('close', (code) => {
+    if (code != 0) error = stderr;
+    accept()
+  });
+})
+
+await forked;
+
+if (error && ${canThrow}) {
+  throw error;
+}
 
 var fileslist = fs.readdirSync(scriptpath);
 
