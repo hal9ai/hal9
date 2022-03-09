@@ -30,10 +30,10 @@ const arqueroDeserialize = async (e) => {
 
 const arqueroIsSerialized = (e) => /{\"schema\":/g.test(e)
 
-const arqueroEnsure = async (e) => {
+const arqueroEnsure = async (data) => {
   const aq = await arqueroRoot();
   var columns = {};
-  var data = event.data.result.data._data;
+  data = data._data;
 
   Object.keys(data).forEach(e => columns[e] = data[e].data);
 
