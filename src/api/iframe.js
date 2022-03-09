@@ -148,7 +148,7 @@ const post = async (code, params, options = {}) => {
     const postId = config.postId++;
 
     var waitResponse = new Promise((accept, reject) => {
-      var onResult = function(e) {
+      var onResult = function(event) {
         if (!event.data || event.data.secret != secret || event.data.id != postId) return;
 
         if (event.data.callbackid !== undefined) {
