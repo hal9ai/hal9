@@ -1,5 +1,7 @@
 import { debuggerIf } from '../utils/debug'
 
+const reservedOutput = [ 'stdout', 'stderr' ];
+
 export default async function(script, header, context) {
   const debugcode = debuggerIf('interpret');
 
@@ -14,8 +16,12 @@ export default async function(script, header, context) {
 
   const paramPythonDef = paramsAll.map(e => `${e} = hal9__params['${e}']`).join('\r\n');
 
-  const pyoutputcode = output.map(e => "'" + e + "': " + e).join(',\n');
-  const jsoutputcode = output.map(e => "" + e + " = output." + e).join('\n');
+  const pyoutputcode = output
+    .filter(e => !reservedOutput.includes(e))
+    .map(e => "'" + e + "': " + e).join(',\n');
+  const jsoutputcode = output
+    .filter(e => !reservedOutput.includes(e))
+    .map(e => "" + e + " = output." + e).join('\n');
 
   const interpreted = `${debugcode}
 const params = { ${paramNodeDef} };
@@ -44,24 +50,7 @@ with open('\${paramsname}') as json_file:
   
 ${paramPythonDef}
 
-class Capture(list):
-  def __enter__(self):
-    import sys
-    from io import StringIO 
-    self._stdout = sys.stdout
-    sys.stdout = self._stringio = StringIO()
-    return self
-  def __exit__(self, *args):
-    import sys
-    self.extend(self._stringio.getvalue().splitlines())
-    del self._stringio    # free up some memory
-    sys.stdout = self._stdout
-hal9__log = Capture().__enter__()
-
 ${script}
-
-hal9__log.__exit__()
-log = hal9__log
 
 hal9__output = {
   ${pyoutputcode}
