@@ -13,7 +13,7 @@
     "watch": "webpack --watch",
     "test": "tape test/**/*.test.js",
     "check": "yarn flow check",
-    "web": "python3 -m http.server 8000"
+    "web": "python3 utils/devproxy.py"
   },
   "dependencies": {
     "buffer": "^6.0.3",
