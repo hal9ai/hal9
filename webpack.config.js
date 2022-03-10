@@ -1,7 +1,7 @@
 const path = require('path');
 const package = require('./package.json');
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -30,10 +30,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\\.(js|jsx)$/,
-        loader: 'babel-loader',
-      },
-      {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/,
         type: 'asset',
       },
@@ -51,7 +47,7 @@ module.exports = {
   },
   optimization: {
     minimize: true,
-    minimizer: [new UglifyJsPlugin({
+    minimizer: [new TerserPlugin({
       include: /\.min\.js$/
     })]
   }

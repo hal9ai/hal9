@@ -1033,7 +1033,7 @@ const clearState = (pipelineid /*: pipelineid */) /*: void */ => {
   pipelinesStateCount++;
 }
 
-const setCallback = (pipelineid /*: pipelineid */, sid /*: number */, name /* string */, callback /*: Object */) /*: void */ => {
+export const setCallback = (pipelineid /*: pipelineid */, sid /*: number */, name /* string */, callback /*: Object */) /*: void */ => {
   if (!pipelinesCallbacks[pipelineid]) pipelinesCallbacks[pipelineid] = { steps: {} };
   if (!pipelinesCallbacks[pipelineid].steps[sid]) pipelinesCallbacks[pipelineid].steps[sid] = {}
   pipelinesCallbacks[pipelineid].steps[sid][name] = callback;

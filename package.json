@@ -1,6 +1,6 @@
 {
   "name": "hal9",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "license": "MIT",
   "description": "Hal9: Composable machine-learning pipelines",
   "main": "dist/hal9.js",
@@ -23,17 +23,13 @@
     "rfdc": "^1.1.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.0",
-    "@babel/preset-env": "^7.14.1",
-    "@webpack-cli/generators": "^2.0.0",
-    "babel-loader": "^8.2.2",
     "css-loader": "^6.4.0",
     "raw-loader": "^4.0.2",
     "tape": "^5.3.1",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^5.36.2",
+    "terser-webpack-plugin": "^5.3.1",
+    "webpack": "^5.70.0",
     "webpack-bundle-analyzer": "^4.5.0",
-    "webpack-cli": "^4.6.0"
+    "webpack-cli": "^4.9.2"
   },
   "keywords": [
     "pipeline",
