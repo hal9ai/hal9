@@ -83,6 +83,7 @@ import seasonalitytxt from '../../scripts/timeseries/seasonality.txt.js';
 import predicttxt from '../../scripts/train/predict.txt';
 import linearregressiontxt from '../../scripts/train/linearregression.txt';
 import logisiticregressiontxt from '../../scripts/train/logisticregression.txt';
+import pycarettxt from '../../scripts/train/pycaret.txt';
 import traintesttxt from '../../scripts/train/traintest.txt';
 
 // stats scripts
@@ -251,6 +252,7 @@ const scripts = {
   linearregression: { script: linearregressiontxt, language: 'python' },
   traintest: { script: traintesttxt, language: 'python' },
   logisiticregression: { script: logisiticregressiontxt, language: 'python'},
+  pycaret: { script: pycarettxt, language: 'python'},
 
   // stats
   shapiro: { script: shapirotxt, language: 'pyodide' },
