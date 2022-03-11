@@ -58,7 +58,8 @@ def jsonable(x):
     return False
 
 def typeserialize(x):
-  if not jsonable(x):
+  import pandas as pd
+  if not jsonable(x) and not isinstance(x, pd.DataFrame):
     return {
       "__type__": "base64",
       "__serializer__": "pickle",
