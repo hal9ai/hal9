@@ -250,7 +250,7 @@ const scripts = {
   fit: { script: fittxt, language: 'python' },
   linearregression: { script: linearregressiontxt, language: 'python' },
   traintest: { script: traintesttxt, language: 'python' },
-  logisiticregression: { script: logisiticregressiontxt, language: 'python'}
+  logisiticregression: { script: logisiticregressiontxt, language: 'python'},
 
   // stats
   shapiro: { script: shapirotxt, language: 'pyodide' },
