@@ -73,18 +73,18 @@ import regressionpredicttxt from '../../scripts/predict/regression.txt.js';
 import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
 
 // prediction / timeseries scripts
-import autoregressivetxt from '../../scripts/timeseries/autoregressive.txt.js';
+import autoregressivetxt from '../../scripts/timeseries/autoregressive.py';
 import lstmtxt from '../../scripts/timeseries/lstm.txt.js';
 import movingaveragetxt from '../../scripts/timeseries/movingaverage.txt.js';
-import prophettxt from '../../scripts/timeseries/prophet.txt';
-import seasonalitytxt from '../../scripts/timeseries/seasonality.txt.js';
+import prophettxt from '../../scripts/timeseries/prophet.py';
+import seasonalitytxt from '../../scripts/timeseries/seasonality.py';
 
 // train scripts
-import predicttxt from '../../scripts/train/predict.txt';
-import linearregressiontxt from '../../scripts/train/linearregression.txt';
-import logisiticregressiontxt from '../../scripts/train/logisticregression.txt';
-import pycarettxt from '../../scripts/train/pycaret.txt';
-import traintesttxt from '../../scripts/train/traintest.txt';
+import predicttxt from '../../scripts/train/predict.py';
+import linearregressiontxt from '../../scripts/train/linearregression.py';
+import logisiticregressiontxt from '../../scripts/train/logisticregression.py';
+import pycarettxt from '../../scripts/train/pycaret.py';
+import traintesttxt from '../../scripts/train/traintest.py';
 
 // stats scripts
 import shapirotxt from '../../scripts/stats/shapiro.txt.js';

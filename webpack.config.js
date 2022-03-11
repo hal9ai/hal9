@@ -34,7 +34,7 @@ module.exports = {
         type: 'asset',
       },
       {
-        test: /(\.txt\.js$)|(\.txt$)|(\.txt\.html$)/,
+        test: /(\.txt\.js$)|(\.txt$)|(\.txt\.html$)|(\.py$)|(\.r$)/,
         use: [
           'raw-loader',
         ],
