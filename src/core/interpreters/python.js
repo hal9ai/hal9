@@ -14,11 +14,11 @@ export default async function(script, header, context) {
 
   const paramNodeDef = paramsAll.map(e => `${e}: ${e}`).join(', ');
 
-  const paramPythonDef = paramsAll.map(e => `${e} = hal9__params['${e}']`).join('\r\n');
+  const paramPythonDef = paramsAll.map(e => `${e} = typedeserialize(hal9__params['${e}'])`).join('\r\n');
 
   const pyoutputcode = output
     .filter(e => !reservedOutput.includes(e))
-    .map(e => "'" + e + "': " + e).join(',\n');
+    .map(e => "'" + e + "': typeserialize(" + e + ")").join(',\n');
   const jsoutputcode = output
     .filter(e => !reservedOutput.includes(e))
     .map(e => "" + e + " = output." + e).join('\n');
@@ -43,10 +43,35 @@ const scriptname = path.resolve(scriptpath, 'hal9code.py');
 const outputname = path.resolve(scriptpath, 'output.json');
 await writeFileAsync(scriptname, \`
 import json
+import pickle
+import base64
 
 hal9__params = {}
 with open('\${paramsname}') as json_file:
   hal9__params = json.load(json_file)
+
+def jsonable(x):
+  try:
+    json.dumps(x)
+    return True
+  except (TypeError, OverflowError):
+    return False
+
+def typeserialize(x):
+  if not jsonable(x):
+    return {
+      "__type__": "base64",
+      "__serializer__": "pickle",
+      "__base64__": base64.b64encode(pickle.dumps(x)).decode()
+    }
+  else:
+    return x
+
+def typedeserialize(x):
+  if type(x) is dict and "__type__" in x.keys() and x["__type__"] == "base64":
+    return pickle.loads(base64.b64decode(x["__base64__"]))
+  else:
+    return x
   
 ${paramPythonDef}
 
