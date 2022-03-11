@@ -96,6 +96,9 @@ if (error && ${canThrow}) {
   throw error;
 }
 
+const rawoutput = await readFileAsync(outputname)
+output = JSON.parse(rawoutput);
+
 var fileslist = fs.readdirSync(scriptpath);
 
 function fileToMediaType(name) {
