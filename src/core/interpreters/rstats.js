@@ -96,8 +96,10 @@ if (error && ${canThrow}) {
   throw error;
 }
 
-const rawoutput = await readFileAsync(outputname)
-output = JSON.parse(rawoutput);
+if (fs.existsSync(outputname)) {
+  const rawoutput = await readFileAsync(outputname)
+  output = JSON.parse(rawoutput);
+}
 
 var fileslist = fs.readdirSync(scriptpath);
 
