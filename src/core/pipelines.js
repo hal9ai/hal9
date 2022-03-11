@@ -76,8 +76,13 @@ import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
 import autoregressivetxt from '../../scripts/timeseries/autoregressive.txt.js';
 import lstmtxt from '../../scripts/timeseries/lstm.txt.js';
 import movingaveragetxt from '../../scripts/timeseries/movingaverage.txt.js';
-import prophettxt from '../../scripts/timeseries/prophet.txt.js';
+import prophettxt from '../../scripts/timeseries/prophet.txt';
 import seasonalitytxt from '../../scripts/timeseries/seasonality.txt.js';
+
+// train scripts
+import fittxt from '../../scripts/train/fit.txt';
+import linearregressiontxt from '../../scripts/train/linearregression.txt';
+import traintesttxt from '../../scripts/train/traintest.txt';
 
 // stats scripts
 import shapirotxt from '../../scripts/stats/shapiro.txt.js';
@@ -239,6 +244,11 @@ const scripts = {
   timemovingaverage: { script: movingaveragetxt, language: 'javascript' },
   timeprophet: { script: prophettxt, language: 'python' },
   timeseasonality: { script: seasonalitytxt, language: 'pyodide' },
+
+  // train
+  fit: { script: fittxt, language: 'python' },
+  linearregression: { script: linearregressiontxt, language: 'python' },
+  traintest: { script: traintesttxt, language: 'python' },
 
   // stats
   shapiro: { script: shapirotxt, language: 'pyodide' },

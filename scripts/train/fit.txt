@@ -1,0 +1,23 @@
+##
+## input: [ 'model', 'data' ]
+## params:
+##  - name: x
+##    label: x
+##  - name: y
+##    label: y
+##    single: true
+## environment: worker
+## cache: true
+##
+
+import numpy as np
+import pandas as pd
+
+data = pd.DataFrame(data)
+
+if x and y:
+  if not isinstance(x, str):
+      x = x.to_py()
+  x_s = data[x]
+  preds = model.predict(x_s.array.reshape(-1, 1))
+  data['predictions'] = preds
