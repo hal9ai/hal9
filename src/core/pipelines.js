@@ -80,7 +80,7 @@ import prophettxt from '../../scripts/timeseries/prophet.txt';
 import seasonalitytxt from '../../scripts/timeseries/seasonality.txt.js';
 
 // train scripts
-import fittxt from '../../scripts/train/fit.txt';
+import predicttxt from '../../scripts/train/predict.txt';
 import linearregressiontxt from '../../scripts/train/linearregression.txt';
 import logisiticregressiontxt from '../../scripts/train/logisticregression.txt';
 import traintesttxt from '../../scripts/train/traintest.txt';
@@ -247,7 +247,7 @@ const scripts = {
   timeseasonality: { script: seasonalitytxt, language: 'pyodide' },
 
   // train
-  fit: { script: fittxt, language: 'python' },
+  predict: { script: predicttxt, language: 'python' },
   linearregression: { script: linearregressiontxt, language: 'python' },
   traintest: { script: traintesttxt, language: 'python' },
   logisiticregression: { script: logisiticregressiontxt, language: 'python'},
