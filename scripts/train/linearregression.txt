@@ -20,9 +20,7 @@ import json
 data = pd.DataFrame(data)
 
 if x and y:
-  if not isinstance(x, str):
-    x = x.to_py()
-  else:
+  if isinstance(x, str):
     x = [x]
   if not isinstance(y, str):
     y = y.to_py()

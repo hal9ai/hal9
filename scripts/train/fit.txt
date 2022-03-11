@@ -3,9 +3,6 @@
 ## params:
 ##  - name: x
 ##    label: x
-##  - name: y
-##    label: y
-##    single: true
 ## environment: worker
 ## cache: true
 ##
@@ -15,9 +12,9 @@ import pandas as pd
 
 data = pd.DataFrame(data)
 
-if x and y:
-  if not isinstance(x, str):
-      x = x.to_py()
+if x:
+  if isinstance(x, str):
+      x = [x]
   x_s = data[x]
-  preds = model.predict(x_s.array.reshape(-1, 1))
+  preds = model.predict(x_s)
   data['predictions'] = preds
