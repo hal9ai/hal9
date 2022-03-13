@@ -3,20 +3,27 @@
 ## output: [ stdout, plot, model ]
 ## environment: worker
 ## cache: true
-##
-
+## params:
+##  - name: x
+##    label: x
+##  - name: y
+##    label: y
+##    single: true
 from pycaret.classification import *
 
 data = pd.DataFrame(data)
+x.append(y)
+df = data[x]
 
-clf = setup(data=data, target="default", session_id=123)
+
+clf = setup(data=df, target=y, silent = True)
 
 best_model = compare_models(fold=3)
 print(best_model)
 
 # Tune with grid search
 tuned = tune_model(best_model)
-plot_model(tuned, plot="confusion_matrix")
+plot = plot_model(tuned, plot="confusion_matrix")
 
 # Predict on holdout set
 predict_model(tuned)
