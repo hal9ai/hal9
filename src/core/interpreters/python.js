@@ -1,6 +1,7 @@
 import { debuggerIf } from '../utils/debug'
+import * as pycore from './pycore'
 
-const reservedOutput = [ 'stdout', 'stderr' ];
+const reservedOutput = [];
 
 export default async function(script, header, context) {
   const debugcode = debuggerIf('interpret');
@@ -8,6 +9,9 @@ export default async function(script, header, context) {
   const params = header.params ? header.params.map(e => e.name) : [];
   const inputs = header.input ? header.input : [];
   const output = header.output ? header.output : [ 'data' ];
+
+  var pyprecode = pycore.pyprecode(output);
+  var pypostcode = pycore.pypostcode(output);
 
   const paramsAll = params;
   paramsAll.push(...inputs);
@@ -57,9 +61,15 @@ def jsonable(x):
   except (TypeError, OverflowError):
     return False
 
+def isDataFrame(x):
+  try:
+    import pandas as pd
+    return isinstance(x, pd.DataFrame)
+  except (TypeError, OverflowError):
+    return False
+
 def typeserialize(x):
-  import pandas as pd
-  if not jsonable(x) and not isinstance(x, pd.DataFrame):
+  if not jsonable(x) and not isDataFrame(x):
     return {
       "__type__": "base64",
       "__serializer__": "pickle",
@@ -76,7 +86,9 @@ def typedeserialize(x):
   
 ${paramPythonDef}
 
+${pyprecode}
 ${script}
+${pypostcode}
 
 hal9__output = {
   ${pyoutputcode}
@@ -90,10 +102,31 @@ with open('\${outputname}', 'w') as json_file:
   )
 \`);
 
-const { stdout, stderr } = await exec('python3 ' + scriptname, { timeout: 30000 } );
+var stderr = '';
+var output = {};
 
-const rawoutput = await readFileAsync(outputname)
-const output = JSON.parse(rawoutput);
+var forked = new Promise((accept, reject) => {
+  const spawned = spawn('python3', [ scriptname ], { timeout: 30000 });
+
+  spawned.stdout.on('data', console.log);
+
+  spawned.stderr.on('data', (data) => {
+    stderr = stderr + data;
+    console.error(data)
+  });
+
+  spawned.on('close', (code) => {
+    if (code != 0) hal9__error = stderr;
+    accept()
+  });
+})
+
+await forked;
+
+if (fs.existsSync(outputname)) {
+  const rawoutput = await readFileAsync(outputname)
+  output = JSON.parse(rawoutput);
+}
 
 ${jsoutputcode}
 fs.rmSync(scriptpath, { recursive: true });

@@ -103,11 +103,35 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
       return 'var ' + param + ' = _hal9_params[\'' + param + '\'];'
     }).join('\n');
   
-  const body = 'async function ' + name + '(_hal9_params)' + ' {\n' + 
-      injectdebug +
-      vars + '\n\n' + (depscode ? depscode : '') + code + '\n' +
-      'return '+  returns + ';\n' +
-    '}';
+  const body = `async function ${name}(_hal9_params) {
+      var hal9__error = null;
+      var hal9__console = [];
+      var hal9__oldconsole = console;
+
+      try {
+        (function(){
+          console.error = function(err) { hal9__console.push({ type: 'error', message: err.toString() }); };
+          console.log = function(log) { hal9__console.push({ type: 'log', message: log.toString() }); };
+          console.warning = function(warn) { hal9__console.push({ type: 'warn', message: warn.toString() }); };
+        })();
+
+        ${injectdebug}
+        ${vars}
+        ${(depscode ? depscode : '')} ${code}
+      } catch(e) {
+        hal9__error = e;
+      }
+
+      if (hal9__error) {
+        return {
+          error: hal9__error,
+          console: hal9__console
+        }
+      }
+      else {
+        return ${returns};
+      }
+    }`;
 
   return body;
 }

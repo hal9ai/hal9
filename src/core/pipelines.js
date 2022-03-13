@@ -576,6 +576,8 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
     error = e;
   }
 
+  if (result.error) error = result.error;
+
   setErrors(pipeline, step.id, error);
   if (result.state) setState(pipelineid, step.id, Object.assign(state ? state : {}, result.state));
   setGlobals(pipeline, globals);
