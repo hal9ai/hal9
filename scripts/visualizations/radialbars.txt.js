@@ -50,7 +50,7 @@ let maxValue = d3.max(chartData.map(d => d.values));
 let width = html.clientWidth;
 let height = html.clientHeight;
 
-let margin = ({ top: 20, left: 0, bottom: 30, right: 30 });
+let margin = ({ top: 50, left: 0, bottom: 30, right: 30 });
 
 // bars
 let bar = ({ width: barThinkness, padding: 4 });
@@ -163,7 +163,7 @@ drawStartLines = g => {
       .attr("alignment-baseline", "hanging")
       .attr("dx", start.left + start.padding)
       .attr("dy", 2)
-      .text(d => `${d[x]} ${d3.format(".2s")(d.values)}`);
+      .text(d => `${d[x]} ${d3.format(".2")(d.values)}`);
 
   var widths = texts.nodes().map(d => d.getComputedTextLength());
 

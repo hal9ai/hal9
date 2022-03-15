@@ -6,4 +6,6 @@
 **/
 data = await hal9.utils.toArquero(data);
 
+if (!gather) gather = Object.keys(data.columns())
+
 data = data.fold(gather)

@@ -13,67 +13,75 @@
   if (state && state.data) data = state.data
 
   data = data ? data : []
-  const rows = { len: 50 + 2 * data.length };
-  if (data.length > 0) {
-    const columns = Object.keys(data[0]);
 
-    rows[0] = {
-      cells: columns.map((e, idx) => {
-        return { text: columns[idx], style: 0 };
-      })
-    };
+  if (hal9.isDocument()) {
+    html.style.height = 0;
+    html.style.maxHeight = 0;
+    html.style.display = 'none'
+  }
+  else {
+    const rows = { len: 50 + 2 * data.length };
+    if (data.length > 0) {
+      const columns = Object.keys(data[0]);
 
-    for (let i = 0; i < data.length; i += 1) {
-      rows[i + 1] = {
+      rows[0] = {
         cells: columns.map((e, idx) => {
-          return { text: data[i][columns[idx]] };
+          return { text: columns[idx], style: 0 };
         })
       };
+
+      for (let i = 0; i < data.length; i += 1) {
+        rows[i + 1] = {
+          cells: columns.map((e, idx) => {
+            return { text: data[i][columns[idx]] };
+          })
+        };
+      }
     }
-  }
-  
-  var xs = x_spreadsheet('#xspreadsheet', {
-    showToolbar: false,
-    showGrid: true,
-    showContextmenu: false,
-    showBottomBar: false,
-    extendToolbar: false,
-  })
-    .loadData([{
-      name: 'data',
-      rows: rows,
-      styles: [
-        {
-          align: 'center',
-          font: { bold: true }
-        },
-      ],
-    }])
-    .change((cdata) => {
-      if (cdata.rows.length < 1) return;
+    
+    var xs = x_spreadsheet('#xspreadsheet', {
+      showToolbar: false,
+      showGrid: true,
+      showContextmenu: false,
+      showBottomBar: false,
+      extendToolbar: false,
+    })
+      .loadData([{
+        name: 'data',
+        rows: rows,
+        styles: [
+          {
+            align: 'center',
+            font: { bold: true }
+          },
+        ],
+      }])
+      .change((cdata) => {
+        if (cdata.rows.length < 1) return;
 
-      const columns = Object.keys(cdata.rows[0].cells)
-        .map(i => cdata.rows[0].cells[i].text)
-        .filter(e => e);
+        const columns = Object.keys(cdata.rows[0].cells)
+          .map(i => cdata.rows[0].cells[i].text)
+          .filter(e => e);
 
-      const data = Object.keys(cdata.rows).map((idx) => {
-        const row = cdata.rows[idx]
-        if (idx == 0 || !row.cells) return null;
-        
-        const cells = Object.keys(row.cells)
-          .map(i => [columns[i], row.cells[i].text]);
+        const data = Object.keys(cdata.rows).map((idx) => {
+          const row = cdata.rows[idx]
+          if (idx == 0 || !row.cells) return null;
+          
+          const cells = Object.keys(row.cells)
+            .map(i => [columns[i], row.cells[i].text]);
 
-        return Object.fromEntries(cells);
-      }).filter(e => e)
+          return Object.fromEntries(cells);
+        }).filter(e => e)
 
-      hal9.setState({ data: data });
-      hal9.invalidate();
+        hal9.setState({ data: data });
+        hal9.invalidate();
+      });
+
+    var observer = new MutationObserver(function (e) {
+      if (e.filter(e => e.removedNodes && e.removedNodes[0] == xsEl).length > 0) {
+        delete xs;
+      }
     });
-
-  var observer = new MutationObserver(function (e) {
-    if (e.filter(e => e.removedNodes && e.removedNodes[0] == xsEl).length > 0) {
-      delete xs;
-    }
-  });
-  observer.observe(xsEl.parentNode, { childList: true });
+    observer.observe(xsEl.parentNode, { childList: true });
+  }
 </script>
