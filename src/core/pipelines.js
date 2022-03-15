@@ -561,6 +561,8 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
     }
 
     for (var resultname in result) {
+      if (resultname === 'state') continue;
+      
       var resultentry = result[resultname];
 
       if (step.output && step.output[resultname]) {
