@@ -19,6 +19,7 @@ export const init = async (options) => {
     <!DOCTYPE html>
     <html style="height: 100%">
       <head>
+        <base target="_blank">
         <script src='${options.api}'></script>
         <script>
           // mock localstorage for iframes to avoid errors
