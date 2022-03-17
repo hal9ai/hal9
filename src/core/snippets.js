@@ -129,7 +129,7 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
         console = hal9__console;
         hal9__returns = ${returns}
       } catch(e) {
-        hal9__error = e;
+        hal9__error = e.message ? e.message : e.toString();
       }
 
       if (hal9__error) {
