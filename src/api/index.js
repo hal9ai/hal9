@@ -5,6 +5,7 @@ import LocalExecutor from '../core/executors/local';
 import * as pipelines from '../core/pipelines';
 import * as iframe from './iframe';
 import * as remote from '../remote/remote.js';
+import * as stepapi from '../core/api.js';
 
 import clone from '../core/utils/clone';
 import functions from '../core/utils/functions';
@@ -284,6 +285,10 @@ export default {
 
   html: {
     setContainerStyle: htmlSetContainerStyle,
+  },
+
+  stepapi: {
+    create: stepapi.create,
   }
 };
 
