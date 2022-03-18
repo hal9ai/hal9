@@ -1,6 +1,8 @@
 import Executor from './definition';
 import * as workers from '../workers';
 
+import * as dataframe from '../utils/dataframe';
+
 const toRowsFromArquero = function(x) {
   var rows = [];
   x.scan(function(i, data) {
@@ -44,6 +46,16 @@ export default class RemoteExecutor extends Executor {
       details = typeof(details) === 'string' ? details : JSON.stringify(details);
       throw 'Failed to execute step on remote worker: ' + details;
     }
-    return await res.json();
+    
+    var result = await res.json();
+
+    // data frames can loose their prototype functions when crossing the iframe boundary
+    for (const key of Object.keys(result)) {
+      if (dataframe.isDataFrame(result[key])) {
+        result[key] = await dataframe.ensure(result[key]);
+      }
+    }
+
+    return result;
   }
 }
