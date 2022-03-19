@@ -4,8 +4,9 @@ import * as datasets from '../core/datasets';
 import LocalExecutor from '../core/executors/local';
 import * as pipelines from '../core/pipelines';
 import * as iframe from './iframe';
-import * as remote from '../remote/remote.js';
-import * as stepapi from '../core/api.js';
+import * as remote from '../remote/remote';
+import * as stepapi from '../core/api';
+import * as dataframe from '../core/utils/dataframe';
 
 import clone from '../core/utils/clone';
 import functions from '../core/utils/functions';
@@ -289,6 +290,17 @@ export default {
 
   stepapi: {
     create: stepapi.create,
-  }
+  },
+
+  dataframe: {
+    isDataFrame: dataframe.isDataFrame,
+    columns: dataframe.columns,
+    clone: dataframe.clone,
+    serialize: dataframe.serialize,
+    deserialiaze: dataframe.deserialiaze,
+    isSerialized: dataframe.isSerialized,
+    ensure: dataframe.ensure,
+    top: dataframe.top,
+  },
 };
 

@@ -40,6 +40,10 @@ const arqueroEnsure = async (data) => {
   return aq.table(columns);
 }
 
+const arqueroTop = (df, limit) => {
+  return df.slice(0, limit);
+}
+
 
 const danfoTest = (e) => e && typeof(e.col_data_tensor) === 'object';
 
@@ -54,6 +58,8 @@ const danfoDeserialize = (e) => e;
 const danfoIsSerialized = (e) => false;
 
 const danfoEnsure = (e) => e;
+
+const danfoTop = (e, limit) => e;
 
 
 const arrayTest = (e) => Array.isArray(e) && (e.length == 0 || typeof(e[0]) == 'object');
@@ -70,6 +76,8 @@ const arrayIsSerialized = (e) => false;
 
 const arrayEnsure = (e) => e;
 
+const arrayTop = (e, limit) => e.slice(0, limit);
+
 
 const pyodideTest = (e) => e && e.type === 'DataFrame';
 
@@ -85,6 +93,8 @@ const pyodideIsSerialized = (e) => false;
 
 const pyodideEnsure = (e) => e;
 
+const pyodideTop = (e, limit) => e;
+
 
 const generalized = [
   {
@@ -95,6 +105,7 @@ const generalized = [
     deserialiaze: arqueroDeserialize,
     serialized: arqueroIsSerialized,
     ensure: arqueroEnsure,
+    top: arqueroTop,
   },
   {
     test: danfoTest,
@@ -104,6 +115,7 @@ const generalized = [
     deserialiaze: danfoDeserialize,
     serialized: danfoIsSerialized,
     ensure: danfoEnsure,
+    top: danfoTop,
   },
   {
     test: arrayTest,
@@ -113,6 +125,7 @@ const generalized = [
     deserialiaze: arrayDeserialize,
     serialized: arrayIsSerialized,
     ensure: arrayEnsure,
+    top: arrayTop,
   },
   {
     test: pyodideTest,
@@ -122,6 +135,7 @@ const generalized = [
     deserialiaze: pyodideDeserialize,
     serialized: pyodideIsSerialized,
     ensure: pyodideEnsure,
+    top: pyodideTop,
   },
 ];
 
@@ -158,5 +172,10 @@ export const isSerialized = (df) => {
 export const ensure = async (df) => {
   const type = generalized.find(maybe => maybe.test(df));
   return type ? await type.ensure(df) : [];
+}
+
+export const top = (df, limit) => {
+  const type = generalized.find(maybe => maybe.test(df));
+  return type ? type.top(df, limit) : df;
 }
 
