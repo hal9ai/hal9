@@ -27,10 +27,16 @@ export const getUserEnv = (env) => {
 }
 
 const isOtherDevelopment = () => {
-  if (typeof(window) == 'undefined') return null;
-
-  if (window.location.origin.includes('mshome.net'))
-    return window.location.protocol + "//" + window.location.hostname;
+  if (typeof(window) === 'undefined') {
+    return false;
+  }
+  if (window.location.origin.includes('mshome.net')) {
+    return window.location.origin;
+  }
+  if (window.location.ancestorOrigins[0]?.includes('mshome.net')) {
+    return window.location.ancestorOrigins[0];
+  }
+  return false;
 }
 
 export const isDevelopment = () => {
@@ -65,7 +71,7 @@ export const getServerUrl = () => {
 
   if (hal9env == 'prod') return 'https://api.hal9.com';
 
-  if (isOtherDevelopment()) return isOtherDevelopment() + ':5000';
+  if (isOtherDevelopment()) return isOtherDevelopment();
 
   if (userHal9Env === 'local' || isDevelopment()) return getLocalhostServerUrl();
 
@@ -77,7 +83,7 @@ export const getServerCachedUrl = () => {
 
   if (hal9env == 'prod') return 'https://hal9.com';
 
-  if (isOtherDevelopment()) return isOtherDevelopment() + ':5000';
+  if (isOtherDevelopment()) return isOtherDevelopment();
 
   if (userHal9Env === 'local' || isDevelopment()) return getLocalhostServerUrl();
 
