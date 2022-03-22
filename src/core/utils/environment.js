@@ -30,11 +30,13 @@ const isOtherDevelopment = () => {
   if (typeof(window) === 'undefined') {
     return false;
   }
-  if (window.location.origin.includes('mshome.net')) {
-    return window.location.origin;
+  const origin = window.location.origin;
+  if (origin && origin.includes('mshome.net')) {
+    return origin;
   }
-  if (window.location.ancestorOrigins[0]?.includes('mshome.net')) {
-    return window.location.ancestorOrigins[0];
+  const ancestorOrigin = window.location.ancestorOrigins[0];
+  if (ancestorOrigin && ancestorOrigin.includes('mshome.net')) {
+    return ancestorOrigin;
   }
   return false;
 }
