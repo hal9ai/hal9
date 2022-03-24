@@ -148,8 +148,9 @@ const post = async (code, params, options = {}) => {
     const iframe = config.iframe;
     const postId = config.postId++;
 
+    var onResult = null;
     var waitResponse = new Promise((accept, reject) => {
-      var onResult = function(event) {
+      onResult = function(event) {
         if (!event.data || event.data.secret != secret || event.data.id != postId) return;
 
         if (event.data.callbackid !== undefined) {
@@ -173,7 +174,7 @@ const post = async (code, params, options = {}) => {
     if (options.longlisten) {
       var observer = new MutationObserver(function (e) {
         if (e.filter(e => e.removedNodes && e.removedNodes[0] == iframe).length > 0) {
-          window.removeEventListener('message', onResult);
+          if (onResult) window.removeEventListener('message', onResult);
         }
       });
       observer.observe(iframe.parentNode, { childList: true });
