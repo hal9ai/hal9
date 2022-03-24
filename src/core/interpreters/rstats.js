@@ -26,6 +26,9 @@ export default async function(script, header, context) {
     .filter(e => !reservedOutput.includes(e))
     .map(e => "" + e + " = output." + e).join('\n');
 
+  // writeFileAsync unescapes so need to double escape
+  script = script.replaceAll('\\', '\\\\');
+
   const interpreted = `${debugcode}
 const params = { ${paramNodeDef} };
 
