@@ -13,12 +13,18 @@ const toRowsFromArquero = function(x) {
   return rows;
 }
 
+const sessionid = (pipelinename, stepid) => {
+  const randid = (Math.random()).toString().replace(/[^a-zA-Z0-9]/g, '');
+  return pipelinename.replace(/[^a-zA-Z0-9]/g, '_') + '_' + stepid + '_' + randid;
+}
+
 export default class RemoteExecutor extends Executor {
   async runStep() {
     const html = this.context['html'] ? this.context['html'](this.step) : null;
     const size = html ? { width: html.offsetWidth, height: html.offsetHeight } : { width: 640, height: 480 };
 
-    var workerUrl = await workers.getValidWorkerUrl(this.pipelinename, this.context.headers);
+    this.workerUrl = await workers.getValidWorkerUrl(this.pipelinename, this.context.headers);
+    this.sessionid = sessionid(this.pipelinename, this.step.id);
 
     // remove arquero objects which don't serialize nicely
     Object.keys(this.inputs).forEach(input => {
@@ -27,9 +33,22 @@ export default class RemoteExecutor extends Executor {
       }
     })
 
-    var res = await fetch(workerUrl + '/execute', {
+    var res = await fetch(this.workerUrl + '/execute', {
       method: 'POST',
-      body: JSON.stringify({ operation: 'runstep', params: [ this.metadata, this.inputs, this.step, Object.assign(size, this.context), this.script, this.params, this.language, this.pipelinename ] }),
+      body: JSON.stringify({
+        operation: 'runstep',
+        params: {
+          metadata: this.metadata,
+          inputs: this.inputs,
+          step: this.step,
+          context: Object.assign(size, this.context),
+          script: this.script,
+          params: this.params,
+          language: this.language,
+          pipelinename: this.pipelinename,
+          sessionid: this.sessionid,
+        }
+      }),
       headers: Object.assign(
         { 'Content-Type': 'application/json' },
         this.context.headers
@@ -46,6 +65,11 @@ export default class RemoteExecutor extends Executor {
       details = typeof(details) === 'string' ? details : JSON.stringify(details);
       throw 'Failed to execute step on remote worker: ' + details;
     }
+
+    try {
+      await this.updateConsole();
+    }
+    catch(e) {}
     
     var result = await res.json();
 
@@ -57,5 +81,28 @@ export default class RemoteExecutor extends Executor {
     }
 
     return result;
+  }
+
+  async updateConsole() {
+    var res = await fetch(this.workerUrl + '/execute', {
+      method: 'POST',
+      body: JSON.stringify({
+        operation: 'console',
+        params: {
+          sessionid: this.sessionid,
+        }
+      }),
+      headers: Object.assign(
+        { 'Content-Type': 'application/json' },
+        this.context.headers
+      )
+    });
+
+    var entries = await res.json();
+    if (entries) {
+      for (var entry of entries) {
+        console[entry.type](entry.message);
+      }
+    }
   }
 }

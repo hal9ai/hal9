@@ -105,25 +105,33 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
   const body = `async function ${name}(_hal9_params) {
       var hal9__error = null;
       var hal9__returns = {};
-
       var hal9__console = [];
 
       try {
-        var console = {
-          error: function(err) {
-            hal9__console.push({ type: 'error', message: err.toString() });
-          },
-          log: function(log) {
-            hal9__console.push({ type: 'log', message: log.toString() });
-          },
-          warning: function(warn) {
-            hal9__console.push({ type: 'warn', message: warn.toString() });
-          }
-        };
-
         ${injectdebug}
         ${vars}
         ${(depscode ? depscode : '')}
+
+        var hal9__console_prev = typeof(console) != 'undefined' ? console : (typeof(window) != 'undefined' ? window.console : null);
+      
+        var console = {
+          error: function() {
+            const text = [...arguments].join();
+            if (hal9__console_prev) hal9__console_prev.error(...arguments);
+            hal9__console.push({ type: 'error', message: text });
+          },
+          log: function() {
+            const text = [...arguments].join();
+            if (hal9__console_prev) hal9__console_prev.log(...arguments);
+            hal9__console.push({ type: 'log', message: text });
+          },
+          warning: function() {
+            const text = [...arguments].join();
+            if (hal9__console_prev) hal9__console_prev.warning(...arguments);
+            hal9__console.push({ type: 'warn', message: text });
+          }
+        };
+
         ${code}
 
         console = hal9__console;

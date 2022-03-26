@@ -111,11 +111,13 @@ var output = {};
 var forked = new Promise((accept, reject) => {
   const spawned = spawn('python3', [ scriptname ], { timeout: 30000 });
 
-  spawned.stdout.on('data', console.log);
+  spawned.stdout.on('data', (data) => {
+    console.log(data.toString())
+  });
 
   spawned.stderr.on('data', (data) => {
     stderr = stderr + data;
-    console.error(data)
+    console.error(data.toString())
   });
 
   spawned.on('close', (code) => {
