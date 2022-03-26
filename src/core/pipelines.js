@@ -58,6 +58,7 @@ import funneltxt from '../../scripts/visualizations/funnel.txt.js';
 import gallerytxt from '../../scripts/visualizations/gallery.txt';
 import mapcharttxt from '../../scripts/visualizations/map.txt.js';
 import networktxt from '../../scripts/visualizations/network.txt.js';
+import plotlychartstxt from '../../scripts/visualizations/plotlycharts.txt.js';
 import radialbarstxt from '../../scripts/visualizations/radialbars.txt.js';
 import simpletabletxt from '../../scripts/visualizations/simpletable.txt';
 import threejstxt from '../../scripts/visualizations/three.txt.js';
@@ -225,6 +226,7 @@ const scripts = {
   gallery: { script: gallerytxt, language: 'html' },
   mapchart: { script: mapcharttxt, language: 'javascript' },
   network: { script: networktxt, language: 'javascript' },
+  plotlycharts: { script: plotlychartstxt, language: 'javascript' },
   radialbars: { script: radialbarstxt, language: 'javascript' },
   threejs: { script: threejstxt, language: 'javascript' },
   wafflechart: { script: wafflecharttxt, language: 'javascript' },
@@ -251,8 +253,8 @@ const scripts = {
   predict: { script: predicttxt, language: 'python' },
   linearregression: { script: linearregressiontxt, language: 'python' },
   traintest: { script: traintesttxt, language: 'python' },
-  logisiticregression: { script: logisiticregressiontxt, language: 'python'},
-  pycaret: { script: pycarettxt, language: 'python'},
+  logisiticregression: { script: logisiticregressiontxt, language: 'python' },
+  pycaret: { script: pycarettxt, language: 'python' },
 
   // stats
   shapiro: { script: shapirotxt, language: 'pyodide' },
@@ -562,7 +564,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
 
     for (var resultname in result) {
       if (resultname === 'state') continue;
-      
+
       var resultentry = result[resultname];
 
       if (step.output && step.output[resultname]) {
