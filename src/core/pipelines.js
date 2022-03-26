@@ -650,6 +650,7 @@ const preparePartial = (pipeline, context, partial, renderid) => {
             Object.keys(result).forEach((r, tabIdx) => {
               var tab = document.createElement('a');
               tab.href = '#';
+              tab.target = '_self';
               tab.style.paddingRight = '6px';
               tab.style.textDecoration = 'none';
               tab.style.color = '#528efd';
