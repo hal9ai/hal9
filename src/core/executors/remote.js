@@ -18,6 +18,29 @@ const sessionid = (pipelinename, stepid) => {
   return pipelinename.replace(/[^a-zA-Z0-9]/g, '_') + '_' + stepid + '_' + randid;
 }
 
+const updateConsole = async (workerUrl, sessionid, headers) => {
+  var res = await fetch(workerUrl + '/execute', {
+    method: 'POST',
+    body: JSON.stringify({
+      operation: 'console',
+      params: {
+        sessionid: sessionid,
+      }
+    }),
+    headers: Object.assign(
+      { 'Content-Type': 'application/json' },
+      headers
+    )
+  });
+
+  var entries = await res.json();
+  if (entries) {
+    for (var entry of entries) {
+      console[entry.type](entry.message);
+    }
+  }
+}
+
 export default class RemoteExecutor extends Executor {
   async runStep() {
     const html = this.context['html'] ? this.context['html'](this.step) : null;
@@ -33,27 +56,37 @@ export default class RemoteExecutor extends Executor {
       }
     })
 
-    var res = await fetch(this.workerUrl + '/execute', {
-      method: 'POST',
-      body: JSON.stringify({
-        operation: 'runstep',
-        params: {
-          metadata: this.metadata,
-          inputs: this.inputs,
-          step: this.step,
-          context: Object.assign(size, this.context),
-          script: this.script,
-          params: this.params,
-          language: this.language,
-          pipelinename: this.pipelinename,
-          sessionid: this.sessionid,
-        }
-      }),
-      headers: Object.assign(
-        { 'Content-Type': 'application/json' },
-        this.context.headers
-      )
-    });
+    const generateConsole = (workerUrl, sessionid, headers) => {
+      return () => updateConsole(workerUrl, sessionid, headers);
+    }
+    const consoleTimeout = setInterval(generateConsole(this.workerUrl, this.sessionid, this.context.headers), 3000);
+
+    try {
+      var res = await fetch(this.workerUrl + '/execute', {
+        method: 'POST',
+        body: JSON.stringify({
+          operation: 'runstep',
+          params: {
+            metadata: this.metadata,
+            inputs: this.inputs,
+            step: this.step,
+            context: Object.assign(size, this.context),
+            script: this.script,
+            params: this.params,
+            language: this.language,
+            pipelinename: this.pipelinename,
+            sessionid: this.sessionid,
+          }
+        }),
+        headers: Object.assign(
+          { 'Content-Type': 'application/json' },
+          this.context.headers
+        )
+      });
+    }
+    finally {
+      clearTimeout(consoleTimeout);
+    }
 
     if (!res.ok) {
       var details = res.statusText;
@@ -67,7 +100,7 @@ export default class RemoteExecutor extends Executor {
     }
 
     try {
-      await this.updateConsole();
+      await this.updateConsole(this.workerUrl, this.sessionid, this.context.headers);
     }
     catch(e) {}
     
@@ -81,28 +114,5 @@ export default class RemoteExecutor extends Executor {
     }
 
     return result;
-  }
-
-  async updateConsole() {
-    var res = await fetch(this.workerUrl + '/execute', {
-      method: 'POST',
-      body: JSON.stringify({
-        operation: 'console',
-        params: {
-          sessionid: this.sessionid,
-        }
-      }),
-      headers: Object.assign(
-        { 'Content-Type': 'application/json' },
-        this.context.headers
-      )
-    });
-
-    var entries = await res.json();
-    if (entries) {
-      for (var entry of entries) {
-        console[entry.type](entry.message);
-      }
-    }
   }
 }
