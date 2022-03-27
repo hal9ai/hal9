@@ -100,9 +100,11 @@ export default class RemoteExecutor extends Executor {
     }
 
     try {
-      await this.updateConsole(this.workerUrl, this.sessionid, this.context.headers);
+      await updateConsole(this.workerUrl, this.sessionid, this.context.headers);
     }
-    catch(e) {}
+    catch(e) {
+      console.log('Failed to retrieve console: ' + e.toString());
+    }
     
     var result = await res.json();
 
