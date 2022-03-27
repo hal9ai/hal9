@@ -109,7 +109,7 @@ var stderr = '';
 var output = {};
 
 var forked = new Promise((accept, reject) => {
-  const spawned = spawn('python3', [ scriptname ], { timeout: 30000 });
+  const spawned = spawn('python3', [ scriptname ], { timeout: 3600000 });
 
   spawned.stdout.on('data', (data) => {
     console.log(data.toString())
@@ -121,8 +121,23 @@ var forked = new Promise((accept, reject) => {
   });
 
   spawned.on('close', (code) => {
-    if (code != 0) hal9__error = stderr;
-    accept()
+  });
+
+  spawned.on('error', (err) => {
+    hal9__error = stderr;
+    hal9__error = hal9__error + 'Error: ' + err;
+    reject(hal9__error)
+  });
+
+  spawned.on('exit', (code, signal) => {
+    if (code != 0 || signal) {
+      hal9__error = stderr;
+      if (signal) hal9__error = hal9__error + 'Signal: ' + signal;
+      reject(hal9__error)
+    }
+    else {
+      accept()
+    }
   });
 })
 
