@@ -27,22 +27,19 @@
       value: 
         - control: 'number'
           value: 1
-    - name: color
-      label: 'Color'
+    - name: palette
+      label: Chart Palette
       value:
-        - control: 'select'
-          value: 'red'
+        - control: paletteSelect
+          value: schemeTableau10
           values:
-            - name: red
-              label: Red
-            - name: blue
-              label: Blue
-            - name: green
-              label: Green
-            - name: black
-              label: Black
-            - name: yellow
-              label: Yellow
+            - schemeTableau10
+            - schemeAccent
+            - schemeDark2
+            - schemePaired
+            - schemeSet1
+            - schemeSet2
+            - schemeSet3
   deps:
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
     - https://cdn.plot.ly/plotly-latest.min.js
@@ -50,6 +47,8 @@
 **/
 
 data = await hal9.utils.toArquero(data);
+
+console.log('paleta: ' + palette)
 
 var layout = {
     title: x + ' - ' + y + ' ' + chartType,
@@ -68,24 +67,37 @@ var layout = {
 }
 
 //colors
+/*            - schemeTableau10
+            - schemeAccent
+            - schemeDark2
+            - schemePaired
+            - schemeSet1
+            - schemeSet2
+            - schemeSet3
+*/
 let dataColor;
-switch (color) {
-    case 'red':
-        dataColor = 'rgb(255,0,0)';
+switch (palette) {
+    case 'schemeTableau10':
+        dataColor = 'rgb(14,101,152)';
         break;
-    case 'blue':
-        dataColor = 'rgb(50,55,230)';
+    case 'schemeAccent':
+        dataColor = 'rgb(93,202,114)';
         break;
-    case 'green':
-        dataColor = 'rgb(50,230,70)';
+    case 'schemeDark2':
+        dataColor = 'rgb(75,160,111)';
         break;
-    case 'black':
-        dataColor = 'rgb(0,0,0)';
+    case 'schemePaired':
+        dataColor = 'rgb(168,205,222)';
         break;
-    case 'yellow':
-        dataColor = 'rgb(230,230,50)';
+    case 'schemeSet1':
+        dataColor = 'rgb(230,35,35)';
         break;
-
+    case 'schemeSet2':
+        dataColor = 'rgb(123,201,169)';
+        break;
+    case 'schemeSet3':
+        dataColor = 'rgb(123,201,194)';
+        break;
 }
 let x_data = data.array(x)
 let texta = [];
