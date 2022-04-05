@@ -94,7 +94,7 @@ export const init = async (options) => {
                 window.parent.postMessage({ secret: ${secret}, id: event.data.id, result: result, html: document.body.innerText.length > 0 }, '*');
               }
               catch(e) {
-                postError(event.data.id, e.message);
+                postError(event.data.id, e && e.message ? e.message : e);
               }
             })();
           }); 
