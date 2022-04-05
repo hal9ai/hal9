@@ -1073,10 +1073,18 @@ const getCallbacks = (pipelineid /*: pipelineid */, sid /*: number */) /*: Objec
 }
 
 export const getSaveText = (pipelineid /*: pipelineid */, padding /* number */) /*: string */ => {
-  var pipeline = clone(store.get(pipelineid));
+  var from = store.get(pipelineid);
+  var pipeline = {}
 
-  // no point in saving global state since it's always recreated when running the pipeline
-  if (pipeline.globals) delete pipeline.globals;
+  const skip = [
+    // no point in saving global state since it's always recreated when running the pipeline
+    'globals',
+  ];
+
+  for (var key in from) {
+    if (skip.includes(key)) continue;
+    pipeline[key] = clone(from[key]);
+  }
 
   pipeline.state = pipelinesState[pipelineid];
 
