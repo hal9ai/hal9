@@ -72,8 +72,15 @@ export const getValidWorkerUrl = async function(pipelinename, headers) {
       return workerUrl;
     }
 
-    var res = await preflight(workerUrl, headers);
-    if (res.status == 503) {
+    var res = undefined;
+    if (workerUrl) {
+      res = await preflight(workerUrl, headers);
+    }
+
+    if (!res) {
+      // retry
+    }
+    else if (res.status == 503) {
       let message = null;
       try {
         message = await res.text();
