@@ -30,8 +30,8 @@ async function run(pipeline, context) {
   return await api.run(pipeline, context);
 };
 
-function step(url, params, output) {
-  return api.step(url, params, output);
+function step(url, params, output, options) {
+  return api.step(url, params, output, options);
 };
 
 async function load(raw) {

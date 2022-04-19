@@ -16,6 +16,9 @@ const languageInfo = {
   pyodide: {
     html: false
   },
+  plumber: {
+    html: false
+  },
 }
 
 export const getLanguageInfo = (lang) => {

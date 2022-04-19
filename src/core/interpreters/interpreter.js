@@ -3,6 +3,7 @@ import html from './html';
 import python from './python';
 import rstats from './rstats';
 import pyodide from './pyodide';
+import plumber from './plumber';
 import * as snippets from '../snippets';
 
 const languageMap = {
@@ -10,7 +11,8 @@ const languageMap = {
   html: html,
   python: python,
   r: rstats,
-  pyodide: pyodide
+  pyodide: pyodide,
+  plumber: plumber,
 }
 
 export const interpret = async (script, language, header, context) => {
