@@ -61,7 +61,7 @@ export const getValidWorkerUrl = async function(pipelinename, headers) {
     try {
       workerUrl = await getWorkerUrl(pipelinename, headers);
     } catch (error) {
-      details = error;
+      details = error & error.message ? error.message : JSON.stringify(error);
       console.log(details);
       sleepDuration = 5000;
     }
