@@ -3,8 +3,9 @@ import * as dataframe from '../core/utils/dataframe';
 var config = {};
 var fnCallbacks = [];
 
-export const init = async (options) => {
+export const init = async (options, hal9wnd) => {
   fnCallbacks = [];
+  hal9wnd = hal9wnd ? hal9wnd : {};
 
   const html = options.html;
   html.innerHTML = '';
@@ -44,6 +45,9 @@ export const init = async (options) => {
           window.localStorage.setItem("KEY", "INPUT")
         </script>
         <script>
+          const hal9wnd = JSON.parse('${JSON.stringify(hal9wnd)}');
+          window.hal9 = Object.assign(hal9wnd, window.hal9);
+
           var postID = -1;
           function enableDebug(config) {
             window.hal9cfg = { debug: config };

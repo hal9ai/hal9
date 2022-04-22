@@ -15,7 +15,7 @@ var api = native;
 function init(options) {
   if (options.iframe) {
     api = iframe;
-    return iframe.init(options);
+    return iframe.init(options, window.hal9);
   }
   else {
     api = native;
