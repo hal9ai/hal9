@@ -513,20 +513,18 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
       if (!Object.keys(params).includes(param)) params[param] = clone(paramsDefault[param]);
     });
 
-    // add context parameters
-    if (typeof (window) != 'undefined' && window.hal9 && window.hal9.params) {
-      console.log('Pipeline contains parameters')
-      context.params = window.hal9.params;
-    }
-
     if (context.params) {
       var paramIdx = Object.keys(params).length > 0 ? Math.max(...Object.keys(params).map(e => params[e].id ? params[e].id : 0)) : 0;
       Object.keys(context.params).forEach(param => {
         if (input[param]) {
+          console.log('Param ' + param + ' of type ' + typeof(input[param]) ' matched with input in step ' + step.name + '/' + step.id)
+
           input[param] = clone(context.params[param]);
           delete context.params[param];
         }
         else if (params[param]) {
+          console.log('Param ' + param + ' of type ' + typeof(input[param]) ' matched with param in step ' + step.name + '/' + step.id)
+
           params[param] = {
             id: paramIdx++, name: param, label: param, value: [{
               value: clone(context.params[param])
@@ -781,6 +779,12 @@ export const run = async (pipelineid /*: pipeline */, context /* context */, par
   pipeline.errors = {};
   pipeline.error = undefined;
   setGlobals(pipeline, {});
+
+  // add context parameters
+  if (typeof (window) != 'undefined' && window.hal9 && window.hal9.params) {
+    console.log('Pipeline contains parameters: ' + Object.keys(window.hal9.params))
+    context.params = window.hal9.params;
+  }
 
   for (var idx = 0; idx < pipeline.steps.length; idx++) {
     const step = pipeline.steps[idx];
