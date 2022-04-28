@@ -1,5 +1,5 @@
 # Install
-pip3 install -e .[dev] --user
+pip3 install -e ".[dev]" --user
 
 # Test
 pytest
