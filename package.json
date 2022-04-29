@@ -13,12 +13,13 @@
     "watch": "webpack --watch",
     "test": "tape test/**/*.test.js",
     "check": "yarn flow check",
-    "web": "python3 utils/devproxy.py"
+    "dev": "webpack-dev-server --mode development --history-api-fallback"
   },
   "dependencies": {
     "buffer": "^6.0.3",
     "compare-versions": "^3.6.0",
     "crypto-js": "^4.0.0",
+    "html-webpack-plugin": "^5.5.0",
     "js-yaml": "4.1.0",
     "rfdc": "^1.1.4"
   },
@@ -29,7 +30,8 @@
     "terser-webpack-plugin": "^5.3.1",
     "webpack": "^5.70.0",
     "webpack-bundle-analyzer": "^4.5.0",
-    "webpack-cli": "^4.9.2"
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1"
   },
   "keywords": [
     "pipeline",
