@@ -6,7 +6,7 @@ import json
 def encode(data):
   if (type(data).__name__ == "DataFrame"):
     return data.to_json(orient = 'records')
-  else
+  else:
     return json.dumps(data)
 
 def create(data, **kwargs):
