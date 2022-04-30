@@ -13,7 +13,7 @@ LONG_DESCRIPTION = (
 
 setup(
   name = 'hal9',
-  version = '0.0.1',
+  version = '0.0.2',
   description = 'Web-First Composable Data Apps',
   long_description = 'Build ',
   url = 'https://github.com/hal9ai/hal9ai',
