@@ -29,6 +29,9 @@ export default async function(html, header, context) {
           tag.src = script.src;
 
         script.remove();
+
+        if (!window.hal9scripts) window.hal9scripts = {};
+        if (script.src && window.hal9scripts[script.src] === 'loaded') continue;
         
         const loaded = new Promise((resolve, reject) => {
           const errorHandler = function(e) {
@@ -38,6 +41,7 @@ export default async function(html, header, context) {
 
           const loadHandler = function() {
             window.removeEventListener('error', errorHandler);
+            if (script.src) window.hal9scripts[script.src] = 'loaded'
             resolve();
           }
 
