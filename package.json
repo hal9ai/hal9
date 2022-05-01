@@ -13,6 +13,7 @@
     "watch": "webpack --watch",
     "test": "tape test/**/*.test.js",
     "check": "yarn flow check",
+    "proxy": "python3 utils/devproxy.py",
     "dev": "webpack-dev-server --mode development --history-api-fallback"
   },
   "dependencies": {
