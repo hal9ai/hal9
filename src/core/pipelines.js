@@ -122,6 +122,7 @@ import pythontxt from '../../scripts/languages/python.txt';
 import rtxt from '../../scripts/languages/r.txt';
 
 // framework scripts
+import pyscripttxt from '../../scripts/frameworks/pyscript.txt';
 import reacttxt from '../../scripts/frameworks/react.txt';
 import vuetxt from '../../scripts/frameworks/vue.txt';
 
@@ -293,6 +294,7 @@ const scripts = {
   r: { script: rtxt, language: 'r' },
 
   // frameworks
+  pyscript: { script: pyscripttxt, language: 'html' },
   react: { script: reacttxt, language: 'html' },
   vue: { script: vuetxt, language: 'html' },
 

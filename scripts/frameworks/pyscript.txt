@@ -1,0 +1,8 @@
+<link rel="stylesheet" href="https://temphal9.s3.us-west-2.amazonaws.com/pyscript/pyscript.css" />
+<script defer src="https://temphal9.s3.us-west-2.amazonaws.com/pyscript/pyscript.js"></script>
+
+<py-script>
+from datetime import datetime
+now = datetime.now()
+now.strftime("%m/%d/%Y, %H:%M:%S")
+</py-script>
