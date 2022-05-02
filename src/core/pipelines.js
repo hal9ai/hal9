@@ -540,7 +540,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
     const deps = {};
 
     // add hal9 api to deps
-    deps['hal9'] = api.create(pipelineid, sid, context);
+    deps['hal9'] = api.create(pipelineid, sid, context, params, input);
 
     const script = scriptFromStep(pipeline, step);
     const executor = executors.executorFromMetadata(

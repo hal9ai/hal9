@@ -1,9 +1,10 @@
 
 import * as pipelines from '../core/pipelines';
+import * as localparams from './executors/params';
 
 import clone from './utils/clone';
 
-export const create = (pipelineid, sid, context) => {
+export const create = (pipelineid, sid, context, params, input) => {
   return {
     // Retrieves the current pipeline as embedable html
     setHtml: function(html) {
@@ -51,6 +52,13 @@ export const create = (pipelineid, sid, context) => {
       if (context.invalidateSteps) {
         context.invalidateSteps();
       }
+    },
+    getParam: function(name) {
+      const local = localparams.paramsForFunction(params, input, {})
+      return local[name];
+    },
+    getInput: function(index) {
+      return input;
     },
     isAborted: async function() {
       return pipelines.isAborted(pipelineid);
