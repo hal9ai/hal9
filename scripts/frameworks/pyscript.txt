@@ -2,7 +2,9 @@
 <script defer src="https://temphal9.s3.us-west-2.amazonaws.com/pyscript/pyscript.js"></script>
 
 <py-script>
-from datetime import datetime
-now = datetime.now()
-now.strftime("%m/%d/%Y, %H:%M:%S")
+from js import hal9
+
+"Hello from Python"
+
+# hal9.getParam("data").to_py()
 </py-script>
