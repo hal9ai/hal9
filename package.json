@@ -1,6 +1,6 @@
 {
   "name": "hal9",
-  "version": "0.1.65",
+  "version": "0.1.66",
   "license": "MIT",
   "description": "Hal9: Composable machine-learning pipelines",
   "main": "dist/hal9.js",
@@ -20,7 +20,6 @@
     "buffer": "^6.0.3",
     "compare-versions": "^3.6.0",
     "crypto-js": "^4.0.0",
-    "html-webpack-plugin": "^5.5.0",
     "js-yaml": "4.1.0",
     "rfdc": "^1.1.4"
   },

@@ -2,7 +2,6 @@ const path = require('path');
 const package = require('./package.json');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -26,9 +25,6 @@ module.exports = {
       VERSION: JSON.stringify(package.version),
       HAL9ENV: JSON.stringify(process.env.HAL9_ENV ? process.env.HAL9_ENV : 'prod'),
       HAL9HOST: JSON.stringify('api')
-    }),
-    new HtmlWebpackPlugin({
-      template: './docs/index.html'
     }),
   ],
   module: {
