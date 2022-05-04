@@ -58,6 +58,7 @@ import bubblestxt from '../../scripts/visualizations/bubbles.txt.js';
 import funneltxt from '../../scripts/visualizations/funnel.txt.js';
 import gallerytxt from '../../scripts/visualizations/gallery.txt';
 import mapcharttxt from '../../scripts/visualizations/map.txt.js';
+import minichartstxt from '../../scripts/visualizations/minicharts.txt.js';
 import networktxt from '../../scripts/visualizations/network.txt.js';
 import plotlychartstxt from '../../scripts/visualizations/plotlycharts.txt.js';
 import radialbarstxt from '../../scripts/visualizations/radialbars.txt.js';
@@ -228,6 +229,7 @@ const scripts = {
   funnel: { script: funneltxt, language: 'javascript' },
   gallery: { script: gallerytxt, language: 'html' },
   mapchart: { script: mapcharttxt, language: 'javascript' },
+  minicharts: { script: minichartstxt, language: 'javascript' },
   network: { script: networktxt, language: 'javascript' },
   plotlycharts: { script: plotlychartstxt, language: 'javascript' },
   radialbars: { script: radialbarstxt, language: 'javascript' },

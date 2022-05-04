@@ -23,7 +23,7 @@
               label: Time
 
     - name: timeConverter
-      label: 'Convert Time'
+      label: 'Convert Date/Time'
       value:
         - control: 'select'
           value: ''
@@ -34,6 +34,9 @@
               label: Hours to Seconds
             - name: hours_miliseconds
               label: Hours to Miliseconds
+            - name: unixDate
+              label: Unix to DateTime
+
 
 
     - name: charactersToRemove
@@ -45,6 +48,7 @@
   deps:
     - https://cdn.jsdelivr.net/npm/arquero@latest
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js 
+  output: [data]
 **/
 
 
@@ -76,8 +80,14 @@ if ((dataType === 'int') || (dataType === 'float')) {
 //date conversion
 else if (dataType === 'date') {
   values = data.array(field).map(value => {
-    return new Date(value);
+    if (timeConverter == 'unixDate') {
+      return new Date(value * 1000);
+    }
+    else {
+      return new Date(value);
+    }
   });
+
 }
 //string conversion
 else if (dataType === 'string') {
