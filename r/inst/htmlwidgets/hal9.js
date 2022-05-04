@@ -1,28 +1,33 @@
 HTMLWidgets.widget({
-
   name: 'hal9',
-
   type: 'output',
-
   factory: function(el, width, height) {
-
-    // TODO: define shared variables for this instance
-
     return {
 
       renderValue: function(x) {
+        const html = `
+<script>
+  window.hal9 = {
+    data: [ { "number": 1 }, { "number": 2 } ],
+    pipeline: {
+      "steps": [ { "name": "javascript", "label": "Source", "language": "javascript", "id": 1, } ],
+      "params": {}, "outputs": {}, "scripts": { "1": "data = window.hal9.data" },
+      "version": "0.0.1"
+    }
+  }
+</script>
+<div id="app" style="height: 420px; max-height: 420px;"></div>
+        `;
 
-        // TODO: code to render the widget, e.g.
-        el.innerText = x.message;
+        el.innerHTML = html;
 
+        const script = document.createElement('script');
+        script.src = 'https://hal9.com/hal9.notebook.js';
+        document.body.appendChild(script);
       },
 
       resize: function(width, height) {
-
-        // TODO: code to re-render the widget with a new size
-
       }
-
     };
   }
 });
