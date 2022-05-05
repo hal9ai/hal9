@@ -30,6 +30,28 @@ module.exports = {
   module: {
     rules: [
       {
+        // This is here to make the hal9 package more compatible with older browsers
+        test: /\.m?js$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  useBuiltIns: 'usage',
+                  corejs: '3.22'
+                }
+              ]
+            ],
+            plugins: [
+              '@babel/plugin-transform-runtime'
+            ]
+          }
+        }
+      },
+      {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/,
         type: 'asset',
       },

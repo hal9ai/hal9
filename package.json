@@ -1,6 +1,6 @@
 {
   "name": "hal9",
-  "version": "0.1.66",
+  "version": "0.1.67",
   "license": "MIT",
   "description": "Hal9: Composable machine-learning pipelines",
   "main": "dist/hal9.js",
@@ -17,13 +17,19 @@
     "dev": "webpack-dev-server --mode development --history-api-fallback"
   },
   "dependencies": {
+    "@babel/runtime": "^7.17.9",
     "buffer": "^6.0.3",
     "compare-versions": "^3.6.0",
+    "core-js": "~3.22.4",
     "crypto-js": "^4.0.0",
     "js-yaml": "4.1.0",
     "rfdc": "^1.1.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/plugin-transform-runtime": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "babel-loader": "^8.2.5",
     "css-loader": "^6.4.0",
     "raw-loader": "^4.0.2",
     "tape": "^5.3.1",
