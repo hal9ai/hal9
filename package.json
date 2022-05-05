@@ -1,6 +1,6 @@
 {
   "name": "hal9",
-  "version": "0.1.67",
+  "version": "0.1.68",
   "license": "MIT",
   "description": "Hal9: Composable machine-learning pipelines",
   "main": "dist/hal9.js",
@@ -17,7 +17,7 @@
     "dev": "webpack-dev-server --mode development --history-api-fallback"
   },
   "dependencies": {
-    "@babel/runtime": "^7.17.9",
+    "@babel/runtime-corejs3": "^7.17.9",
     "buffer": "^6.0.3",
     "compare-versions": "^3.6.0",
     "core-js": "~3.22.4",
