@@ -57,6 +57,7 @@ export const getValidWorkerUrl = async function(pipelinename, headers) {
 
   while (shouldRetry && retryCount > 0) {
     let sleepDuration = 5000;
+    let needPlanForWorker = false;
 
     try {
       workerUrl = await getWorkerUrl(pipelinename, headers);
@@ -64,6 +65,16 @@ export const getValidWorkerUrl = async function(pipelinename, headers) {
       details = error & error.message ? error.message : JSON.stringify(error);
       console.log(details);
       sleepDuration = 5000;
+      if (error.code == 'plan') {
+        // There is no reason to retry, if plan is needed
+        shouldRetry = false;
+        needPlanForWorker = true;
+        details = 'Running pipelines as APIs requires a Pro Plan';
+      }
+    }
+
+    if (needPlanForWorker) {
+      break;
     }
 
     // get server version
