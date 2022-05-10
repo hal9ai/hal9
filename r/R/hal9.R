@@ -19,7 +19,8 @@ hal9 <- function(message, width = NULL, height = NULL, elementId = NULL) {
     width = width,
     height = height,
     package = 'hal9',
-    elementId = elementId
+    elementId = elementId,
+    sizingPolicy = htmlwidgets::sizingPolicy(padding = 0)
   )
 }
 
