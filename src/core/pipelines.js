@@ -584,7 +584,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
     }
   }
   catch (e) {
-    console.log(e);
+    console.log('Error in step ' + step.name + ': ' + e);
     error = e;
   }
 
