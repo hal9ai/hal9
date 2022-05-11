@@ -95,8 +95,9 @@ export default class IFrameExecutor extends Executor {
     html.appendChild(iframe);
     await waitLoad;
 
+    var onResult = null;
     var waitResponse = new Promise((accept, reject) => {
-      var onResult = function(e) {
+      onResult = function(e) {
         if (!event.data || event.data.secret != secret) return;
 
         if (!event.data.html) iframe.remove();
@@ -124,7 +125,7 @@ export default class IFrameExecutor extends Executor {
 
     var observer = new MutationObserver(function (e) {
       if (e.filter(e => e.removedNodes && e.removedNodes[0] == html).length > 0) {
-        window.removeEventListener('message', onResult);
+        if (onResult) window.removeEventListener('message', onResult);
       }
     });
     observer.observe(html.parentNode, { childList: true });
