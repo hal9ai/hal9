@@ -769,8 +769,6 @@ export const run = async (pipelineid /*: pipeline */, context /* context */, par
   var pipeline = store.get(pipelineid);
   pipeline.aborted = undefined;
 
-  if (!pipeline || pipeline.length == 0) return;
-
   await fetchScripts(pipeline.steps);
 
   if (typeof (context.html) === 'string') {
