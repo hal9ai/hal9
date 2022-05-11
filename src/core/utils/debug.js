@@ -1,4 +1,4 @@
-const shoudDebug = (flag) => {
+export const shoudDebug = (flag) => {
   if (typeof(window) != 'undefined' && window.hal9 && window.hal9.debug && window.hal9.debug[flag]) {
     return true;
   }

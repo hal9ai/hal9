@@ -5,6 +5,7 @@ import * as interpreter from '../interpreters/interpreter';
 
 import clone from '../utils/clone';
 import * as datasets from '../datasets';
+import { shoudDebug } from '../utils/debug';
 
 import * as dataframe from '../utils/dataframe';
 
@@ -37,6 +38,9 @@ export default class IFrameExecutor extends Executor {
 
     iframe.setAttribute('sandbox', 'allow-scripts');
 
+    var debug = shoudDebug('subiframe');
+    var debugcode = debug ? 'debugger;' : '';
+
     var deps = '<!-- No Hal9 dependencies -->';
     if (header.deps) deps = header.deps.map(dep => `      <script src='${dep}'></script>`).join('\n');
 
@@ -52,6 +56,7 @@ export default class IFrameExecutor extends Executor {
             }
           }
           var block = new Function("return " + body)();
+          ${debugcode}
           return await block(params);
         };
 
