@@ -495,13 +495,19 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
       throw 'Script header is invalid: ' + metadata.invalid;
     }
 
+    let rebinds = step.options?.rebinds;
+
     var input = {}
 
     // assign only globals being used to prevent cache invalidations
     for (var inputidx in metadata.input) {
       const inputName = metadata.input[inputidx];
       input[inputName] = undefined;
-      if (typeof (globals[inputName]) !== 'undefined') input[inputName] = globals[inputName];
+      let globalToUse = inputName;
+      if (rebinds?.inputs && (inputName in rebinds.inputs)) {
+        globalToUse = rebinds.inputs[inputName];
+      }
+      if (typeof (globals[globalToUse]) !== 'undefined') input[inputName] = globals[globalToUse];
     }
 
     // upgrade old pipelines, can be removed eventually
@@ -542,6 +548,19 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
       });
     }
 
+    if (rebinds?.params) {
+      for (let param in rebinds.params) {
+        if (param in params) {
+          params[param].value = [
+            {
+              id: params[param].value?.[0]?.id ?? 0,
+              value: globals[rebinds.params[param]]
+            }
+          ];
+        }
+      }
+    }
+
     const deps = {};
 
     // add hal9 api to deps
@@ -580,6 +599,10 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
 
       if (step.output && step.output[resultname]) {
         resultname = step.output[resultname];
+      }
+
+      if (rebinds?.outputs && (resultname in rebinds.outputs)) {
+        resultname = rebinds.outputs[resultname];
       }
 
       resultNames.push(resultname);

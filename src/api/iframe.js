@@ -239,11 +239,12 @@ export const load = async (raw) => {
   })
 }
 
-export const step = async (url, params, output) => {
-	return await post("hal9.step(params.url, params.params, params.output)", {
+export const step = async (url, params, output, options) => {
+	return await post("hal9.step(params.url, params.params, params.output, params.options)", {
     url: url,
     params: params,
-    output: output
+    output: output,
+    options: options
   })
 }
 
