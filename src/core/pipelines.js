@@ -325,9 +325,12 @@ const scriptFromStep = (pipeline /* pipeline */, step /*: step */) /*: string */
   else if (scripts[step.name]) {
     text = scripts[step.name].script;
     language = scripts[step.name].language;
-  }
-  else
+  } else if (step.inlineScript) {
+    text = step.inlineScript;
+    language = step.inlineScriptLanguage;
+  } else {
     text = '';
+  }
 
   return { script: text, language: language };
 }

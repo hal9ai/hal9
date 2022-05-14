@@ -73,6 +73,14 @@ export async function run(pipeline, context) {
 
 var maxStepId = 0;
 export function step(url, params, output) {
+  if (!url && params.script) {
+    return {
+      id: maxStepId++,
+      inlineScript: params.script,
+      inlineScriptLanguage: params.language ?? 'javascript',
+      html: output
+    }
+  }
 
   // convert param values to pipeline params
   Object.keys(params).forEach(e => {

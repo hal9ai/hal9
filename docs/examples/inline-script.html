@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="/hal9.js"></script>
+  </head>
+  <body>
+    <div id="output"></div>
+    <script>
+      let firstStepScript =
+`
+/**
+  output: [ firstStepOutput ]
+**/
+firstStepOutput = 'Output from first step';
+`;
+
+      let secondStepScript =
+`
+/**
+  input: [ firstStepOutput ]
+  output: [ html ]
+**/
+html.innerHTML = '<div>Second step received: ' + firstStepOutput + '</div>';
+`;
+
+      hal9.run([
+        hal9.step(null, { script: firstStepScript, language: 'javascript' }),
+        hal9.step(null, { script: secondStepScript, language: 'javascript' }, 'output')
+      ]);
+    </script>
+  </body>
+</html>
