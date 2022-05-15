@@ -394,6 +394,13 @@ export async function pipelinesGetStep(pipelineid, sid) {
   })
 }
 
+export async function pipelinesGetRebindablesForStep(pipelineid, step) {
+  return await post("hal9.pipelines.getRebindablesForStep(params.pipelineid, params.step)", {
+    pipelineid: pipelineid,
+    step: step,
+  })
+}
+
 export async function pipelinesGetSources(pipelineid, sid) {
   return await post("hal9.pipelines.getSources(params.pipelineid, params.sid)", {
     pipelineid: pipelineid,

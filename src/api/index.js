@@ -116,6 +116,10 @@ async function pipelinesGetStep(pipelineid, sid) {
   return await api.pipelinesGetStep(pipelineid, sid);
 }
 
+async function pipelinesGetRebindablesForStep(pipelineid, step) {
+  return await api.pipelinesGetRebindablesForStep(pipelineid, step);
+}
+
 async function pipelinesGetSources(pipelineid, sid) {
   return await api.pipelinesGetSources(pipelineid, sid);
 }
@@ -258,6 +262,7 @@ export default {
     moveStep: pipelinesMoveStep,
     getNested: pipelinesGetNested,
     getStep: pipelinesGetStep,
+    getRebindablesForStep: pipelinesGetRebindablesForStep,
     getSources: pipelinesGetSources,
     getStepError: pipelinesGetStepError,
     setScript: pipelinesSetScript,

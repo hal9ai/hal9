@@ -196,6 +196,10 @@ export async function pipelinesGetStep(pipelineid, sid) {
   return await pipelines.getStep(pipelineid, sid);
 }
 
+export async function pipelinesGetRebindablesForStep(pipelineid, step) {
+  return await pipelines.getRebindablesForStep(pipelineid, step);
+}
+
 export async function pipelinesGetSources(pipelineid, sid) {
   return await pipelines.getSources(pipelineid, sid);
 }

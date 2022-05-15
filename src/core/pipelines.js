@@ -1020,6 +1020,16 @@ export const getStep = (pipelineid /*: pipelineid */, sid /*: number */) /* step
   return stepFromId(pipeline, sid);
 }
 
+export const getRebindablesForStep = (pipelineid, step) => {
+  const pipeline = store.get(pipelineid);
+  const metadata = metadataFromStepScript(pipeline, step);
+  return {
+    inputs: (metadata.invalid ? [] : [...(metadata.input)]),
+    outputs: (metadata.invalid ? [] : [...(metadata.output)]),
+    params: (metadata.invalid ? [] : metadata.params.map(param => param.name))
+  };
+}
+
 const prevStep = (pipelineid /*: pipelineid */, sid /*: number */) /* step */ => {
   var pipeline = store.get(pipelineid);
   return clone(stepFromId(pipeline, sid, -1));
