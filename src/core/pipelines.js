@@ -551,10 +551,14 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
     if (rebinds?.params) {
       for (let param in rebinds.params) {
         if (param in params) {
+          let newValue = input[rebinds.params[param]];
+          if (newValue === undefined) {
+            newValue = globals[rebinds.params[param]];
+          }
           params[param].value = [
             {
               id: params[param].value?.[0]?.id ?? 0,
-              value: input[rebinds.params[param]]
+              value: newValue
             }
           ];
         }
