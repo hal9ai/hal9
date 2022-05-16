@@ -2,6 +2,7 @@
 
 import yaml from 'js-yaml';
 import { loadScripts } from './utils/scriptloader';
+import { shoudDebug } from './utils/debug';
 
 /*::
 type params = { [key: string]: Array<string> };
@@ -95,7 +96,7 @@ export const getFunctionBody = async function(code /*: string */, params /*: par
 
   const returns = '{ ' + output.filter(e => e != 'html').map((e) => e + ': ' + e).join(', ') + ' }';
 
-  const injectdebug = (typeof(window) != 'undefined' && window.hal9 && window.hal9.debug) ? 'debugger;\n' : '';
+  const injectdebug = shoudDebug('snippets') ? 'debugger;\n' : '';
 
   const vars = Object.keys(params)
     .map((param) => {

@@ -325,9 +325,12 @@ const scriptFromStep = (pipeline /* pipeline */, step /*: step */) /*: string */
   else if (scripts[step.name]) {
     text = scripts[step.name].script;
     language = scripts[step.name].language;
-  }
-  else
+  } else if (step.inlineScript) {
+    text = step.inlineScript;
+    language = step.inlineScriptLanguage;
+  } else {
     text = '';
+  }
 
   return { script: text, language: language };
 }
@@ -492,13 +495,19 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
       throw 'Script header is invalid: ' + metadata.invalid;
     }
 
+    let rebinds = step.options?.rebinds;
+
     var input = {}
 
     // assign only globals being used to prevent cache invalidations
     for (var inputidx in metadata.input) {
       const inputName = metadata.input[inputidx];
       input[inputName] = undefined;
-      if (typeof (globals[inputName]) !== 'undefined') input[inputName] = globals[inputName];
+      let globalToUse = inputName;
+      if (rebinds?.inputs && (inputName in rebinds.inputs)) {
+        globalToUse = rebinds.inputs[inputName];
+      }
+      if (typeof (globals[globalToUse]) !== 'undefined') input[inputName] = globals[globalToUse];
     }
 
     // upgrade old pipelines, can be removed eventually
@@ -537,6 +546,19 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
           delete context.params[param];
         }
       });
+    }
+
+    if (rebinds?.params) {
+      for (let param in rebinds.params) {
+        if (param in params) {
+          params[param].value = [
+            {
+              id: params[param].value?.[0]?.id ?? 0,
+              value: input[rebinds.params[param]]
+            }
+          ];
+        }
+      }
     }
 
     const deps = {};
@@ -579,12 +601,16 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
         resultname = step.output[resultname];
       }
 
+      if (rebinds?.outputs && (resultname in rebinds.outputs)) {
+        resultname = rebinds.outputs[resultname];
+      }
+
       resultNames.push(resultname);
       globals[resultname] = resultentry;
     }
   }
   catch (e) {
-    console.log(e);
+    console.log('Error in step ' + step.name + ': ' + e);
     error = e;
   }
 
@@ -768,8 +794,6 @@ export const run = async (pipelineid /*: pipeline */, context /* context */, par
 
   var pipeline = store.get(pipelineid);
   pipeline.aborted = undefined;
-
-  if (!pipeline || pipeline.length == 0) return;
 
   await fetchScripts(pipeline.steps);
 
@@ -994,6 +1018,16 @@ const stepFromId = (pipeline /*: pipeline */, sid /*: number */, offset = 0 /* n
 export const getStep = (pipelineid /*: pipelineid */, sid /*: number */) /* step */ => {
   var pipeline = store.get(pipelineid);
   return stepFromId(pipeline, sid);
+}
+
+export const getRebindablesForStep = (pipelineid, step) => {
+  const pipeline = store.get(pipelineid);
+  const metadata = metadataFromStepScript(pipeline, step);
+  return {
+    inputs: (metadata.invalid ? [] : [...(metadata.input)]),
+    outputs: (metadata.invalid ? [] : [...(metadata.output)]),
+    params: (metadata.invalid ? [] : metadata.params.map(param => param.name))
+  };
 }
 
 const prevStep = (pipelineid /*: pipelineid */, sid /*: number */) /* step */ => {

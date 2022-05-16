@@ -72,22 +72,29 @@ export async function run(pipeline, context) {
 };
 
 var maxStepId = 0;
-export function step(url, params, output) {
-
-  // convert param values to pipeline params
-  Object.keys(params).forEach(e => {
-    var val = params[e];
-    var valArray =  Array.isArray(val) ? val : [ val ];
-    var valEntries = valArray.map(e => ({ value: e }));
-    params[e] = { value: valEntries, name: e };
-  });
-
-  return {
+export function step(url, params, output, options) {
+  let step = {
     id: maxStepId++,
-    url: url,
-    params: params,
-    html: output
+    html: output,
+    options: options
+  };
+
+  if (!url && params.script) {
+    step.inlineScript = params.script;
+    step.inlineScriptLanguage = params.language ?? 'javascript';
+  } else {
+    // convert param values to pipeline params
+    Object.keys(params).forEach(e => {
+      var val = params[e];
+      var valArray =  Array.isArray(val) ? val : [ val ];
+      var valEntries = valArray.map(e => ({ value: e }));
+      params[e] = { value: valEntries, name: e };
+    });
+    step.url = url;
+    step.params = params;
   }
+
+  return step;
 };
 
 export async function load(raw) {
@@ -187,6 +194,10 @@ export async function pipelinesGetNested(pipelineid) {
 
 export async function pipelinesGetStep(pipelineid, sid) {
   return await pipelines.getStep(pipelineid, sid);
+}
+
+export async function pipelinesGetRebindablesForStep(pipelineid, step) {
+  return await pipelines.getRebindablesForStep(pipelineid, step);
 }
 
 export async function pipelinesGetSources(pipelineid, sid) {

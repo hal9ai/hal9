@@ -53,10 +53,14 @@ export const init = async (options, hal9wnd) => {
             window.hal9cfg = { debug: config };
           }
 
-          async function runAsync(body, params) {
+          function breakIfDebug() {
             if (typeof(window) != 'undefined' && window.hal9cfg && window.hal9cfg.debug && window.hal9cfg.debug.iframe) {
               debugger;
             }
+          }
+
+          async function runAsync(body, params) {
+            breakIfDebug()
 
             var block = new Function("params", "return (async (params) => { " + "return " + body + "})")();
             return await block(params);
@@ -67,6 +71,7 @@ export const init = async (options, hal9wnd) => {
           }
 
           window.onerror = function (message, url, line) {
+            breakIfDebug()
             postError(postID, message, url, line);
           }
 
@@ -98,6 +103,7 @@ export const init = async (options, hal9wnd) => {
                 window.parent.postMessage({ secret: ${secret}, id: event.data.id, result: result, html: document.body.innerText.length > 0 }, '*');
               }
               catch(e) {
+                breakIfDebug()
                 postError(event.data.id, e && e.message ? e.message : e);
               }
             })();
@@ -233,11 +239,12 @@ export const load = async (raw) => {
   })
 }
 
-export const step = async (url, params, output) => {
-	return await post("hal9.step(params.url, params.params, params.output)", {
+export const step = async (url, params, output, options) => {
+	return await post("hal9.step(params.url, params.params, params.output, params.options)", {
     url: url,
     params: params,
-    output: output
+    output: output,
+    options: options
   })
 }
 
@@ -384,6 +391,13 @@ export async function pipelinesGetStep(pipelineid, sid) {
   return await post("hal9.pipelines.getStep(params.pipelineid, params.sid)", {
     pipelineid: pipelineid,
     sid: sid,
+  })
+}
+
+export async function pipelinesGetRebindablesForStep(pipelineid, step) {
+  return await post("hal9.pipelines.getRebindablesForStep(params.pipelineid, params.step)", {
+    pipelineid: pipelineid,
+    step: step,
   })
 }
 

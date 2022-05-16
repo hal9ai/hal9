@@ -31,11 +31,11 @@ const isOtherDevelopment = () => {
     return false;
   }
   const origin = window.location.origin;
-  if (origin && origin.includes('mshome.net')) {
+  if (origin?.includes('mshome.net')) {
     return origin;
   }
-  const ancestorOrigin = window.location.ancestorOrigins[0];
-  if (ancestorOrigin && ancestorOrigin.includes('mshome.net')) {
+  const ancestorOrigin = window.location.ancestorOrigins?.[0];
+  if (ancestorOrigin?.includes('mshome.net')) {
     return ancestorOrigin;
   }
   return false;

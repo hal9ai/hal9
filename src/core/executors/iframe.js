@@ -5,6 +5,7 @@ import * as interpreter from '../interpreters/interpreter';
 
 import clone from '../utils/clone';
 import * as datasets from '../datasets';
+import { shoudDebug } from '../utils/debug';
 
 import * as dataframe from '../utils/dataframe';
 
@@ -37,6 +38,9 @@ export default class IFrameExecutor extends Executor {
 
     iframe.setAttribute('sandbox', 'allow-scripts');
 
+    var debug = shoudDebug('subiframe');
+    var debugcode = debug ? 'debugger;' : '';
+
     var deps = '<!-- No Hal9 dependencies -->';
     if (header.deps) deps = header.deps.map(dep => `      <script src='${dep}'></script>`).join('\n');
 
@@ -52,6 +56,7 @@ export default class IFrameExecutor extends Executor {
             }
           }
           var block = new Function("return " + body)();
+          ${debugcode}
           return await block(params);
         };
 
@@ -90,8 +95,9 @@ export default class IFrameExecutor extends Executor {
     html.appendChild(iframe);
     await waitLoad;
 
+    var onResult = null;
     var waitResponse = new Promise((accept, reject) => {
-      var onResult = function(e) {
+      onResult = function(e) {
         if (!event.data || event.data.secret != secret) return;
 
         if (!event.data.html) iframe.remove();
@@ -119,7 +125,7 @@ export default class IFrameExecutor extends Executor {
 
     var observer = new MutationObserver(function (e) {
       if (e.filter(e => e.removedNodes && e.removedNodes[0] == html).length > 0) {
-        window.removeEventListener('message', onResult);
+        if (onResult) window.removeEventListener('message', onResult);
       }
     });
     observer.observe(html.parentNode, { childList: true });
