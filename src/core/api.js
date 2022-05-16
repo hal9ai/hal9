@@ -27,9 +27,9 @@ export const create = (pipelineid, sid, context, params, input) => {
     },
     // Notify that a pipeline step has changed
     invalidate: function() {
-      if (context.invalidatePipeline) {
+      if (context.invalidateSteps) {
         pipelines.invalidateStep(pipelineid, sid);
-        context.invalidatePipeline();
+        context.invalidateSteps();
       }
     },
     // Notify when invalidation triggers
