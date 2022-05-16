@@ -554,7 +554,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
           params[param].value = [
             {
               id: params[param].value?.[0]?.id ?? 0,
-              value: globals[rebinds.params[param]]
+              value: input[rebinds.params[param]]
             }
           ];
         }
