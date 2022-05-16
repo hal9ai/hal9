@@ -724,17 +724,50 @@ const preparePartial = (pipeline, context, partial, renderid) => {
   return partial;
 }
 
+const getLayout = (pipeline) => {
+  return pipeline.layout;
+}
+
+const generateLayout = (pipeline) => {
+  var html = ''
+  for (let step of pipeline.steps) {
+    const langInfo = languages.getLanguageInfo(step.language);
+
+    var height = 'auto';
+    var heightClass = '';
+
+    if (langInfo.height) {
+      height = langInfo.height;
+    }
+    else {
+      heightClass = ' hal9-inherit-height';
+    }
+
+    html = html + `<div class="hal9-step-${step.id}${heightClass}" style="width: 100%; height: ${height}"></div>\n`;
+  }
+}
+
+const regenerateLayout = (pipeline) => {
+  pipeline.layout = generateLayout();
+}
+
 const prepareContext = (pipeline, context, stepstopid) => {
   var parent = context.html;
 
   if (typeof (parent) === 'object') {
     const height = parent.offsetHeight;
-
-    parent.innerHTML = '';
     const html = parent.shadowRoot ? parent.shadowRoot : (context.shadow === false ? parent : parent.attachShadow({ mode: 'open' }));
-    html.innerHTML = '';
 
     const isFullView = stepstopid === null || stepstopid === undefined;
+    const layoutHTML = getLayout(pipeline);
+    const hasLayout = !isFullView || layoutHTML;
+
+    if (hasLayout) {
+      parent.innerHTML = layoutHTML;
+    }
+    else {
+      parent.innerHTML = html.innerHTML = '';
+    }
 
     // add support for generating html blocks
     context.html = (step) => {
