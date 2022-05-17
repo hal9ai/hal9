@@ -22,8 +22,12 @@ const generateLayout = (pipeline) => {
       heightClass = ' hal9-inherit-height';
     }
 
-    if (langInfo.html) {
-      html = html + `<div class="hal9-step-${step.id}${heightClass}" style="width: 100%; height: ${height}"></div>\n`;
+    var header = snippets.parseHeader(scripts.scriptFromStep(pipeline, step).script);
+    var hasHtml = header && header.output && header.output.filter(e => e == 'html').length > 0;
+    if (langInfo.html) hasHtml = true;
+
+    if (hasHtml) {
+      html = html + `<div class="hal9-step hal9-step-${step.id}${heightClass}" style="width: 100%; height: ${height}"></div>\n`;
     }
   }
 
@@ -51,7 +55,8 @@ export const prepareLayout = (pipeline, context, stepstopid) => {
       window.hal9.layouts = window.hal9.layouts ? window.hal9.layouts : {};
 
       if (window.hal9.layouts[pipeline.id] === layoutHTML) {
-        // TODO: clear manually
+        const stepEls = html.querySelectorAll(':scope .hal9-step');
+        [...stepEls].map(el => { el.innerHTML = '' });
       }
       else {
         parent.innerHTML = window.hal9.layouts[pipeline.id] = layoutHTML;
