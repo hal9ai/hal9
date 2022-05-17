@@ -9,15 +9,14 @@
   output: [ dropdown, html ]
 **/
 
-const input = document.createElement('select');
-input.style.width = '100px';
+const select = document.createElement('select');
+select.style.minWidth = '50px';
 
-input.innerHTML = '';
 const valuesarr = values.split(',');
 for (let value of valuesarr){
     let opt = document.createElement('option');
-    opt.value = opt.innerText = value;
-    input.appendChild(opt);
+    opt.value = opt.innerText = value.trim();
+    select.appendChild(opt);
 }
 
 let dropdown = 0;
@@ -26,13 +25,14 @@ state = state ? state : {};
 
 if (state.dropdown) {
   dropdown = state.dropdown;
+  select.value = dropdown;
 }
 
-input.onchange = function() {
+select.onchange = function() {
   state.dropdown = this.value;
   hal9.setState(state);
   hal9.invalidate();
 }
 
-html.appendChild(input);
+html.appendChild(select);
 html.style.height = '30px';
