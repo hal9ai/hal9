@@ -4,6 +4,7 @@ import * as pipelines from '../core/pipelines';
 import * as pipelineremote from '../core/pipelineremote';
 import * as datasets from '../core/datasets';
 import * as screenshot from '../core/utils/screenshot';
+import * as layout from '../core/layout'
 
 const runRemote = async (lambda, context) => {
   if (typeof(lambda) != 'function') {
@@ -289,5 +290,5 @@ export function htmlSetContainerStyle(name, value) {
 }
 
 export async function pipelinesRegenerateLayout(pipelineid) {
-  return await pipelines.regenerateLayout(pipelineid);
+  return await layout.regenerateLayout(pipelineid);
 }

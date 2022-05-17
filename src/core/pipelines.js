@@ -1,141 +1,5 @@
 // @flow
 
-// import scripts
-import graphqltxt from '../../scripts/import/graphql.txt.js';
-import imagestxt from '../../scripts/import/images.txt.js';
-import importcsvtxt from '../../scripts/import/csv.txt.js';
-import importexceltxt from '../../scripts/import/excel.txt.js';
-import importjsontxt from '../../scripts/import/json.txt.js';
-import iristxt from '../../scripts/import/iris.txt.js';
-import mysqltxt from '../../scripts/import/mysql.txt.js';
-import stockstxt from '../../scripts/import/stocks.txt.js';
-import videoframestxt from '../../scripts/import/videoframes.txt.js';
-import webcamtxt from '../../scripts/import/webcam.txt.js';
-import sqlitetxt from '../../scripts/import/sqlite.txt.js';
-
-// webscraping scripts
-import webimagestxt from '../../scripts/import/webimages.txt.js';
-import webselectortxt from '../../scripts/import/webselector.txt.js';
-import webtablestxt from '../../scripts/import/webtable.txt.js';
-
-// transform scripts
-import assigntxt from '../../scripts/transforms/assign.txt.js';
-import columntxt from '../../scripts/transforms/column.txt.js';
-import converttxt from '../../scripts/transforms/convert.txt.js';
-import derivetxt from '../../scripts/transforms/derive.txt.js';
-import droptxt from '../../scripts/transforms/drop.txt.js';
-import explodetxt from '../../scripts/transforms/explode.txt.js';
-import fetchtxt from '../../scripts/transforms/fetch.txt.js';
-import filtertxt from '../../scripts/transforms/filter.txt.js';
-import foldtxt from '../../scripts/transforms/fold.txt.js';
-import imputetxt from '../../scripts/transforms/impute.txt.js';
-import jointxt from '../../scripts/transforms/join.txt.js';
-import pivottxt from '../../scripts/transforms/pivot.txt.js';
-import rangetxt from '../../scripts/transforms/range.txt.js';
-import rollingsumtxt from '../../scripts/transforms/rollingsum.txt.js';
-import sampletxt from '../../scripts/transforms/sample.txt.js';
-import selecttxt from '../../scripts/transforms/select.txt.js';
-import slicetxt from '../../scripts/transforms/slice.txt.js';
-import sorttxt from '../../scripts/transforms/sort.txt.js';
-import subsprevtxt from '../../scripts/transforms/subsprev.txt.js';
-import summarizetxt from '../../scripts/transforms/summarize.txt.js';
-
-// chart scripts
-import barcharttxt from '../../scripts/charts/barchart.txt.js';
-import boxplotcharttxt from '../../scripts/charts/boxplotchart.txt.js';
-import dotplotcharttxt from '../../scripts/charts/dotplotchart.txt.js';
-import violinplotcharttxt from '../../scripts/charts/violinplotchart.txt';
-import errorbarcharttxt from '../../scripts/charts/errorbarchart.txt.js';
-import heatmapcharttxt from '../../scripts/charts/heatmapchart.txt.js';
-import histogramcharttxt from '../../scripts/charts/histogramchart.txt.js';
-import linecharttxt from '../../scripts/charts/linechart.txt.js';
-import sankeycharttxt from '../../scripts/charts/sankeychart.txt.js';
-import scattercharttxt from '../../scripts/charts/scatterchart.txt.js';
-import treemapcharttxt from '../../scripts/charts/treemapchart.txt.js';
-
-// visualization scripts
-import bubblestxt from '../../scripts/visualizations/bubbles.txt.js';
-import funneltxt from '../../scripts/visualizations/funnel.txt.js';
-import gallerytxt from '../../scripts/visualizations/gallery.txt';
-import mapcharttxt from '../../scripts/visualizations/map.txt.js';
-import minichartstxt from '../../scripts/visualizations/minicharts.txt.js';
-import networktxt from '../../scripts/visualizations/network.txt.js';
-import plotlychartstxt from '../../scripts/visualizations/plotlycharts.txt.js';
-import radialbarstxt from '../../scripts/visualizations/radialbars.txt.js';
-import simpletabletxt from '../../scripts/visualizations/simpletable.txt';
-import threejstxt from '../../scripts/visualizations/three.txt.js';
-import wafflecharttxt from '../../scripts/visualizations/waffle.txt.js';
-import waterfallcharttxt from '../../scripts/visualizations/waterfall.txt.js';
-import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
-
-// prediction scripts
-import movenettxt from '../../scripts/predict/movenet.txt.js';
-import knntxt from '../../scripts/predict/knn.txt.js';
-import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
-import regressionpredicttxt from '../../scripts/predict/regression.txt.js';
-import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
-
-// prediction / timeseries scripts
-import autoregressivetxt from '../../scripts/timeseries/autoregressive.py';
-import lstmtxt from '../../scripts/timeseries/lstm.txt.js';
-import movingaveragetxt from '../../scripts/timeseries/movingaverage.txt.js';
-import prophettxt from '../../scripts/timeseries/prophet.py';
-import seasonalitytxt from '../../scripts/timeseries/seasonality.py';
-
-// train scripts
-import predicttxt from '../../scripts/train/predict.py';
-import linearregressiontxt from '../../scripts/train/linearregression.py';
-import logisiticregressiontxt from '../../scripts/train/logisticregression.py';
-import pycarettxt from '../../scripts/train/pycaret.py';
-import traintesttxt from '../../scripts/train/traintest.py';
-
-// stats scripts
-import shapirotxt from '../../scripts/stats/shapiro.txt.js';
-import abtesttxt from '../../scripts/stats/abtest.txt.js';
-
-// util scripts
-import copytxt from '../../scripts/utils/copy.txt.js';
-import pastetxt from '../../scripts/utils/paste.txt.js';
-import tojsontxt from '../../scripts/utils/tojson.txt.js';
-import ziptomaptxt from '../../scripts/utils/ziptomap.txt.js';
-import citytomaptxt from '../../scripts/utils/citytomap.txt.js';
-
-// export scripts
-import exportcsvtxt from '../../scripts/export/csv.txt.js';
-import exporttexttxt from '../../scripts/export/text.txt.js';
-
-// service scripts
-import airbnbtxt from '../../scripts/services/airbnb.txt.js';
-import bigquerytxt from '../../scripts/services/bigquery.txt.js';
-import datagrabiotxt from '../../scripts/services/datagrabio.txt';
-import googlesheetstxt from '../../scripts/services/googlesheets.txt.js';
-import powerbitxt from '../../scripts/services/powerbi.txt';
-import reddittxt from '../../scripts/services/reddit.txt.js';
-import tableautxt from '../../scripts/services/tableau.txt';
-import twittertxt from '../../scripts/services/twitter.txt.js';
-
-// language scripts
-import htmltxt from '../../scripts/languages/html.txt';
-import javascripttxt from '../../scripts/languages/javascript.txt';
-import markdowntxt from '../../scripts/languages/markdown.txt';
-import pyodidetxt from '../../scripts/languages/pyodide.txt.js';
-import pythontxt from '../../scripts/languages/python.txt';
-import rtxt from '../../scripts/languages/r.txt';
-
-// framework scripts
-import pyscripttxt from '../../scripts/frameworks/pyscript.txt';
-import reacttxt from '../../scripts/frameworks/react.txt';
-import vuetxt from '../../scripts/frameworks/vue.txt';
-
-// control scripts
-import dropdownctrltxt from '../../scripts/controls/dropdown.txt.js';
-import rangectrltxt from '../../scripts/controls/range.txt.js';
-import spreadsheetctrltxt from '../../scripts/controls/spreadsheet.txt';
-import websitectrltxt from '../../scripts/controls/website.txt.js';
-
-// business scripts
-import churntxt from '../../scripts/business/churn.txt.js';
-
 import * as snippets from './snippets';
 import * as operations from './utils/operations';
 import * as dataframe from './utils/dataframe';
@@ -146,6 +10,8 @@ import * as executors from './executors/executors';
 
 import * as store from './pipelinestore.js';
 import * as api from './api.js';
+import * as scripts from './scripts.js';
+import * as layout from './layout.js';
 
 import * as languages from './interpreters/languages'
 
@@ -173,175 +39,13 @@ type block = { id: number, name: string, params: params, error: string, metadata
 type blocks = Array<block>;
 */
 
-const scripts = {
-  // import
-  graphql: { script: graphqltxt, language: 'javascript' },
-  images: { script: imagestxt, language: 'javascript' },
-  importcsv: { script: importcsvtxt, language: 'javascript' },
-  importexcel: { script: importexceltxt, language: 'javascript' },
-  importjson: { script: importjsontxt, language: 'javascript' },
-  iris: { script: iristxt, language: 'javascript' },
-  mysql: { script: mysqltxt, language: 'javascript' },
-  stocks: { script: stockstxt, language: 'javascript' },
-  videoframes: { script: videoframestxt, language: 'javascript' },
-  webcam: { script: webcamtxt, language: 'javascript' },
-  sqlite: { script: sqlitetxt, language: 'javascript' },
-
-  // webscraping
-  webimages: { script: webimagestxt, language: 'javascript' },
-  webselector: { script: webselectortxt, language: 'javascript' },
-  webtables: { script: webtablestxt, language: 'javascript' },
-
-  // transforms
-  assign: { script: assigntxt, language: 'javascript' },
-  column: { script: columntxt, language: 'javascript' },
-  convert: { script: converttxt, language: 'javascript' },
-  derive: { script: derivetxt, language: 'javascript' },
-  drop: { script: droptxt, language: 'javascript' },
-  explode: { script: explodetxt, language: 'javascript' },
-  filter: { script: filtertxt, language: 'javascript' },
-  fold: { script: foldtxt, language: 'javascript' },
-  impute: { script: imputetxt, language: 'javascript' },
-  join: { script: jointxt, language: 'javascript' },
-  pivot: { script: pivottxt, language: 'javascript' },
-  range: { script: rangetxt, language: 'javascript' },
-  rollingsum: { script: rollingsumtxt, language: 'javascript' },
-  sample: { script: sampletxt, language: 'javascript' },
-  select: { script: selecttxt, language: 'javascript' },
-  slice: { script: slicetxt, language: 'javascript' },
-  sort: { script: sorttxt, language: 'javascript' },
-  subsprev: { script: subsprevtxt, language: 'javascript' },
-  summarize: { script: summarizetxt, language: 'javascript' },
-
-  // charts
-  barchart: { script: barcharttxt, language: 'javascript' },
-  boxplotchart: { script: boxplotcharttxt, language: 'pyodide' },
-  dotplotchart: { script: dotplotcharttxt, language: 'javascript' },
-  errorbarchart: { script: errorbarcharttxt, language: 'javascript' },
-  heatmapchart: { script: heatmapcharttxt, language: 'javascript' },
-  histogramchart: { script: histogramcharttxt, language: 'javascript' },
-  violinchart: { script: violinplotcharttxt, language: 'pyodide' },
-  linechart: { script: linecharttxt, language: 'javascript' },
-  sankeychart: { script: sankeycharttxt, language: 'javascript' },
-  scatterchart: { script: scattercharttxt, language: 'javascript' },
-  treemapchart: { script: treemapcharttxt, language: 'javascript' },
-
-  // visualizations
-  bubbles: { script: bubblestxt, language: 'javascript' },
-  funnel: { script: funneltxt, language: 'javascript' },
-  gallery: { script: gallerytxt, language: 'html' },
-  mapchart: { script: mapcharttxt, language: 'javascript' },
-  minicharts: { script: minichartstxt, language: 'javascript' },
-  network: { script: networktxt, language: 'javascript' },
-  plotlycharts: { script: plotlychartstxt, language: 'javascript' },
-  radialbars: { script: radialbarstxt, language: 'javascript' },
-  threejs: { script: threejstxt, language: 'javascript' },
-  wafflechart: { script: wafflecharttxt, language: 'javascript' },
-  wordcloud: { script: wordcloudtxt, language: 'javascript' },
-  waterfallchart: { script: waterfallcharttxt, language: 'javascript' },
-  table: { script: simpletabletxt, language: 'html' },
-
-  // predictions
-  bodypix: { script: movenettxt, language: 'javascript' },
-  movenet: { script: movenettxt, language: 'javascript' },
-  knn: { script: knntxt, language: 'javascript' },
-  mobilenet: { script: mobilenettxt, language: 'javascript' },
-  regressionpredict: { script: regressionpredicttxt, language: 'javascript' },
-  sentiment: { script: sentimenttxt, language: 'javascript' },
-
-  // prediction / time
-  timeauto: { script: autoregressivetxt, language: 'python' },
-  timelstm: { script: lstmtxt, language: 'javascript' },
-  timemovingaverage: { script: movingaveragetxt, language: 'javascript' },
-  timeprophet: { script: prophettxt, language: 'python' },
-  timeseasonality: { script: seasonalitytxt, language: 'pyodide' },
-
-  // train
-  predict: { script: predicttxt, language: 'python' },
-  linearregression: { script: linearregressiontxt, language: 'python' },
-  traintest: { script: traintesttxt, language: 'python' },
-  logisiticregression: { script: logisiticregressiontxt, language: 'python' },
-  pycaret: { script: pycarettxt, language: 'python' },
-
-  // stats
-  shapiro: { script: shapirotxt, language: 'pyodide' },
-  abtest: { script: abtesttxt, language: 'pyodide' },
-
-  // utils
-  copy: { script: copytxt, language: 'javascript' },
-  paste: { script: pastetxt, language: 'javascript' },
-  tojson: { script: tojsontxt, language: 'javascript' },
-  fetch: { script: fetchtxt, language: 'javascript' },
-  ziptomap: { script: ziptomaptxt, language: 'javascript' },
-  citytomap: { script: citytomaptxt, language: 'javascript' },
-
-  // export
-  exportcsv: { script: exportcsvtxt, language: 'javascript' },
-  exporttext: { script: exporttexttxt, language: 'javascript' },
-
-  // services
-  airbnb: { script: airbnbtxt, language: 'javascript' },
-  bigquery: { script: bigquerytxt, language: 'javascript' },
-  datagrabio: { script: datagrabiotxt, language: 'html' },
-  googlesheets: { script: googlesheetstxt, language: 'javascript' },
-  powerbi: { script: powerbitxt, language: 'html' },
-  reddit: { script: reddittxt, language: 'javascript' },
-  tableau: { script: tableautxt, language: 'html' },
-  twitter: { script: twittertxt, language: 'javascript' },
-
-  // languages
-  html: { script: htmltxt, language: 'html' },
-  javascript: { script: javascripttxt, language: 'javascript' },
-  markdown: { script: markdowntxt, language: 'markdown' },
-  pyodide: { script: pyodidetxt, language: 'pyodide' },
-  python: { script: pythontxt, language: 'python' },
-  r: { script: rtxt, language: 'r' },
-
-  // frameworks
-  pyscript: { script: pyscripttxt, language: 'html' },
-  react: { script: reacttxt, language: 'html' },
-  vue: { script: vuetxt, language: 'html' },
-
-  // controls
-  dropdownctrl: { script: dropdownctrltxt, language: 'javascript' },
-  rangectrl: { script: rangectrltxt, language: 'javascript' },
-  spreadsheetctrl: { script: spreadsheetctrltxt, language: 'html' },
-  websitectrl: { script: websitectrltxt, language: 'javascript' },
-
-  // business
-  churn: { script: churntxt, language: 'pyodide' },
-}
-
 var pipelinesStateCount = 0;
 var pipelinesState = {};
 var pipelinesCallbacks = {};
 
-var fetchedScripts = {};
-
-const scriptFromStep = (pipeline /* pipeline */, step /*: step */) /*: string */ => {
-  var language = step.language;
-  var text = undefined;
-
-  if (pipeline.scripts[step.id])
-    text = pipeline.scripts[step.id];
-  else if (fetchedScripts[step.url])
-    text = fetchedScripts[step.url];
-  else if (scripts[step.name]) {
-    text = scripts[step.name].script;
-    language = scripts[step.name].language;
-  } else if (step.inlineScript) {
-    text = step.inlineScript;
-    language = step.inlineScriptLanguage;
-  } else {
-    text = '';
-  }
-
-  return { script: text, language: language };
-}
-
 const paramsFromStep = (pipeline /* pipeline */, step /*: step */) /*: params */ => {
   if (pipeline.params[step.id]) return clone(pipeline.params[step.id]);
-  return clone(paramsFromScript(scriptFromStep(pipeline, step).script));
+  return clone(paramsFromScript(scripts.scriptFromStep(pipeline, step).script));
 }
 
 const paramsFromScript = (script /*: string */) /*: params */ => {
@@ -385,7 +89,7 @@ const metadataFromScript = (script /*: string */) /* metadata */ => {
 }
 
 const metadataFromStepScript = (pipeline /* pipeline */, step /*: step */) /* metadata */ => {
-  return metadataFromScript(scriptFromStep(pipeline, step).script);
+  return metadataFromScript(scripts.scriptFromStep(pipeline, step).script);
 }
 
 const createInt = (steps /*: steps */, previous /*: pipeline */) /*: pipeline */ => {
@@ -439,20 +143,6 @@ export const create = (steps /*: steps */) /*: pipelineid */ => {
   const pipeline = createInt(steps, {});
   const pipelineid = store.add(pipeline);
   return pipelineid;
-}
-
-const fetchScripts = async (steps /*: steps */) => {
-  if (!steps) return;
-  await Promise.all(steps.map(step => {
-    return (async (step) => {
-      if (step.url && !fetchedScripts[step.url]) {
-        const fullUrl = step.url.startsWith('http://') || step.url.startsWith('https://');
-        const url = fullUrl ? step.url : 'https://raw.githubusercontent.com/hal9ai/hal9ai/main/scripts/' + step.url;
-        const response = await fetch(url);
-        fetchedScripts[step.url] = await response.text();
-      }
-    })(step);
-  }));
 }
 
 export const update = (pipelineid /*: pipelineid */, steps /*: steps */) /*: void */ => {
@@ -525,7 +215,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
     var params = pipeline.params[step.id] ? clone(pipeline.params[step.id]) : {};
 
     // add default parameters
-    var paramsDefault = paramsFromScript(scriptFromStep(pipeline, step).script);
+    var paramsDefault = paramsFromScript(scripts.scriptFromStep(pipeline, step).script);
     Object.keys(paramsDefault).forEach(param => {
       if (!Object.keys(params).includes(param)) params[param] = clone(paramsDefault[param]);
     });
@@ -574,7 +264,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
     // add hal9 api to deps
     deps['hal9'] = api.create(pipelineid, sid, context, params, input);
 
-    const script = scriptFromStep(pipeline, step);
+    const script = scripts.scriptFromStep(pipeline, step);
     const executor = executors.executorFromMetadata(
       metadata,
       input,
@@ -647,7 +337,7 @@ const stepHasHtml = (pipeline, step) => {
   const langInfo = languages.getLanguageInfo(step.language);
   if (langInfo.html) return true;
 
-  var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
+  var header = snippets.parseHeader(scripts.scriptFromStep(pipeline, step).script);
   return header && header.output && header.output.filter(e => e == 'html').length > 0;
 }
 
@@ -665,7 +355,7 @@ const preparePartial = (pipeline, context, partial, renderid) => {
       }
 
       var step = stepFromId(pipeline, renderid);
-      var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
+      var header = snippets.parseHeader(scripts.scriptFromStep(pipeline, step).script);
       const hasHtml = stepHasHtml(pipeline, step);
       if (!hasHtml) {
         return function (pipeline, step, result, error, details) {
@@ -724,134 +414,20 @@ const preparePartial = (pipeline, context, partial, renderid) => {
   return partial;
 }
 
-const getLayout = (pipeline) => {
-  return pipeline.layout;
-}
-
-const generateLayout = (pipeline) => {
-  var html = ''
-  for (let step of pipeline.steps) {
-    const langInfo = languages.getLanguageInfo(step.language);
-
-    var height = 'auto';
-    var heightClass = '';
-
-    if (langInfo.height) {
-      height = langInfo.height;
-    }
-    else {
-      heightClass = ' hal9-inherit-height';
-    }
-
-    if (langInfo.html) {
-      html = html + `<div class="hal9-step-${step.id}${heightClass}" style="width: 100%; height: ${height}"></div>\n`;
-    }
-  }
-
-  return html;
-}
-
-export const regenerateLayout = (pipelineid) => {
-  var pipeline = store.get(pipelineid);
-  pipeline.layout = generateLayout(pipeline);
-}
-
-const prepareContext = (pipeline, context, stepstopid) => {
-  var parent = context.html;
-
-  if (typeof (parent) === 'object') {
-    const height = parent.offsetHeight;
-    const html = parent.shadowRoot ? parent.shadowRoot : (context.shadow === false ? parent : parent.attachShadow({ mode: 'open' }));
-
-    const isFullView = stepstopid === null || stepstopid === undefined;
-    const layoutHTML = getLayout(pipeline);
-    const hasLayout = !isFullView || layoutHTML;
-
-    if (isFullView && hasLayout) {
-      parent.innerHTML = layoutHTML;
-
-      const inheritHeights = html.querySelectorAll(':scope .hal9-inherit-height');
-      [...inheritHeights].map(container => { container.style.height = height + 'px' });
-    }
-    else {
-      parent.innerHTML = html.innerHTML = '';
-    }
-
-    // add support for generating html blocks
-    context.html = (step) => {
-      var header = snippets.parseHeader(scriptFromStep(pipeline, step).script);
-      var hasHtml = header && header.output && header.output.filter(e => e == 'html').length > 0;
-
-      const langInfo = languages.getLanguageInfo(step.language);
-      if (langInfo.html) hasHtml = true;
-
-      if (isFullView && hasHtml) {
-        const output = html.querySelector(':scope .hal9-step-' + step.id);
-        if (output) return output;
-
-        var container = document.createElement('div');
-        container.className = 'hal9-step-' + step.id;
-        container.style.width = '100%';
-
-        if (langInfo.height) {
-          container.style.height = langInfo.height;
-        }
-        else {
-          container.style.height = height + 'px';
-        }
-
-        html.appendChild(container);
-
-        return container;
-      }
-      else if (stepstopid == step.id) {
-        const output = html.querySelector(':scope .hal9-step-' + step.id);
-        if (output) return output;
-
-        var container = document.createElement('div');
-        container.className = 'hal9-step-' + step.id;
-        container.style.width = '100%';
-        container.style.height = '100%';
-
-        html.appendChild(container);
-
-        return container;
-      }
-      else {
-        const sandbox = html.querySelector(':scope .hal9-step-sandbox');
-        if (sandbox) {
-          sandbox.innerHTML = '';
-          return sandbox;
-        }
-
-        var container = document.createElement('div');
-        container.className = 'hal9-step-sandbox';
-        container.style.width = '0';
-        container.style.height = '0';
-        container.style.position = 'absolute';
-        container.style.display = 'none';
-        html.appendChild(container);
-
-        return container;
-      }
-    }
-  }
-}
-
 export const run = async (pipelineid /*: pipeline */, context /* context */, partial, stepstopid /* stepid */) /*: void */ => {
   debugIf('run');
 
   var pipeline = store.get(pipelineid);
   pipeline.aborted = undefined;
 
-  await fetchScripts(pipeline.steps);
+  await scripts.fetchScripts(pipeline.steps);
 
   if (typeof (context.html) === 'string') {
     context.html = document.getElementById(context.html);
   }
 
   partial = preparePartial(pipeline, context, partial, stepstopid);
-  prepareContext(pipeline, context, stepstopid);
+  layout.prepareLayout(pipeline, context, stepstopid);
 
   pipeline.errors = {};
   pipeline.error = undefined;
@@ -1001,7 +577,7 @@ export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step
     pipeline.params[step.id] = step.params;
   }
 
-  const scriptInfo = scriptFromStep(pipeline, step);
+  const scriptInfo = scripts.scriptFromStep(pipeline, step);
   step.script = scriptInfo.script;
   step.language = scriptInfo.language;
 
@@ -1039,7 +615,7 @@ export const getNested = (pipelineid /*: pipelineid */) /*: blocks */ => {
   var pipeline = store.get(pipelineid);
   return clone(
     pipeline.steps.map(step => {
-      const script = scriptFromStep(pipeline, step);
+      const script = scripts.scriptFromStep(pipeline, step);
       return Object.assign(step, {
         params: paramsFromStep(pipeline, step),
         error: pipeline.errors[step.id] ? pipeline.errors[step.id] : '',
@@ -1112,7 +688,7 @@ export const setScript = (pipelineid /*: pipelineid */, sid /*: number */, scrip
   var pipeline = store.get(pipelineid);
   const step = stepFromId(pipeline, sid);
 
-  const oldscript = scriptFromStep(pipeline, step).script;
+  const oldscript = scripts.scriptFromStep(pipeline, step).script;
   const oldmeta = JSON.stringify(metadataFromScript(oldscript));
   const newmeta = JSON.stringify(metadataFromScript(script));
 
@@ -1127,7 +703,7 @@ export const setScript = (pipelineid /*: pipelineid */, sid /*: number */, scrip
 export const getScript = (pipelineid /*: pipelineid */, sid /*: number */) /*: string */ => {
   var pipeline = store.get(pipelineid);
   const step = stepFromId(pipeline, sid);
-  return scriptFromStep(pipeline, step).script;
+  return scripts.scriptFromStep(pipeline, step).script;
 }
 
 export const getHashable = (pipelineid /*: pipelineid */) /*: string */ => {
