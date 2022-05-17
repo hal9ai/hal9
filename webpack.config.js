@@ -23,7 +23,7 @@ module.exports = (env, argv) => {
     },
   ];
 
-  // This is here to make the hal9 package more compatible with older browsers, but disable in devel for easy debugging.
+  // This is here to make the hal9 package more compatible with older browsers
   if (!devel) {
     rules.unshift({
       test: /\.m?js$/,
@@ -41,6 +41,26 @@ module.exports = (env, argv) => {
                 corejs: 3
               }
             ]
+          ]
+        }
+      }
+    });
+  } else {
+    rules.unshift({
+      test: /\.m?js$/,
+      exclude: /(node_modules)/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          plugins: [
+            [
+              '@babel/plugin-transform-runtime',
+              {
+                corejs: 3
+              }
+            ],
+            '@babel/plugin-proposal-nullish-coalescing-operator',
+            '@babel/plugin-proposal-optional-chaining'
           ]
         }
       }
