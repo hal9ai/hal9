@@ -743,13 +743,17 @@ const generateLayout = (pipeline) => {
       heightClass = ' hal9-inherit-height';
     }
 
-    html = html + `<div class="hal9-step-${step.id}${heightClass}" style="width: 100%; height: ${height}"></div>\n`;
+    if (langInfo.html) {
+      html = html + `<div class="hal9-step-${step.id}${heightClass}" style="width: 100%; height: ${height}"></div>\n`;
+    }
   }
+
+  return html;
 }
 
 export const regenerateLayout = (pipelineid) => {
   var pipeline = store.get(pipelineid);
-  pipeline.layout = generateLayout();
+  pipeline.layout = generateLayout(pipeline);
 }
 
 const prepareContext = (pipeline, context, stepstopid) => {
@@ -763,7 +767,7 @@ const prepareContext = (pipeline, context, stepstopid) => {
     const layoutHTML = getLayout(pipeline);
     const hasLayout = !isFullView || layoutHTML;
 
-    if (hasLayout) {
+    if (isFullView && hasLayout) {
       parent.innerHTML = layoutHTML;
 
       const inheritHeights = html.querySelectorAll(':scope .hal9-inherit-height');
