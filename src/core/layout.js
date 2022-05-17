@@ -24,10 +24,11 @@ const generateLayout = (pipeline) => {
 
     var header = snippets.parseHeader(scripts.scriptFromStep(pipeline, step).script);
     var hasHtml = header && header.output && header.output.filter(e => e == 'html').length > 0;
+    var interactiveClass = header && header.interactive ? ' hal9-interactive' : '';
     if (langInfo.html) hasHtml = true;
 
     if (hasHtml) {
-      html = html + `<div class="hal9-step hal9-step-${step.id}${heightClass}" style="width: 100%; height: ${height}"></div>\n`;
+      html = html + `<div class="hal9-step hal9-step-${step.id}${heightClass}${interactiveClass}" style="width: 100%; height: ${height}"></div>\n`;
     }
   }
 
@@ -39,10 +40,31 @@ export const regenerateLayout = (pipelineid) => {
   pipeline.layout = generateLayout(pipeline);
 }
 
+const sandboxIfNeeded = (html) => {
+  const sandbox = html.querySelector(':scope .hal9-step-sandbox');
+  if (sandbox) {
+    sandbox.innerHTML = '';
+    return sandbox;
+  }
+
+  var container = document.createElement('div');
+  container.className = 'hal9-step-sandbox';
+  container.style.width = '0';
+  container.style.height = '0';
+  container.style.position = 'absolute';
+  container.style.display = 'none';
+  html.appendChild(container);
+
+  return container;
+}
+
 export const prepareLayout = (pipeline, context, stepstopid) => {
   var parent = context.html;
 
   if (typeof (parent) === 'object') {
+    window.hal9 = window.hal9 ? window.hal9 : {};
+    window.hal9.layouts = window.hal9.layouts ? window.hal9.layouts : {};
+      
     const height = parent.offsetHeight;
     const html = parent.shadowRoot ? parent.shadowRoot : (context.shadow === false ? parent : parent.attachShadow({ mode: 'open' }));
 
@@ -51,12 +73,16 @@ export const prepareLayout = (pipeline, context, stepstopid) => {
     const hasLayout = !isFullView || layoutHTML;
 
     if (isFullView && hasLayout) {
-      window.hal9 = window.hal9 ? window.hal9 : {};
-      window.hal9.layouts = window.hal9.layouts ? window.hal9.layouts : {};
-
       if (window.hal9.layouts[pipeline.id] === layoutHTML) {
         const stepEls = html.querySelectorAll(':scope .hal9-step');
-        [...stepEls].map(el => { el.innerHTML = '' });
+        [...stepEls].map(el => {
+          if (el.classList.contains('hal9-interactive')) {
+            // interactive elements are not erased but rather handle interactions themselves
+          }
+          else {
+            el.innerHTML = '';
+          }
+        });
       }
       else {
         parent.innerHTML = window.hal9.layouts[pipeline.id] = layoutHTML;
@@ -66,6 +92,7 @@ export const prepareLayout = (pipeline, context, stepstopid) => {
       [...inheritHeights].map(container => { container.style.height = height + 'px' });
     }
     else {
+      window.hal9.layouts[pipeline.id] = undefined;
       parent.innerHTML = html.innerHTML = '';
     }
 
@@ -77,7 +104,13 @@ export const prepareLayout = (pipeline, context, stepstopid) => {
       const langInfo = languages.getLanguageInfo(step.language);
       if (langInfo.html) hasHtml = true;
 
-      if (isFullView && hasHtml) {
+      if (isFullView && hasLayout) {
+        const output = html.querySelector(':scope .hal9-step-' + step.id);
+        if (output) return output;
+
+        return sandboxIfNeeded(html);
+      }
+      else if (isFullView && hasHtml) {
         const output = html.querySelector(':scope .hal9-step-' + step.id);
         if (output) return output;
 
@@ -110,21 +143,7 @@ export const prepareLayout = (pipeline, context, stepstopid) => {
         return container;
       }
       else {
-        const sandbox = html.querySelector(':scope .hal9-step-sandbox');
-        if (sandbox) {
-          sandbox.innerHTML = '';
-          return sandbox;
-        }
-
-        var container = document.createElement('div');
-        container.className = 'hal9-step-sandbox';
-        container.style.width = '0';
-        container.style.height = '0';
-        container.style.position = 'absolute';
-        container.style.display = 'none';
-        html.appendChild(container);
-
-        return container;
+        return sandboxIfNeeded(html);
       }
     }
   }
