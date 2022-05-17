@@ -287,3 +287,7 @@ export async function screenshotResize(sourceImageData, width, height) {
 export function htmlSetContainerStyle(name, value) {
   
 }
+
+export async function pipelinesRegenerateLayout(pipelineid) {
+  return await pipelines.regenerateLayout(pipelineid);
+}

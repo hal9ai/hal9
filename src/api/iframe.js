@@ -552,3 +552,9 @@ export async function screenshotResize(sourceImageData, width, height) {
 export function htmlSetContainerStyle(name, value) {
   config.iframe.style[name] = value;
 }
+
+export async function pipelinesRegenerateLayout(pipelineid) {
+  return await post("hal9.pipelines.regenerateLayout(params.pipelineid)", {
+    pipelineid: pipelineid,
+  })
+}

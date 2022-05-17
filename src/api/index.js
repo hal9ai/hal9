@@ -208,6 +208,10 @@ function htmlSetContainerStyle(name, value) {
   return api.htmlSetContainerStyle(name, value);
 }
 
+async function regenerateLayout(pipelineid) {
+  return await api.pipelinesRegenerateLayout(pipelineid);
+}
+
 export default {
   init: init,
   create: create,
@@ -282,6 +286,7 @@ export default {
     getMetadata: pipelinesGetMetadata,
     abort: pipelinesAbort,
     isAborted: pipelinesIsAborted,
+    regenerateLayout: regenerateLayout,
   },
 
   screenshot: {

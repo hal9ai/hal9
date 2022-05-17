@@ -747,7 +747,8 @@ const generateLayout = (pipeline) => {
   }
 }
 
-const regenerateLayout = (pipeline) => {
+export const regenerateLayout = (pipelineid) => {
+  var pipeline = store.get(pipelineid);
   pipeline.layout = generateLayout();
 }
 
@@ -764,6 +765,9 @@ const prepareContext = (pipeline, context, stepstopid) => {
 
     if (hasLayout) {
       parent.innerHTML = layoutHTML;
+
+      const inheritHeights = html.querySelectorAll(':scope .hal9-inherit-height');
+      [...inheritHeights].map(container => { container.style.height = height + 'px' });
     }
     else {
       parent.innerHTML = html.innerHTML = '';
