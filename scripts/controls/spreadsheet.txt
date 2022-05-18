@@ -74,8 +74,10 @@
         }).filter(e => e)
 
         hal9.setState({ data: data });
+      })
+      .on('cell-edited', (text, ri, ci) => {
         hal9.invalidate();
-      });
+      })
 
     var observer = new MutationObserver(function (e) {
       if (e.filter(e => e.removedNodes && e.removedNodes[0] == xsEl).length > 0) {
