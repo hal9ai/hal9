@@ -74,10 +74,29 @@ r <- plumb(hal9__params$hal9__plumberscript)
 r$run(port = hal9__params$hal9__plumberport)
 \`);
 
+const apilocalurl = 'http://localhost:8001';
+const isHealthy = async () => {
+  try {
+    const healthurl = apilocalurl + '/health';
+
+    console.log('Checking health for ' + healthurl)
+    const healthresult = await fetch(healthurl, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    return healthresult.ok;
+  }
+  catch (error) {
+    console.log('Check health failed ' + error.toString())
+    return false;
+  }
+}
+
 var stderr = '';
 var output = {};
 
-var forked = new Promise((accept, reject) => {
+var forker = (accept, reject) => {
   const spawned = spawn('Rscript', [ scriptname ], { timeout: 5000 });
 
   spawned.stdout.on('data', (data) => {
@@ -108,17 +127,19 @@ var forked = new Promise((accept, reject) => {
       accept()
     }
   });
-})
+}
 
-await new Promise(r => setTimeout(r, 1000));
+let forked = undefined;
 
-const apilocalurl = 'http://localhost:8001';
-const healthresult = await fetch(apilocalurl + '/health', {
-  method: 'GET',
-  headers: { 'Content-Type': 'application/json' }
-});
+if (!await isHealthy()) {
+  console.log('Forking new API process')
+  forked = new Promise(forker);
+  // await forked;
 
-if (!healthresult.ok) {
+  await new Promise(r => setTimeout(r, 1000));
+}
+
+if (!await isHealthy()) {
   throw 'Failed to retrieve data from: ' + apilocalurl + '/health';
 }
 
@@ -140,7 +161,7 @@ const apiresult = await fetch(apilocalurl + '/', {
   body: JSON.stringify(apiparams),
 });
 
-if (!healthresult.ok) {
+if (!apiresult.ok) {
   throw 'Failed to retrieve data from: ' + apilocalurl + '/';
 }
 
