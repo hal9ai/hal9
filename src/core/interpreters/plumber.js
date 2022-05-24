@@ -31,6 +31,7 @@ export default async function(script, header, context) {
 
   const interpreted = `${debugcode}
 const params = { ${paramNodeDef} };
+const portnumber = 8001;
 
 const readFileAsync = util.promisify(fs.readFile)
 const writeFileAsync = util.promisify(fs.writeFile)
@@ -42,7 +43,7 @@ if (!fs.existsSync(scriptpath)) fs.mkdirSync(scriptpath);
 const plumberscript = path.resolve(scriptpath, 'plumber.R');
 const paramsname = path.resolve(scriptpath, 'params.json');
 
-await writeFileAsync(plumberscript, \`
+const finalscript = \`
   hal9__params = jsonlite::read_json('\${paramsname}', simplifyVector = TRUE)
   ${paramRDef}
 
@@ -54,12 +55,37 @@ function(msg="") {
 }
 
 ${script}
-\`);
+\`;
+
+if (!fs.existsSync('./hal9__ports/')) fs.mkdirSync('./hal9__ports/');
+const scriptmd5 = crypto.createHash('md5').update(finalscript).digest("hex");
+const portsfile = './hal9__ports/' + portnumber + '.json';
+let portsdata = {};
+if (fs.existsSync(portsfile)) {
+  try {
+  const rawports = fs.readFileSync(portsfile);
+  portsdata = JSON.parse(rawports);
+  } catch(e) {
+    console.log('Error reading ports file: ' + e.toString())
+  }
+}
+else {
+  const rawports = JSON.stringify({
+    hash: scriptmd5
+  });
+  fs.writeFileSync(portsfile, rawports);
+}
+
+if (portsdata.hash && portsdata.hash != scriptmd5) {
+  console.log('The api has changed from ' + portsdata.hash + ' to ' + scriptmd5 + ', redeploying.')
+}
+
+await writeFileAsync(plumberscript, finalscript);
 
 params["hal9__scriptpath"] = scriptpath;
 params["hal9__context"] = hal9__context;
 params["hal9__plumberscript"] = plumberscript;
-params["hal9__plumberport"] = 8001
+params["hal9__plumberport"] = portnumber;
 
 await writeFileAsync(paramsname, JSON.stringify(params));
 
@@ -74,7 +100,7 @@ r <- plumb(hal9__params$hal9__plumberscript)
 r$run(port = hal9__params$hal9__plumberport)
 \`);
 
-const apilocalurl = 'http://localhost:8001';
+const apilocalurl = 'http://localhost:' + portnumber;
 const isHealthy = async () => {
   try {
     const healthurl = apilocalurl + '/health';
@@ -166,6 +192,14 @@ if (!apiresult.ok) {
 }
 
 const datares = await apiresult.json();
+
+
+// if (fs.existsSync(outputname)) {
+//  const rawoutput = await readFileAsync(outputname)
+//  output = JSON.parse(rawoutput);
+// }
+
+// ${jsoutputcode}
 
 fs.rmSync(scriptpath, { recursive: true });
 
