@@ -88,6 +88,13 @@ export default class RemoteExecutor extends Executor {
       clearTimeout(consoleTimeout);
     }
 
+    try {
+      await updateConsole(this.workerUrl, this.sessionid, this.context.headers);
+    }
+    catch(e) {
+      console.log('Failed to retrieve console: ' + e.toString());
+    }
+
     if (!res.ok) {
       var details = res.statusText;
       try {
@@ -97,13 +104,6 @@ export default class RemoteExecutor extends Executor {
 
       details = typeof(details) === 'string' ? details : JSON.stringify(details);
       throw 'Failed to execute step on remote worker: ' + details;
-    }
-
-    try {
-      await updateConsole(this.workerUrl, this.sessionid, this.context.headers);
-    }
-    catch(e) {
-      console.log('Failed to retrieve console: ' + e.toString());
     }
     
     var result = await res.json();
