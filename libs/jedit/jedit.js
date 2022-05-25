@@ -223,7 +223,7 @@ function buildArray(parentEl, json, max, options) {
     var rowEl = createElem(tableEl, 'tr', 'jedit-object-row');
     var rowValueEl = createElem(rowEl, 'td', 'jedit-object-value');
 
-    buildHtml(rowValueEl, json[index], max - 1, options.root && json.length == 1);
+    buildHtml(rowValueEl, json[index], max - 1, null, options.root && json.length == 1);
   }
 }
 
