@@ -114,7 +114,7 @@ app.run(host = "localhost", port = \${portnumber}, debug = False)
 # waitress.serve(app, port = \${portnumber}, url_scheme = 'http')
 \`);
 
-const apilocalurl = 'http://localhost:' + portnumber;
+const apilocalurl = 'http://127.0.0.1:' + portnumber;
 const isHealthy = async () => {
   try {
     const healthurl = apilocalurl + '/health';

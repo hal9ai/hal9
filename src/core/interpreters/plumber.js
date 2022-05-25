@@ -116,7 +116,7 @@ r <- plumb(hal9__params$hal9__plumberscript)
 r$run(port = hal9__params$hal9__plumberport)
 \`);
 
-const apilocalurl = 'http://localhost:' + portnumber;
+const apilocalurl = 'http://127.0.0.1:' + portnumber;
 const isHealthy = async () => {
   try {
     const healthurl = apilocalurl + '/health';
