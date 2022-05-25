@@ -123,6 +123,8 @@ import pythontxt from '../../scripts/languages/python.txt';
 import rtxt from '../../scripts/languages/r.txt';
 
 // framework scripts
+import flasktxt from '../../scripts/frameworks/flask.py';
+import plumbertxt from '../../scripts/frameworks/plumber.r';
 import pyscripttxt from '../../scripts/frameworks/pyscript.txt';
 import reacttxt from '../../scripts/frameworks/react.txt';
 import vuetxt from '../../scripts/frameworks/vue.txt';
@@ -265,6 +267,8 @@ const scripts = {
   r: { script: rtxt, language: 'r' },
 
   // frameworks
+  flask: { script: flasktxt, language: 'flask' },
+  plumber: { script: plumbertxt, language: 'plumber' },
   pyscript: { script: pyscripttxt, language: 'html' },
   react: { script: reacttxt, language: 'html' },
   vue: { script: vuetxt, language: 'html' },
