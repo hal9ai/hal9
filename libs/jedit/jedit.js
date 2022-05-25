@@ -176,7 +176,7 @@ function appendTableRows(tableEl, json, types, keys, max, start, colStart, colEn
   }
 }
 
-async function buildTable(parentEl, json, max, colStart) {
+async function buildTable(parentEl, json, max, options, colStart) {
   if (json.length == 0) {
     parentEl.innerHTML = 'No results :(';
     parentEl.className = 'jedit-table-empty';
@@ -193,7 +193,7 @@ async function buildTable(parentEl, json, max, colStart) {
   var headerEl = createElem(tableEl, 'tr', 'jedit-table-header');
   createTableNavElem(headerEl, false, false, 'jedit-table-row-entry' + (colStart > 0 ? '' : ' jedit-hide'), function() {
     parentEl.innerHTML = '';
-    buildTable(parentEl, json, max, colStart - visibleCols);
+    buildTable(parentEl, json, max, options, colStart - visibleCols);
   });
 
   for (var idxCol = colStart; idxCol <= colEnd; idxCol++) {
@@ -203,7 +203,7 @@ async function buildTable(parentEl, json, max, colStart) {
 
   createTableNavElem(headerEl, true, false, 'jedit-table-row-entry' + (colEnd < keys.length - 1 ? '' : ' jedit-hide'), function() {
     parentEl.innerHTML = '';
-    buildTable(parentEl, json, max, colStart + visibleCols);
+    buildTable(parentEl, json, max, options, colStart + visibleCols);
   });
 
   const types = await getTableTypes(json);
@@ -211,9 +211,9 @@ async function buildTable(parentEl, json, max, colStart) {
   appendTableRows(tableEl, json, types, keys, max, 0, colStart, colEnd);
 }
 
-function buildArray(parentEl, json, max) {
+function buildArray(parentEl, json, max, options) {
   if (json.length == 0) {
-    buildString(parentEl, '[]', max);
+    buildString(parentEl, '[]', max, options);
     return;
   }
 
@@ -223,16 +223,16 @@ function buildArray(parentEl, json, max) {
     var rowEl = createElem(tableEl, 'tr', 'jedit-object-row');
     var rowValueEl = createElem(rowEl, 'td', 'jedit-object-value');
 
-    buildHtml(rowValueEl, json[index], max - 1, null);
+    buildHtml(rowValueEl, json[index], max - 1, options.root && json.length == 1);
   }
 }
 
-function buildString(parentEl, json, max) {
+function buildString(parentEl, json, max, options) {
   var divKeyEl = createElem(parentEl, 'div', 'jedit-contained jedit-string');
   divKeyEl.innerText = json;
 }
 
-function buildRootString(parentEl, json, max) {
+function buildRootString(parentEl, json, max, options) {
   var divKeyEl = createElem(parentEl, 'div', 'jedit-contained jedit-string');
   divKeyEl.style.minHeight = divKeyEl.style.maxHeight = divKeyEl.style.height = '100%';
   divKeyEl.style.whiteSpace = 'normal';
@@ -240,14 +240,14 @@ function buildRootString(parentEl, json, max) {
   divKeyEl.innerText = json;
 }
 
-function buildLink(parentEl, json, max) {
+function buildLink(parentEl, json, max, options) {
   var divKeyEl = createElem(parentEl, 'a', 'jedit-contained jedit-link');
   divKeyEl.href = json;
   divKeyEl.target = 'blank';
   divKeyEl.innerText = json;
 }
 
-function buildArquero(parentEl, table, max) {
+function buildArquero(parentEl, table, max, options) {
   var subset = table.slice(0, Math.min(500, table.numRows()));
   var rows = [];
   subset.scan(function(i, data) {
@@ -258,22 +258,22 @@ function buildArquero(parentEl, table, max) {
     rows.push(row);
   }, true);
 
-  buildTable(parentEl, rows, max);
+  buildTable(parentEl, rows, max, options);
 }
 
-async function buildDanfo(parentEl, table, max) {
+async function buildDanfo(parentEl, table, max, options) {
   var rows = JSON.parse(await table.head(500).to_json())
 
-  buildTable(parentEl, rows, max);
+  buildTable(parentEl, rows, max, options);
 }
 
-async function buildPyodide(parentEl, table, max) {
+async function buildPyodide(parentEl, table, max, options) {
   var rows = JSON.parse(table.to_json(undefined, 'records'))
 
-  buildTable(parentEl, rows, max);
+  buildTable(parentEl, rows, max, options);
 }
 
-function buildImage(parentEl, json, max) {
+function buildImage(parentEl, json, max, options) {
   var linkEl = createElem(parentEl, 'a', 'jedit-image-link');
   linkEl.href = json;
   linkEl.target = "_blank";
@@ -310,7 +310,7 @@ function appendObjectRows(tableEl, json, max, start, end) {
   }
 }
 
-function buildObject(parentEl, json, max) {
+function buildObject(parentEl, json, max, options) {
   if (Object.keys(json).length == 0) {
     buildUnknown(parentEl, json, max);
     return;
@@ -320,12 +320,12 @@ function buildObject(parentEl, json, max) {
   appendObjectRows(tableEl, json, max, 0, 20);
 }
 
-function buildBoolean(parentEl, json, max) {
+function buildBoolean(parentEl, json, max, options) {
   var divKey = createElem(parentEl, 'div', 'jedit-contained jedit-boolean');
   divKey.innerText = json.toString();
 }
 
-function buildUnknown(parentEl, json, max) {
+function buildUnknown(parentEl, json, max, options) {
   var divKey = createElem(parentEl, 'div', 'jedit-contained jedit-unknown');
   divKey.innerText = json !== undefined && json !== null ? json.toString() : 'null';
 }
@@ -361,7 +361,7 @@ async function buildHtml(parentEl, json, max, type, root) {
     pyodide: buildPyodide,
   }
 
-  await typeDispatch[type](parentEl, json, max);
+  await typeDispatch[type](parentEl, json, max, { root: root });
 }
 
 export async function build(parentEl, json) {
