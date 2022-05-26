@@ -144,7 +144,7 @@ var output = {};
 hal9__error = undefined;
 
 var forker = (accept, reject) => {
-  const spawned = spawn('python3', [ scriptname ], { timeout: 2 * 60 * 60 * 1000 });
+  const spawned = spawn('python3', [ scriptname ]);
 
   updatePortsFile(scriptmd5, spawned.pid)
 
