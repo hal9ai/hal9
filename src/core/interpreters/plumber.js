@@ -146,7 +146,7 @@ var output = {};
 hal9__error = undefined;
 
 var forker = (accept, reject) => {
-  const spawned = spawn('Rscript', [ scriptname ], { timeout: 20000 });
+  const spawned = spawn('Rscript', [ scriptname ], { timeout: 2 * 60 * 60 * 1000 });
 
   updatePortsFile(scriptmd5, spawned.pid)
 
