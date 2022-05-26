@@ -11,7 +11,11 @@ export const init = async (options, hal9wnd) => {
   html.innerHTML = '';
 
   var iframe = document.createElement("iframe");
+
+  // TODO: Control features based on user warning and preferences
   iframe.allow = 'camera;microphone';
+  iframe.setAttribute('sandbox', 'allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation allow-scripts allow-same-origin');
+
   iframe.style.border = 'none';
   iframe.style.width = '100%';
   iframe.style.height = '100%';

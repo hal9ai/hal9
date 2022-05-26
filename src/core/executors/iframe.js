@@ -32,12 +32,14 @@ export default class IFrameExecutor extends Executor {
    
     html.innerHTML = '';
     var iframe = document.createElement("iframe");
-    iframe.allow = 'camera;microphone';
+
     iframe.style.border = 'none';
     iframe.style.width = '100%';
     iframe.style.height = '100%';
 
-    iframe.setAttribute('sandbox', 'allow-scripts');
+    // TODO: Control features based on user warning and preferences
+    iframe.allow = 'camera;microphone';
+    iframe.setAttribute('sandbox', 'allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation allow-scripts allow-same-origin');
 
     var debug = shoudDebug('subiframe');
     var debugcode = debug ? 'debugger;' : '';
