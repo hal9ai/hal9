@@ -108,9 +108,9 @@ await writeFileAsync(paramsname, JSON.stringify(params));
 const scriptname = path.resolve(scriptpath, 'code.py');
 const outputname = ''; // path.resolve(scriptpath, 'output.json');
 await writeFileAsync(scriptname, \`
-from hal9api import *  
+import hal9api
 
-app.run(host = "localhost", port = \${portnumber}, debug = False)
+hal9api.app.run(host = "localhost", port = \${portnumber}, debug = False)
 # waitress.serve(app, port = \${portnumber}, url_scheme = 'http')
 \`);
 
@@ -186,7 +186,8 @@ if (!await isHealthy()) {
   console.log('Forking new API process')
   forker()
 
-  var initTimeoutSec = 60;
+  const maxInitializationTime = 60;
+  var initTimeoutSec = maxInitializationTime;
   const forkPromise = new Promise((accept, reject) => {
     const waitInitialized = async () => {
       initTimeoutSec = initTimeoutSec - 1;
@@ -197,8 +198,8 @@ if (!await isHealthy()) {
           reject(hal9__error)
         }
         else if (initTimeoutSec <= 0) {
-          console.log('Failed to initialize after ' + initTimeoutSec + 'seconds')
-          reject('Failed to initialize after ' + initTimeoutSec + 'seconds')
+          console.log('Failed to initialize after ' + maxInitializationTime + ' seconds')
+          reject('Failed to initialize after ' + maxInitializationTime + ' seconds')
         }
         else if (!await isHealthy()) {
           console.log('API is not healthy, waiting')
