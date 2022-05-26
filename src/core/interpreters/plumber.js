@@ -232,7 +232,7 @@ const apiparams = Object.assign(
     ${paramNodeDef}
   });
 
-console.log('apiparams: ' + JSON.stringify(apiparams))
+console.log('apiparams: ' + Object.keys(apiparams).join(', '))
 
 const apiresult = await fetch(apilocalurl + '/', {
   method: 'POST',
