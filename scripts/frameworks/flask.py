@@ -12,9 +12,12 @@
 ##
 
 import json
-from flask import Flask
+from flask import Flask, request
 app = Flask(__name__)
 
 @app.route('/', methods = [ 'POST' ])
 def index():
-    return json.dumps({'name': 'alice', 'email': 'alice@test.com'})
+  return json.dumps({
+    'records': len(request.json['data']),
+    'email': request.json['sometext']
+  })
