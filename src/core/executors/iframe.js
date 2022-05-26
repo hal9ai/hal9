@@ -32,6 +32,7 @@ export default class IFrameExecutor extends Executor {
    
     html.innerHTML = '';
     var iframe = document.createElement("iframe");
+    iframe.allow = 'camera;microphone';
     iframe.style.border = 'none';
     iframe.style.width = '100%';
     iframe.style.height = '100%';
