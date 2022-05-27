@@ -151,7 +151,7 @@ var forker = (accept, reject) => {
   updatePortsFile(scriptmd5, spawned.pid)
 
   spawned.stdout.on('data', (data) => {
-    console.log(data.toString())
+    if (console.log) console.log(data.toString())
   });
 
   spawned.stderr.on('data', (data) => {
@@ -171,7 +171,7 @@ var forker = (accept, reject) => {
 
   spawned.on('exit', (code, signal) => {
     if ((code != null && code > 0) || (signal && signal.toString() != 'SIGKILL')) {
-      console.log('Process exited with code [' + code + '] and signal [' + signal + ']');
+      if (console.log) console.log('Process exited with code [' + code + '] and signal [' + signal + ']');
       
       hal9__error = stderr;
       if (signal) hal9__error = hal9__error + 'Signal: [' + signal + ']';
