@@ -105,14 +105,7 @@ params["hal9__apiport"] = portnumber;
 
 await writeFileAsync(paramsname, JSON.stringify(params));
 
-const scriptname = path.resolve(scriptpath, 'code.py');
 const outputname = ''; // path.resolve(scriptpath, 'output.json');
-await writeFileAsync(scriptname, \`
-import hal9api
-
-hal9api.app.run(host = "localhost", port = \${portnumber}, debug = False)
-# waitress.serve(app, port = \${portnumber}, url_scheme = 'http')
-\`);
 
 const apilocalurl = 'http://127.0.0.1:' + portnumber;
 const isHealthy = async () => {
@@ -144,7 +137,9 @@ var output = {};
 hal9__error = undefined;
 
 var forker = (accept, reject) => {
-  const spawned = spawn('python3', [ scriptname ]);
+  flaskparams = [ '-m', 'flask', 'run', '-h', 'localhost', '-p', portnumber ]
+  console.log('spawning: ' + flaskscript + ' ' + flaskparams.join(' '))
+  const spawned = spawn('python3', flaskparams, { env: { 'FLASK_APP': flaskscript } });
 
   updatePortsFile(scriptmd5, spawned.pid)
 
