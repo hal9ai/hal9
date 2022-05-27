@@ -138,8 +138,5 @@ data = await fetch(url, {
   res => res.json()
 );
 
-if (statistic === 'historicalPriceFull') {
-  data = data.historical;
-}
 
 data = aq.from(data);
