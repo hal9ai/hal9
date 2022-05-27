@@ -158,6 +158,7 @@ var forker = (accept, reject) => {
   });
 
   spawned.on('close', (code) => {
+    hal9__error = 'API terminated with code ' + code;
   });
 
   spawned.on('error', (err) => {
