@@ -19,4 +19,6 @@ def create(data, **kwargs):
         "version": "0.0.1"
       }
     }
-  </script><script src="https://hal9.com/hal9.notebook.js"></script><div id="app" style="height: 420px; max-height: 420px;"></div>"""))
+  </script>
+  <script defer src="https://hal9.com/hal9.notebook.js"></script>
+  <div id="app"></div>"""))
