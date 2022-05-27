@@ -149,7 +149,7 @@ var forker = (accept, reject) => {
 
   spawned.stderr.on('data', (data) => {
     stderr = stderr + data;
-    console.error(data.toString())
+    if (console.error) console.error(data.toString())
   });
 
   spawned.on('close', (code) => {
