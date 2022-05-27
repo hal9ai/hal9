@@ -24,7 +24,7 @@ export default async function(script, header, context) {
     .map(e => e + " = " + e).join(',\n');
   const jsoutputcode = output
     .filter(e => !reservedOutput.includes(e))
-    .map(e => "" + e + " = output." + e).join('\n');
+    .map(e => "" + e + " = datares." + e).join('\n');
 
   // writeFileAsync unescapes so need to double escape
   script = script.replaceAll('\\', '\\\\');
@@ -251,19 +251,9 @@ if (!apiresult.ok) {
 
 const datares = await apiresult.json();
 
-
-// if (fs.existsSync(outputname)) {
-//  const rawoutput = await readFileAsync(outputname)
-//  output = JSON.parse(rawoutput);
-// }
-
-// ${jsoutputcode}
+${jsoutputcode}
 
 fs.rmSync(scriptpath, { recursive: true });
-
-return {
-  data: datares
-}
   `;
 
   return {
