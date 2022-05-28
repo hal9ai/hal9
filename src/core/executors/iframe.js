@@ -38,8 +38,8 @@ export default class IFrameExecutor extends Executor {
     iframe.style.height = '100%';
 
     // TODO: Control features based on user warning and preferences
-    iframe.allow = 'camera;microphone';
-    iframe.setAttribute('sandbox', 'allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation allow-scripts allow-same-origin');
+    // iframe.allow = 'camera;microphone';
+    // iframe.setAttribute('sandbox', 'allow-forms allow-downloads allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation allow-scripts allow-same-origin');
 
     var debug = shoudDebug('subiframe');
     var debugcode = debug ? 'debugger;' : '';
