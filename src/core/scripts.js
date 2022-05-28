@@ -103,6 +103,7 @@ import ziptomaptxt from '../../scripts/utils/ziptomap.txt.js';
 import exportcsvtxt from '../../scripts/export/csv.txt.js';
 import exporttexttxt from '../../scripts/export/text.txt.js';
 import exportjsontxt from '../../scripts/export/json.txt.js';
+import exportxmltxt from '../../scripts/export/xml.txt.js';
 
 // service scripts
 import airbnbtxt from '../../scripts/services/airbnb.txt.js';
@@ -247,6 +248,7 @@ const scripts = {
   exportcsv: { script: exportcsvtxt, language: 'javascript' },
   exporttext: { script: exporttexttxt, language: 'javascript' },
   exportjson: { script: exportjsontxt, language: 'javascript' },
+  exportxml: { script: exportxmltxt, language: 'javascript' },
 
   // services
   airbnb: { script: airbnbtxt, language: 'javascript' },
