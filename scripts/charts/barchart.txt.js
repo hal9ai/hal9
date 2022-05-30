@@ -73,11 +73,19 @@
 **/
 
 data = await hal9.utils.toRows(data);
- 
+if (data == null) {
+    throw 'No input data defined. Please use an import block to import data before visualizing it.'
+  }
+
 if (data.length > 10000) {
   throw(`Up to 10,000 data points are supported for this visualization, but ${data.length} were provided.`);
 }
-
+if (x == null){
+    throw 'Please select a column for the x-axis'
+  }
+  if (y == null){
+    throw 'Please select a column for the y-axis'
+  }
 if (y && !Array.isArray(y)) y = [y];
 if (!y) y = [];
 
