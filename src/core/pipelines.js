@@ -578,7 +578,6 @@ export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step
   }
 
   const scriptInfo = scripts.scriptFromStep(pipeline, step);
-  step.script = scriptInfo.script;
   step.language = scriptInfo.language;
 
   pipeline.steps.push(step);
