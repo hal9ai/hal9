@@ -223,13 +223,13 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
     if (context.params) {
       var paramIdx = Object.keys(params).length > 0 ? Math.max(...Object.keys(params).map(e => params[e].id ? params[e].id : 0)) : 0;
       Object.keys(context.params).forEach(param => {
-        if (input[param]) {
+        if (Object.keys(input).includes(param)) {
           console.log('Param ' + param + ' of type ' + typeof(input[param]) + ' matched with input in step ' + step.name + '/' + step.id)
 
           input[param] = clone(context.params[param]);
           delete context.params[param];
         }
-        else if (params[param]) {
+        else if (Object.keys(params).includes(param)) {
           console.log('Param ' + param + ' of type ' + typeof(input[param]) + ' matched with param in step ' + step.name + '/' + step.id)
 
           params[param] = {
