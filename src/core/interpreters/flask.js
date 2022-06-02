@@ -2,7 +2,8 @@ import { debuggerIf } from '../utils/debug'
 
 const reservedOutput = [];
 
-export default async function(script, header, context) {
+export default async function(script, header, context, step) {
+  // context.pipelinepath
   const debugcode = debuggerIf('interpret');
 
   const params = header.params ? header.params.map(e => e.name) : [];
@@ -31,7 +32,50 @@ export default async function(script, header, context) {
 
   const interpreted = `${debugcode}
 const params = { ${paramNodeDef} };
-const portnumber = 8002;
+
+if (!fs.existsSync('./hal9__apis/')) fs.mkdirSync('./hal9__apis/');
+const portsfile = './hal9__apis/runtime.json';
+const portsidentifier = '${context.pipelinepath}/${step.id}';
+console.log('Ports identifier: ' + portsidentifier)
+
+const getAllPorts = () => {
+  try {
+    const rawports = fs.readFileSync(portsfile);
+    return JSON.parse(rawports);
+  } catch(e) {
+    console.log('Error reading ports file: ' + e.toString())
+    fs.writeFileSync(portsfile,  JSON.stringify({}));
+    return {};
+  }
+}
+
+const getNextPort = () => {
+  const alldata = getAllPorts();
+  const ports = Object.keys(alldata).map(e => alldata[e].port ? alldata[e].port : 0);
+  return Math.max(8000, Math.max(...ports) + 1)
+}
+
+const updatePortsFile = (data) => {
+  // data: hash, pid, port
+  let portsinfo = getAllPorts();
+  portsinfo[portsidentifier] = portsinfo[portsidentifier] ? portsinfo[portsidentifier] : {};
+  portsinfo[portsidentifier] = Object.assign(portsinfo[portsidentifier], data);
+  fs.writeFileSync(portsfile,  JSON.stringify(portsinfo));
+}
+
+const getPortsFile = () => {
+  let portsdata = {}
+  let portsinfo = getAllPorts();
+  if (portsinfo[portsidentifier]) portsdata = portsinfo[portsidentifier];
+  return portsdata;
+}
+
+const getPortNumber = () => {
+  const portsdata = getPortsFile();
+  return portsdata.port ? portsdata.port : getNextPort();
+}
+
+const portnumber = getPortNumber();
 
 const readFileAsync = util.promisify(fs.readFile)
 const writeFileAsync = util.promisify(fs.writeFile)
@@ -58,29 +102,11 @@ def health():
 \`;
 const finalscript = apiscript;
 
-if (!fs.existsSync('./hal9__ports/')) fs.mkdirSync('./hal9__ports/');
 const scriptmd5 = crypto.createHash('md5').update(apiscript).digest("hex");
-const portsfile = './hal9__ports/' + portnumber + '.json';
 
-const updatePortsFile = (hash, pid) => {
-  const rawports = JSON.stringify({
-    hash: hash,
-    pid: pid
-  });
-  fs.writeFileSync(portsfile, rawports);
-}
-
-let portsdata = {};
-if (fs.existsSync(portsfile)) {
-  try {
-    const rawports = fs.readFileSync(portsfile);
-    portsdata = JSON.parse(rawports);
-  } catch(e) {
-    console.log('Error reading ports file: ' + e.toString())
-  }
-}
-else {
-  updatePortsFile(scriptmd5)
+let portsdata = getPortsFile();
+if (!portsdata.hash) {
+  updatePortsFile({ hash: scriptmd5, port: portnumber })
 }
 
 if (portsdata.hash && portsdata.hash != scriptmd5) {
@@ -141,7 +167,7 @@ var forker = (accept, reject) => {
   console.log('spawning: ' + flaskscript + ' ' + flaskparams.join(' '))
   const spawned = spawn('python3', flaskparams, { env: { 'FLASK_APP': flaskscript } });
 
-  updatePortsFile(scriptmd5, spawned.pid)
+  updatePortsFile({ hash: scriptmd5, pid: spawned.pid, port: portnumber })
 
   spawned.stdout.on('data', (data) => {
     if (console.log) console.log(data.toString())
