@@ -14,6 +14,6 @@
 #* Echo back the input
 #* @param data The input data
 #* @post /
-function(data) {
+function(data, sometext) {
   list(data = paste0("With sometext as '", sometext, "' and ", nrow(data), " records."))
 }
