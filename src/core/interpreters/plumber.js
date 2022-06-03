@@ -1,8 +1,9 @@
 import { debuggerIf } from '../utils/debug'
+import { portScripts } from './apicore'
 
 const reservedOutput = [];
 
-export default async function(script, header, context) {
+export default async function(script, header, context, step) {
   const debugcode = debuggerIf('interpret');
 
   const params = header.params ? header.params.map(e => e.name) : [];
@@ -29,9 +30,12 @@ export default async function(script, header, context) {
   // writeFileAsync unescapes so need to double escape
   script = script.replaceAll('\\', '\\\\');
 
+  const portScriptsCode = portScripts(context.pipelinepath + '/' + step.id);
+
   const interpreted = `${debugcode}
 const params = { ${paramNodeDef} };
-const portnumber = 8001;
+
+${portScriptsCode}
 
 const readFileAsync = util.promisify(fs.readFile)
 const writeFileAsync = util.promisify(fs.writeFile)
@@ -58,29 +62,11 @@ function(msg="") {
 \${apiscript}
 \`;
 
-if (!fs.existsSync('./hal9__ports/')) fs.mkdirSync('./hal9__ports/');
 const scriptmd5 = crypto.createHash('md5').update(apiscript).digest("hex");
-const portsfile = './hal9__ports/' + portnumber + '.json';
 
-const updatePortsFile = (hash, pid) => {
-  const rawports = JSON.stringify({
-    hash: hash,
-    pid: pid
-  });
-  fs.writeFileSync(portsfile, rawports);
-}
-
-let portsdata = {};
-if (fs.existsSync(portsfile)) {
-  try {
-    const rawports = fs.readFileSync(portsfile);
-    portsdata = JSON.parse(rawports);
-  } catch(e) {
-    console.log('Error reading ports file: ' + e.toString())
-  }
-}
-else {
-  updatePortsFile(scriptmd5)
+let portsdata = getPortsFile();
+if (!portsdata.hash) {
+  updatePortsFile({ hash: scriptmd5, port: portnumber })
 }
 
 if (portsdata.hash && portsdata.hash != scriptmd5) {
@@ -148,7 +134,7 @@ hal9__error = undefined;
 var forker = (accept, reject) => {
   const spawned = spawn('Rscript', [ scriptname ]);
 
-  updatePortsFile(scriptmd5, spawned.pid)
+  updatePortsFile({ hash: scriptmd5, pid: spawned.pid, port: portnumber })
 
   spawned.stdout.on('data', (data) => {
     if (console.log) console.log(data.toString())

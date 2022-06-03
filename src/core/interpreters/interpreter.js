@@ -17,10 +17,10 @@ const languageMap = {
   r: rstats,
 }
 
-export const interpret = async (script, language, header, context) => {
+export const interpret = async (script, language, header, context, step) => {
   const interpreter = languageMap[language];
 
-  const result = interpreter ? await interpreter(script, header, context) : { script: script };
+  const result = interpreter ? await interpreter(script, header, context, step) : { script: script };
 
   if (!result.header) {
     result.header = header ? header : snippets.parseHeader(code);
