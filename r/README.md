@@ -24,8 +24,7 @@ Hal9 is a javascript library that enables anyone to compose
 visualizations and predictive models optimized for websites and web
 APIs.
 
-You may start building your own pipeline interactively using the `hal9`
-function:
+You can explore your data interactively using the `hal9` function:
 
 ``` r
 library(hal9)
@@ -34,23 +33,27 @@ library(hal9)
 hal9(my_data)
 ```
 
-You may also build your pipeline using our high-level functions:
+You may also build a specific pipeline using our high-level functions:
 
 ``` r
 # option 1
+
+# step-by-step construction
 hal9_pipeline() |> 
   hal9_add_data(iris) |> 
   hal9_add_filter() |> 
   hal9_show()
 
 #option 2
+
+# pre-built common pipelines
 hal9_filter_data(iris)
 ```
 
 ## Exporting a pipeline
 
-You may export an existing pipeline built using high level function to a
-html file using the `hal9_render` function:
+You may export an existing pipeline built using high level functions to
+a html file using the `hal9_render` function:
 
 ``` r
 hal9_pipeline() |> 
@@ -61,7 +64,7 @@ hal9_pipeline() |>
 
 ## Publishing a pipeline
 
-You can also publish your work on RPubs to make it easily shareable
+You can also publish your work on RPubs and make it easily shareable
 through a link:
 
 ``` r
@@ -70,3 +73,10 @@ hal9_pipeline() |>
   hal9_add_filter() |> 
   hal9_publish()
 ```
+
+# TO DO
+
+-   [ ] Test infrastructure
+-   [ ] `hal9_render()` first draft
+-   [ ] `hal9_render()` tests
+-   [ ] `hal9_publish()` first draft
