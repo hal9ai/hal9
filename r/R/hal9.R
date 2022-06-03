@@ -5,11 +5,11 @@
 #' @import htmlwidgets
 #'
 #' @export
-hal9 <- function(message, width = NULL, height = NULL, elementId = NULL) {
+hal9 <- function(data, width = NULL, height = NULL, elementId = NULL) {
 
   # forward options using x
   x = list(
-    message = message
+    data = jsonlite::toJSON(data)
   )
 
   # create widget
@@ -51,3 +51,23 @@ renderHal9 <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
   htmlwidgets::shinyRenderWidget(expr, hal9Output, env, quoted = TRUE)
 }
+
+hal9.filter <- function(data, width = NULL, height = NULL, elementId = NULL) {
+
+  # forward options using x
+  x = list(
+    data = jsonlite::toJSON(data)
+  )
+
+  # create widget
+  htmlwidgets::createWidget(
+    name = 'hal9-filter',
+    x,
+    width = width,
+    height = height,
+    package = 'hal9',
+    elementId = elementId,
+    sizingPolicy = htmlwidgets::sizingPolicy(padding = 0)
+  )
+}
+
