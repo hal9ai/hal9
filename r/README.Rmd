@@ -84,4 +84,8 @@ hal9_pipeline() |>
 
 ```
 
+# TO DO
 
+- [ ] Test infrastructure
+- [ ] `hal9_render()`
+- [ ] `hal9_publish()`
