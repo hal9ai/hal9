@@ -1,12 +1,13 @@
 #' Render hal9 app to HTML file using RMarkdown
 #'
 #' @param hal9_expr R A hal9 htmlWidget
+#' @param file (optional) Name of output file
 #'
 #' @return
 #' @export
 #'
 #' @examples
-hal9_render <- function(hal9_expr){
+hal9_render <- function(hal9_expr, file = "hal9_app.html"){
 
   script_file <- system.file(
     "hal9_render/template.Rmd",
@@ -31,7 +32,7 @@ hal9_render <- function(hal9_expr){
 
   rmarkdown::render(
     temp_file,
-    output_file = "D:/hal9ai/r/my_hal9.html"
+    output_file = paste0(getwd(), "/", file)
   )
 
 }
