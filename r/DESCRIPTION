@@ -1,11 +1,12 @@
 Package: hal9
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Interface to 'hal9.js' 
 Version: 0.1.0
 Author: Who wrote it
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Hal9 is a javascript library that enables anyone to compose
+    visualizations and predictive models optimized for websites and web APIs.
+    hal9 package provides some hal9 functionalities for R users.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
