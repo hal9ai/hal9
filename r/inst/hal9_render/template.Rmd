@@ -1,0 +1,14 @@
+---
+title: "My hal9 App"
+output: html_document
+---
+
+```{r, include = FALSE}
+
+knitr::opts_chunk$set(
+  error = FALSE,
+  message = FALSE,
+  warning = FALSE)
+  
+```
+
