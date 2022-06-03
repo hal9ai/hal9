@@ -6,7 +6,7 @@ HTMLWidgets.widget({
 
       renderValue: function(x) {
         window.hal9 = {
-          data: [ { "number": 1 }, { "number": 2 } ],
+          data: x.data,
           pipeline: {
             "steps": [ { "name": "javascript", "label": "Source", "language": "javascript", "id": 1, } ],
             "params": {}, "outputs": {}, "scripts": { "1": "data = window.hal9.data" },
