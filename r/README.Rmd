@@ -91,6 +91,12 @@ hal9_pipeline() |>
 # TO DO
 
 - [ ] Test infrastructure
-- [ ] `hal9_render()` first draft
+- [x] `hal9_render()` first draft
 - [ ] `hal9_render()` tests
 - [ ] `hal9_publish()` first draft
+
+## Maybe
+
+- [ ] Shiny use case 
+- [ ] Stats/ML use case
+- [ ] Publishing hal9 vignette (rpubs, shinyapps, stand alone html)
