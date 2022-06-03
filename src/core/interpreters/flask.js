@@ -230,7 +230,7 @@ const apiresult = await fetch(apilocalurl + '/', {
 
 if (!apiresult.ok) {
   const details = await apiresult.text();
-  throw 'Failed to retrieve data from: ' + apilocalurl + '/' + ' ' + details;
+  throw 'Failed to retrieve data from: ' + apilocalurl + '/' + '. ' + details;
 }
 
 const datares = await apiresult.json();
