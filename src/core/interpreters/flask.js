@@ -58,7 +58,11 @@ ${script}
 
 @app.route('/health')
 def health():
-    return { 'healthy': 'true' }
+  return { 'healthy': 'true' }
+
+@app.errorhandler(Exception)
+def handle_bad_request(e):
+  return str(e), 400
 \`;
 const finalscript = apiscript;
 
@@ -225,7 +229,8 @@ const apiresult = await fetch(apilocalurl + '/', {
 });
 
 if (!apiresult.ok) {
-  throw 'Failed to retrieve data from: ' + apilocalurl + '/';
+  const details = await apiresult.text();
+  throw 'Failed to retrieve data from: ' + apilocalurl + '/' + '. ' + details;
 }
 
 const datares = await apiresult.json();
