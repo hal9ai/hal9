@@ -4,7 +4,7 @@
 \alias{hal9}
 \title{<Add Title>}
 \usage{
-hal9(message, width = NULL, height = NULL, elementId = NULL)
+hal9(data, width = NULL, height = NULL, elementId = NULL)
 }
 \description{
 <Add Description>
