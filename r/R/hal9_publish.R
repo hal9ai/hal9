@@ -12,7 +12,7 @@
 hal9_publish <- function(hal9_expr, title = "My hal9 app",
                          desc = NULL, id = NULL) {
 
-  html_file <- hal9_to_rmd(
+  html_file <- hal9_to_html(
     hal9_expr,
     file = "hal9_app.html",
     title = title,
