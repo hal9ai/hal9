@@ -1,14 +1,21 @@
 ---
-title: "My hal9 App"
+title: "{{title}}"
 output: html_document
 ---
 
 ```{r, include = FALSE}
-
 knitr::opts_chunk$set(
   error = FALSE,
   message = FALSE,
-  warning = FALSE)
-  
+  warning = FALSE
+)
+```
+
+{{desc}}
+
+<br>
+
+```{r, echo = FALSE}
+{{hal9_expr}}
 ```
 

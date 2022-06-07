@@ -56,10 +56,9 @@ You may export an existing pipeline built using high level functions to
 a html file using the `hal9_render` function:
 
 ``` r
-hal9_pipeline() |> 
-  hal9_add_data(iris) |> 
-  hal9_add_filter() |> 
-  hal9_render("pipeline.html")
+mtcars |> 
+  hal9() |> 
+  hal9_to_html(file = "myHal9.html")
 ```
 
 ## Publishing a pipeline
@@ -68,10 +67,9 @@ You can also publish your work on RPubs and make it easily shareable
 through a link:
 
 ``` r
-hal9_pipeline() |> 
-  hal9_add_data(iris) |> 
-  hal9_add_filter() |> 
-  hal9_publish()
+mtcars |> 
+  hal9() |> 
+  hal9_publish(file = "myHal9.html")
 ```
 
 # TO DO
@@ -79,7 +77,7 @@ hal9_pipeline() |>
 -   [ ] Test infrastructure
 -   [x] `hal9_render()` first draft
 -   [ ] `hal9_render()` tests
--   [ ] `hal9_publish()` first draft
+-   [x] `hal9_publish()` first draft
 
 ## Maybe
 
