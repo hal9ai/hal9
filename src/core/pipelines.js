@@ -28,7 +28,7 @@ type step = { id: number, name: string, language: string };
 type stepid = number;
 type steps = Array<step>;
 type output = { id: number, name: string, label: string };
-type outputs = { [id: string]: output };
+type outputs = { [string]: Array<output> };
 type source = { id: number, name: string, label: string };
 type sources = { [id: string]: source };
 type context = { html: Object };
@@ -243,7 +243,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
     }
 
     if (rebinds?.params) {
-      for (let param in rebinds.params) {
+      for (const param in rebinds.params) {
         if (param in params) {
           let newValue = input[rebinds.params[param]];
           if (newValue === undefined) {
@@ -290,14 +290,10 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
       }
     }
 
-    for (var resultname in result) {
+    for (let resultname in result) {
       if (resultname === 'state') continue;
 
-      var resultentry = result[resultname];
-
-      if (step.output && step.output[resultname]) {
-        resultname = step.output[resultname];
-      }
+      const resultentry = result[resultname];
 
       if (rebinds?.outputs && (resultname in rebinds.outputs)) {
         resultname = rebinds.outputs[resultname];
@@ -318,9 +314,9 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
   if (result.state) setState(pipelineid, step.id, Object.assign(state ? state : {}, result.state));
   setGlobals(pipeline, globals);
 
-  var outputs = undefined;
-  if (result.data) {
-    outputs = dataframe.columns(result.data).map((col, idx) => {
+  let outputs = {};
+  for (const resultName of resultNames) {
+    outputs[resultName] = dataframe.columns(globals[resultName]).map((col, idx) => {
       return { id: idx, name: col, label: col };
     });
   }
@@ -432,6 +428,7 @@ export const run = async (pipelineid /*: pipeline */, context /* context */, par
   pipeline.errors = {};
   pipeline.error = undefined;
   setGlobals(pipeline, {});
+  pipeline.outputs = {};
 
   // add context parameters
   if (typeof (window) != 'undefined' && window.hal9 && window.hal9.params) {
@@ -661,17 +658,18 @@ const prevStep = (pipelineid /*: pipelineid */, sid /*: number */) /* step */ =>
 
 export const getSources = (pipelineid /*: pipelineid */, sid /*: number */) /*: sources */ => {
   var pipeline = store.get(pipelineid);
+  const outputName = stepFromId(pipeline, sid)?.options?.rebinds?.inputs?.data ?? 'data';
 
   var prev = null;
   var previd = sid;
 
-  // search backwards for the block that has column outputs
+  // search backwards for the block that has the output we're looking for
   do {
     prev = prevStep(pipelineid, previd);
     if (prev != null) previd = prev.id;
-  } while (prev != null && pipeline.outputs[previd] == undefined)
+  } while ((prev != null) && (pipeline.outputs[previd]?.[outputName] === undefined))
 
-  return prev ? (pipeline.outputs[previd] ? clone(pipeline.outputs[previd]) : undefined) : undefined;
+  return prev ? (pipeline.outputs[previd]?.[outputName] ? clone(pipeline.outputs[previd][outputName]) : undefined) : undefined;
 }
 
 const setErrors = (pipeline /*: pipeline */, sid /*: number */, error /*: string */) /*: void */ => {
@@ -749,8 +747,11 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /* number */) 
   var pipeline = {}
 
   const skip = [
-    // no point in saving global state since it's always recreated when running the pipeline
+    // no point in saving these because they're always recreated when running the pipeline
+    'error',
+    'errors',
     'globals',
+    'outputs',
   ];
 
   for (var key in from) {
