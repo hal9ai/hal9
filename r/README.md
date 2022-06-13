@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# hal9
+# hal9 <img src="man/figures/logo.png" align="right" width="120" />
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -72,14 +72,14 @@ mtcars |>
   hal9_publish(file = "myHal9.html")
 ```
 
-# TO DO
+## TO DO
 
 -   [ ] Test infrastructure
 -   [x] `hal9_render()` first draft
 -   [ ] `hal9_render()` tests
 -   [x] `hal9_publish()` first draft
 
-## Maybe
+#### Maybe
 
 -   [ ] Shiny use case
 -   [ ] Stats/ML use case

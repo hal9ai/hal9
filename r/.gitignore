@@ -7,3 +7,4 @@ _bookdown_files
 *.rds
 .Rapp.history
 data-raw
+docs
