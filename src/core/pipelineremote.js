@@ -5,9 +5,9 @@ export const runPipelineRemote = async (pipelinename) => {
   var workerUrl = await workers.getValidWorkerUrl(pipelinename);
   const pipelineurl = environment.getServerUrl() + '/?sharedPipeline=' + pipelinename;
 
-  var res = await fetch(workerUrl + '/execute', {
+  var res = await fetch(workerUrl + '/execute/pipeline', {
     method: 'POST',
-    body: JSON.stringify({ operation: 'pipeline', pipelineurl: pipelineurl }),
+    body: JSON.stringify({ pipelineurl: pipelineurl }),
     headers: { 'Content-Type': 'application/json' }
   });
 

@@ -19,10 +19,9 @@ const sessionid = (pipelinename, stepid) => {
 }
 
 const updateConsole = async (workerUrl, sessionid, headers) => {
-  var res = await fetch(workerUrl + '/execute', {
+  var res = await fetch(workerUrl + '/execute/console', {
     method: 'POST',
     body: JSON.stringify({
-      operation: 'console',
       params: {
         sessionid: sessionid,
       }
@@ -62,10 +61,9 @@ export default class RemoteExecutor extends Executor {
     const consoleTimeout = setInterval(generateConsole(this.workerUrl, this.sessionid, this.context.headers), 3000);
 
     try {
-      var res = await fetch(this.workerUrl + '/execute', {
+      var res = await fetch(this.workerUrl + '/execute/step', {
         method: 'POST',
         body: JSON.stringify({
-          operation: 'runstep',
           params: {
             metadata: this.metadata,
             inputs: this.inputs,

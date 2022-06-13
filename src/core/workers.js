@@ -6,9 +6,9 @@ function sleep(ms) {
 }
 
 const preflight = async function(workerUrl, headers) {
-  return await fetch(workerUrl + '/execute', {
+  return await fetch(workerUrl + '/execute/preflight', {
     method: 'POST',
-    body: JSON.stringify({ operation: 'preflight' }),
+    body: JSON.stringify({}),
     headers: Object.assign({ 'Content-Type': 'application/json' }, headers)
   });
 }
