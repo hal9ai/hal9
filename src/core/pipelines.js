@@ -804,20 +804,20 @@ export const load = async (pipeline /*: pipeline */) /*: pipelineid */ => {
           var stepResults = stepState['cache'].result;
           for (const name of Object.keys(stepResults)) {
             if (await dataframe.isSerialized(stepResults[name])) {
-              stepResults[name] = await dataframe.deserialiaze(stepResults[name]);
+              stepResults[name] = await dataframe.deserialize(stepResults[name]);
             }
           };
         }
         else if (name === 'api') {
           for (const apiname of Object.keys(stepState['api'])) {
             if (await dataframe.isSerialized(stepState['api'][apiname])) {
-              stepState['api'][apiname] = await dataframe.deserialiaze(stepState['api'][apiname]);
+              stepState['api'][apiname] = await dataframe.deserialize(stepState['api'][apiname]);
             }
           };
         }
         else {
           if (await dataframe.isSerialized(stepState[name])) {
-            stepState[name] = await dataframe.deserialiaze(stepState[name]);
+            stepState[name] = await dataframe.deserialize(stepState[name]);
           }
         }
       };

@@ -307,7 +307,7 @@ export default {
     columns: dataframe.columns,
     clone: dataframe.clone,
     serialize: dataframe.serialize,
-    deserialiaze: dataframe.deserialiaze,
+    deserialize: dataframe.deserialize,
     isSerialized: dataframe.isSerialized,
     ensure: dataframe.ensure,
     top: dataframe.top,

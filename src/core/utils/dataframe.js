@@ -102,7 +102,7 @@ const generalized = [
     columns: arqueroColumns,
     clone: arqueroClone,
     serialize: arqueroSerialize,
-    deserialiaze: arqueroDeserialize,
+    deserialize: arqueroDeserialize,
     serialized: arqueroIsSerialized,
     ensure: arqueroEnsure,
     top: arqueroTop,
@@ -112,7 +112,7 @@ const generalized = [
     columns: danfoColumns,
     clone: danfoClone,
     serialize: danfoSerialize,
-    deserialiaze: danfoDeserialize,
+    deserialize: danfoDeserialize,
     serialized: danfoIsSerialized,
     ensure: danfoEnsure,
     top: danfoTop,
@@ -122,7 +122,7 @@ const generalized = [
     columns: arrayColumns,
     clone: arrayClone,
     serialize: arraySerialize,
-    deserialiaze: arrayDeserialize,
+    deserialize: arrayDeserialize,
     serialized: arrayIsSerialized,
     ensure: arrayEnsure,
     top: arrayTop,
@@ -132,7 +132,7 @@ const generalized = [
     columns: pyodideColumns,
     clone: pyodideClone,
     serialize: pyodideSerialize,
-    deserialiaze: pyodideDeserialize,
+    deserialize: pyodideDeserialize,
     serialized: pyodideIsSerialized,
     ensure: pyodideEnsure,
     top: pyodideTop,
@@ -159,9 +159,9 @@ export const serialize = (df) => {
   return type ? type.serialize(df) : df;
 }
 
-export const deserialiaze = (df) => {
+export const deserialize = (df) => {
   const type = generalized.find(maybe => maybe.serialized(df));
-  return type ? type.deserialiaze(df) : df;
+  return type ? type.deserialize(df) : df;
 }
 
 export const isSerialized = (df) => {
