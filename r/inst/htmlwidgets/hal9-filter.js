@@ -44,7 +44,7 @@ HTMLWidgets.widget({
                   "single": true
                 },
                 "expression": {
-                  "id": 2,
+                  "id": 1,
                   "static": true,
                   "value": [
                     {

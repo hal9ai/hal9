@@ -7,9 +7,31 @@
 #' @export
 hal9 <- function(data, width = NULL, height = NULL, elementId = NULL) {
 
+  pipeline <- list(
+    steps = list(
+      list(
+        name = "javascript",
+        label = "Source",
+        language = "javascript",
+        id = 1,
+        params = NULL
+      )
+    ),
+    params = list(
+      "1" = NULL
+    ),
+    outputs = NULL,
+    scripts = list(
+      "1" = "data = window.hal9.data"
+    ),
+    version = "0.0.1"
+  )
+
   # forward options using x
   x = list(
-    data = jsonlite::toJSON(data)
+    data = jsonlite::toJSON(data),
+    pipeline = pipeline,
+    pipeline_json = jsonlite::toJSON(pipeline, null = "list", auto_unbox = TRUE)
   )
 
   # create widget
@@ -22,6 +44,7 @@ hal9 <- function(data, width = NULL, height = NULL, elementId = NULL) {
     elementId = elementId,
     sizingPolicy = htmlwidgets::sizingPolicy(padding = 0)
   )
+
 }
 
 #' Shiny bindings for hal9
@@ -52,8 +75,7 @@ renderHal9 <- function(expr, env = parent.frame(), quoted = FALSE) {
   htmlwidgets::shinyRenderWidget(expr, hal9Output, env, quoted = TRUE)
 }
 
-hal9.filter <- function(data, width = NULL, height = NULL, elementId = NULL) {
-
+hal9_filter <- function(data, width = NULL, height = NULL, elementId = NULL) {
   # forward options using x
   x = list(
     data = jsonlite::toJSON(data)
@@ -69,5 +91,91 @@ hal9.filter <- function(data, width = NULL, height = NULL, elementId = NULL) {
     elementId = elementId,
     sizingPolicy = htmlwidgets::sizingPolicy(padding = 0)
   )
+}
+
+hal9_add_filter <- function(h) {
+
+  novo_id <- lapply(h$x$pipeline$steps, function(x) x$id) |>
+    as.numeric() |>
+    max()
+
+  novo_id <- novo_id + 1
+
+  h$x$pipeline$steps <- c(
+    h$x$pipeline$steps,
+    list(
+      list(
+        name = "filter",
+        label = "Filter",
+        language = "javascript",
+        description = "Keep only the rows that satisfy a given expression for a specific column",
+        icon = "fa-light fa-filter",
+        id = novo_id,
+        params = NULL
+      )
+    )
+  )
+
+  l_params <- list(
+    a = list(
+      field = list(
+        id = 0,
+        static = FALSE,
+        value = list(
+          list(
+            id = 0,
+            name = "",
+            label = ""
+          )
+        ),
+        name = "field",
+        label = "Field",
+        single = TRUE
+      ),
+      expression = list(
+        id = 1,
+        static = TRUE,
+        value = list(
+          list(
+            id = 1,
+            control = "textbox",
+            value = "field != null"
+          )
+        ),
+        name = "expression",
+        label = "Expression"
+      )
+    )
+  )
+  names(l_params) <- novo_id
+
+  h$x$pipeline$params <- c(
+    h$x$pipeline$params,
+    l_params
+  )
+
+  script <- system.file("scripts/filter.txt.js", package = "hal9") |>
+    readLines() |>
+    paste(collapse = "\n")
+
+  l_script <- list(
+    a = script
+  )
+
+  names(l_script) <- novo_id
+
+  h$x$pipeline$script <- c(
+    h$x$pipeline$script,
+    l_script
+  )
+
+  h$x$pipeline_json <- jsonlite::toJSON(
+    h$x$pipeline,
+    null = "list",
+    auto_unbox = TRUE
+  )
+
+  h
+
 }
 

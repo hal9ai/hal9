@@ -36,18 +36,14 @@ hal9(my_data)
 You may also build a specific pipeline using our high-level functions:
 
 ``` r
-# option 1
-
-# step-by-step construction
-hal9_pipeline() |> 
-  hal9_add_data(iris) |> 
-  hal9_add_filter() |> 
-  hal9_show()
+mtcars |> 
+  hal9() |> 
+  hal9_add_filter()
 
 #option 2
 
 # pre-built common pipelines
-hal9_filter_data(iris)
+hal9_filter(mtcars)
 ```
 
 ## Exporting a pipeline

@@ -47,18 +47,14 @@ hal9(my_data)
 You may also build a specific pipeline using our high-level functions:
 
 ```{r}
-# option 1
-
-# step-by-step construction
-hal9_pipeline() |> 
-  hal9_add_data(iris) |> 
-  hal9_add_filter() |> 
-  hal9_show()
+mtcars |> 
+  hal9() |> 
+  hal9_add_filter()
 
 #option 2
 
 # pre-built common pipelines
-hal9_filter_data(iris)
+hal9_filter(mtcars)
 ```
 
 ## Exporting a pipeline
@@ -71,14 +67,6 @@ mtcars |>
   hal9_to_html(file = "myHal9.html")
 ```
 
-```{r, include=FALSE}
-# maybe in the future
-hal9_pipeline() |> 
-  hal9_add_data(iris) |> 
-  hal9_add_filter() |> 
-  hal9_render("pipeline.html")
-```
-
 ## Publishing a pipeline
 
 You can also publish your work on RPubs and make it easily shareable through a link:
@@ -87,14 +75,6 @@ You can also publish your work on RPubs and make it easily shareable through a l
 mtcars |> 
   hal9() |> 
   hal9_publish(file = "myHal9.html")
-```
-
-```{r, include=FALSE}
-# maybe in the future
-hal9_pipeline() |> 
-  hal9_add_data(iris) |> 
-  hal9_add_filter() |> 
-  hal9_publish()
 ```
 
 ## TO DO
