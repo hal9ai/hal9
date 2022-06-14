@@ -132,8 +132,11 @@ import vuetxt from '../../scripts/frameworks/vue.txt';
 
 // control scripts
 import dropdownctrltxt from '../../scripts/controls/dropdown.txt.js';
+import inputfilectrltxt from '../../scripts/controls/inputfile.txt.js';
+import numberctrltxt from '../../scripts/controls/number.txt.js';
 import rangectrltxt from '../../scripts/controls/range.txt.js';
 import spreadsheetctrltxt from '../../scripts/controls/spreadsheet.txt';
+import textboxctrltxt from '../../scripts/controls/textbox.txt.js';
 import websitectrltxt from '../../scripts/controls/website.txt.js';
 
 // business scripts
@@ -277,8 +280,11 @@ const scripts = {
 
   // controls
   dropdownctrl: { script: dropdownctrltxt, language: 'javascript' },
+  inputfilectrl: { script: inputfilectrltxt, language: 'javascript' },
+  numberctrl: { script: numberctrltxt, language: 'javascript' },
   rangectrl: { script: rangectrltxt, language: 'javascript' },
   spreadsheetctrl: { script: spreadsheetctrltxt, language: 'html' },
+  textboxctrl: { script: textboxctrltxt, language: 'javascript' },
   websitectrl: { script: websitectrltxt, language: 'javascript' },
 
   // business
