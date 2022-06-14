@@ -742,7 +742,7 @@ const getCallbacks = (pipelineid /*: pipelineid */, sid /*: number */) /*: Objec
   return pipelinesCallbacks[pipelineid].steps[sid];
 }
 
-export const getSaveText = (pipelineid /*: pipelineid */, padding /* number */) /*: string */ => {
+export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number */, alsoSkip = [] /*:: : Array<string> */) /*: string */ => {
   var from = store.get(pipelineid);
   var pipeline = {}
 
@@ -755,7 +755,7 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /* number */) 
   ];
 
   for (var key in from) {
-    if (skip.includes(key)) continue;
+    if (skip.includes(key) || alsoSkip.includes(key)) continue;
     pipeline[key] = clone(from[key]);
   }
 
