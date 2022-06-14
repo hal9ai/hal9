@@ -8,8 +8,20 @@ HTMLWidgets.widget({
         window.hal9 = {
           data: x.data,
           pipeline: {
-            "steps": [ { "name": "javascript", "label": "Source", "language": "javascript", "id": 1, } ],
-            "params": {}, "outputs": {}, "scripts": { "1": "data = window.hal9.data" },
+            "steps": [
+              {
+                "name": "javascript",
+                "label": "Source",
+                "language": "javascript",
+                "id": 1,
+                "params": {}
+              }
+            ],
+            "params": {
+              "1": {}
+            },
+            "outputs": {},
+            "scripts": { "1": "data = window.hal9.data" },
             "version": "0.0.1"
           }
         };
