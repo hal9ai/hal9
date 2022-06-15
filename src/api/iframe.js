@@ -496,7 +496,7 @@ export async function pipelinesInvalidateStep(pipelineid, sid) {
 }
 
 export async function pipelinesGetHtml(pipelineid) {
-  return await post("hal9.datasets.getHtml(params.pipelineid)", {
+  return await post("hal9.pipelines.getHtml(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }

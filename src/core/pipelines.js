@@ -889,16 +889,17 @@ export const getHtml = (pipelineid /* pipelineid */) /* string */ => {
   return `<script src="${libraryUrl}"></script>
 <div id='hal9app' style="min-width: 600px; min-height: 400px;"></div>
 <script>
-  var raw = '` + btoa(unescape(encodeURIComponent(getSaveText(pipelineid, 0)))) + `';
-
-  hal9.run(hal9.load(raw), { html: document.getElementById('hal9app') });
+  (async function() {
+    var raw = '` + btoa(unescape(encodeURIComponent(getSaveText(pipelineid, 0)))) + `';
+    hal9.run(await hal9.load(raw), { html: document.getElementById('hal9app') });
+  })();
 </script>`;
 }
 
 export const getHtmlRemote = (pipelinepath /* pipelinepath */) /* string */ => {
   const libraryUrl = environment.getLibraryUrl();
   const env = environment.getId();
-  const setenv = env != 'prod' ? `\n    hal9.environment.setEnv('${env}')` : '';
+  const setenv = env != 'prod' ? `\n    hal9.environment.setEnv('${env}');` : '';
 
   return `<script src="${libraryUrl}"></script>
 <div id='hal9app' style="min-width: 600px; min-height: 400px;"></div>
