@@ -23,7 +23,7 @@ const arqueroRoot = async () => {
   return aq;
 }
 
-const arqueroToRows = async(x) => {
+const arqueroToRows = async (x) => {
   var rows = [];
   x.scan(function(i, data) {
     const row = Object.fromEntries(Object.keys(data).map(e => [e, data[e].get(i)]));
@@ -61,7 +61,7 @@ const danfoColumns = (e) => e.columns;
 
 const danfoClone = (e) => e;
 
-const danfoToRows = (x) => {
+const danfoToRows = async (x) => {
   return JSON.parse(await x.to_json())
 }
 
