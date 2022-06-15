@@ -118,4 +118,4 @@ if (barmode === 'overlay' && x.length > 1) {
 }
 chartdata.push(trace)
 }
-Plotly.newPlot(html, chartdata, layout);
+Plotly.newPlot(html, chartdata, layout, {displaylogo: false});
