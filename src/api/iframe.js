@@ -444,7 +444,8 @@ export async function pipelinesGetHashable(pipelineid) {
 export async function pipelinesGetSaveText(pipelineid, padding, alsoSkip) {
   return await post("hal9.pipelines.getSaveText(params.pipelineid, params.padding, params.alsoSkip)", {
     pipelineid: pipelineid,
-    padding: padding
+    padding: padding,
+    alsoSkip: alsoSkip,
   })
 }
 
