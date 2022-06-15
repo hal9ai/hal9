@@ -1,38 +1,32 @@
 /**
   input: []
-  output: [ inputfile, html ]
+  output: [ number, html ]
   interactive: true
 **/
 
-var inputfile = '';
+var number = 1;
 
 var state = hal9.getState();
 state = state ? state : {};
 
-if (state.inputfile) {
-  inputfile = state.inputfile;
+if (state.number) {
+  number = state.number;
 }
 
 if (html.innerHTML == '') {
-  const input = document.createElement('input');
-  input.type = 'file';
+  const textboxInput = document.createElement('input');
+  textboxInput.type = 'number';
 
-  if (state.inputfile) {
-    inputfile = state.inputfile;
+  if (state.number) {
+    textboxInput.value = number;
   }
 
-  input.onchange = function (e) {
-    const reader = new FileReader()
-    reader.onload = async (e) => {
-      const text = (e.target.result);
-      state.inputfile = text
-      hal9.setState(state);
-      hal9.invalidate();
-    };
-    reader.readAsDataURL(e.target.files[0])
+  textboxInput.onchange = function () {
+    state.number = this.value;
+    hal9.setState(state);
+    hal9.invalidate();
   }
-
-  html.appendChild(input);
+  html.appendChild(textboxInput);
 }
 
 html.style.height = '40px';
