@@ -311,6 +311,7 @@ export default {
     isSerialized: dataframe.isSerialized,
     ensure: dataframe.ensure,
     top: dataframe.top,
+    toRows: dataframe.toRows,
   },
 };
 

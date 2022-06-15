@@ -23,6 +23,16 @@ const arqueroRoot = async () => {
   return aq;
 }
 
+const arqueroToRows = async(x) => {
+  var rows = [];
+  x.scan(function(i, data) {
+    const row = Object.fromEntries(Object.keys(data).map(e => [e, data[e].get(i)]));
+    rows.push(row);
+  }, true);
+
+  return rows;
+}
+
 const arqueroDeserialize = async (e) => {
   const aq = await arqueroRoot();
   return aq.table(JSON.parse(e.replace(/undefined/g, 'null')).data);
@@ -51,6 +61,10 @@ const danfoColumns = (e) => e.columns;
 
 const danfoClone = (e) => e;
 
+const danfoToRows = (x) => {
+  return JSON.parse(await x.to_json())
+}
+
 const danfoSerialize = (e) => e;
 
 const danfoDeserialize = (e) => e;
@@ -68,6 +82,8 @@ const arrayColumns = (e) => e.length == 0 ? [] : Object.keys(e[0]);
 
 const arrayClone = defaultClone;
 
+const arrayToRows = (e) => e;
+
 const arraySerialize = (e) => e;
 
 const arrayDeserialize = (e) => e;
@@ -84,6 +100,10 @@ const pyodideTest = (e) => e && e.type === 'DataFrame';
 const pyodideColumns = (e) => e.columns.values.tolist().toJs();
 
 const pyodideClone = (e) => JSON.parse(e.to_json(undefined, 'records'));
+
+const pyodideToRows = (x) => {
+  return JSON.parse(x.to_json(undefined, 'records'))
+};
 
 const pyodideSerialize = (e) => e;
 
@@ -106,6 +126,7 @@ const generalized = [
     serialized: arqueroIsSerialized,
     ensure: arqueroEnsure,
     top: arqueroTop,
+    toRows: arqueroToRows,
   },
   {
     test: danfoTest,
@@ -116,6 +137,7 @@ const generalized = [
     serialized: danfoIsSerialized,
     ensure: danfoEnsure,
     top: danfoTop,
+    toRows: danfoToRows,
   },
   {
     test: arrayTest,
@@ -126,6 +148,7 @@ const generalized = [
     serialized: arrayIsSerialized,
     ensure: arrayEnsure,
     top: arrayTop,
+    toRows: arrayToRows,
   },
   {
     test: pyodideTest,
@@ -136,6 +159,7 @@ const generalized = [
     serialized: pyodideIsSerialized,
     ensure: pyodideEnsure,
     top: pyodideTop,
+    toRows: pyodideToRows,
   },
 ];
 
@@ -179,3 +203,7 @@ export const top = (df, limit) => {
   return type ? type.top(df, limit) : df;
 }
 
+export const toRows = (df) => {
+  const type = generalized.find(maybe => maybe.test(df));
+  return type ? type.toRows(df) : df;
+}
