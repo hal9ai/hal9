@@ -1,23 +1,25 @@
 /**
   input: []
-  output: [ textarea, html ]
+  output: [ textbox, html ]
 **/
 
-const textareaEl = document.createElement('textarea'); textareaEl.rows = 5
-textareaEl.style.width = '100%';
+var textbox = '';
+
+const textboxEl = document.createElement('input');
+textboxEl.style.width = '100%';
 
 let state = hal9.getState();
 state = state ? state : {};
 
-if (state.textarea) {
-    textarea = state.textarea;
-    textareaEl.value = textarea;
+if (state.textbox) {
+  textbox = state.textbox;
+  textboxEl.value = textbox;
 }
 
-textareaEl.onchange = function () {
-    state.textarea = this.value;
-    hal9.setState(state);
-    hal9.invalidate();
+textboxEl.onchange = function () {
+  state.textbox = this.value;
+  hal9.setState(state);
+  hal9.invalidate();
 }
 
-html.appendChild(textareaEl);
+html.appendChild(textboxEl);
