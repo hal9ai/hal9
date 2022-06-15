@@ -759,7 +759,9 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number 
     pipeline[key] = clone(from[key]);
   }
 
-  pipeline.state = pipelinesState[pipelineid];
+  if (!(alsoSkip.includes('state'))) {
+    pipeline.state = pipelinesState[pipelineid];
+  }
 
   if (pipeline.state) {
     for (var stepid in pipeline.state.steps) {
