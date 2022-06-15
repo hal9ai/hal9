@@ -140,8 +140,8 @@ async function pipelinesGetHashable(pipelineid) {
   return await api.pipelinesGetHashable(pipelineid);
 }
 
-async function pipelinesGetSaveText(pipelineid, padding) {
-  return await api.pipelinesGetSaveText(pipelineid, padding);
+async function pipelinesGetSaveText(pipelineid, padding, alsoSkip) {
+  return await api.pipelinesGetSaveText(pipelineid, padding, alsoSkip);
 }
 
 async function pipelinesLoad(pipeline) {

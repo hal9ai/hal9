@@ -221,8 +221,8 @@ export async function pipelinesGetHashable(pipelineid) {
   return await pipelines.getHashable(pipelineid);
 }
 
-export async function pipelinesGetSaveText(pipelineid, padding) {
-  return await pipelines.getSaveText(pipelineid, padding);
+export async function pipelinesGetSaveText(pipelineid, padding, alsoSkip) {
+  return await pipelines.getSaveText(pipelineid, padding, alsoSkip);
 }
 
 export async function pipelinesLoad(pipeline) {
