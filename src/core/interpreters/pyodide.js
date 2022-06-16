@@ -47,7 +47,7 @@ export default async function(script, header, context) {
     ${debugcode}
 
     if (!self.pyodide) {
-      self.pyodide = await loadPyodide({ indexURL : "https://cdn.jsdelivr.net/pyodide/v0.19.1/full/" });
+      self.pyodide = await loadPyodide({ indexURL : "https://cdn.jsdelivr.net/pyodide/v0.20.0/full/" });
     }
 
     ${jsconvertcode}
@@ -62,7 +62,7 @@ export default async function(script, header, context) {
 
   header.deps = [
     'https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js?v=0.0.15',
-    'https://cdn.jsdelivr.net/pyodide/v0.19.1/full/pyodide.js?v=0.19.1'
+    'https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js'
   ];
 
   return {
