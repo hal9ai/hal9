@@ -315,5 +315,9 @@ export default {
     top: dataframe.top,
     toRows: dataframe.toRows,
   },
+
+  developer: {
+    components: components,
+  }
 };
 
