@@ -8,6 +8,8 @@ import * as remote from '../remote/remote';
 import * as stepapi from '../core/api';
 import * as dataframe from '../core/utils/dataframe';
 
+import components from '../../scripts/components.json';
+
 import clone from '../core/utils/clone';
 import functions from '../core/utils/functions';
 

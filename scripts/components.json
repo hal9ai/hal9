@@ -1,0 +1,767 @@
+{
+  "Import": [
+    {
+      "name": "importcsv",
+      "label": "CSV",
+      "language": "javascript",
+      "description": "Import a CSV formatted dataset",
+      "icon": "fa-light fa-file-csv"
+    },
+    {
+      "name": "importexcel",
+      "label": "Excel",
+      "language": "javascript",
+      "description": "Import a dataset from a sheet of an Excel file",
+      "icon": "fa-light fa-file-excel"
+    },
+    {
+      "name": "importjson",
+      "label": "JSON",
+      "language": "javascript",
+      "description": "Import a JSON formatted dataset",
+      "icon": "fa-light fa-brackets-curly"
+    },
+    {
+      "name": "airbnb",
+      "label": "Airbnb",
+      "language": "javascript",
+      "description": "Gather comments from an Airbnb listing by using a Hal9 server worker",
+      "icon": "fa-brands fa-airbnb",
+      "serverWorker": true
+    },
+    {
+      "name": "bigquery",
+      "label": "BigQuery",
+      "language": "javascript",
+      "description": "Query data from a Google Cloud BigQuery data warehouse",
+      "icon": "fa-light fa-magnifying-glass"
+    },
+    {
+      "name": "datagrabio",
+      "label": "DataGrab",
+      "language": "html",
+      "description": "Scrape text from a website by using the DataGrab Chrome extension",
+      "icon": "fa-brands fa-chrome"
+    },
+    {
+      "name": "googlesheets",
+      "label": "Google Sheets",
+      "language": "javascript",
+      "description": "Import data from a Google Sheets spreadsheet",
+      "icon": "fa-light fa-file-spreadsheet"
+    },
+    {
+      "name": "graphql",
+      "label": "GraphQL",
+      "language": "javascript",
+      "description": "Query data from a GraphQL endpoint",
+      "icon": "fa-light fa-comment-question"
+    },
+    {
+      "name": "mysql",
+      "label": "MySQL",
+      "language": "javascript",
+      "description": "Query data from a MySQL database by using a Hal9 server worker",
+      "icon": "fa-light fa-database",
+      "serverWorker": true
+    },
+    {
+      "name": "powerbi",
+      "label": "Power BI",
+      "language": "html",
+      "description": "Import data from Power BI",
+      "icon": "fa-brands fa-microsoft"
+    },
+    {
+      "name": "reddit",
+      "label": "Reddit",
+      "language": "javascript",
+      "description": "Search Reddit for submissions or comments",
+      "icon": "fa-brands fa-reddit"
+    },
+    {
+      "name": "stocks",
+      "label": "Stocks",
+      "language": "javascript",
+      "description": "Get stock market data provided by Financial Modeling Prep",
+      "icon": "fa-light fa-arrow-trend-up"
+    },
+    {
+      "name": "sqlite",
+      "label": "SQLite",
+      "language": "javascript",
+      "description": "Query data from a SQLite database",
+      "icon": "fa-light fa-database"
+    },
+    {
+      "name": "tableau",
+      "label": "Tableau",
+      "language": "html",
+      "description": "Import data from Tableau",
+      "icon": "fa-brands fa-salesforce"
+    },
+    {
+      "name": "twitter",
+      "label": "Twitter",
+      "language": "javascript",
+      "description": "Search Twitter with a Hal9 server worker",
+      "icon": "icon-twitter",
+      "serverWorker": true
+    },
+    {
+      "name": "videoframes",
+      "label": "Video Frames",
+      "language": "javascript",
+      "description": "Grab frames from a video file",
+      "icon": "fa-light fa-photo-film"
+    },
+    {
+      "name": "webimages",
+      "label": "Web Images",
+      "language": "javascript",
+      "description": "Scrape images from a website by using a Hal9 server worker",
+      "icon": "fa-light fa-images",
+      "serverWorker": true
+    },
+    {
+      "name": "webtables",
+      "label": "Web Table",
+      "language": "javascript",
+      "description": "Scrape a table from a website by using a Hal9 server worker",
+      "icon": "fa-light fa-table",
+      "serverWorker": true
+    },
+    {
+      "name": "webselector",
+      "label": "Web Selectors",
+      "language": "javascript",
+      "description": "Scrape data matching CSS or DOM selectors on a website by using a Hal9 server worker",
+      "icon": "fa-brands fa-css3-alt",
+      "serverWorker": true
+    },
+    {
+      "name": "webcam",
+      "label": "Webcam",
+      "language": "javascript",
+      "description": "Snap a webcam photo to insert into a dataset",
+      "icon": "fa-light fa-camera-web"
+    },
+    {
+      "name": "images",
+      "label": "Images Dataset",
+      "language": "javascript",
+      "description": "Sample dataset of image URLs",
+      "icon": "fa-light fa-images"
+    },
+    {
+      "name": "iris",
+      "label": "Iris Dataset",
+      "language": "javascript",
+      "description": "Sample dataset about iris flowers",
+      "icon": "fa-light fa-file-lines"
+    }
+  ],
+  "Transform": [
+    {
+      "name": "assign",
+      "label": "Assign",
+      "language": "javascript",
+      "description": "Attach a new column",
+      "icon": "fa-light fa-layer-plus"
+    },
+    {
+      "name": "convert",
+      "label": "Convert",
+      "language": "javascript",
+      "description": "Apply an expression to the values in a specific column",
+      "icon": "fa-light fa-wand"
+    },
+    {
+      "name": "derive",
+      "label": "Derive",
+      "language": "javascript",
+      "description": "Create a new column or replace an existing one via an expression",
+      "icon": "fa-light fa-wand-sparkles"
+    },
+    {
+      "name": "drop",
+      "label": "Drop",
+      "language": "javascript",
+      "description": "Remove specific columns",
+      "icon": "fa-light fa-layer-minus"
+    },
+    {
+      "name": "filter",
+      "label": "Filter",
+      "language": "javascript",
+      "description": "Keep only the rows that satisfy a given expression for a specific column",
+      "icon": "fa-light fa-filter"
+    },
+    {
+      "name": "fold",
+      "label": "Fold",
+      "language": "javascript",
+      "description": "Fold one or more columns into a pair of key-value columns",
+      "icon": "fa-light fa-paper-plane"
+    },
+    {
+      "name": "impute",
+      "label": "Impute",
+      "language": "javascript",
+      "description": "Fill in a column's missing data with the value of an aggregation",
+      "icon": "fa-light fa-fill-drip"
+    },
+    {
+      "name": "pivot",
+      "label": "Pivot",
+      "language": "javascript",
+      "description": "Pivot columns into a cross-tabulation",
+      "icon": "fa-light fa-table-pivot"
+    },
+    {
+      "name": "rollingsum",
+      "label": "Rolling Sum",
+      "language": "javascript",
+      "description": "Create new columns from the running totals of others",
+      "icon": "fa-light fa-sigma"
+    },
+    {
+      "name": "sample",
+      "label": "Sample",
+      "language": "javascript",
+      "description": "Trim a dataset down to a random sample of its rows",
+      "icon": "fa-light fa-dice"
+    },
+    {
+      "name": "select",
+      "label": "Select",
+      "language": "javascript",
+      "description": "Keep only a subset of columns",
+      "icon": "fa-light fa-hand-pointer"
+    },
+    {
+      "name": "slice",
+      "label": "Slice",
+      "language": "javascript",
+      "description": "Keep only a contiguous subset of rows",
+      "icon": "fa-light fa-pizza-slice"
+    },
+    {
+      "name": "sort",
+      "label": "Sort",
+      "language": "javascript",
+      "description": "Sort rows of data based on the values in selected columns",
+      "icon": "fa-light fa-arrow-down-1-9"
+    },
+    {
+      "name": "summarize",
+      "label": "Summarize",
+      "language": "javascript",
+      "description": "Select columns to aggregate and others to keep unmodified",
+      "icon": "fa-light fa-calculator-simple"
+    }
+  ],
+  "Visualize": [
+    {
+      "name": "barchart",
+      "label": "Bar",
+      "language": "javascript",
+      "description": "Our first chart type needs no introduction",
+      "icon": "fa-light fa-chart-bar"
+    },
+    {
+      "name": "boxplotchart",
+      "label": "Box Plot",
+      "language": "pyodide",
+      "description": "Great for comparing distributions of data",
+      "icon": "fa-light fa-box-open"
+    },
+    {
+      "name": "bubbles",
+      "label": "Bubbles",
+      "language": "javascript",
+      "description": "Bigger values -> bigger bubbles",
+      "icon": "fa-light fa-soap"
+    },
+    {
+      "name": "dotplotchart",
+      "label": "Dot Plot",
+      "language": "javascript",
+      "description": "Stack data into columns of dots",
+      "icon": "fa-light fa-arrow-up-right-dots"
+    },
+    {
+      "name": "errorbarchart",
+      "label": "Candles",
+      "language": "javascript",
+      "description": "Explain financial trends with a candlestick chart",
+      "icon": "fa-light fa-chart-candlestick"
+    },
+    {
+      "name": "funnel",
+      "label": "Funnel",
+      "language": "javascript",
+      "description": "Communicate how data narrows down",
+      "icon": "fa-light fa-filters"
+    },
+    {
+      "name": "gallery",
+      "label": "Gallery",
+      "language": "html",
+      "description": "A showcase for image datasets",
+      "icon": "fa-light fa-images"
+    },
+    {
+      "name": "heatmapchart",
+      "label": "Heatmap",
+      "language": "javascript",
+      "description": "Draw attention to larger values with more vibrant colors in this 2D map",
+      "icon": "fa-light fa-fire"
+    },
+    {
+      "name": "histogramchart",
+      "label": "Histogram",
+      "language": "javascript",
+      "description": "Show further granularity within buckets via optional color palettes",
+      "icon": "fa-light fa-chart-column"
+    },
+    {
+      "name": "linechart",
+      "label": "Line",
+      "language": "javascript",
+      "description": "For use with sorted X axis values only...unless you like scribbles",
+      "icon": "fa-light fa-chart-line"
+    },
+    {
+      "name": "mapchart",
+      "label": "Map",
+      "language": "javascript",
+      "description": "Clearly map out Earthly datasets that have columns for latitude and longitude",
+      "icon": "fa-light fa-earth-americas"
+    },
+    {
+      "name": "network",
+      "label": "Network",
+      "language": "javascript",
+      "description": "Dazzle your colleagues with this colorful animated network graph",
+      "icon": "fa-light fa-chart-network"
+    },
+    {
+      "name": "plotlycharts",
+      "label": "Plotly",
+      "language": "javascript",
+      "description": "Choose from a variety of Plotly visualizations",
+      "icon": "fa-light fa-chart-simple"
+    },
+    {
+      "name": "radialbars",
+      "label": "Radial",
+      "language": "javascript",
+      "description": "A circular bar chart",
+      "icon": "fa-light fa-bullseye"
+    },
+    {
+      "name": "sankeychart",
+      "label": "Sankey",
+      "language": "javascript",
+      "description": "Show the flow with Captain Sankey's signature diagram",
+      "icon": "fa-light fa-diagram-sankey"
+    },
+    {
+      "name": "scatterchart",
+      "label": "Scatter",
+      "language": "javascript",
+      "description": "A tried and true classic",
+      "icon": "fa-light fa-chart-scatter"
+    },
+    {
+      "name": "table",
+      "label": "Table",
+      "language": "html",
+      "description": "Sort and search a dataset",
+      "icon": "fa-light fa-columns-3"
+    },
+    {
+      "name": "treemapchart",
+      "label": "Treemap",
+      "language": "javascript",
+      "description": "Choose a column to map into colored blocks, and another to further subdivide by size",
+      "icon": "fa-light fa-chart-tree-map"
+    },
+    {
+      "name": "violinchart",
+      "label": "Violin",
+      "language": "pyodide",
+      "description": "A more descriptive box plot",
+      "icon": "fa-light fa-violin"
+    },
+    {
+      "name": "wafflechart",
+      "label": "Waffle",
+      "language": "javascript",
+      "description": "A square pie chart; still not edible",
+      "icon": "fa-light fa-grid-4"
+    },
+    {
+      "name": "waterfallchart",
+      "label": "Waterfall",
+      "language": "javascript",
+      "description": "Lay out cascades of data next to a towering waterfall representing the total",
+      "icon": "fa-light fa-chart-waterfall"
+    },
+    {
+      "name": "wordcloud",
+      "label": "Wordcloud",
+      "language": "javascript",
+      "description": "Make the most frequent words in a dataset stand out in a trendy way",
+      "icon": "fa-light fa-cloud-word"
+    }
+  ],
+  "Predict": [
+    {
+      "name": "mobilenet",
+      "label": "Image Classification",
+      "language": "javascript",
+      "description": "Use MobileNet's Image Classification to attempt to identify what's in an image",
+      "icon": "fa-light fa-comment-image",
+      "link": "https://hal9.com/hal9/image-classification"
+    },
+    {
+      "name": "bodypix",
+      "label": "Pose",
+      "language": "javascript",
+      "description": "Apply automated post-process motion capture dots to an image",
+      "icon": "fa-light fa-person-running",
+      "link": "https://hal9.com/hal9/pose-estimation"
+    },
+    {
+      "name": "regressionpredict",
+      "label": "Regression",
+      "language": "javascript",
+      "description": "Fit a regression model to a dataset to predict future values",
+      "icon": "fa-light fa-chart-line-up"
+    },
+    {
+      "name": "sentiment",
+      "label": "Sentiment",
+      "language": "javascript",
+      "description": "Ask a neural net to predict how positively the text in a dataset will be perceived",
+      "icon": "fa-light fa-thought-bubble"
+    }
+  ],
+  "Time Series": [
+    {
+      "name": "timeauto",
+      "label": "ARIMA",
+      "language": "python",
+      "description": "Predict using autoregressive models",
+      "icon": "fa-light fa-calendar-days",
+      "serverWorker": true
+    },
+    {
+      "name": "timelstm",
+      "label": "LSTM",
+      "language": "javascript",
+      "description": "Predict using a long-short-term-memory model",
+      "icon": "fa-light fa-calendar-days"
+    },
+    {
+      "name": "timemovingaverage",
+      "label": "SMA",
+      "language": "javascript",
+      "description": "Calculate the moving average",
+      "icon": "fa-light fa-calendar-days"
+    },
+    {
+      "name": "timeprophet",
+      "label": "Prophet",
+      "language": "python",
+      "description": "Predict using the Prophet library",
+      "icon": "fa-light fa-calendar-days",
+      "serverWorker": true
+    },
+    {
+      "name": "timeseasonality",
+      "label": "Seasons",
+      "language": "pyodide",
+      "description": "Compute seasonality",
+      "icon": "fa-light fa-calendar-days"
+    }
+  ],
+  "Train": [
+    {
+      "name": "pycaret",
+      "label": "Automatic",
+      "language": "python",
+      "description": "Use PyCaret to automatically train your model",
+      "icon": "fa-light fa-brain-circuit",
+      "serverWorker": true
+    },
+    {
+      "name": "predict",
+      "label": "Predict",
+      "language": "python",
+      "description": "Predict from a trained model",
+      "icon": "fa-light fa-crystal-ball",
+      "serverWorker": true
+    },
+    {
+      "name": "linearregression",
+      "label": "Linear Model",
+      "language": "python",
+      "description": "Train a linear regression model then predict",
+      "icon": "fa-light fa-brain-circuit",
+      "serverWorker": true
+    },
+    {
+      "name": "logisiticregression",
+      "label": "Logisitic Model",
+      "language": "python",
+      "description": "Train a logisitic regression model then predict",
+      "icon": "fa-light fa-brain-circuit",
+      "serverWorker": true
+    },
+    {
+      "name": "traintest",
+      "label": "Train Split",
+      "language": "python",
+      "description": "Split data into train and test to train models",
+      "icon": "fa-light fa-split",
+      "serverWorker": true
+    }
+  ],
+  "Export": [
+    {
+      "name": "exportcsv",
+      "label": "CSV",
+      "language": "javascript",
+      "description": "Export a dataset into CSV format",
+      "icon": "fa-light fa-file-csv"
+    },
+    {
+      "name": "exportjson",
+      "label": "JSON",
+      "language": "javascript",
+      "description": "Export a dataset into JSON format",
+      "icon": "fa-light fa-brackets-curly"
+    },
+    {
+      "name": "exporttext",
+      "label": "Text",
+      "language": "javascript",
+      "description": "Export a dataset into a delimited string",
+      "icon": "fa-light fa-text"
+    }
+  ],
+  "Business": [
+    {
+      "name": "abtest",
+      "label": "A/B Test",
+      "language": "pyodide",
+      "description": "Calculate statistics like p-value for A/B tests",
+      "icon": "fa-light fa-vials"
+    },
+    {
+      "name": "churn",
+      "label": "Churn",
+      "language": "pyodide",
+      "description": "Compute customer churn by providing counts of new and lost customers",
+      "icon": "fa-light fa-person-from-portal"
+    }
+  ],
+  "Statistics": [
+    {
+      "name": "shapiro",
+      "label": "Shapiro-Wilk",
+      "language": "pyodide",
+      "description": "Test if data is normally distributed",
+      "icon": "fa-light fa-bell"
+    }
+  ],
+  "Utilities": [
+    {
+      "name": "copy",
+      "label": "Copy",
+      "language": "javascript",
+      "description": "Temporarily store the current state of a dataset",
+      "icon": "fa-light fa-clipboard-list"
+    },
+    {
+      "name": "paste",
+      "label": "Paste",
+      "language": "javascript",
+      "description": "Restore a dataset to its previously copied state",
+      "icon": "fa-light fa-paste"
+    },
+    {
+      "name": "fetch",
+      "label": "Fetch",
+      "language": "javascript",
+      "description": "Create new data columns by processing a URL column with a Hal9 server worker",
+      "icon": "fa-light fa-browser",
+      "serverWorker": true
+    },
+    {
+      "name": "citytomap",
+      "label": "Coordinates from City",
+      "language": "javascript",
+      "description": "Create latitude and longitude columns from a pair of US city and state columns",
+      "icon": "fa-light fa-earth-americas"
+    },
+    {
+      "name": "ziptomap",
+      "label": "Coordinates from Zip Code",
+      "language": "javascript",
+      "description": "Create latitude and longitude columns from a US zip code column",
+      "icon": "fa-light fa-earth-americas"
+    },
+    {
+      "name": "upscaler",
+      "label": "Upscale",
+      "language": "javascript",
+      "description": "Magnify an image with AI enhancement",
+      "icon": "fa-light fa-panorama"
+    }
+  ],
+  "Languages": [
+    {
+      "name": "html",
+      "label": "HTML",
+      "language": "html",
+      "description": "Insert a webpage snippet",
+      "icon": "fa-brands fa-html5"
+    },
+    {
+      "name": "javascript",
+      "label": "JavaScript",
+      "language": "javascript",
+      "description": "Write JavaScript code for custom data processing",
+      "icon": "fa-brands fa-js-square"
+    },
+    {
+      "name": "markdown",
+      "label": "Markdown",
+      "language": "markdown",
+      "description": "Insert a section of Markdown formatted text",
+      "icon": "fa-brands fa-markdown"
+    },
+    {
+      "name": "pyodide",
+      "label": "Pyodide",
+      "language": "pyodide",
+      "description": "Write a Pyodide script for advanced data processing",
+      "icon": "fa-brands fa-python"
+    },
+    {
+      "name": "python",
+      "label": "Python",
+      "language": "python",
+      "description": "Write a Python script for advanced data processing",
+      "icon": "fa-brands fa-python",
+      "serverWorker": true
+    },
+    {
+      "name": "r",
+      "label": "R",
+      "language": "r",
+      "description": "Write an R script for advanced data processing",
+      "icon": "fa-brands fa-r-project",
+      "serverWorker": true
+    }
+  ],
+  "Frameworks": [
+    {
+      "name": "flask",
+      "label": "Flask",
+      "language": "flask",
+      "description": "Crate an API block in Python using Flask to improve speed",
+      "icon": "fa-brands fa-python"
+    },
+    {
+      "name": "plumber",
+      "label": "Plumber",
+      "language": "plumber",
+      "description": "Crate an API block in R using Plumber to improve speed",
+      "icon": "fa-brands fa-r-project"
+    },
+    {
+      "name": "pyscript",
+      "label": "PyScript",
+      "language": "html",
+      "description": "Use PyScript to render HTML",
+      "icon": "fa-brands fa-python"
+    },
+    {
+      "name": "react",
+      "label": "React",
+      "language": "html",
+      "description": "Write a React script for advanced interactivity",
+      "icon": "fa-brands fa-react"
+    },
+    {
+      "name": "vue",
+      "label": "Vue",
+      "language": "vue",
+      "description": "Write a Vue script for advanced interactivity",
+      "icon": "fa-brands fa-vuejs"
+    }
+  ],
+  "Controls": [
+    {
+      "name": "dropdownctrl",
+      "label": "Dropdown",
+      "language": "javascript",
+      "description": "Embed an HTML <select> element",
+      "icon": "fa-light fa-list-dropdown"
+    },
+    {
+      "name": "inputfilectrl",
+      "label": "File Input",
+      "language": "javascript",
+      "description": "Embed a file input control",
+      "icon": "fa-light fa-file-import"
+    },
+    {
+      "name": "numberctrl",
+      "label": "Number Input",
+      "language": "javascript",
+      "description": "Embed a number input control",
+      "icon": "fa-light fa-input-numeric"
+    },
+    {
+      "name": "rangectrl",
+      "label": "Range",
+      "language": "javascript",
+      "description": "Embed an slider element",
+      "icon": "fa-light fa-slider"
+    },
+    {
+      "name": "spreadsheetctrl",
+      "label": "Sheet",
+      "language": "html",
+      "description": "Embed a spreadsheet to collect data",
+      "icon": "fa-light fa-file-spreadsheet"
+    },
+    {
+      "name": "textboxctrl",
+      "label": "Text Input",
+      "language": "javascript",
+      "description": "Embed a text input control",
+      "icon": "fa-light fa-input-text"
+    },
+    {
+      "name": "textareactrl",
+      "label": "Multi-line Text Input",
+      "language": "javascript",
+      "description": "Embed a multi-line text input control",
+      "icon": "fa-light fa-paragraph"
+    },
+    {
+      "name": "websitectrl",
+      "label": "Website",
+      "language": "javascript",
+      "description": "Embed a website and load a URL",
+      "icon": "fa-light fa-browser"
+    }
+  ]
+}
