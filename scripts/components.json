@@ -31,8 +31,8 @@
       "name": "airbnb",
       "function": "import_airbnb",
       "source": "services/airbnb.txt.js",
-      "serverWorker": true,
       "language": "javascript",
+      "serverWorker": true,
       "label": "Airbnb",
       "description": "Gather comments from an Airbnb listing by using a Hal9 server worker",
       "icon": "fa-brands fa-airbnb"
@@ -77,8 +77,8 @@
       "name": "mysql",
       "function": "import_mysql",
       "source": "import/mysql.txt.js",
-      "serverWorker": true,
       "language": "javascript",
+      "serverWorker": true,
       "label": "MySQL",
       "description": "Query data from a MySQL database by using a Hal9 server worker",
       "icon": "fa-light fa-database"
@@ -132,8 +132,8 @@
       "name": "twitter",
       "function": "import_twitter",
       "source": "services/twitter.txt.js",
-      "serverWorker": true,
       "language": "javascript",
+      "serverWorker": true,
       "label": "Twitter",
       "description": "Search Twitter with a Hal9 server worker",
       "icon": "icon-twitter"
@@ -151,8 +151,8 @@
       "name": "webimages",
       "function": "webscrape_images",
       "source": "import/webimages.txt.js",
-      "serverWorker": true,
       "language": "javascript",
+      "serverWorker": true,
       "label": "Web Images",
       "description": "Scrape images from a website by using a Hal9 server worker",
       "icon": "fa-light fa-images"
@@ -161,8 +161,8 @@
       "name": "webtables",
       "function": "webscrape_table",
       "source": "import/webtable.txt.js",
-      "serverWorker": true,
       "language": "javascript",
+      "serverWorker": true,
       "label": "Web Table",
       "description": "Scrape a table from a website by using a Hal9 server worker",
       "icon": "fa-light fa-table"
@@ -171,8 +171,8 @@
       "name": "webselector",
       "function": "webscrape_selectors",
       "source": "import/webselector.txt.js",
-      "serverWorker": true,
       "language": "javascript",
+      "serverWorker": true,
       "label": "Web Selectors",
       "description": "Scrape data matching CSS or DOM selectors on a website by using a Hal9 server worker",
       "icon": "fa-brands fa-css3-alt"
@@ -578,8 +578,8 @@
       "name": "timeauto",
       "function": "predict_arima",
       "source": "timeseries/autoregressive.py",
-      "serverWorker": true,
       "language": "python",
+      "serverWorker": true,
       "label": "ARIMA",
       "description": "Predict using autoregressive models",
       "icon": "fa-light fa-calendar-days"
@@ -606,8 +606,8 @@
       "name": "timeprophet",
       "function": "predict_prophet",
       "source": "timeseries/prophet.py",
-      "serverWorker": true,
       "language": "python",
+      "serverWorker": true,
       "label": "Prophet",
       "description": "Predict using the Prophet library",
       "icon": "fa-light fa-calendar-days"
@@ -627,8 +627,8 @@
       "name": "pycaret",
       "function": "train_pycaret",
       "source": "train/pycaret.py",
-      "serverWorker": true,
       "language": "python",
+      "serverWorker": true,
       "label": "Automatic",
       "description": "Use PyCaret to automatically train your model",
       "icon": "fa-light fa-brain-circuit"
@@ -637,8 +637,8 @@
       "name": "predict",
       "function": "predict_pycaret",
       "source": "train/predict.py",
-      "serverWorker": true,
       "language": "python",
+      "serverWorker": true,
       "label": "Predict",
       "description": "Predict from a trained model",
       "icon": "fa-light fa-crystal-ball"
@@ -647,8 +647,8 @@
       "name": "linearregression",
       "function": "train_linear",
       "source": "train/linearregression.py",
-      "serverWorker": true,
       "language": "python",
+      "serverWorker": true,
       "label": "Linear Model",
       "description": "Train a linear regression model then predict",
       "icon": "fa-light fa-brain-circuit"
@@ -657,8 +657,8 @@
       "name": "logisiticregression",
       "function": "train_logistic",
       "source": "train/logisticregression.py",
-      "serverWorker": true,
       "language": "python",
+      "serverWorker": true,
       "label": "Logisitic Model",
       "description": "Train a logisitic regression model then predict",
       "icon": "fa-light fa-brain-circuit"
@@ -667,8 +667,8 @@
       "name": "traintest",
       "function": "split_train_test",
       "source": "train/traintest.py",
-      "serverWorker": true,
       "language": "python",
+      "serverWorker": true,
       "label": "Train Split",
       "description": "Split data into train and test to train models",
       "icon": "fa-light fa-split"
@@ -756,8 +756,8 @@
       "name": "fetch",
       "function": "fetch",
       "source": "transforms/fetch.txt.js",
-      "serverWorker": true,
       "language": "javascript",
+      "serverWorker": true,
       "label": "Fetch",
       "description": "Create new data columns by processing a URL column with a Hal9 server worker",
       "icon": "fa-light fa-browser"
@@ -840,8 +840,8 @@
       "name": "python",
       "function": "python",
       "source": "languages/python.txt",
-      "serverWorker": true,
       "language": "python",
+      "serverWorker": true,
       "label": "Python",
       "description": "Write a Python script for advanced data processing",
       "icon": "fa-brands fa-python"
@@ -850,8 +850,8 @@
       "name": "r",
       "function": "r",
       "source": "languages/r.txt",
-      "serverWorker": true,
       "language": "r",
+      "serverWorker": true,
       "label": "R",
       "description": "Write an R script for advanced data processing",
       "icon": "fa-brands fa-r-project"
