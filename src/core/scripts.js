@@ -18,24 +18,19 @@ import webtablestxt from '../../scripts/import/webtable.txt.js';
 
 // transform scripts
 import assigntxt from '../../scripts/transforms/assign.txt.js';
-import columntxt from '../../scripts/transforms/column.txt.js';
 import converttxt from '../../scripts/transforms/convert.txt.js';
 import derivetxt from '../../scripts/transforms/derive.txt.js';
 import droptxt from '../../scripts/transforms/drop.txt.js';
-import explodetxt from '../../scripts/transforms/explode.txt.js';
 import fetchtxt from '../../scripts/transforms/fetch.txt.js';
 import filtertxt from '../../scripts/transforms/filter.txt.js';
 import foldtxt from '../../scripts/transforms/fold.txt.js';
 import imputetxt from '../../scripts/transforms/impute.txt.js';
-import jointxt from '../../scripts/transforms/join.txt.js';
 import pivottxt from '../../scripts/transforms/pivot.txt.js';
-import rangetxt from '../../scripts/transforms/range.txt.js';
 import rollingsumtxt from '../../scripts/transforms/rollingsum.txt.js';
 import sampletxt from '../../scripts/transforms/sample.txt.js';
 import selecttxt from '../../scripts/transforms/select.txt.js';
 import slicetxt from '../../scripts/transforms/slice.txt.js';
 import sorttxt from '../../scripts/transforms/sort.txt.js';
-import subsprevtxt from '../../scripts/transforms/subsprev.txt.js';
 import summarizetxt from '../../scripts/transforms/summarize.txt.js';
 
 // chart scripts
@@ -56,19 +51,16 @@ import bubblestxt from '../../scripts/visualizations/bubbles.txt.js';
 import funneltxt from '../../scripts/visualizations/funnel.txt.js';
 import gallerytxt from '../../scripts/visualizations/gallery.txt';
 import mapcharttxt from '../../scripts/visualizations/map.txt.js';
-import minichartstxt from '../../scripts/visualizations/minicharts.txt.js';
 import networktxt from '../../scripts/visualizations/network.txt.js';
 import plotlychartstxt from '../../scripts/visualizations/plotlycharts.txt.js';
 import radialbarstxt from '../../scripts/visualizations/radialbars.txt.js';
 import simpletabletxt from '../../scripts/visualizations/simpletable.txt';
-import threejstxt from '../../scripts/visualizations/three.txt.js';
 import wafflecharttxt from '../../scripts/visualizations/waffle.txt.js';
 import waterfallcharttxt from '../../scripts/visualizations/waterfall.txt.js';
 import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
 
 // prediction scripts
 import movenettxt from '../../scripts/predict/movenet.txt.js';
-import knntxt from '../../scripts/predict/knn.txt.js';
 import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
 import regressionpredicttxt from '../../scripts/predict/regression.txt.js';
 import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
@@ -96,7 +88,6 @@ import citytomaptxt from '../../scripts/utils/citytomap.txt.js';
 import copytxt from '../../scripts/utils/copy.txt.js';
 import pastetxt from '../../scripts/utils/paste.txt.js';
 import tojsontxt from '../../scripts/utils/tojson.txt.js';
-import upscalertxt from '../../scripts/utils/upscaler.txt.js';
 import ziptomaptxt from '../../scripts/utils/ziptomap.txt.js';
 
 // export scripts
@@ -166,23 +157,18 @@ const scripts = {
 
   // transforms
   assign: { script: assigntxt, language: 'javascript' },
-  column: { script: columntxt, language: 'javascript' },
   convert: { script: converttxt, language: 'javascript' },
   derive: { script: derivetxt, language: 'javascript' },
   drop: { script: droptxt, language: 'javascript' },
-  explode: { script: explodetxt, language: 'javascript' },
   filter: { script: filtertxt, language: 'javascript' },
   fold: { script: foldtxt, language: 'javascript' },
   impute: { script: imputetxt, language: 'javascript' },
-  join: { script: jointxt, language: 'javascript' },
   pivot: { script: pivottxt, language: 'javascript' },
-  range: { script: rangetxt, language: 'javascript' },
   rollingsum: { script: rollingsumtxt, language: 'javascript' },
   sample: { script: sampletxt, language: 'javascript' },
   select: { script: selecttxt, language: 'javascript' },
   slice: { script: slicetxt, language: 'javascript' },
   sort: { script: sorttxt, language: 'javascript' },
-  subsprev: { script: subsprevtxt, language: 'javascript' },
   summarize: { script: summarizetxt, language: 'javascript' },
 
   // charts
@@ -203,11 +189,9 @@ const scripts = {
   funnel: { script: funneltxt, language: 'javascript' },
   gallery: { script: gallerytxt, language: 'html' },
   mapchart: { script: mapcharttxt, language: 'javascript' },
-  minicharts: { script: minichartstxt, language: 'javascript' },
   network: { script: networktxt, language: 'javascript' },
   plotlycharts: { script: plotlychartstxt, language: 'javascript' },
   radialbars: { script: radialbarstxt, language: 'javascript' },
-  threejs: { script: threejstxt, language: 'javascript' },
   wafflechart: { script: wafflecharttxt, language: 'javascript' },
   wordcloud: { script: wordcloudtxt, language: 'javascript' },
   waterfallchart: { script: waterfallcharttxt, language: 'javascript' },
@@ -215,8 +199,6 @@ const scripts = {
 
   // predictions
   bodypix: { script: movenettxt, language: 'javascript' },
-  movenet: { script: movenettxt, language: 'javascript' },
-  knn: { script: knntxt, language: 'javascript' },
   mobilenet: { script: mobilenettxt, language: 'javascript' },
   regressionpredict: { script: regressionpredicttxt, language: 'javascript' },
   sentiment: { script: sentimenttxt, language: 'javascript' },
@@ -245,7 +227,6 @@ const scripts = {
   fetch: { script: fetchtxt, language: 'javascript' },
   paste: { script: pastetxt, language: 'javascript' },
   tojson: { script: tojsontxt, language: 'javascript' },
-  upscaler: { script: upscalertxt, language: 'javascript' },
   ziptomap: { script: ziptomaptxt, language: 'javascript' },
 
   // export
