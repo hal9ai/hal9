@@ -24,3 +24,24 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+      - uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: site
+      - uses: zdurham/s3-upload-github-action@master
+        with:
+          args: --recursive --acl public-read
+        env:
+          FILE: './site/'
+          AWS_REGION: 'us-west-2'
+          S3_BUCKET: 'notebooks.hal9.com'
+          S3_KEY: ''
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
