@@ -107,6 +107,7 @@ html.appendChild(Plot.plot({
   padding: 0.05,
   width: html.clientWidth,
   height: html.clientHeight,
+  marginTop: 30,
   marginLeft: parseInt(marginleft),
   marginBottom: parseInt(marginbottom),
   style: {

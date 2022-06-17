@@ -131,6 +131,7 @@ const plot = Plot.plot({
   },
   width: html.clientWidth,
   height: html.clientHeight,
+  marginTop: 30,
   marginLeft: parseInt(marginleft),
   marginBottom: parseInt(marginbottom),
   style: {

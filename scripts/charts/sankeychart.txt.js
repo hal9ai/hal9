@@ -152,7 +152,7 @@ html.appendChild(Plot.plot({
   color: { range: d3[palette] },
   width: html.clientWidth,
   height: html.clientHeight,
-  marginTop: 40,
+  marginTop: 30,
   marginLeft: parseInt(marginleft),
   marginBottom: parseInt(marginbottom),
   style: {
