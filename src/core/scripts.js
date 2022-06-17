@@ -88,6 +88,7 @@ import citytomaptxt from '../../scripts/utils/citytomap.txt.js';
 import copytxt from '../../scripts/utils/copy.txt.js';
 import pastetxt from '../../scripts/utils/paste.txt.js';
 import tojsontxt from '../../scripts/utils/tojson.txt.js';
+import upscalertxt from '../../scripts/utils/upscaler.txt.js';
 import ziptomaptxt from '../../scripts/utils/ziptomap.txt.js';
 
 // export scripts
@@ -227,6 +228,7 @@ const scripts = {
   fetch: { script: fetchtxt, language: 'javascript' },
   paste: { script: pastetxt, language: 'javascript' },
   tojson: { script: tojsontxt, language: 'javascript' },
+  upscaler: { script: upscalertxt, language: 'javascript' },
   ziptomap: { script: ziptomaptxt, language: 'javascript' },
 
   // export

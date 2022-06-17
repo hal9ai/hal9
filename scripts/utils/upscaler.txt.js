@@ -21,6 +21,7 @@
   deps:
     - https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.16.0/dist/tf.min.js
     - https://cdn.jsdelivr.net/npm/upscaler@0.12.1/dist/browser/umd/upscaler.js
+  cache: true
   credit:
     - name: thekevinscott
     - url: https://upscalerjs.com/
