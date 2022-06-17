@@ -56,7 +56,7 @@
       label: Margin left
       value:
         - control: range
-          value: 30
+          value: 40
           min: 20
           max: 200
     - name: marginbottom
