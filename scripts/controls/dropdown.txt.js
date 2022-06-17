@@ -12,7 +12,7 @@
 const select = document.createElement('select');
 select.style.minWidth = '50px';
 
-const valuesarr = values.split(',');
+const valuesarr = values instanceof String ? values.split(',') : values;
 for (let value of valuesarr){
     let opt = document.createElement('option');
     opt.value = opt.innerText = value.trim();
