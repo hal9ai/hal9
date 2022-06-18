@@ -191,11 +191,11 @@ const scripts = {
   gallery: { script: gallerytxt, language: 'html' },
   mapchart: { script: mapcharttxt, language: 'javascript' },
   network: { script: networktxt, language: 'javascript' },
-  plotlycharts: { script: plotlychartstxt, language: 'javascript' },
+  plotly: { script: plotlychartstxt, language: 'javascript' },
   radialbars: { script: radialbarstxt, language: 'javascript' },
-  wafflechart: { script: wafflecharttxt, language: 'javascript' },
+  waffle: { script: wafflecharttxt, language: 'javascript' },
   wordcloud: { script: wordcloudtxt, language: 'javascript' },
-  waterfallchart: { script: waterfallcharttxt, language: 'javascript' },
+  waterfall: { script: waterfallcharttxt, language: 'javascript' },
   table: { script: simpletabletxt, language: 'html' },
 
   // predictions

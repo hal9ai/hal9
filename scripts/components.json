@@ -362,7 +362,7 @@
       "icon": "fa-light fa-soap"
     },
     {
-      "name": "dotplot",
+      "name": "dotplotchart",
       "function": "dot_plot",
       "source": "charts/dotplotchart.txt.js",
       "language": "javascript",
@@ -371,7 +371,7 @@
       "icon": "fa-light fa-arrow-up-right-dots"
     },
     {
-      "name": "errorbar",
+      "name": "errorbarchart",
       "function": "error_bar",
       "source": "charts/errorbarchart.txt.js",
       "language": "javascript",
@@ -398,7 +398,7 @@
       "icon": "fa-light fa-images"
     },
     {
-      "name": "heatmap",
+      "name": "heatmapchart",
       "function": "heatmap",
       "source": "charts/heatmapchart.txt.js",
       "language": "javascript",
@@ -407,7 +407,7 @@
       "icon": "fa-light fa-fire"
     },
     {
-      "name": "histogram",
+      "name": "histogramchart",
       "function": "histogram",
       "source": "charts/histogramchart.txt.js",
       "language": "javascript",
@@ -461,7 +461,7 @@
       "icon": "fa-light fa-bullseye"
     },
     {
-      "name": "sankey",
+      "name": "sankeychart",
       "function": "sankey",
       "source": "charts/sankeychart.txt.js",
       "language": "javascript",
@@ -470,7 +470,7 @@
       "icon": "fa-light fa-diagram-sankey"
     },
     {
-      "name": "scatter",
+      "name": "scatterchart",
       "function": "scatter",
       "source": "charts/scatterchart.txt.js",
       "language": "javascript",
@@ -488,7 +488,7 @@
       "icon": "fa-light fa-columns-3"
     },
     {
-      "name": "treemap",
+      "name": "treemapchart",
       "function": "treemap",
       "source": "charts/treemapchart.txt.js",
       "language": "javascript",
@@ -497,7 +497,7 @@
       "icon": "fa-light fa-chart-tree-map"
     },
     {
-      "name": "violin",
+      "name": "violinchart",
       "function": "violin",
       "source": "charts/violinplotchart.txt",
       "language": "pyodide",
