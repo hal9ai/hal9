@@ -34,7 +34,7 @@ export const parseHeader = (code /*: string */) /*: header */ => {
   var headers = code.match(/\/\*\*(.|[\r\n])+\*\*\//g);
   if (!headers || headers.length == 0) {
     headers = code.match(/\"\"\"(.|[\r\n])+\"\"\"/g);
-    if (headers.length > 0) type = 'docstring';
+    if (headers && headers.length > 0) type = 'docstring';
   }
 
   if (!headers || headers.length == 0) {
