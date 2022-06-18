@@ -263,14 +263,14 @@ const scripts = {
   vue: { script: vuetxt, language: 'html' },
 
   // controls
-  dropdownctrl: { script: dropdownctrltxt, language: 'javascript' },
-  inputfilectrl: { script: inputfilectrltxt, language: 'javascript' },
-  numberctrl: { script: numberctrltxt, language: 'javascript' },
-  rangectrl: { script: rangectrltxt, language: 'javascript' },
-  spreadsheetctrl: { script: spreadsheetctrltxt, language: 'html' },
-  textareactrl: { script: textareactrltxt, language: 'javascript' },
-  textboxctrl: { script: textboxctrltxt, language: 'javascript' },
-  websitectrl: { script: websitectrltxt, language: 'javascript' },
+  dropdown: { script: dropdownctrltxt, language: 'javascript' },
+  fileinput: { script: inputfilectrltxt, language: 'javascript' },
+  numberinput: { script: numberctrltxt, language: 'javascript' },
+  slider: { script: rangectrltxt, language: 'javascript' },
+  sheet: { script: spreadsheetctrltxt, language: 'html' },
+  textarea: { script: textareactrltxt, language: 'javascript' },
+  textbox: { script: textboxctrltxt, language: 'javascript' },
+  website: { script: websitectrltxt, language: 'javascript' },
 
   // business
   churn: { script: churntxt, language: 'pyodide' },
