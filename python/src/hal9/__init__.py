@@ -9,7 +9,7 @@ def encode(data):
   else:
     return json.dumps(data)
 
-def create(data, **kwargs):
+def create(data, height = 400, **kwargs):
   display(HTML("""<script>
     window.hal9 = {
       data: """ + encode(data) + """,
@@ -21,4 +21,4 @@ def create(data, **kwargs):
     }
   </script>
   <script defer src="https://hal9.com/hal9.notebook.js"></script>
-  <div id="app"></div>"""))
+  <div style='width: 100%; padding: 6px; height: """ + str(height) + "px'><div id='app'></div></div>"))
