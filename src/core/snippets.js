@@ -29,22 +29,31 @@ export const parseHeader = (code /*: string */) /*: header */ => {
   const error = 'Code requires YAML parameters like /** params: [ param1, param2, param3 ] **/';
 
   var header = null;
+  var type = 'js';
   var hashtagHeader = false;
   var headers = code.match(/\/\*\*(.|[\r\n])+\*\*\//g);
   if (!headers || headers.length == 0) {
+    headers = code.match(/\"\"\"(.|[\r\n])+\"\"\"/g);
+    if (headers.length > 0) type = 'docstring';
+  }
+
+  if (!headers || headers.length == 0) {
     // attempt with python/rstats comments
-    headers = code.match(/(##[^#\n]+[\r\n])+/g);
+    headers = code.match(/(#+[^#\n]+[\r\n])+/g);
 
     if (!headers || headers.length == 0) {
       return { params: [], input: [ 'data' ], deps: [], output: [ 'data' ] };
     }
     else {
       hashtagHeader = true;
-      header = headers[0].replace(/(^##)/g, '').replace(/([\r\n]##)/g, '\r\n');
+      header = headers[0].replace(/(^#+)/g, '').replace(/([\r\n]#+)/g, '\r\n');
     }
   }
   else {
-    header = headers[0].replace(/(^\/\*\*)|(\*\*\/$)/g, '');
+    if (type === 'docstring')
+      header = headers[0].replace(/(^\"\"\")|(\"\"\"$)/g, '');
+    else
+      header = headers[0].replace(/(^\/\*\*)|(\*\*\/$)/g, '');
   }
 
   var invalid = null;
