@@ -129,7 +129,7 @@ export const init = async (options, hal9wnd) => {
         </style>
       </head>
       <body>
-      	<div id="output"></div>
+        <div id="output" style="width: 100%; height: 100%;"></div>
       </body>
     </html>
   `;
