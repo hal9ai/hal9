@@ -7,7 +7,7 @@
 #'
 hal9_to_html <- function(hal9_expr, file = "hal9_app.html",
                         title = "My hal9 app",
-                        desc = NULL) {
+                        desc = NULL, wd = getwd()) {
 
   if (is.null(desc)) {
     desc <- "Learn more about Hal9 at our website: [https://hal9.com/](https://hal9.com/)"
@@ -37,7 +37,7 @@ hal9_to_html <- function(hal9_expr, file = "hal9_app.html",
 
   rmarkdown::render(
     temp_file,
-    output_file = paste0(getwd(), "/", file)
+    output_file = paste0(wd, "/", file)
   )
 
 }

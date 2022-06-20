@@ -93,7 +93,7 @@ hal9_filter <- function(data, width = NULL, height = NULL, elementId = NULL) {
   )
 }
 
-hal9_add_filter <- function(h) {
+hal9_add_step <- function(h, pipeline_name){
 
   novo_id <- lapply(h$x$pipeline$steps, function(x) x$id) |>
     as.numeric() |>
@@ -105,10 +105,10 @@ hal9_add_filter <- function(h) {
     h$x$pipeline$steps,
     list(
       list(
-        name = "filter",
-        label = "Filter",
+        name = name,
+        label = label,
         language = "javascript",
-        description = "Keep only the rows that satisfy a given expression for a specific column",
+        description = desc,
         icon = "fa-light fa-filter",
         id = novo_id,
         params = NULL
@@ -118,33 +118,7 @@ hal9_add_filter <- function(h) {
 
   l_params <- list(
     a = list(
-      field = list(
-        id = 0,
-        static = FALSE,
-        value = list(
-          list(
-            id = 0,
-            name = "",
-            label = ""
-          )
-        ),
-        name = "field",
-        label = "Field",
-        single = TRUE
-      ),
-      expression = list(
-        id = 1,
-        static = TRUE,
-        value = list(
-          list(
-            id = 1,
-            control = "textbox",
-            value = "field != null"
-          )
-        ),
-        name = "expression",
-        label = "Expression"
-      )
+      pipeline_data[pipeline_name]
     )
   )
   names(l_params) <- novo_id
