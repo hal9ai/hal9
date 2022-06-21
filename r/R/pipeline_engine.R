@@ -19,36 +19,17 @@ parse_value <- function(value){
   }
 }
 
-parse_txt_js <- function(file = "../scripts/transforms/filter.txt.js"){
-
-  temp <- tempfile()
-
-  aux <- readLines(file)
-
-  indices <- which(aux == "**/" | aux == "/**")
-
-  cat(
-    paste0(
-      aux[(indices[1]+1):(indices[2]-1)],
-      collapse = "\n"),
-    file = temp
-  )
-
-  con <- file(temp, "r")
-
-  response <- list(
-    params = yaml::read_yaml(temp),
-    script = paste0(aux[indices[2]:length(aux)], collapse = "\n")
-  )
-
-  close(con)
-
-  return(response)
+parse_txt_js <- function(file) {
+  lines <- readLines(file,  warn = FALSE)
+  last_line <- which(lines == "**/")
+  lines <- lines[2:(last_line - 1)]
+  yaml <- lines |>
+    paste(collapse = "\n")
+  yaml::read_yaml(text = yaml)
 }
 
-build_param_list <- function(parsed_txt_js){
-
-  parsed_txt_js$params$params |>
+build_param_list <- function(x){
+  x$params$params |>
     purrr::imap(~list(
       id = .y-1,
       static = FALSE,
@@ -58,6 +39,6 @@ build_param_list <- function(parsed_txt_js){
       single = .x$single
     )) |>
     purrr::set_names(
-      parsed_txt_js$params$params |> purrr::map_chr(purrr::pluck, "name")
+      x$params$params |> purrr::map_chr(purrr::pluck, "name")
     )
 }

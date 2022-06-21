@@ -93,13 +93,16 @@ hal9_filter <- function(data, width = NULL, height = NULL, elementId = NULL) {
   )
 }
 
-hal9_add_step <- function(h, pipeline_name){
+hal9_add_step <- function(h, pipeline_name) {
 
   novo_id <- lapply(h$x$pipeline$steps, function(x) x$id) |>
     as.numeric() |>
     max()
 
   novo_id <- novo_id + 1
+
+  components <- readRDS(system.file("extdata/components.rds", package = "hal9"))
+  comp <- components[[components]]
 
   h$x$pipeline$steps <- c(
     h$x$pipeline$steps,
