@@ -1,0 +1,25 @@
+project:
+  type: website
+  output-dir: "."
+
+website:
+  title: "Hal9"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - getstarted.qmd
+      - examples.qmd
+      - href: https://hal9.com/notebooks/r
+        text: R documentation
+      - href: https://hal9.com/notebooks/python
+        text: Python documentation
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
+

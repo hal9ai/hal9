@@ -1,0 +1,23 @@
+---
+title: "Get Started"
+---
+
+## Installation
+
+::: {.panel-tabset}
+
+## R
+
+```{r, eval = FALSE}
+install.packages("hal9")
+```
+
+## Python
+
+```{python}
+"soon"
+```
+
+:::
+
+## Build a pipeline
