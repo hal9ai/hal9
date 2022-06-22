@@ -1,9 +1,11 @@
 /**
   params:
     - name: field
-      label: Field
+      label: Column
+      description: The list of columns to sort by
     - name: order
       label: Order
+      description: The order in which to sort, default - ascending
       value:
         - control: select
           value: asc
@@ -12,6 +14,7 @@
               label: Ascending
             - name: desc
               label: Descending
+  description: Sort the table by the values in given columns.
   deps:
     - https://cdn.jsdelivr.net/npm/arquero@latest
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js

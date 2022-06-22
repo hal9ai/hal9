@@ -1,12 +1,15 @@
 /**
+  description: Add a new column to your table from an array
   params:
     - name: column
       label: Column
+      description: Name of the new column
       value:
         - control: 'textbox'
           value: newColumn
     - name: array
       label: Array
+      description: The array to be added to the table
       value:
         - control: 'textbox'
           value: data.indices()

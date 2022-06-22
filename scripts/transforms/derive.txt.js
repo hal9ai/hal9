@@ -1,12 +1,15 @@
 /**
+  description: Derive a new column on the basis of an expression, or replace an exisitingone
   params:
     - name: column
       label: Column
+      description: The name of the new column. If this is a column that already exists in the dataframe, the derived column replaces the exisiting one.
       value:
         - control: 'textbox'
           value: 'mycolumn'
     - name: expression
       label: 'Expression'
+      description: The expression based on which the new columns are derived
       value:
         - control: 'textbox'
           value: data[columns[0]]

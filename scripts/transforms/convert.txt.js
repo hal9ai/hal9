@@ -1,10 +1,13 @@
 /**
+  description: Use this block to do some quick data type conversions
   params:
     - name: field
-      label: Field
+      label: Column
       single: true
+      description: The name of the column to convert
     - name: dataType
       label: 'Data type'
+      description: The target data type
       value:
         - control: 'select'
           value: ''
@@ -24,6 +27,7 @@
 
     - name: timeConverter
       label: 'Convert Date/Time'
+      description: an optional parameter to help convert date-times
       value:
         - control: 'select'
           value: ''
@@ -41,6 +45,7 @@
 
     - name: charactersToRemove
       label: Remove Characters
+      description: a string of characters to remove
       value:
         - control: 'textbox'
 
