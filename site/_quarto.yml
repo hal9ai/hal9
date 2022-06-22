@@ -1,7 +1,6 @@
 project:
   type: website
-  output-dir: "."
-
+  output-dir: docs
 website:
   title: "Hal9"
   navbar:
