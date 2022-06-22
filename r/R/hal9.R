@@ -1,11 +1,13 @@
-#' <Add Title>
+#' Title
 #'
-#' <Add Description>
-#'
-#' @import htmlwidgets
+#' @param data
+#' @param width
+#' @param height
+#' @param elementId
 #'
 #' @export
-hal9 <- function(data, width = NULL, height = NULL, elementId = NULL) {
+#'
+h9_create <- function(data, width = NULL, height = NULL, elementId = NULL) {
 
   pipeline <- list(
     steps = list(
@@ -75,25 +77,23 @@ renderHal9 <- function(expr, env = parent.frame(), quoted = FALSE) {
   htmlwidgets::shinyRenderWidget(expr, hal9Output, env, quoted = TRUE)
 }
 
-hal9_filter <- function(data, width = NULL, height = NULL, elementId = NULL) {
-  # forward options using x
-  x = list(
-    data = jsonlite::toJSON(data)
-  )
-
-  # create widget
-  htmlwidgets::createWidget(
-    name = 'hal9-filter',
-    x,
-    width = width,
-    height = height,
-    package = 'hal9',
-    elementId = elementId,
-    sizingPolicy = htmlwidgets::sizingPolicy(padding = 0)
-  )
+h9_filter <- function(h, ...) {
+  h9_add_step(h, "filter")
 }
 
-hal9_add_step <- function(h, step) {
+h9_slider <- function(h, ...) {
+  h9_add_step(h, "slider")
+}
+
+h9_line_chart <- function(h, ...) {
+  h9_add_step(h, "linechart")
+}
+
+h9_sample <- function(h, ...) {
+  h9_add_step(h, "sample")
+}
+
+h9_add_step <- function(h, step, ...) {
 
   novo_id <- lapply(h$x$pipeline$steps, function(x) x$id) |>
     as.numeric() |>

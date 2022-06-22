@@ -8,7 +8,8 @@ hal9_to_html(
   hal9_expr,
   file = "hal9_app.html",
   title = "My hal9 app",
-  desc = NULL
+  desc = NULL,
+  wd = getwd()
 )
 }
 \arguments{

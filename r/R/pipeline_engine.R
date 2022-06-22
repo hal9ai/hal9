@@ -1,10 +1,6 @@
 parse_value <- function(value, id) {
   if (is.null(value)) {
-    list(list(
-      id = id - 1,
-      name = "",
-      label = ""
-    ))
+    list()
   } else {
     values_list <- list()
     for (i in 1:length(value)) {
@@ -12,7 +8,8 @@ parse_value <- function(value, id) {
         list(
           id = id - 1,
           control = value[[i]]$control,
-          value = value[[i]]$value
+          value = value[[i]]$value,
+          values = value[[i]]$values
         )
       )
       values_list <- append(values_list, l)
