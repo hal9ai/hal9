@@ -1,14 +1,17 @@
 /**
   input: [ data ]
+  description: Create a dataframe with a subset of the rows with indices from start (included) and the end(not included)
   params:
     - name: start
       label: 'Start'
+      description: The starting index(included)
       value:
         - control: 'number'
           value: ''
           lazy: true
     - name: end
       label: 'End'
+      description: The ending index(not included)
       value:
         - control: 'number'
           value: ''

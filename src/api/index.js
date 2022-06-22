@@ -182,6 +182,14 @@ async function pipelinesGetHtmlRemote(pipelinepath) {
   return await api.pipelinesGetHtmlRemote(pipelinepath);
 }
 
+async function pipelinesGetPythonScript(pipelineid) {
+  return await api.pipelinesGetPythonScript(pipelineid);
+}
+
+async function pipelinesGetRScript(pipelineid) {
+  return await api.pipelinesGetRScript(pipelineid);
+}
+
 async function pipelinesUpdateMetadata(pipelineid, metadata) {
   return await api.pipelinesUpdateMetadata(pipelineid, metadata);
 }
@@ -284,6 +292,8 @@ export default {
     invalidateStep: pipelinesInvalidateStep,
     getHtml: pipelinesGetHtml,
     getHtmlRemote: pipelinesGetHtmlRemote,
+    getPythonScript: pipelinesGetPythonScript,
+    getRScript: pipelinesGetRScript,
     updateMetadata: pipelinesUpdateMetadata,
     getMetadata: pipelinesGetMetadata,
     abort: pipelinesAbort,

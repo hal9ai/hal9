@@ -18,6 +18,8 @@ import * as languages from './interpreters/languages'
 import * as datatable from '../../libs/jedit/jedit.js';
 import datatablecss from "../../libs/jedit/jedit.css";
 
+import components from '../../scripts/components.json';
+
 import { debugIf } from './utils/debug'
 
 /*::
@@ -909,6 +911,51 @@ export const getHtmlRemote = (pipelinepath /* pipelinepath */) /* string */ => {
     hal9.run(await hal9.load(raw), { html: document.getElementById('hal9app') });
   })();
 </script>`;
+}
+
+const getFunctionForComponentName = (componentName) => {
+  let componentForComponentName;
+  for (const category in components) {
+    componentForComponentName = components[category].find(component => (component.name === componentName));
+    if (componentForComponentName) {
+      break;
+    }
+  }
+  return componentForComponentName?.function;
+}
+
+export const getPythonScript = (pipelineid) => {
+  const pipeline = store.get(pipelineid);
+  let script = `# parameters not implemented yet
+import hal9 as h9
+h9.create()`;
+  for (const step of pipeline.steps) {
+    const functionName = step.function ?? getFunctionForComponentName(step.name);
+    if (functionName) {
+      script += '\n  .' + functionName + '()';
+    } else {
+      script += '\n  # missing function for step: ' + step.name;
+    }
+  }
+  script += '\n  .show()';
+  return script;
+}
+
+export const getRScript = (pipelineid) => {
+  const pipeline = store.get(pipelineid);
+  let script = `# parameters not implemented yet
+library(hal9)
+h9_create()`;
+  for (const step of pipeline.steps) {
+    const functionName = step.function ?? getFunctionForComponentName(step.name);
+    if (functionName) {
+      script += ' |>\n  h9_' + functionName + '()';
+    } else {
+      script += ' |>\n  # missing function for step: ' + step.name;
+    }
+  }
+  script += ' |>\n  h9_show()';
+  return script;
 }
 
 export const updateMetadata = (pipelineid /*: pipelineid */, metadata /*: object */) /*: void */ => {

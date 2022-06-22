@@ -1,8 +1,10 @@
 /**
   input: []
+  description: Import CSV files as a dataframe 
   params:
     - name: file
       label: 'File'
+      description: Either the URL for the csv or a local file.
       value:
         - control: 'fileload'
           links:
@@ -15,11 +17,13 @@
           value: 'https://raw.githubusercontent.com/javierluraschi/datasets/datasets/aapl/data.csv'
     - name: separator
       label: 'Separator'
+      description:  A single-character delimiter string between column values (default ',')
       value:
         - control: 'textbox'
           value: ','
     - name: skip
       label: 'Skip'
+      description: The number of lines to skip (default 0) before reading data
       value:
         - control: 'number'
           value: ''

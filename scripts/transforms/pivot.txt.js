@@ -1,13 +1,20 @@
 /**
+  description: Generate a dataframe with a column for each unique value in columns, with rows for each unique value in rows. Each row counts/aggregates the values that match both row and column based on summarizer
   params:
     - name: rows
       label: Rows
+      description: The column whose unique values should serve as the rows of the new dataframe 
+      single : true
     - name: columns
       label: Columns
+      description: The column whose unique values should serve as the columns of the new dataframe
+      single: true
     - name: values
       label: Values
+      description: The columns whose values should be collected to serve as the individual cells of the table 
     - name: summarizer
       label: Summarizer
+      description: the method to aggregate the collected values
       value:
         - control: select
           value: count

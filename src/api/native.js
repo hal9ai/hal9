@@ -261,6 +261,14 @@ export async function pipelinesGetHtmlRemote(pipelinepath) {
   return await pipelines.getHtmlRemote(pipelinepath);
 }
 
+export async function pipelinesGetPythonScript(pipelineid) {
+  return await pipelines.getPythonScript(pipelineid);
+}
+
+export async function pipelinesGetRScript(pipelineid) {
+  return await pipelines.getRScript(pipelineid);
+}
+
 export async function pipelinesUpdateMetadata(pipelineid, metadata) {
   return await pipelines.updateMetadata(pipelineid, metadata);
 }

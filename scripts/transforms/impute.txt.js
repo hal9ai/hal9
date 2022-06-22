@@ -1,9 +1,12 @@
 /**
+  description: replace missing values in a given columns using a given method. null, undefined and NaNs are considered missing values
   params:
     - name: field
       label: Columns
+      description: List of columns in which to replace missing values
     - name: method
       label: Method
+      description: the function to use to impute the missing values. Currently available options are 'max', 'min', 'mean' median', 'zero'. Default is 'zero'
       value:
         - control: select
           value: zero

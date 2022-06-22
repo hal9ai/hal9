@@ -1,17 +1,21 @@
 /**
+  description: create a dataframe which is a summary of the input. Commonly used for computing averages or sums across the dataframe.
   params:
     - name: group
       label: Group
+      description: The list of columns by which to group
     - name: field
       label: Columns
+      description: The list of columns who's values to collect
     - name: summarizer
       label: Summarizer
+      description: The summarizer method to aggregate the values collected, default- count
       value:
         - control: select
           value: count
           values:
             - name: deviation
-              label: Deviation
+              label: Standard Deviation
             - name: first
               label: First
             - name: last

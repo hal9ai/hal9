@@ -1,10 +1,13 @@
 /**
+  description: Filter a dataframe to a subset of rows on the basis of particular expression applied to a particular column
   params:
     - name: field
       label: Field
+      description: The column on which to filter
       single: true
     - name: expression
       label: 'Expression'
+      control: the criteria on which to filter the rows
       value:
         - control: 'textbox'
           value: field != null
