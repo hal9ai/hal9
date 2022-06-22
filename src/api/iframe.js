@@ -507,6 +507,18 @@ export async function pipelinesGetHtmlRemote(pipelinepath) {
   })
 }
 
+export async function pipelinesGetPythonScript(pipelineid) {
+  return await post("hal9.pipelines.getPythonScript(params.pipelineid)", {
+    pipelineid: pipelineid,
+  })
+}
+
+export async function pipelinesGetRScript(pipelineid) {
+  return await post("hal9.pipelines.getRScript(params.pipelineid)", {
+    pipelineid: pipelineid,
+  })
+}
+
 export async function pipelinesUpdateMetadata(pipelineid, metadata) {
   return await post("hal9.pipelines.updateMetadata(params.pipelineid, params.metadata)", {
     pipelineid: pipelineid,
