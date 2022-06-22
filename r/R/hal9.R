@@ -93,7 +93,7 @@ hal9_filter <- function(data, width = NULL, height = NULL, elementId = NULL) {
   )
 }
 
-hal9_add_step <- function(h, pipeline_name) {
+hal9_add_step <- function(h, step) {
 
   novo_id <- lapply(h$x$pipeline$steps, function(x) x$id) |>
     as.numeric() |>
@@ -101,18 +101,17 @@ hal9_add_step <- function(h, pipeline_name) {
 
   novo_id <- novo_id + 1
 
-  components <- readRDS(system.file("extdata/components.rds", package = "hal9"))
-  comp <- components[[components]]
+  comp <- components[[which(lapply(components, function(x) x$name) == step)]]
 
   h$x$pipeline$steps <- c(
     h$x$pipeline$steps,
     list(
       list(
-        name = name,
-        label = label,
-        language = "javascript",
-        description = desc,
-        icon = "fa-light fa-filter",
+        name = comp$name,
+        label = comp$label,
+        language = comp$language,
+        description = comp$description,
+        icon = comp$icon,
         id = novo_id,
         params = NULL
       )
@@ -120,30 +119,13 @@ hal9_add_step <- function(h, pipeline_name) {
   )
 
   l_params <- list(
-    a = list(
-      pipeline_data[pipeline_name]
-    )
+    ph = build_param_list(comp$params)
   )
   names(l_params) <- novo_id
 
   h$x$pipeline$params <- c(
     h$x$pipeline$params,
     l_params
-  )
-
-  script <- system.file("scripts/filter.txt.js", package = "hal9") |>
-    readLines() |>
-    paste(collapse = "\n")
-
-  l_script <- list(
-    a = script
-  )
-
-  names(l_script) <- novo_id
-
-  h$x$pipeline$script <- c(
-    h$x$pipeline$script,
-    l_script
   )
 
   h$x$pipeline_json <- jsonlite::toJSON(
