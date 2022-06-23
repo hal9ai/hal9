@@ -32,6 +32,9 @@ jobs:
         with:
           node-version: '15'
       - uses: quarto-dev/quarto-actions/setup@v2
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
       - uses: r-lib/actions/setup-r-dependencies@v2
       - name: Render
         run: quarto render
