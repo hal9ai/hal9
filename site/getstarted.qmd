@@ -9,7 +9,7 @@ title: "Get Started"
 ## R
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(python.reticulate = FALSE).
+knitr::opts_chunk$set(python.reticulate = FALSE)
 ```
 
 ```{r, eval = FALSE}
