@@ -8,13 +8,17 @@ title: "Get Started"
 
 ## R
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(python.reticulate = FALSE).
+```
+
 ```{r, eval = FALSE}
 install.packages("hal9")
 ```
 
 ## Python
 
-```{python}
+```{python, eval = FALSE}
 "soon"
 ```
 
