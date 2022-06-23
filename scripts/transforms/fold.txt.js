@@ -3,6 +3,8 @@
   params:
     - name: gather
       label: Gather
+      static: false
+      single: false
       description: the list of columns to convert into key-value pairs
   deps:
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js

@@ -4,6 +4,7 @@
   params:
     - name: start
       label: 'Start'
+      static: true
       description: The starting index(included)
       value:
         - control: 'number'
@@ -11,6 +12,7 @@
           lazy: true
     - name: end
       label: 'End'
+      static: true
       description: The ending index(not included)
       value:
         - control: 'number'

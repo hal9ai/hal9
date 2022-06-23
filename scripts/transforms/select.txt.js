@@ -2,6 +2,8 @@
   params:
     - name: columns
       label: Columns
+      single: false
+      static: false
       description: The list of columns to keep
   description: create a new dataframe with a subset of the columns of the original
   deps:

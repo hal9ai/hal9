@@ -5,6 +5,7 @@
       label: Field
       description: The column on which to filter
       single: true
+      static: false
     - name: expression
       label: 'Expression'
       control: the criteria on which to filter the rows

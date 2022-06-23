@@ -3,6 +3,7 @@
   params:
     - name: field
       label: Columns
+      static: false
       description: List of columns in which to replace missing values
     - name: method
       label: Method
@@ -43,14 +44,14 @@ if (field.length == 0 )
 else {
   if (method == 'zero') {
     for (var i = 0; i < field.length; i++) {
-      rollUpDict[field[i]] = () => 0 
+      rollUpDict[field[i]] = () => 0
     }
     console.log(rollUpDict)
     data = data.impute(rollUpDict)
   } else {
     data.params({method, methodMap, field})
     for (var i = 0; i < field.length; i++) {
-      rollUpDict[field[i]] = methodMap[method](field[i]) 
+      rollUpDict[field[i]] = methodMap[method](field[i])
     }
     data = data.impute(rollUpDict)
   }

@@ -4,9 +4,13 @@
     - name: group
       label: Group
       description: The list of columns by which to group
+      single: false
+      static: false
     - name: field
       label: Columns
       description: The list of columns who's values to collect
+      single: false
+      static: false
     - name: summarizer
       label: Summarizer
       description: The summarizer method to aggregate the values collected, default- count
@@ -60,7 +64,7 @@ if (field.length == 0 )
   data = data.groupby(group).count()
 else {
   for (var i = 0; i < field.length; i++) {
-    rollUpDict[summarizer+'('+field[i]+')'] = summarizerMap[summarizer](field[i]) 
+    rollUpDict[summarizer+'('+field[i]+')'] = summarizerMap[summarizer](field[i])
   }
   data = data.groupby(group).rollup(rollUpDict)
 }

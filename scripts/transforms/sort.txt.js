@@ -3,6 +3,8 @@
     - name: field
       label: Column
       description: The list of columns to sort by
+      single: false
+      static: false
     - name: order
       label: Order
       description: The order in which to sort, default - ascending

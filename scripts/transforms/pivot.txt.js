@@ -3,15 +3,19 @@
   params:
     - name: rows
       label: Rows
-      description: The column whose unique values should serve as the rows of the new dataframe 
+      static: false
+      description: The column whose unique values should serve as the rows of the new dataframe
       single : true
     - name: columns
       label: Columns
+      static: false
       description: The column whose unique values should serve as the columns of the new dataframe
       single: true
     - name: values
       label: Values
-      description: The columns whose values should be collected to serve as the individual cells of the table 
+      single: false
+      static: false
+      description: The columns whose values should be collected to serve as the individual cells of the table
     - name: summarizer
       label: Summarizer
       description: the method to aggregate the collected values
@@ -71,7 +75,7 @@ if (values.length == 0 ) {
   valueDict = {value: aq.op.count(rows[0])};
 } else {
   for (var i = 0; i < values.length; i++) {
-    valueDict[summarizer+'('+values[i]+')'] = summarizerMap[summarizer](values[i]) 
+    valueDict[summarizer+'('+values[i]+')'] = summarizerMap[summarizer](values[i])
   }
 }
 data = data.groupby(rows).pivot(columns, valueDict);

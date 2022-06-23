@@ -9,7 +9,8 @@ parse_value <- function(value, id) {
           id = id - 1,
           control = value[[i]]$control,
           value = value[[i]]$value,
-          values = value[[i]]$values
+          values = value[[i]]$values,
+          lazy = value[[i]]$lazy
         )
       )
       values_list <- append(values_list, l)

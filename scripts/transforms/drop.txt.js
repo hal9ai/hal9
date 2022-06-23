@@ -1,8 +1,10 @@
 /**
-  description: Remove selected columns from the dataframe 
+  description: Remove selected columns from the dataframe
   params:
     - name: columns
       label: Columns
+      static: false
+      single: false
       description: The list of columns to remove
   deps:
     - https://cdn.jsdelivr.net/npm/arquero@latest
