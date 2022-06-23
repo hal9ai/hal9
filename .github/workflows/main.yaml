@@ -49,7 +49,7 @@ jobs:
         with:
           args: --recursive --acl public-read
         env:
-          FILE: './site/'
+          FILE: './site/docs'
           AWS_REGION: 'us-west-2'
           S3_BUCKET: 'notebooks.hal9.com'
           S3_KEY: ''
