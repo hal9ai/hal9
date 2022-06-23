@@ -31,10 +31,14 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '15'
+      - uses: quarto-dev/quarto-actions/setup@v2
+      - name: Render
+        run: quarto render
+        working-directory: ./site
       - uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: site
+          folder: site/docs
       - uses: zdurham/s3-upload-github-action@master
         with:
           args: --recursive --acl public-read
