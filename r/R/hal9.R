@@ -31,7 +31,7 @@ h9_create <- function(data, width = NULL, height = NULL, elementId = NULL) {
 
   # forward options using x
   x = list(
-    data = jsonlite::toJSON(data),
+    data = jsonlite::toJSON(data, na = "string"),
     pipeline = pipeline,
     pipeline_json = jsonlite::toJSON(pipeline, null = "list", auto_unbox = TRUE)
   )
