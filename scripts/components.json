@@ -346,7 +346,7 @@
     {
       "name": "boxplotchart",
       "function": "box_plot",
-      "source": "charts/boxplotchart.txt.js",
+      "source": "charts/boxplotchart.py",
       "language": "pyodide",
       "label": "Box Plot",
       "description": "Great for comparing distributions of data",
@@ -499,7 +499,7 @@
     {
       "name": "violinchart",
       "function": "violin",
-      "source": "charts/violinplotchart.txt",
+      "source": "charts/violinplotchart.py",
       "language": "pyodide",
       "label": "Violin",
       "description": "A more descriptive box plot",
@@ -707,7 +707,7 @@
     {
       "name": "abtest",
       "function": "abtest",
-      "source": "stats/abtest.txt.js",
+      "source": "stats/abtest.py",
       "language": "pyodide",
       "label": "A/B Test",
       "description": "Calculate statistics like p-value for A/B tests",
@@ -717,6 +717,7 @@
       "name": "churn",
       "function": "churn",
       "language": "pyodide",
+      "source": "business/churn.py",
       "label": "Churn",
       "description": "Compute customer churn by providing counts of new and lost customers",
       "icon": "fa-light fa-person-from-portal"
@@ -726,7 +727,7 @@
     {
       "name": "shapiro",
       "function": "test_shapiro",
-      "source": "stats/shapiro.txt.js",
+      "source": "stats/shapiro.py",
       "language": "pyodide",
       "label": "Shapiro-Wilk",
       "description": "Test if data is normally distributed",
@@ -830,7 +831,7 @@
     {
       "name": "pyodide",
       "function": "pyodide",
-      "source": "languages/pyodide.txt.js",
+      "source": "languages/pyodide.py",
       "language": "pyodide",
       "label": "Pyodide",
       "description": "Write a Pyodide script for advanced data processing",
@@ -839,7 +840,7 @@
     {
       "name": "python",
       "function": "python",
-      "source": "languages/python.txt",
+      "source": "languages/python.py",
       "language": "python",
       "serverWorker": true,
       "label": "Python",
@@ -849,7 +850,7 @@
     {
       "name": "r",
       "function": "r",
-      "source": "languages/r.txt",
+      "source": "languages/r.r",
       "language": "r",
       "serverWorker": true,
       "label": "R",

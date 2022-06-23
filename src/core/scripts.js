@@ -35,9 +35,9 @@ import summarizetxt from '../../scripts/transforms/summarize.txt.js';
 
 // chart scripts
 import barcharttxt from '../../scripts/charts/barchart.txt.js';
-import boxplotcharttxt from '../../scripts/charts/boxplotchart.txt.js';
+import boxplotcharttxt from '../../scripts/charts/boxplotchart.py';
 import dotplotcharttxt from '../../scripts/charts/dotplotchart.txt.js';
-import violinplotcharttxt from '../../scripts/charts/violinplotchart.txt';
+import violinplotcharttxt from '../../scripts/charts/violinplotchart.py';
 import errorbarcharttxt from '../../scripts/charts/errorbarchart.txt.js';
 import heatmapcharttxt from '../../scripts/charts/heatmapchart.txt.js';
 import histogramcharttxt from '../../scripts/charts/histogramchart.txt.js';
@@ -80,8 +80,8 @@ import pycarettxt from '../../scripts/train/pycaret.py';
 import traintesttxt from '../../scripts/train/traintest.py';
 
 // stats scripts
-import shapirotxt from '../../scripts/stats/shapiro.txt.js';
-import abtesttxt from '../../scripts/stats/abtest.txt.js';
+import shapirotxt from '../../scripts/stats/shapiro.py';
+import abtesttxt from '../../scripts/stats/abtest.py';
 
 // util scripts
 import citytomaptxt from '../../scripts/utils/citytomap.txt.js';
@@ -111,9 +111,9 @@ import twittertxt from '../../scripts/services/twitter.txt.js';
 import htmltxt from '../../scripts/languages/html.txt';
 import javascripttxt from '../../scripts/languages/javascript.txt';
 import markdowntxt from '../../scripts/languages/markdown.txt';
-import pyodidetxt from '../../scripts/languages/pyodide.txt.js';
-import pythontxt from '../../scripts/languages/python.txt';
-import rtxt from '../../scripts/languages/r.txt';
+import pyodidetxt from '../../scripts/languages/pyodide.py';
+import pythontxt from '../../scripts/languages/python.py';
+import rtxt from '../../scripts/languages/r.r';
 
 // framework scripts
 import flasktxt from '../../scripts/frameworks/flask.py';
@@ -133,7 +133,7 @@ import textboxctrltxt from '../../scripts/controls/textbox.txt.js';
 import websitectrltxt from '../../scripts/controls/website.txt.js';
 
 // business scripts
-import churntxt from '../../scripts/business/churn.txt.js';
+import churntxt from '../../scripts/business/churn.py';
 
 var fetchedScripts = {};
 
