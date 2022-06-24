@@ -7,7 +7,7 @@
 #'
 #' @export
 #'
-h9_create <- function(data, width = NULL, height = NULL, elementId = NULL) {
+h9_create <- function(data, width = "100%", height = "100%", elementId = NULL) {
 
   pipeline <- list(
     steps = list(
