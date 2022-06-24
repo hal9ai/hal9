@@ -2,6 +2,4 @@
 
 export(h9_create)
 export(hal9Output)
-export(hal9_publish)
-export(hal9_to_html)
 export(renderHal9)

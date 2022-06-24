@@ -4,7 +4,7 @@
 \alias{h9_create}
 \title{Title}
 \usage{
-h9_create(data, width = NULL, height = NULL, elementId = NULL)
+h9_create(data, width = "100\%", height = "100\%", elementId = NULL)
 }
 \arguments{
 \item{elementId}{}
