@@ -10,7 +10,7 @@ HTMLWidgets.widget({
           pipeline: x.pipeline_json
         };
 
-        const html = `<div id="app" style="height: 420px; max-height: 420px;"></div>`;
+        const html = `<div id="app" style="height: 800px; max-height: 800px;"></div>`;
         el.innerHTML = html;
 
         const script = document.createElement('script');
