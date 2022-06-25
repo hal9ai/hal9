@@ -380,6 +380,15 @@
       "icon": "fa-light fa-chart-candlestick"
     },
     {
+      "name": "facets",
+      "function": "facets",
+      "source": "visualizations/facets.txt.js",
+      "language": "javascript",
+      "label": "Facets",
+      "description": "A chart of charts organized in a grid",
+      "icon": "fa-light fa-grid"
+    },
+    {
       "name": "funnel",
       "function": "funnel",
       "source": "visualizations/funnel.txt.js",
@@ -512,7 +521,7 @@
       "language": "javascript",
       "label": "Waffle",
       "description": "A square pie chart; still not edible",
-      "icon": "fa-light fa-grid-4"
+      "icon": "fa-light fa-waffle"
     },
     {
       "name": "waterfall",
