@@ -6,7 +6,8 @@
 var textbox = '';
 
 const textboxEl = document.createElement('input');
-textboxEl.style.width = '100%';
+textboxEl.style.width = 'calc(100% - 8px)';
+html.style.height = '26px';
 
 let state = hal9.getState();
 state = state ? state : {};

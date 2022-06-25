@@ -798,6 +798,15 @@
       "label": "Upscale",
       "description": "Magnify an image with AI enhancement",
       "icon": "fa-light fa-panorama"
+    },
+    {
+      "name": "stop",
+      "function": "stop",
+      "source": "utils/stop.txt.js",
+      "language": "javascript",
+      "label": "Stop",
+      "description": "Stops pipeline execution conditionally",
+      "icon": "fa-light fa-traffic-light-stop"
     }
   ],
   "Languages": [

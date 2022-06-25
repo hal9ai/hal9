@@ -65,6 +65,12 @@ export const create = (pipelineid, sid, context, params, input) => {
     },
     isDocument: function() {
       return context.stopid === null || context.stopid === undefined;
+    },
+    stop: function() {
+      context.stopped = true;
+    },
+    getOutputs: function() {
+      return pipelines.getGlobals(pipelineid);
     }
   }
 }

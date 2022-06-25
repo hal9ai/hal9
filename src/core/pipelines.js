@@ -449,6 +449,7 @@ export const run = async (pipelineid /*: pipeline */, context /* context */, par
     }
 
     if (stepstopid != undefined && step.id === stepstopid) break;
+    if (context.stopped === true) break;
   };
 
   return pipelineid;
