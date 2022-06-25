@@ -90,6 +90,7 @@ import pastetxt from '../../scripts/utils/paste.txt.js';
 import tojsontxt from '../../scripts/utils/tojson.txt.js';
 import upscalertxt from '../../scripts/utils/upscaler.txt.js';
 import ziptomaptxt from '../../scripts/utils/ziptomap.txt.js';
+import stoptxt from '../../scripts/utils/stop.txt.js';
 
 // export scripts
 import exportcsvtxt from '../../scripts/export/csv.txt.js';
@@ -230,6 +231,7 @@ const scripts = {
   tojson: { script: tojsontxt, language: 'javascript' },
   upscaler: { script: upscalertxt, language: 'javascript' },
   ziptomap: { script: ziptomaptxt, language: 'javascript' },
+  stop: { script: stoptxt, language: 'javascript' },
 
   // export
   exportcsv: { script: exportcsvtxt, language: 'javascript' },
