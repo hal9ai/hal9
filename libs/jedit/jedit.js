@@ -49,6 +49,10 @@ function isTable(json) {
   return true;
 }
 
+function isRemoteDF(json) {
+  return json && json.type === 'remotedf';
+}
+
 function isArquero(json) {
   return json && typeof(json.columnNames) === 'function';
 }
@@ -138,7 +142,18 @@ async function getTableTypes(json) {
   return types;
 }
 
-function appendTableRows(tableEl, json, types, keys, max, start, colStart, colEnd) {
+function appentTableMessage(tableEl, colStart, colEnd, message) {
+  var moreRowEl = createElem(tableEl, 'tr', 'jedit-table-row jedit-table-more');
+
+  var moreEleEl = createElem(moreRowEl, 'td', 'jedit-table-row-entry jedit-table-more');
+  moreEleEl.colSpan = (colEnd - colStart) + 1;
+  moreEleEl.style.textAlign = 'center';
+  moreEleEl.innerText = message;
+
+  return moreEleEl;
+}
+
+function appendTableRows(tableEl, json, types, keys, max, start, colStart, colEnd, options) {
   var total = 0;
   var idxRow = start;
   while (idxRow < json.length) {
@@ -162,17 +177,16 @@ function appendTableRows(tableEl, json, types, keys, max, start, colStart, colEn
   }
 
   if (idxRow < json.length) {
-    var moreRowEl = createElem(tableEl, 'tr', 'jedit-table-row jedit-table-more');
-    var moreEleEl = createElem(moreRowEl, 'td', 'jedit-table-row-entry jedit-table-more');
-    moreEleEl.colSpan = (colEnd - colStart) + 1;
-    moreEleEl.style.textAlign = 'center';
-    moreEleEl.innerText = 'Load more';
+    var moreEleEl = appentTableMessage(tableEl, colStart, colEnd, 'Load More')
     moreEleEl.style.cursor = 'pointer';
     moreEleEl.onclick = function() {
       var last = tableEl.children[tableEl.children.length - 1];
       last.remove();
-      appendTableRows(tableEl, json, types, keys, max, idxRow, colStart, colEnd);
+      appendTableRows(tableEl, json, types, keys, max, idxRow, colStart, colEnd, options);
     }
+  }
+  else {
+    if (options.bottomMessage) appentTableMessage(tableEl, colStart, colEnd, options.bottomMessage);
   }
 }
 
@@ -208,7 +222,7 @@ async function buildTable(parentEl, json, max, options, colStart) {
 
   const types = await getTableTypes(json);
 
-  appendTableRows(tableEl, json, types, keys, max, 0, colStart, colEnd);
+  appendTableRows(tableEl, json, types, keys, max, 0, colStart, colEnd, options);
 }
 
 function buildArray(parentEl, json, max, options) {
@@ -273,6 +287,10 @@ async function buildPyodide(parentEl, table, max, options) {
   buildTable(parentEl, rows, max, options);
 }
 
+async function buildRemoteDF(parentEl, table, max, options) {
+  buildTable(parentEl, table.subset, max, Object.assign(options, { bottomMessage: 'More rows available in the server.' }));
+}
+
 function buildImage(parentEl, json, max, options) {
   var linkEl = createElem(parentEl, 'a', 'jedit-image-link');
   linkEl.href = json;
@@ -281,7 +299,17 @@ function buildImage(parentEl, json, max, options) {
   imgEl.src = json;
 }
 
-function appendObjectRows(tableEl, json, max, start, end) {
+function appendBottomMessage(tableEl, message) {
+  var rowEl = createElem(tableEl, 'tr', 'jedit-object-row');
+
+  var moreEleEl = createElem(rowEl, 'td', 'jedit-object-key');
+  moreEleEl.setAttribute('colspan', 2);
+  moreEleEl.innerText = message;
+
+  return moreEleEl;
+}
+
+function appendObjectRows(tableEl, json, max, start, end, options) {
   for (var idx = start; idx < end && idx < Object.keys(json).length; idx++) {
     var key = Object.keys(json)[idx];
     var rowEl = createElem(tableEl, 'tr', 'jedit-object-row');
@@ -295,18 +323,17 @@ function appendObjectRows(tableEl, json, max, start, end) {
   }
 
   if (end < Object.keys(json).length) {
-    var rowEl = createElem(tableEl, 'tr', 'jedit-object-row');
-
-    var moreEleEl = createElem(rowEl, 'td', 'jedit-object-key');
-    moreEleEl.setAttribute('colspan', 2);
-    moreEleEl.innerText = 'Load More';
+    var moreEleEl = appendBottomMessage(tableEl, 'Load More')
 
     moreEleEl.style.cursor = 'pointer';
     moreEleEl.onclick = function() {
       var last = tableEl.children[tableEl.children.length - 1];
       last.remove();
-      appendObjectRows(tableEl, json, max, end, end + 20);
+      appendObjectRows(tableEl, json, max, end, end + 20, options);
     }
+  }
+  else {
+    if (options.bottomMessage) var moreEleEl = appendBottomMessage(tableEl, options.bottomMessage)
   }
 }
 
@@ -317,7 +344,9 @@ function buildObject(parentEl, json, max, options) {
   }
 
   var tableEl = createTable(parentEl, 'jedit-object-table');
-  appendObjectRows(tableEl, json, max, 0, 20);
+  appendObjectRows(tableEl, json, max, 0, 20, options);
+
+  if (options.bottomMessage) appendBottomMessage(tableEl, options.bottomMessage);
 }
 
 function buildBoolean(parentEl, json, max, options) {
@@ -335,7 +364,8 @@ async function buildHtml(parentEl, json, max, type, root) {
 
   if (!type) {
     type = 'unknown';
-    if (isArquero(json)) type = 'arquero';
+    if (isRemoteDF(json)) type = 'remotedf';
+    else if (isArquero(json)) type = 'arquero';
     else if (isPyodide(json)) type = 'pyodide';
     else if (isDanfo(json)) type = 'danfo';
     else if (isTable(json)) type = 'table';
@@ -359,6 +389,7 @@ async function buildHtml(parentEl, json, max, type, root) {
     arquero: buildArquero,
     danfo: buildDanfo,
     pyodide: buildPyodide,
+    remotedf: buildRemoteDF,
   }
 
   await typeDispatch[type](parentEl, json, max, { root: root });
