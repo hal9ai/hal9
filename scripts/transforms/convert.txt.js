@@ -5,8 +5,10 @@
       label: Column
       single: true
       description: The name of the column to convert
+      static: false
     - name: dataType
       label: 'Data type'
+      static: true
       description: The target data type
       value:
         - control: 'select'
@@ -27,6 +29,7 @@
 
     - name: timeConverter
       label: 'Convert Date/Time'
+      static: true
       description: an optional parameter to help convert date-times
       value:
         - control: 'select'
@@ -45,14 +48,16 @@
 
     - name: charactersToRemove
       label: Remove Characters
+      static: true
       description: a string of characters to remove
       value:
         - control: 'textbox'
+          value: ''
 
 
   deps:
     - https://cdn.jsdelivr.net/npm/arquero@latest
-    - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js 
+    - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
   output: [data]
 **/
 
