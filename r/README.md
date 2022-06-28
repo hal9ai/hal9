@@ -45,7 +45,7 @@ mtcars |>
 
 -   [ ] Test infrastructure
 -   [x] `h9_create()` first draft
--   [x] `h9_add_steps()` first draft
+-   [x] `h9_add_step()` first draft
 -   [ ] Support to all steps
 
 #### Examples

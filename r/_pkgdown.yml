@@ -1,0 +1,11 @@
+url: https://hal9.com/notebooks/
+
+home:
+  title: hal9.js API for R users
+  description: Compose visualizations and predictive models. Integrate with websites and APIs. Extend with JavaScript, Python and R.
+
+template:
+  opengraph:
+    image:
+      src: man/figures/logo.png
+      alt: "Hal9 hex sticker: a yellow nine on a blue background and the text hal9, happy web apps written on in."
