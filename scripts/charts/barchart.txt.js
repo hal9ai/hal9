@@ -1,18 +1,22 @@
 /**
   output: [html]
+  description: Create a chart that shows point estimates as the height of a rectangular bar
   params:
     - name: x
       label: x
+      description: The variable that horizontal axis
     - name: y
       label: y
+      description: The variable that should be on the vertical axis.
     - name: type
       label: Type
+      description: One of 'grouped' or 'stacked'. In grouped mode, bars are placed next to each other, in stacked mode bars are placed above each other.
       value:
         - control: select
-          value: normal
+          value: grouped
           values:
-            - name: normal
-              label: Normal
+            - name: grouped
+              label: Grouped
             - name: stacked
               label: Stacked
     - name: orientation
@@ -27,6 +31,7 @@
               label: Horizontal
     - name: palette
       label: D3 Palette
+      description: Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.
       value:
         - control: paletteSelect
           value: schemeTableau10
@@ -40,6 +45,7 @@
             - schemeSet3
     - name: fontsize
       label: Font Size
+      description: Size of the font to be used in the x and y axes.
       value:
         - control: range
           value: 16
@@ -47,6 +53,7 @@
           max: 20
     - name: tickrotation
       label: Tick Rotation
+      description: The angle at which to place the x-axis labels
       value:
         - control: range
           value: 0
@@ -54,6 +61,7 @@
           max: 90
     - name: marginleft
       label: Margin left
+      description: the left margin
       value:
         - control: range
           value: 40
@@ -61,6 +69,7 @@
           max: 200
     - name: marginbottom
       label: Margin Bottom
+      description: the bottom margin
       value:
         - control: range
           value: 30

@@ -1,27 +1,13 @@
 /**
   output: [console,html]
+  description: Group the rows of a dataframe to create univariate histograms to visualize the distribution of the dataset
   params:
-    - x
-    - name: histnorm
-      label: Normalization
-      value:
-        - control: select
-          value: none
-          values:
-            - name: 'probability density'
-              label: 'Probability Density'
-            - name: percent
-              label: Percentage
-            - name: 'none'
-              label: 'None'
-            - name: percent
-              label: Percent
-            - name: probability
-              label: Probability
-            - name: density
-              label: Density
+    - name: x
+      label: X
+      description: The name of the column in the input dataframe that who's distribution to be visualized
     - name: histfunc
       label: 'Aggregation Function'
+      description: The function used to aggregate the values collected in each bin for summarization.
       value:
         - control: select
           value: count
@@ -34,32 +20,37 @@
               label: Maximum
             - name: sum
               label: Sum
+    - name: histnorm
+      label: Normalization
+      description: The aggregation method to apply on outputs of the aggregation functions. 
+      value:
+        - control: select
+          value: none
+          values:
+            - name: 'probability density'
+              label: 'Probability Density'
+            - name: percent
+              label: Percentage
+            - name: 'none'
+              label: 'None'
             - name: probability
               label: Probability
             - name: density
               label: Density
     - name: barmode
       label: Bar Mode
+      description: One of stacked or overlaid, which controls the manner in which multiple distributions selected in x are visualized.
       value:
         - control: select
-          value: stacked
+          value: stack
           values:
             - name: stack
               label: Stacked
             - name: overlay
               label: Overlaid
-    - name: dataSizes
-      label: 'Marker Size'
-      value: 
-        - control: 'number'
-          value: 5
-    - name: dataSizes
-      label: 'Marker Size'
-      value: 
-        - control: 'number'
-          value: 5
     - name: palette
       label: Chart Palette
+      description: The D3 palette used to control the colors of each of the distributions in x.
       value:
         - control: paletteSelect
           value: schemeTableau10
@@ -75,6 +66,7 @@
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
     - https://cdn.plot.ly/plotly-latest.min.js
     - https://cdn.jsdelivr.net/npm/arquero@latest
+    - https://cdn.jsdelivr.net/npm/d3@6
 **/
 
 if (data == null) {
@@ -104,6 +96,7 @@ layout['yaxis']['title'] = histnorm
 }
 x = x.constructor === Array ? x : [x];
 chartdata = [];
+console.log(d3[palette])
 for (i=0; i<x.length; i++) {
 var trace = {
   x: data.array(x[i]),
@@ -111,7 +104,9 @@ var trace = {
   histnorm: histnorm,
   histfunc: histfunc,
   name: x[i],
-  color: palette[i]
+  marker: {
+     color: d3[palette][i],
+  }
 };
 if (barmode === 'overlay' && x.length > 1) {
   trace['opacity'] = 0.6
