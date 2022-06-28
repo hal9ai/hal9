@@ -1,6 +1,9 @@
 import defaultClone from './clone';
 import { loadScripts } from './scriptloader';
 
+var deps = {};
+
+
 const arqueroTest = (e) => e && typeof(e.toJs) !== 'function' && typeof(e._data) === 'object';
 
 const arqueroColumns = (e) => e.columnNames();
@@ -10,11 +13,18 @@ const arqueroClone = (e) => e;
 const arqueroSerialize = (e) => e;
 
 const arqueroRoot = async () => {
-  if (typeof(window) == 'undefined' && !aq) {
-    throw 'Arquero is not available';
+  var aq = aq;
+
+  if (deps.aq) {
+    aq = deps.aq;
+  }
+  else {
+    if (typeof(window) == 'undefined' && !aq) {
+      throw 'Arquero is not available';
+    }
+    aq = window.aq ? window.aq : null;
   }
 
-  var aq = window.aq ? window.aq : null;
   if (!aq) {
     await loadScripts([ 'https://cdn.jsdelivr.net/npm/arquero@latest' ]);
     aq = window.aq;
@@ -206,4 +216,8 @@ export const top = (df, limit) => {
 export const toRows = (df) => {
   const type = generalized.find(maybe => maybe.test(df));
   return type ? type.toRows(df) : df;
+}
+
+export const setDeps = (newdeps) => {
+  deps = newdeps;
 }

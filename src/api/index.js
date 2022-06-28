@@ -324,6 +324,7 @@ export default {
     ensure: dataframe.ensure,
     top: dataframe.top,
     toRows: dataframe.toRows,
+    setDeps: dataframe.setDeps,
   },
 
   developer: {
