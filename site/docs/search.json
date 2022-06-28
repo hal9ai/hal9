@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "examples.html#r-markdown",
+    "href": "examples.html#r-markdown",
+    "title": "Examples",
+    "section": "R Markdown",
+    "text": "R Markdown"
+  },
+  {
+    "objectID": "examples.html#publish",
+    "href": "examples.html#publish",
+    "title": "Examples",
+    "section": "Publish",
+    "text": "Publish"
+  },
+  {
+    "objectID": "examples.html#shiny",
+    "href": "examples.html#shiny",
+    "title": "Examples",
+    "section": "Shiny",
+    "text": "Shiny"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Hal9",
+    "section": "",
+    "text": "Compose visualizations and predictive models. Integrate with websites and APIs. Extend with JavaScript, Python and R."
+  },
+  {
+    "objectID": "getstarted.html",
+    "href": "getstarted.html",
+    "title": "Get Started",
+    "section": "",
+    "text": "RPython\n\n\n\ninstall.packages(\"hal9\")\n\n\n\n\n\"soon\""
+  },
+  {
+    "objectID": "getstarted.html#build-a-pipeline",
+    "href": "getstarted.html#build-a-pipeline",
+    "title": "Get Started",
+    "section": "Build a pipeline",
+    "text": "Build a pipeline"
+  }
+]
