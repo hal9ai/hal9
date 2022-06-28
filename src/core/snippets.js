@@ -33,13 +33,11 @@ export const parseHeader = (code /*: string */) /*: header */ => {
   var hashtagHeader = false;
   var headers = code.match(/\/\*\*(.|[\r\n])+\*\*\//g);
   if (code.trim().startsWith('"""')) {
-    type = 'docstring';
     headers = code.match(/\"\"\"(.|[\r\n])+\"\"\"/g);
+    if (headers && headers.length > 0) type = 'docstring';
   }
 
-  if (code.trim().startsWith('#')) {
-    type = 'comments';
-
+  if (!headers || headers.length == 0) {
     // attempt with python/rstats comments
     headers = code.match(/(#+[^#\n]+[\r\n])+/g);
 
