@@ -10,7 +10,7 @@ website:
         text: Home
       - getstarted.qmd
       - examples.qmd
-      - href: https://hal9.com/notebooks/r
+      - href: https://hal9.com/notebooks/r/index.html
         text: R documentation
       - href: https://hal9.com/notebooks/python
         text: Python documentation
