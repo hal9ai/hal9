@@ -32,12 +32,14 @@ export const parseHeader = (code /*: string */) /*: header */ => {
   var type = 'js';
   var hashtagHeader = false;
   var headers = code.match(/\/\*\*(.|[\r\n])+\*\*\//g);
-  if (!headers || headers.length == 0) {
+  if (code.trim().startsWith('"""')) {
+    type = 'docstring';
     headers = code.match(/\"\"\"(.|[\r\n])+\"\"\"/g);
-    if (headers && headers.length > 0) type = 'docstring';
   }
 
-  if (!headers || headers.length == 0) {
+  if (code.trim().startsWith('#')) {
+    type = 'comments';
+
     // attempt with python/rstats comments
     headers = code.match(/(#+[^#\n]+[\r\n])+/g);
 
