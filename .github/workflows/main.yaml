@@ -1,5 +1,5 @@
 name: CI
-   
+
 on:
   push:
     branches:
@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       HAL9_ENV: prod
-    permissions: 
+    permissions:
       contents: read
-      packages: write 
+      packages: write
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -38,9 +38,14 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           working-directory: ./r
-      - name: Render
+      - name: Render quarto
         run: quarto render
         working-directory: ./site
+      - name: Render pkgdown
+        run: |
+          Rscript -e 'install.packages("pkgdown")'
+          Rscript -e 'pkgdown::build_site("./r")'
+          cp -r  ./r/docs site/docs/r
       - uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages

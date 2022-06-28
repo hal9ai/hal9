@@ -30,53 +30,27 @@ You can explore your data interactively using the `hal9` function:
 library(hal9)
 ## basic example code
 
-hal9(my_data)
+h9_create(my_data)
 ```
 
 You may also build a specific pipeline using our high-level functions:
 
 ``` r
 mtcars |> 
-  hal9() |> 
-  hal9_add_filter()
-
-#option 2
-
-# pre-built common pipelines
-hal9_filter(mtcars)
-```
-
-## Exporting a pipeline
-
-You may export an existing pipeline built using high level functions to
-a html file using the `hal9_render` function:
-
-``` r
-mtcars |> 
-  hal9() |> 
-  hal9_to_html(file = "myHal9.html")
-```
-
-## Publishing a pipeline
-
-You can also publish your work on RPubs and make it easily shareable
-through a link:
-
-``` r
-mtcars |> 
-  hal9() |> 
-  hal9_publish(file = "myHal9.html")
+  h9_create() |> 
+  h9_filter()
 ```
 
 ## TO DO
 
 -   [ ] Test infrastructure
--   [x] `hal9_render()` first draft
--   [ ] `hal9_render()` tests
--   [x] `hal9_publish()` first draft
+-   [x] `h9_create()` first draft
+-   [x] `h9_add_steps()` first draft
+-   [ ] Support to all steps
 
-#### Maybe
+#### Examples
 
+-   [ ] R Markdown use case
 -   [ ] Shiny use case
 -   [ ] Stats/ML use case
 -   [ ] Publishing hal9 vignette (rpubs, shinyapps, stand alone html)
