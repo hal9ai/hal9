@@ -3,10 +3,13 @@
   params:
     - name: source
       label: Source
+      static: false
     - name: target
       label: Target
+      static: false
     - name: value
       label: Value
+      static: false
     - name: palette
       label: D3 Palette
       value:

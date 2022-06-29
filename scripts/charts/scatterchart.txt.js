@@ -1,11 +1,18 @@
 /**
   output: [html]
-  params: 
-    - x
-    - y
-    - color
-    - size
-    - label
+  params:
+    - name: x
+      label: x
+      static: false
+    - name: "y"
+      label: "y"
+      static: false
+    - name: color
+      label: color
+      static: false
+    - name: size
+      label: size
+      static: false
     - name: palette
       label: D3 Palette
       value:

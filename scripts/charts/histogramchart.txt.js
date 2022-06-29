@@ -3,7 +3,8 @@
   description: Group the rows of a dataframe to create univariate histograms to visualize the distribution of the dataset
   params:
     - name: x
-      label: X
+      label: x
+      static: false
       description: The name of the column in the input dataframe that who's distribution to be visualized
     - name: histfunc
       label: 'Aggregation Function'
@@ -22,7 +23,7 @@
               label: Sum
     - name: histnorm
       label: Normalization
-      description: The aggregation method to apply on outputs of the aggregation functions. 
+      description: The aggregation method to apply on outputs of the aggregation functions.
       value:
         - control: select
           value: none

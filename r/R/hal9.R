@@ -85,15 +85,11 @@ h9_slider <- function(h, ...) {
   h9_add_step(h, "slider")
 }
 
-h9_line_chart <- function(h, ...) {
-  h9_add_step(h, "linechart")
-}
-
 h9_sample <- function(h, ...) {
   h9_add_step(h, "sample")
 }
 
-h9_add_step <- function(h, step, ...) {
+h9_add_step <- function(h, step, update = NULL) {
 
   novo_id <- lapply(h$x$pipeline$steps, function(x) x$id) |>
     as.numeric() |>
@@ -122,6 +118,18 @@ h9_add_step <- function(h, step, ...) {
     ph = build_param_list(comp$params)
   )
   names(l_params) <- novo_id
+
+  if(!is.null(update)){
+
+    inputed <- names(update)
+
+    for(ii in seq_along(update)){
+      if(l_params[[1]][[ii]]$name == inputed[ii]){
+        l_params[[1]][[ii]]$value <- list(build_value_list(update[ii])[[1]])
+      }
+    }
+
+  }
 
   h$x$pipeline$params <- c(
     h$x$pipeline$params,
