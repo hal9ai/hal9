@@ -1,6 +1,10 @@
 /**
   output: [ html ]
-  params: [ x, y, color, size ]
+  params:
+    - name: x
+    - name: 'y'
+    - name: color
+    - name: size
   deps: [ 'https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js' ]
 **/
 
@@ -11,18 +15,18 @@ var margin = { top: 30, right: 30, bottom: 30, left: 50 },
 var scalecolor = d3.scaleOrdinal().range(d3.schemeCategory10);
 
 // Define the div for the tooltip
-var div = d3.select(html).append("div") 
+var div = d3.select(html).append("div")
     .attr("style", `
-    position: absolute;     
-    text-align: center;     
-    width: 70px;          
-    height: 18px;         
-    padding: 2px;       
-    font: 12px sans-serif;    
-    background: lightsteelblue; 
-    border: 0px;    
-    border-radius: 8px;     
-    pointer-events: none; 
+    position: absolute;
+    text-align: center;
+    width: 70px;
+    height: 18px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
     opacity: 0;
 `);
 
@@ -61,14 +65,14 @@ svg.append('g')
     .attr('cy', function (d) { return axisy(d[y]); } )
     .attr('fill', function (d) { return color ? scalecolor(d[color]) : '#8888FF66'; } )
     .attr('r', function (d) { return typeof(size) === 'number' ? size : scalesize(size ? d[size] : 1); } )
-    .on("mouseover", function(e, d) { 
-            div.transition()    
-                .duration(200)    
-                .style("opacity", .9);    
+    .on("mouseover", function(e, d) {
+            div.transition()
+                .duration(200)
+                .style("opacity", .9);
             div.text((Math.round(d[y] * 100) / 100).toLocaleString())
-            })          
-        .on("mouseout", function(d) {   
-            div.transition()    
-                .duration(500)    
-                .style("opacity", 0); 
+            })
+        .on("mouseout", function(d) {
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
         });

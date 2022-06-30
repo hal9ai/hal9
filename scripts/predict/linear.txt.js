@@ -3,8 +3,8 @@
     - data
     - model
   params:
-    - x
-    - y
+    - name: x
+    - name: 'y'
     - name: predictions
       label: Predictions
       value:
@@ -33,7 +33,7 @@ const b = tf.scalar(model.b);
 
 const predict = (x) => tf.tidy(() => m.mul(x).add(b));
 
-const predsYs = predict(tf.tensor1d(dataX)).dataSync(0); 
+const predsYs = predict(tf.tensor1d(dataX)).dataSync(0);
 
 data = data.map((e, i) => {
   e['prediction' + y] = predsYs[i]

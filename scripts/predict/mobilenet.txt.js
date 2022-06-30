@@ -1,7 +1,8 @@
 /**
-  params: [ 'url' ]
+  params:
+    - name: 'url'
   cache: true
-  deps: 
+  deps:
     - 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.1'
     - 'https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0'
 **/
@@ -1053,7 +1054,7 @@ if (url && data) {
 
   for (var idx = 0; idx < data.length; idx++) {
     var dataurl = data[idx][url];
-    
+
     if (state[dataurl]) {
       data[idx] = state[dataurl];
     }

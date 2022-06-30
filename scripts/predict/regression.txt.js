@@ -2,8 +2,8 @@
   params:
     - name: x
       label: X
-    - name: y
-      label: Y
+    - name: 'y'
+      label: 'Y'
     - name: type
       label: Type
       value:
@@ -11,7 +11,7 @@
           value: linear
           values:
             - name: linear
-              label: Linear    
+              label: Linear
             - name: exponential
               label: Exponential
             - name: logarithmic
@@ -105,11 +105,11 @@ const optimizer = tf.train.adam(learningRate);
 
 for (let idx = 0; idx < epochs; idx++) {
   tf.tidy(() => {
-    optimizer.minimize(function() { 
-      const predsYs = predict(normX); 
-      stepLoss = loss(predsYs, normY);   
-      return stepLoss; 
-    }); 
+    optimizer.minimize(function() {
+      const predsYs = predict(normX);
+      stepLoss = loss(predsYs, normY);
+      return stepLoss;
+    });
   });
 }
 

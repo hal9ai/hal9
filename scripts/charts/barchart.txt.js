@@ -5,8 +5,8 @@
     - name: x
       label: x
       description: The variable that horizontal axis
-    - name: y
-      label: y
+    - name: 'y'
+      label: 'y'
       description: The variable that should be on the vertical axis.
     - name: type
       label: Type

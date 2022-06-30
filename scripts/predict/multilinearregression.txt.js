@@ -2,8 +2,8 @@
   params:
     - name: x
       label: X
-    - name: y
-      label: Y
+    - name: 'y'
+      label: 'Y'
   output:
     - data
   deps:
@@ -60,7 +60,7 @@ if (x && y) {
         }
       }
     });
-    return model;  
+    return model;
   }
   model = await trainModel(x_t, y_t);
   predictSet = data.select(x);

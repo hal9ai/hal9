@@ -1,8 +1,8 @@
 /**
   output: [html]
   params:
-    - x
-    - y
+    - name: x
+    - name: 'y'
     - name: fontsize
       label: Font Size
       value:

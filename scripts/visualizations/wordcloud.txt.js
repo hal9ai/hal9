@@ -1,6 +1,8 @@
 /**
   output: [html]
-  params: [label, size]
+  params:
+    - name: label
+    - name: size
   deps: [
     'https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js',
     'https://cdn.rawgit.com/jasondavies/d3-cloud/v1.2.1/build/d3.layout.cloud.js',

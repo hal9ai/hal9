@@ -1,8 +1,8 @@
 /**
   output: [html]
   params:
-    - label
-    - size
+    - name: label
+    - name: size
     - name: palette
       label: D3 Palette
       value:

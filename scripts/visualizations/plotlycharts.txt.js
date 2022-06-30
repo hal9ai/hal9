@@ -1,8 +1,8 @@
 /**
   output: [console,html]
   params:
-    - x
-    - y
+    - name: x
+    - name: 'y'
     - name: chartType
       label: 'Chart Type'
       value:
@@ -24,7 +24,7 @@
 
     - name: dataSizes
       label: 'Marker Size'
-      value: 
+      value:
         - control: 'number'
           value: 5
     - name: palette
@@ -49,7 +49,7 @@ if (data == null) {
     throw 'No input data defined. Please use an import block to import data before visualizing it.'
   }
   data = await hal9.utils.toArquero(data);
-  
+
   console.log('paleta: ' + palette)
   if (x == null){
     throw 'Please select a column for the x-axis'
@@ -72,10 +72,10 @@ if (data == null) {
             showline: false
         },
         width: html.offsetWidth,
-  
-  
+
+
     }
-  
+
     //colors
     /*            - schemeTableau10
                 - schemeAccent
@@ -134,7 +134,7 @@ if (data == null) {
                 chartData = [linesTrace];
                 break;
             }
-  
+
         case 'scatter':
             {
                 scatterTrace = {
@@ -154,7 +154,7 @@ if (data == null) {
                 chartData = [scatterTrace];
                 break;
             }
-  
+
         case 'barChart':
             {
                 barTrace = {
@@ -216,13 +216,12 @@ if (data == null) {
                 type: 'histogram2d',
                 hovertemplate:
                     "x_" + x + ': %{x}<br>',
-  
+
             }
             chartData = [twohist];
             break;
         }
-  
+
     }
-  
+
     Plotly.newPlot(html, chartData, layout);
-  

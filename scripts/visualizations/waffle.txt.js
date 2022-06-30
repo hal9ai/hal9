@@ -3,7 +3,7 @@
   params:
     - name: x
       label: Label
-    - name: y
+    - name: 'y'
       label: Value
     - name: wafflesizelabel
       label: 'Size'
@@ -97,23 +97,23 @@ let color = d3.scaleOrdinal(d3[palette])
 // fun -> convert to currency
 toCurrency = num => d3.format(",.2f")(num);
 
-// create svg, container of legend and waffles 
+// create svg, container of legend and waffles
 var legendChartpadding = parseFloat(wafflesizelabel) + 20;
 var svg = d3.create("svg")
     .style("cursor", "default")
     .attr("viewBox", [0, 0, width, height + parseFloat(wafflesizelabel / 8)]);
 html.appendChild(svg.node())
 
-// container for the squares 
+// container for the squares
 const g = svg.selectAll(".waffle")
     .data(waffles)
     .join("g")
     .attr("class", "waffle");
 
-// scale for the squares 
+// scale for the squares
 let scale = d3.scaleBand()
   .domain(sequence(10))
-  // works with 300 fine 
+  // works with 300 fine
   .range([0, parseFloat(wafflesizelabel)])
   .padding(0.1)
 
@@ -152,7 +152,7 @@ cells.transition()
 svg.transition().delay(550)
     .on("end", () => drawLegend(svg, cells));
 
-// draw legend 
+// draw legend
 let drawLegend = (svg, cells) => {
     const legend = svg.selectAll(".legend")
         .data(chartData.map(d => d[x]))

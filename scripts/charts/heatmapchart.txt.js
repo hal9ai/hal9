@@ -1,9 +1,9 @@
 /**
   output: [html]
   params:
-    - x
-    - y
-    - value
+    - name: x
+    - name: 'y'
+    - name: value
     - name: palette
       label: D3 Palette
       value:

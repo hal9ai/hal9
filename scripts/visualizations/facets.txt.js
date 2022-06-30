@@ -3,8 +3,8 @@
   params:
     - name: x
       label: x
-    - name: y
-      label: y
+    - name: 'y'
+      label: 'y'
     - name: facets
       label: Facets
     - name: color

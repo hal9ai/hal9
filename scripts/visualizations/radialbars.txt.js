@@ -3,7 +3,7 @@
   params:
     - name: x
       label: Label
-    - name: y
+    - name: 'y'
       label: Value
     - name: palette
       label: D3 Palette
@@ -46,7 +46,7 @@ let seq = (length) => Array.apply(null, { length: length }).map((d, i) => i);
 // max value of chartdata
 let maxValue = d3.max(chartData.map(d => d.values));
 
-// sizes for the chart 
+// sizes for the chart
 let width = html.clientWidth;
 let height = html.clientHeight;
 

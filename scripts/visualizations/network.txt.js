@@ -1,6 +1,8 @@
 /**
   output: [ html ]
-  params: [ from, to ]
+  params:
+    - name: from
+    - name: to
   deps:
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
     - https://cdn.jsdelivr.net/npm/d3@6
@@ -111,7 +113,7 @@ function ticked() {
       return "translate(" + d.x + "," + d.y + ")";
     })
     .attr("opacity", function(d) { return d.size/30 + 0.25; });
-    
+
   link
       .attr("x1", function(d) { return d.source.x; })
       .attr("y1", function(d) { return d.source.y; })
