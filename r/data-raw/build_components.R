@@ -1,4 +1,4 @@
-pkgload::load_all()
+devtools::load_all()
 
 components_file <- "../scripts/components.json"
 

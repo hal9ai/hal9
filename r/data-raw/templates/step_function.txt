@@ -1,0 +1,21 @@
+#' {{func_title}}
+#'
+#' {{func_description}}
+#'
+{{params}}
+#'
+#' @return A list with the pipeline specification.
+#' @export
+#'
+{{func_name}} <- function(h, {{func_params}}, ...) {
+
+  h9_add_step(
+    h,
+    "{{step_name}}",
+    list(
+      ...
+    )
+  )
+
+}
+

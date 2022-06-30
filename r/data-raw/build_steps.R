@@ -1,18 +1,85 @@
-pkgload::load_all()
+devtools::load_all()
 
-components_file <- "../scripts/components.json"
+sources <- lapply(components, function(x) x$source)
+rfiles <- unique(sub("/.*", ".R", sources))
 
-components <- jsonlite::read_json(components_file) |>
-  unlist(recursive = FALSE, use.names = FALSE)
+res <- file.create(paste0("R/", rfiles), showWarnings = FALSE)
 
-for (i in 1:length(components)) {
-  script <- paste0("../scripts/", components[[i]]$source)
-  if (grepl("\\.js$", script)) {
-    list <- script |>
-      parse_txt_js()
-    components[[i]]$params <- list$params
-    components[[i]]$deps <- list$deps
-  }
+if (!all(res)) {
+  stop(paste(
+    "The following R files were not created:",
+    paste(rfiles[res], collapse = ", ")
+  ))
 }
 
-usethis::use_data(components, internal = TRUE, overwrite = TRUE)
+for(i in 1:length(components)) {
+
+  if (!is.null(components[[i]]$params)) {
+    print(paste0(i, ": creating component ", components[[i]]$name))
+
+    func_params <- lapply(components[[i]]$params, function(x) x$name) |>
+      unlist() |>
+      paste(collapse = ", ")
+
+    params <- list()
+
+    for (j in 1:length(components[[i]]$params)) {
+
+      plist <- list(
+        param_name = components[[i]]$params[[j]]$name,
+        param_desc = components[[i]]$params[[j]]$description
+      )
+
+      plist <- lapply(plist, function(x) ifelse(is.null(x), "", x))
+
+      template <- readLines("data-raw/templates/roxygen_param.txt")
+
+      for (k in 1:length(plist)) {
+        template <- sub(
+          paste0("\\{\\{", names(plist[k]), "\\}\\}"),
+          plist[[k]],
+          template
+        )
+      }
+
+      params <- c(
+        params,
+        template
+      )
+
+    }
+
+    params <- params |>
+      unlist() |>
+      paste(collapse = "\n")
+
+    funlist <- list(
+      func_title = components[[i]]$label,
+      func_description = components[[i]]$description,
+      params = params,
+      func_name = paste0("h9_", components[[i]]$`function`),
+      func_params = func_params,
+      step_name = components[[i]]$name
+    )
+
+    template <- readLines("data-raw/templates/step_function.txt")
+
+    for (k in 1:length(funlist)) {
+      template <- sub(
+        paste0("\\{\\{", names(funlist[k]), "\\}\\}"),
+        funlist[[k]],
+        template
+      )
+    }
+
+    rfile <- unique(sub("/.*", ".R", components[[i]]$source))
+
+    template |>
+      paste(collapse = "\n") |>
+      write(
+        file = paste0("R/", rfile),
+        append = TRUE
+      )
+  }
+
+}
