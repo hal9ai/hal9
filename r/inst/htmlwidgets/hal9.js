@@ -2,6 +2,10 @@ HTMLWidgets.widget({
   name: 'hal9',
   type: 'output',
   factory: function(el, width, height) {
+
+    el.parentElement.style.height = "100%";
+    el.parentElement.style.maxHeight = "100%";
+
     return {
 
       renderValue: function(x) {
@@ -14,7 +18,7 @@ HTMLWidgets.widget({
         el.innerHTML = html;
 
         const script = document.createElement('script');
-        script.src = 'https://hal9.com/hal9.notebook.js';
+        script.src = 'http://localhost:8080/hal9.notebook.js';
         document.body.appendChild(script);
       },
 
