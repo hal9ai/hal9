@@ -52,4 +52,5 @@
     opt.value = opt.innerText = value.trim();
     dropdownElement.appendChild(opt);
 }
+html.style.height = 'auto';
 </script>
