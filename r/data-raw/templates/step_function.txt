@@ -2,6 +2,7 @@
 #'
 #' {{func_description}}
 #'
+#' @param h A h9 object created by h9_create.
 {{params}}
 #'
 #' @return A list with the pipeline specification.
@@ -12,7 +13,8 @@
   h9_add_step(
     h,
     "{{step_name}}",
-    list(
+    update = list(
+{{list_func_params}}
       ...
     )
   )

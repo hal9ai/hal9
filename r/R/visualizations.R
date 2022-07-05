@@ -2,6 +2,7 @@
 #'
 #' Bigger values -> bigger bubbles
 #'
+#' @param h A h9 object created by h9_create.
 #' @param label 
 #' @param size 
 #' @param palette 
@@ -9,12 +10,15 @@
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_bubble_chart <- function(h, label, size, palette, ...) {
+h9_bubble_chart <- function(h, label  = NULL, size  = NULL, palette  = NULL, ...) {
 
   h9_add_step(
     h,
     "bubblechart",
-    list(
+    update = list(
+      label = label,
+      size = size,
+      palette = palette,
       ...
     )
   )
@@ -25,6 +29,7 @@ h9_bubble_chart <- function(h, label, size, palette, ...) {
 #'
 #' A chart of charts organized in a grid
 #'
+#' @param h A h9 object created by h9_create.
 #' @param x 
 #' @param y 
 #' @param facets 
@@ -35,12 +40,18 @@ h9_bubble_chart <- function(h, label, size, palette, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_facets <- function(h, x, y, facets, color, chartType, palette, ...) {
+h9_facets <- function(h, x  = NULL, y  = NULL, facets  = NULL, color  = NULL, chartType  = NULL, palette  = NULL, ...) {
 
   h9_add_step(
     h,
     "facets",
-    list(
+    update = list(
+      x = x,
+      y = y,
+      facets = facets,
+      color = color,
+      chartType = chartType,
+      palette = palette,
       ...
     )
   )
@@ -51,6 +62,7 @@ h9_facets <- function(h, x, y, facets, color, chartType, palette, ...) {
 #'
 #' Communicate how data narrows down
 #'
+#' @param h A h9 object created by h9_create.
 #' @param stage 
 #' @param value 
 #' @param label 
@@ -62,12 +74,19 @@ h9_facets <- function(h, x, y, facets, color, chartType, palette, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_funnel <- function(h, stage, value, label, fontSize, showPercentSelection, funnelType, palette, ...) {
+h9_funnel <- function(h, stage  = NULL, value  = NULL, label  = NULL, fontSize  = NULL, showPercentSelection  = NULL, funnelType  = NULL, palette  = NULL, ...) {
 
   h9_add_step(
     h,
     "funnel",
-    list(
+    update = list(
+      stage = stage,
+      value = value,
+      label = label,
+      fontSize = fontSize,
+      showPercentSelection = showPercentSelection,
+      funnelType = funnelType,
+      palette = palette,
       ...
     )
   )
@@ -78,6 +97,7 @@ h9_funnel <- function(h, stage, value, label, fontSize, showPercentSelection, fu
 #'
 #' Clearly map out Earthly datasets that have columns for latitude and longitude
 #'
+#' @param h A h9 object created by h9_create.
 #' @param lon 
 #' @param lat 
 #' @param size 
@@ -86,12 +106,16 @@ h9_funnel <- function(h, stage, value, label, fontSize, showPercentSelection, fu
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_map <- function(h, lon, lat, size, label, ...) {
+h9_map <- function(h, lon  = NULL, lat  = NULL, size  = NULL, label  = NULL, ...) {
 
   h9_add_step(
     h,
     "map",
-    list(
+    update = list(
+      lon = lon,
+      lat = lat,
+      size = size,
+      label = label,
       ...
     )
   )
@@ -102,18 +126,21 @@ h9_map <- function(h, lon, lat, size, label, ...) {
 #'
 #' Dazzle your colleagues with this colorful animated network graph
 #'
+#' @param h A h9 object created by h9_create.
 #' @param from 
 #' @param to 
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_network <- function(h, from, to, ...) {
+h9_network <- function(h, from  = NULL, to  = NULL, ...) {
 
   h9_add_step(
     h,
     "network",
-    list(
+    update = list(
+      from = from,
+      to = to,
       ...
     )
   )
@@ -124,6 +151,7 @@ h9_network <- function(h, from, to, ...) {
 #'
 #' Choose from a variety of Plotly visualizations
 #'
+#' @param h A h9 object created by h9_create.
 #' @param x 
 #' @param y 
 #' @param chartType 
@@ -133,12 +161,17 @@ h9_network <- function(h, from, to, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_plotly <- function(h, x, y, chartType, dataSizes, palette, ...) {
+h9_plotly <- function(h, x  = NULL, y  = NULL, chartType  = NULL, dataSizes  = NULL, palette  = NULL, ...) {
 
   h9_add_step(
     h,
     "plotly",
-    list(
+    update = list(
+      x = x,
+      y = y,
+      chartType = chartType,
+      dataSizes = dataSizes,
+      palette = palette,
       ...
     )
   )
@@ -149,6 +182,7 @@ h9_plotly <- function(h, x, y, chartType, dataSizes, palette, ...) {
 #'
 #' A circular bar chart
 #'
+#' @param h A h9 object created by h9_create.
 #' @param x 
 #' @param y 
 #' @param palette 
@@ -156,12 +190,15 @@ h9_plotly <- function(h, x, y, chartType, dataSizes, palette, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_radial_bars <- function(h, x, y, palette, ...) {
+h9_radial_bars <- function(h, x  = NULL, y  = NULL, palette  = NULL, ...) {
 
   h9_add_step(
     h,
     "radialbars",
-    list(
+    update = list(
+      x = x,
+      y = y,
+      palette = palette,
       ...
     )
   )
@@ -172,6 +209,7 @@ h9_radial_bars <- function(h, x, y, palette, ...) {
 #'
 #' A square pie chart; still not edible
 #'
+#' @param h A h9 object created by h9_create.
 #' @param x 
 #' @param y 
 #' @param wafflesizelabel 
@@ -180,12 +218,16 @@ h9_radial_bars <- function(h, x, y, palette, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_waffle <- function(h, x, y, wafflesizelabel, palette, ...) {
+h9_waffle <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette  = NULL, ...) {
 
   h9_add_step(
     h,
     "waffle",
-    list(
+    update = list(
+      x = x,
+      y = y,
+      wafflesizelabel = wafflesizelabel,
+      palette = palette,
       ...
     )
   )
@@ -196,6 +238,7 @@ h9_waffle <- function(h, x, y, wafflesizelabel, palette, ...) {
 #'
 #' Lay out cascades of data next to a towering waterfall representing the total
 #'
+#' @param h A h9 object created by h9_create.
 #' @param x 
 #' @param y 
 #' @param fontsize 
@@ -205,12 +248,17 @@ h9_waffle <- function(h, x, y, wafflesizelabel, palette, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_waterfall <- function(h, x, y, fontsize, marginleft, marginbottom, ...) {
+h9_waterfall <- function(h, x  = NULL, y  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
 
   h9_add_step(
     h,
     "waterfall",
-    list(
+    update = list(
+      x = x,
+      y = y,
+      fontsize = fontsize,
+      marginleft = marginleft,
+      marginbottom = marginbottom,
       ...
     )
   )
@@ -221,18 +269,21 @@ h9_waterfall <- function(h, x, y, fontsize, marginleft, marginbottom, ...) {
 #'
 #' Make the most frequent words in a dataset stand out in a trendy way
 #'
+#' @param h A h9 object created by h9_create.
 #' @param label 
 #' @param size 
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_wordcloud <- function(h, label, size, ...) {
+h9_wordcloud <- function(h, label  = NULL, size  = NULL, ...) {
 
   h9_add_step(
     h,
     "wordcloud",
-    list(
+    update = list(
+      label = label,
+      size = size,
       ...
     )
   )

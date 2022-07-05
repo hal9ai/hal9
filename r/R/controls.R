@@ -2,17 +2,19 @@
 #'
 #' Embed an HTML <select> element
 #'
+#' @param h A h9 object created by h9_create.
 #' @param values 
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_dropdown <- function(h, values, ...) {
+h9_dropdown <- function(h, values  = NULL, ...) {
 
   h9_add_step(
     h,
     "dropdown",
-    list(
+    update = list(
+      values = values,
       ...
     )
   )
@@ -23,17 +25,19 @@ h9_dropdown <- function(h, values, ...) {
 #'
 #' Embed a website and load a URL
 #'
+#' @param h A h9 object created by h9_create.
 #' @param site 
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_website <- function(h, site, ...) {
+h9_website <- function(h, site  = NULL, ...) {
 
   h9_add_step(
     h,
     "website",
-    list(
+    update = list(
+      site = site,
       ...
     )
   )

@@ -2,18 +2,21 @@
 #'
 #' Attach a new column
 #'
+#' @param h A h9 object created by h9_create.
 #' @param column Name of the new column
 #' @param array The array to be added to the table
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_assign <- function(h, column, array, ...) {
+h9_assign <- function(h, column  = NULL, array  = NULL, ...) {
 
   h9_add_step(
     h,
     "assign",
-    list(
+    update = list(
+      column = column,
+      array = array,
       ...
     )
   )
@@ -24,6 +27,7 @@ h9_assign <- function(h, column, array, ...) {
 #'
 #' Apply an expression to the values in a specific column
 #'
+#' @param h A h9 object created by h9_create.
 #' @param field The name of the column to convert
 #' @param dataType The target data type
 #' @param timeConverter an optional parameter to help convert date-times
@@ -32,12 +36,16 @@ h9_assign <- function(h, column, array, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_convert <- function(h, field, dataType, timeConverter, charactersToRemove, ...) {
+h9_convert <- function(h, field  = NULL, dataType  = NULL, timeConverter  = NULL, charactersToRemove  = NULL, ...) {
 
   h9_add_step(
     h,
     "convert",
-    list(
+    update = list(
+      field = field,
+      dataType = dataType,
+      timeConverter = timeConverter,
+      charactersToRemove = charactersToRemove,
       ...
     )
   )
@@ -48,18 +56,21 @@ h9_convert <- function(h, field, dataType, timeConverter, charactersToRemove, ..
 #'
 #' Create a new column or replace an existing one via an expression
 #'
+#' @param h A h9 object created by h9_create.
 #' @param column The name of the new column. If this is a column that already exists in the dataframe, the derived column replaces the exisiting one.
 #' @param expression The expression based on which the new columns are derived
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_derive <- function(h, column, expression, ...) {
+h9_derive <- function(h, column  = NULL, expression  = NULL, ...) {
 
   h9_add_step(
     h,
     "derive",
-    list(
+    update = list(
+      column = column,
+      expression = expression,
       ...
     )
   )
@@ -70,17 +81,19 @@ h9_derive <- function(h, column, expression, ...) {
 #'
 #' Remove specific columns
 #'
+#' @param h A h9 object created by h9_create.
 #' @param columns The list of columns to remove
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_drop <- function(h, columns, ...) {
+h9_drop <- function(h, columns  = NULL, ...) {
 
   h9_add_step(
     h,
     "drop",
-    list(
+    update = list(
+      columns = columns,
       ...
     )
   )
@@ -91,18 +104,21 @@ h9_drop <- function(h, columns, ...) {
 #'
 #' Keep only the rows that satisfy a given expression for a specific column
 #'
+#' @param h A h9 object created by h9_create.
 #' @param field The column on which to filter
 #' @param expression 
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_filter <- function(h, field, expression, ...) {
+h9_filter <- function(h, field  = NULL, expression  = NULL, ...) {
 
   h9_add_step(
     h,
     "filter",
-    list(
+    update = list(
+      field = field,
+      expression = expression,
       ...
     )
   )
@@ -113,17 +129,19 @@ h9_filter <- function(h, field, expression, ...) {
 #'
 #' Fold one or more columns into a pair of key-value columns
 #'
+#' @param h A h9 object created by h9_create.
 #' @param gather the list of columns to convert into key-value pairs
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_fold <- function(h, gather, ...) {
+h9_fold <- function(h, gather  = NULL, ...) {
 
   h9_add_step(
     h,
     "fold",
-    list(
+    update = list(
+      gather = gather,
       ...
     )
   )
@@ -134,18 +152,21 @@ h9_fold <- function(h, gather, ...) {
 #'
 #' Fill in a column's missing data with the value of an aggregation
 #'
+#' @param h A h9 object created by h9_create.
 #' @param field List of columns in which to replace missing values
 #' @param method the function to use to impute the missing values. Currently available options are 'max', 'min', 'mean' median', 'zero'. Default is 'zero'
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_impute <- function(h, field, method, ...) {
+h9_impute <- function(h, field  = NULL, method  = NULL, ...) {
 
   h9_add_step(
     h,
     "impute",
-    list(
+    update = list(
+      field = field,
+      method = method,
       ...
     )
   )
@@ -156,6 +177,7 @@ h9_impute <- function(h, field, method, ...) {
 #'
 #' Pivot columns into a cross-tabulation
 #'
+#' @param h A h9 object created by h9_create.
 #' @param rows The column whose unique values should serve as the rows of the new dataframe
 #' @param columns The column whose unique values should serve as the columns of the new dataframe
 #' @param values The columns whose values should be collected to serve as the individual cells of the table
@@ -164,12 +186,16 @@ h9_impute <- function(h, field, method, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_pivot <- function(h, rows, columns, values, summarizer, ...) {
+h9_pivot <- function(h, rows  = NULL, columns  = NULL, values  = NULL, summarizer  = NULL, ...) {
 
   h9_add_step(
     h,
     "pivot",
-    list(
+    update = list(
+      rows = rows,
+      columns = columns,
+      values = values,
+      summarizer = summarizer,
       ...
     )
   )
@@ -180,17 +206,19 @@ h9_pivot <- function(h, rows, columns, values, summarizer, ...) {
 #'
 #' Create new columns from the running totals of others
 #'
+#' @param h A h9 object created by h9_create.
 #' @param column The column for which to calculate the rolling sum.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_roll_sum <- function(h, column, ...) {
+h9_roll_sum <- function(h, column  = NULL, ...) {
 
   h9_add_step(
     h,
     "rollingsum",
-    list(
+    update = list(
+      column = column,
       ...
     )
   )
@@ -201,18 +229,21 @@ h9_roll_sum <- function(h, column, ...) {
 #'
 #' Trim a dataset down to a random sample of its rows
 #'
+#' @param h A h9 object created by h9_create.
 #' @param samplesize The size of the sample as a percentage of the size of the input dataframe
 #' @param withReplacement Allow or disallow sampling of the same row more than once. Default- True
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_sample <- function(h, samplesize, withReplacement, ...) {
+h9_sample <- function(h, samplesize  = NULL, withReplacement  = NULL, ...) {
 
   h9_add_step(
     h,
     "sample",
-    list(
+    update = list(
+      samplesize = samplesize,
+      withReplacement = withReplacement,
       ...
     )
   )
@@ -223,17 +254,19 @@ h9_sample <- function(h, samplesize, withReplacement, ...) {
 #'
 #' Keep only a subset of columns
 #'
+#' @param h A h9 object created by h9_create.
 #' @param columns The list of columns to keep
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_select <- function(h, columns, ...) {
+h9_select <- function(h, columns  = NULL, ...) {
 
   h9_add_step(
     h,
     "select",
-    list(
+    update = list(
+      columns = columns,
       ...
     )
   )
@@ -244,18 +277,21 @@ h9_select <- function(h, columns, ...) {
 #'
 #' Keep only a contiguous subset of rows
 #'
+#' @param h A h9 object created by h9_create.
 #' @param start The starting index(included)
 #' @param end The ending index(not included)
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_slice <- function(h, start, end, ...) {
+h9_slice <- function(h, start  = NULL, end  = NULL, ...) {
 
   h9_add_step(
     h,
     "slice",
-    list(
+    update = list(
+      start = start,
+      end = end,
       ...
     )
   )
@@ -266,18 +302,21 @@ h9_slice <- function(h, start, end, ...) {
 #'
 #' Sort rows of data based on the values in selected columns
 #'
+#' @param h A h9 object created by h9_create.
 #' @param field The list of columns to sort by
 #' @param order The order in which to sort, default - ascending
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_sort <- function(h, field, order, ...) {
+h9_sort <- function(h, field  = NULL, order  = NULL, ...) {
 
   h9_add_step(
     h,
     "sort",
-    list(
+    update = list(
+      field = field,
+      order = order,
       ...
     )
   )
@@ -288,6 +327,7 @@ h9_sort <- function(h, field, order, ...) {
 #'
 #' Select columns to aggregate and others to keep unmodified
 #'
+#' @param h A h9 object created by h9_create.
 #' @param group The list of columns by which to group
 #' @param field The list of columns who's values to collect
 #' @param summarizer The summarizer method to aggregate the values collected, default- count
@@ -295,12 +335,15 @@ h9_sort <- function(h, field, order, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_summarize <- function(h, group, field, summarizer, ...) {
+h9_summarize <- function(h, group  = NULL, field  = NULL, summarizer  = NULL, ...) {
 
   h9_add_step(
     h,
     "summarize",
-    list(
+    update = list(
+      group = group,
+      field = field,
+      summarizer = summarizer,
       ...
     )
   )
@@ -311,18 +354,21 @@ h9_summarize <- function(h, group, field, summarizer, ...) {
 #'
 #' Create new data columns by processing a URL column with a Hal9 server worker
 #'
+#' @param h A h9 object created by h9_create.
 #' @param url 
 #' @param resize 
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_fetch <- function(h, url, resize, ...) {
+h9_fetch <- function(h, url  = NULL, resize  = NULL, ...) {
 
   h9_add_step(
     h,
     "fetch",
-    list(
+    update = list(
+      url = url,
+      resize = resize,
       ...
     )
   )

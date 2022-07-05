@@ -2,6 +2,7 @@
 #'
 #' Predict using a long-short-term-memory model
 #'
+#' @param h A h9 object created by h9_create.
 #' @param prediction 
 #' @param window 
 #' @param units 
@@ -11,12 +12,17 @@
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_predict_lstm <- function(h, prediction, window, units, epochs, predictions, ...) {
+h9_predict_lstm <- function(h, prediction  = NULL, window  = NULL, units  = NULL, epochs  = NULL, predictions  = NULL, ...) {
 
   h9_add_step(
     h,
     "timelstm",
-    list(
+    update = list(
+      prediction = prediction,
+      window = window,
+      units = units,
+      epochs = epochs,
+      predictions = predictions,
       ...
     )
   )
@@ -27,18 +33,21 @@ h9_predict_lstm <- function(h, prediction, window, units, epochs, predictions, .
 #'
 #' Calculate the moving average
 #'
+#' @param h A h9 object created by h9_create.
 #' @param source 
 #' @param window 
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_sma <- function(h, source, window, ...) {
+h9_sma <- function(h, source  = NULL, window  = NULL, ...) {
 
   h9_add_step(
     h,
     "timemovingaverage",
-    list(
+    update = list(
+      source = source,
+      window = window,
       ...
     )
   )

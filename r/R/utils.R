@@ -2,18 +2,21 @@
 #'
 #' Create latitude and longitude columns from a pair of US city and state columns
 #'
+#' @param h A h9 object created by h9_create.
 #' @param city 
 #' @param state 
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_city_to_map <- function(h, city, state, ...) {
+h9_city_to_map <- function(h, city  = NULL, state  = NULL, ...) {
 
   h9_add_step(
     h,
     "citytomap",
-    list(
+    update = list(
+      city = city,
+      state = state,
       ...
     )
   )
@@ -24,17 +27,19 @@ h9_city_to_map <- function(h, city, state, ...) {
 #'
 #' Create latitude and longitude columns from a US zip code column
 #'
+#' @param h A h9 object created by h9_create.
 #' @param zipcode 
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_zip_to_map <- function(h, zipcode, ...) {
+h9_zip_to_map <- function(h, zipcode  = NULL, ...) {
 
   h9_add_step(
     h,
     "ziptomap",
-    list(
+    update = list(
+      zipcode = zipcode,
       ...
     )
   )
@@ -45,18 +50,21 @@ h9_zip_to_map <- function(h, zipcode, ...) {
 #'
 #' Magnify an image with AI enhancement
 #'
+#' @param h A h9 object created by h9_create.
 #' @param originalImg 
 #' @param model 
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_upscaler <- function(h, originalImg, model, ...) {
+h9_upscaler <- function(h, originalImg  = NULL, model  = NULL, ...) {
 
   h9_add_step(
     h,
     "upscaler",
-    list(
+    update = list(
+      originalImg = originalImg,
+      model = model,
       ...
     )
   )
@@ -67,17 +75,19 @@ h9_upscaler <- function(h, originalImg, model, ...) {
 #'
 #' Stops pipeline execution conditionally
 #'
+#' @param h A h9 object created by h9_create.
 #' @param expression A JavaScript expression, which may use the 'outputs' dictionary which references outputs produced by previous steps by name.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_stop <- function(h, expression, ...) {
+h9_stop <- function(h, expression  = NULL, ...) {
 
   h9_add_step(
     h,
     "stop",
-    list(
+    update = list(
+      expression = expression,
       ...
     )
   )

@@ -2,6 +2,7 @@
 #'
 #' Import a CSV formatted dataset
 #'
+#' @param h A h9 object created by h9_create.
 #' @param file Either the URL for the csv or a local file.
 #' @param separator A single-character delimiter string between column values (default ',')
 #' @param skip The number of lines to skip (default 0) before reading data
@@ -9,12 +10,15 @@
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_read_csv <- function(h, file, separator, skip, ...) {
+h9_read_csv <- function(h, file  = NULL, separator  = NULL, skip  = NULL, ...) {
 
   h9_add_step(
     h,
     "importcsv",
-    list(
+    update = list(
+      file = file,
+      separator = separator,
+      skip = skip,
       ...
     )
   )
@@ -25,17 +29,19 @@ h9_read_csv <- function(h, file, separator, skip, ...) {
 #'
 #' Import a dataset from a sheet of an Excel file
 #'
+#' @param h A h9 object created by h9_create.
 #' @param file 
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_read_excel <- function(h, file, ...) {
+h9_read_excel <- function(h, file  = NULL, ...) {
 
   h9_add_step(
     h,
     "importexcel",
-    list(
+    update = list(
+      file = file,
       ...
     )
   )
@@ -46,18 +52,21 @@ h9_read_excel <- function(h, file, ...) {
 #'
 #' Import a JSON formatted dataset
 #'
+#' @param h A h9 object created by h9_create.
 #' @param file 
 #' @param extract 
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_read_json <- function(h, file, extract, ...) {
+h9_read_json <- function(h, file  = NULL, extract  = NULL, ...) {
 
   h9_add_step(
     h,
     "importjson",
-    list(
+    update = list(
+      file = file,
+      extract = extract,
       ...
     )
   )
@@ -68,6 +77,7 @@ h9_read_json <- function(h, file, extract, ...) {
 #'
 #' Query data from a GraphQL endpoint
 #'
+#' @param h A h9 object created by h9_create.
 #' @param url 
 #' @param query 
 #' @param extract 
@@ -75,12 +85,15 @@ h9_read_json <- function(h, file, extract, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_import_graphql <- function(h, url, query, extract, ...) {
+h9_import_graphql <- function(h, url  = NULL, query  = NULL, extract  = NULL, ...) {
 
   h9_add_step(
     h,
     "graphql",
-    list(
+    update = list(
+      url = url,
+      query = query,
+      extract = extract,
       ...
     )
   )
@@ -91,6 +104,7 @@ h9_import_graphql <- function(h, url, query, extract, ...) {
 #'
 #' Query data from a MySQL database by using a Hal9 server worker
 #'
+#' @param h A h9 object created by h9_create.
 #' @param host 
 #' @param user 
 #' @param password 
@@ -100,12 +114,17 @@ h9_import_graphql <- function(h, url, query, extract, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_import_mysql <- function(h, host, user, password, database, query, ...) {
+h9_import_mysql <- function(h, host  = NULL, user  = NULL, password  = NULL, database  = NULL, query  = NULL, ...) {
 
   h9_add_step(
     h,
     "mysql",
-    list(
+    update = list(
+      host = host,
+      user = user,
+      password = password,
+      database = database,
+      query = query,
       ...
     )
   )
@@ -116,6 +135,7 @@ h9_import_mysql <- function(h, host, user, password, database, query, ...) {
 #'
 #' Get stock market data provided by Financial Modeling Prep
 #'
+#' @param h A h9 object created by h9_create.
 #' @param stock 
 #' @param statistic 
 #' @param limit 
@@ -124,12 +144,16 @@ h9_import_mysql <- function(h, host, user, password, database, query, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_import_stocks <- function(h, stock, statistic, limit, apiKey, ...) {
+h9_import_stocks <- function(h, stock  = NULL, statistic  = NULL, limit  = NULL, apiKey  = NULL, ...) {
 
   h9_add_step(
     h,
     "stocks",
-    list(
+    update = list(
+      stock = stock,
+      statistic = statistic,
+      limit = limit,
+      apiKey = apiKey,
       ...
     )
   )
@@ -140,18 +164,21 @@ h9_import_stocks <- function(h, stock, statistic, limit, apiKey, ...) {
 #'
 #' Query data from a SQLite database
 #'
+#' @param h A h9 object created by h9_create.
 #' @param file 
 #' @param query 
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_import_sqlite <- function(h, file, query, ...) {
+h9_import_sqlite <- function(h, file  = NULL, query  = NULL, ...) {
 
   h9_add_step(
     h,
     "sqlite",
-    list(
+    update = list(
+      file = file,
+      query = query,
       ...
     )
   )
@@ -162,17 +189,19 @@ h9_import_sqlite <- function(h, file, query, ...) {
 #'
 #' Grab frames from a video file
 #'
+#' @param h A h9 object created by h9_create.
 #' @param file 
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_import_video <- function(h, file, ...) {
+h9_import_video <- function(h, file  = NULL, ...) {
 
   h9_add_step(
     h,
     "videoframes",
-    list(
+    update = list(
+      file = file,
       ...
     )
   )
@@ -183,6 +212,7 @@ h9_import_video <- function(h, file, ...) {
 #'
 #' Scrape images from a website by using a Hal9 server worker
 #'
+#' @param h A h9 object created by h9_create.
 #' @param url 
 #' @param minSize 
 #' @param scrollIters 
@@ -190,12 +220,15 @@ h9_import_video <- function(h, file, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_webscrape_images <- function(h, url, minSize, scrollIters, ...) {
+h9_webscrape_images <- function(h, url  = NULL, minSize  = NULL, scrollIters  = NULL, ...) {
 
   h9_add_step(
     h,
     "webimages",
-    list(
+    update = list(
+      url = url,
+      minSize = minSize,
+      scrollIters = scrollIters,
       ...
     )
   )
@@ -206,6 +239,7 @@ h9_webscrape_images <- function(h, url, minSize, scrollIters, ...) {
 #'
 #' Scrape a table from a website by using a Hal9 server worker
 #'
+#' @param h A h9 object created by h9_create.
 #' @param url 
 #' @param text 
 #' @param hasHeader 
@@ -215,12 +249,17 @@ h9_webscrape_images <- function(h, url, minSize, scrollIters, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_webscrape_table <- function(h, url, text, hasHeader, scrollIters, scrollClick, ...) {
+h9_webscrape_table <- function(h, url  = NULL, text  = NULL, hasHeader  = NULL, scrollIters  = NULL, scrollClick  = NULL, ...) {
 
   h9_add_step(
     h,
     "webtables",
-    list(
+    update = list(
+      url = url,
+      text = text,
+      hasHeader = hasHeader,
+      scrollIters = scrollIters,
+      scrollClick = scrollClick,
       ...
     )
   )
@@ -231,6 +270,7 @@ h9_webscrape_table <- function(h, url, text, hasHeader, scrollIters, scrollClick
 #'
 #' Scrape data matching CSS or DOM selectors on a website by using a Hal9 server worker
 #'
+#' @param h A h9 object created by h9_create.
 #' @param url 
 #' @param className 
 #' @param columnName 
@@ -241,12 +281,18 @@ h9_webscrape_table <- function(h, url, text, hasHeader, scrollIters, scrollClick
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_webscrape_selectors <- function(h, url, className, columnName, hasHeader, scrollIters, scrollClick, ...) {
+h9_webscrape_selectors <- function(h, url  = NULL, className  = NULL, columnName  = NULL, hasHeader  = NULL, scrollIters  = NULL, scrollClick  = NULL, ...) {
 
   h9_add_step(
     h,
     "webselector",
-    list(
+    update = list(
+      url = url,
+      className = className,
+      columnName = columnName,
+      hasHeader = hasHeader,
+      scrollIters = scrollIters,
+      scrollClick = scrollClick,
       ...
     )
   )

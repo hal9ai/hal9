@@ -119,13 +119,21 @@ h9_add_step <- function(h, step, update = NULL) {
   )
   names(l_params) <- novo_id
 
-  if(!is.null(update)){
+  # browser()
+
+  update <- update[!unlist(lapply(update, is.null))]
+
+  if(length(update) > 0) {
 
     inputed <- names(update)
 
-    for(ii in seq_along(update)){
-      if(l_params[[1]][[ii]]$name == inputed[ii]){
-        l_params[[1]][[ii]]$value <- list(build_value_list(update[ii])[[1]])
+    for(i in seq_along(update)) {
+      if (is.list(l_params[[1]][[inputed[i]]]$value)) {
+        l_params[[1]][[inputed[i]]]$value[[1]]$value <- update[[i]]
+      } else if (!l_params[[1]][[inputed[i]]]$static) {
+        l_params[[1]][[inputed[i]]]$value <- list(list(name = update[[i]]))
+      } else {
+        l_params[[1]][[inputed[i]]]$value <- update[[i]]
       }
     }
 

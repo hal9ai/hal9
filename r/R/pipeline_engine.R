@@ -1,6 +1,6 @@
 parse_value <- function(value, id) {
   if (is.null(value)) {
-    list()
+    return(NULL)
   } else {
     values_list <- list()
     for (i in 1:length(value)) {
