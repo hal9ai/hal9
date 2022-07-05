@@ -1,38 +1,78 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+
+<div class="numberBoxContainer">
+<template>
+    <b-field class="file is-primary" :class="{'has-name': !!file}">
+      <b-upload v-model="file" class="file-label" @change.native="numChange">
+        <span class="file-cta">
+            <b-icon class="file-icon" icon="upload"></b-icon>
+              <span class="file-label">Click to upload</span>
+            </span>
+            <span class="file-name" v-if="file">{{ file.name }}</span>
+      </b-upload>
+    </b-field>
+</template>
+</div>
+
+
+<script>
 /**
   input: []
-  output: [ inputfile, html ]
-  interactive: true
+  params:
+    - name: dataType
+      label: 'Upload your data as '
+      value:
+        - control: select
+          value: base
+          values:
+            - name: base
+              label: Base64
+            - name: txt
+              label: Text
+            - name: arrbuff
+              label: Array Buffer
+            - name: binstring
+              label: Binary String
+  output: [  html,inputFile ]
 **/
-
-var inputfile = '';
-
-var state = hal9.getState();
-state = state ? state : {};
-
-if (state.inputfile) {
-  inputfile = state.inputfile;
-}
-
-if (html.innerHTML == '') {
-  const input = document.createElement('input');
-  input.type = 'file';
-
-  if (state.inputfile) {
-    inputfile = state.inputfile;
+  var state = hal9.getState();
+  state = state ? state : {};
+  var inputFile = '';
+  if (state.inputFile) {
+    inputFile = state.inputFile;
+    value = inputFile;
   }
 
-  input.onchange = function (e) {
-    const reader = new FileReader()
-    reader.onload = async (e) => {
-      const text = (e.target.result);
-      state.inputfile = text
-      hal9.setState(state);
-      hal9.invalidate();
-    };
-    reader.readAsDataURL(e.target.files[0])
-  }
-
-  html.appendChild(input);
-}
-
-html.style.height = '40px';
+  var app = new Vue({
+    el: html.getElementsByClassName('numberBoxContainer')[0],
+    data: {
+      file: null,
+    },
+    methods: {
+      numChange(e){
+        const reader = new FileReader()
+        reader.onload = async (e) => {
+          const text = (e.target.result);
+          state.inputFile = text
+          hal9.setState(state);
+          hal9.invalidate();
+      };
+      if(dataType == 'base'){
+        reader.readAsDataURL(e.target.files[0]);
+      }
+      else if(dataType == 'txt'){
+        reader.readAsText(e.target.files[0]);
+      }
+      else if(dataType == 'arrbuff'){
+        reader.readAsArrayBuffer(e.target.files[0]);
+      }
+      else if(dataType == 'binstring'){
+        reader.readAsBinaryString(e.target.files[0]);
+      }
+      }
+    }
+  })
+  html.style.height = 'auto';
+</script>

@@ -1,6 +1,6 @@
 {
   "name": "hal9",
-  "version": "0.2.38",
+  "version": "0.2.42",
   "license": "MIT",
   "description": "Hal9: Composable machine-learning pipelines",
   "main": "dist/hal9.js",
@@ -20,7 +20,7 @@
     "@babel/runtime-corejs3": "^7.17.9",
     "buffer": "^6.0.3",
     "compare-versions": "^3.6.0",
-    "core-js": "~3.22.4",
+    "core-js": "^3.23.3",
     "crypto-js": "^4.0.0",
     "js-yaml": "4.1.0",
     "rfdc": "^1.1.4"

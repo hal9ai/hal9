@@ -1,0 +1,56 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+
+<div class="checkboxContainer">
+  <template>
+    <section>
+        <b-field>
+            <b-checkbox @change.native="checkChange">{{parameter}}</b-checkbox>
+        </b-field>
+    </section>
+  </template>
+</div>
+
+<script>
+/**
+  input: []
+  params:
+    - name: paramName
+      label: parameter Name
+      value:
+        - control: textbox
+          value: checkBox
+  output: [  html,checkBoxVal ]
+**/
+  var state = hal9.getState();
+  state = state ? state : {};
+  let checkBoxVal = false;
+  if (state.checkBoxVal) {
+    checkBoxVal = state.checkBoxVal;
+    value = checkBoxVal;
+  }
+  var app = new Vue({
+    el: html.getElementsByClassName('checkboxContainer')[0],
+    data: {
+      value: '',
+      parameter: paramName,
+    },
+    methods: {
+      checkChange(){
+        if(checkBoxVal == true){
+          state.checkBoxVal = false;
+          hal9.setState(state);
+          hal9.invalidate();
+        }
+        else{
+          state.checkBoxVal = true;
+          hal9.setState(state);
+          hal9.invalidate();
+        }
+      }
+    }
+  })
+  html.style.height = 'auto';
+</script>
+

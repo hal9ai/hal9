@@ -1,3 +1,18 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+
+<div class="numberBoxContainer">
+  <template>
+    <section>
+            <b-select placeholder="" @change.native="selectChange" id='dropID'>
+            </b-select>
+    </section>
+  </template>
+</div>
+
+
+<script>
 /**
   input: []
   params:
@@ -6,33 +21,36 @@
       value:
         - control: textbox
           value: A,B,C
-  output: [ dropdown, html ]
+  output: [ dropdownVal, html ]
 **/
 
-const select = document.createElement('select');
-select.style.minWidth = '50px';
+  var state = hal9.getState();
+  state = state ? state : {};
+  let dropdownVal = 0;
+  if (state.dropdownVal) {
+    dropdownVal = state.dropdownVal;
+    value = dropdownVal;
+  }
 
-const valuesarr = values instanceof String ? values.split(',') : values;
-for (let value of valuesarr){
+  const valuesarr = values.split(',')
+  var app = new Vue({
+    el: html.getElementsByClassName('numberBoxContainer')[0],
+    data: {
+      value: '',
+    },
+    methods: {
+      selectChange(e){
+        state.dropdownVal = e.target.value;
+        hal9.setState(state);
+        hal9.invalidate();
+      }
+    }
+  })
+  const dropdownElement = document.getElementById('dropID')
+  for (let value of valuesarr){
     let opt = document.createElement('option');
     opt.value = opt.innerText = value.trim();
-    select.appendChild(opt);
+    dropdownElement.appendChild(opt);
 }
-
-let dropdown = 0;
-let state = hal9.getState();
-state = state ? state : {};
-
-if (state.dropdown) {
-  dropdown = state.dropdown;
-  select.value = dropdown;
-}
-
-select.onchange = function() {
-  state.dropdown = this.value;
-  hal9.setState(state);
-  hal9.invalidate();
-}
-
-html.appendChild(select);
-html.style.height = '30px';
+html.style.height = 'auto';
+</script>
