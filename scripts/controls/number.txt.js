@@ -1,32 +1,53 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+
+<div class="numberBoxContainer">
+  <template>
+    <section>
+          {{ parameter }}
+            <b-input type="number"
+                v-model="value"
+                @change.native="numChange">>
+            </b-input>
+    </section>
+  </template>
+</div>
+
+
+<script>
 /**
   input: []
-  output: [ number, html ]
-  interactive: true
+  params:
+    - name: paramName
+      label: parameter Name
+      value:
+        - control: textbox
+          value: NumberBox
+  output: [  html,numVal ]
 **/
 
-var number = 1;
-
-var state = hal9.getState();
-state = state ? state : {};
-
-if (state.number) {
-  number = state.number;
-}
-
-if (html.innerHTML == '') {
-  const textboxInput = document.createElement('input');
-  textboxInput.type = 'number';
-
-  if (state.number) {
-    textboxInput.value = number;
+  var state = hal9.getState();
+  state = state ? state : {};
+  let numVal = 0;
+  if (state.numVal) {
+    numVal = state.numVal;
+    value = numVal;
   }
 
-  textboxInput.onchange = function () {
-    state.number = this.value;
-    hal9.setState(state);
-    hal9.invalidate();
-  }
-  html.appendChild(textboxInput);
-}
-
-html.style.height = '40px';
+  var app = new Vue({
+    el: html.getElementsByClassName('numberBoxContainer')[0],
+    data: {
+      value: numVal,
+      parameter: paramName
+    },
+    methods: {
+      numChange(e){
+        state.numVal = e.target.value;
+        hal9.setState(state);
+        hal9.invalidate();
+      }
+    }
+  })
+  html.style.height = 'auto';
+</script>

@@ -125,10 +125,10 @@ import reacttxt from '../../scripts/frameworks/react.txt';
 import vuetxt from '../../scripts/frameworks/vue.txt';
 
 // control scripts
-import checkboxctrltxt from '../../scripts/controls/checkbox.txt'
-import dropdownctrltxt from '../../scripts/controls/dropdown.txt';
-import inputfilectrltxt from '../../scripts/controls/inputfile.txt';
-import numberctrltxt from '../../scripts/controls/number.txt';
+import checkboxctrltxt from '../../scripts/controls/checkbox.txt.js';
+import dropdownctrltxt from '../../scripts/controls/dropdown.txt.js';
+import inputfilectrltxt from '../../scripts/controls/inputfile.txt.js';
+import numberctrltxt from '../../scripts/controls/number.txt.js';
 import rangectrltxt from '../../scripts/controls/range.txt.js';
 import spreadsheetctrltxt from '../../scripts/controls/spreadsheet.txt';
 import textareactrltxt from '../../scripts/controls/textarea.txt.js';
@@ -268,6 +268,7 @@ const scripts = {
   vue: { script: vuetxt, language: 'html' },
 
   // controls
+  checkbox: { script: checkboxctrltxt, language: 'javascript'},
   dropdown: { script: dropdownctrltxt, language: 'javascript' },
   fileinput: { script: inputfilectrltxt, language: 'javascript' },
   numberinput: { script: numberctrltxt, language: 'javascript' },
