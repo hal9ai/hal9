@@ -47,10 +47,6 @@ jobs:
           Rscript -e 'install.packages("pkgdown")'
           Rscript -e 'pkgdown::build_site("./r")'
           cp -r  ./r/docs site/docs/r
-      - uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages
-          folder: site/docs
       - uses: zdurham/s3-upload-github-action@master
         with:
           args: --recursive --acl public-read
