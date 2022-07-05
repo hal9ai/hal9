@@ -131,12 +131,8 @@ import inputfilectrltxt from '../../scripts/controls/inputfile.txt';
 import numberctrltxt from '../../scripts/controls/number.txt';
 import rangectrltxt from '../../scripts/controls/range.txt.js';
 import spreadsheetctrltxt from '../../scripts/controls/spreadsheet.txt';
-<<<<<<< Updated upstream
 import textareactrltxt from '../../scripts/controls/textarea.txt.js';
 import textboxctrltxt from '../../scripts/controls/textbox.txt.js';
-=======
-import textboxctrltxt from '../../scripts/controls/textbox.txt';
->>>>>>> Stashed changes
 import websitectrltxt from '../../scripts/controls/website.txt.js';
 
 // business scripts
@@ -272,7 +268,6 @@ const scripts = {
   vue: { script: vuetxt, language: 'html' },
 
   // controls
-<<<<<<< Updated upstream
   dropdown: { script: dropdownctrltxt, language: 'javascript' },
   fileinput: { script: inputfilectrltxt, language: 'javascript' },
   numberinput: { script: numberctrltxt, language: 'javascript' },
@@ -281,16 +276,6 @@ const scripts = {
   textarea: { script: textareactrltxt, language: 'javascript' },
   textbox: { script: textboxctrltxt, language: 'javascript' },
   website: { script: websitectrltxt, language: 'javascript' },
-=======
-  checkboxctrl: { script: checkboxctrltxt, language: 'html' },
-  dropdownctrl: { script: dropdownctrltxt, language: 'html' },
-  inputfilectrl: { script: inputfilectrltxt, language: 'html' },
-  numberctrl: { script: numberctrltxt, language: 'html' },
-  rangectrl: { script: rangectrltxt, language: 'javascript' },
-  spreadsheetctrl: { script: spreadsheetctrltxt, language: 'html' },
-  textboxctrl: { script: textboxctrltxt, language: 'html' },
-  websitectrl: { script: websitectrltxt, language: 'javascript' },
->>>>>>> Stashed changes
 
   // business
   churn: { script: churntxt, language: 'pyodide' },
