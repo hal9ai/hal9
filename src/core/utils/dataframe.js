@@ -3,6 +3,7 @@ import { loadScripts } from './scriptloader';
 
 var deps = {};
 
+const defaultOp = (e) => e;
 
 const arqueroTest = (e) => e && typeof(e.toJs) !== 'function' && typeof(e._data) === 'object';
 
@@ -126,6 +127,13 @@ const pyodideEnsure = (e) => e;
 const pyodideTop = (e, limit) => e;
 
 
+const remoteTest = (e) => typeof(e) == 'object' && e.type == 'remotedf'
+
+const remoteCast = (fn) => {
+  return (e) => fn(e.subset);
+}
+
+
 const generalized = [
   {
     test: arqueroTest,
@@ -170,6 +178,17 @@ const generalized = [
     ensure: pyodideEnsure,
     top: pyodideTop,
     toRows: pyodideToRows,
+  },
+  {
+    test: remoteTest,
+    columns: remoteCast(arrayColumns),
+    clone: defaultClone,
+    serialize: defaultOp,
+    deserialize: defaultOp,
+    serialized: defaultOp,
+    ensure: defaultOp,
+    top: remoteCast(arrayTop),
+    toRows: remoteCast(e => e),
   },
 ];
 
