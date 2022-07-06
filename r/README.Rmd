@@ -54,7 +54,7 @@ mtcars |>
 ```
 
 ```{r, eval = TRUE, echo = FALSE, out.width="50%", fig.align="center"}
-knitr::include_graphics("inst/htmlwidgets/scatter_example.png")
+knitr::include_graphics("https://raw.githubusercontent.com/hal9ai/hal9ai/main/r/inst/htmlwidgets/scatter_example.png")
 ```
 
 ```{r}
