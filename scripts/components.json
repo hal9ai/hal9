@@ -353,8 +353,8 @@
       "icon": "fa-light fa-box-open"
     },
     {
-      "name": "bubblechart",
-      "function": "bubble_chart",
+      "name": "bubbles",
+      "function": "bubbles",
       "source": "visualizations/bubbles.txt.js",
       "language": "javascript",
       "label": "Bubbles",
