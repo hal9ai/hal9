@@ -13,6 +13,7 @@ LazyData: true
 RoxygenNote: 7.2.0
 Imports: 
     htmlwidgets,
-    jsonlite
+    jsonlite,
+    yaml
 Depends: 
     R (>= 2.10)
