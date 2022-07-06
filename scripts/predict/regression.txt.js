@@ -2,8 +2,10 @@
   params:
     - name: x
       label: X
+      static: false
     - name: 'y'
       label: 'Y'
+      static: false
     - name: type
       label: Type
       value:
