@@ -42,16 +42,7 @@ mtcars |>
   h9_scatter(x = "mpg", y = "wt")
 ```
 
-<img src="https://raw.githubusercontent.com/hal9ai/hal9ai/main/r/inst/htmlwidgets/scatter_example.png" width="50%" style="display: block; margin: auto;" />
-
-``` r
-# a plot pipeline
-mtcars |> 
-  h9_create() |> 
-  h9_scatter(x = "mpg", y = "wt")
-```
-
-<img src="inst/htmlwidgets/scatter_example.png" width="50%" style="display: block; margin: auto;" />
+<img src="scatter_example.png" width="50%" style="display: block; margin: auto;" />
 
 ## TO DO
 
