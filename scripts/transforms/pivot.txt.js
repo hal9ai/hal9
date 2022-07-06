@@ -1,4 +1,6 @@
 /**
+  input: [data]
+  output: [data]
   description: Generate a dataframe with a column for each unique value in columns, with rows for each unique value in rows. Each row counts/aggregates the values that match both row and column based on summarizer
   params:
     - name: rows

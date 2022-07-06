@@ -1,4 +1,6 @@
 /**
+  input: [data]
+  output: [data]
   params:
     - name: samplesize
       label: Sample Percentage

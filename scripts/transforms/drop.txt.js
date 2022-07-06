@@ -1,5 +1,7 @@
 /**
   description: Remove selected columns from the dataframe
+  input: [data]
+  output: [data]
   params:
     - name: columns
       label: Columns

@@ -1,5 +1,7 @@
 /**
   description: Fold one or more of the dataframe's columns into Key-Value Pairs. The resulting dataframe will have two columns, one with the column names and the other with the column values
+  input: [data]
+  output: [data]
   params:
     - name: gather
       label: Gather

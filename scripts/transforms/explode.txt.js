@@ -1,4 +1,6 @@
 /**
+  input: [data]
+  output: [data]
   params:
     - name: column
       label: 'Column'

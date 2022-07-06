@@ -1,7 +1,6 @@
 /**
-  input:
-    - data
-    - right
+input: [data, right]
+output: [data]  
   params:
     - field
   deps:

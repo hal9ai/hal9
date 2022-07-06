@@ -1,5 +1,7 @@
 /**
   description: replace missing values in a given columns using a given method. null, undefined and NaNs are considered missing values
+  input: [data]
+  output: [data]
   params:
     - name: field
       label: Columns

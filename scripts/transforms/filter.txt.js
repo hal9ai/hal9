@@ -1,5 +1,7 @@
 /**
   description: Filter a dataframe to a subset of rows on the basis of particular expression applied to a particular column
+  input: [data]
+  output: [data]
   params:
     - name: field
       label: Field

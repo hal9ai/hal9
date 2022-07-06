@@ -1,4 +1,6 @@
 /**
+  input: [data]
+  output: [data]
   description: Add a new column to your table from an array
   params:
     - name: column

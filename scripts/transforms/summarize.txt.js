@@ -1,5 +1,7 @@
 /**
   description: create a dataframe which is a summary of the input. Commonly used for computing averages or sums across the dataframe.
+  input: [data]
+  output: [data]
   params:
     - name: group
       label: Group

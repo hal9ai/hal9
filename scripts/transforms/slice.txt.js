@@ -1,5 +1,6 @@
 /**
-  input: [ data ]
+  input: [data]
+  output: [data]
   description: Create a dataframe with a subset of the rows with indices from start (included) and the end(not included)
   params:
     - name: start

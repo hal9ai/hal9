@@ -1,5 +1,7 @@
 /**
   description: Derive a new column on the basis of an expression, or replace an exisitingone
+  input: [data]
+  output: [data]
   params:
     - name: column
       label: Column

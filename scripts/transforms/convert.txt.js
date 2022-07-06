@@ -1,5 +1,7 @@
 /**
   description: Use this block to do some quick data type conversions
+  input: [data]
+  output: [data]
   params:
     - name: field
       label: Column
