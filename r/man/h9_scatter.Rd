@@ -10,6 +10,7 @@ h9_scatter(
   y = NULL,
   color = NULL,
   size = NULL,
+  label = NULL,
   palette = NULL,
   fontsize = NULL,
   marginleft = NULL,
@@ -19,6 +20,22 @@ h9_scatter(
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
+
+\item{x}{}
+
+\item{y}{}
+
+\item{color}{}
+
+\item{size}{}
+
+\item{label}{}
+
+\item{palette}{}
+
+\item{fontsize}{}
+
+\item{marginleft}{}
 
 \item{marginbottom}{}
 }

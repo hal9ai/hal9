@@ -47,10 +47,27 @@ h9_create(my_data)
 You may also build a specific pipeline using our high-level functions:
 
 ```{r}
+# a plot pipeline
 mtcars |> 
   h9_create() |> 
-  h9_filter()
+  h9_scatter(x = "mpg", y = "wt")
 ```
+
+```{r, eval = TRUE, echo = FALSE, out.width="50%", fig.align="center"}
+knitr::include_graphics("inst/htmlwidgets/scatter_example.png")
+```
+
+```{r}
+# a plot pipeline
+mtcars |> 
+  h9_create() |> 
+  h9_scatter(x = "mpg", y = "wt")
+```
+
+```{r, eval = TRUE, echo = FALSE, out.width="50%", fig.align="center"}
+knitr::include_graphics("inst/htmlwidgets/scatter_example.png")
+```
+
 
 ## TO DO
 

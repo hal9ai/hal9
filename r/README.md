@@ -36,10 +36,13 @@ h9_create(my_data)
 You may also build a specific pipeline using our high-level functions:
 
 ``` r
+# a plot pipeline
 mtcars |> 
   h9_create() |> 
-  h9_filter()
+  h9_scatter(x = "mpg", y = "wt")
 ```
+
+<img src="inst/htmlwidgets/scatter_example.png" width="50%" style="display: block; margin: auto;" />
 
 ## TO DO
 

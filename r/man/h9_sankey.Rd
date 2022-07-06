@@ -19,6 +19,18 @@ h9_sankey(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
+\item{source}{}
+
+\item{target}{}
+
+\item{value}{}
+
+\item{palette}{}
+
+\item{fontsize}{}
+
+\item{marginleft}{}
+
 \item{marginbottom}{}
 }
 \value{

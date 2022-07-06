@@ -21,6 +21,22 @@ h9_error_bar(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
+\item{x}{}
+
+\item{min}{}
+
+\item{max}{}
+
+\item{open}{}
+
+\item{close}{}
+
+\item{levels}{}
+
+\item{fontsize}{}
+
+\item{marginleft}{}
+
 \item{marginbottom}{}
 }
 \value{

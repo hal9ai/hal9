@@ -20,6 +20,20 @@ h9_dot_plot(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
+\item{x}{}
+
+\item{color}{}
+
+\item{palette}{}
+
+\item{dotsize}{}
+
+\item{ticks}{}
+
+\item{fontsize}{}
+
+\item{marginleft}{}
+
 \item{marginbottom}{}
 }
 \value{

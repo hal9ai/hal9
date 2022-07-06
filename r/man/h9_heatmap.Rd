@@ -19,6 +19,18 @@ h9_heatmap(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
+\item{x}{}
+
+\item{y}{}
+
+\item{value}{}
+
+\item{palette}{}
+
+\item{fontsize}{}
+
+\item{marginleft}{}
+
 \item{marginbottom}{}
 }
 \value{

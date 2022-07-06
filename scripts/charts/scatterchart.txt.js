@@ -4,8 +4,8 @@
     - name: x
       label: x
       static: false
-    - name: y
-      label: y
+    - name: 'y'
+      label: 'y'
       static: false
     - name: color
       label: color
@@ -14,7 +14,7 @@
       label: size
       static: false
     - name: label
-      label: label 
+      label: label
       static: false
     - name: palette
       label: D3 Palette

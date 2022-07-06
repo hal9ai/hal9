@@ -4,7 +4,13 @@
     - model
   params:
     - name: x
+      label: x
+      static: false
+      description: Predictors
     - name: 'y'
+      label: 'y'
+      static: false
+      description: The variable that will be predicted
     - name: predictions
       label: Predictions
       value:

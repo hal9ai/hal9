@@ -18,6 +18,16 @@ h9_treemap(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
+\item{label}{}
+
+\item{size}{}
+
+\item{palette}{}
+
+\item{fontsize}{}
+
+\item{marginleft}{}
+
 \item{marginbottom}{}
 }
 \value{
