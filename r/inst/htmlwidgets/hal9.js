@@ -18,7 +18,7 @@ HTMLWidgets.widget({
         el.innerHTML = html;
 
         const script = document.createElement('script');
-        script.src = 'http://localhost:8080/hal9.notebook.js';
+        script.src = 'https://hal9.com/hal9.notebook.js';
         document.body.appendChild(script);
       },
 
