@@ -1,10 +1,18 @@
-/**
+ /**
   output: [html]
+  description: Non-hierarchical packed circles where the area of each circle is propotional to its value.
   params:
     - name: label
+      label: Label
+      single: true
+      description: The column in the dataframe who's values should be used as labels on the circles
     - name: size
+      label: Size
+      description: The column in the dataframe who's values should the area of each circle be propotional to.
+      single: true
     - name: palette
       label: D3 Palette
+      description: the D3 Palette to determine the color scheme to use
       value:
         - control: paletteSelect
           value: schemeTableau10

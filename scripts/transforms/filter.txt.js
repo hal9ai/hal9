@@ -10,7 +10,7 @@
       static: false
     - name: expression
       label: 'Expression'
-      control: the criteria on which to filter the rows
+      description: the criteria on which to filter the rows
       value:
         - control: 'textbox'
           value: field != null

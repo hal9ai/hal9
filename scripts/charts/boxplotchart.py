@@ -1,11 +1,16 @@
 ##
 ## deps: [ 'numpy', 'pandas', 'micropip' ]
 ## output: ['plot']
+## description: Use box and whiskers diagrams to show the distribution with respect to categories 
 ## params:
 ##  - name: x
+##    description: Column from the dataframe used to position the marks along the x axis 
+##    single: true
 ##    label: x
 ##  - name: y
 ##    label: y
+##    description: Column from the dataframe used to position the marks along the y axis
+##    single: true
 ##
 
 import numpy as np
