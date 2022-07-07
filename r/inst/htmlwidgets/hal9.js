@@ -10,7 +10,6 @@ HTMLWidgets.widget({
 
       renderValue: function(x) {
         window.hal9 = {
-          data: x.data,
           pipeline: x.pipeline_json
         };
 
@@ -18,7 +17,7 @@ HTMLWidgets.widget({
         el.innerHTML = html;
 
         const script = document.createElement('script');
-        script.src = 'https://hal9.com/hal9.notebook.js';
+        script.src = x.localhost ? 'http://localhost:8080/hal9.notebook.js' : 'https://hal9.com/hal9.notebook.js';
         document.body.appendChild(script);
       },
 

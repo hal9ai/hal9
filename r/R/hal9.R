@@ -23,9 +23,9 @@ h9_create <- function(width = "100%", height = "100%", elementId = NULL, ...) {
 
   # forward options using x
   x = list(
-    data = jsonlite::toJSON(data, na = "string"),
     pipeline = pipeline,
-    pipeline_json = jsonlite::toJSON(pipeline, null = "list", auto_unbox = TRUE)
+    pipeline_json = jsonlite::toJSON(pipeline, null = "list", auto_unbox = TRUE),
+    localhost = list(...)$localhost
   )
 
   # create widget
