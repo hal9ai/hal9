@@ -10,25 +10,17 @@ HTMLWidgets.widget({
           pipeline: {
             "steps": [
               {
-                "name": "javascript",
-                "label": "Source",
-                "language": "javascript",
-                "id": 1,
-                "params": {}
-              },
-              {
                 "name": "filter",
                 "label": "Filter",
                 "language": "javascript",
                 "description": "Keep only the rows that satisfy a given expression for a specific column",
                 "icon": "fa-light fa-filter",
-                "id": 2,
+                "id": 1,
                 "params": {}
               }
             ],
             "params": {
-              "1": {},
-              "2": {
+              "1": {
                 "field": {
                   "id": 0,
                   "static": false,
@@ -60,8 +52,7 @@ HTMLWidgets.widget({
             },
             "outputs": {},
             "scripts": {
-              "1": "data = window.hal9.data",
-              "2": "/**\n  params:\n    - name: field\n      label: Field\n      single: true\n    - name: expression\n      label: 'Expression'\n      value:\n        - control: 'textbox'\n          value: field != null\n  deps:\n    - https://cdn.jsdelivr.net/npm/arquero@latest\n    - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js\n**/\ndata = await hal9.utils.toArquero(data);\n\nif (expression && field) {\n  var filterexp = new Function('field', 'return ' + expression);\n  data = data.params({field}).filter(aq.escape((data, $)=> filterexp(data[$.field])));\n}"
+              "1": "/**\n  params:\n    - name: field\n      label: Field\n      single: true\n    - name: expression\n      label: 'Expression'\n      value:\n        - control: 'textbox'\n          value: field != null\n  deps:\n    - https://cdn.jsdelivr.net/npm/arquero@latest\n    - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js\n**/\ndata = await hal9.utils.toArquero(data);\n\nif (expression && field) {\n  var filterexp = new Function('field', 'return ' + expression);\n  data = data.params({field}).filter(aq.escape((data, $)=> filterexp(data[$.field])));\n}"
             },
             "version": "0.0.1"
           }
