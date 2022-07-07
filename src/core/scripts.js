@@ -154,7 +154,7 @@ const scripts = {
   videoframes: { script: videoframestxt, language: 'javascript' },
   webcam: { script: webcamtxt, language: 'javascript' },
   sqlite: { script: sqlitetxt, language: 'javascript' },
-  dataframe: { script: dataframetxt, language: 'javascript' }
+  dataframe: { script: dataframetxt, language: 'javascript' },
 
   // webscraping
   webimages: { script: webimagestxt, language: 'javascript' },
