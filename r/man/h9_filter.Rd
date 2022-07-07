@@ -11,7 +11,9 @@ h9_filter(h, field = NULL, expression = NULL, ...)
 
 \item{field}{The column on which to filter}
 
-\item{expression}{}
+\item{expression}{the criteria on which to filter the rows}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

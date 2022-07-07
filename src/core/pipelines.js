@@ -925,6 +925,20 @@ const getFunctionForComponentName = (componentName) => {
   return componentForComponentName?.function;
 }
 
+const getParametersForComponent = (step) => {
+  const componentName = step.name;
+
+  const params = Object.keys(step.params).map(paramName => {
+    const param = step.params[paramName];
+    if (param.value.length > 0)
+      return param.name + ' = "' + param.value[0].value + '"'
+    else
+      return null;
+  }).filter(e => e != null);
+
+  return params.join(', ');
+}
+
 export const getPythonScript = (pipelineid) => {
   const pipeline = store.get(pipelineid);
   let script = `# parameters not implemented yet
@@ -950,7 +964,8 @@ h9_create()`;
   for (const step of pipeline.steps) {
     const functionName = step.function ?? getFunctionForComponentName(step.name);
     if (functionName) {
-      script += ' |>\n  h9_' + functionName + '()';
+      debugger;
+      script += ' |>\n  h9_' + functionName + '(' + getParametersForComponent(step) + ')';
     } else {
       script += ' |>\n  # missing function for step: ' + step.name;
     }

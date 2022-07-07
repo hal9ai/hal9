@@ -12,6 +12,8 @@ h9_estimate_pose(h, images = NULL, model = NULL, ...)
 \item{images}{}
 
 \item{model}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

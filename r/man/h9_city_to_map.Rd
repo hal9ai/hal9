@@ -12,6 +12,8 @@ h9_city_to_map(h, city = NULL, state = NULL, ...)
 \item{city}{}
 
 \item{state}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

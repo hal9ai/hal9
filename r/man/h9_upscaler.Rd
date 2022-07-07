@@ -12,6 +12,8 @@ h9_upscaler(h, originalImg = NULL, model = NULL, ...)
 \item{originalImg}{}
 
 \item{model}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

@@ -23,6 +23,8 @@ h9_convert(
 \item{timeConverter}{an optional parameter to help convert date-times}
 
 \item{charactersToRemove}{a string of characters to remove}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

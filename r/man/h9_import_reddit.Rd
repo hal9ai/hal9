@@ -26,6 +26,8 @@ h9_import_reddit(
 \item{before}{}
 
 \item{after}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

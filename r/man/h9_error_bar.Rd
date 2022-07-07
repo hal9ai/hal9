@@ -38,6 +38,8 @@ h9_error_bar(
 \item{marginleft}{}
 
 \item{marginbottom}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

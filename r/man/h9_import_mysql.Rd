@@ -26,6 +26,8 @@ h9_import_mysql(
 \item{database}{}
 
 \item{query}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

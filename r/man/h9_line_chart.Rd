@@ -32,6 +32,8 @@ h9_line_chart(
 \item{marginleft}{}
 
 \item{marginbottom}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

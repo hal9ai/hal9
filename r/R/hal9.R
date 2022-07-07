@@ -4,27 +4,19 @@
 #' @param width
 #' @param height
 #' @param elementId
+#' @param ... Additional parameters
 #'
 #' @export
 #'
-h9_create <- function(data, width = "100%", height = "100%", elementId = NULL) {
+h9_create <- function(width = "100%", height = "100%", elementId = NULL, ...) {
 
   pipeline <- list(
     steps = list(
-      list(
-        name = "javascript",
-        label = "Source",
-        language = "javascript",
-        id = 1,
-        params = NULL
-      )
     ),
     params = list(
-      "1" = NULL
     ),
     outputs = NULL,
     scripts = list(
-      "1" = "data = window.hal9.data"
     ),
     version = "0.0.1"
   )

@@ -5,6 +5,7 @@
 #' @param h A h9 object created by h9_create.
 #' @param url 
 #' @param maxReviews 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -32,6 +33,7 @@ h9_import_airbnb <- function(h, url  = NULL, maxReviews  = NULL, ...) {
 #' @param projectNumber 
 #' @param query 
 #' @param dbLocation 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -61,6 +63,7 @@ h9_import_bigquery <- function(h, clientId  = NULL, projectNumber  = NULL, query
 #' @param documentAccess 
 #' @param sheet 
 #' @param clientId 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -91,6 +94,7 @@ h9_import_sheet <- function(h, url  = NULL, documentAccess  = NULL, sheet  = NUL
 #' @param query 
 #' @param before 
 #' @param after 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -121,6 +125,7 @@ h9_import_reddit <- function(h, type  = NULL, sub  = NULL, query  = NULL, before
 #' @param key 
 #' @param secret 
 #' @param type 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export

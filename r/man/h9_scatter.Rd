@@ -38,6 +38,8 @@ h9_scatter(
 \item{marginleft}{}
 
 \item{marginbottom}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

@@ -1,30 +1,3 @@
-#' Bubbles
-#'
-#' Bigger values -> bigger bubbles
-#'
-#' @param h A h9 object created by h9_create.
-#' @param label 
-#' @param size 
-#' @param palette 
-#'
-#' @return A list with the pipeline specification.
-#' @export
-#'
-h9_bubble_chart <- function(h, label  = NULL, size  = NULL, palette  = NULL, ...) {
-
-  h9_add_step(
-    h,
-    "bubblechart",
-    update = list(
-      label = label,
-      size = size,
-      palette = palette,
-      ...
-    )
-  )
-
-}
-
 #' Facets
 #'
 #' A chart of charts organized in a grid
@@ -36,6 +9,7 @@ h9_bubble_chart <- function(h, label  = NULL, size  = NULL, palette  = NULL, ...
 #' @param color 
 #' @param chartType 
 #' @param palette 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -70,6 +44,7 @@ h9_facets <- function(h, x  = NULL, y  = NULL, facets  = NULL, color  = NULL, ch
 #' @param showPercentSelection 
 #' @param funnelType 
 #' @param palette 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -102,6 +77,7 @@ h9_funnel <- function(h, stage  = NULL, value  = NULL, label  = NULL, fontSize  
 #' @param lat 
 #' @param size 
 #' @param label 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -129,6 +105,7 @@ h9_map <- function(h, lon  = NULL, lat  = NULL, size  = NULL, label  = NULL, ...
 #' @param h A h9 object created by h9_create.
 #' @param from 
 #' @param to 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -157,6 +134,7 @@ h9_network <- function(h, from  = NULL, to  = NULL, ...) {
 #' @param chartType 
 #' @param dataSizes 
 #' @param palette 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -186,6 +164,7 @@ h9_plotly <- function(h, x  = NULL, y  = NULL, chartType  = NULL, dataSizes  = N
 #' @param x 
 #' @param y 
 #' @param palette 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -214,6 +193,7 @@ h9_radial_bars <- function(h, x  = NULL, y  = NULL, palette  = NULL, ...) {
 #' @param y 
 #' @param wafflesizelabel 
 #' @param palette 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -244,6 +224,7 @@ h9_waffle <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette 
 #' @param fontsize 
 #' @param marginleft 
 #' @param marginbottom 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -272,6 +253,7 @@ h9_waterfall <- function(h, x  = NULL, y  = NULL, fontsize  = NULL, marginleft  
 #' @param h A h9 object created by h9_create.
 #' @param label 
 #' @param size 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export

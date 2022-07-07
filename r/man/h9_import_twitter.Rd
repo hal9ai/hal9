@@ -23,6 +23,8 @@ h9_import_twitter(
 \item{secret}{}
 
 \item{type}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

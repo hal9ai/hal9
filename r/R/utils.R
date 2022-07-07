@@ -5,6 +5,7 @@
 #' @param h A h9 object created by h9_create.
 #' @param city 
 #' @param state 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -29,6 +30,7 @@ h9_city_to_map <- function(h, city  = NULL, state  = NULL, ...) {
 #'
 #' @param h A h9 object created by h9_create.
 #' @param zipcode 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -53,6 +55,7 @@ h9_zip_to_map <- function(h, zipcode  = NULL, ...) {
 #' @param h A h9 object created by h9_create.
 #' @param originalImg 
 #' @param model 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -77,6 +80,7 @@ h9_upscaler <- function(h, originalImg  = NULL, model  = NULL, ...) {
 #'
 #' @param h A h9 object created by h9_create.
 #' @param expression A JavaScript expression, which may use the 'outputs' dictionary which references outputs produced by previous steps by name.
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export

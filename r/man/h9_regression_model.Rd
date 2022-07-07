@@ -23,6 +23,8 @@ h9_regression_model(
 \item{type}{}
 
 \item{predictions}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

@@ -10,6 +10,8 @@ h9_stop(h, expression = NULL, ...)
 \item{h}{A h9 object created by h9_create.}
 
 \item{expression}{A JavaScript expression, which may use the 'outputs' dictionary which references outputs produced by previous steps by name.}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

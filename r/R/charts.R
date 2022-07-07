@@ -12,6 +12,7 @@
 #' @param tickrotation The angle at which to place the x-axis labels
 #' @param marginleft the left margin
 #' @param marginbottom the bottom margin
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -50,6 +51,7 @@ h9_bar_chart <- function(h, x  = NULL, y  = NULL, type  = NULL, orientation  = N
 #' @param fontsize 
 #' @param marginleft 
 #' @param marginbottom 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -88,6 +90,7 @@ h9_dot_plot <- function(h, x  = NULL, color  = NULL, palette  = NULL, dotsize  =
 #' @param fontsize 
 #' @param marginleft 
 #' @param marginbottom 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -125,6 +128,7 @@ h9_error_bar <- function(h, x  = NULL, min  = NULL, max  = NULL, open  = NULL, c
 #' @param fontsize 
 #' @param marginleft 
 #' @param marginbottom 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -158,6 +162,7 @@ h9_heatmap <- function(h, x  = NULL, y  = NULL, value  = NULL, palette  = NULL, 
 #' @param histnorm The aggregation method to apply on outputs of the aggregation functions.
 #' @param barmode One of stacked or overlaid, which controls the manner in which multiple distributions selected in x are visualized.
 #' @param palette The D3 palette used to control the colors of each of the distributions in x.
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -191,6 +196,7 @@ h9_histogram <- function(h, x  = NULL, histfunc  = NULL, histnorm  = NULL, barmo
 #' @param fontsize 
 #' @param marginleft 
 #' @param marginbottom 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -226,6 +232,7 @@ h9_line_chart <- function(h, x  = NULL, y  = NULL, palette  = NULL, domainx  = N
 #' @param fontsize 
 #' @param marginleft 
 #' @param marginbottom 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -263,6 +270,7 @@ h9_sankey <- function(h, source  = NULL, target  = NULL, value  = NULL, palette 
 #' @param fontsize 
 #' @param marginleft 
 #' @param marginbottom 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -299,6 +307,7 @@ h9_scatter <- function(h, x  = NULL, y  = NULL, color  = NULL, size  = NULL, lab
 #' @param fontsize 
 #' @param marginleft 
 #' @param marginbottom 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export

@@ -10,6 +10,8 @@ h9_fold(h, gather = NULL, ...)
 \item{h}{A h9 object created by h9_create.}
 
 \item{gather}{the list of columns to convert into key-value pairs}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

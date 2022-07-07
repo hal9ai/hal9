@@ -10,6 +10,8 @@ h9_import_video(h, file = NULL, ...)
 \item{h}{A h9 object created by h9_create.}
 
 \item{file}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

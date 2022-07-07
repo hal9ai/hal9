@@ -203,6 +203,15 @@
       "label": "Iris Dataset",
       "description": "Sample iris flowers dataset",
       "icon": "fa-light fa-file-lines"
+    },
+    {
+      "name": "dataframe",
+      "function": "load",
+      "source": "import/dataframe.txt.js",
+      "language": "javascript",
+      "label": "DataFrame",
+      "description": "Loads a dataframe",
+      "icon": "fa-light fa-columns-3"
     }
   ],
   "Transform": [

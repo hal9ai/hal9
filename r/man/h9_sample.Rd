@@ -12,6 +12,8 @@ h9_sample(h, samplesize = NULL, withReplacement = NULL, ...)
 \item{samplesize}{The size of the sample as a percentage of the size of the input dataframe}
 
 \item{withReplacement}{Allow or disallow sampling of the same row more than once. Default- True}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

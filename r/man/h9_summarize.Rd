@@ -14,6 +14,8 @@ h9_summarize(h, group = NULL, field = NULL, summarizer = NULL, ...)
 \item{field}{The list of columns who's values to collect}
 
 \item{summarizer}{The summarizer method to aggregate the values collected, default- count}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

@@ -23,6 +23,8 @@ h9_import_stocks(
 \item{limit}{}
 
 \item{apiKey}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

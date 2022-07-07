@@ -26,6 +26,8 @@ h9_histogram(
 \item{barmode}{One of stacked or overlaid, which controls the manner in which multiple distributions selected in x are visualized.}
 
 \item{palette}{The D3 palette used to control the colors of each of the distributions in x.}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

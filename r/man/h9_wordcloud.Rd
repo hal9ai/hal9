@@ -12,6 +12,8 @@ h9_wordcloud(h, label = NULL, size = NULL, ...)
 \item{label}{}
 
 \item{size}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

@@ -26,6 +26,8 @@ h9_webscrape_table(
 \item{scrollIters}{}
 
 \item{scrollClick}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

@@ -12,6 +12,8 @@ h9_import_airbnb(h, url = NULL, maxReviews = NULL, ...)
 \item{url}{}
 
 \item{maxReviews}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

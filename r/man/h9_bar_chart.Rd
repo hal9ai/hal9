@@ -38,6 +38,8 @@ h9_bar_chart(
 \item{marginleft}{the left margin}
 
 \item{marginbottom}{the bottom margin}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

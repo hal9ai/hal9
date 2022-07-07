@@ -14,6 +14,8 @@ h9_read_csv(h, file = NULL, separator = NULL, skip = NULL, ...)
 \item{separator}{A single-character delimiter string between column values (default ',')}
 
 \item{skip}{The number of lines to skip (default 0) before reading data}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.
