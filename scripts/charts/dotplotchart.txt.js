@@ -1,12 +1,18 @@
 /**
   output: [html]
+  description: A simple histogram like distribution which uses dots to show the number of observations in each bin
   params:
     - name: x
       label: data
+      description: The column in the dataframe whose values should determine the position of the dots along the x-axis
+      single: true
     - name: color
       label: color
+      description: The column in the dataframe who's values should determine the color of each dot
+      single: true
     - name: palette
       label: D3 Palette
+      description: the D3 Palette to determine the color scheme to use
       value:
         - control: paletteSelect
           value: schemeTableau10
@@ -19,6 +25,7 @@
             - schemeSet2
             - schemeSet3
     - name: dotsize
+      description: the size of each dot
       label: Dot Size
       value:
         - control: range
@@ -27,12 +34,14 @@
           max: 5
     - name: ticks
       label: Ticks
+      description: The number of ticks on the x-axis
       value:
         - control: range
           value: 3
           min: 1
           max: 20
     - name: fontsize
+      description: the size of the font in pixels
       label: Font Size
       value:
         - control: range
@@ -40,6 +49,7 @@
           min: 5
           max: 20
     - name: marginleft
+      description: the left margin
       label: Margin Left
       value:
         - control: range
@@ -47,6 +57,7 @@
           min: 20
           max: 200
     - name: marginbottom
+      description: the bottom margin
       label: Margin Bottom
       value:
         - control: range

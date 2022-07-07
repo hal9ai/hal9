@@ -1,20 +1,27 @@
 /**
   output: [html]
+  description: A financial chart describing open, high, low and close for a x coordinate
   params:
     - name: x
       label: x
+      description: the column in the dataframe that is the contains the values for the x coordinates
     - name: min
       label: Min
+      description: the column in the dataframe that is the contains the values for the minimum at each x coordinate
     - name: max
       label: Max
+      description: the column in the dataframe that is the contains the values for the maximum at each x coordinate
     - name: open
       label: Open
+      description: the column in the dataframe the contains the values at opening at each x coordinate
     - name: close
       label: Close
+      description: the column in the dataframe the contains the values at close m at each x coordinate
     - name: levels
       label: Horizontal levels
     - name: fontsize
       label: Font Size
+      description: the font size
       value:
         - control: range
           value: 16
@@ -22,6 +29,7 @@
           max: 20
     - name: marginleft
       label: Margin left
+      description: The left margin
       value:
         - control: range
           value: 40
@@ -29,6 +37,7 @@
           max: 200
     - name: marginbottom
       label: Margin Bottom
+      description: the bottom margin
       value:
         - control: range
           value: 30
