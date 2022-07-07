@@ -5,6 +5,7 @@ HTMLWidgets.widget({
 
     el.parentElement.style.height = "100%";
     el.parentElement.style.maxHeight = "100%";
+    el.style.padding = '4px';
 
     return {
 
