@@ -631,6 +631,7 @@ const getDefinition = (pipeline /*: pipeline */) /*: steps */ => {
 }
 
 const setOutputs = (pipeline /*: pipeline */, sid /*: number */, outputs /*: outputs */) /*: void */ => {
+  if (!pipeline.outputs) pipeline.outputs = {};
   pipeline.outputs[sid] = clone(outputs);
 }
 
