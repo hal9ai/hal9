@@ -1,14 +1,21 @@
 #' Title
 #'
-#' @param data
 #' @param width
 #' @param height
-#' @param elementId
+#' @param environment The environment to use, production by default. Use 'devel' for
+#'   development and 'local' for local developer environment.
 #' @param ... Additional parameters
 #'
 #' @export
 #'
-h9_create <- function(width = "100%", height = "100%", elementId = NULL, ...) {
+h9_create <- function(width = "100%", height = "100%", environment = 'cloud', ...) {
+  elementId <- list(...)$elementId
+
+  library <- list(
+    cloud = "https://hal9.com/hal9.notebook.js",
+    devel = "https://devel.hal9.com/hal9.notebook.js",
+    local = "http://localhost:8080/hal9.notebook.js"
+  )
 
   pipeline <- list(
     steps = list(
@@ -25,7 +32,7 @@ h9_create <- function(width = "100%", height = "100%", elementId = NULL, ...) {
   x = list(
     pipeline = pipeline,
     pipeline_json = jsonlite::toJSON(pipeline, null = "list", auto_unbox = TRUE),
-    localhost = list(...)$localhost
+    library = library[[environment]]
   )
 
   # create widget
