@@ -54,6 +54,26 @@ async function datasetsSave(dataurl) {
   return await api.datasetsSave(dataurl);
 }
 
+async function exporttoGetSaveText(pipelineid, padding, alsoSkip) {
+  return await api.exporttoGetSaveText(pipelineid, padding, alsoSkip);
+}
+
+async function exporttoGetHtml(pipelineid) {
+  return await api.exporttoGetHtml(pipelineid);
+}
+
+async function exporttoGetHtmlRemote(pipelinepath) {
+  return await api.exporttoGetHtmlRemote(pipelinepath);
+}
+
+async function exporttoGetPythonScript(pipelineid) {
+  return await api.exporttoGetPythonScript(pipelineid);
+}
+
+async function exporttoGetRScript(pipelineid) {
+  return await api.exporttoGetRScript(pipelineid);
+}
+
 async function pipelinesCreate(steps) {
   return await api.pipelinesCreate(steps);
 }
@@ -142,10 +162,6 @@ async function pipelinesGetHashable(pipelineid) {
   return await api.pipelinesGetHashable(pipelineid);
 }
 
-async function pipelinesGetSaveText(pipelineid, padding, alsoSkip) {
-  return await api.pipelinesGetSaveText(pipelineid, padding, alsoSkip);
-}
-
 async function pipelinesLoad(pipeline) {
   return await api.pipelinesLoad(pipeline);
 }
@@ -172,22 +188,6 @@ async function pipelinesGetGlobals(pipelineid) {
 
 async function pipelinesInvalidateStep(pipelineid, sid) {
   return await api.pipelinesInvalidateStep(pipelineid, sid);
-}
-
-async function pipelinesGetHtml(pipelineid) {
-  return await api.pipelinesGetHtml(pipelineid);
-}
-
-async function pipelinesGetHtmlRemote(pipelinepath) {
-  return await api.pipelinesGetHtmlRemote(pipelinepath);
-}
-
-async function pipelinesGetPythonScript(pipelineid) {
-  return await api.pipelinesGetPythonScript(pipelineid);
-}
-
-async function pipelinesGetRScript(pipelineid) {
-  return await api.pipelinesGetRScript(pipelineid);
 }
 
 async function pipelinesUpdateMetadata(pipelineid, metadata) {
@@ -282,7 +282,6 @@ export default {
     setScript: pipelinesSetScript,
     getScript: pipelinesGetScript,
     getHashable: pipelinesGetHashable,
-    getSaveText: pipelinesGetSaveText,
     load: pipelinesLoad,
     getMaxId: pipelinesGetMaxId,
     getGlobal: pipelinesGetGlobal,
@@ -290,15 +289,19 @@ export default {
     getGlobalNames: pipelinesGetGlobalNames,
     getGlobals: pipelinesGetGlobals,
     invalidateStep: pipelinesInvalidateStep,
-    getHtml: pipelinesGetHtml,
-    getHtmlRemote: pipelinesGetHtmlRemote,
-    getPythonScript: pipelinesGetPythonScript,
-    getRScript: pipelinesGetRScript,
     updateMetadata: pipelinesUpdateMetadata,
     getMetadata: pipelinesGetMetadata,
     abort: pipelinesAbort,
     isAborted: pipelinesIsAborted,
     regenerateLayout: regenerateLayout,
+  },
+
+  exportto: {
+    getSaveText: exporttoGetSaveText,
+    getHtml: exporttoGetHtml,
+    getHtmlRemote: exporttoGetHtmlRemote,
+    getPythonScript: exporttoGetPythonScript,
+    getRScript: exporttoGetRScript,
   },
 
   screenshot: {

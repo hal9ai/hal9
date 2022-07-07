@@ -283,6 +283,38 @@ export async function datasetsSave(dataurl) {
   })
 }
 
+export async function exporttoGetSaveText(pipelineid, padding, alsoSkip) {
+  return await post("hal9.exportto.getSaveText(params.pipelineid, params.padding, params.alsoSkip)", {
+    pipelineid: pipelineid,
+    padding: padding,
+    alsoSkip: alsoSkip,
+  })
+}
+
+export async function exporttoGetHtml(pipelineid) {
+  return await post("hal9.exportto.getHtml(params.pipelineid)", {
+    pipelineid: pipelineid,
+  })
+}
+
+export async function exporttoGetHtmlRemote(pipelinepath) {
+  return await post("hal9.exporto.getHtmlRemote(params.pipelinepath)", {
+    pipelinepath: pipelinepath,
+  })
+}
+
+export async function exporttoGetPythonScript(pipelineid) {
+  return await post("hal9.exportto.getPythonScript(params.pipelineid)", {
+    pipelineid: pipelineid,
+  })
+}
+
+export async function exporttoGetRScript(pipelineid) {
+  return await post("hal9.exportto.getRScript(params.pipelineid)", {
+    pipelineid: pipelineid,
+  })
+}
+
 export async function pipelinesCreate(steps) {
   return await post("hal9.pipelines.create(params.steps)", {
     steps: steps,
@@ -441,14 +473,6 @@ export async function pipelinesGetHashable(pipelineid) {
   })
 }
 
-export async function pipelinesGetSaveText(pipelineid, padding, alsoSkip) {
-  return await post("hal9.pipelines.getSaveText(params.pipelineid, params.padding, params.alsoSkip)", {
-    pipelineid: pipelineid,
-    padding: padding,
-    alsoSkip: alsoSkip,
-  })
-}
-
 export async function pipelinesLoad(pipeline) {
   return await post("hal9.pipelines.load(params.pipeline)", {
     pipeline: pipeline,
@@ -492,30 +516,6 @@ export async function pipelinesInvalidateStep(pipelineid, sid) {
   return await post("hal9.pipelines.invalidateStep(params.pipelineid, params.sid)", {
     pipelineid: pipelineid,
     sid: sid,
-  })
-}
-
-export async function pipelinesGetHtml(pipelineid) {
-  return await post("hal9.pipelines.getHtml(params.pipelineid)", {
-    pipelineid: pipelineid,
-  })
-}
-
-export async function pipelinesGetHtmlRemote(pipelinepath) {
-  return await post("hal9.pipelines.getHtmlRemote(params.pipelinepath)", {
-    pipelinepath: pipelinepath,
-  })
-}
-
-export async function pipelinesGetPythonScript(pipelineid) {
-  return await post("hal9.pipelines.getPythonScript(params.pipelineid)", {
-    pipelineid: pipelineid,
-  })
-}
-
-export async function pipelinesGetRScript(pipelineid) {
-  return await post("hal9.pipelines.getRScript(params.pipelineid)", {
-    pipelineid: pipelineid,
   })
 }
 

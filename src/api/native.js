@@ -4,7 +4,8 @@ import * as pipelines from '../core/pipelines';
 import * as pipelineremote from '../core/pipelineremote';
 import * as datasets from '../core/datasets';
 import * as screenshot from '../core/utils/screenshot';
-import * as layout from '../core/layout'
+import * as layout from '../core/layout';
+import * as exportto from '../core/exportto';
 
 const runRemote = async (lambda, context) => {
   if (typeof(lambda) != 'function') {
@@ -133,6 +134,26 @@ export async function datasetsSave(dataurl) {
   return datasets.save(dataurl);
 }
 
+export async function exporttoGetSaveText(pipelineid, padding, alsoSkip) {
+  return await exportto.getSaveText(pipelineid, padding, alsoSkip);
+}
+
+export async function exporttoGetHtml(pipelineid) {
+  return await exportto.getHtml(pipelineid);
+}
+
+export async function exporttoGetHtmlRemote(pipelinepath) {
+  return await exportto.getHtmlRemote(pipelinepath);
+}
+
+export async function exporttoGetPythonScript(pipelineid) {
+  return await exportto.getPythonScript(pipelineid);
+}
+
+export async function exporttoGetRScript(pipelineid) {
+  return await exportto.getRScript(pipelineid);
+}
+
 export async function pipelinesCreate(steps) {
   return await pipelines.create(steps);
 }
@@ -221,10 +242,6 @@ export async function pipelinesGetHashable(pipelineid) {
   return await pipelines.getHashable(pipelineid);
 }
 
-export async function pipelinesGetSaveText(pipelineid, padding, alsoSkip) {
-  return await pipelines.getSaveText(pipelineid, padding, alsoSkip);
-}
-
 export async function pipelinesLoad(pipeline) {
   return await pipelines.load(pipeline);
 }
@@ -251,22 +268,6 @@ export async function pipelinesGetGlobals(pipelineid) {
 
 export async function pipelinesInvalidateStep(pipelineid, sid) {
   return await pipelines.invalidateStep(pipelineid, sid);
-}
-
-export async function pipelinesGetHtml(pipelineid) {
-  return await pipelines.getHtml(pipelineid);
-}
-
-export async function pipelinesGetHtmlRemote(pipelinepath) {
-  return await pipelines.getHtmlRemote(pipelinepath);
-}
-
-export async function pipelinesGetPythonScript(pipelineid) {
-  return await pipelines.getPythonScript(pipelineid);
-}
-
-export async function pipelinesGetRScript(pipelineid) {
-  return await pipelines.getRScript(pipelineid);
 }
 
 export async function pipelinesUpdateMetadata(pipelineid, metadata) {
