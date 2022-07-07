@@ -12,6 +12,8 @@ h9_impute(h, field = NULL, method = NULL, ...)
 \item{field}{List of columns in which to replace missing values}
 
 \item{method}{the function to use to impute the missing values. Currently available options are 'max', 'min', 'mean' median', 'zero'. Default is 'zero'}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

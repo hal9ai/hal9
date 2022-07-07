@@ -12,6 +12,8 @@ h9_sort(h, field = NULL, order = NULL, ...)
 \item{field}{The list of columns to sort by}
 
 \item{order}{The order in which to sort, default - ascending}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

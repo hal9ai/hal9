@@ -12,6 +12,8 @@ h9_fetch(h, url = NULL, resize = NULL, ...)
 \item{url}{}
 
 \item{resize}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

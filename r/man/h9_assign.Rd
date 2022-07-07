@@ -12,6 +12,8 @@ h9_assign(h, column = NULL, array = NULL, ...)
 \item{column}{Name of the new column}
 
 \item{array}{The array to be added to the table}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

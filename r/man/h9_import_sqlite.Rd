@@ -12,6 +12,8 @@ h9_import_sqlite(h, file = NULL, query = NULL, ...)
 \item{file}{}
 
 \item{query}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

@@ -8,6 +8,7 @@
 #' @param units 
 #' @param epochs 
 #' @param predictions 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -36,6 +37,7 @@ h9_predict_lstm <- function(h, prediction  = NULL, window  = NULL, units  = NULL
 #' @param h A h9 object created by h9_create.
 #' @param source 
 #' @param window 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export

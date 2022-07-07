@@ -10,6 +10,8 @@ h9_zip_to_map(h, zipcode = NULL, ...)
 \item{h}{A h9 object created by h9_create.}
 
 \item{zipcode}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

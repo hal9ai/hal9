@@ -14,6 +14,8 @@ h9_radial_bars(h, x = NULL, y = NULL, palette = NULL, ...)
 \item{y}{}
 
 \item{palette}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

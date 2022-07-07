@@ -23,6 +23,8 @@ h9_import_bigquery(
 \item{query}{}
 
 \item{dbLocation}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

@@ -5,6 +5,7 @@
 #' @param h A h9 object created by h9_create.
 #' @param field 
 #' @param separator 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export

@@ -12,6 +12,8 @@ h9_derive(h, column = NULL, expression = NULL, ...)
 \item{column}{The name of the new column. If this is a column that already exists in the dataframe, the derived column replaces the exisiting one.}
 
 \item{expression}{The expression based on which the new columns are derived}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

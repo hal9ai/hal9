@@ -4,6 +4,7 @@
 #'
 #' @param h A h9 object created by h9_create.
 #' @param url 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -28,6 +29,7 @@ h9_classify_image <- function(h, url  = NULL, ...) {
 #' @param h A h9 object created by h9_create.
 #' @param images 
 #' @param model 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -55,6 +57,7 @@ h9_estimate_pose <- function(h, images  = NULL, model  = NULL, ...) {
 #' @param y 
 #' @param type 
 #' @param predictions 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -81,6 +84,7 @@ h9_regression_model <- function(h, x  = NULL, y  = NULL, type  = NULL, predictio
 #'
 #' @param h A h9 object created by h9_create.
 #' @param sentiment 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export

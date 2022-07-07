@@ -12,6 +12,8 @@ h9_sma(h, source = NULL, window = NULL, ...)
 \item{source}{}
 
 \item{window}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

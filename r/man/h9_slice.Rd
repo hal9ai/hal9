@@ -12,6 +12,8 @@ h9_slice(h, start = NULL, end = NULL, ...)
 \item{start}{The starting index(included)}
 
 \item{end}{The ending index(not included)}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

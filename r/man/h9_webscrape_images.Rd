@@ -14,6 +14,8 @@ h9_webscrape_images(h, url = NULL, minSize = NULL, scrollIters = NULL, ...)
 \item{minSize}{}
 
 \item{scrollIters}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

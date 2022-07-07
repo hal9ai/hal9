@@ -12,6 +12,8 @@ h9_read_json(h, file = NULL, extract = NULL, ...)
 \item{file}{}
 
 \item{extract}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

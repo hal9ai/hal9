@@ -26,6 +26,8 @@ h9_predict_lstm(
 \item{epochs}{}
 
 \item{predictions}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

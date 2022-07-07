@@ -16,6 +16,8 @@ h9_waffle(h, x = NULL, y = NULL, wafflesizelabel = NULL, palette = NULL, ...)
 \item{wafflesizelabel}{}
 
 \item{palette}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

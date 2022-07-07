@@ -26,6 +26,8 @@ h9_plotly(
 \item{dataSizes}{}
 
 \item{palette}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

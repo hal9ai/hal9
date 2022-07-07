@@ -10,6 +10,8 @@ h9_select(h, columns = NULL, ...)
 \item{h}{A h9 object created by h9_create.}
 
 \item{columns}{The list of columns to keep}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

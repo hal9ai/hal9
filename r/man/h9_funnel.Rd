@@ -32,6 +32,8 @@ h9_funnel(
 \item{funnelType}{}
 
 \item{palette}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

@@ -10,6 +10,8 @@ h9_predict_sentiment(h, sentiment = NULL, ...)
 \item{h}{A h9 object created by h9_create.}
 
 \item{sentiment}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

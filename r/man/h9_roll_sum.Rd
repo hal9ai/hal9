@@ -10,6 +10,8 @@ h9_roll_sum(h, column = NULL, ...)
 \item{h}{A h9 object created by h9_create.}
 
 \item{column}{The column for which to calculate the rolling sum.}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

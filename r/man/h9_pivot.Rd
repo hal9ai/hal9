@@ -16,6 +16,8 @@ h9_pivot(h, rows = NULL, columns = NULL, values = NULL, summarizer = NULL, ...)
 \item{values}{The columns whose values should be collected to serve as the individual cells of the table}
 
 \item{summarizer}{the method to aggregate the collected values}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

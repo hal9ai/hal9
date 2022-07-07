@@ -14,6 +14,8 @@ h9_import_graphql(h, url = NULL, query = NULL, extract = NULL, ...)
 \item{query}{}
 
 \item{extract}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

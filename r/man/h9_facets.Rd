@@ -29,6 +29,8 @@ h9_facets(
 \item{chartType}{}
 
 \item{palette}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

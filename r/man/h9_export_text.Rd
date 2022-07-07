@@ -12,6 +12,8 @@ h9_export_text(h, field = NULL, separator = NULL, ...)
 \item{field}{}
 
 \item{separator}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

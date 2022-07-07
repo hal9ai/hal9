@@ -6,6 +6,7 @@
 #' @param file Either the URL for the csv or a local file.
 #' @param separator A single-character delimiter string between column values (default ',')
 #' @param skip The number of lines to skip (default 0) before reading data
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -31,6 +32,7 @@ h9_read_csv <- function(h, file  = NULL, separator  = NULL, skip  = NULL, ...) {
 #'
 #' @param h A h9 object created by h9_create.
 #' @param file 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -55,6 +57,7 @@ h9_read_excel <- function(h, file  = NULL, ...) {
 #' @param h A h9 object created by h9_create.
 #' @param file 
 #' @param extract 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -81,6 +84,7 @@ h9_read_json <- function(h, file  = NULL, extract  = NULL, ...) {
 #' @param url 
 #' @param query 
 #' @param extract 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -110,6 +114,7 @@ h9_import_graphql <- function(h, url  = NULL, query  = NULL, extract  = NULL, ..
 #' @param password 
 #' @param database 
 #' @param query 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -140,6 +145,7 @@ h9_import_mysql <- function(h, host  = NULL, user  = NULL, password  = NULL, dat
 #' @param statistic 
 #' @param limit 
 #' @param apiKey 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -167,6 +173,7 @@ h9_import_stocks <- function(h, stock  = NULL, statistic  = NULL, limit  = NULL,
 #' @param h A h9 object created by h9_create.
 #' @param file 
 #' @param query 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -191,6 +198,7 @@ h9_import_sqlite <- function(h, file  = NULL, query  = NULL, ...) {
 #'
 #' @param h A h9 object created by h9_create.
 #' @param file 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -216,6 +224,7 @@ h9_import_video <- function(h, file  = NULL, ...) {
 #' @param url 
 #' @param minSize 
 #' @param scrollIters 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -245,6 +254,7 @@ h9_webscrape_images <- function(h, url  = NULL, minSize  = NULL, scrollIters  = 
 #' @param hasHeader 
 #' @param scrollIters 
 #' @param scrollClick 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -277,6 +287,7 @@ h9_webscrape_table <- function(h, url  = NULL, text  = NULL, hasHeader  = NULL, 
 #' @param hasHeader 
 #' @param scrollIters 
 #' @param scrollClick 
+#' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
@@ -293,6 +304,30 @@ h9_webscrape_selectors <- function(h, url  = NULL, className  = NULL, columnName
       hasHeader = hasHeader,
       scrollIters = scrollIters,
       scrollClick = scrollClick,
+      ...
+    )
+  )
+
+}
+
+#' DataFrame
+#'
+#' Loads a dataframe
+#'
+#' @param h A h9 object created by h9_create.
+#' @param dataset The dataframe to load
+#' @param ... Other h9 parameters.
+#'
+#' @return A list with the pipeline specification.
+#' @export
+#'
+h9_load <- function(h, dataset  = NULL, ...) {
+
+  h9_add_step(
+    h,
+    "dataframe",
+    update = list(
+      dataset = dataset,
       ...
     )
   )

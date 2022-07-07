@@ -16,6 +16,8 @@ h9_map(h, lon = NULL, lat = NULL, size = NULL, label = NULL, ...)
 \item{size}{}
 
 \item{label}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.

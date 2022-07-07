@@ -23,6 +23,8 @@ h9_import_sheet(
 \item{sheet}{}
 
 \item{clientId}{}
+
+\item{...}{Other h9 parameters.}
 }
 \value{
 A list with the pipeline specification.
