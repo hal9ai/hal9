@@ -35,28 +35,35 @@ devtools::install_github("hal9ai/hal9ai")
 
 Hal9 is a javascript library that enables anyone to compose visualizations and predictive models optimized for websites and web APIs.
 
-You can explore your data interactively using the `hal9` function:
+You can initialize `hal9` with an empty web app as follows:
 
 ```{r example}
 library(hal9)
-## basic example code
 
-h9_create(my_data)
+# create app
+h9_create()
 ```
 
-You may also build a specific pipeline using our high-level functions:
+You may also add data as follows:
+
+```{r data}
+# load mtcars
+h9_create() |>
+  h9_load(mtcars)
+```
+
+You may also build a specific pipeline using our high-level chart functions:
 
 ```{r}
-# a plot pipeline
-mtcars |> 
-  h9_create() |> 
+# plot mtcars
+h9_create() |>
+  h9_load(mtcars) |> 
   h9_scatter(x = "mpg", y = "wt")
 ```
 
 ```{r, eval = TRUE, echo = FALSE, out.width="50%", fig.align="center"}
 knitr::include_graphics("scatter_example.png")
 ```
-
 
 ## TO DO
 
