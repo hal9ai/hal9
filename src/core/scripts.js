@@ -129,6 +129,7 @@ import vuetxt from '../../scripts/frameworks/vue.txt';
 import checkboxctrltxt from '../../scripts/controls/checkbox.txt.js';
 import dropdownctrltxt from '../../scripts/controls/dropdown.txt.js';
 import inputfilectrltxt from '../../scripts/controls/inputfile.txt.js';
+import messagectrltxt from '../../scripts/controls/message.txt.js';
 import numberctrltxt from '../../scripts/controls/number.txt.js';
 import rangectrltxt from '../../scripts/controls/range.txt.js';
 import spreadsheetctrltxt from '../../scripts/controls/spreadsheet.txt';
@@ -270,9 +271,10 @@ const scripts = {
   vue: { script: vuetxt, language: 'html' },
 
   // controls
-  checkbox: { script: checkboxctrltxt, language: 'javascript'},
+  checkbox: { script: checkboxctrltxt, language: 'javascript' },
   dropdown: { script: dropdownctrltxt, language: 'javascript' },
   fileinput: { script: inputfilectrltxt, language: 'javascript' },
+  message: { script: messagectrltxt, language: 'javascript' },
   numberinput: { script: numberctrltxt, language: 'javascript' },
   slider: { script: rangectrltxt, language: 'javascript' },
   sheet: { script: spreadsheetctrltxt, language: 'html' },
