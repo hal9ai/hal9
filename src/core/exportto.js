@@ -93,18 +93,24 @@ const getFunctionForComponentName = (componentName) => {
   return componentForComponentName?.function;
 }
 
-const getParametersForComponent = (step) => {
+const getParametersForComponent = (step, params) => {
   const componentName = step.name;
 
-  const params = Object.keys(step.params).map(paramName => {
-    const param = step.params[paramName];
-    if (param.value.length > 0)
-      return param.name + ' = "' + param.value[0].value + '"'
+  const fnparams = Object.keys(params).map(paramName => {
+    const param = params[paramName];
+    if (param.value.length > 0) {
+      if (param.value[0].control == 'dataframe') {
+        return param.name + ' = ' + param.value[0].source
+      }
+      else {
+        return param.name + ' = "' + param.value[0].value + '"'
+      }
+    }
     else
       return null;
   }).filter(e => e != null);
 
-  return params.join(', ');
+  return fnparams.join(', ');
 }
 
 export const getPythonScript = (pipelineid) => {
@@ -132,11 +138,12 @@ h9_create()`;
   for (const step of pipeline.steps) {
     const functionName = step.function ?? getFunctionForComponentName(step.name);
     if (functionName) {
-      script += ' |>\n  h9_' + functionName + '(' + getParametersForComponent(step) + ')';
+      const params = pipeline.params[step.id];
+      script += ' |>\n  h9_' + functionName + '(' + getParametersForComponent(step, params) + ')';
     } else {
       script += ' |>\n  # missing function for step: ' + step.name;
     }
   }
-  script += ' |>\n  h9_show()';
+  
   return script;
 }

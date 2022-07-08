@@ -761,7 +761,6 @@ export const load = async (pipeline /*: pipeline */) /*: pipelineid */ => {
 
     for (const param of Object.keys(params)) {
       if (params[param].value?.[0]?.control == 'dataframe') {
-        debugger;
         params[param].value[0].value = datasets.save(params[param].value[0].value);
       }
     }
