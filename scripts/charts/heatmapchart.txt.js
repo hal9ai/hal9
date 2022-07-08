@@ -6,8 +6,8 @@
       label: x
       single: true
       description: The column in the dataframe that defines the x coordinates of the marks
-    - name: y
-      label: y
+    - name: 'y'
+      label: 'y'
       description: The column in the dataframe that defines the y coordinates of the marks
       single: true
     - name: value
