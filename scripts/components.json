@@ -937,7 +937,7 @@
       "name": "dropdown",
       "function": "dropdown",
       "source": "controls/dropdown.txt.js",
-      "language": "javascript",
+      "language": "html",
       "label": "Dropdown",
       "description": "Embed an HTML <select> element",
       "icon": "fa-light fa-list-dropdown"
@@ -946,7 +946,7 @@
       "name": "fileinput",
       "function": "file_input",
       "source": "controls/inputfile.txt.js",
-      "language": "javascript",
+      "language": "html",
       "label": "File Input",
       "description": "Embed a file input control",
       "icon": "fa-light fa-file-import"
@@ -955,7 +955,7 @@
       "name": "numberinput",
       "function": "number_input",
       "source": "controls/number.txt.js",
-      "language": "javascript",
+      "language": "html",
       "label": "Number Input",
       "description": "Embed a number input control",
       "icon": "fa-light fa-input-numeric"
@@ -964,7 +964,7 @@
       "name": "slider",
       "function": "slider",
       "source": "controls/range.txt.js",
-      "language": "javascript",
+      "language": "html",
       "label": "Slider",
       "description": "Embed an slider element",
       "icon": "fa-light fa-slider"
@@ -982,7 +982,7 @@
       "name": "textbox",
       "function": "textbox",
       "source": "controls/textbox.txt.js",
-      "language": "javascript",
+      "language": "html",
       "label": "Text Input",
       "description": "Embed a text input control",
       "icon": "fa-light fa-input-text"
