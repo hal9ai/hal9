@@ -1,10 +1,23 @@
 /**
   output: [html]
+  description: Represent the data as vertices on the map of the world
   params:
     - name: lon
+      label: Longitude
+      single: true
+      description: The column that contains the values that should be interpreted as the Longitude of vertex
     - name: lat
+      label: Latitude
+      single: true
+      description: The column that contains the values that should be interpreted as the Longitude of vertex
     - name: size
+      label: Size
+      single: true
+      description: The column propotional to which the points size should be.
     - name: label
+      single: true
+      label: Label
+      description: The column which contains the labels of each of the verticies.
   deps: [
     'https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js',
     'https://unpkg.com/leaflet@1.7.1/dist/leaflet.js',
