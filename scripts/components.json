@@ -936,7 +936,7 @@
     {
       "name": "dropdown",
       "function": "dropdown",
-      "source": "controls/dropdown.txt.js",
+      "source": "controls/dropdown.txt",
       "language": "html",
       "label": "Dropdown",
       "description": "Embed an HTML <select> element",
@@ -945,7 +945,7 @@
     {
       "name": "fileinput",
       "function": "file_input",
-      "source": "controls/inputfile.txt.js",
+      "source": "controls/inputfile.txt",
       "language": "html",
       "label": "File Input",
       "description": "Embed a file input control",
@@ -954,7 +954,7 @@
     {
       "name": "numberinput",
       "function": "number_input",
-      "source": "controls/number.txt.js",
+      "source": "controls/number.txt",
       "language": "html",
       "label": "Number Input",
       "description": "Embed a number input control",
@@ -963,7 +963,7 @@
     {
       "name": "slider",
       "function": "slider",
-      "source": "controls/range.txt.js",
+      "source": "controls/range.txt",
       "language": "html",
       "label": "Slider",
       "description": "Embed an slider element",
@@ -981,7 +981,7 @@
     {
       "name": "textbox",
       "function": "textbox",
-      "source": "controls/textbox.txt.js",
+      "source": "controls/textbox.txt",
       "language": "html",
       "label": "Text Input",
       "description": "Embed a text input control",

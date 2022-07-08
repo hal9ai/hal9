@@ -126,15 +126,15 @@ import reacttxt from '../../scripts/frameworks/react.txt';
 import vuetxt from '../../scripts/frameworks/vue.txt';
 
 // control scripts
-import checkboxctrltxt from '../../scripts/controls/checkbox.txt.js';
-import dropdownctrltxt from '../../scripts/controls/dropdown.txt.js';
-import inputfilectrltxt from '../../scripts/controls/inputfile.txt.js';
-import messagectrltxt from '../../scripts/controls/message.txt.js';
-import numberctrltxt from '../../scripts/controls/number.txt.js';
-import rangectrltxt from '../../scripts/controls/range.txt.js';
+import checkboxctrltxt from '../../scripts/controls/checkbox.txt';
+import dropdownctrltxt from '../../scripts/controls/dropdown.txt';
+import inputfilectrltxt from '../../scripts/controls/inputfile.txt';
+import messagectrltxt from '../../scripts/controls/message.txt';
+import numberctrltxt from '../../scripts/controls/number.txt';
+import rangectrltxt from '../../scripts/controls/range.txt';
 import spreadsheetctrltxt from '../../scripts/controls/spreadsheet.txt';
 import textareactrltxt from '../../scripts/controls/textarea.txt.js';
-import textboxctrltxt from '../../scripts/controls/textbox.txt.js';
+import textboxctrltxt from '../../scripts/controls/textbox.txt';
 import websitectrltxt from '../../scripts/controls/website.txt.js';
 
 // business scripts
@@ -271,15 +271,15 @@ const scripts = {
   vue: { script: vuetxt, language: 'html' },
 
   // controls
-  checkbox: { script: checkboxctrltxt, language: 'javascript' },
-  dropdown: { script: dropdownctrltxt, language: 'javascript' },
-  fileinput: { script: inputfilectrltxt, language: 'javascript' },
-  message: { script: messagectrltxt, language: 'javascript' },
-  numberinput: { script: numberctrltxt, language: 'javascript' },
-  slider: { script: rangectrltxt, language: 'javascript' },
+  checkbox: { script: checkboxctrltxt, language: 'html' },
+  dropdown: { script: dropdownctrltxt, language: 'html' },
+  fileinput: { script: inputfilectrltxt, language: 'html' },
+  message: { script: messagectrltxt, language: 'html' },
+  numberinput: { script: numberctrltxt, language: 'html' },
+  slider: { script: rangectrltxt, language: 'html' },
   sheet: { script: spreadsheetctrltxt, language: 'html' },
   textarea: { script: textareactrltxt, language: 'javascript' },
-  textbox: { script: textboxctrltxt, language: 'javascript' },
+  textbox: { script: textboxctrltxt, language: 'html' },
   website: { script: websitectrltxt, language: 'javascript' },
 
   // business
