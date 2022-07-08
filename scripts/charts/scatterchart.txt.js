@@ -78,7 +78,6 @@ const chartdata = x && y
      y: hal9.utils.convert(v[y]),
      color: v[color] + '',
      size: hal9.utils.convert(v[size]),
-     label: v[label] ? (v[label].substring(0, 10) + (v[label].length > 10 ? '...' : '')) : '',
    }))
  : [];
 
