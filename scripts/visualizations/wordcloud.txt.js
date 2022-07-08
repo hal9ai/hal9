@@ -1,8 +1,15 @@
 /**
   output: [html]
+  description: Highlight words with their sizes
   params:
     - name: label
+      label: Label
+      description: The column containing words to be added to the cloud
+      single: true
     - name: size
+      label: Size
+      single: true
+      description: The column the size of the words should be in propotion to
   deps: [
     'https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js',
     'https://cdn.rawgit.com/jasondavies/d3-cloud/v1.2.1/build/d3.layout.cloud.js',

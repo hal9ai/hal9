@@ -1,9 +1,17 @@
 /**
   output: [html]
+  description: Visualize the running total as a series of gains and losses
   params:
     - name: x
+      label: x
+      single: true
+      description: The column that sets the x coordinates
     - name: 'y'
+      label: y
+      single: true
+      description: A cumalative sum is calculated on this column and then the difference are visualized
     - name: fontsize
+      description: The font size
       label: Font Size
       value:
         - control: range
@@ -11,6 +19,7 @@
           min: 5
           max: 20
     - name: marginleft
+      description: The left margin
       label: Margin left
       value:
         - control: range
@@ -18,6 +27,7 @@
           min: 20
           max: 200
     - name: marginbottom
+      description: The bottom margin
       label: Margin Bottom
       value:
         - control: range

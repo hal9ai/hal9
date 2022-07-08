@@ -1,11 +1,17 @@
 /**
   output: [html]
+  description: Visualize the data as nested rectangular sectors.
   params:
     - name: label
+      description: The column to be used as labels and colorcode the rectangular sectors
+      single: true
       label: Label
     - name: size
       label: Size
+      single: true
+      description: The column to which the area of the rectangular sections should be in propotion to
     - name: palette
+      description: the D3 Palette to determine the color scheme to use
       label: D3 Palette
       value:
         - control: paletteSelect
@@ -19,6 +25,7 @@
             - schemeSet2
             - schemeSet3
     - name: fontsize
+      description: The size of the font
       label: Font Size
       value:
         - control: range
@@ -26,6 +33,7 @@
           min: 5
           max: 20
     - name: marginleft
+      description: The left margin
       label: Margin left
       value:
         - control: range
@@ -34,6 +42,7 @@
           max: 200
     - name: marginbottom
       label: Margin Bottom
+      description: The bottom margin
       value:
         - control: range
           value: 30

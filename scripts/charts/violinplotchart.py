@@ -1,10 +1,15 @@
 ##
 ## deps: [ 'numpy', 'pandas', 'micropip' ]
 ## output: ['plot']
+## description: Visualize the distribution of quantitative data across several levels of one (or more) categorical variables such that those distributions can be compared.
 ## params:
 ##  - name: x
+##    single: true
+##    description: The column which should be on the x-axis of the plot. Either x or y should be categorical
 ##    label: x
 ##  - name: y
+##    description: The column which should be on the y-axis of the plot. Either x or y should be categorical
+##    single: true
 ##    label: y
 ##
 

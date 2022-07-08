@@ -444,7 +444,7 @@
     },
     {
       "name": "map",
-      "function": "map",
+      "function": "mapchart",
       "source": "visualizations/map.txt.js",
       "language": "javascript",
       "label": "Map",

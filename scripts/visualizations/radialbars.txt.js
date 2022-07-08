@@ -1,12 +1,24 @@
 /**
-  output: [ html ]
+  output: [html]
+  description: Visualize values as percentage of a shared rectagular area.
   params:
     - name: x
       label: Label
+      single: true
+      description: The column containing the labels of the charts
     - name: 'y'
       label: Value
+      single: true
+      description: the column containing the values the areas they occupy in the rectagular area should be propotional to
+    - name: wafflesizelabel
+      label: 'Size'
+      description: The size of the large rectangle
+      value:
+        - control: 'number'
+          value: '250'
     - name: palette
       label: D3 Palette
+      description: the D3 Palette to determine the color scheme to use
       value:
         - control: paletteSelect
           value: schemeTableau10
@@ -27,201 +39,152 @@
 **/
 
 data = await hal9.utils.toRows(data);
-barThinkness = Math.min(100 / data.length, 20);
 
-let chartData = data.map(d => {
-  return {
+// ratio column
+const total = data.reduce((a, b) => a + Math.abs(b[y]), 0);
+data = data.map(d => ({
     [x]: d[x],
-    values: d[y]
-  }
-})
+    [y]: d[y],
+    ratio: d[y] / total * 100
+}))
 
-// color for each bar
-let color = d3.scaleOrdinal(d3[palette])
-  .domain(chartData.map(d => d[x]))
-
-// sequence func for chartdata
-let seq = (length) => Array.apply(null, { length: length }).map((d, i) => i);
-
-// max value of chartdata
-let maxValue = d3.max(chartData.map(d => d.values));
+let chartData = data;
+chartData.map(e => {})
 
 // sizes for the chart
 let width = html.clientWidth;
 let height = html.clientHeight;
 
-let margin = ({ top: 50, left: 0, bottom: 30, right: 30 });
+// padding
+let padding = { x: 10, y: 40 }
 
-// bars
-let bar = ({ width: barThinkness, padding: 4 });
-let radialStart = 3 * width / 4 - margin.right;
-console.log('radialStart: ' + radialStart)
-let triangle = ({ width: bar.width / 2, height: bar.width, padding: 2, num: 3 });
-let triangleAllWidth = triangle.width + 2 * triangle.padding;
-console.log('triangle.width ' + triangle.width)
-let start = ({ left: 100, right: null, padding: 6 });
-let numOfBars = chartData.length;
+// whole or portion
+var options = {
+    style: "whole",
+    shape: "rect"
+};
+isRect = options.shape === "rect"
 
-// bars inner radius, max_min radius
-let barsTotalHeight = data.length * (bar.width + bar.padding);
-let maxRadius = Math.max(Math.min(width / 4, height / 3), barsTotalHeight);
-let maxCircle = barsTotalHeight >= maxRadius ? 0.5 : 1.5;
-let outerRadius = i => maxRadius - (bar.width + bar.padding) * i;
-let innerRadius = i => outerRadius(i) - bar.width;
+// waffles data array create
+const array = [];
 
-let minRadius = innerRadius(data.length - 1);
+const max = chartData.length;
+let index = 0, curr = 1,
+    accu = Math.round(chartData[0].ratio), waffle = [];
+for (let y = 9; y >= 0; y--)
+    for (let x = 0; x < 10; x++) {
+        if (curr > accu && index < max) {
+            if (chartData.length - 1 == index) {
+                //pass
+            }
+            else {
+                let r = Math.round(chartData[++index].ratio);
+                while (r === 0 && index < max) r = Math.round(chartData[++index].ratio);
+                accu += r;
+            }
+        }
 
-let deg = a => a * 180 / Math.PI;
+        waffle.push({ x, y, index });
+        curr++;
+    }
+array.push(waffle);
 
-// arc function
-let arc = (d, i) => d3.arc()
-  .innerRadius(innerRadius(i))
-  .outerRadius(outerRadius(i))
-  .startAngle(0)
-  .endAngle(x_scaler(d.values))()
+let waffles = array;
 
-// axisarc
-let axisArc = i => d3.arc()
-  .innerRadius(outerRadius(i) + bar.padding / 2)
-  .outerRadius(outerRadius(i) + bar.padding / 2)
-  .startAngle(0)
-  .endAngle(maxCircle * Math.PI)()
+// fun -> sequence of data length [1,2,3,4,5,6,]
+let sequence = (length) => Array.apply(null, { length: length }).map((d, i) => i);
 
-let x_scaler = d3.scaleLinear()
-  .domain([0, maxValue * 1.05])
-  .range([0, maxCircle * Math.PI])
+// each waffle size
+let waffleSize = width < height ? width : height;
 
-// title for the chart
-let title = g => g.append("title").text(d => `${y} - ${d[x]}\n${d3.format(",.2f")(d.values)}`);
+// fun-> color of each waffle index
+let color = d3.scaleOrdinal(d3[palette])
+    .domain(sequence(chartData.length))
 
-let restore = () => {
-  parts.start.transition().duration(500).attr("opacity", 1);
-  parts.bar.transition().duration(500).attr("opacity", 1);
-}
+// fun -> convert to currency
+toCurrency = num => d3.format(",.2f")(num);
 
-// highlight the bar
-let highlight = (e, d) => {
-  parts.start.transition().duration(500).attr("opacity", a => a === d ? 1 : 0.5);
-  parts.bar.transition().duration(500).attr("opacity", a => a === d ? 1 : 0.5);
-}
+// create svg, container of legend and waffles
+var legendChartpadding = parseFloat(wafflesizelabel) + 20;
+var svg = d3.create("svg")
+    .style("cursor", "default")
+    .attr("viewBox", [0, 0, width, height + parseFloat(wafflesizelabel / 8)]);
+html.appendChild(svg.node())
 
-let parts = ({ start: null, bar: null })
-
-// draw radial bars
-drawRadialBars = (g, tspace) => {
-  const ticks = x_scaler.ticks(15).slice(1, -1);
-  ticks.push(maxValue * 1.05);
-  g.attr("transform", `translate(${radialStart}, ${maxRadius + margin.top})`);
-
-const marks = g.append("g")
-  .selectAll(".tick")
-  .data(ticks)
-  .join("g")
-  .attr("class", "tick")
-  .attr("transform", d => `rotate(${deg(x_scaler(d)) - 90})`)
-  .call(g => g.append("line").attr("x1", maxRadius - bar.padding / 2).attr("x2", maxRadius + bar.padding / 2))
-  .call(g => g.append("text")
-    .attr("class", "tick")
-    .attr("transform", d => `translate(${maxRadius + bar.padding * 1.5},0)`)
-    .text(x_scaler.tickFormat(1, ".1s")));
-
-  const bars = g.selectAll(".bar")
-    .data(chartData)
+// container for the squares
+const g = svg.selectAll(".waffle")
+    .data(waffles)
     .join("g")
-    .attr("class", "bar")
-    .attr("opacity", 1)
-    .attr("fill", d => color(d[x]))
-    .call(g => g.append("path").attr("d", arc))
-    .call(g => g.append("circle")
-      .attr("r", bar.width / 2)
-      .attr("cx", (d, i) => outerRadius(i) - bar.width / 2)
-      .attr("transform", (d, i) => `rotate(${deg(x_scaler(d.values)) - 90})`))
-    .call(title)
-    .on("mouseover", bar.width > 5 ? highlight : undefined)
-    .on("mouseout", restore);
+    .attr("class", "waffle");
 
-  parts.bar = bars;
+// scale for the squares
+let scale = d3.scaleBand()
+  .domain(sequence(10))
+  // works with 300 fine
+  .range([0, parseFloat(wafflesizelabel)])
+  .padding(0.1)
+
+// assign color for the squares, each index, unique color
+const cellSize = scale.bandwidth();
+const half = cellSize / 2;
+const cells = g.append("g")
+    .selectAll(options.shape)
+    .data(d => d)
+    .join(options.shape)
+    .attr("fill", d => d.index === -1 ? "#ddd" : color(d.index));
+
+// assign each rect or not rect a size
+if (isRect) {
+    cells.attr("x", d => scale(d.x))
+        .attr("y", d => 0)
+        .attr("rx", 3).attr("ry", 3)
+        .attr("width", cellSize).attr("height", cellSize)
 }
-
-// draw startlines
-drawStartLines = g => {
-  const starts = g.selectAll(".start")
-    .data(chartData)
-    .join("g")
-    .attr("opacity", 1)
-    .attr("fill", d => color(d[x]))
-    .attr("transform", (d, i) => `translate(${bar.width + margin.left}, ${ maxRadius - outerRadius(i) + margin.top})`)
-    .call(g => g.append("circle").attr("cy", bar.width / 2).attr("r", bar.width / 2))
-    .call(g => g.append("rect").attr("width", start.left).attr("height", bar.width))
-    .call(title)
-    .on("mouseover", highlight)
-    .on("mouseout", restore);
-
-    var texts = starts.append("text")
-      .attr("class", "start")
-      .attr("font-weight", "bold")
-      .attr("alignment-baseline", "hanging")
-      .attr("dx", start.left + start.padding)
-      .attr("dy", 2)
-      .text(d => `${d[x]} ${d3.format(".2")(d.values)}`);
-
-  var widths = texts.nodes().map(d => d.getComputedTextLength());
-
-  const ext = d3.extent(widths);
-  const min = ext[0], max = ext[1];
-  starts.append("rect")
-    .attr("width", (d, i) => radialStart - (widths[i] + start.left + start.padding) - triangle.num * triangleAllWidth - 3 / 2 * bar.width - margin.left)
-    .attr("height", bar.width)
-    .attr("transform", (d, i) => `translate(${widths[i] + start.left + start.padding * 2}, 0)`)
-
-  const startTriangle = radialStart - triangle.num * triangleAllWidth;
-  starts.append("g")
-    .selectAll("polygon")
-    .data(seq(triangle.num))
-    .join("polygon")
-    .attr("points", `0,2 ${triangle.width},${triangle.width} 0,${triangle.height - 2}`)
-    .attr("transform", (d, i) => `translate(${startTriangle - bar.width + i * (triangle.width + triangle.padding) + 2 * triangle.padding - margin.left},0)`);
-
-  const startLength = start.left + start.right + start.padding * 2 + max + bar.width + (triangle.num ? 3 : 0);
-  starts.append("g")
-    .selectAll("polygon")
-    .data(seq(triangle.num))
-    .join("polygon")
-    .attr("points", `0,2 ${triangle.width},${triangle.width} 0,${triangle.height - 2}`)
-    .attr("transform", (d, i) => `translate(${startLength - bar.width + i * (triangle.width + triangle.padding)},0)`);
-
-  g.selectAll(".track")
-    .data(seq(chartData.length + 1))
-    .join("path")
-    .attr("class", "track")
-    .attr("stroke", "#ccc")
-    .attr("d", axisArc)
-    .attr("transform", `translate(${radialStart}, ${maxRadius + margin.top})`);
-
-  const y = d => innerRadius(d) + bar.width + bar.padding / 2 - minRadius + margin.top,
-    tspace = startLength + (triangle.width + triangle.padding) * triangle.num;
-  g.selectAll("line")
-    .data(seq(numOfBars + 1))
-    .join("line")
-    .attr("stroke", "#ccc")
-    .attr("x1", bar.width).attr("y1", y)
-    .attr("x2", radialStart).attr("y2", y);
-
-  parts.start = starts;
-
-  return tspace;
+else {
+    cells.attr("cx", d => scale(d.x) + half)
+        .attr("cy", d => 0)
+        .attr("r", half);
 }
+// if whole vizualization, assign a position in the graph
 
-// chart svg
-const svg = d3.create("svg")
-  .attr("font-size", (barThinkness * 0.7) + "pt")
-  .attr("cursor", "default")
-  .attr("viewBox", [0, 0, width, height]);
+cells.append("title").text(d => {
+    const cd = chartData[d.index];
+    return `${cd[x]}\n${toCurrency(cd[y])} (${cd.ratio.toFixed(1)}%)`;
+});
 
-document.body.append(svg.node());
+cells.transition()
+    .duration(d => d.y * 100)
+    .ease(d3.easeBounce)
+    .attr(isRect ? "y" : "cy", d => scale(d.y) + (isRect ? 0 : half));
+svg.transition().delay(550)
+    .on("end", () => drawLegend(svg, cells));
 
-svg.append("g").call(g => drawStartLines(g));
-svg.append("g").call(g => drawRadialBars(g));
+// draw legend
+let drawLegend = (svg, cells) => {
+    const legend = svg.selectAll(".legend")
+        .data(chartData.map(d => d[x]))
+        .join("g")
+        .attr("opacity", 1)
+        .attr("transform", (d, i) => `translate(${legendChartpadding},${i * 17.5})`)
+        .on("mouseover", highlight)
+        .on("mouseout", restore);
 
-const svgEl = svg.node();
-html.appendChild(svgEl);
+    legend.append("rect")
+        .attr("rx", 3).attr("ry", 3)
+        .attr("width", 30).attr("height", 15)
+        .attr("fill", (d, i) => color(i));
+
+    legend.append("text")
+        .attr("dx", 40)
+        .attr("alignment-baseline", "hanging")
+        .text((d, i) => `${d} (${chartData[i].ratio.toFixed(1)}%)`);
+
+    function highlight(e, d, restore) {
+        const i = legend.nodes().indexOf(e.currentTarget);
+        cells.transition().duration(500)
+            .attr("fill", d => d.index === i ? color(d.index) : "#ccc");
+    }
+    function restore() {
+        cells.transition().duration(500).attr("fill", d => color(d.index))
+    }
+}

@@ -1,8 +1,15 @@
 /**
   output: [ html ]
+  description: Visualize connections between columns as a graph. The size of each vertex is propotional to the number of edges originating from it.
   params:
     - name: from
+      label: From
+      single: true
+      description: Column containing the origin vertices of all the edges in the graph
     - name: to
+      label: To
+      single: true
+      description: Column containing the target vertices of all the edges in the graph
   deps:
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
     - https://cdn.jsdelivr.net/npm/d3@6

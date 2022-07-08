@@ -18,6 +18,7 @@
   /**
     params:
       - name: searchable
+        description: Whether the table should be searchable
         label: Searchable
         value:
           - control: select
@@ -28,11 +29,13 @@
               - name: no
                 label: No
       - name: perPage
+        description: The number of rows to be included per page
         label: 'Rows'
         value:
           - control: 'number'
             value: '5'
             lazy: true
+    description: create an HTML table to display data in the dataframe
   **/
   (async function() {
     var headings = [];

@@ -1,23 +1,30 @@
 /**
   output: [html]
+  description: Visualize the data as marks in a cartesian plane
   params:
     - name: x
       label: x
+      description: The column containing the x coordinates of the marks
+      single: true
       static: false
     - name: 'y'
       label: 'y'
+      description: The column containing the y coordinates of the marks
+      single: true
       static: false
     - name: color
       label: color
+      description: The column that should be used to group the marks into different colors
+      single: true
       static: false
     - name: size
       label: size
-      static: false
-    - name: label
-      label: label
+      description: The column the marks should be propotional in area to.
+      single: true
       static: false
     - name: palette
       label: D3 Palette
+      description: Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.
       value:
         - control: paletteSelect
           value: schemeTableau10
@@ -31,12 +38,14 @@
             - schemeSet3
     - name: fontsize
       label: Font Size
+      description: The size of the font to be used
       value:
         - control: range
           value: 16
           min: 5
           max: 20
     - name: marginleft
+      description: The left margin
       label: Margin left
       value:
         - control: range
@@ -44,6 +53,7 @@
           min: 20
           max: 200
     - name: marginbottom
+      description: The Bottom margin
       label: Margin Bottom
       value:
         - control: range
