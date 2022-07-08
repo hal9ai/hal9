@@ -88,8 +88,7 @@ h9_sample <- function(h, ...) {
   h9_add_step(h, "sample")
 }
 
-h9_add_step <- function(h, step, update = NULL) {
-
+h9_add_step <- function(h, step, update = NULL, matched_call = NULL) {
   novo_id <- lapply(h$x$pipeline$steps, function(x) x$id) |>
     as.numeric() |>
     max(0)
@@ -127,7 +126,13 @@ h9_add_step <- function(h, step, update = NULL) {
     inputed <- names(update)
 
     for(i in seq_along(update)) {
-      if (is.list(l_params[[1]][[inputed[i]]]$value)) {
+
+      val <- l_params[[1]][[inputed[i]]]$value
+      if (is.list(val)) {
+        if (val[[1]]$control == "dataframe") {
+          l_params[[1]][[inputed[i]]]$value[[1]]$source <- as.character(matched_call[[names(update)[i]]])
+        }
+
         l_params[[1]][[inputed[i]]]$value[[1]]$value <- update[[i]]
       } else if (!l_params[[1]][[inputed[i]]]$static) {
         l_params[[1]][[inputed[i]]]$value <- list(list(name = update[[i]]))

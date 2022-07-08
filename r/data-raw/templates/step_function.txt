@@ -10,6 +10,7 @@
 #' @export
 #'
 {{func_name}} <- function(h, {{func_params}}, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -17,7 +18,8 @@
     update = list(
 {{list_func_params}}
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
