@@ -20,7 +20,9 @@ import datatablecss from "../../libs/jedit/jedit.css";
 
 import components from '../../scripts/components.json';
 
-import { debugIf } from './utils/debug'
+import { debugIf } from './utils/debug';
+
+import * as datasets  from './datasets';
 
 /*::
 type paramid = number;
@@ -751,6 +753,20 @@ const getCallbacks = (pipelineid /*: pipelineid */, sid /*: number */) /*: Objec
 }
 
 export const load = async (pipeline /*: pipeline */) /*: pipelineid */ => {
+  
+  // validate steps and transfer dataframes
+  for (var idx = 0; idx < pipeline.steps.length; idx++) {
+    const step = pipeline.steps[idx];
+    const params = pipeline.params[step.id];
+
+    for (const param of Object.keys(params)) {
+      if (params[param].value?.[0]?.control == 'dataframe') {
+        debugger;
+        params[param].value[0].value = datasets.save(params[param].value[0].value);
+      }
+    }
+  }
+
   var pipelineid = store.add(pipeline);
 
   // deserialize dataframes
