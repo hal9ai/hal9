@@ -4,9 +4,12 @@
 \alias{h9_create}
 \title{Title}
 \usage{
-h9_create(width = "100\%", height = "100\%", elementId = NULL, ...)
+h9_create(width = "100\%", height = "100\%", environment = "cloud", ...)
 }
 \arguments{
+\item{environment}{The environment to use, production by default. Use 'devel' for
+development and 'local' for local developer environment.}
+
 \item{...}{Additional parameters}
 }
 \description{

@@ -9,9 +9,9 @@ h9_network(h, from = NULL, to = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{from}{}
+\item{from}{Column containing the origin vertices of all the edges in the graph}
 
-\item{to}{}
+\item{to}{Column containing the target vertices of all the edges in the graph}
 
 \item{...}{Other h9 parameters.}
 }

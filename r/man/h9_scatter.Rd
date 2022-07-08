@@ -10,7 +10,6 @@ h9_scatter(
   y = NULL,
   color = NULL,
   size = NULL,
-  label = NULL,
   palette = NULL,
   fontsize = NULL,
   marginleft = NULL,
@@ -21,23 +20,21 @@ h9_scatter(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{x}{}
+\item{x}{The column containing the x coordinates of the marks}
 
-\item{y}{}
+\item{y}{The column containing the y coordinates of the marks}
 
-\item{color}{}
+\item{color}{The column that should be used to group the marks into different colors}
 
-\item{size}{}
+\item{size}{The column the marks should be propotional in area to.}
 
-\item{label}{}
+\item{palette}{Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.}
 
-\item{palette}{}
+\item{fontsize}{The size of the font to be used}
 
-\item{fontsize}{}
+\item{marginleft}{The left margin}
 
-\item{marginleft}{}
-
-\item{marginbottom}{}
+\item{marginbottom}{The Bottom margin}
 
 \item{...}{Other h9 parameters.}
 }

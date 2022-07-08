@@ -4,16 +4,25 @@
 \alias{h9_radial_bars}
 \title{Radial}
 \usage{
-h9_radial_bars(h, x = NULL, y = NULL, palette = NULL, ...)
+h9_radial_bars(
+  h,
+  x = NULL,
+  y = NULL,
+  wafflesizelabel = NULL,
+  palette = NULL,
+  ...
+)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{x}{}
+\item{x}{The column containing the labels of the charts}
 
-\item{y}{}
+\item{y}{the column containing the values the areas they occupy in the rectagular area should be propotional to}
 
-\item{palette}{}
+\item{wafflesizelabel}{The size of the large rectangle}
+
+\item{palette}{the D3 Palette to determine the color scheme to use}
 
 \item{...}{Other h9 parameters.}
 }

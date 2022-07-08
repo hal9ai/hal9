@@ -19,11 +19,11 @@ h9_line_chart(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{x}{}
+\item{x}{The column in the dataframe which defines the x coordinate of each vertex of the line}
 
-\item{y}{}
+\item{y}{The column in the dataframe which defines the y coordinate of each vertex of the line}
 
-\item{palette}{}
+\item{palette}{Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.}
 
 \item{domainx}{}
 

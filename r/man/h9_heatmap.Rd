@@ -19,19 +19,19 @@ h9_heatmap(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{x}{}
+\item{x}{The column in the dataframe that defines the x coordinates of the marks}
 
-\item{y}{}
+\item{y}{The column in the dataframe that defines the y coordinates of the marks}
 
-\item{value}{}
+\item{value}{The column in the dataframe that defines the intensity of the colors of the marks}
 
 \item{palette}{}
 
-\item{fontsize}{}
+\item{fontsize}{The font size}
 
-\item{marginleft}{}
+\item{marginleft}{The left margin}
 
-\item{marginbottom}{}
+\item{marginbottom}{The bottom margin}
 
 \item{...}{Other h9 parameters.}
 }

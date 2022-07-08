@@ -19,19 +19,19 @@ h9_sankey(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{source}{}
+\item{source}{The column containing the source nodes}
 
-\item{target}{}
+\item{target}{The column containing the target nodes}
 
-\item{value}{}
+\item{value}{The column containing the volume of each arrow}
 
-\item{palette}{}
+\item{palette}{Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.}
 
-\item{fontsize}{}
+\item{fontsize}{The font size in pixels}
 
-\item{marginleft}{}
+\item{marginleft}{The margin on the left}
 
-\item{marginbottom}{}
+\item{marginbottom}{The margin on the bottom}
 
 \item{...}{Other h9 parameters.}
 }

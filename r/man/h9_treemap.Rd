@@ -18,17 +18,17 @@ h9_treemap(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{label}{}
+\item{label}{The column to be used as labels and colorcode the rectangular sectors}
 
-\item{size}{}
+\item{size}{The column to which the area of the rectangular sections should be in propotion to}
 
-\item{palette}{}
+\item{palette}{the D3 Palette to determine the color scheme to use}
 
-\item{fontsize}{}
+\item{fontsize}{The size of the font}
 
-\item{marginleft}{}
+\item{marginleft}{The left margin}
 
-\item{marginbottom}{}
+\item{marginbottom}{The bottom margin}
 
 \item{...}{Other h9 parameters.}
 }

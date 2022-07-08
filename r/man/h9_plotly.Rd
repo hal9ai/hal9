@@ -17,15 +17,15 @@ h9_plotly(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{x}{}
+\item{x}{The column that determines the x coordinates in the cartesian plane of the marks}
 
-\item{y}{}
+\item{y}{The column that determines the y coordinates in the cartesian plane of the marks}
 
-\item{chartType}{}
+\item{chartType}{The chart to be constructed. Currently accepts one of lines, scatter, barChart, fillArea, histogram, twoHistogram}
 
-\item{dataSizes}{}
+\item{dataSizes}{The size of the marks}
 
-\item{palette}{}
+\item{palette}{Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.}
 
 \item{...}{Other h9 parameters.}
 }

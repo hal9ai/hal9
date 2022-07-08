@@ -11,6 +11,7 @@
 #' @export
 #'
 h9_import_airbnb <- function(h, url  = NULL, maxReviews  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -19,7 +20,8 @@ h9_import_airbnb <- function(h, url  = NULL, maxReviews  = NULL, ...) {
       url = url,
       maxReviews = maxReviews,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -39,6 +41,7 @@ h9_import_airbnb <- function(h, url  = NULL, maxReviews  = NULL, ...) {
 #' @export
 #'
 h9_import_bigquery <- function(h, clientId  = NULL, projectNumber  = NULL, query  = NULL, dbLocation  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -49,7 +52,8 @@ h9_import_bigquery <- function(h, clientId  = NULL, projectNumber  = NULL, query
       query = query,
       dbLocation = dbLocation,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -69,6 +73,7 @@ h9_import_bigquery <- function(h, clientId  = NULL, projectNumber  = NULL, query
 #' @export
 #'
 h9_import_sheet <- function(h, url  = NULL, documentAccess  = NULL, sheet  = NULL, clientId  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -79,7 +84,8 @@ h9_import_sheet <- function(h, url  = NULL, documentAccess  = NULL, sheet  = NUL
       sheet = sheet,
       clientId = clientId,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -100,6 +106,7 @@ h9_import_sheet <- function(h, url  = NULL, documentAccess  = NULL, sheet  = NUL
 #' @export
 #'
 h9_import_reddit <- function(h, type  = NULL, sub  = NULL, query  = NULL, before  = NULL, after  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -111,7 +118,8 @@ h9_import_reddit <- function(h, type  = NULL, sub  = NULL, query  = NULL, before
       before = before,
       after = after,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -131,6 +139,7 @@ h9_import_reddit <- function(h, type  = NULL, sub  = NULL, query  = NULL, before
 #' @export
 #'
 h9_import_twitter <- function(h, search  = NULL, key  = NULL, secret  = NULL, type  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -141,7 +150,8 @@ h9_import_twitter <- function(h, search  = NULL, key  = NULL, secret  = NULL, ty
       secret = secret,
       type = type,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }

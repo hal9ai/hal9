@@ -14,6 +14,7 @@
 #' @export
 #'
 h9_predict_lstm <- function(h, prediction  = NULL, window  = NULL, units  = NULL, epochs  = NULL, predictions  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -25,7 +26,8 @@ h9_predict_lstm <- function(h, prediction  = NULL, window  = NULL, units  = NULL
       epochs = epochs,
       predictions = predictions,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -43,6 +45,7 @@ h9_predict_lstm <- function(h, prediction  = NULL, window  = NULL, units  = NULL
 #' @export
 #'
 h9_sma <- function(h, source  = NULL, window  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -51,7 +54,8 @@ h9_sma <- function(h, source  = NULL, window  = NULL, ...) {
       source = source,
       window = window,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }

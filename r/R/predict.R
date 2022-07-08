@@ -10,6 +10,7 @@
 #' @export
 #'
 h9_classify_image <- function(h, url  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -17,7 +18,8 @@ h9_classify_image <- function(h, url  = NULL, ...) {
     update = list(
       url = url,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -35,6 +37,7 @@ h9_classify_image <- function(h, url  = NULL, ...) {
 #' @export
 #'
 h9_estimate_pose <- function(h, images  = NULL, model  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -43,7 +46,8 @@ h9_estimate_pose <- function(h, images  = NULL, model  = NULL, ...) {
       images = images,
       model = model,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -63,6 +67,7 @@ h9_estimate_pose <- function(h, images  = NULL, model  = NULL, ...) {
 #' @export
 #'
 h9_regression_model <- function(h, x  = NULL, y  = NULL, type  = NULL, predictions  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -73,7 +78,8 @@ h9_regression_model <- function(h, x  = NULL, y  = NULL, type  = NULL, predictio
       type = type,
       predictions = predictions,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -90,6 +96,7 @@ h9_regression_model <- function(h, x  = NULL, y  = NULL, type  = NULL, predictio
 #' @export
 #'
 h9_predict_sentiment <- function(h, sentiment  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -97,7 +104,8 @@ h9_predict_sentiment <- function(h, sentiment  = NULL, ...) {
     update = list(
       sentiment = sentiment,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }

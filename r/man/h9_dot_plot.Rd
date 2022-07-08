@@ -20,21 +20,21 @@ h9_dot_plot(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{x}{}
+\item{x}{The column in the dataframe whose values should determine the position of the dots along the x-axis}
 
-\item{color}{}
+\item{color}{The column in the dataframe who's values should determine the color of each dot}
 
-\item{palette}{}
+\item{palette}{the D3 Palette to determine the color scheme to use}
 
-\item{dotsize}{}
+\item{dotsize}{the size of each dot}
 
-\item{ticks}{}
+\item{ticks}{The number of ticks on the x-axis}
 
-\item{fontsize}{}
+\item{fontsize}{the size of the font in pixels}
 
-\item{marginleft}{}
+\item{marginleft}{the left margin}
 
-\item{marginbottom}{}
+\item{marginbottom}{the bottom margin}
 
 \item{...}{Other h9 parameters.}
 }

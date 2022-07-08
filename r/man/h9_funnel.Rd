@@ -19,19 +19,19 @@ h9_funnel(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{stage}{}
+\item{stage}{The column in the dataframe that contains all the stages of the process}
 
-\item{value}{}
+\item{value}{The column in the dataframe that contains the values corresponding to each stage of the process}
 
-\item{label}{}
+\item{label}{The column in the dataframe that should be used to create labels of the stages}
 
-\item{fontSize}{}
+\item{fontSize}{The font size}
 
-\item{showPercentSelection}{}
+\item{showPercentSelection}{Boolean on whether to show the percentage in each step}
 
-\item{funnelType}{}
+\item{funnelType}{The type of the funnel to make. Options are 2d, 3d and flat.}
 
-\item{palette}{}
+\item{palette}{Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.}
 
 \item{...}{Other h9 parameters.}
 }

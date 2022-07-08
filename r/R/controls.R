@@ -10,6 +10,7 @@
 #' @export
 #'
 h9_website <- function(h, site  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -17,7 +18,8 @@ h9_website <- function(h, site  = NULL, ...) {
     update = list(
       site = site,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }

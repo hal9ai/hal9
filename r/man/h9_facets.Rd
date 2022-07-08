@@ -18,17 +18,17 @@ h9_facets(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{x}{}
+\item{x}{The column in the dataframe that should be along the x-axis in all the subplots.}
 
-\item{y}{}
+\item{y}{The column in the dataframe that should be along the y-axis in all the subplots.}
 
-\item{facets}{}
+\item{facets}{The columns in the dataframe that should define the marks to facetted subplots in  horizontal and vertical directions of the subplots.}
 
-\item{color}{}
+\item{color}{The column in the dataframe that will define the color of the marks in each of the subplots.}
 
-\item{chartType}{}
+\item{chartType}{The type of chart each of the subplots. Currently supports Scatter, Bar, Line and Cell}
 
-\item{palette}{}
+\item{palette}{Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.}
 
 \item{...}{Other h9 parameters.}
 }

@@ -21,23 +21,23 @@ h9_error_bar(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{x}{}
+\item{x}{the column in the dataframe that is the contains the values for the x coordinates}
 
-\item{min}{}
+\item{min}{the column in the dataframe that is the contains the values for the minimum at each x coordinate}
 
-\item{max}{}
+\item{max}{the column in the dataframe that is the contains the values for the maximum at each x coordinate}
 
-\item{open}{}
+\item{open}{the column in the dataframe the contains the values at opening at each x coordinate}
 
-\item{close}{}
+\item{close}{the column in the dataframe the contains the values at close m at each x coordinate}
 
 \item{levels}{}
 
-\item{fontsize}{}
+\item{fontsize}{the font size}
 
-\item{marginleft}{}
+\item{marginleft}{The left margin}
 
-\item{marginbottom}{}
+\item{marginbottom}{the bottom margin}
 
 \item{...}{Other h9 parameters.}
 }

@@ -3,18 +3,19 @@
 #' A chart of charts organized in a grid
 #'
 #' @param h A h9 object created by h9_create.
-#' @param x 
-#' @param y 
-#' @param facets 
-#' @param color 
-#' @param chartType 
-#' @param palette 
+#' @param x The column in the dataframe that should be along the x-axis in all the subplots.
+#' @param y The column in the dataframe that should be along the y-axis in all the subplots.
+#' @param facets The columns in the dataframe that should define the marks to facetted subplots in  horizontal and vertical directions of the subplots.
+#' @param color The column in the dataframe that will define the color of the marks in each of the subplots.
+#' @param chartType The type of chart each of the subplots. Currently supports Scatter, Bar, Line and Cell
+#' @param palette Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
 h9_facets <- function(h, x  = NULL, y  = NULL, facets  = NULL, color  = NULL, chartType  = NULL, palette  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -27,7 +28,8 @@ h9_facets <- function(h, x  = NULL, y  = NULL, facets  = NULL, color  = NULL, ch
       chartType = chartType,
       palette = palette,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -37,19 +39,20 @@ h9_facets <- function(h, x  = NULL, y  = NULL, facets  = NULL, color  = NULL, ch
 #' Communicate how data narrows down
 #'
 #' @param h A h9 object created by h9_create.
-#' @param stage 
-#' @param value 
-#' @param label 
-#' @param fontSize 
-#' @param showPercentSelection 
-#' @param funnelType 
-#' @param palette 
+#' @param stage The column in the dataframe that contains all the stages of the process
+#' @param value The column in the dataframe that contains the values corresponding to each stage of the process
+#' @param label The column in the dataframe that should be used to create labels of the stages
+#' @param fontSize The font size
+#' @param showPercentSelection Boolean on whether to show the percentage in each step
+#' @param funnelType The type of the funnel to make. Options are 2d, 3d and flat.
+#' @param palette Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
 h9_funnel <- function(h, stage  = NULL, value  = NULL, label  = NULL, fontSize  = NULL, showPercentSelection  = NULL, funnelType  = NULL, palette  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -63,7 +66,8 @@ h9_funnel <- function(h, stage  = NULL, value  = NULL, label  = NULL, fontSize  
       funnelType = funnelType,
       palette = palette,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -73,16 +77,17 @@ h9_funnel <- function(h, stage  = NULL, value  = NULL, label  = NULL, fontSize  
 #' Clearly map out Earthly datasets that have columns for latitude and longitude
 #'
 #' @param h A h9 object created by h9_create.
-#' @param lon 
-#' @param lat 
-#' @param size 
-#' @param label 
+#' @param lon The column that contains the values that should be interpreted as the Longitude of vertex
+#' @param lat The column that contains the values that should be interpreted as the Longitude of vertex
+#' @param size The column propotional to which the points size should be.
+#' @param label The column which contains the labels of each of the verticies.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_map <- function(h, lon  = NULL, lat  = NULL, size  = NULL, label  = NULL, ...) {
+h9_mapchart <- function(h, lon  = NULL, lat  = NULL, size  = NULL, label  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -93,7 +98,8 @@ h9_map <- function(h, lon  = NULL, lat  = NULL, size  = NULL, label  = NULL, ...
       size = size,
       label = label,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -103,14 +109,15 @@ h9_map <- function(h, lon  = NULL, lat  = NULL, size  = NULL, label  = NULL, ...
 #' Dazzle your colleagues with this colorful animated network graph
 #'
 #' @param h A h9 object created by h9_create.
-#' @param from 
-#' @param to 
+#' @param from Column containing the origin vertices of all the edges in the graph
+#' @param to Column containing the target vertices of all the edges in the graph
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
 h9_network <- function(h, from  = NULL, to  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -119,7 +126,8 @@ h9_network <- function(h, from  = NULL, to  = NULL, ...) {
       from = from,
       to = to,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -129,17 +137,18 @@ h9_network <- function(h, from  = NULL, to  = NULL, ...) {
 #' Choose from a variety of Plotly visualizations
 #'
 #' @param h A h9 object created by h9_create.
-#' @param x 
-#' @param y 
-#' @param chartType 
-#' @param dataSizes 
-#' @param palette 
+#' @param x The column that determines the x coordinates in the cartesian plane of the marks
+#' @param y The column that determines the y coordinates in the cartesian plane of the marks
+#' @param chartType The chart to be constructed. Currently accepts one of lines, scatter, barChart, fillArea, histogram, twoHistogram
+#' @param dataSizes The size of the marks
+#' @param palette Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
 h9_plotly <- function(h, x  = NULL, y  = NULL, chartType  = NULL, dataSizes  = NULL, palette  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -151,7 +160,8 @@ h9_plotly <- function(h, x  = NULL, y  = NULL, chartType  = NULL, dataSizes  = N
       dataSizes = dataSizes,
       palette = palette,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -161,15 +171,17 @@ h9_plotly <- function(h, x  = NULL, y  = NULL, chartType  = NULL, dataSizes  = N
 #' A circular bar chart
 #'
 #' @param h A h9 object created by h9_create.
-#' @param x 
-#' @param y 
-#' @param palette 
+#' @param x The column containing the labels of the charts
+#' @param y the column containing the values the areas they occupy in the rectagular area should be propotional to
+#' @param wafflesizelabel The size of the large rectangle
+#' @param palette the D3 Palette to determine the color scheme to use
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_radial_bars <- function(h, x  = NULL, y  = NULL, palette  = NULL, ...) {
+h9_radial_bars <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -177,9 +189,11 @@ h9_radial_bars <- function(h, x  = NULL, y  = NULL, palette  = NULL, ...) {
     update = list(
       x = x,
       y = y,
+      wafflesizelabel = wafflesizelabel,
       palette = palette,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -199,6 +213,7 @@ h9_radial_bars <- function(h, x  = NULL, y  = NULL, palette  = NULL, ...) {
 #' @export
 #'
 h9_waffle <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -209,7 +224,8 @@ h9_waffle <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette 
       wafflesizelabel = wafflesizelabel,
       palette = palette,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -219,17 +235,18 @@ h9_waffle <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette 
 #' Lay out cascades of data next to a towering waterfall representing the total
 #'
 #' @param h A h9 object created by h9_create.
-#' @param x 
-#' @param y 
-#' @param fontsize 
-#' @param marginleft 
-#' @param marginbottom 
+#' @param x The column that sets the x coordinates
+#' @param y A cumalative sum is calculated on this column and then the difference are visualized
+#' @param fontsize The font size
+#' @param marginleft The left margin
+#' @param marginbottom The bottom margin
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
 h9_waterfall <- function(h, x  = NULL, y  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -241,7 +258,8 @@ h9_waterfall <- function(h, x  = NULL, y  = NULL, fontsize  = NULL, marginleft  
       marginleft = marginleft,
       marginbottom = marginbottom,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -251,14 +269,15 @@ h9_waterfall <- function(h, x  = NULL, y  = NULL, fontsize  = NULL, marginleft  
 #' Make the most frequent words in a dataset stand out in a trendy way
 #'
 #' @param h A h9 object created by h9_create.
-#' @param label 
-#' @param size 
+#' @param label The column containing words to be added to the cloud
+#' @param size The column the size of the words should be in propotion to
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
 h9_wordcloud <- function(h, label  = NULL, size  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -267,7 +286,8 @@ h9_wordcloud <- function(h, label  = NULL, size  = NULL, ...) {
       label = label,
       size = size,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }

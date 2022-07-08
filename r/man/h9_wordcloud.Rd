@@ -9,9 +9,9 @@ h9_wordcloud(h, label = NULL, size = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{label}{}
+\item{label}{The column containing words to be added to the cloud}
 
-\item{size}{}
+\item{size}{The column the size of the words should be in propotion to}
 
 \item{...}{Other h9 parameters.}
 }

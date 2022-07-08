@@ -17,15 +17,15 @@ h9_waterfall(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{x}{}
+\item{x}{The column that sets the x coordinates}
 
-\item{y}{}
+\item{y}{A cumalative sum is calculated on this column and then the difference are visualized}
 
-\item{fontsize}{}
+\item{fontsize}{The font size}
 
-\item{marginleft}{}
+\item{marginleft}{The left margin}
 
-\item{marginbottom}{}
+\item{marginbottom}{The bottom margin}
 
 \item{...}{Other h9 parameters.}
 }

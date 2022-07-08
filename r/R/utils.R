@@ -11,6 +11,7 @@
 #' @export
 #'
 h9_city_to_map <- function(h, city  = NULL, state  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -19,7 +20,8 @@ h9_city_to_map <- function(h, city  = NULL, state  = NULL, ...) {
       city = city,
       state = state,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -36,6 +38,7 @@ h9_city_to_map <- function(h, city  = NULL, state  = NULL, ...) {
 #' @export
 #'
 h9_zip_to_map <- function(h, zipcode  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -43,7 +46,8 @@ h9_zip_to_map <- function(h, zipcode  = NULL, ...) {
     update = list(
       zipcode = zipcode,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -61,6 +65,7 @@ h9_zip_to_map <- function(h, zipcode  = NULL, ...) {
 #' @export
 #'
 h9_upscaler <- function(h, originalImg  = NULL, model  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -69,7 +74,8 @@ h9_upscaler <- function(h, originalImg  = NULL, model  = NULL, ...) {
       originalImg = originalImg,
       model = model,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
@@ -86,6 +92,7 @@ h9_upscaler <- function(h, originalImg  = NULL, model  = NULL, ...) {
 #' @export
 #'
 h9_stop <- function(h, expression  = NULL, ...) {
+  matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
@@ -93,7 +100,8 @@ h9_stop <- function(h, expression  = NULL, ...) {
     update = list(
       expression = expression,
       ...
-    )
+    ),
+    matched_call = matched_call
   )
 
 }
