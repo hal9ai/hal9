@@ -1,14 +1,22 @@
 /**
   input: [ data ]
   output: [ html ]
+  description: Show values across different stages of a process.
   params:
   - name: stage
     label: Stage
+    single: true
+    description: The column in the dataframe that contains all the stages of the process
   - name: value
     label: Value
+    single: true
+    description: The column in the dataframe that contains the values corresponding to each stage of the process
   - name: label
     label: Label
+    single: true
+    description: The column in the dataframe that should be used to create labels of the stages
   - name: fontSize
+    description: The font size 
     label: Font Size
     value:
     - control: range
@@ -17,6 +25,7 @@
       max: 30
   - name: showPercentSelection
     label: Show Percent
+    description: Boolean on whether to show the percentage in each step
     value:
     - control: select
       value: 'true'
@@ -26,7 +35,8 @@
       - name: 'false'
         label: No
   - name: funnelType
-    label: Show Percent
+    label: Funnel Type
+    description: The type of the funnel to make. Options are 2d, 3d and flat.
     value:
     - control: select
       value: '2d'
@@ -38,6 +48,7 @@
       - name: 'flat'
         label: Flat
   - name: palette
+    description: Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.
     label: D3 Palette
     value:
     - control: paletteSelect

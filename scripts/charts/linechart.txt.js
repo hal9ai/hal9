@@ -1,14 +1,18 @@
 /**
   output: [html]
+  description: represent each row in a dataframe as a plot in a polypoint line
   params:
     - name: x
       label: x
+      description: The column in the dataframe which defines the x coordinate of each vertex of the line
       static: false
     - name: "y"
       label: "y"
+      description: The column in the dataframe which defines the y coordinate of each vertex of the line
       static: false
     - name: palette
       label: D3 Palette
+      description: Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.
       value:
         - control: paletteSelect
           value: schemeTableau10

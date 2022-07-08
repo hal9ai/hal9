@@ -14,12 +14,22 @@
 <script>
   /**
     output: [ html ]
+    description: show a gallery of images
     params:
-      - data
-      - image
-      - label
+      - name: data
+        label: Data
+        single: true
+      - name: image
+        label: Image
+        single: true
+        description: The column in the dataframe that contains the images
+      - name: label
+        label: 'Label'
+        single: true
+        description: The column in the dataframe that should be displayed as a label on the bottom of the images.
       - name: columns
         label: 'Columns'
+        description: The number of columns the gallery should have
         value:
           - control: 'number'
             value: 3

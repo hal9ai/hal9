@@ -1,9 +1,18 @@
 /**
   output: [html]
+  description: plot the dataframe as a color-coded matrix 
   params:
     - name: x
-    - name: 'y'
+      label: x
+      single: true
+      description: The column in the dataframe that defines the x coordinates of the marks
+    - name: y
+      label: y
+      description: The column in the dataframe that defines the y coordinates of the marks
+      single: true
     - name: value
+      label: Value
+      description: The column in the dataframe that defines the intensity of the colors of the marks
     - name: palette
       label: D3 Palette
       value:
@@ -13,16 +22,22 @@
           values:
             - name: blue
               colors: ['#ffffff', '#4e79a7']
+              label: Blue
             - name: orange
               colors: ['#ffffff', '#f28e2c']
+              label: Orange
             - name: red
               colors: ['#ffffff', '#e15759']
+              label: Red
             - name: green
               colors: ['#ffffff', '#59a14f']
+              label: Green
             - name: violet
               colors: ['#ffffff', '#af7aa1']
+              label: Violet
     - name: fontsize
       label: Font Size
+      description: The font size
       value:
         - control: range
           value: 16
@@ -30,6 +45,7 @@
           max: 20
     - name: marginleft
       label: Margin left
+      description: The left margin
       value:
         - control: range
           value: 40
@@ -37,6 +53,7 @@
           max: 200
     - name: marginbottom
       label: Margin Bottom
+      description: The bottom margin
       value:
         - control: range
           value: 30

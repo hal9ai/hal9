@@ -1,16 +1,24 @@
 /**
   output: [ html ]
+  description: create subplots on a shared set of axes to visualize how distributions vary accross different categories
   params:
     - name: x
       label: x
+      single: true
+      description: The column in the dataframe that should be along the x-axis in all the subplots.
     - name: 'y'
       label: 'y'
+      single: true
+      description: The column in the dataframe that should be along the y-axis in all the subplots.
     - name: facets
       label: Facets
+      description: The columns in the dataframe that should define the marks to facetted subplots in  horizontal and vertical directions of the subplots.
     - name: color
       label: Color
+      description: The column in the dataframe that will define the color of the marks in each of the subplots.
     - name: chartType
       label: Chart
+      description: The type of chart each of the subplots. Currently supports Scatter, Bar, Line and Cell
       value:
         - control: select
           value: dot
@@ -25,6 +33,8 @@
               label: Cell
     - name: palette
       label: D3 Palette
+      description: Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.
+
       value:
         - control: paletteSelect
           value: schemeTableau10
