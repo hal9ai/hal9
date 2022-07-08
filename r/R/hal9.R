@@ -92,7 +92,7 @@ h9_add_step <- function(h, step, update = NULL) {
 
   novo_id <- lapply(h$x$pipeline$steps, function(x) x$id) |>
     as.numeric() |>
-    max()
+    max(0)
 
   novo_id <- novo_id + 1
 
