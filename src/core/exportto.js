@@ -96,8 +96,6 @@ const getFunctionForComponentName = (componentName) => {
 const getParametersForComponent = (step) => {
   const componentName = step.name;
 
-  debugger;
-
   const params = Object.keys(step.params).map(paramName => {
     const param = step.params[paramName];
     if (param.value.length > 0)
@@ -134,7 +132,6 @@ h9_create()`;
   for (const step of pipeline.steps) {
     const functionName = step.function ?? getFunctionForComponentName(step.name);
     if (functionName) {
-      debugger;
       script += ' |>\n  h9_' + functionName + '(' + getParametersForComponent(step) + ')';
     } else {
       script += ' |>\n  # missing function for step: ' + step.name;
