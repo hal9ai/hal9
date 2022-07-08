@@ -443,7 +443,7 @@
       "icon": "fa-light fa-chart-line"
     },
     {
-      "name": "map",
+      "name": "mapchart",
       "function": "mapchart",
       "source": "visualizations/map.txt.js",
       "language": "javascript",
