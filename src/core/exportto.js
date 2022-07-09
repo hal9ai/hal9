@@ -103,7 +103,8 @@ const getParametersForComponent = (step, params) => {
         return param.name + ' = ' + param.value[0].source
       }
       else {
-        return param.name + ' = "' + param.value[0].value + '"'
+        const value = param.value[0].value ?? param.value[0].name;
+        return param.name + ' = "' + value + '"'
       }
     }
     else
