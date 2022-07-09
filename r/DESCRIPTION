@@ -1,7 +1,7 @@
 Package: hal9
 Type: Package
 Title: Interface to 'hal9.js' 
-Version: 0.1.0
+Version: 0.1.2
 Author: Who wrote it
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: Hal9 is a javascript library that enables anyone to compose
