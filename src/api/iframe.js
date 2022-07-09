@@ -16,6 +16,8 @@ export const init = async (options, hal9wnd) => {
   // iframe.allow = 'camera;microphone';
   // iframe.setAttribute('sandbox', 'allow-forms allow-downloads allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation allow-scripts allow-same-origin');
 
+  iframe.setAttribute('scrolling', 'no');
+
   iframe.style.border = 'none';
   iframe.style.width = '100%';
   iframe.style.height = '100%';
@@ -129,7 +131,7 @@ export const init = async (options, hal9wnd) => {
         </style>
       </head>
       <body>
-        <div id="output" style="width: 100%; height: 100%;"></div>
+        <div id="output" style="width: 100%; height: 100%; overflow: auto;"></div>
       </body>
     </html>
   `;
