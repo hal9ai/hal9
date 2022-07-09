@@ -396,5 +396,9 @@ async function buildHtml(parentEl, json, max, type, root) {
 }
 
 export async function build(parentEl, json) {
-  await buildHtml(parentEl, json, settings.maxLevels, undefined, true);
+  const scroll = createElem(parentEl, 'div', 'jedit-scroll');
+  scroll.style.width = scroll.style.height = scroll.style.maxHeight = scroll.style.maxWidth = "100%";
+  scroll.style.overflow = 'auto';
+
+  await buildHtml(scroll, json, settings.maxLevels, undefined, true);
 }
