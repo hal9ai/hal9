@@ -759,9 +759,11 @@ export const load = async (pipeline /*: pipeline */) /*: pipelineid */ => {
     const step = pipeline.steps[idx];
     const params = pipeline.params[step.id];
 
-    for (const param of Object.keys(params)) {
-      if (params[param].value?.[0]?.control == 'dataframe') {
-        params[param].value[0].value = datasets.save(params[param].value[0].value);
+    if (params) {
+      for (const param of Object.keys(params)) {
+        if (params[param].value?.[0]?.control == 'dataframe') {
+          params[param].value[0].value = datasets.save(params[param].value[0].value);
+        }
       }
     }
   }
