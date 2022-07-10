@@ -81,7 +81,7 @@ export const getServerUrl = () => {
 }
 
 export const isNotProduction = () => {
-  return hal9env != getId();
+  return 'prod' != getId();
 }
 
 export const getServerCachedUrl = () => {
