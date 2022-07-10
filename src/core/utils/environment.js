@@ -80,6 +80,10 @@ export const getServerUrl = () => {
   return 'https://api.devel.hal9.com';
 }
 
+export const isNotProduction = () => {
+  return hal9env != getId();
+}
+
 export const getServerCachedUrl = () => {
   const hal9env = getId();
 

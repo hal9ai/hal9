@@ -244,7 +244,8 @@ export default {
     getServerUrl: environment.getServerUrl,
     getServerCachedUrl: environment.getServerCachedUrl,
     getWebsiteUrl: environment.getWebsiteUrl,
-    getLibraryUrl: environment.getLibraryUrl
+    getLibraryUrl: environment.getLibraryUrl,
+    isNotProduction: environment.isNotProduction
   },
 
   datasets: {
