@@ -12,8 +12,15 @@ title: "Get Started"
 knitr::opts_chunk$set(python.reticulate = FALSE)
 ```
 
-```{r, eval = FALSE}
-install.packages("hal9")
+```{r, include = FALSE}
+devtools::install_github("hal9ai/hal9ai", subdir = "r")
+```
+
+```{r}
+library(hal9)
+h9_create() |>
+  h9_load(dataset = mtcars) |>
+  h9_scatter_chart(x = "cyl", y = "disp")
 ```
 
 ## Python

@@ -15,7 +15,7 @@ You can install the development version of hal9 from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("hal9ai/hal9ai")
+devtools::install_github("hal9ai/hal9ai", subdir = "r")
 ```
 
 ## Basic Usage
