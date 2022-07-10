@@ -56,6 +56,7 @@ import mapcharttxt from '../../scripts/visualizations/map.txt.js';
 import networktxt from '../../scripts/visualizations/network.txt.js';
 import plotlychartstxt from '../../scripts/visualizations/plotlycharts.txt.js';
 import radialbarstxt from '../../scripts/visualizations/radialbars.txt.js';
+import regressioncharttxt from '../../scripts/visualizations/regression.txt.js';
 import simpletabletxt from '../../scripts/visualizations/simpletable.txt';
 import wafflecharttxt from '../../scripts/visualizations/waffle.txt.js';
 import waterfallcharttxt from '../../scripts/visualizations/waterfall.txt.js';
@@ -64,7 +65,6 @@ import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
 // prediction scripts
 import movenettxt from '../../scripts/predict/movenet.txt.js';
 import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
-import regressionpredicttxt from '../../scripts/predict/regression.txt.js';
 import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
 
 // prediction / timeseries scripts
@@ -200,6 +200,7 @@ const scripts = {
   network: { script: networktxt, language: 'javascript' },
   plotly: { script: plotlychartstxt, language: 'javascript' },
   radialbars: { script: radialbarstxt, language: 'javascript' },
+  regressionchart: { script: regressioncharttxt, language: 'javascript' },
   waffle: { script: wafflecharttxt, language: 'javascript' },
   wordcloud: { script: wordcloudtxt, language: 'javascript' },
   waterfall: { script: waterfallcharttxt, language: 'javascript' },
@@ -208,7 +209,6 @@ const scripts = {
   // predictions
   bodypix: { script: movenettxt, language: 'javascript' },
   mobilenet: { script: mobilenettxt, language: 'javascript' },
-  regressionpredict: { script: regressionpredicttxt, language: 'javascript' },
   sentiment: { script: sentimenttxt, language: 'javascript' },
 
   // prediction / time

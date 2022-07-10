@@ -354,7 +354,7 @@
     },
     {
       "name": "boxplotchart",
-      "function": "box_plot",
+      "function": "box_chart",
       "source": "charts/boxplotchart.py",
       "language": "pyodide",
       "label": "Box Plot",
@@ -363,7 +363,7 @@
     },
     {
       "name": "bubbles",
-      "function": "bubbles",
+      "function": "bubble_chart",
       "source": "visualizations/bubbles.txt.js",
       "language": "javascript",
       "label": "Bubbles",
@@ -372,7 +372,7 @@
     },
     {
       "name": "dotplotchart",
-      "function": "dot_plot",
+      "function": "dot_chart",
       "source": "charts/dotplotchart.txt.js",
       "language": "javascript",
       "label": "Dot Plot",
@@ -381,7 +381,7 @@
     },
     {
       "name": "errorbarchart",
-      "function": "error_bar",
+      "function": "error_chart",
       "source": "charts/errorbarchart.txt.js",
       "language": "javascript",
       "label": "Candles",
@@ -390,7 +390,7 @@
     },
     {
       "name": "facets",
-      "function": "facets",
+      "function": "facets_chart",
       "source": "visualizations/facets.txt.js",
       "language": "javascript",
       "label": "Facets",
@@ -399,7 +399,7 @@
     },
     {
       "name": "funnel",
-      "function": "funnel",
+      "function": "funnel_chart",
       "source": "visualizations/funnel.txt.js",
       "language": "javascript",
       "label": "Funnel",
@@ -408,7 +408,7 @@
     },
     {
       "name": "gallery",
-      "function": "gallery",
+      "function": "image_chart",
       "source": "visualizations/gallery.txt",
       "language": "html",
       "label": "Gallery",
@@ -417,7 +417,7 @@
     },
     {
       "name": "heatmapchart",
-      "function": "heatmap",
+      "function": "heatmap_chart",
       "source": "charts/heatmapchart.txt.js",
       "language": "javascript",
       "label": "Heatmap",
@@ -426,7 +426,7 @@
     },
     {
       "name": "histogramchart",
-      "function": "histogram",
+      "function": "histogram_chart",
       "source": "charts/histogramchart.txt.js",
       "language": "javascript",
       "label": "Histogram",
@@ -444,7 +444,7 @@
     },
     {
       "name": "mapchart",
-      "function": "mapchart",
+      "function": "map_chart",
       "source": "visualizations/map.txt.js",
       "language": "javascript",
       "label": "Map",
@@ -453,7 +453,7 @@
     },
     {
       "name": "network",
-      "function": "network",
+      "function": "network_chart",
       "source": "visualizations/network.txt.js",
       "language": "javascript",
       "label": "Network",
@@ -462,7 +462,7 @@
     },
     {
       "name": "plotly",
-      "function": "plotly",
+      "function": "plotly_chart",
       "source": "visualizations/plotlycharts.txt.js",
       "language": "javascript",
       "label": "Plotly",
@@ -471,7 +471,7 @@
     },
     {
       "name": "radialbars",
-      "function": "radial_bars",
+      "function": "radial_chart",
       "source": "visualizations/radialbars.txt.js",
       "language": "javascript",
       "label": "Radial",
@@ -479,8 +479,17 @@
       "icon": "fa-light fa-bullseye"
     },
     {
+      "name": "regressionchart",
+      "function": "regression_chart",
+      "source": "visualizations/regression.txt.js",
+      "language": "javascript",
+      "label": "Regression",
+      "description": "Fit a regression model to a dataset to predict future values",
+      "icon": "fa-light fa-chart-line-up"
+    },
+    {
       "name": "sankeychart",
-      "function": "sankey",
+      "function": "sankey_chart",
       "source": "charts/sankeychart.txt.js",
       "language": "javascript",
       "label": "Sankey",
@@ -489,7 +498,7 @@
     },
     {
       "name": "scatterchart",
-      "function": "scatter",
+      "function": "scatter_chart",
       "source": "charts/scatterchart.txt.js",
       "language": "javascript",
       "label": "Scatter",
@@ -507,7 +516,7 @@
     },
     {
       "name": "treemapchart",
-      "function": "treemap",
+      "function": "treemap_chart",
       "source": "charts/treemapchart.txt.js",
       "language": "javascript",
       "label": "Treemap",
@@ -516,7 +525,7 @@
     },
     {
       "name": "violinchart",
-      "function": "violin",
+      "function": "violin_chart",
       "source": "charts/violinplotchart.py",
       "language": "pyodide",
       "label": "Violin",
@@ -525,7 +534,7 @@
     },
     {
       "name": "waffle",
-      "function": "waffle",
+      "function": "waffle_chart",
       "source": "visualizations/waffle.txt.js",
       "language": "javascript",
       "label": "Waffle",
@@ -534,7 +543,7 @@
     },
     {
       "name": "waterfall",
-      "function": "waterfall",
+      "function": "waterfall_chart",
       "source": "visualizations/waterfall.txt.js",
       "language": "javascript",
       "label": "Waterfall",
@@ -543,7 +552,7 @@
     },
     {
       "name": "wordcloud",
-      "function": "wordcloud",
+      "function": "wordcloud_chart",
       "source": "visualizations/wordcloud.txt.js",
       "language": "javascript",
       "label": "Wordcloud",
@@ -571,15 +580,6 @@
       "description": "Apply automated post-process motion capture dots to an image",
       "icon": "fa-light fa-person-running",
       "link": "https://hal9.com/hal9/pose-estimation"
-    },
-    {
-      "name": "regressionpredict",
-      "function": "regression_model",
-      "source": "predict/regression.txt.js",
-      "language": "javascript",
-      "label": "Regression",
-      "description": "Fit a regression model to a dataset to predict future values",
-      "icon": "fa-light fa-chart-line-up"
     },
     {
       "name": "sentiment",
