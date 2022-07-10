@@ -14,7 +14,7 @@
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_facets <- function(h, x  = NULL, y  = NULL, facets  = NULL, color  = NULL, chartType  = NULL, palette  = NULL, ...) {
+h9_facets_chart <- function(h, x  = NULL, y  = NULL, facets  = NULL, color  = NULL, chartType  = NULL, palette  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
@@ -51,7 +51,7 @@ h9_facets <- function(h, x  = NULL, y  = NULL, facets  = NULL, color  = NULL, ch
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_funnel <- function(h, stage  = NULL, value  = NULL, label  = NULL, fontSize  = NULL, showPercentSelection  = NULL, funnelType  = NULL, palette  = NULL, ...) {
+h9_funnel_chart <- function(h, stage  = NULL, value  = NULL, label  = NULL, fontSize  = NULL, showPercentSelection  = NULL, funnelType  = NULL, palette  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
@@ -86,12 +86,12 @@ h9_funnel <- function(h, stage  = NULL, value  = NULL, label  = NULL, fontSize  
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_mapchart <- function(h, lon  = NULL, lat  = NULL, size  = NULL, label  = NULL, ...) {
+h9_map_chart <- function(h, lon  = NULL, lat  = NULL, size  = NULL, label  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
     h,
-    "map",
+    "mapchart",
     update = list(
       lon = lon,
       lat = lat,
@@ -116,7 +116,7 @@ h9_mapchart <- function(h, lon  = NULL, lat  = NULL, size  = NULL, label  = NULL
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_network <- function(h, from  = NULL, to  = NULL, ...) {
+h9_network_chart <- function(h, from  = NULL, to  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
@@ -147,7 +147,7 @@ h9_network <- function(h, from  = NULL, to  = NULL, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_plotly <- function(h, x  = NULL, y  = NULL, chartType  = NULL, dataSizes  = NULL, palette  = NULL, ...) {
+h9_plotly_chart <- function(h, x  = NULL, y  = NULL, chartType  = NULL, dataSizes  = NULL, palette  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
@@ -180,7 +180,7 @@ h9_plotly <- function(h, x  = NULL, y  = NULL, chartType  = NULL, dataSizes  = N
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_radial_bars <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette  = NULL, ...) {
+h9_radial_chart <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
@@ -191,6 +191,38 @@ h9_radial_bars <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, pal
       y = y,
       wafflesizelabel = wafflesizelabel,
       palette = palette,
+      ...
+    ),
+    matched_call = matched_call
+  )
+
+}
+
+#' Regression
+#'
+#' Fit a regression model to a dataset to predict future values
+#'
+#' @param h A h9 object created by h9_create.
+#' @param x 
+#' @param y 
+#' @param type 
+#' @param predictions 
+#' @param ... Other h9 parameters.
+#'
+#' @return A list with the pipeline specification.
+#' @export
+#'
+h9_regression_chart <- function(h, x  = NULL, y  = NULL, type  = NULL, predictions  = NULL, ...) {
+  matched_call <- as.list(match.call())
+
+  h9_add_step(
+    h,
+    "regressionchart",
+    update = list(
+      x = x,
+      y = y,
+      type = type,
+      predictions = predictions,
       ...
     ),
     matched_call = matched_call
@@ -212,7 +244,7 @@ h9_radial_bars <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, pal
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_waffle <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette  = NULL, ...) {
+h9_waffle_chart <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
@@ -245,7 +277,7 @@ h9_waffle <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette 
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_waterfall <- function(h, x  = NULL, y  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_waterfall_chart <- function(h, x  = NULL, y  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
@@ -276,7 +308,7 @@ h9_waterfall <- function(h, x  = NULL, y  = NULL, fontsize  = NULL, marginleft  
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_wordcloud <- function(h, label  = NULL, size  = NULL, ...) {
+h9_wordcloud_chart <- function(h, label  = NULL, size  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(

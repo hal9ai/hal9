@@ -58,7 +58,7 @@ h9_bar_chart <- function(h, x  = NULL, y  = NULL, type  = NULL, orientation  = N
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_dot_plot <- function(h, x  = NULL, color  = NULL, palette  = NULL, dotsize  = NULL, ticks  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_dot_chart <- function(h, x  = NULL, color  = NULL, palette  = NULL, dotsize  = NULL, ticks  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
@@ -99,7 +99,7 @@ h9_dot_plot <- function(h, x  = NULL, color  = NULL, palette  = NULL, dotsize  =
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_error_bar <- function(h, x  = NULL, min  = NULL, max  = NULL, open  = NULL, close  = NULL, levels  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_error_chart <- function(h, x  = NULL, min  = NULL, max  = NULL, open  = NULL, close  = NULL, levels  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
@@ -139,7 +139,7 @@ h9_error_bar <- function(h, x  = NULL, min  = NULL, max  = NULL, open  = NULL, c
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_heatmap <- function(h, x  = NULL, y  = NULL, value  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_heatmap_chart <- function(h, x  = NULL, y  = NULL, value  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
@@ -175,7 +175,7 @@ h9_heatmap <- function(h, x  = NULL, y  = NULL, value  = NULL, palette  = NULL, 
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_histogram <- function(h, x  = NULL, histfunc  = NULL, histnorm  = NULL, barmode  = NULL, palette  = NULL, ...) {
+h9_histogram_chart <- function(h, x  = NULL, histfunc  = NULL, histnorm  = NULL, barmode  = NULL, palette  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
@@ -249,7 +249,7 @@ h9_line_chart <- function(h, x  = NULL, y  = NULL, palette  = NULL, domainx  = N
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_sankey <- function(h, source  = NULL, target  = NULL, value  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_sankey_chart <- function(h, source  = NULL, target  = NULL, value  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
@@ -288,7 +288,7 @@ h9_sankey <- function(h, source  = NULL, target  = NULL, value  = NULL, palette 
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_scatter <- function(h, x  = NULL, y  = NULL, color  = NULL, size  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_scatter_chart <- function(h, x  = NULL, y  = NULL, color  = NULL, size  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
@@ -326,7 +326,7 @@ h9_scatter <- function(h, x  = NULL, y  = NULL, color  = NULL, size  = NULL, pal
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_treemap <- function(h, label  = NULL, size  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_treemap_chart <- function(h, label  = NULL, size  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
   matched_call <- as.list(match.call())
 
   h9_add_step(
