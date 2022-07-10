@@ -164,7 +164,7 @@ let drawLegend = (svg, cells) => {
 
     legend.append("rect")
         .attr("rx", 3).attr("ry", 3)
-        .attr("width", 30).attr("height", 15)
+        .attr("width", 30).attr("height", 16)
         .attr("fill", (d, i) => color(i));
 
     legend.append("text")
@@ -174,10 +174,10 @@ let drawLegend = (svg, cells) => {
 
     function highlight(e, d, restore) {
         const i = legend.nodes().indexOf(e.currentTarget);
-        cells.transition().duration(500)
+        cells.transition().duration(100)
             .attr("fill", d => d.index === i ? color(d.index) : "#ccc");
     }
     function restore() {
-        cells.transition().duration(500).attr("fill", d => color(d.index))
+        cells.transition().duration(100).attr("fill", d => color(d.index))
     }
 }
