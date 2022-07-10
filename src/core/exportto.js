@@ -133,8 +133,7 @@ h9.create()`;
 
 export const getRScript = (pipelineid) => {
   const pipeline = store.get(pipelineid);
-  let script = `# parameters not implemented yet
-library(hal9)
+  let script = `library(hal9)
 h9_create()`;
   for (const step of pipeline.steps) {
     const functionName = step.function ?? getFunctionForComponentName(step.name);
