@@ -58,7 +58,7 @@ You may also build a specific pipeline using our high-level chart functions:
 # plot mtcars
 h9_create() |>
   h9_load(mtcars) |> 
-  h9_scatter(x = "mpg", y = "wt")
+  h9_scatter_chart(x = "mpg", y = "wt")
 ```
 
 ```{r, eval = TRUE, echo = FALSE, out.width="50%", fig.align="center"}
