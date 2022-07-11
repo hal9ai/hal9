@@ -12,7 +12,7 @@ title: "Get Started"
 knitr::opts_chunk$set(python.reticulate = FALSE)
 ```
 
-```{r, include = FALSE}
+```{r, eval = FALSE}
 devtools::install_github("hal9ai/hal9ai", subdir = "r")
 ```
 

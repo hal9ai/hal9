@@ -39,6 +39,11 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           working-directory: ./r
+      - name: Install Hal9
+        run: |
+          Rscript -e 'install.packages("devtools")'
+          Rscript -e 'devtools::load_all()'
+        working-directory: ./r
       - name: Render quarto
         run: quarto render
         working-directory: ./site
