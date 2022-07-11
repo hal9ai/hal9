@@ -41,7 +41,9 @@ jobs:
           working-directory: ./r
       - name: Install Hal9
         run: |
-          Rscript -e 'R CMD build hal9'
+          Rscript -e 'install.packages("devtools")'
+          Rscript -e 'devtools::build()'
+          Rscript -e 'devtools::install()'
         working-directory: ./r
       - name: Render quarto
         run: quarto render
