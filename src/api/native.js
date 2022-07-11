@@ -4,6 +4,7 @@ import * as pipelines from '../core/pipelines';
 import * as pipelineremote from '../core/pipelineremote';
 import * as datasets from '../core/datasets';
 import * as screenshot from '../core/utils/screenshot';
+import * as htmloutput from '../core/htmloutput';
 import * as layout from '../core/layout';
 import * as exportto from '../core/exportto';
 
@@ -294,8 +295,24 @@ export async function screenshotResize(sourceImageData, width, height) {
   return await screenshot.resize(sourceImageData, width, height);
 }
 
-export function htmlSetContainerStyle(name, value) {
-  
+export function htmloutputSetIframeStyle(name, value) {
+  // only for iframe
+}
+
+export async function htmloutputGetScrollWidth() {
+  return htmloutput.getScrollWidth();
+}
+
+export async function htmloutputSetScrollLeft(pixels) {
+  htmloutput.setScrollLeft(pixels);
+}
+
+export async function htmloutputGetScrollHeight() {
+  return htmloutput.getScrollHeight();
+}
+
+export async function htmloutputSetScrollTop(pixels) {
+  htmloutput.setScrollTop(pixels);
 }
 
 export async function pipelinesRegenerateLayout(pipelineid) {

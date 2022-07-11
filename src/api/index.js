@@ -214,8 +214,24 @@ async function screenshotResize(sourceImageData, width, height) {
   return await api.screenshotResize(sourceImageData, width, height);
 }
 
-function htmlSetContainerStyle(name, value) {
-  return api.htmlSetContainerStyle(name, value);
+function htmloutputSetIframeStyle(name, value) {
+  return api.htmloutputSetIframeStyle(name, value);
+}
+
+async function htmloutputGetScrollWidth() {
+  return await api.htmloutputGetScrollWidth();
+}
+
+async function htmloutputSetScrollLeft(pixels) {
+  return await api.htmloutputSetScrollLeft(pixels);
+}
+
+async function htmloutputGetScrollHeight() {
+  return await api.htmloutputGetScrollHeight();
+}
+
+async function htmloutputSetScrollTop(pixels) {
+  return await api.htmloutputSetScrollTop(pixels);
 }
 
 async function regenerateLayout(pipelineid) {
@@ -310,8 +326,12 @@ export default {
     resize: screenshotResize,
   },
 
-  html: {
-    setContainerStyle: htmlSetContainerStyle,
+  htmloutput: {
+    setIframeStyle: htmloutputSetIframeStyle,
+    getScrollWidth: htmloutputGetScrollWidth,
+    setScrollLeft: htmloutputSetScrollLeft,
+    getScrollHeight: htmloutputGetScrollHeight,
+    setScrollTop: htmloutputSetScrollTop,
   },
 
   stepapi: {

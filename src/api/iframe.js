@@ -569,8 +569,30 @@ export async function screenshotResize(sourceImageData, width, height) {
   })
 }
 
-export function htmlSetContainerStyle(name, value) {
+export function htmloutputSetIframeStyle(name, value) {
   config.iframe.style[name] = value;
+}
+
+export async function htmloutputGetScrollWidth() {
+  return await post("hal9.htmloutput.getScrollWidth()", {
+  })
+}
+
+export async function htmloutputSetScrollLeft(pixels) {
+  return await post("hal9.htmloutput.setScrollLeft(params.pixels)", {
+    pixels: pixels
+  })
+}
+
+export async function htmloutputGetScrollHeight() {
+  return await post("hal9.htmloutput.getScrollHeight()", {
+  })
+}
+
+export async function htmloutputSetScrollTop(pixels) {
+  return await post("hal9.htmloutput.setScrollTop(params.pixels)", {
+    pixels: pixels
+  })
 }
 
 export async function pipelinesRegenerateLayout(pipelineid) {
