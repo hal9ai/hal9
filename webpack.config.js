@@ -12,7 +12,7 @@ module.exports = (env, argv) => {
       type: 'asset',
     },
     {
-      test: /(\.txt\.js$)|(\.txt$)|(\.txt\.html$)|(\.py$)|(\.r$)/,
+      test: /\/scripts\/[a-z]+\//,
       use: [
         'raw-loader',
       ],

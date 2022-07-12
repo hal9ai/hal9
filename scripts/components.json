@@ -29,7 +29,7 @@
     },
     {
       "name": "airbnb",
-      "function": "import_airbnb",
+      "function": "",
       "source": "services/airbnb.txt.js",
       "language": "javascript",
       "serverWorker": true,
@@ -39,7 +39,7 @@
     },
     {
       "name": "bigquery",
-      "function": "import_bigquery",
+      "function": "",
       "source": "services/bigquery.txt.js",
       "language": "javascript",
       "label": "BigQuery",
@@ -48,7 +48,7 @@
     },
     {
       "name": "datagrabio",
-      "function": "import_datagrab",
+      "function": "",
       "source": "services/datagrabio.txt",
       "language": "html",
       "label": "DataGrab",
@@ -57,7 +57,7 @@
     },
     {
       "name": "googlesheets",
-      "function": "import_sheet",
+      "function": "",
       "source": "services/googlesheets.txt.js",
       "language": "javascript",
       "label": "Google Sheets",
@@ -66,7 +66,7 @@
     },
     {
       "name": "graphql",
-      "function": "import_graphql",
+      "function": "",
       "source": "import/graphql.txt.js",
       "language": "javascript",
       "label": "GraphQL",
@@ -75,7 +75,7 @@
     },
     {
       "name": "mysql",
-      "function": "import_mysql",
+      "function": "",
       "source": "import/mysql.txt.js",
       "language": "javascript",
       "serverWorker": true,
@@ -85,7 +85,7 @@
     },
     {
       "name": "powerbi",
-      "function": "import_powerbi",
+      "function": "",
       "source": "services/powerbi.txt",
       "language": "html",
       "label": "Power BI",
@@ -94,7 +94,7 @@
     },
     {
       "name": "reddit",
-      "function": "import_reddit",
+      "function": "",
       "source": "services/reddit.txt.js",
       "language": "javascript",
       "label": "Reddit",
@@ -103,7 +103,7 @@
     },
     {
       "name": "stocks",
-      "function": "import_stocks",
+      "function": "",
       "source": "import/stocks.txt.js",
       "language": "javascript",
       "label": "Stocks",
@@ -112,7 +112,7 @@
     },
     {
       "name": "sqlite",
-      "function": "import_sqlite",
+      "function": "read_sqlite",
       "source": "import/sqlite.txt.js",
       "language": "javascript",
       "label": "SQLite",
@@ -121,7 +121,7 @@
     },
     {
       "name": "tableau",
-      "function": "import_tableau",
+      "function": "",
       "source": "services/tableau.txt",
       "language": "html",
       "label": "Tableau",
@@ -130,7 +130,7 @@
     },
     {
       "name": "twitter",
-      "function": "import_twitter",
+      "function": "",
       "source": "services/twitter.txt.js",
       "language": "javascript",
       "serverWorker": true,
@@ -140,7 +140,7 @@
     },
     {
       "name": "videoframes",
-      "function": "import_video",
+      "function": "",
       "source": "import/videoframes.txt.js",
       "language": "javascript",
       "label": "Video Frames",
@@ -149,7 +149,7 @@
     },
     {
       "name": "webimages",
-      "function": "webscrape_images",
+      "function": "",
       "source": "import/webimages.txt.js",
       "language": "javascript",
       "serverWorker": true,
@@ -159,7 +159,7 @@
     },
     {
       "name": "webtables",
-      "function": "webscrape_table",
+      "function": "",
       "source": "import/webtable.txt.js",
       "language": "javascript",
       "serverWorker": true,
@@ -169,7 +169,7 @@
     },
     {
       "name": "webselector",
-      "function": "webscrape_selectors",
+      "function": "",
       "source": "import/webselector.txt.js",
       "language": "javascript",
       "serverWorker": true,
@@ -179,7 +179,7 @@
     },
     {
       "name": "webcam",
-      "function": "import_webcam",
+      "function": "",
       "source": "import/webcam.txt.js",
       "language": "javascript",
       "label": "Webcam",
@@ -354,7 +354,7 @@
     },
     {
       "name": "boxplotchart",
-      "function": "box_chart",
+      "function": "",
       "source": "charts/boxplotchart.py",
       "language": "pyodide",
       "label": "Box Plot",
@@ -507,7 +507,7 @@
     },
     {
       "name": "table",
-      "function": "table",
+      "function": "simple_table",
       "source": "visualizations/simpletable.txt",
       "language": "html",
       "label": "Table",
@@ -563,7 +563,7 @@
   "Predict": [
     {
       "name": "mobilenet",
-      "function": "classify_image",
+      "function": "predict_image",
       "source": "predict/mobilenet.txt.js",
       "language": "javascript",
       "label": "Image Classification",
@@ -573,7 +573,7 @@
     },
     {
       "name": "bodypix",
-      "function": "estimate_pose",
+      "function": "",
       "source": "predict/movenet.txt.js",
       "language": "javascript",
       "label": "Pose",
@@ -594,7 +594,7 @@
   "Time Series": [
     {
       "name": "timeauto",
-      "function": "predict_arima",
+      "function": "",
       "source": "timeseries/autoregressive.py",
       "language": "python",
       "serverWorker": true,
@@ -622,7 +622,7 @@
     },
     {
       "name": "timeprophet",
-      "function": "predict_prophet",
+      "function": "",
       "source": "timeseries/prophet.py",
       "language": "python",
       "serverWorker": true,
@@ -632,7 +632,7 @@
     },
     {
       "name": "timeseasonality",
-      "function": "predict_seasonality",
+      "function": "",
       "source": "timeseries/seasonality.py",
       "language": "pyodide",
       "label": "Seasons",
@@ -643,7 +643,7 @@
   "Train": [
     {
       "name": "pycaret",
-      "function": "train_pycaret",
+      "function": "",
       "source": "train/pycaret.py",
       "language": "python",
       "serverWorker": true,
@@ -653,7 +653,7 @@
     },
     {
       "name": "predict",
-      "function": "predict_pycaret",
+      "function": "",
       "source": "train/predict.py",
       "language": "python",
       "serverWorker": true,
@@ -663,7 +663,7 @@
     },
     {
       "name": "linearregression",
-      "function": "train_linear",
+      "function": "",
       "source": "train/linearregression.py",
       "language": "python",
       "serverWorker": true,
@@ -673,7 +673,7 @@
     },
     {
       "name": "logisiticregression",
-      "function": "train_logistic",
+      "function": "",
       "source": "train/logisticregression.py",
       "language": "python",
       "serverWorker": true,
@@ -683,7 +683,7 @@
     },
     {
       "name": "traintest",
-      "function": "split_train_test",
+      "function": "",
       "source": "train/traintest.py",
       "language": "python",
       "serverWorker": true,
@@ -724,7 +724,7 @@
   "Business": [
     {
       "name": "abtest",
-      "function": "abtest",
+      "function": "",
       "source": "stats/abtest.py",
       "language": "pyodide",
       "label": "A/B Test",
@@ -733,7 +733,7 @@
     },
     {
       "name": "churn",
-      "function": "churn",
+      "function": "",
       "language": "pyodide",
       "source": "business/churn.py",
       "label": "Churn",
@@ -744,7 +744,7 @@
   "Statistics": [
     {
       "name": "shapiro",
-      "function": "test_shapiro",
+      "function": "",
       "source": "stats/shapiro.py",
       "language": "pyodide",
       "label": "Shapiro-Wilk",
@@ -773,7 +773,7 @@
     },
     {
       "name": "fetch",
-      "function": "fetch",
+      "function": "",
       "source": "transforms/fetch.txt.js",
       "language": "javascript",
       "serverWorker": true,
@@ -783,7 +783,7 @@
     },
     {
       "name": "citytomap",
-      "function": "city_to_map",
+      "function": "",
       "source": "utils/citytomap.txt.js",
       "language": "javascript",
       "label": "Coordinates from City",
@@ -792,7 +792,7 @@
     },
     {
       "name": "ziptomap",
-      "function": "zip_to_map",
+      "function": "",
       "source": "utils/ziptomap.txt.js",
       "language": "javascript",
       "label": "Coordinates from Zip Code",
@@ -801,7 +801,7 @@
     },
     {
       "name": "tojson",
-      "function": "to_json",
+      "function": "",
       "source": "utils/tojson.txt.js",
       "language": "javascript",
       "label": "To JSON",
@@ -810,7 +810,7 @@
     },
     {
       "name": "upscaler",
-      "function": "upscaler",
+      "function": "",
       "source": "utils/upscaler.txt.js",
       "language": "javascript",
       "label": "Upscale",
@@ -830,7 +830,7 @@
   "Languages": [
     {
       "name": "html",
-      "function": "show_html",
+      "function": "html",
       "source": "languages/html.txt",
       "language": "html",
       "label": "HTML",
@@ -840,7 +840,7 @@
     {
       "name": "javascript",
       "function": "javascript",
-      "source": "languages/javascript.txt",
+      "source": "languages/javascript.txt.js",
       "language": "javascript",
       "label": "JavaScript",
       "description": "Write JavaScript code for custom data processing",
@@ -866,7 +866,7 @@
     },
     {
       "name": "python",
-      "function": "python",
+      "function": "",
       "source": "languages/python.py",
       "language": "python",
       "serverWorker": true,
@@ -876,7 +876,7 @@
     },
     {
       "name": "r",
-      "function": "r",
+      "function": "",
       "source": "languages/r.r",
       "language": "r",
       "serverWorker": true,
@@ -888,7 +888,7 @@
   "Frameworks": [
     {
       "name": "flask",
-      "function": "flask",
+      "function": "",
       "source": "frameworks/flask.py",
       "language": "flask",
       "label": "Flask",
@@ -897,7 +897,7 @@
     },
     {
       "name": "plumber",
-      "function": "plumber",
+      "function": "",
       "source": "frameworks/plumber.r",
       "language": "plumber",
       "label": "Plumber",
@@ -944,7 +944,7 @@
     },
     {
       "name": "fileinput",
-      "function": "file_input",
+      "function": "file",
       "source": "controls/inputfile.txt",
       "language": "html",
       "label": "File Input",
@@ -953,7 +953,7 @@
     },
     {
       "name": "numberinput",
-      "function": "number_input",
+      "function": "number",
       "source": "controls/number.txt",
       "language": "html",
       "label": "Number Input",
@@ -963,7 +963,7 @@
     {
       "name": "slider",
       "function": "slider",
-      "source": "controls/range.txt",
+      "source": "controls/range.html",
       "language": "html",
       "label": "Slider",
       "description": "Embed an slider element",
