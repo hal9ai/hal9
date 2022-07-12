@@ -7,7 +7,9 @@ components <- jsonlite::read_json(components_file) |>
 
 for (i in 1:length(components)) {
   script <- paste0("../scripts/", components[[i]]$source)
-  if (grepl("\\.js$", script)) {
+  if (nchar(components[[i]][["function"]]) > 0) {
+    message("Processing ", components[[i]]$name)
+
     list <- script |>
       parse_txt_js()
     components[[i]]$params <- list$params
