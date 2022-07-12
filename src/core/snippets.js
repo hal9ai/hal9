@@ -36,6 +36,12 @@ export const parseHeader = (code /*: string */) /*: header */ => {
     headers = code.match(/\"\"\"(.|[\r\n])+\"\"\"/g);
     if (headers && headers.length > 0) type = 'docstring';
   }
+  else if (code.trim().startsWith('<!--')) {
+    debugger;
+    type = 'html';
+    const last = code.indexOf("-->");
+    headers = [ code.substr(4, last - 4) ];
+  }
 
   if (!headers || headers.length == 0) {
     // attempt with python/rstats comments
@@ -52,6 +58,9 @@ export const parseHeader = (code /*: string */) /*: header */ => {
   else {
     if (type === 'docstring')
       header = headers[0].replace(/(^\"\"\")|(\"\"\"$)/g, '');
+    else if (type === 'html') {
+      header = headers[0]
+    }
     else
       header = headers[0].replace(/(^\/\*\*)|(\*\*\/$)/g, '');
   }

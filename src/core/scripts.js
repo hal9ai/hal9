@@ -131,7 +131,7 @@ import dropdownctrltxt from '../../scripts/controls/dropdown.txt';
 import inputfilectrltxt from '../../scripts/controls/inputfile.txt';
 import messagectrltxt from '../../scripts/controls/message.txt';
 import numberctrltxt from '../../scripts/controls/number.txt';
-import rangectrltxt from '../../scripts/controls/range.txt';
+import rangectrltxt from '../../scripts/controls/range.html';
 import spreadsheetctrltxt from '../../scripts/controls/spreadsheet.txt';
 import textareactrltxt from '../../scripts/controls/textarea.txt.js';
 import textboxctrltxt from '../../scripts/controls/textbox.txt';
