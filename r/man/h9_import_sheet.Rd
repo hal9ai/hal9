@@ -16,13 +16,13 @@ h9_import_sheet(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{url}{}
+\item{url}{Additional step parameter.}
 
-\item{documentAccess}{}
+\item{documentAccess}{Additional step parameter.}
 
-\item{sheet}{}
+\item{sheet}{Additional step parameter.}
 
-\item{clientId}{}
+\item{clientId}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

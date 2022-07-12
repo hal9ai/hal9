@@ -9,7 +9,7 @@ h9_predict_sentiment(h, sentiment = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{sentiment}{}
+\item{sentiment}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

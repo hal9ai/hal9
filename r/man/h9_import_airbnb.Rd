@@ -9,9 +9,9 @@ h9_import_airbnb(h, url = NULL, maxReviews = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{url}{}
+\item{url}{Additional step parameter.}
 
-\item{maxReviews}{}
+\item{maxReviews}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

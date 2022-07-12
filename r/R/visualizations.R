@@ -139,10 +139,10 @@ h9_radial_chart <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, pa
 #' Fit a regression model to a dataset to predict future values
 #'
 #' @param h A h9 object created by h9_create.
-#' @param x 
-#' @param y 
-#' @param type 
-#' @param predictions 
+#' @param x Additional step parameter.
+#' @param y Additional step parameter.
+#' @param type Additional step parameter.
+#' @param predictions Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -161,10 +161,10 @@ h9_regression_chart <- function(h, x  = NULL, y  = NULL, type  = NULL, predictio
 #' A square pie chart; still not edible
 #'
 #' @param h A h9 object created by h9_create.
-#' @param x 
-#' @param y 
-#' @param wafflesizelabel 
-#' @param palette 
+#' @param x Additional step parameter.
+#' @param y Additional step parameter.
+#' @param wafflesizelabel Additional step parameter.
+#' @param palette Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.

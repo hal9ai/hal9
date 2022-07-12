@@ -9,7 +9,7 @@ h9_website(h, site = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{site}{}
+\item{site}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

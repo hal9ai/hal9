@@ -25,13 +25,13 @@ h9_line_chart(
 
 \item{palette}{Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.}
 
-\item{domainx}{}
+\item{domainx}{Additional step parameter.}
 
-\item{fontsize}{}
+\item{fontsize}{Additional step parameter.}
 
-\item{marginleft}{}
+\item{marginleft}{Additional step parameter.}
 
-\item{marginbottom}{}
+\item{marginbottom}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

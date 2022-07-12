@@ -27,7 +27,7 @@ h9_bar_chart(
 
 \item{type}{One of 'grouped' or 'stacked'. In grouped mode, bars are placed next to each other, in stacked mode bars are placed above each other.}
 
-\item{orientation}{}
+\item{orientation}{Additional step parameter.}
 
 \item{palette}{Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.}
 

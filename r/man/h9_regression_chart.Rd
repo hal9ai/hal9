@@ -16,13 +16,13 @@ h9_regression_chart(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{x}{}
+\item{x}{Additional step parameter.}
 
-\item{y}{}
+\item{y}{Additional step parameter.}
 
-\item{type}{}
+\item{type}{Additional step parameter.}
 
-\item{predictions}{}
+\item{predictions}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

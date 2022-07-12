@@ -9,7 +9,7 @@ h9_zip_to_map(h, zipcode = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{zipcode}{}
+\item{zipcode}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

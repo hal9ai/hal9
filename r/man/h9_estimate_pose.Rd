@@ -9,9 +9,9 @@ h9_estimate_pose(h, images = NULL, model = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{images}{}
+\item{images}{Additional step parameter.}
 
-\item{model}{}
+\item{model}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

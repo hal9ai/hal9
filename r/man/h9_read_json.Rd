@@ -9,9 +9,9 @@ h9_read_json(h, file = NULL, extract = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{file}{}
+\item{file}{Additional step parameter.}
 
-\item{extract}{}
+\item{extract}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

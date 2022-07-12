@@ -16,13 +16,13 @@ h9_import_bigquery(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{clientId}{}
+\item{clientId}{Additional step parameter.}
 
-\item{projectNumber}{}
+\item{projectNumber}{Additional step parameter.}
 
-\item{query}{}
+\item{query}{Additional step parameter.}
 
-\item{dbLocation}{}
+\item{dbLocation}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

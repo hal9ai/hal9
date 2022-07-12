@@ -17,15 +17,15 @@ h9_import_reddit(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{type}{}
+\item{type}{Additional step parameter.}
 
-\item{sub}{}
+\item{sub}{Additional step parameter.}
 
-\item{query}{}
+\item{query}{Additional step parameter.}
 
-\item{before}{}
+\item{before}{Additional step parameter.}
 
-\item{after}{}
+\item{after}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

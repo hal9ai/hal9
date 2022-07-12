@@ -9,9 +9,9 @@ h9_city_to_map(h, city = NULL, state = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{city}{}
+\item{city}{Additional step parameter.}
 
-\item{state}{}
+\item{state}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

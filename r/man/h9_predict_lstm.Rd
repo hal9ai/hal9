@@ -17,15 +17,15 @@ h9_predict_lstm(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{prediction}{}
+\item{prediction}{Additional step parameter.}
 
-\item{window}{}
+\item{window}{Additional step parameter.}
 
-\item{units}{}
+\item{units}{Additional step parameter.}
 
-\item{epochs}{}
+\item{epochs}{Additional step parameter.}
 
-\item{predictions}{}
+\item{predictions}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

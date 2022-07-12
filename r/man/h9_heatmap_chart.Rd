@@ -25,7 +25,7 @@ h9_heatmap_chart(
 
 \item{value}{The column in the dataframe that defines the intensity of the colors of the marks}
 
-\item{palette}{}
+\item{palette}{Additional step parameter.}
 
 \item{fontsize}{The font size}
 

@@ -9,11 +9,11 @@ h9_import_graphql(h, url = NULL, query = NULL, extract = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{url}{}
+\item{url}{Additional step parameter.}
 
-\item{query}{}
+\item{query}{Additional step parameter.}
 
-\item{extract}{}
+\item{extract}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

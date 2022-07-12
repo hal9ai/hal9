@@ -16,13 +16,13 @@ h9_import_stocks(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{stock}{}
+\item{stock}{Additional step parameter.}
 
-\item{statistic}{}
+\item{statistic}{Additional step parameter.}
 
-\item{limit}{}
+\item{limit}{Additional step parameter.}
 
-\item{apiKey}{}
+\item{apiKey}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

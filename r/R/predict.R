@@ -3,7 +3,7 @@
 #' Use MobileNet's Image Classification to attempt to identify what's in an image
 #'
 #' @param h A h9 object created by h9_create.
-#' @param url 
+#' @param url Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -22,8 +22,8 @@ h9_classify_image <- function(h, url  = NULL, ...) {
 #' Apply automated post-process motion capture dots to an image
 #'
 #' @param h A h9 object created by h9_create.
-#' @param images 
-#' @param model 
+#' @param images Additional step parameter.
+#' @param model Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -42,7 +42,7 @@ h9_estimate_pose <- function(h, images  = NULL, model  = NULL, ...) {
 #' Ask a neural net to predict how positively the text in a dataset will be perceived
 #'
 #' @param h A h9 object created by h9_create.
-#' @param sentiment 
+#' @param sentiment Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.

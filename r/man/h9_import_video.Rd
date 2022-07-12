@@ -9,7 +9,7 @@ h9_import_video(h, file = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{file}{}
+\item{file}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

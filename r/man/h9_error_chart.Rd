@@ -31,7 +31,7 @@ h9_error_chart(
 
 \item{close}{the column in the dataframe the contains the values at close m at each x coordinate}
 
-\item{levels}{}
+\item{levels}{Additional step parameter.}
 
 \item{fontsize}{the font size}
 

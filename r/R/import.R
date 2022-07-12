@@ -24,7 +24,7 @@ h9_read_csv <- function(h, file  = NULL, separator  = NULL, skip  = NULL, ...) {
 #' Import a dataset from a sheet of an Excel file
 #'
 #' @param h A h9 object created by h9_create.
-#' @param file 
+#' @param file Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -43,8 +43,8 @@ h9_read_excel <- function(h, file  = NULL, ...) {
 #' Import a JSON formatted dataset
 #'
 #' @param h A h9 object created by h9_create.
-#' @param file 
-#' @param extract 
+#' @param file Additional step parameter.
+#' @param extract Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -63,9 +63,9 @@ h9_read_json <- function(h, file  = NULL, extract  = NULL, ...) {
 #' Query data from a GraphQL endpoint
 #'
 #' @param h A h9 object created by h9_create.
-#' @param url 
-#' @param query 
-#' @param extract 
+#' @param url Additional step parameter.
+#' @param query Additional step parameter.
+#' @param extract Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -84,11 +84,11 @@ h9_import_graphql <- function(h, url  = NULL, query  = NULL, extract  = NULL, ..
 #' Query data from a MySQL database by using a Hal9 server worker
 #'
 #' @param h A h9 object created by h9_create.
-#' @param host 
-#' @param user 
-#' @param password 
-#' @param database 
-#' @param query 
+#' @param host Additional step parameter.
+#' @param user Additional step parameter.
+#' @param password Additional step parameter.
+#' @param database Additional step parameter.
+#' @param query Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -107,10 +107,10 @@ h9_import_mysql <- function(h, host  = NULL, user  = NULL, password  = NULL, dat
 #' Get stock market data provided by Financial Modeling Prep
 #'
 #' @param h A h9 object created by h9_create.
-#' @param stock 
-#' @param statistic 
-#' @param limit 
-#' @param apiKey 
+#' @param stock Additional step parameter.
+#' @param statistic Additional step parameter.
+#' @param limit Additional step parameter.
+#' @param apiKey Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -129,8 +129,8 @@ h9_import_stocks <- function(h, stock  = NULL, statistic  = NULL, limit  = NULL,
 #' Query data from a SQLite database
 #'
 #' @param h A h9 object created by h9_create.
-#' @param file 
-#' @param query 
+#' @param file Additional step parameter.
+#' @param query Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -149,7 +149,7 @@ h9_import_sqlite <- function(h, file  = NULL, query  = NULL, ...) {
 #' Grab frames from a video file
 #'
 #' @param h A h9 object created by h9_create.
-#' @param file 
+#' @param file Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -168,9 +168,9 @@ h9_import_video <- function(h, file  = NULL, ...) {
 #' Scrape images from a website by using a Hal9 server worker
 #'
 #' @param h A h9 object created by h9_create.
-#' @param url 
-#' @param minSize 
-#' @param scrollIters 
+#' @param url Additional step parameter.
+#' @param minSize Additional step parameter.
+#' @param scrollIters Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -189,11 +189,11 @@ h9_webscrape_images <- function(h, url  = NULL, minSize  = NULL, scrollIters  = 
 #' Scrape a table from a website by using a Hal9 server worker
 #'
 #' @param h A h9 object created by h9_create.
-#' @param url 
-#' @param text 
-#' @param hasHeader 
-#' @param scrollIters 
-#' @param scrollClick 
+#' @param url Additional step parameter.
+#' @param text Additional step parameter.
+#' @param hasHeader Additional step parameter.
+#' @param scrollIters Additional step parameter.
+#' @param scrollClick Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -212,12 +212,12 @@ h9_webscrape_table <- function(h, url  = NULL, text  = NULL, hasHeader  = NULL, 
 #' Scrape data matching CSS or DOM selectors on a website by using a Hal9 server worker
 #'
 #' @param h A h9 object created by h9_create.
-#' @param url 
-#' @param className 
-#' @param columnName 
-#' @param hasHeader 
-#' @param scrollIters 
-#' @param scrollClick 
+#' @param url Additional step parameter.
+#' @param className Additional step parameter.
+#' @param columnName Additional step parameter.
+#' @param hasHeader Additional step parameter.
+#' @param scrollIters Additional step parameter.
+#' @param scrollClick Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.

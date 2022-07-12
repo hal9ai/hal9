@@ -26,9 +26,13 @@ for(i in 1:length(components)) {
 
     for (j in 1:length(components[[i]]$params)) {
 
+      desc <- components[[i]]$params[[j]]$description
+      desc <- ifelse(is.null(desc), "Additional step parameter.", desc)
+
+
       plist <- list(
         param_name = components[[i]]$params[[j]]$name,
-        param_desc = components[[i]]$params[[j]]$description
+        param_desc = desc
       )
 
       plist <- lapply(plist, function(x) ifelse(is.null(x), "", x))

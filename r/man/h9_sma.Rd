@@ -9,9 +9,9 @@ h9_sma(h, source = NULL, window = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{source}{}
+\item{source}{Additional step parameter.}
 
-\item{window}{}
+\item{window}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

@@ -284,8 +284,8 @@ h9_summarize <- function(h, group  = NULL, field  = NULL, summarizer  = NULL, ..
 #' Create new data columns by processing a URL column with a Hal9 server worker
 #'
 #' @param h A h9 object created by h9_create.
-#' @param url 
-#' @param resize 
+#' @param url Additional step parameter.
+#' @param resize Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.

@@ -9,9 +9,9 @@ h9_fetch(h, url = NULL, resize = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{url}{}
+\item{url}{Additional step parameter.}
 
-\item{resize}{}
+\item{resize}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

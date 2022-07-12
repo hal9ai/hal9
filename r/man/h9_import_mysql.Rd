@@ -17,15 +17,15 @@ h9_import_mysql(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{host}{}
+\item{host}{Additional step parameter.}
 
-\item{user}{}
+\item{user}{Additional step parameter.}
 
-\item{password}{}
+\item{password}{Additional step parameter.}
 
-\item{database}{}
+\item{database}{Additional step parameter.}
 
-\item{query}{}
+\item{query}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

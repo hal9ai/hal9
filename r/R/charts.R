@@ -6,7 +6,7 @@
 #' @param x The variable that horizontal axis
 #' @param y The variable that should be on the vertical axis.
 #' @param type One of 'grouped' or 'stacked'. In grouped mode, bars are placed next to each other, in stacked mode bars are placed above each other.
-#' @param orientation 
+#' @param orientation Additional step parameter.
 #' @param palette Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.
 #' @param fontsize Size of the font to be used in the x and y axes.
 #' @param tickrotation The angle at which to place the x-axis labels
@@ -61,7 +61,7 @@ h9_dot_chart <- function(h, x  = NULL, color  = NULL, palette  = NULL, dotsize  
 #' @param max the column in the dataframe that is the contains the values for the maximum at each x coordinate
 #' @param open the column in the dataframe the contains the values at opening at each x coordinate
 #' @param close the column in the dataframe the contains the values at close m at each x coordinate
-#' @param levels 
+#' @param levels Additional step parameter.
 #' @param fontsize the font size
 #' @param marginleft The left margin
 #' @param marginbottom the bottom margin
@@ -86,7 +86,7 @@ h9_error_chart <- function(h, x  = NULL, min  = NULL, max  = NULL, open  = NULL,
 #' @param x The column in the dataframe that defines the x coordinates of the marks
 #' @param y The column in the dataframe that defines the y coordinates of the marks
 #' @param value The column in the dataframe that defines the intensity of the colors of the marks
-#' @param palette 
+#' @param palette Additional step parameter.
 #' @param fontsize The font size
 #' @param marginleft The left margin
 #' @param marginbottom The bottom margin
@@ -134,10 +134,10 @@ h9_histogram_chart <- function(h, x  = NULL, histfunc  = NULL, histnorm  = NULL,
 #' @param x The column in the dataframe which defines the x coordinate of each vertex of the line
 #' @param y The column in the dataframe which defines the y coordinate of each vertex of the line
 #' @param palette Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.
-#' @param domainx 
-#' @param fontsize 
-#' @param marginleft 
-#' @param marginbottom 
+#' @param domainx Additional step parameter.
+#' @param fontsize Additional step parameter.
+#' @param marginleft Additional step parameter.
+#' @param marginbottom Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.

@@ -9,9 +9,9 @@ h9_import_sqlite(h, file = NULL, query = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{file}{}
+\item{file}{Additional step parameter.}
 
-\item{query}{}
+\item{query}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

@@ -16,13 +16,13 @@ h9_import_twitter(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{search}{}
+\item{search}{Additional step parameter.}
 
-\item{key}{}
+\item{key}{Additional step parameter.}
 
-\item{secret}{}
+\item{secret}{Additional step parameter.}
 
-\item{type}{}
+\item{type}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

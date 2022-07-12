@@ -3,8 +3,8 @@
 #' Create latitude and longitude columns from a pair of US city and state columns
 #'
 #' @param h A h9 object created by h9_create.
-#' @param city 
-#' @param state 
+#' @param city Additional step parameter.
+#' @param state Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -23,7 +23,7 @@ h9_city_to_map <- function(h, city  = NULL, state  = NULL, ...) {
 #' Create latitude and longitude columns from a US zip code column
 #'
 #' @param h A h9 object created by h9_create.
-#' @param zipcode 
+#' @param zipcode Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -42,8 +42,8 @@ h9_zip_to_map <- function(h, zipcode  = NULL, ...) {
 #' Magnify an image with AI enhancement
 #'
 #' @param h A h9 object created by h9_create.
-#' @param originalImg 
-#' @param model 
+#' @param originalImg Additional step parameter.
+#' @param model Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.

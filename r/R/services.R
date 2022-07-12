@@ -3,8 +3,8 @@
 #' Gather comments from an Airbnb listing by using a Hal9 server worker
 #'
 #' @param h A h9 object created by h9_create.
-#' @param url 
-#' @param maxReviews 
+#' @param url Additional step parameter.
+#' @param maxReviews Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -23,10 +23,10 @@ h9_import_airbnb <- function(h, url  = NULL, maxReviews  = NULL, ...) {
 #' Query data from a Google Cloud BigQuery data warehouse
 #'
 #' @param h A h9 object created by h9_create.
-#' @param clientId 
-#' @param projectNumber 
-#' @param query 
-#' @param dbLocation 
+#' @param clientId Additional step parameter.
+#' @param projectNumber Additional step parameter.
+#' @param query Additional step parameter.
+#' @param dbLocation Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -45,10 +45,10 @@ h9_import_bigquery <- function(h, clientId  = NULL, projectNumber  = NULL, query
 #' Import data from a Google Sheets spreadsheet
 #'
 #' @param h A h9 object created by h9_create.
-#' @param url 
-#' @param documentAccess 
-#' @param sheet 
-#' @param clientId 
+#' @param url Additional step parameter.
+#' @param documentAccess Additional step parameter.
+#' @param sheet Additional step parameter.
+#' @param clientId Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -67,11 +67,11 @@ h9_import_sheet <- function(h, url  = NULL, documentAccess  = NULL, sheet  = NUL
 #' Search Reddit for submissions or comments
 #'
 #' @param h A h9 object created by h9_create.
-#' @param type 
-#' @param sub 
-#' @param query 
-#' @param before 
-#' @param after 
+#' @param type Additional step parameter.
+#' @param sub Additional step parameter.
+#' @param query Additional step parameter.
+#' @param before Additional step parameter.
+#' @param after Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -90,10 +90,10 @@ h9_import_reddit <- function(h, type  = NULL, sub  = NULL, query  = NULL, before
 #' Search Twitter with a Hal9 server worker
 #'
 #' @param h A h9 object created by h9_create.
-#' @param search 
-#' @param key 
-#' @param secret 
-#' @param type 
+#' @param search Additional step parameter.
+#' @param key Additional step parameter.
+#' @param secret Additional step parameter.
+#' @param type Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.

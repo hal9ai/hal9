@@ -3,11 +3,11 @@
 #' Predict using a long-short-term-memory model
 #'
 #' @param h A h9 object created by h9_create.
-#' @param prediction 
-#' @param window 
-#' @param units 
-#' @param epochs 
-#' @param predictions 
+#' @param prediction Additional step parameter.
+#' @param window Additional step parameter.
+#' @param units Additional step parameter.
+#' @param epochs Additional step parameter.
+#' @param predictions Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
@@ -26,8 +26,8 @@ h9_predict_lstm <- function(h, prediction  = NULL, window  = NULL, units  = NULL
 #' Calculate the moving average
 #'
 #' @param h A h9 object created by h9_create.
-#' @param source 
-#' @param window 
+#' @param source Additional step parameter.
+#' @param window Additional step parameter.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.

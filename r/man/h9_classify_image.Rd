@@ -9,7 +9,7 @@ h9_classify_image(h, url = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{url}{}
+\item{url}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

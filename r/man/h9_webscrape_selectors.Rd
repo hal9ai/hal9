@@ -18,17 +18,17 @@ h9_webscrape_selectors(
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{url}{}
+\item{url}{Additional step parameter.}
 
-\item{className}{}
+\item{className}{Additional step parameter.}
 
-\item{columnName}{}
+\item{columnName}{Additional step parameter.}
 
-\item{hasHeader}{}
+\item{hasHeader}{Additional step parameter.}
 
-\item{scrollIters}{}
+\item{scrollIters}{Additional step parameter.}
 
-\item{scrollClick}{}
+\item{scrollClick}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

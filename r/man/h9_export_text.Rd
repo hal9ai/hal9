@@ -9,9 +9,9 @@ h9_export_text(h, field = NULL, separator = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{field}{}
+\item{field}{Additional step parameter.}
 
-\item{separator}{}
+\item{separator}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }

@@ -9,11 +9,11 @@ h9_webscrape_images(h, url = NULL, minSize = NULL, scrollIters = NULL, ...)
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
-\item{url}{}
+\item{url}{Additional step parameter.}
 
-\item{minSize}{}
+\item{minSize}{Additional step parameter.}
 
-\item{scrollIters}{}
+\item{scrollIters}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 }
