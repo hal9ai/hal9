@@ -392,31 +392,3 @@ h9_summarize <- function(h, group  = NULL, field  = NULL, summarizer  = NULL, ..
 
 }
 
-#' Fetch
-#'
-#' Create new data columns by processing a URL column with a Hal9 server worker
-#'
-#' @param h A h9 object created by h9_create.
-#' @param url 
-#' @param resize 
-#' @param ... Other h9 parameters.
-#'
-#' @return A list with the pipeline specification.
-#' @export
-#'
-h9_fetch <- function(h, url  = NULL, resize  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
-  h9_add_step(
-    h,
-    "fetch",
-    update = list(
-      url = url,
-      resize = resize,
-      ...
-    ),
-    matched_call = matched_call
-  )
-
-}
-

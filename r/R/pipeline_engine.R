@@ -27,6 +27,13 @@ parse_txt_js <- function(file) {
     yaml <- lines |>
       paste(collapse = "\n")
     yaml::read_yaml(text = yaml)
+  }
+  else if (lines[1] == "<!--") {
+    last_line <- which(lines == "-->")
+    lines <- lines[2:(last_line - 1)]
+    yaml <- lines |>
+      paste(collapse = "\n")
+    yaml::read_yaml(text = yaml)
   } else {
     list()
   }
