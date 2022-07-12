@@ -7,12 +7,11 @@
     <section>
       <div style= "height:30px"></div>
         <b-field>
-            <b-slider tooltip-always :min="parameter" :max="maxparam" :step="steparam" ></b-slider>
+            <b-slider tooltip-always :min="parameter" :max="maxparam" :step="steparam" :value="value"></b-slider>
         </b-field>
     </section>
   </template>
 </div>
-
 
 <script>
 /**
@@ -33,21 +32,22 @@
       value:
         - control: number
           value: 1
-  output: [  html,rangeVal ]
+  output: [  html, range ]
+  interactive: true
 **/
 
   var state = hal9.getState();
   state = state ? state : {};
-  let rangeVal = 0;
-  if (state.rangeVal) {
-    rangeVal = state.rangeVal;
-    value = rangeVal;
+  let range = 0;
+  if (state.range) {
+    range = state.range;
+    value = range;
   }
 
   var app = new Vue({
     el: html.getElementsByClassName('rangeContainer')[0],
     data: {
-      value: rangeVal,
+      value: range,
       parameter: parseFloat(min),
       maxparam: parseFloat(max),
       steparam: parseFloat(step)
@@ -61,7 +61,7 @@ let rangeNumber = document.getElementsByClassName('tooltip-content')[0]
 console.log('first html ',html)
 
 rangeNumber.addEventListener("DOMCharacterDataModified", function (event) { 
-  state.rangeVal = event.newValue;
+  state.range = event.newValue;
   hal9.setState(state);
   hal9.invalidate();
   }, false);
