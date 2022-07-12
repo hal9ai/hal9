@@ -9,30 +9,10 @@
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_classify_image <- function(h, url  = NULL, ...) {
+h9_predict_image <- function(h, url  = NULL, ...) {
   h9_add_step(
     h,
     "mobilenet",
-    matched_call = as.list(match.call())
-  )
-}
-
-#' Pose
-#'
-#' Apply automated post-process motion capture dots to an image
-#'
-#' @param h A h9 object created by h9_create.
-#' @param images Additional step parameter.
-#' @param model Additional step parameter.
-#' @param ... Other h9 parameters.
-#'
-#' @return A list with the pipeline specification.
-#' @export
-#'
-h9_estimate_pose <- function(h, images  = NULL, model  = NULL, ...) {
-  h9_add_step(
-    h,
-    "bodypix",
     matched_call = as.list(match.call())
   )
 }
