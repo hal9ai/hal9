@@ -174,7 +174,7 @@ export const getFunction = async function(code /*: string */, params /*: params 
 export const runFunction = async function(code /*: string */, params /*: params */, header /*: header */) /*: void */ {
   const op = await getFunction(code, params, header);
 
-  params['hal9'] = Object.assign(typeof(window) != 'undefined' && window.hal9 ? window.hal9 : {}, params['hal9']);
+  params['hal9'] = Object.assign(params['hal9'], typeof(window) != 'undefined' && window.hal9 ? window.hal9 : {});
 
   // $FlowFixMe
   return op(params);
