@@ -2,16 +2,20 @@
 % Please edit documentation in R/hal9.R
 \name{h9_create}
 \alias{h9_create}
-\title{Title}
+\title{Hal9 Create}
 \usage{
 h9_create(width = "100\%", height = "100\%", environment = "cloud", ...)
 }
 \arguments{
+\item{width}{Width of the widget container.}
+
+\item{height}{Height of the widget container.}
+
 \item{environment}{The environment to use, production by default. Use 'devel' for
 development and 'local' for local developer environment.}
 
 \item{...}{Additional parameters}
 }
 \description{
-Title
+Create a h9 object.
 }

@@ -18,26 +18,11 @@
 #' @export
 #'
 h9_bar_chart <- function(h, x  = NULL, y  = NULL, type  = NULL, orientation  = NULL, palette  = NULL, fontsize  = NULL, tickrotation  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "barchart",
-    update = list(
-      x = x,
-      y = y,
-      type = type,
-      orientation = orientation,
-      palette = palette,
-      fontsize = fontsize,
-      tickrotation = tickrotation,
-      marginleft = marginleft,
-      marginbottom = marginbottom,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Dot Plot
@@ -59,25 +44,11 @@ h9_bar_chart <- function(h, x  = NULL, y  = NULL, type  = NULL, orientation  = N
 #' @export
 #'
 h9_dot_chart <- function(h, x  = NULL, color  = NULL, palette  = NULL, dotsize  = NULL, ticks  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "dotplotchart",
-    update = list(
-      x = x,
-      color = color,
-      palette = palette,
-      dotsize = dotsize,
-      ticks = ticks,
-      fontsize = fontsize,
-      marginleft = marginleft,
-      marginbottom = marginbottom,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Candles
@@ -100,26 +71,11 @@ h9_dot_chart <- function(h, x  = NULL, color  = NULL, palette  = NULL, dotsize  
 #' @export
 #'
 h9_error_chart <- function(h, x  = NULL, min  = NULL, max  = NULL, open  = NULL, close  = NULL, levels  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "errorbarchart",
-    update = list(
-      x = x,
-      min = min,
-      max = max,
-      open = open,
-      close = close,
-      levels = levels,
-      fontsize = fontsize,
-      marginleft = marginleft,
-      marginbottom = marginbottom,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Heatmap
@@ -140,24 +96,11 @@ h9_error_chart <- function(h, x  = NULL, min  = NULL, max  = NULL, open  = NULL,
 #' @export
 #'
 h9_heatmap_chart <- function(h, x  = NULL, y  = NULL, value  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "heatmapchart",
-    update = list(
-      x = x,
-      y = y,
-      value = value,
-      palette = palette,
-      fontsize = fontsize,
-      marginleft = marginleft,
-      marginbottom = marginbottom,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Histogram
@@ -176,22 +119,11 @@ h9_heatmap_chart <- function(h, x  = NULL, y  = NULL, value  = NULL, palette  = 
 #' @export
 #'
 h9_histogram_chart <- function(h, x  = NULL, histfunc  = NULL, histnorm  = NULL, barmode  = NULL, palette  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "histogramchart",
-    update = list(
-      x = x,
-      histfunc = histfunc,
-      histnorm = histnorm,
-      barmode = barmode,
-      palette = palette,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Line
@@ -212,24 +144,11 @@ h9_histogram_chart <- function(h, x  = NULL, histfunc  = NULL, histnorm  = NULL,
 #' @export
 #'
 h9_line_chart <- function(h, x  = NULL, y  = NULL, palette  = NULL, domainx  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "linechart",
-    update = list(
-      x = x,
-      y = y,
-      palette = palette,
-      domainx = domainx,
-      fontsize = fontsize,
-      marginleft = marginleft,
-      marginbottom = marginbottom,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Sankey
@@ -250,24 +169,11 @@ h9_line_chart <- function(h, x  = NULL, y  = NULL, palette  = NULL, domainx  = N
 #' @export
 #'
 h9_sankey_chart <- function(h, source  = NULL, target  = NULL, value  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "sankeychart",
-    update = list(
-      source = source,
-      target = target,
-      value = value,
-      palette = palette,
-      fontsize = fontsize,
-      marginleft = marginleft,
-      marginbottom = marginbottom,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Scatter
@@ -289,25 +195,11 @@ h9_sankey_chart <- function(h, source  = NULL, target  = NULL, value  = NULL, pa
 #' @export
 #'
 h9_scatter_chart <- function(h, x  = NULL, y  = NULL, color  = NULL, size  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "scatterchart",
-    update = list(
-      x = x,
-      y = y,
-      color = color,
-      size = size,
-      palette = palette,
-      fontsize = fontsize,
-      marginleft = marginleft,
-      marginbottom = marginbottom,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Treemap
@@ -327,22 +219,10 @@ h9_scatter_chart <- function(h, x  = NULL, y  = NULL, color  = NULL, size  = NUL
 #' @export
 #'
 h9_treemap_chart <- function(h, label  = NULL, size  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "treemapchart",
-    update = list(
-      label = label,
-      size = size,
-      palette = palette,
-      fontsize = fontsize,
-      marginleft = marginleft,
-      marginbottom = marginbottom,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 

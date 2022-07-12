@@ -23,7 +23,6 @@ for(i in 1:length(components)) {
       paste(collapse = ", ")
 
     params <- list()
-    list_func_params <- list()
 
     for (j in 1:length(components[[i]]$params)) {
 
@@ -35,13 +34,6 @@ for(i in 1:length(components)) {
       plist <- lapply(plist, function(x) ifelse(is.null(x), "", x))
 
       template_roxygen <- readLines("data-raw/templates/roxygen_param.txt")
-      template_list <- readLines("data-raw/templates/list_params.txt")
-
-      template_list <- gsub(
-        "\\{\\{param_name\\}\\}",
-        replacement = plist$param_name,
-        template_list
-      )
 
       for (k in 1:length(plist)) {
         template_roxygen <- sub(
@@ -56,18 +48,9 @@ for(i in 1:length(components)) {
         template_roxygen
       )
 
-      list_func_params <- c(
-        list_func_params,
-        template_list
-      )
-
     }
 
     params <- params |>
-      unlist() |>
-      paste(collapse = "\n")
-
-    list_func_params <- list_func_params |>
       unlist() |>
       paste(collapse = "\n")
 
@@ -77,8 +60,7 @@ for(i in 1:length(components)) {
       params = params,
       func_name = paste0("h9_", components[[i]]$`function`),
       func_params = func_params,
-      step_name = components[[i]]$name,
-      list_func_params = list_func_params
+      step_name = components[[i]]$name
     )
 
     template <- readLines("data-raw/templates/step_function.txt")

@@ -12,20 +12,11 @@
 #' @export
 #'
 h9_read_csv <- function(h, file  = NULL, separator  = NULL, skip  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "importcsv",
-    update = list(
-      file = file,
-      separator = separator,
-      skip = skip,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Excel
@@ -40,18 +31,11 @@ h9_read_csv <- function(h, file  = NULL, separator  = NULL, skip  = NULL, ...) {
 #' @export
 #'
 h9_read_excel <- function(h, file  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "importexcel",
-    update = list(
-      file = file,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' JSON
@@ -67,19 +51,11 @@ h9_read_excel <- function(h, file  = NULL, ...) {
 #' @export
 #'
 h9_read_json <- function(h, file  = NULL, extract  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "importjson",
-    update = list(
-      file = file,
-      extract = extract,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' GraphQL
@@ -96,20 +72,11 @@ h9_read_json <- function(h, file  = NULL, extract  = NULL, ...) {
 #' @export
 #'
 h9_import_graphql <- function(h, url  = NULL, query  = NULL, extract  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "graphql",
-    update = list(
-      url = url,
-      query = query,
-      extract = extract,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' MySQL
@@ -128,22 +95,11 @@ h9_import_graphql <- function(h, url  = NULL, query  = NULL, extract  = NULL, ..
 #' @export
 #'
 h9_import_mysql <- function(h, host  = NULL, user  = NULL, password  = NULL, database  = NULL, query  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "mysql",
-    update = list(
-      host = host,
-      user = user,
-      password = password,
-      database = database,
-      query = query,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Stocks
@@ -161,21 +117,11 @@ h9_import_mysql <- function(h, host  = NULL, user  = NULL, password  = NULL, dat
 #' @export
 #'
 h9_import_stocks <- function(h, stock  = NULL, statistic  = NULL, limit  = NULL, apiKey  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "stocks",
-    update = list(
-      stock = stock,
-      statistic = statistic,
-      limit = limit,
-      apiKey = apiKey,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' SQLite
@@ -191,19 +137,11 @@ h9_import_stocks <- function(h, stock  = NULL, statistic  = NULL, limit  = NULL,
 #' @export
 #'
 h9_import_sqlite <- function(h, file  = NULL, query  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "sqlite",
-    update = list(
-      file = file,
-      query = query,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Video Frames
@@ -218,18 +156,11 @@ h9_import_sqlite <- function(h, file  = NULL, query  = NULL, ...) {
 #' @export
 #'
 h9_import_video <- function(h, file  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "videoframes",
-    update = list(
-      file = file,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Web Images
@@ -246,20 +177,11 @@ h9_import_video <- function(h, file  = NULL, ...) {
 #' @export
 #'
 h9_webscrape_images <- function(h, url  = NULL, minSize  = NULL, scrollIters  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "webimages",
-    update = list(
-      url = url,
-      minSize = minSize,
-      scrollIters = scrollIters,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Web Table
@@ -278,22 +200,11 @@ h9_webscrape_images <- function(h, url  = NULL, minSize  = NULL, scrollIters  = 
 #' @export
 #'
 h9_webscrape_table <- function(h, url  = NULL, text  = NULL, hasHeader  = NULL, scrollIters  = NULL, scrollClick  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "webtables",
-    update = list(
-      url = url,
-      text = text,
-      hasHeader = hasHeader,
-      scrollIters = scrollIters,
-      scrollClick = scrollClick,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Web Selectors
@@ -313,23 +224,11 @@ h9_webscrape_table <- function(h, url  = NULL, text  = NULL, hasHeader  = NULL, 
 #' @export
 #'
 h9_webscrape_selectors <- function(h, url  = NULL, className  = NULL, columnName  = NULL, hasHeader  = NULL, scrollIters  = NULL, scrollClick  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "webselector",
-    update = list(
-      url = url,
-      className = className,
-      columnName = columnName,
-      hasHeader = hasHeader,
-      scrollIters = scrollIters,
-      scrollClick = scrollClick,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' DataFrame
@@ -344,17 +243,10 @@ h9_webscrape_selectors <- function(h, url  = NULL, className  = NULL, columnName
 #' @export
 #'
 h9_load <- function(h, dataset  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "dataframe",
-    update = list(
-      dataset = dataset,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 

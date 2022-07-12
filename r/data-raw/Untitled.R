@@ -1,9 +1,7 @@
-#' Hal9 Create
+#' Title
 #'
-#' Create a h9 object.
-#'
-#' @param width Width of the widget container.
-#' @param height Height of the widget container.
+#' @param width
+#' @param height
 #' @param environment The environment to use, production by default. Use 'devel' for
 #'   development and 'local' for local developer environment.
 #' @param ... Additional parameters
@@ -78,7 +76,7 @@ renderHal9 <- function(expr, env = parent.frame(), quoted = FALSE) {
   htmlwidgets::shinyRenderWidget(expr, hal9Output, env, quoted = TRUE)
 }
 
-h9_add_step <- function(h, step, matched_call = NULL) {
+h9_add_step <- function(h, step, update = NULL, matched_call = NULL) {
   novo_id <- lapply(h$x$pipeline$steps, function(x) x$id) |>
     as.numeric() |>
     max(0)
@@ -117,7 +115,6 @@ h9_add_step <- function(h, step, matched_call = NULL) {
       if (is.list(val)) {
         if (val[[1]]$control == "dataframe") {
           l_params[[1]][[update[i]]]$value[[1]]$source <- as.character(arg_value)
-          l_params[[1]][[update[i]]]$value[[1]]$value <- eval(arg_value)
         } else {
           l_params[[1]][[update[i]]]$value[[1]]$value <- arg_value
         }

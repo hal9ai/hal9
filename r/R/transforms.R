@@ -11,19 +11,11 @@
 #' @export
 #'
 h9_assign <- function(h, column  = NULL, array  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "assign",
-    update = list(
-      column = column,
-      array = array,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Convert
@@ -41,21 +33,11 @@ h9_assign <- function(h, column  = NULL, array  = NULL, ...) {
 #' @export
 #'
 h9_convert <- function(h, field  = NULL, dataType  = NULL, timeConverter  = NULL, charactersToRemove  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "convert",
-    update = list(
-      field = field,
-      dataType = dataType,
-      timeConverter = timeConverter,
-      charactersToRemove = charactersToRemove,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Derive
@@ -71,19 +53,11 @@ h9_convert <- function(h, field  = NULL, dataType  = NULL, timeConverter  = NULL
 #' @export
 #'
 h9_derive <- function(h, column  = NULL, expression  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "derive",
-    update = list(
-      column = column,
-      expression = expression,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Drop
@@ -98,18 +72,11 @@ h9_derive <- function(h, column  = NULL, expression  = NULL, ...) {
 #' @export
 #'
 h9_drop <- function(h, columns  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "drop",
-    update = list(
-      columns = columns,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Filter
@@ -125,19 +92,11 @@ h9_drop <- function(h, columns  = NULL, ...) {
 #' @export
 #'
 h9_filter <- function(h, field  = NULL, expression  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "filter",
-    update = list(
-      field = field,
-      expression = expression,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Fold
@@ -152,18 +111,11 @@ h9_filter <- function(h, field  = NULL, expression  = NULL, ...) {
 #' @export
 #'
 h9_fold <- function(h, gather  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "fold",
-    update = list(
-      gather = gather,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Impute
@@ -179,19 +131,11 @@ h9_fold <- function(h, gather  = NULL, ...) {
 #' @export
 #'
 h9_impute <- function(h, field  = NULL, method  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "impute",
-    update = list(
-      field = field,
-      method = method,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Pivot
@@ -209,21 +153,11 @@ h9_impute <- function(h, field  = NULL, method  = NULL, ...) {
 #' @export
 #'
 h9_pivot <- function(h, rows  = NULL, columns  = NULL, values  = NULL, summarizer  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "pivot",
-    update = list(
-      rows = rows,
-      columns = columns,
-      values = values,
-      summarizer = summarizer,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Rolling Sum
@@ -238,18 +172,11 @@ h9_pivot <- function(h, rows  = NULL, columns  = NULL, values  = NULL, summarize
 #' @export
 #'
 h9_roll_sum <- function(h, column  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "rollingsum",
-    update = list(
-      column = column,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Sample
@@ -265,19 +192,11 @@ h9_roll_sum <- function(h, column  = NULL, ...) {
 #' @export
 #'
 h9_sample <- function(h, samplesize  = NULL, withReplacement  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "sample",
-    update = list(
-      samplesize = samplesize,
-      withReplacement = withReplacement,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Select
@@ -292,18 +211,11 @@ h9_sample <- function(h, samplesize  = NULL, withReplacement  = NULL, ...) {
 #' @export
 #'
 h9_select <- function(h, columns  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "select",
-    update = list(
-      columns = columns,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Slice
@@ -319,19 +231,11 @@ h9_select <- function(h, columns  = NULL, ...) {
 #' @export
 #'
 h9_slice <- function(h, start  = NULL, end  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "slice",
-    update = list(
-      start = start,
-      end = end,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Sort
@@ -347,19 +251,11 @@ h9_slice <- function(h, start  = NULL, end  = NULL, ...) {
 #' @export
 #'
 h9_sort <- function(h, field  = NULL, order  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "sort",
-    update = list(
-      field = field,
-      order = order,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Summarize
@@ -376,20 +272,11 @@ h9_sort <- function(h, field  = NULL, order  = NULL, ...) {
 #' @export
 #'
 h9_summarize <- function(h, group  = NULL, field  = NULL, summarizer  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "summarize",
-    update = list(
-      group = group,
-      field = field,
-      summarizer = summarizer,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Fetch
@@ -405,18 +292,10 @@ h9_summarize <- function(h, group  = NULL, field  = NULL, summarizer  = NULL, ..
 #' @export
 #'
 h9_fetch <- function(h, url  = NULL, resize  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "fetch",
-    update = list(
-      url = url,
-      resize = resize,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 

@@ -15,23 +15,11 @@
 #' @export
 #'
 h9_facets_chart <- function(h, x  = NULL, y  = NULL, facets  = NULL, color  = NULL, chartType  = NULL, palette  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "facets",
-    update = list(
-      x = x,
-      y = y,
-      facets = facets,
-      color = color,
-      chartType = chartType,
-      palette = palette,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Funnel
@@ -52,24 +40,11 @@ h9_facets_chart <- function(h, x  = NULL, y  = NULL, facets  = NULL, color  = NU
 #' @export
 #'
 h9_funnel_chart <- function(h, stage  = NULL, value  = NULL, label  = NULL, fontSize  = NULL, showPercentSelection  = NULL, funnelType  = NULL, palette  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "funnel",
-    update = list(
-      stage = stage,
-      value = value,
-      label = label,
-      fontSize = fontSize,
-      showPercentSelection = showPercentSelection,
-      funnelType = funnelType,
-      palette = palette,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Map
@@ -87,21 +62,11 @@ h9_funnel_chart <- function(h, stage  = NULL, value  = NULL, label  = NULL, font
 #' @export
 #'
 h9_map_chart <- function(h, lon  = NULL, lat  = NULL, size  = NULL, label  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "mapchart",
-    update = list(
-      lon = lon,
-      lat = lat,
-      size = size,
-      label = label,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Network
@@ -117,19 +82,11 @@ h9_map_chart <- function(h, lon  = NULL, lat  = NULL, size  = NULL, label  = NUL
 #' @export
 #'
 h9_network_chart <- function(h, from  = NULL, to  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "network",
-    update = list(
-      from = from,
-      to = to,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Plotly
@@ -148,22 +105,11 @@ h9_network_chart <- function(h, from  = NULL, to  = NULL, ...) {
 #' @export
 #'
 h9_plotly_chart <- function(h, x  = NULL, y  = NULL, chartType  = NULL, dataSizes  = NULL, palette  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "plotly",
-    update = list(
-      x = x,
-      y = y,
-      chartType = chartType,
-      dataSizes = dataSizes,
-      palette = palette,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Radial
@@ -181,21 +127,11 @@ h9_plotly_chart <- function(h, x  = NULL, y  = NULL, chartType  = NULL, dataSize
 #' @export
 #'
 h9_radial_chart <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "radialbars",
-    update = list(
-      x = x,
-      y = y,
-      wafflesizelabel = wafflesizelabel,
-      palette = palette,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Regression
@@ -213,21 +149,11 @@ h9_radial_chart <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, pa
 #' @export
 #'
 h9_regression_chart <- function(h, x  = NULL, y  = NULL, type  = NULL, predictions  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "regressionchart",
-    update = list(
-      x = x,
-      y = y,
-      type = type,
-      predictions = predictions,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Waffle
@@ -245,21 +171,11 @@ h9_regression_chart <- function(h, x  = NULL, y  = NULL, type  = NULL, predictio
 #' @export
 #'
 h9_waffle_chart <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "waffle",
-    update = list(
-      x = x,
-      y = y,
-      wafflesizelabel = wafflesizelabel,
-      palette = palette,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Waterfall
@@ -278,22 +194,11 @@ h9_waffle_chart <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, pa
 #' @export
 #'
 h9_waterfall_chart <- function(h, x  = NULL, y  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "waterfall",
-    update = list(
-      x = x,
-      y = y,
-      fontsize = fontsize,
-      marginleft = marginleft,
-      marginbottom = marginbottom,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Wordcloud
@@ -309,18 +214,10 @@ h9_waterfall_chart <- function(h, x  = NULL, y  = NULL, fontsize  = NULL, margin
 #' @export
 #'
 h9_wordcloud_chart <- function(h, label  = NULL, size  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "wordcloud",
-    update = list(
-      label = label,
-      size = size,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 

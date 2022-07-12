@@ -10,18 +10,11 @@
 #' @export
 #'
 h9_classify_image <- function(h, url  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "mobilenet",
-    update = list(
-      url = url,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Pose
@@ -37,19 +30,11 @@ h9_classify_image <- function(h, url  = NULL, ...) {
 #' @export
 #'
 h9_estimate_pose <- function(h, images  = NULL, model  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "bodypix",
-    update = list(
-      images = images,
-      model = model,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Sentiment
@@ -64,17 +49,10 @@ h9_estimate_pose <- function(h, images  = NULL, model  = NULL, ...) {
 #' @export
 #'
 h9_predict_sentiment <- function(h, sentiment  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "sentiment",
-    update = list(
-      sentiment = sentiment,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 

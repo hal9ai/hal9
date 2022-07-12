@@ -11,19 +11,11 @@
 #' @export
 #'
 h9_import_airbnb <- function(h, url  = NULL, maxReviews  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "airbnb",
-    update = list(
-      url = url,
-      maxReviews = maxReviews,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' BigQuery
@@ -41,21 +33,11 @@ h9_import_airbnb <- function(h, url  = NULL, maxReviews  = NULL, ...) {
 #' @export
 #'
 h9_import_bigquery <- function(h, clientId  = NULL, projectNumber  = NULL, query  = NULL, dbLocation  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "bigquery",
-    update = list(
-      clientId = clientId,
-      projectNumber = projectNumber,
-      query = query,
-      dbLocation = dbLocation,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Google Sheets
@@ -73,21 +55,11 @@ h9_import_bigquery <- function(h, clientId  = NULL, projectNumber  = NULL, query
 #' @export
 #'
 h9_import_sheet <- function(h, url  = NULL, documentAccess  = NULL, sheet  = NULL, clientId  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "googlesheets",
-    update = list(
-      url = url,
-      documentAccess = documentAccess,
-      sheet = sheet,
-      clientId = clientId,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Reddit
@@ -106,22 +78,11 @@ h9_import_sheet <- function(h, url  = NULL, documentAccess  = NULL, sheet  = NUL
 #' @export
 #'
 h9_import_reddit <- function(h, type  = NULL, sub  = NULL, query  = NULL, before  = NULL, after  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "reddit",
-    update = list(
-      type = type,
-      sub = sub,
-      query = query,
-      before = before,
-      after = after,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Twitter
@@ -139,20 +100,10 @@ h9_import_reddit <- function(h, type  = NULL, sub  = NULL, query  = NULL, before
 #' @export
 #'
 h9_import_twitter <- function(h, search  = NULL, key  = NULL, secret  = NULL, type  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "twitter",
-    update = list(
-      search = search,
-      key = key,
-      secret = secret,
-      type = type,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 

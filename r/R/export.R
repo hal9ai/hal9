@@ -11,18 +11,10 @@
 #' @export
 #'
 h9_export_text <- function(h, field  = NULL, separator  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "exporttext",
-    update = list(
-      field = field,
-      separator = separator,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 

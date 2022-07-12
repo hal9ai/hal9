@@ -11,19 +11,11 @@
 #' @export
 #'
 h9_city_to_map <- function(h, city  = NULL, state  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "citytomap",
-    update = list(
-      city = city,
-      state = state,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Coordinates from Zip Code
@@ -38,18 +30,11 @@ h9_city_to_map <- function(h, city  = NULL, state  = NULL, ...) {
 #' @export
 #'
 h9_zip_to_map <- function(h, zipcode  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "ziptomap",
-    update = list(
-      zipcode = zipcode,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Upscale
@@ -65,19 +50,11 @@ h9_zip_to_map <- function(h, zipcode  = NULL, ...) {
 #' @export
 #'
 h9_upscaler <- function(h, originalImg  = NULL, model  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "upscaler",
-    update = list(
-      originalImg = originalImg,
-      model = model,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
 #' Stop
@@ -92,17 +69,10 @@ h9_upscaler <- function(h, originalImg  = NULL, model  = NULL, ...) {
 #' @export
 #'
 h9_stop <- function(h, expression  = NULL, ...) {
-  matched_call <- as.list(match.call())
-
   h9_add_step(
     h,
     "stop",
-    update = list(
-      expression = expression,
-      ...
-    ),
-    matched_call = matched_call
+    matched_call = as.list(match.call())
   )
-
 }
 
