@@ -55,10 +55,6 @@ h9_create(environment = "devel") |>
 
 ## R
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(python.reticulate = FALSE)
-```
-
 ```{r, eval = FALSE}
 devtools::install_github("hal9ai/hal9ai", subdir = "r")
 ```
