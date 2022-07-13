@@ -53,6 +53,7 @@ jobs:
           Rscript -e 'install.packages("pkgdown")'
           Rscript -e 'pkgdown::build_site("./r")'
           cp -r  ./r/docs site/docs/r
+        continue-on-error: true
       - uses: zdurham/s3-upload-github-action@master
         with:
           args: --recursive --acl public-read
