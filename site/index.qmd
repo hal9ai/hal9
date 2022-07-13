@@ -22,7 +22,8 @@ devtools::install_github("hal9ai/hal9ai", subdir = "r")
 
 ```{r, eval = FALSE}
 library(hal9)
-h9_create(environment = "devel") |>
+
+h9_create() |>
   h9_load(iris) |>
   h9_dropdown(values = "versicolor,setosa,virginica") |>
   h9_filter(field = "Species", expression = "field == outputs.dropdown") |>
@@ -32,8 +33,13 @@ h9_create(environment = "devel") |>
 ## Python
 
 ```{python, eval = FALSE}
+!pip3 install --upgrade --force-reinstall git+https://github.com/hal9ai/hal9ai.git#subdirectory=python
+```
+
+```{python, eval = FALSE}
 import hal9 as h9
-h9.create(environment = "devel")
+
+h9.create()
   .load(iris)
   .dropdown(values = "versicolor,setosa,virginica")
   .filter(field = "Species", expression = "field == outputs.dropdown")
@@ -42,7 +48,7 @@ h9.create(environment = "devel")
 
 :::
 
-```{r, include = FALSE, eval = FALSE}
+```{r, include = FALSE}
 library(hal9)
 h9_create(environment = "devel") |>
   h9_load(iris) |>
@@ -58,11 +64,6 @@ h9_create(environment = "devel") |>
 ## R
 
 ```{r, eval = FALSE}
-devtools::install_github("hal9ai/hal9ai", subdir = "r")
-```
-
-```{r, eval = FALSE}
-library(hal9)
 h9_create() |>
   h9_load(dataset = iris) |>
   h9_slider(min = "1", max = "100", step = "1") |>
@@ -73,8 +74,7 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-import hal9 as h9
-h9.create(environment = "devel")
+h9.create()
   .load(dataset = iris)
   .slider(min = "1", max = "100", step = "1")
   .sample()
@@ -84,8 +84,7 @@ h9.create(environment = "devel")
 :::
 
 ```{r, include = FALSE}
-library(hal9)
-h9_create(environment = "devel") |>
+h9_create() |>
   h9_load(dataset = iris) |>
   h9_slider(min = "1", max = "100", step = "1") |>
   h9_sample() |>
