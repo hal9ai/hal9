@@ -22,8 +22,8 @@ devtools::install_github("hal9ai/hal9ai", subdir = "r")
 library(hal9)
 h9_create(environment = "devel") |>
   h9_load(iris) |>
-  h9_dropdown(values = "versicolor, setosa, virginica") |>
-  h9_filter(field = "Species", expression = "field == hal9.outputs.dropdown") |>
+  h9_dropdown(values = "versicolor,setosa,virginica") |>
+  h9_filter(field = "Species", expression = "field == outputs.dropdown") |>
   h9_scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
 ```
 
