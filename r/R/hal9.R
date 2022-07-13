@@ -87,7 +87,7 @@ renderHal9 <- function(expr, env = parent.frame(), quoted = FALSE) {
   htmlwidgets::shinyRenderWidget(expr, hal9Output, env, quoted = TRUE)
 }
 
-h9_add_step <- function(h, step, matched_call = NULL) {
+h9_add_step <- function(h, step, rebind, matched_call = NULL) {
   novo_id <- lapply(h$x$pipeline$steps, function(x) x$id) |>
     as.numeric() |>
     max(0)
@@ -106,7 +106,13 @@ h9_add_step <- function(h, step, matched_call = NULL) {
         description = comp$description,
         icon = comp$icon,
         id = novo_id,
-        params = NULL
+        params = NULL,
+        options = list(
+          # TODO: Add support for inputs and ouputs
+          params = list(
+            rebinds = rebind
+          )
+        )
       )
     )
   )
