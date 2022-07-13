@@ -54,7 +54,7 @@
     {
       "name": "datagrabio",
       "function": "",
-      "source": "services/datagrabio.txt",
+      "source": "services/datagrabio.html",
       "language": "html",
       "label": "DataGrab",
       "description": "Scrape text from a website by using the DataGrab Chrome extension",
@@ -95,7 +95,7 @@
     {
       "name": "powerbi",
       "function": "",
-      "source": "services/powerbi.txt",
+      "source": "services/powerbi.html",
       "language": "html",
       "label": "Power BI",
       "description": "Import data from Power BI",
@@ -135,7 +135,7 @@
     {
       "name": "tableau",
       "function": "",
-      "source": "services/tableau.txt",
+      "source": "services/tableau.html",
       "language": "html",
       "label": "Tableau",
       "description": "Import data from Tableau",
@@ -919,7 +919,7 @@
     {
       "name": "html",
       "function": "html",
-      "source": "languages/html.txt",
+      "source": "languages/html.html",
       "language": "html",
       "label": "HTML",
       "description": "Insert a webpage snippet",
@@ -939,7 +939,7 @@
     {
       "name": "markdown",
       "function": "markdown",
-      "source": "languages/markdown.txt",
+      "source": "languages/markdown.md",
       "language": "markdown",
       "label": "Markdown",
       "description": "Insert a section of Markdown formatted text",
@@ -1003,7 +1003,7 @@
     {
       "name": "pyscript",
       "function": "pyscript",
-      "source": "frameworks/pyscript.txt",
+      "source": "frameworks/pyscript.html",
       "language": "html",
       "label": "PyScript",
       "description": "Use PyScript to render HTML",
@@ -1013,7 +1013,7 @@
     {
       "name": "react",
       "function": "react",
-      "source": "frameworks/react.txt",
+      "source": "frameworks/react.html",
       "language": "html",
       "label": "React",
       "description": "Write a React script for advanced interactivity",
@@ -1023,7 +1023,7 @@
     {
       "name": "vue",
       "function": "vue",
-      "source": "frameworks/vue.txt",
+      "source": "frameworks/vue.html",
       "language": "vue",
       "label": "Vue",
       "description": "Write a Vue script for advanced interactivity",
@@ -1045,7 +1045,7 @@
     {
       "name": "fileinput",
       "function": "file",
-      "source": "controls/inputfile.txt",
+      "source": "controls/inputfile.html",
       "language": "html",
       "label": "File Input",
       "description": "Embed a file input control",
@@ -1055,7 +1055,7 @@
     {
       "name": "numberinput",
       "function": "number",
-      "source": "controls/number.txt",
+      "source": "controls/number.html",
       "language": "html",
       "label": "Number Input",
       "description": "Embed a number input control",
@@ -1075,7 +1075,7 @@
     {
       "name": "sheet",
       "function": "sheet",
-      "source": "controls/spreadsheet.txt",
+      "source": "controls/spreadsheet.html",
       "language": "html",
       "label": "Sheet",
       "description": "Embed a spreadsheet to collect data",
@@ -1085,7 +1085,7 @@
     {
       "name": "textbox",
       "function": "textbox",
-      "source": "controls/textbox.txt",
+      "source": "controls/textbox.html",
       "language": "html",
       "label": "Text Input",
       "description": "Embed a text input control",
