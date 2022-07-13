@@ -16,7 +16,7 @@
       value:
         - control: number
           value: 1
-  output: [ html, range ]
+  output: [ html, slider ]
   interactive: true
 -->
 
@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
 
-<div class="rangeContainer">
+<div class="sliderContainer">
   <template>
     <section>
       <div style= "height:30px"></div>
@@ -38,16 +38,16 @@
 <script>
   var state = hal9.getState();
   state = state ? state : {};
-  let range = 0;
-  if (state.range) {
-    range = state.range;
-    value = range;
+  let slider = 0;
+  if (state.slider) {
+    slider = state.slider;
+    value = slider;
   }
 
   var app = new Vue({
-    el: html.getElementsByClassName('rangeContainer')[0],
+    el: html.getElementsByClassName('sliderContainer')[0],
     data: {
-      value: range,
+      value: slider,
       parameter: parseFloat(min),
       maxparam: parseFloat(max),
       steparam: parseFloat(step)
@@ -57,10 +57,10 @@
   document.getElementsByClassName('b-slider-track')[0].style = 'width: 300px';
   document.getElementsByClassName('b-slider-track')[0].style.left = "16px";
 
-  let rangeNumber = document.getElementsByClassName('tooltip-content')[0];
+  let sliderNumber = document.getElementsByClassName('tooltip-content')[0];
 
-  rangeNumber.addEventListener('DOMCharacterDataModified', function (event) { 
-    state.range = event.newValue;
+  sliderNumber.addEventListener('DOMCharacterDataModified', function (event) { 
+    state.slider = event.newValue;
     hal9.setState(state);
     hal9.invalidate();
     }, false);
