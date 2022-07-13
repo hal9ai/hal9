@@ -23,7 +23,7 @@ export const create = (pipelineid, sid, context, params, input) => {
     // Loads the state for the current pipeline step
     getState: function() {
       var current = pipelines.getState(pipelineid, sid);
-      return current ? current.api : {};
+      return current ? (current.api ?? {}) : {};
     },
     // Notify that a pipeline step has changed
     invalidate: function() {
