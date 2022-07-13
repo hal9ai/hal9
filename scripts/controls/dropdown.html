@@ -1,56 +1,51 @@
-<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-<link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
-<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
-
-<div class="numberBoxContainer">
-  <template>
-    <section>
-            <b-select placeholder="" @change.native="selectChange" id='dropID'>
-            </b-select>
-    </section>
-  </template>
-</div>
-
-
-<script>
-/**
+<!--
   input: []
   params:
     - name: values
       label: Values
       value:
         - control: textbox
-          value: A,B,C
-  output: [ dropdownVal, html ]
-**/
+          value: versicolor,setosa,vergica
+  output: [ dropdown, html ]
+  interactive: true
+-->
 
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+
+<div class="control">
+  <template>
+    <section>
+      <b-select v-model="value">
+        <option v-for="o in options" :value='o'>
+          {{ o }}
+        </option>
+      </b-select>
+    </section>
+  </template>
+</div>
+
+<script>
   var state = hal9.getState();
   state = state ? state : {};
-  let dropdownVal = 0;
-  if (state.dropdownVal) {
-    dropdownVal = state.dropdownVal;
-    value = dropdownVal;
-  }
+  
+  dropdown = state.dropdown ? state.dropdown : '';
 
-  const valuesarr = values.split(',')
   var app = new Vue({
-    el: html.getElementsByClassName('numberBoxContainer')[0],
+    el: html.getElementsByClassName('control')[0],
     data: {
-      value: '',
+      value: dropdown,
+      options: values.split(',')
     },
-    methods: {
-      selectChange(e){
-        state.dropdownVal = e.target.value;
+    watch: {
+      value: function(e) {
+        state.dropdown = e;
         hal9.setState(state);
         hal9.invalidate();
       }
     }
   })
-  const dropdownElement = document.getElementById('dropID')
-  for (let value of valuesarr){
-    let opt = document.createElement('option');
-    opt.value = opt.innerText = value.trim();
-    dropdownElement.appendChild(opt);
-}
-html.style.height = 'auto';
+
+  html.style.height = 'auto';
 </script>
