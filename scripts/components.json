@@ -1035,12 +1035,12 @@
     {
       "name": "dropdown",
       "function": "dropdown",
-      "source": "controls/dropdown.txt",
+      "source": "controls/dropdown.html",
       "language": "html",
       "label": "Dropdown",
       "description": "Embed an HTML <select> element",
       "icon": "fa-light fa-list-dropdown",
-      "build": "false"
+      "build": "true"
     },
     {
       "name": "fileinput",
