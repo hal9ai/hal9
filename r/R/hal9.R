@@ -42,6 +42,7 @@ h9_create <- function(
     pipeline = pipeline,
     pipeline_json = jsonlite::toJSON(pipeline, null = "list", auto_unbox = TRUE),
     library = library[[environment]],
+    environment = environment,
     iframe = iframe
   )
 

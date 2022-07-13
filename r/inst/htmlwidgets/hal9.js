@@ -13,10 +13,13 @@ HTMLWidgets.widget({
       renderValue: function(x) {
         window.hal9 = {
           pipeline: x.pipeline_json,
-          iframe: x.iframe
+          iframe: x.iframe,
+          id: 'hal9-root-8562934'
         };
 
-        const html = `<div id="app" style="height: 800px; max-height: 800px;"></div>`;
+        const id = x.environment != 'prod' ? window.hal9.id : 'app';
+
+        const html = `<div id="${window.hal9.id}" style="height: 800px; max-height: 800px;"></div>`;
         el.innerHTML = html;
 
         const script = document.createElement('script');
