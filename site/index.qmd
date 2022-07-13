@@ -4,9 +4,11 @@ title: "Hal9"
 
 ## About
 
-Compose visualizations and predictive models. Integrate with websites and APIs. Extend with JavaScript, Python and R.
+Hal9 helps you build web applications with not web development background to build rich web applications from Python and R. This project is under development in [Hal9's GitHub repo](https://github.com/hal9ai/hal9ai).
 
 ::: {.panel-tabset}
+
+### Easy to Use
 
 ## R
 
@@ -18,7 +20,7 @@ knitr::opts_chunk$set(python.reticulate = FALSE)
 devtools::install_github("hal9ai/hal9ai", subdir = "r")
 ```
 
-```{r}
+```{r, eval = FALSE}
 library(hal9)
 h9_create(environment = "devel") |>
   h9_load(iris) |>
@@ -30,10 +32,67 @@ h9_create(environment = "devel") |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 as h9
+h9.create(environment = "devel")
+  .load(iris) |>
+  .dropdown(values = "versicolor,setosa,virginica") |>
+  .filter(field = "Species", expression = "field == outputs.dropdown") |>
+  .scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
 ```
 
 :::
+
+```{r, include = FALSE}
+library(hal9)
+h9_create(environment = "devel") |>
+  h9_load(iris) |>
+  h9_dropdown(values = "versicolor,setosa,virginica") |>
+  h9_filter(field = "Species", expression = "field == outputs.dropdown") |>
+  h9_scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
+```
+
+### Interactive
+
+## R
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(python.reticulate = FALSE)
+```
+
+```{r, eval = FALSE}
+devtools::install_github("hal9ai/hal9ai", subdir = "r")
+```
+
+```{r, eval = FALSE}
+library(hal9)
+h9_create() |>
+  h9_load(dataset = iris) |>
+  h9_slider(min = "1", max = "100", step = "1") |>
+  h9_sample() |>
+  h9_scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species", size = "Petal.Length")
+```
+
+## Python
+
+```{python, eval = FALSE}
+import hal9 as h9
+h9.create(environment = "devel")
+  .load(dataset = iris) |>
+  .slider(min = "1", max = "100", step = "1") |>
+  .sample() |>
+  .scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species", size = "Petal.Length")
+```
+
+:::
+
+```{r, include = FALSE}
+library(hal9)
+h9_create(environment = "devel") |>
+  h9_load(dataset = iris) |>
+  h9_slider(min = "1", max = "100", step = "1") |>
+  h9_sample() |>
+  h9_scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species", size = "Petal.Length")
+```
 
 
 
