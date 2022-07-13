@@ -24,36 +24,29 @@ Hal9 is a javascript library that enables anyone to compose
 visualizations and predictive models optimized for websites and web
 APIs.
 
-You can explore your data interactively using the `hal9` function:
+You can initialize `hal9` with an empty web app as follows:
 
 ``` r
 library(hal9)
-## basic example code
 
-h9_create(my_data)
+# create app
+h9_create()
 ```
 
-You may also build a specific pipeline using our high-level functions:
+You may also add data as follows:
 
 ``` r
-# a plot pipeline
-mtcars |> 
-  h9_create() |> 
-  h9_scatter(x = "mpg", y = "wt")
+# load mtcars
+h9_create() |>
+  h9_load(mtcars)
 ```
 
-<img src="scatter_example.png" width="50%" style="display: block; margin: auto;" />
+You may also build a specific pipeline using our high-level chart
+functions:
 
-## TO DO
-
--   [ ] Test infrastructure
--   [x] `h9_create()` first draft
--   [x] `h9_add_step()` first draft
--   [ ] Support to all steps
-
-#### Examples
-
--   [ ] R Markdown use case
--   [ ] Shiny use case
--   [ ] Stats/ML use case
--   [ ] Publishing hal9 vignette (rpubs, shinyapps, stand alone html)
+``` r
+# plot mtcars
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_scatter_chart(x = "mpg", y = "wt")
+```

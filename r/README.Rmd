@@ -61,6 +61,3 @@ h9_create() |>
   h9_scatter_chart(x = "mpg", y = "wt")
 ```
 
-```{r, eval = TRUE, echo = FALSE, out.width="50%", fig.align="center"}
-knitr::include_graphics("scatter_example.png")
-```
