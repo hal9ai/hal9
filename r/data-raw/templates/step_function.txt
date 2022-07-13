@@ -10,7 +10,7 @@
 #' @return A list with the pipeline specification.
 #' @export
 #'
-{{func_name}} <- function(h, {{func_params}}, rebind, ...) {
+{{func_name}} <- function(h, {{func_params}}, rebind = NULL, ...) {
   h9_add_step(
     h,
     "{{step_name}}",
