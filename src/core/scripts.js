@@ -112,7 +112,7 @@ import twittertxt from '../../scripts/services/twitter.js';
 
 // language scripts
 import htmltxt from '../../scripts/languages/html.html';
-import javascripttxt from '../../scripts/languages/javascript.html';
+import javascripttxt from '../../scripts/languages/javascript.js';
 import markdowntxt from '../../scripts/languages/markdown.md';
 import pyodidetxt from '../../scripts/languages/pyodide.py';
 import pythontxt from '../../scripts/languages/python.py';
