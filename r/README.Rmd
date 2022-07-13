@@ -28,7 +28,7 @@ You can install the development version of hal9 from [GitHub](https://github.com
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("hal9ai/hal9ai")
+devtools::install_github("hal9ai/hal9ai", subdir = "r")
 ```
 
 ## Basic Usage
@@ -64,17 +64,3 @@ h9_create() |>
 ```{r, eval = TRUE, echo = FALSE, out.width="50%", fig.align="center"}
 knitr::include_graphics("scatter_example.png")
 ```
-
-## TO DO
-
-- [ ] Test infrastructure
-- [x] `h9_create()` first draft
-- [x] `h9_add_step()` first draft
-- [ ] Support to all steps
-
-#### Examples
-
-- [ ] R Markdown use case
-- [ ] Shiny use case 
-- [ ] Stats/ML use case
-- [ ] Publishing hal9 vignette (rpubs, shinyapps, stand alone html)

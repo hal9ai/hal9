@@ -7,6 +7,11 @@ components <- jsonlite::read_json(components_file) |>
 
 for (i in 1:length(components)) {
   script <- paste0("../scripts/", components[[i]]$source)
+
+  if(components[[i]]$build == "false"){
+    next
+  }
+
   if (nchar(components[[i]][["function"]]) > 0) {
     message("Processing ", components[[i]]$name)
 
