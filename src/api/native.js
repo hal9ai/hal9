@@ -303,6 +303,10 @@ export async function htmloutputGetScrollWidth() {
   return htmloutput.getScrollWidth();
 }
 
+export async function htmloutputGetScrollLeft() {
+  return htmloutput.getScrollLeft();
+}
+
 export async function htmloutputSetScrollLeft(pixels) {
   htmloutput.setScrollLeft(pixels);
 }
@@ -311,10 +315,26 @@ export async function htmloutputGetScrollHeight() {
   return htmloutput.getScrollHeight();
 }
 
+export async function htmloutputGetScrollTop() {
+  return htmloutput.getScrollTop();
+}
+
 export async function htmloutputSetScrollTop(pixels) {
   htmloutput.setScrollTop(pixels);
 }
 
-export async function pipelinesRegenerateLayout(pipelineid) {
-  return await layout.regenerateLayout(pipelineid);
+export async function layoutRegenerateForDocumentView(pipelineid, removeOldLayout) {
+  return await layout.regenerateForDocumentView(pipelineid, removeOldLayout);
+}
+
+export async function layoutGetForAppView() {
+  return layout.getForAppView();
+}
+
+export async function layoutSetForAppView(stepLayouts) {
+  return layout.setForAppView(stepLayouts);
+}
+
+export async function layoutSetHal9StepOverflowProperty(overflowValue) {
+  return layout.setHal9StepOverflowProperty(overflowValue);
 }

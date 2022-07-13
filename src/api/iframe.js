@@ -131,7 +131,7 @@ export const init = async (options, hal9wnd) => {
         </style>
       </head>
       <body>
-        <div id="output" style="width: 100%; height: 100%; overflow: auto;"></div>
+        <div id="output" style="position: relative; width: 100%; height: 100%; overflow: auto;"></div>
       </body>
     </html>
   `;
@@ -578,6 +578,11 @@ export async function htmloutputGetScrollWidth() {
   })
 }
 
+export async function htmloutputGetScrollLeft() {
+  return await post("hal9.htmloutput.getScrollLeft()", {
+  })
+}
+
 export async function htmloutputSetScrollLeft(pixels) {
   return await post("hal9.htmloutput.setScrollLeft(params.pixels)", {
     pixels: pixels
@@ -589,14 +594,37 @@ export async function htmloutputGetScrollHeight() {
   })
 }
 
+export async function htmloutputGetScrollTop() {
+  return await post("hal9.htmloutput.getScrollTop()", {
+  })
+}
+
 export async function htmloutputSetScrollTop(pixels) {
   return await post("hal9.htmloutput.setScrollTop(params.pixels)", {
     pixels: pixels
   })
 }
 
-export async function pipelinesRegenerateLayout(pipelineid) {
-  return await post("hal9.pipelines.regenerateLayout(params.pipelineid)", {
+export async function layoutRegenerateForDocumentView(pipelineid, removeOldLayout) {
+  return await post("hal9.layout.regenerateForDocumentView(params.pipelineid, params.removeOldLayout)", {
     pipelineid: pipelineid,
+    removeOldLayout: removeOldLayout,
+  })
+}
+
+export async function layoutGetForAppView() {
+  return await post("hal9.layout.getForAppView()", {
+  })
+}
+
+export async function layoutSetForAppView(stepLayouts) {
+  return await post("hal9.layout.setForAppView(params.stepLayouts)", {
+    stepLayouts: stepLayouts,
+  })
+}
+
+export async function layoutSetHal9StepOverflowProperty(overflowValue) {
+  return await post("hal9.layout.setHal9StepOverflowProperty(params.overflowValue)", {
+    overflowValue: overflowValue,
   })
 }

@@ -3,11 +3,11 @@ import * as languages from './interpreters/languages'
 import * as scripts from './scripts.js';
 import * as snippets from './snippets';
 
-const getLayout = (pipeline) => {
+const getForDocumentView = (pipeline) => {
   return pipeline.layout;
 }
 
-const generateLayout = (pipeline) => {
+const generateForDocumentView = (pipeline) => {
   var html = ''
   for (let step of pipeline.steps) {
     const langInfo = languages.getLanguageInfo(step.language);
@@ -35,9 +35,14 @@ const generateLayout = (pipeline) => {
   return html;
 }
 
-export const regenerateLayout = (pipelineid) => {
+export const regenerateForDocumentView = (pipelineid, removeOldLayout) => {
   var pipeline = store.get(pipelineid);
-  pipeline.layout = generateLayout(pipeline);
+  pipeline.layout = generateForDocumentView(pipeline);
+  if (removeOldLayout) {
+    if (window.hal9?.layouts?.[pipeline.id]) {
+      window.hal9.layouts[pipeline.id] = undefined;
+    }
+  }
 }
 
 const sandboxIfNeeded = (html) => {
@@ -58,7 +63,7 @@ const sandboxIfNeeded = (html) => {
   return container;
 }
 
-export const prepareLayout = (pipeline, context, stepstopid) => {
+export const prepareForDocumentView = (pipeline, context, stepstopid) => {
   var parent = context.html;
 
   if (typeof (parent) === 'object') {
@@ -69,7 +74,7 @@ export const prepareLayout = (pipeline, context, stepstopid) => {
     const html = parent.shadowRoot ? parent.shadowRoot : (context.shadow === false ? parent : parent.attachShadow({ mode: 'open' }));
 
     const isFullView = stepstopid === null || stepstopid === undefined;
-    const layoutHTML = getLayout(pipeline);
+    const layoutHTML = getForDocumentView(pipeline);
     const hasLayout = !isFullView || layoutHTML;
 
     if (isFullView && hasLayout) {
@@ -145,6 +150,62 @@ export const prepareLayout = (pipeline, context, stepstopid) => {
       else {
         return sandboxIfNeeded(html);
       }
+    }
+  }
+}
+
+// be very specific, in case someone put id="output" or class="hal9-step" in their block script
+const hal9StepSelector = ':root>body>#output>.hal9-step';
+
+const getHal9Steps = () => {
+  return document.querySelectorAll(hal9StepSelector);
+}
+
+const getHal9StepById = (stepId) => {
+  return document.querySelector(hal9StepSelector + '-' + stepId);
+}
+
+export const getForAppView = (existingStepLayouts) => {
+  const hal9Steps = getHal9Steps();
+  return [...hal9Steps].map(hal9Step => {
+    let stepLayout = {};
+    for (const className of hal9Step.classList) {
+      if (className.startsWith('hal9-step-')) {
+        stepLayout.stepId = className.slice(10);
+        break;
+      }
+    }
+    stepLayout.width = hal9Step.offsetWidth + 'px';
+    stepLayout.left = hal9Step.offsetLeft + 'px';
+    stepLayout.height = hal9Step.offsetHeight + 'px';
+    stepLayout.top = hal9Step.offsetTop + 'px';
+    return stepLayout;
+  });
+}
+
+export const setForAppView = (stepLayouts) => {
+  for (const stepLayout of stepLayouts) {
+    const hal9Step = getHal9StepById(stepLayout.stepId);
+    if (!hal9Step) {
+      // a step previously in the layout was removed
+      continue;
+    }
+    hal9Step.classList.remove('hal9-inherit-height');
+    hal9Step.style.position = 'absolute';
+    hal9Step.style.width = stepLayout.width;
+    hal9Step.style.left = stepLayout.left;
+    hal9Step.style.height = stepLayout.height;
+    hal9Step.style.top = stepLayout.top;
+  }
+}
+
+export const setHal9StepOverflowProperty = (overflowValue) => {
+  const hal9Steps = getHal9Steps();
+  for (const hal9Step of hal9Steps) {
+    if (overflowValue) {
+      hal9Step.style.overflow = overflowValue;
+    } else {
+      hal9Step.style.removeProperty('overflow');
     }
   }
 }

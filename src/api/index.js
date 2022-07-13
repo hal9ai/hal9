@@ -222,6 +222,10 @@ async function htmloutputGetScrollWidth() {
   return await api.htmloutputGetScrollWidth();
 }
 
+async function htmloutputGetScrollLeft() {
+  return await api.htmloutputGetScrollLeft();
+}
+
 async function htmloutputSetScrollLeft(pixels) {
   return await api.htmloutputSetScrollLeft(pixels);
 }
@@ -230,12 +234,28 @@ async function htmloutputGetScrollHeight() {
   return await api.htmloutputGetScrollHeight();
 }
 
+async function htmloutputGetScrollTop() {
+  return await api.htmloutputGetScrollTop();
+}
+
 async function htmloutputSetScrollTop(pixels) {
   return await api.htmloutputSetScrollTop(pixels);
 }
 
-async function regenerateLayout(pipelineid) {
-  return await api.pipelinesRegenerateLayout(pipelineid);
+async function layoutRegenerateForDocumentView(pipelineid, removeOldLayout) {
+  return await api.layoutRegenerateForDocumentView(pipelineid, removeOldLayout);
+}
+
+async function layoutGetForAppView() {
+  return await api.layoutGetForAppView();
+}
+
+async function layoutSetForAppView(stepLayouts) {
+  return await api.layoutSetForAppView(stepLayouts);
+}
+
+async function layoutSetHal9StepOverflowProperty(overflowValue) {
+  return await api.layoutSetHal9StepOverflowProperty(overflowValue);
 }
 
 export default {
@@ -310,7 +330,6 @@ export default {
     getMetadata: pipelinesGetMetadata,
     abort: pipelinesAbort,
     isAborted: pipelinesIsAborted,
-    regenerateLayout: regenerateLayout,
   },
 
   exportto: {
@@ -329,9 +348,18 @@ export default {
   htmloutput: {
     setIframeStyle: htmloutputSetIframeStyle,
     getScrollWidth: htmloutputGetScrollWidth,
+    getScrollLeft: htmloutputGetScrollLeft,
     setScrollLeft: htmloutputSetScrollLeft,
     getScrollHeight: htmloutputGetScrollHeight,
+    getScrollTop: htmloutputGetScrollTop,
     setScrollTop: htmloutputSetScrollTop,
+  },
+
+  layout: {
+    regenerateForDocumentView: layoutRegenerateForDocumentView,
+    getForAppView: layoutGetForAppView,
+    setForAppView: layoutSetForAppView,
+    setHal9StepOverflowProperty: layoutSetHal9StepOverflowProperty,
   },
 
   stepapi: {

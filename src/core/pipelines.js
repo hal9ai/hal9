@@ -431,7 +431,7 @@ export const run = async (pipelineid /*: pipeline */, context /* context */, par
   }
 
   partial = preparePartial(pipeline, context, partial, stepstopid);
-  layout.prepareLayout(pipeline, context, stepstopid);
+  layout.prepareForDocumentView(pipeline, context, stepstopid);
 
   pipeline.errors = {};
   pipeline.error = undefined;
