@@ -87,7 +87,7 @@ renderHal9 <- function(expr, env = parent.frame(), quoted = FALSE) {
   htmlwidgets::shinyRenderWidget(expr, hal9Output, env, quoted = TRUE)
 }
 
-h9_add_step <- function(h, step, rebind, matched_call = NULL) {
+h9_add_step <- function(h, step, rebind = NULL, matched_call = NULL) {
   novo_id <- lapply(h$x$pipeline$steps, function(x) x$id) |>
     as.numeric() |>
     max(0)
@@ -136,9 +136,7 @@ h9_add_step <- function(h, step, rebind, matched_call = NULL) {
     for(i in seq_along(update)) {
       val <- l_params[[1]][[update[i]]]$value
       arg_value <- matched_call[[update[i]]]
-      if (identical(val, NULL)) {
-      }
-      else if (is.list(val)) {
+      if (is.list(val)) {
         if (val[[1]]$control == "dataframe") {
           l_params[[1]][[update[i]]]$value[[1]]$source <- as.character(arg_value)
           l_params[[1]][[update[i]]]$value[[1]]$value <- eval(arg_value)
