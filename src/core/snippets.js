@@ -37,7 +37,6 @@ export const parseHeader = (code /*: string */) /*: header */ => {
     if (headers && headers.length > 0) type = 'docstring';
   }
   else if (code.trim().startsWith('<!--')) {
-    debugger;
     type = 'html';
     const last = code.indexOf("-->");
     headers = [ code.substr(4, last - 4) ];
