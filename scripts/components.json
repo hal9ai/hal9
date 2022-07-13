@@ -1070,7 +1070,7 @@
       "label": "Slider",
       "description": "Embed an slider element",
       "icon": "fa-light fa-slider",
-      "build": "false"
+      "build": "true"
     },
     {
       "name": "sheet",
