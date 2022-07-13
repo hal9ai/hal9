@@ -18,9 +18,11 @@
     - https://cdn.jsdelivr.net/npm/arquero@latest
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
 **/
+
 data = await hal9.utils.toArquero(data);
+const outputs = hal9.getOutputs();
 
 if (expression && field) {
-  var filterexp = new Function('field', 'return ' + expression);
-  data = data.params({field}).filter(aq.escape((data, $)=> filterexp(data[$.field])));
+  var filterexp = new Function('field', 'outputs', 'return ' + expression);
+  data = data.params({field, outputs}).filter(aq.escape((data, $)=> filterexp(data[$.field], $.outputs)));
 }
