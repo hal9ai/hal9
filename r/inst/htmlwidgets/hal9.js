@@ -14,7 +14,7 @@ HTMLWidgets.widget({
         window.hal9 = {
           pipeline: x.pipeline_json,
           iframe: x.iframe,
-          id: 'hal9-root-8562934'
+          id: 'hal9-root-' + Math.floor(Math.random() * 10000000)
         };
 
         const id = x.environment != 'prod' ? window.hal9.id : 'app';
