@@ -96,25 +96,32 @@ h9_add_step <- function(h, step, rebind, matched_call = NULL) {
 
   comp <- components[[which(lapply(components, function(x) x$name) == step)]]
 
-  h$x$pipeline$steps <- c(
-    h$x$pipeline$steps,
+  if (!identical(rebind, NULL)) browser()
+
+  new_step <- list(
     list(
-      list(
-        name = comp$name,
-        label = comp$label,
-        language = comp$language,
-        description = comp$description,
-        icon = comp$icon,
-        id = novo_id,
-        params = NULL,
-        options = list(
-          # TODO: Add support for inputs and ouputs
-          params = list(
-            rebinds = rebind
-          )
-        )
+      name = comp$name,
+      label = comp$label,
+      language = comp$language,
+      description = comp$description,
+      icon = comp$icon,
+      id = novo_id,
+      params = NULL
+    )
+  )
+
+  if (!identical(rebind, NULL)) {
+    # TODO: Add support for inputs and ouputs
+    new_step$options <- list(
+      params = list(
+        rebinds = rebind
       )
     )
+  }
+
+  h$x$pipeline$steps <- c(
+    h$x$pipeline$steps,
+    new_step
   )
 
   l_params <- list(
@@ -129,7 +136,9 @@ h9_add_step <- function(h, step, rebind, matched_call = NULL) {
     for(i in seq_along(update)) {
       val <- l_params[[1]][[update[i]]]$value
       arg_value <- matched_call[[update[i]]]
-      if (is.list(val)) {
+      if (identical(val, NULL)) {
+      }
+      else if (is.list(val)) {
         if (val[[1]]$control == "dataframe") {
           l_params[[1]][[update[i]]]$value[[1]]$source <- as.character(arg_value)
           l_params[[1]][[update[i]]]$value[[1]]$value <- eval(arg_value)
