@@ -18,9 +18,8 @@ knitr::opts_chunk$set(python.reticulate = FALSE)
 devtools::install_github("hal9ai/hal9ai", subdir = "r")
 ```
 
-```{r, eval = FALSE}
+```{r}
 library(hal9)
-
 h9_create(environment = "devel") |>
   h9_load(iris) |>
   h9_dropdown(values = "versicolor, setosa, virginica") |>
