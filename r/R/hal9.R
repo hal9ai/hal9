@@ -6,11 +6,18 @@
 #' @param height Height of the widget container.
 #' @param environment The environment to use, production by default. Use 'devel' for
 #'   development and 'local' for local developer environment.
+#' @param iframe Should the application run inside an iframe to protect styles and
+#'   resources from the parent? Defaults to 'TRUE'.
 #' @param ... Additional parameters
 #'
 #' @export
 #'
-h9_create <- function(width = "100%", height = "100%", environment = 'cloud', ...) {
+h9_create <- function(
+  width = "100%",
+  height = "100%",
+  environment = 'cloud',
+  iframe = TRUE,
+  ...) {
   elementId <- list(...)$elementId
 
   library <- list(
@@ -34,7 +41,8 @@ h9_create <- function(width = "100%", height = "100%", environment = 'cloud', ..
   x = list(
     pipeline = pipeline,
     pipeline_json = jsonlite::toJSON(pipeline, null = "list", auto_unbox = TRUE),
-    library = library[[environment]]
+    library = library[[environment]],
+    iframe = iframe
   )
 
   # create widget

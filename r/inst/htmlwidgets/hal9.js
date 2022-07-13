@@ -12,7 +12,8 @@ HTMLWidgets.widget({
 
       renderValue: function(x) {
         window.hal9 = {
-          pipeline: x.pipeline_json
+          pipeline: x.pipeline_json,
+          iframe: x.iframe
         };
 
         const html = `<div id="app" style="height: 800px; max-height: 800px;"></div>`;

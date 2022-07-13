@@ -4,7 +4,13 @@
 \alias{h9_create}
 \title{Hal9 Create}
 \usage{
-h9_create(width = "100\%", height = "100\%", environment = "cloud", ...)
+h9_create(
+  width = "100\%",
+  height = "100\%",
+  environment = "cloud",
+  iframe = TRUE,
+  ...
+)
 }
 \arguments{
 \item{width}{Width of the widget container.}
@@ -13,6 +19,9 @@ h9_create(width = "100\%", height = "100\%", environment = "cloud", ...)
 
 \item{environment}{The environment to use, production by default. Use 'devel' for
 development and 'local' for local developer environment.}
+
+\item{iframe}{Should the application run inside an iframe to protect styles and
+resources from the parent? Defaults to 'TRUE'.}
 
 \item{...}{Additional parameters}
 }
