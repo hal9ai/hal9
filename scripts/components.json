@@ -39,7 +39,7 @@
       "label": "Airbnb",
       "description": "Gather comments from an Airbnb listing by using a Hal9 server worker",
       "icon": "fa-brands fa-airbnb",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "bigquery",
@@ -49,7 +49,7 @@
       "label": "BigQuery",
       "description": "Query data from a Google Cloud BigQuery data warehouse",
       "icon": "fa-light fa-magnifying-glass",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "datagrabio",
@@ -59,7 +59,7 @@
       "label": "DataGrab",
       "description": "Scrape text from a website by using the DataGrab Chrome extension",
       "icon": "fa-brands fa-chrome",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "googlesheets",
@@ -69,7 +69,7 @@
       "label": "Google Sheets",
       "description": "Import data from a Google Sheets spreadsheet",
       "icon": "fa-light fa-file-spreadsheet",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "graphql",
@@ -79,7 +79,7 @@
       "label": "GraphQL",
       "description": "Query data from a GraphQL endpoint",
       "icon": "fa-light fa-comment-question",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "mysql",
@@ -90,7 +90,7 @@
       "label": "MySQL",
       "description": "Query data from a MySQL database by using a Hal9 server worker",
       "icon": "fa-light fa-database",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "powerbi",
@@ -100,7 +100,7 @@
       "label": "Power BI",
       "description": "Import data from Power BI",
       "icon": "fa-brands fa-microsoft",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "reddit",
@@ -110,7 +110,7 @@
       "label": "Reddit",
       "description": "Search Reddit for submissions or comments",
       "icon": "fa-brands fa-reddit",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "stocks",
@@ -120,7 +120,7 @@
       "label": "Stocks",
       "description": "Get stock market data provided by Financial Modeling Prep",
       "icon": "fa-light fa-arrow-trend-up",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "sqlite",
@@ -140,7 +140,7 @@
       "label": "Tableau",
       "description": "Import data from Tableau",
       "icon": "fa-brands fa-salesforce",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "twitter",
@@ -151,7 +151,7 @@
       "label": "Twitter",
       "description": "Search Twitter with a Hal9 server worker",
       "icon": "icon-twitter",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "videoframes",
@@ -161,7 +161,7 @@
       "label": "Video Frames",
       "description": "Grab frames from a video file",
       "icon": "fa-light fa-photo-film",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "webimages",
@@ -172,7 +172,7 @@
       "label": "Web Images",
       "description": "Scrape images from a website by using a Hal9 server worker",
       "icon": "fa-light fa-images",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "webtables",
@@ -183,7 +183,7 @@
       "label": "Web Table",
       "description": "Scrape a table from a website by using a Hal9 server worker",
       "icon": "fa-light fa-table",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "webselector",
@@ -194,7 +194,7 @@
       "label": "Web Selectors",
       "description": "Scrape data matching CSS or DOM selectors on a website by using a Hal9 server worker",
       "icon": "fa-brands fa-css3-alt",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "webcam",
@@ -204,7 +204,7 @@
       "label": "Webcam",
       "description": "Snap a webcam photo to insert into a dataset",
       "icon": "fa-light fa-camera-web",
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "images",
@@ -1050,7 +1050,7 @@
       "label": "File Input",
       "description": "Embed a file input control",
       "icon": "fa-light fa-file-import",
-      "build": "false"
+      "build": "true"
     },
     {
       "name": "numberinput",
@@ -1060,7 +1060,7 @@
       "label": "Number Input",
       "description": "Embed a number input control",
       "icon": "fa-light fa-input-numeric",
-      "build": "false"
+      "build": "true"
     },
     {
       "name": "slider",
@@ -1080,7 +1080,7 @@
       "label": "Sheet",
       "description": "Embed a spreadsheet to collect data",
       "icon": "fa-light fa-file-spreadsheet",
-      "build": "false"
+      "build": "true"
     },
     {
       "name": "textbox",
@@ -1090,7 +1090,7 @@
       "label": "Text Input",
       "description": "Embed a text input control",
       "icon": "fa-light fa-input-text",
-      "build": "false"
+      "build": "true"
     },
     {
       "name": "textarea",
@@ -1100,7 +1100,7 @@
       "label": "Multi-line Text Input",
       "description": "Embed a multi-line text input control",
       "icon": "fa-light fa-paragraph",
-      "build": "false"
+      "build": "true"
     },
     {
       "name": "website",
@@ -1110,7 +1110,7 @@
       "label": "Website",
       "description": "Embed a website and load a URL",
       "icon": "fa-light fa-browser",
-      "build": "false"
+      "build": "true"
     }
   ]
 }
