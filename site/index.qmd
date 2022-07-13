@@ -70,7 +70,7 @@ h9_create() |>
   h9_load(dataset = iris) |>
   h9_slider(min = "1", max = "100", step = "1") |>
   h9_sample() |>
-  h9_scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species", size = "Petal.Length")
+  h9_scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
 ```
 
 ## Python
@@ -80,7 +80,7 @@ h9.create()
   .load(dataset = iris)
   .slider(min = "1", max = "100", step = "1")
   .sample()
-  .scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species", size = "Petal.Length")
+  .scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
 ```
 
 :::
@@ -92,7 +92,7 @@ h9_create() |>
   h9_load(dataset = iris) |>
   h9_slider(min = "1", max = "100", step = "1") |>
   h9_sample() |>
-  h9_scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species", size = "Petal.Length")
+  h9_scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
 ```
 
 
