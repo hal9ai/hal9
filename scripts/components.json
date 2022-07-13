@@ -849,7 +849,7 @@
     {
       "name": "markdown",
       "function": "markdown",
-      "source": "languages/markdown.html",
+      "source": "languages/markdown.md",
       "language": "markdown",
       "label": "Markdown",
       "description": "Insert a section of Markdown formatted text",
