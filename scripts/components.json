@@ -3,7 +3,7 @@
     {
       "name": "importcsv",
       "function": "read_csv",
-      "source": "import/csv.txt.js",
+      "source": "import/csv.js",
       "language": "javascript",
       "label": "CSV",
       "description": "Import a CSV formatted dataset",
@@ -12,7 +12,7 @@
     {
       "name": "importexcel",
       "function": "read_excel",
-      "source": "import/excel.txt.js",
+      "source": "import/excel.js",
       "language": "javascript",
       "label": "Excel",
       "description": "Import a dataset from a sheet of an Excel file",
@@ -21,7 +21,7 @@
     {
       "name": "importjson",
       "function": "read_json",
-      "source": "import/json.txt.js",
+      "source": "import/json.js",
       "language": "javascript",
       "label": "JSON",
       "description": "Import a JSON formatted dataset",
@@ -30,7 +30,7 @@
     {
       "name": "airbnb",
       "function": "",
-      "source": "services/airbnb.txt.js",
+      "source": "services/airbnb.js",
       "language": "javascript",
       "serverWorker": true,
       "label": "Airbnb",
@@ -40,7 +40,7 @@
     {
       "name": "bigquery",
       "function": "",
-      "source": "services/bigquery.txt.js",
+      "source": "services/bigquery.js",
       "language": "javascript",
       "label": "BigQuery",
       "description": "Query data from a Google Cloud BigQuery data warehouse",
@@ -49,7 +49,7 @@
     {
       "name": "datagrabio",
       "function": "",
-      "source": "services/datagrabio.txt",
+      "source": "services/datagrabio.html",
       "language": "html",
       "label": "DataGrab",
       "description": "Scrape text from a website by using the DataGrab Chrome extension",
@@ -58,7 +58,7 @@
     {
       "name": "googlesheets",
       "function": "",
-      "source": "services/googlesheets.txt.js",
+      "source": "services/googlesheets.js",
       "language": "javascript",
       "label": "Google Sheets",
       "description": "Import data from a Google Sheets spreadsheet",
@@ -67,7 +67,7 @@
     {
       "name": "graphql",
       "function": "",
-      "source": "import/graphql.txt.js",
+      "source": "import/graphql.js",
       "language": "javascript",
       "label": "GraphQL",
       "description": "Query data from a GraphQL endpoint",
@@ -76,7 +76,7 @@
     {
       "name": "mysql",
       "function": "",
-      "source": "import/mysql.txt.js",
+      "source": "import/mysql.js",
       "language": "javascript",
       "serverWorker": true,
       "label": "MySQL",
@@ -86,7 +86,7 @@
     {
       "name": "powerbi",
       "function": "",
-      "source": "services/powerbi.txt",
+      "source": "services/powerbi.html",
       "language": "html",
       "label": "Power BI",
       "description": "Import data from Power BI",
@@ -95,7 +95,7 @@
     {
       "name": "reddit",
       "function": "",
-      "source": "services/reddit.txt.js",
+      "source": "services/reddit.js",
       "language": "javascript",
       "label": "Reddit",
       "description": "Search Reddit for submissions or comments",
@@ -104,7 +104,7 @@
     {
       "name": "stocks",
       "function": "",
-      "source": "import/stocks.txt.js",
+      "source": "import/stocks.js",
       "language": "javascript",
       "label": "Stocks",
       "description": "Get stock market data provided by Financial Modeling Prep",
@@ -113,7 +113,7 @@
     {
       "name": "sqlite",
       "function": "read_sqlite",
-      "source": "import/sqlite.txt.js",
+      "source": "import/sqlite.js",
       "language": "javascript",
       "label": "SQLite",
       "description": "Query data from a SQLite database",
@@ -122,7 +122,7 @@
     {
       "name": "tableau",
       "function": "",
-      "source": "services/tableau.txt",
+      "source": "services/tableau.html",
       "language": "html",
       "label": "Tableau",
       "description": "Import data from Tableau",
@@ -131,7 +131,7 @@
     {
       "name": "twitter",
       "function": "",
-      "source": "services/twitter.txt.js",
+      "source": "services/twitter.js",
       "language": "javascript",
       "serverWorker": true,
       "label": "Twitter",
@@ -141,7 +141,7 @@
     {
       "name": "videoframes",
       "function": "",
-      "source": "import/videoframes.txt.js",
+      "source": "import/videoframes.js",
       "language": "javascript",
       "label": "Video Frames",
       "description": "Grab frames from a video file",
@@ -150,7 +150,7 @@
     {
       "name": "webimages",
       "function": "",
-      "source": "import/webimages.txt.js",
+      "source": "import/webimages.js",
       "language": "javascript",
       "serverWorker": true,
       "label": "Web Images",
@@ -160,7 +160,7 @@
     {
       "name": "webtables",
       "function": "",
-      "source": "import/webtable.txt.js",
+      "source": "import/webtable.js",
       "language": "javascript",
       "serverWorker": true,
       "label": "Web Table",
@@ -170,7 +170,7 @@
     {
       "name": "webselector",
       "function": "",
-      "source": "import/webselector.txt.js",
+      "source": "import/webselector.js",
       "language": "javascript",
       "serverWorker": true,
       "label": "Web Selectors",
@@ -180,7 +180,7 @@
     {
       "name": "webcam",
       "function": "",
-      "source": "import/webcam.txt.js",
+      "source": "import/webcam.js",
       "language": "javascript",
       "label": "Webcam",
       "description": "Snap a webcam photo to insert into a dataset",
@@ -189,7 +189,7 @@
     {
       "name": "images",
       "function": "load_images",
-      "source": "import/images.txt.js",
+      "source": "import/images.js",
       "language": "javascript",
       "label": "Images Dataset",
       "description": "Sample dataset of image URLs",
@@ -198,7 +198,7 @@
     {
       "name": "iris",
       "function": "load_iris",
-      "source": "import/iris.txt.js",
+      "source": "import/iris.js",
       "language": "javascript",
       "label": "Iris Dataset",
       "description": "Sample iris flowers dataset",
@@ -207,7 +207,7 @@
     {
       "name": "dataframe",
       "function": "load",
-      "source": "import/dataframe.txt.js",
+      "source": "import/dataframe.js",
       "language": "javascript",
       "label": "DataFrame",
       "description": "Loads a dataframe",
@@ -218,7 +218,7 @@
     {
       "name": "assign",
       "function": "assign",
-      "source": "transforms/assign.txt.js",
+      "source": "transforms/assign.js",
       "language": "javascript",
       "label": "Assign",
       "description": "Attach a new column",
@@ -227,7 +227,7 @@
     {
       "name": "convert",
       "function": "convert",
-      "source": "transforms/convert.txt.js",
+      "source": "transforms/convert.js",
       "language": "javascript",
       "label": "Convert",
       "description": "Apply an expression to the values in a specific column",
@@ -236,7 +236,7 @@
     {
       "name": "derive",
       "function": "derive",
-      "source": "transforms/derive.txt.js",
+      "source": "transforms/derive.js",
       "language": "javascript",
       "label": "Derive",
       "description": "Create a new column or replace an existing one via an expression",
@@ -245,7 +245,7 @@
     {
       "name": "drop",
       "function": "drop",
-      "source": "transforms/drop.txt.js",
+      "source": "transforms/drop.js",
       "language": "javascript",
       "label": "Drop",
       "description": "Remove specific columns",
@@ -254,7 +254,7 @@
     {
       "name": "filter",
       "function": "filter",
-      "source": "transforms/filter.txt.js",
+      "source": "transforms/filter.js",
       "language": "javascript",
       "label": "Filter",
       "description": "Keep only the rows that satisfy a given expression for a specific column",
@@ -263,7 +263,7 @@
     {
       "name": "fold",
       "function": "fold",
-      "source": "transforms/fold.txt.js",
+      "source": "transforms/fold.js",
       "language": "javascript",
       "label": "Fold",
       "description": "Fold one or more columns into a pair of key-value columns",
@@ -272,7 +272,7 @@
     {
       "name": "impute",
       "function": "impute",
-      "source": "transforms/impute.txt.js",
+      "source": "transforms/impute.js",
       "language": "javascript",
       "label": "Impute",
       "description": "Fill in a column's missing data with the value of an aggregation",
@@ -281,7 +281,7 @@
     {
       "name": "pivot",
       "function": "pivot",
-      "source": "transforms/pivot.txt.js",
+      "source": "transforms/pivot.js",
       "language": "javascript",
       "label": "Pivot",
       "description": "Pivot columns into a cross-tabulation",
@@ -290,7 +290,7 @@
     {
       "name": "rollingsum",
       "function": "roll_sum",
-      "source": "transforms/rollingsum.txt.js",
+      "source": "transforms/rollingsum.js",
       "language": "javascript",
       "label": "Rolling Sum",
       "description": "Create new columns from the running totals of others",
@@ -299,7 +299,7 @@
     {
       "name": "sample",
       "function": "sample",
-      "source": "transforms/sample.txt.js",
+      "source": "transforms/sample.js",
       "language": "javascript",
       "label": "Sample",
       "description": "Trim a dataset down to a random sample of its rows",
@@ -308,7 +308,7 @@
     {
       "name": "select",
       "function": "select",
-      "source": "transforms/select.txt.js",
+      "source": "transforms/select.js",
       "language": "javascript",
       "label": "Select",
       "description": "Keep only a subset of columns",
@@ -317,7 +317,7 @@
     {
       "name": "slice",
       "function": "slice",
-      "source": "transforms/slice.txt.js",
+      "source": "transforms/slice.js",
       "language": "javascript",
       "label": "Slice",
       "description": "Keep only a contiguous subset of rows",
@@ -326,7 +326,7 @@
     {
       "name": "sort",
       "function": "sort",
-      "source": "transforms/sort.txt.js",
+      "source": "transforms/sort.js",
       "language": "javascript",
       "label": "Sort",
       "description": "Sort rows of data based on the values in selected columns",
@@ -335,7 +335,7 @@
     {
       "name": "summarize",
       "function": "summarize",
-      "source": "transforms/summarize.txt.js",
+      "source": "transforms/summarize.js",
       "language": "javascript",
       "label": "Summarize",
       "description": "Select columns to aggregate and others to keep unmodified",
@@ -346,7 +346,7 @@
     {
       "name": "barchart",
       "function": "bar_chart",
-      "source": "charts/barchart.txt.js",
+      "source": "charts/barchart.js",
       "language": "javascript",
       "label": "Bar",
       "description": "Our first chart type needs no introduction",
@@ -364,7 +364,7 @@
     {
       "name": "bubbles",
       "function": "bubble_chart",
-      "source": "visualizations/bubbles.txt.js",
+      "source": "visualizations/bubbles.js",
       "language": "javascript",
       "label": "Bubbles",
       "description": "Bigger values -> bigger bubbles",
@@ -373,7 +373,7 @@
     {
       "name": "dotplotchart",
       "function": "dot_chart",
-      "source": "charts/dotplotchart.txt.js",
+      "source": "charts/dotplotchart.js",
       "language": "javascript",
       "label": "Dot Plot",
       "description": "Stack data into columns of dots",
@@ -382,7 +382,7 @@
     {
       "name": "errorbarchart",
       "function": "error_chart",
-      "source": "charts/errorbarchart.txt.js",
+      "source": "charts/errorbarchart.js",
       "language": "javascript",
       "label": "Candles",
       "description": "Explain financial trends with a candlestick chart",
@@ -391,7 +391,7 @@
     {
       "name": "facets",
       "function": "facets_chart",
-      "source": "visualizations/facets.txt.js",
+      "source": "visualizations/facets.js",
       "language": "javascript",
       "label": "Facets",
       "description": "A chart of charts organized in a grid",
@@ -400,7 +400,7 @@
     {
       "name": "funnel",
       "function": "funnel_chart",
-      "source": "visualizations/funnel.txt.js",
+      "source": "visualizations/funnel.js",
       "language": "javascript",
       "label": "Funnel",
       "description": "Communicate how data narrows down",
@@ -409,7 +409,7 @@
     {
       "name": "gallery",
       "function": "image_chart",
-      "source": "visualizations/gallery.txt",
+      "source": "visualizations/gallery.html",
       "language": "html",
       "label": "Gallery",
       "description": "A showcase for image datasets",
@@ -418,7 +418,7 @@
     {
       "name": "heatmapchart",
       "function": "heatmap_chart",
-      "source": "charts/heatmapchart.txt.js",
+      "source": "charts/heatmapchart.js",
       "language": "javascript",
       "label": "Heatmap",
       "description": "Draw attention to larger values with more vibrant colors in this 2D map",
@@ -427,7 +427,7 @@
     {
       "name": "histogramchart",
       "function": "histogram_chart",
-      "source": "charts/histogramchart.txt.js",
+      "source": "charts/histogramchart.js",
       "language": "javascript",
       "label": "Histogram",
       "description": "Show further granularity within buckets via optional color palettes",
@@ -436,7 +436,7 @@
     {
       "name": "linechart",
       "function": "line_chart",
-      "source": "charts/linechart.txt.js",
+      "source": "charts/linechart.js",
       "language": "javascript",
       "label": "Line",
       "description": "For use with sorted X axis values only...unless you like scribbles",
@@ -445,7 +445,7 @@
     {
       "name": "mapchart",
       "function": "map_chart",
-      "source": "visualizations/map.txt.js",
+      "source": "visualizations/map.js",
       "language": "javascript",
       "label": "Map",
       "description": "Clearly map out Earthly datasets that have columns for latitude and longitude",
@@ -454,7 +454,7 @@
     {
       "name": "network",
       "function": "network_chart",
-      "source": "visualizations/network.txt.js",
+      "source": "visualizations/network.js",
       "language": "javascript",
       "label": "Network",
       "description": "Dazzle your colleagues with this colorful animated network graph",
@@ -463,7 +463,7 @@
     {
       "name": "plotly",
       "function": "plotly_chart",
-      "source": "visualizations/plotlycharts.txt.js",
+      "source": "visualizations/plotlycharts.js",
       "language": "javascript",
       "label": "Plotly",
       "description": "Choose from a variety of Plotly visualizations",
@@ -472,7 +472,7 @@
     {
       "name": "radialbars",
       "function": "radial_chart",
-      "source": "visualizations/radialbars.txt.js",
+      "source": "visualizations/radialbars.js",
       "language": "javascript",
       "label": "Radial",
       "description": "A circular bar chart",
@@ -481,7 +481,7 @@
     {
       "name": "regressionchart",
       "function": "regression_chart",
-      "source": "visualizations/regression.txt.js",
+      "source": "visualizations/regression.js",
       "language": "javascript",
       "label": "Regression",
       "description": "Fit a regression model to a dataset to predict future values",
@@ -490,7 +490,7 @@
     {
       "name": "sankeychart",
       "function": "sankey_chart",
-      "source": "charts/sankeychart.txt.js",
+      "source": "charts/sankeychart.js",
       "language": "javascript",
       "label": "Sankey",
       "description": "Show the flow with Captain Sankey's signature diagram",
@@ -499,7 +499,7 @@
     {
       "name": "scatterchart",
       "function": "scatter_chart",
-      "source": "charts/scatterchart.txt.js",
+      "source": "charts/scatterchart.js",
       "language": "javascript",
       "label": "Scatter",
       "description": "A tried and true classic",
@@ -508,7 +508,7 @@
     {
       "name": "table",
       "function": "simple_table",
-      "source": "visualizations/simpletable.txt",
+      "source": "visualizations/simpletable.html",
       "language": "html",
       "label": "Table",
       "description": "Sort and search a dataset",
@@ -517,7 +517,7 @@
     {
       "name": "treemapchart",
       "function": "treemap_chart",
-      "source": "charts/treemapchart.txt.js",
+      "source": "charts/treemapchart.js",
       "language": "javascript",
       "label": "Treemap",
       "description": "Choose a column to map into colored blocks, and another to further subdivide by size",
@@ -535,7 +535,7 @@
     {
       "name": "waffle",
       "function": "waffle_chart",
-      "source": "visualizations/waffle.txt.js",
+      "source": "visualizations/waffle.js",
       "language": "javascript",
       "label": "Waffle",
       "description": "A square pie chart; still not edible",
@@ -544,7 +544,7 @@
     {
       "name": "waterfall",
       "function": "waterfall_chart",
-      "source": "visualizations/waterfall.txt.js",
+      "source": "visualizations/waterfall.js",
       "language": "javascript",
       "label": "Waterfall",
       "description": "Lay out cascades of data next to a towering waterfall representing the total",
@@ -553,7 +553,7 @@
     {
       "name": "wordcloud",
       "function": "wordcloud_chart",
-      "source": "visualizations/wordcloud.txt.js",
+      "source": "visualizations/wordcloud.js",
       "language": "javascript",
       "label": "Wordcloud",
       "description": "Make the most frequent words in a dataset stand out in a trendy way",
@@ -564,7 +564,7 @@
     {
       "name": "mobilenet",
       "function": "predict_image",
-      "source": "predict/mobilenet.txt.js",
+      "source": "predict/mobilenet.js",
       "language": "javascript",
       "label": "Image Classification",
       "description": "Use MobileNet's Image Classification to attempt to identify what's in an image",
@@ -574,7 +574,7 @@
     {
       "name": "bodypix",
       "function": "",
-      "source": "predict/movenet.txt.js",
+      "source": "predict/movenet.js",
       "language": "javascript",
       "label": "Pose",
       "description": "Apply automated post-process motion capture dots to an image",
@@ -584,7 +584,7 @@
     {
       "name": "sentiment",
       "function": "predict_sentiment",
-      "source": "predict/sentiment.txt.js",
+      "source": "predict/sentiment.js",
       "language": "javascript",
       "label": "Sentiment",
       "description": "Ask a neural net to predict how positively the text in a dataset will be perceived",
@@ -605,7 +605,7 @@
     {
       "name": "timelstm",
       "function": "predict_lstm",
-      "source": "timeseries/lstm.txt.js",
+      "source": "timeseries/lstm.js",
       "language": "javascript",
       "label": "LSTM",
       "description": "Predict using a long-short-term-memory model",
@@ -614,7 +614,7 @@
     {
       "name": "timemovingaverage",
       "function": "sma",
-      "source": "timeseries/movingaverage.txt.js",
+      "source": "timeseries/movingaverage.js",
       "language": "javascript",
       "label": "SMA",
       "description": "Calculate the moving average",
@@ -696,7 +696,7 @@
     {
       "name": "exportcsv",
       "function": "export_csv",
-      "source": "export/csv.txt.js",
+      "source": "export/csv.js",
       "language": "javascript",
       "label": "CSV",
       "description": "Export a dataset into CSV format",
@@ -705,7 +705,7 @@
     {
       "name": "exportjson",
       "function": "export_json",
-      "source": "export/json.txt.js",
+      "source": "export/json.js",
       "language": "javascript",
       "label": "JSON",
       "description": "Export a dataset into JSON format",
@@ -714,7 +714,7 @@
     {
       "name": "exporttext",
       "function": "export_text",
-      "source": "export/text.txt.js",
+      "source": "export/text.js",
       "language": "javascript",
       "label": "Text",
       "description": "Export a dataset into a delimited string",
@@ -756,7 +756,7 @@
     {
       "name": "copy",
       "function": "copy",
-      "source": "utils/copy.txt.js",
+      "source": "utils/copy.js",
       "language": "javascript",
       "label": "Copy",
       "description": "Temporarily store the current state of a dataset",
@@ -765,7 +765,7 @@
     {
       "name": "paste",
       "function": "paste",
-      "source": "utils/paste.txt.js",
+      "source": "utils/paste.js",
       "language": "javascript",
       "label": "Paste",
       "description": "Restore a dataset to its previously copied state",
@@ -774,7 +774,7 @@
     {
       "name": "fetch",
       "function": "",
-      "source": "transforms/fetch.txt.js",
+      "source": "transforms/fetch.js",
       "language": "javascript",
       "serverWorker": true,
       "label": "Fetch",
@@ -784,7 +784,7 @@
     {
       "name": "citytomap",
       "function": "",
-      "source": "utils/citytomap.txt.js",
+      "source": "utils/citytomap.js",
       "language": "javascript",
       "label": "Coordinates from City",
       "description": "Create latitude and longitude columns from a pair of US city and state columns",
@@ -793,7 +793,7 @@
     {
       "name": "ziptomap",
       "function": "",
-      "source": "utils/ziptomap.txt.js",
+      "source": "utils/ziptomap.js",
       "language": "javascript",
       "label": "Coordinates from Zip Code",
       "description": "Create latitude and longitude columns from a US zip code column",
@@ -802,7 +802,7 @@
     {
       "name": "tojson",
       "function": "",
-      "source": "utils/tojson.txt.js",
+      "source": "utils/tojson.js",
       "language": "javascript",
       "label": "To JSON",
       "description": "Convert to JSON format, useful for building APIs",
@@ -811,7 +811,7 @@
     {
       "name": "upscaler",
       "function": "",
-      "source": "utils/upscaler.txt.js",
+      "source": "utils/upscaler.js",
       "language": "javascript",
       "label": "Upscale",
       "description": "Magnify an image with AI enhancement",
@@ -820,7 +820,7 @@
     {
       "name": "stop",
       "function": "stop",
-      "source": "utils/stop.txt.js",
+      "source": "utils/stop.js",
       "language": "javascript",
       "label": "Stop",
       "description": "Stops pipeline execution conditionally",
@@ -831,7 +831,7 @@
     {
       "name": "html",
       "function": "html",
-      "source": "languages/html.txt",
+      "source": "languages/html.html",
       "language": "html",
       "label": "HTML",
       "description": "Insert a webpage snippet",
@@ -840,7 +840,7 @@
     {
       "name": "javascript",
       "function": "javascript",
-      "source": "languages/javascript.txt.js",
+      "source": "languages/javascript.js",
       "language": "javascript",
       "label": "JavaScript",
       "description": "Write JavaScript code for custom data processing",
@@ -849,7 +849,7 @@
     {
       "name": "markdown",
       "function": "markdown",
-      "source": "languages/markdown.txt",
+      "source": "languages/markdown.html",
       "language": "markdown",
       "label": "Markdown",
       "description": "Insert a section of Markdown formatted text",
@@ -907,7 +907,7 @@
     {
       "name": "pyscript",
       "function": "pyscript",
-      "source": "frameworks/pyscript.txt",
+      "source": "frameworks/pyscript.html",
       "language": "html",
       "label": "PyScript",
       "description": "Use PyScript to render HTML",
@@ -916,7 +916,7 @@
     {
       "name": "react",
       "function": "react",
-      "source": "frameworks/react.txt",
+      "source": "frameworks/react.html",
       "language": "html",
       "label": "React",
       "description": "Write a React script for advanced interactivity",
@@ -925,7 +925,7 @@
     {
       "name": "vue",
       "function": "vue",
-      "source": "frameworks/vue.txt",
+      "source": "frameworks/vue.html",
       "language": "vue",
       "label": "Vue",
       "description": "Write a Vue script for advanced interactivity",
@@ -936,7 +936,7 @@
     {
       "name": "dropdown",
       "function": "dropdown",
-      "source": "controls/dropdown.txt",
+      "source": "controls/dropdown.html",
       "language": "html",
       "label": "Dropdown",
       "description": "Embed an HTML <select> element",
@@ -945,7 +945,7 @@
     {
       "name": "fileinput",
       "function": "file",
-      "source": "controls/inputfile.txt",
+      "source": "controls/inputfile.html",
       "language": "html",
       "label": "File Input",
       "description": "Embed a file input control",
@@ -954,7 +954,7 @@
     {
       "name": "numberinput",
       "function": "number",
-      "source": "controls/number.txt",
+      "source": "controls/number.html",
       "language": "html",
       "label": "Number Input",
       "description": "Embed a number input control",
@@ -972,7 +972,7 @@
     {
       "name": "sheet",
       "function": "sheet",
-      "source": "controls/spreadsheet.txt",
+      "source": "controls/spreadsheet.html",
       "language": "html",
       "label": "Sheet",
       "description": "Embed a spreadsheet to collect data",
@@ -981,7 +981,7 @@
     {
       "name": "textbox",
       "function": "textbox",
-      "source": "controls/textbox.txt",
+      "source": "controls/textbox.html",
       "language": "html",
       "label": "Text Input",
       "description": "Embed a text input control",
@@ -990,7 +990,7 @@
     {
       "name": "textarea",
       "function": "textarea",
-      "source": "controls/textarea.txt.js",
+      "source": "controls/textarea.js",
       "language": "javascript",
       "label": "Multi-line Text Input",
       "description": "Embed a multi-line text input control",
@@ -999,7 +999,7 @@
     {
       "name": "website",
       "function": "website",
-      "source": "controls/website.txt.js",
+      "source": "controls/website.js",
       "language": "javascript",
       "label": "Website",
       "description": "Embed a website and load a URL",

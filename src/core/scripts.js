@@ -1,76 +1,76 @@
 // import scripts
-import graphqltxt from '../../scripts/import/graphql.txt.js';
-import imagestxt from '../../scripts/import/images.txt.js';
-import importcsvtxt from '../../scripts/import/csv.txt.js';
-import importexceltxt from '../../scripts/import/excel.txt.js';
-import importjsontxt from '../../scripts/import/json.txt.js';
-import iristxt from '../../scripts/import/iris.txt.js';
-import mysqltxt from '../../scripts/import/mysql.txt.js';
-import stockstxt from '../../scripts/import/stocks.txt.js';
-import videoframestxt from '../../scripts/import/videoframes.txt.js';
-import webcamtxt from '../../scripts/import/webcam.txt.js';
-import sqlitetxt from '../../scripts/import/sqlite.txt.js';
-import dataframetxt from '../../scripts/import/dataframe.txt.js';
+import graphqltxt from '../../scripts/import/graphql.js';
+import imagestxt from '../../scripts/import/images.js';
+import importcsvtxt from '../../scripts/import/csv.js';
+import importexceltxt from '../../scripts/import/excel.js';
+import importjsontxt from '../../scripts/import/json.js';
+import iristxt from '../../scripts/import/iris.js';
+import mysqltxt from '../../scripts/import/mysql.js';
+import stockstxt from '../../scripts/import/stocks.js';
+import videoframestxt from '../../scripts/import/videoframes.js';
+import webcamtxt from '../../scripts/import/webcam.js';
+import sqlitetxt from '../../scripts/import/sqlite.js';
+import dataframetxt from '../../scripts/import/dataframe.js';
 
 // webscraping scripts
-import webimagestxt from '../../scripts/import/webimages.txt.js';
-import webselectortxt from '../../scripts/import/webselector.txt.js';
-import webtablestxt from '../../scripts/import/webtable.txt.js';
+import webimagestxt from '../../scripts/import/webimages.js';
+import webselectortxt from '../../scripts/import/webselector.js';
+import webtablestxt from '../../scripts/import/webtable.js';
 
 // transform scripts
-import assigntxt from '../../scripts/transforms/assign.txt.js';
-import converttxt from '../../scripts/transforms/convert.txt.js';
-import derivetxt from '../../scripts/transforms/derive.txt.js';
-import droptxt from '../../scripts/transforms/drop.txt.js';
-import fetchtxt from '../../scripts/transforms/fetch.txt.js';
-import filtertxt from '../../scripts/transforms/filter.txt.js';
-import foldtxt from '../../scripts/transforms/fold.txt.js';
-import imputetxt from '../../scripts/transforms/impute.txt.js';
-import pivottxt from '../../scripts/transforms/pivot.txt.js';
-import rollingsumtxt from '../../scripts/transforms/rollingsum.txt.js';
-import sampletxt from '../../scripts/transforms/sample.txt.js';
-import selecttxt from '../../scripts/transforms/select.txt.js';
-import slicetxt from '../../scripts/transforms/slice.txt.js';
-import sorttxt from '../../scripts/transforms/sort.txt.js';
-import summarizetxt from '../../scripts/transforms/summarize.txt.js';
+import assigntxt from '../../scripts/transforms/assign.js';
+import converttxt from '../../scripts/transforms/convert.js';
+import derivetxt from '../../scripts/transforms/derive.js';
+import droptxt from '../../scripts/transforms/drop.js';
+import fetchtxt from '../../scripts/transforms/fetch.js';
+import filtertxt from '../../scripts/transforms/filter.js';
+import foldtxt from '../../scripts/transforms/fold.js';
+import imputetxt from '../../scripts/transforms/impute.js';
+import pivottxt from '../../scripts/transforms/pivot.js';
+import rollingsumtxt from '../../scripts/transforms/rollingsum.js';
+import sampletxt from '../../scripts/transforms/sample.js';
+import selecttxt from '../../scripts/transforms/select.js';
+import slicetxt from '../../scripts/transforms/slice.js';
+import sorttxt from '../../scripts/transforms/sort.js';
+import summarizetxt from '../../scripts/transforms/summarize.js';
 
 // chart scripts
-import barcharttxt from '../../scripts/charts/barchart.txt.js';
+import barcharttxt from '../../scripts/charts/barchart.js';
 import boxplotcharttxt from '../../scripts/charts/boxplotchart.py';
-import dotplotcharttxt from '../../scripts/charts/dotplotchart.txt.js';
+import dotplotcharttxt from '../../scripts/charts/dotplotchart.js';
 import violinplotcharttxt from '../../scripts/charts/violinplotchart.py';
-import errorbarcharttxt from '../../scripts/charts/errorbarchart.txt.js';
-import heatmapcharttxt from '../../scripts/charts/heatmapchart.txt.js';
-import histogramcharttxt from '../../scripts/charts/histogramchart.txt.js';
-import linecharttxt from '../../scripts/charts/linechart.txt.js';
-import sankeycharttxt from '../../scripts/charts/sankeychart.txt.js';
-import scattercharttxt from '../../scripts/charts/scatterchart.txt.js';
-import treemapcharttxt from '../../scripts/charts/treemapchart.txt.js';
+import errorbarcharttxt from '../../scripts/charts/errorbarchart.js';
+import heatmapcharttxt from '../../scripts/charts/heatmapchart.js';
+import histogramcharttxt from '../../scripts/charts/histogramchart.js';
+import linecharttxt from '../../scripts/charts/linechart.js';
+import sankeycharttxt from '../../scripts/charts/sankeychart.js';
+import scattercharttxt from '../../scripts/charts/scatterchart.js';
+import treemapcharttxt from '../../scripts/charts/treemapchart.js';
 
 // visualization scripts
-import bubblestxt from '../../scripts/visualizations/bubbles.txt.js';
-import facetstxt from '../../scripts/visualizations/facets.txt.js';
-import funneltxt from '../../scripts/visualizations/funnel.txt.js';
-import gallerytxt from '../../scripts/visualizations/gallery.txt';
-import mapcharttxt from '../../scripts/visualizations/map.txt.js';
-import networktxt from '../../scripts/visualizations/network.txt.js';
-import plotlychartstxt from '../../scripts/visualizations/plotlycharts.txt.js';
-import radialbarstxt from '../../scripts/visualizations/radialbars.txt.js';
-import regressioncharttxt from '../../scripts/visualizations/regression.txt.js';
-import simpletabletxt from '../../scripts/visualizations/simpletable.txt';
-import wafflecharttxt from '../../scripts/visualizations/waffle.txt.js';
-import waterfallcharttxt from '../../scripts/visualizations/waterfall.txt.js';
-import wordcloudtxt from '../../scripts/visualizations/wordcloud.txt.js';
+import bubblestxt from '../../scripts/visualizations/bubbles.js';
+import facetstxt from '../../scripts/visualizations/facets.js';
+import funneltxt from '../../scripts/visualizations/funnel.js';
+import gallerytxt from '../../scripts/visualizations/gallery.html';
+import mapcharttxt from '../../scripts/visualizations/map.js';
+import networktxt from '../../scripts/visualizations/network.js';
+import plotlychartstxt from '../../scripts/visualizations/plotlycharts.js';
+import radialbarstxt from '../../scripts/visualizations/radialbars.js';
+import regressioncharttxt from '../../scripts/visualizations/regression.js';
+import simpletabletxt from '../../scripts/visualizations/simpletable.html';
+import wafflecharttxt from '../../scripts/visualizations/waffle.js';
+import waterfallcharttxt from '../../scripts/visualizations/waterfall.js';
+import wordcloudtxt from '../../scripts/visualizations/wordcloud.js';
 
 // prediction scripts
-import movenettxt from '../../scripts/predict/movenet.txt.js';
-import mobilenettxt from '../../scripts/predict/mobilenet.txt.js';
-import sentimenttxt from '../../scripts/predict/sentiment.txt.js';
+import movenettxt from '../../scripts/predict/movenet.js';
+import mobilenettxt from '../../scripts/predict/mobilenet.js';
+import sentimenttxt from '../../scripts/predict/sentiment.js';
 
 // prediction / timeseries scripts
 import autoregressivetxt from '../../scripts/timeseries/autoregressive.py';
-import lstmtxt from '../../scripts/timeseries/lstm.txt.js';
-import movingaveragetxt from '../../scripts/timeseries/movingaverage.txt.js';
+import lstmtxt from '../../scripts/timeseries/lstm.js';
+import movingaveragetxt from '../../scripts/timeseries/movingaverage.js';
 import prophettxt from '../../scripts/timeseries/prophet.py';
 import seasonalitytxt from '../../scripts/timeseries/seasonality.py';
 
@@ -86,34 +86,34 @@ import shapirotxt from '../../scripts/stats/shapiro.py';
 import abtesttxt from '../../scripts/stats/abtest.py';
 
 // util scripts
-import citytomaptxt from '../../scripts/utils/citytomap.txt.js';
-import copytxt from '../../scripts/utils/copy.txt.js';
-import pastetxt from '../../scripts/utils/paste.txt.js';
-import tojsontxt from '../../scripts/utils/tojson.txt.js';
-import upscalertxt from '../../scripts/utils/upscaler.txt.js';
-import ziptomaptxt from '../../scripts/utils/ziptomap.txt.js';
-import stoptxt from '../../scripts/utils/stop.txt.js';
+import citytomaptxt from '../../scripts/utils/citytomap.js';
+import copytxt from '../../scripts/utils/copy.js';
+import pastetxt from '../../scripts/utils/paste.js';
+import tojsontxt from '../../scripts/utils/tojson.js';
+import upscalertxt from '../../scripts/utils/upscaler.js';
+import ziptomaptxt from '../../scripts/utils/ziptomap.js';
+import stoptxt from '../../scripts/utils/stop.js';
 
 // export scripts
-import exportcsvtxt from '../../scripts/export/csv.txt.js';
-import exporttexttxt from '../../scripts/export/text.txt.js';
-import exportjsontxt from '../../scripts/export/json.txt.js';
-import exportxmltxt from '../../scripts/export/xml.txt.js';
+import exportcsvtxt from '../../scripts/export/csv.js';
+import exporttexttxt from '../../scripts/export/text.js';
+import exportjsontxt from '../../scripts/export/json.js';
+import exportxmltxt from '../../scripts/export/xml.js';
 
 // service scripts
-import airbnbtxt from '../../scripts/services/airbnb.txt.js';
-import bigquerytxt from '../../scripts/services/bigquery.txt.js';
-import datagrabiotxt from '../../scripts/services/datagrabio.txt';
-import googlesheetstxt from '../../scripts/services/googlesheets.txt.js';
-import powerbitxt from '../../scripts/services/powerbi.txt';
-import reddittxt from '../../scripts/services/reddit.txt.js';
-import tableautxt from '../../scripts/services/tableau.txt';
-import twittertxt from '../../scripts/services/twitter.txt.js';
+import airbnbtxt from '../../scripts/services/airbnb.js';
+import bigquerytxt from '../../scripts/services/bigquery.js';
+import datagrabiotxt from '../../scripts/services/datagrabio.html';
+import googlesheetstxt from '../../scripts/services/googlesheets.js';
+import powerbitxt from '../../scripts/services/powerbi.html';
+import reddittxt from '../../scripts/services/reddit.js';
+import tableautxt from '../../scripts/services/tableau.html';
+import twittertxt from '../../scripts/services/twitter.js';
 
 // language scripts
-import htmltxt from '../../scripts/languages/html.txt';
-import javascripttxt from '../../scripts/languages/javascript.txt';
-import markdowntxt from '../../scripts/languages/markdown.txt';
+import htmltxt from '../../scripts/languages/html.html';
+import javascripttxt from '../../scripts/languages/javascript.html';
+import markdowntxt from '../../scripts/languages/markdown.html';
 import pyodidetxt from '../../scripts/languages/pyodide.py';
 import pythontxt from '../../scripts/languages/python.py';
 import rtxt from '../../scripts/languages/r.r';
@@ -121,21 +121,21 @@ import rtxt from '../../scripts/languages/r.r';
 // framework scripts
 import flasktxt from '../../scripts/frameworks/flask.py';
 import plumbertxt from '../../scripts/frameworks/plumber.r';
-import pyscripttxt from '../../scripts/frameworks/pyscript.txt';
-import reacttxt from '../../scripts/frameworks/react.txt';
-import vuetxt from '../../scripts/frameworks/vue.txt';
+import pyscripttxt from '../../scripts/frameworks/pyscript.html';
+import reacttxt from '../../scripts/frameworks/react.html';
+import vuetxt from '../../scripts/frameworks/vue.html';
 
 // control scripts
-import checkboxctrltxt from '../../scripts/controls/checkbox.txt';
-import dropdownctrltxt from '../../scripts/controls/dropdown.txt';
-import inputfilectrltxt from '../../scripts/controls/inputfile.txt';
-import messagectrltxt from '../../scripts/controls/message.txt';
-import numberctrltxt from '../../scripts/controls/number.txt';
+import checkboxctrltxt from '../../scripts/controls/checkbox.html';
+import dropdownctrltxt from '../../scripts/controls/dropdown.html';
+import inputfilectrltxt from '../../scripts/controls/inputfile.html';
+import messagectrltxt from '../../scripts/controls/message.html';
+import numberctrltxt from '../../scripts/controls/number.html';
 import rangectrltxt from '../../scripts/controls/range.html';
-import spreadsheetctrltxt from '../../scripts/controls/spreadsheet.txt';
-import textareactrltxt from '../../scripts/controls/textarea.txt.js';
-import textboxctrltxt from '../../scripts/controls/textbox.txt';
-import websitectrltxt from '../../scripts/controls/website.txt.js';
+import spreadsheetctrltxt from '../../scripts/controls/spreadsheet.html';
+import textareactrltxt from '../../scripts/controls/textarea.js';
+import textboxctrltxt from '../../scripts/controls/textbox.html';
+import websitectrltxt from '../../scripts/controls/website.js';
 
 // business scripts
 import churntxt from '../../scripts/business/churn.py';
