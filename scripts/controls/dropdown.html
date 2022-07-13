@@ -29,14 +29,15 @@
 <script>
   var state = hal9.getState();
   state = state ? state : {};
+  values = values.split(',');
   
-  dropdown = state.dropdown ? state.dropdown : '';
+  dropdown = state.dropdown ? state.dropdown : values[0];
 
   var app = new Vue({
     el: html.getElementsByClassName('control')[0],
     data: {
       value: dropdown,
-      options: values.split(',')
+      options: values
     },
     watch: {
       value: function(e) {
