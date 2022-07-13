@@ -6,9 +6,9 @@ title: "Hal9"
 
 Hal9 helps you build web applications with not web development background to build rich web applications from Python and R. This project is under development in [Hal9's GitHub repo](https://github.com/hal9ai/hal9ai).
 
-::: {.panel-tabset}
-
 ### Easy to Use
+
+::: {.panel-tabset}
 
 ## R
 
@@ -42,7 +42,7 @@ h9.create(environment = "devel")
 
 :::
 
-```{r, include = FALSE}
+```{r, include = FALSE, eval = FALSE}
 library(hal9)
 h9_create(environment = "devel") |>
   h9_load(iris) |>
@@ -52,6 +52,8 @@ h9_create(environment = "devel") |>
 ```
 
 ### Interactive
+
+::: {.panel-tabset}
 
 ## R
 
