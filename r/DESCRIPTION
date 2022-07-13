@@ -2,8 +2,21 @@ Package: hal9
 Type: Package
 Title: Interface to 'hal9.js' 
 Version: 0.1.3
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Authors: c(person(given = "Javier",
+             family = "Luraschi",
+             role = c("aut", "cre"),
+             email = "jluraschi@gmail.com"),
+      person(given = "William",
+             family = "Amorim",
+             role = c("aut", "cre"),
+             email = "wamorim@curso-r.com"),
+      person(given = "Fernando",
+             family = "Corrêa",
+             role = c("aut", "cre"),
+             email = "fcorrea@curso-r.com"),
+      person(given = "Hal9",
+             role = c("cph", "fnd")))
+Maintainer: Fernando Corrêa <fcorrea@curso-r.com>
 Description: Hal9 is a javascript library that enables anyone to compose
     visualizations and predictive models optimized for websites and web APIs.
     hal9 package provides some hal9 functionalities for R users.
