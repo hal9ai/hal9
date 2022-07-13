@@ -6,5 +6,35 @@ title: "Hal9"
 
 Compose visualizations and predictive models. Integrate with websites and APIs. Extend with JavaScript, Python and R.
 
+::: {.panel-tabset}
+
+## R
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(python.reticulate = FALSE)
+```
+
+```{r, eval = FALSE}
+devtools::install_github("hal9ai/hal9ai", subdir = "r")
+```
+
+```{r, eval = FALSE}
+library(hal9)
+
+h9_create() |>
+  h9_load(iris) |>
+  h9_dropdown(values = "versicolor, setosa, virginica") |>
+  h9_filter(field = "Species", expression = "field == hal9.outputs.dropdown") |>
+  h9_scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
+```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::
+
 
 
