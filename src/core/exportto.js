@@ -14,6 +14,7 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number 
     'error',
     'errors',
     'globals',
+    'layout',
     'outputs',
   ];
 

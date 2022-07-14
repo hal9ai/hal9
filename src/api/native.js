@@ -271,12 +271,20 @@ export async function pipelinesInvalidateStep(pipelineid, sid) {
   return await pipelines.invalidateStep(pipelineid, sid);
 }
 
-export async function pipelinesUpdateMetadata(pipelineid, metadata) {
-  return await pipelines.updateMetadata(pipelineid, metadata);
+export async function pipelinesSetMetadataProperty(pipelineid, name, value) {
+  return await pipelines.setMetadataProperty(pipelineid, name, value);
 }
 
 export async function pipelinesGetMetadata(pipelineid) {
   return await pipelines.getMetadata(pipelineid);
+}
+
+export async function pipelinesSetAppProperty(pipelineid, name, value) {
+  return await pipelines.setAppProperty(pipelineid, name, value);
+}
+
+export async function pipelinesGetApp(pipelineid) {
+  return await pipelines.getApp(pipelineid);
 }
 
 export async function pipelinesAbort(pipelineid) {
@@ -327,12 +335,12 @@ export async function layoutRegenerateForDocumentView(pipelineid, removeOldLayou
   return await layout.regenerateForDocumentView(pipelineid, removeOldLayout);
 }
 
-export async function layoutGetForAppView() {
-  return layout.getForAppView();
+export async function layoutStoreAppStepLayouts(pipelineid) {
+  return layout.storeAppStepLayouts(pipelineid);
 }
 
-export async function layoutSetForAppView(stepLayouts) {
-  return layout.setForAppView(stepLayouts);
+export async function layoutApplyStepLayoutsToApp(stepLayouts) {
+  return layout.applyStepLayoutsToApp(stepLayouts);
 }
 
 export async function layoutSetHal9StepOverflowProperty(overflowValue) {

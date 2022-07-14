@@ -1,5 +1,6 @@
 import * as store from './pipelinestore.js';
 import * as languages from './interpreters/languages'
+import * as pipelines from './pipelines.js';
 import * as scripts from './scripts.js';
 import * as snippets from './snippets';
 
@@ -165,9 +166,9 @@ const getHal9StepById = (stepId) => {
   return document.querySelector(hal9StepSelector + '-' + stepId);
 }
 
-export const getForAppView = (existingStepLayouts) => {
+export const storeAppStepLayouts = (pipelineid) => {
   const hal9Steps = getHal9Steps();
-  return [...hal9Steps].map(hal9Step => {
+  let stepLayouts = [...hal9Steps].map(hal9Step => {
     let stepLayout = {};
     for (const className of hal9Step.classList) {
       if (className.startsWith('hal9-step-')) {
@@ -175,15 +176,19 @@ export const getForAppView = (existingStepLayouts) => {
         break;
       }
     }
+    if (hal9Step.style.overflow !== 'hidden') {
+      console.log(`Warning: calculating app layout depends on all steps having 'overflow' set to 'hidden'`);
+    }
     stepLayout.width = hal9Step.offsetWidth + 'px';
     stepLayout.left = hal9Step.offsetLeft + 'px';
     stepLayout.height = hal9Step.offsetHeight + 'px';
     stepLayout.top = hal9Step.offsetTop + 'px';
     return stepLayout;
   });
+  pipelines.setAppProperty(pipelineid, 'stepLayouts', stepLayouts);
 }
 
-export const setForAppView = (stepLayouts) => {
+export const applyStepLayoutsToApp = (stepLayouts) => {
   for (const stepLayout of stepLayouts) {
     const hal9Step = getHal9StepById(stepLayout.stepId);
     if (!hal9Step) {

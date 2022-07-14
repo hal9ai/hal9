@@ -190,12 +190,20 @@ async function pipelinesInvalidateStep(pipelineid, sid) {
   return await api.pipelinesInvalidateStep(pipelineid, sid);
 }
 
-async function pipelinesUpdateMetadata(pipelineid, metadata) {
-  return await api.pipelinesUpdateMetadata(pipelineid, metadata);
+async function pipelinesSetMetadataProperty(pipelineid, name, value) {
+  return await api.pipelinesSetMetadataProperty(pipelineid, name, value);
 }
 
 async function pipelinesGetMetadata(pipelineid) {
   return await api.pipelinesGetMetadata(pipelineid);
+}
+
+async function pipelinesSetAppProperty(pipelineid, name, value) {
+  return await api.pipelinesSetAppProperty(pipelineid, name, value);
+}
+
+async function pipelinesGetApp(pipelineid) {
+  return await api.pipelinesGetApp(pipelineid);
 }
 
 async function pipelinesAbort(pipelineid) {
@@ -246,12 +254,12 @@ async function layoutRegenerateForDocumentView(pipelineid, removeOldLayout) {
   return await api.layoutRegenerateForDocumentView(pipelineid, removeOldLayout);
 }
 
-async function layoutGetForAppView() {
-  return await api.layoutGetForAppView();
+async function layoutStoreAppStepLayouts(pipelineid) {
+  return await api.layoutStoreAppStepLayouts(pipelineid);
 }
 
-async function layoutSetForAppView(stepLayouts) {
-  return await api.layoutSetForAppView(stepLayouts);
+async function layoutApplyStepLayoutsToApp(stepLayouts) {
+  return await api.layoutApplyStepLayoutsToApp(stepLayouts);
 }
 
 async function layoutSetHal9StepOverflowProperty(overflowValue) {
@@ -326,8 +334,10 @@ export default {
     getGlobalNames: pipelinesGetGlobalNames,
     getGlobals: pipelinesGetGlobals,
     invalidateStep: pipelinesInvalidateStep,
-    updateMetadata: pipelinesUpdateMetadata,
+    setMetadataProperty: pipelinesSetMetadataProperty,
     getMetadata: pipelinesGetMetadata,
+    setAppProperty: pipelinesSetAppProperty,
+    getApp: pipelinesGetApp,
     abort: pipelinesAbort,
     isAborted: pipelinesIsAborted,
   },
@@ -357,8 +367,8 @@ export default {
 
   layout: {
     regenerateForDocumentView: layoutRegenerateForDocumentView,
-    getForAppView: layoutGetForAppView,
-    setForAppView: layoutSetForAppView,
+    storeAppStepLayouts: layoutStoreAppStepLayouts,
+    applyStepLayoutsToApp: layoutApplyStepLayoutsToApp,
     setHal9StepOverflowProperty: layoutSetHal9StepOverflowProperty,
   },
 

@@ -521,15 +521,30 @@ export async function pipelinesInvalidateStep(pipelineid, sid) {
   })
 }
 
-export async function pipelinesUpdateMetadata(pipelineid, metadata) {
-  return await post("hal9.pipelines.updateMetadata(params.pipelineid, params.metadata)", {
+export async function pipelinesSetMetadataProperty(pipelineid, name, value) {
+  return await post("hal9.pipelines.setMetadataProperty(params.pipelineid, params.name, params.value)", {
     pipelineid: pipelineid,
-    metadata: metadata,
+    name: name,
+    value: value,
   })
 }
 
 export async function pipelinesGetMetadata(pipelineid) {
   return await post("hal9.pipelines.getMetadata(params.pipelineid)", {
+    pipelineid: pipelineid,
+  })
+}
+
+export async function pipelinesSetAppProperty(pipelineid, name, value) {
+  return await post("hal9.pipelines.setAppProperty(params.pipelineid, params.name, params.value)", {
+    pipelineid: pipelineid,
+    name: name,
+    value: value,
+  })
+}
+
+export async function pipelinesGetApp(pipelineid) {
+  return await post("hal9.pipelines.getApp(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
@@ -612,13 +627,14 @@ export async function layoutRegenerateForDocumentView(pipelineid, removeOldLayou
   })
 }
 
-export async function layoutGetForAppView() {
-  return await post("hal9.layout.getForAppView()", {
+export async function layoutStoreAppStepLayouts(pipelineid) {
+  return await post("hal9.layout.storeAppStepLayouts(params.pipelineid)", {
+    pipelineid: pipelineid,
   })
 }
 
-export async function layoutSetForAppView(stepLayouts) {
-  return await post("hal9.layout.setForAppView(params.stepLayouts)", {
+export async function layoutApplyStepLayoutsToApp(stepLayouts) {
+  return await post("hal9.layout.applyStepLayoutsToApp(params.stepLayouts)", {
     stepLayouts: stepLayouts,
   })
 }

@@ -632,8 +632,12 @@ export const getNested = (pipelineid /*: pipelineid */) /*: blocks */ => {
   );
 }
 
-const getDefinition = (pipeline /*: pipeline */) /*: steps */ => {
-  return clone(pipeline.steps.map(step => stepGetDefinition(pipeline, step)));
+const getDefinition = (pipeline /*: pipeline */) /*: object */ => {
+  const stepDefinitions = clone(pipeline.steps.map(step => stepGetDefinition(pipeline, step)));
+  return {
+    steps: stepDefinitions,
+    app: clone(pipeline.app)
+  }
 }
 
 const setOutputs = (pipeline /*: pipeline */, sid /*: number */, outputs /*: outputs */) /*: void */ => {
@@ -859,14 +863,30 @@ export const invalidateStep = (pipelineid /*: pipelineid */, sid /*: number */) 
   updateStep(pipelineid, step);
 }
 
-export const updateMetadata = (pipelineid /*: pipelineid */, metadata /*: object */) /*: void */ => {
+export const setMetadataProperty = (pipelineid /*: pipelineid */, name /*: string */, value /*: mixed */) /*: void */ => {
   var pipeline = store.get(pipelineid);
-  pipeline.metadata = metadata;
+  if (!(pipeline.metadata)) {
+    pipeline.metadata = {};
+  }
+  pipeline.metadata[name] = clone(value);
 }
 
 export const getMetadata = (pipelineid /*: pipelineid */) /*: object */ => {
   var pipeline = store.get(pipelineid);
   return clone(pipeline.metadata);
+}
+
+export const setAppProperty = (pipelineid /*: pipelineid */, name /*: string */, value /*: mixed */) /*: void */ => {
+  var pipeline = store.get(pipelineid);
+  if (!(pipeline.app)) {
+    pipeline.app = {};
+  }
+  pipeline.app[name] = clone(value);
+}
+
+export const getApp = (pipelineid /*: pipelineid */) /*: object */ => {
+  var pipeline = store.get(pipelineid);
+  return clone(pipeline.app);
 }
 
 export const abort = async (pipelineid /*: pipelineid */) /*: void */ => {
