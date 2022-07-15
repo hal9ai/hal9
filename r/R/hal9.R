@@ -136,6 +136,11 @@ h9_add_step <- function(h, step, rebind = NULL, matched_call = NULL) {
     for(i in seq_along(update)) {
       val <- l_params[[1]][[update[i]]]$value
       arg_value <- matched_call[[update[i]]]
+
+      if(is.null(l_params[[1]][[update[[i]]]]$static)){
+        l_params[[1]][[update[[i]]]]$static <- TRUE
+      }
+
       if (is.list(val)) {
         if (val[[1]]$control == "dataframe") {
           l_params[[1]][[update[i]]]$value[[1]]$source <- as.character(arg_value)
