@@ -5,6 +5,8 @@ website:
   title: "Hal9"
   site-url: https://hal9.com/notebooks/
   navbar:
+    logo: logo.png
+    title: false
     left:
       - href: index.qmd
         text: Home
