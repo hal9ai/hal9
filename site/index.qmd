@@ -1,12 +1,10 @@
 ---
-title: "Hal9"
+title: "hal9: Interactive Data Apps without Web Dev"
 ---
-
-## About
 
 Hal9 helps you build web applications with not web development background to build rich web applications from Python and R. This project is under development in [Hal9's GitHub repo](https://github.com/hal9ai/hal9ai).
 
-### Easy to Use
+## Easy to Use
 
 ::: {.panel-tabset}
 
@@ -59,7 +57,7 @@ h9_create(environment = "devel") |>
   h9_scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
 ```
 
-### Interactive
+## Interactive
 
 ::: {.panel-tabset}
 

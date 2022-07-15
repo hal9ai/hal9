@@ -2,8 +2,6 @@
 title: "Examples"
 ---
 
-## Pipelines
-
 ## R Markdown
 
 ## Publish

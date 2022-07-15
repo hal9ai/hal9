@@ -2,25 +2,18 @@
 title: "Get Started"
 ---
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(python.reticulate = FALSE)
+```
+
 ## Installation
 
 ::: {.panel-tabset}
 
 ## R
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(python.reticulate = FALSE)
-```
-
 ```{r, eval = FALSE}
 devtools::install_github("hal9ai/hal9ai", subdir = "r")
-```
-
-```{r}
-library(hal9)
-h9_create() |>
-  h9_load(dataset = mtcars) |>
-  h9_scatter_chart(x = "cyl", y = "disp")
 ```
 
 ## Python
@@ -31,4 +24,38 @@ h9_create() |>
 
 :::
 
-## Build a pipeline
+## Create a pipeline
+
+Pipelines are a sequence of operations that allows you to import, transform, visualize and model your data in a single web app.
+
+::: {.panel-tabset}
+
+## R
+
+Using the `hal9` package, you can create a hal9 pipeline as follow:
+
+```{r}
+library(hal9)
+
+h9_create() |>
+  h9_load(dataset = mtcars) |>
+  h9_scatter_chart(x = "cyl", y = "disp")
+```
+
+<br>
+
+- `h9_create()` creates a h9 object. All hal9 pipelines will start with this function.
+
+- `h9_load()` s used to import an R dataset into hal9. This dataset will be used throughout the entire pipeline.
+
+- `h9_scatter_chart()` adds a scatter chart to the pipeline.
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::
+
+
