@@ -18,7 +18,17 @@
 
 .navbar-brand>img {
   height: 100%;
-  max-height: 50px;
+  max-height: 56px;
   object-fit: contain;
+}
+
+#quarto-header nav {
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-top: 0.5em;
+}
+
+.navbar-brand {
+  padding-top: 0;
 }
 
