@@ -418,6 +418,15 @@ const preparePartial = (pipeline, context, partial, renderid) => {
   return partial;
 }
 
+const skipStep = (pipeline, step) => {
+  if (typeof (window) == 'undefined') {
+    // can't execute HTML blocks in nodejs
+    if (stepHasHtml(pipeline, step)) return true;
+  }
+
+  return false;
+}
+
 export const run = async (pipelineid /*: pipeline */, context /* context */, partial, stepstopid /* stepid */) /*: void */ => {
   debugIf('run');
 
@@ -446,6 +455,7 @@ export const run = async (pipelineid /*: pipeline */, context /* context */, par
 
   for (var idx = 0; idx < pipeline.steps.length; idx++) {
     const step = pipeline.steps[idx];
+    if (skipStep(pipeline, step)) continue;
 
     const success = await runStep(pipelineid, step.id, context, partial);
 
