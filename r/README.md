@@ -33,7 +33,7 @@ library(hal9)
 h9_create()
 ```
 
-You may also add data as follows:
+You may also add data using `h9_load()`:
 
 ``` r
 # load mtcars
@@ -41,8 +41,7 @@ h9_create() |>
   h9_load(mtcars)
 ```
 
-You may also build a specific pipeline using our high-level chart
-functions:
+To build a specific pipeline, use our high-level functions:
 
 ``` r
 # plot mtcars

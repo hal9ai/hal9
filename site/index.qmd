@@ -46,10 +46,9 @@ h9.create()
 
 :::
 
-```{r}
-#| echo: false
-
+```{r, echo = FALSE}
 library(hal9)
+
 h9_create(environment = "devel") |>
   h9_load(iris) |>
   h9_dropdown(values = "versicolor,setosa,virginica") |>
