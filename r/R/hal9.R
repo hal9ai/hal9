@@ -96,8 +96,6 @@ h9_add_step <- function(h, step, rebind = NULL, matched_call = NULL) {
 
   comp <- components[[which(lapply(components, function(x) x$name) == step)]]
 
-  if (!identical(rebind, NULL)) browser()
-
   new_step <- list(
     list(
       name = comp$name,
