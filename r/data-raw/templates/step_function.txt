@@ -11,11 +11,15 @@
 #' @export
 #'
 {{func_name}} <- function(h, {{func_params}}, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "{{step_name}}",
     rebind,
-    matched_call = as.list(match.call())
+    matched_call = args[no_rebinds]
   )
 }
 
