@@ -45,7 +45,8 @@ export default class RemoteExecutor extends Executor {
     const html = this.context['html'] ? this.context['html'](this.step) : null;
     const size = html ? { width: html.offsetWidth, height: html.offsetHeight } : { width: 640, height: 480 };
 
-    this.workerUrl = await workers.getValidWorkerUrl(this.pipelinename, this.context.headers);
+    debugger;
+    this.workerUrl = this.context?.workerUrl ?? await workers.getValidWorkerUrl(this.pipelinename, this.context.headers);
     this.sessionid = sessionid(this.pipelinename, this.step.id);
 
     // remove arquero objects which don't serialize nicely
