@@ -4,7 +4,15 @@
 \alias{h9_pivot}
 \title{Pivot}
 \usage{
-h9_pivot(h, rows = NULL, columns = NULL, values = NULL, summarizer = NULL, ...)
+h9_pivot(
+  h,
+  rows = NULL,
+  columns = NULL,
+  values = NULL,
+  summarizer = NULL,
+  rebind = NULL,
+  ...
+)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -16,6 +24,8 @@ h9_pivot(h, rows = NULL, columns = NULL, values = NULL, summarizer = NULL, ...)
 \item{values}{The columns whose values should be collected to serve as the individual cells of the table}
 
 \item{summarizer}{the method to aggregate the collected values}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

@@ -13,6 +13,7 @@ h9_line_chart(
   fontsize = NULL,
   marginleft = NULL,
   marginbottom = NULL,
+  rebind = NULL,
   ...
 )
 }
@@ -32,6 +33,8 @@ h9_line_chart(
 \item{marginleft}{Additional step parameter.}
 
 \item{marginbottom}{Additional step parameter.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

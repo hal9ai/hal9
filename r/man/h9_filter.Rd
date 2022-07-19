@@ -4,7 +4,7 @@
 \alias{h9_filter}
 \title{Filter}
 \usage{
-h9_filter(h, field = NULL, expression = NULL, ...)
+h9_filter(h, field = NULL, expression = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -12,6 +12,8 @@ h9_filter(h, field = NULL, expression = NULL, ...)
 \item{field}{The column on which to filter}
 
 \item{expression}{the criteria on which to filter the rows}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

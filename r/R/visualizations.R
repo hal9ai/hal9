@@ -9,16 +9,22 @@
 #' @param color The column in the dataframe that will define the color of the marks in each of the subplots.
 #' @param chartType The type of chart each of the subplots. Currently supports Scatter, Bar, Line and Cell
 #' @param palette Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_facets_chart <- function(h, x  = NULL, y  = NULL, facets  = NULL, color  = NULL, chartType  = NULL, palette  = NULL, ...) {
+h9_facets_chart <- function(h, x  = NULL, y  = NULL, facets  = NULL, color  = NULL, chartType  = NULL, palette  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "facets",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -34,16 +40,22 @@ h9_facets_chart <- function(h, x  = NULL, y  = NULL, facets  = NULL, color  = NU
 #' @param showPercentSelection Boolean on whether to show the percentage in each step
 #' @param funnelType The type of the funnel to make. Options are 2d, 3d and flat.
 #' @param palette Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_funnel_chart <- function(h, stage  = NULL, value  = NULL, label  = NULL, fontSize  = NULL, showPercentSelection  = NULL, funnelType  = NULL, palette  = NULL, ...) {
+h9_funnel_chart <- function(h, stage  = NULL, value  = NULL, label  = NULL, fontSize  = NULL, showPercentSelection  = NULL, funnelType  = NULL, palette  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "funnel",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -56,16 +68,22 @@ h9_funnel_chart <- function(h, stage  = NULL, value  = NULL, label  = NULL, font
 #' @param lat The column that contains the values that should be interpreted as the Longitude of vertex
 #' @param size The column propotional to which the points size should be.
 #' @param label The column which contains the labels of each of the verticies.
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_map_chart <- function(h, lon  = NULL, lat  = NULL, size  = NULL, label  = NULL, ...) {
+h9_map_chart <- function(h, lon  = NULL, lat  = NULL, size  = NULL, label  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "mapchart",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -76,16 +94,22 @@ h9_map_chart <- function(h, lon  = NULL, lat  = NULL, size  = NULL, label  = NUL
 #' @param h A h9 object created by h9_create.
 #' @param from Column containing the origin vertices of all the edges in the graph
 #' @param to Column containing the target vertices of all the edges in the graph
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_network_chart <- function(h, from  = NULL, to  = NULL, ...) {
+h9_network_chart <- function(h, from  = NULL, to  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "network",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -99,16 +123,22 @@ h9_network_chart <- function(h, from  = NULL, to  = NULL, ...) {
 #' @param chartType The chart to be constructed. Currently accepts one of lines, scatter, barChart, fillArea, histogram, twoHistogram
 #' @param dataSizes The size of the marks
 #' @param palette Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_plotly_chart <- function(h, x  = NULL, y  = NULL, chartType  = NULL, dataSizes  = NULL, palette  = NULL, ...) {
+h9_plotly_chart <- function(h, x  = NULL, y  = NULL, chartType  = NULL, dataSizes  = NULL, palette  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "plotly",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -121,16 +151,22 @@ h9_plotly_chart <- function(h, x  = NULL, y  = NULL, chartType  = NULL, dataSize
 #' @param y the column containing the values the areas they occupy in the rectagular area should be propotional to
 #' @param wafflesizelabel The size of the large rectangle
 #' @param palette the D3 Palette to determine the color scheme to use
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_radial_chart <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette  = NULL, ...) {
+h9_radial_chart <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "radialbars",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -143,16 +179,22 @@ h9_radial_chart <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, pa
 #' @param y Additional step parameter.
 #' @param type Additional step parameter.
 #' @param predictions Additional step parameter.
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_regression_chart <- function(h, x  = NULL, y  = NULL, type  = NULL, predictions  = NULL, ...) {
+h9_regression_chart <- function(h, x  = NULL, y  = NULL, type  = NULL, predictions  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "regressionchart",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -165,16 +207,22 @@ h9_regression_chart <- function(h, x  = NULL, y  = NULL, type  = NULL, predictio
 #' @param y Additional step parameter.
 #' @param wafflesizelabel Additional step parameter.
 #' @param palette Additional step parameter.
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_waffle_chart <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette  = NULL, ...) {
+h9_waffle_chart <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, palette  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "waffle",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -188,16 +236,22 @@ h9_waffle_chart <- function(h, x  = NULL, y  = NULL, wafflesizelabel  = NULL, pa
 #' @param fontsize The font size
 #' @param marginleft The left margin
 #' @param marginbottom The bottom margin
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_waterfall_chart <- function(h, x  = NULL, y  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_waterfall_chart <- function(h, x  = NULL, y  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "waterfall",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -208,16 +262,22 @@ h9_waterfall_chart <- function(h, x  = NULL, y  = NULL, fontsize  = NULL, margin
 #' @param h A h9 object created by h9_create.
 #' @param label The column containing words to be added to the cloud
 #' @param size The column the size of the words should be in propotion to
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_wordcloud_chart <- function(h, label  = NULL, size  = NULL, ...) {
+h9_wordcloud_chart <- function(h, label  = NULL, size  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "wordcloud",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 

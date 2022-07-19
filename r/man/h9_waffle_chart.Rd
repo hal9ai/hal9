@@ -10,6 +10,7 @@ h9_waffle_chart(
   y = NULL,
   wafflesizelabel = NULL,
   palette = NULL,
+  rebind = NULL,
   ...
 )
 }
@@ -23,6 +24,8 @@ h9_waffle_chart(
 \item{wafflesizelabel}{Additional step parameter.}
 
 \item{palette}{Additional step parameter.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

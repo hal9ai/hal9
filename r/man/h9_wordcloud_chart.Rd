@@ -4,7 +4,7 @@
 \alias{h9_wordcloud_chart}
 \title{Wordcloud}
 \usage{
-h9_wordcloud_chart(h, label = NULL, size = NULL, ...)
+h9_wordcloud_chart(h, label = NULL, size = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -12,6 +12,8 @@ h9_wordcloud_chart(h, label = NULL, size = NULL, ...)
 \item{label}{The column containing words to be added to the cloud}
 
 \item{size}{The column the size of the words should be in propotion to}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

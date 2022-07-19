@@ -4,7 +4,14 @@
 \alias{h9_summarize}
 \title{Summarize}
 \usage{
-h9_summarize(h, group = NULL, field = NULL, summarizer = NULL, ...)
+h9_summarize(
+  h,
+  group = NULL,
+  field = NULL,
+  summarizer = NULL,
+  rebind = NULL,
+  ...
+)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -14,6 +21,8 @@ h9_summarize(h, group = NULL, field = NULL, summarizer = NULL, ...)
 \item{field}{The list of columns who's values to collect}
 
 \item{summarizer}{The summarizer method to aggregate the values collected, default- count}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

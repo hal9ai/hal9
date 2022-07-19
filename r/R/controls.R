@@ -4,16 +4,22 @@
 #'
 #' @param h A h9 object created by h9_create.
 #' @param values Additional step parameter.
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_dropdown <- function(h, values  = NULL, ...) {
+h9_dropdown <- function(h, values  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "dropdown",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -25,16 +31,22 @@ h9_dropdown <- function(h, values  = NULL, ...) {
 #' @param min Additional step parameter.
 #' @param max Additional step parameter.
 #' @param step Additional step parameter.
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_slider <- function(h, min  = NULL, max  = NULL, step  = NULL, ...) {
+h9_slider <- function(h, min  = NULL, max  = NULL, step  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "slider",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -44,16 +56,22 @@ h9_slider <- function(h, min  = NULL, max  = NULL, step  = NULL, ...) {
 #'
 #' @param h A h9 object created by h9_create.
 #' @param site Additional step parameter.
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_website <- function(h, site  = NULL, ...) {
+h9_website <- function(h, site  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "website",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 

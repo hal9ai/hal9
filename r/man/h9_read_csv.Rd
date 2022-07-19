@@ -4,7 +4,7 @@
 \alias{h9_read_csv}
 \title{CSV}
 \usage{
-h9_read_csv(h, file = NULL, separator = NULL, skip = NULL, ...)
+h9_read_csv(h, file = NULL, separator = NULL, skip = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -14,6 +14,8 @@ h9_read_csv(h, file = NULL, separator = NULL, skip = NULL, ...)
 \item{separator}{A single-character delimiter string between column values (default ',')}
 
 \item{skip}{The number of lines to skip (default 0) before reading data}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

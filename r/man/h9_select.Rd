@@ -4,12 +4,14 @@
 \alias{h9_select}
 \title{Select}
 \usage{
-h9_select(h, columns = NULL, ...)
+h9_select(h, columns = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
 \item{columns}{The list of columns to keep}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

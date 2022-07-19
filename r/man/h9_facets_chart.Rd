@@ -12,6 +12,7 @@ h9_facets_chart(
   color = NULL,
   chartType = NULL,
   palette = NULL,
+  rebind = NULL,
   ...
 )
 }
@@ -29,6 +30,8 @@ h9_facets_chart(
 \item{chartType}{The type of chart each of the subplots. Currently supports Scatter, Bar, Line and Cell}
 
 \item{palette}{Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

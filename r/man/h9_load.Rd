@@ -4,12 +4,14 @@
 \alias{h9_load}
 \title{DataFrame}
 \usage{
-h9_load(h, dataset = NULL, ...)
+h9_load(h, dataset = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
 \item{dataset}{The dataframe to load}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

@@ -4,12 +4,14 @@
 \alias{h9_roll_sum}
 \title{Rolling Sum}
 \usage{
-h9_roll_sum(h, column = NULL, ...)
+h9_roll_sum(h, column = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
 \item{column}{The column for which to calculate the rolling sum.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

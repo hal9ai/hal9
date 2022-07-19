@@ -14,6 +14,7 @@ h9_scatter_chart(
   fontsize = NULL,
   marginleft = NULL,
   marginbottom = NULL,
+  rebind = NULL,
   ...
 )
 }
@@ -35,6 +36,8 @@ h9_scatter_chart(
 \item{marginleft}{The left margin}
 
 \item{marginbottom}{The Bottom margin}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

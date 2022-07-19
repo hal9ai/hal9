@@ -4,7 +4,7 @@
 \alias{h9_assign}
 \title{Assign}
 \usage{
-h9_assign(h, column = NULL, array = NULL, ...)
+h9_assign(h, column = NULL, array = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -12,6 +12,8 @@ h9_assign(h, column = NULL, array = NULL, ...)
 \item{column}{Name of the new column}
 
 \item{array}{The array to be added to the table}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

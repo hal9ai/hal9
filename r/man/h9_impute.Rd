@@ -4,7 +4,7 @@
 \alias{h9_impute}
 \title{Impute}
 \usage{
-h9_impute(h, field = NULL, method = NULL, ...)
+h9_impute(h, field = NULL, method = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -12,6 +12,8 @@ h9_impute(h, field = NULL, method = NULL, ...)
 \item{field}{List of columns in which to replace missing values}
 
 \item{method}{the function to use to impute the missing values. Currently available options are 'max', 'min', 'mean' median', 'zero'. Default is 'zero'}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

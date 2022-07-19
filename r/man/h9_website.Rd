@@ -4,12 +4,14 @@
 \alias{h9_website}
 \title{Website}
 \usage{
-h9_website(h, site = NULL, ...)
+h9_website(h, site = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
 \item{site}{Additional step parameter.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

@@ -4,7 +4,7 @@
 \alias{h9_network_chart}
 \title{Network}
 \usage{
-h9_network_chart(h, from = NULL, to = NULL, ...)
+h9_network_chart(h, from = NULL, to = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -12,6 +12,8 @@ h9_network_chart(h, from = NULL, to = NULL, ...)
 \item{from}{Column containing the origin vertices of all the edges in the graph}
 
 \item{to}{Column containing the target vertices of all the edges in the graph}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

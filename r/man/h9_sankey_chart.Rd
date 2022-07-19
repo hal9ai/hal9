@@ -13,6 +13,7 @@ h9_sankey_chart(
   fontsize = NULL,
   marginleft = NULL,
   marginbottom = NULL,
+  rebind = NULL,
   ...
 )
 }
@@ -32,6 +33,8 @@ h9_sankey_chart(
 \item{marginleft}{The margin on the left}
 
 \item{marginbottom}{The margin on the bottom}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

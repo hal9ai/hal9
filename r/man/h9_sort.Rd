@@ -4,7 +4,7 @@
 \alias{h9_sort}
 \title{Sort}
 \usage{
-h9_sort(h, field = NULL, order = NULL, ...)
+h9_sort(h, field = NULL, order = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -12,6 +12,8 @@ h9_sort(h, field = NULL, order = NULL, ...)
 \item{field}{The list of columns to sort by}
 
 \item{order}{The order in which to sort, default - ascending}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

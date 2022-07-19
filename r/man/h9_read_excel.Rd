@@ -4,12 +4,14 @@
 \alias{h9_read_excel}
 \title{Excel}
 \usage{
-h9_read_excel(h, file = NULL, ...)
+h9_read_excel(h, file = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
 \item{file}{Additional step parameter.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

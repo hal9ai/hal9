@@ -13,6 +13,7 @@ h9_funnel_chart(
   showPercentSelection = NULL,
   funnelType = NULL,
   palette = NULL,
+  rebind = NULL,
   ...
 )
 }
@@ -32,6 +33,8 @@ h9_funnel_chart(
 \item{funnelType}{The type of the funnel to make. Options are 2d, 3d and flat.}
 
 \item{palette}{Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

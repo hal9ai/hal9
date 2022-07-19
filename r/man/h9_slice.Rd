@@ -4,7 +4,7 @@
 \alias{h9_slice}
 \title{Slice}
 \usage{
-h9_slice(h, start = NULL, end = NULL, ...)
+h9_slice(h, start = NULL, end = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -12,6 +12,8 @@ h9_slice(h, start = NULL, end = NULL, ...)
 \item{start}{The starting index(included)}
 
 \item{end}{The ending index(not included)}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

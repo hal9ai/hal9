@@ -4,12 +4,14 @@
 \alias{h9_drop}
 \title{Drop}
 \usage{
-h9_drop(h, columns = NULL, ...)
+h9_drop(h, columns = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
 \item{columns}{The list of columns to remove}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

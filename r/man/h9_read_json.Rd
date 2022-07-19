@@ -4,7 +4,7 @@
 \alias{h9_read_json}
 \title{JSON}
 \usage{
-h9_read_json(h, file = NULL, extract = NULL, ...)
+h9_read_json(h, file = NULL, extract = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -12,6 +12,8 @@ h9_read_json(h, file = NULL, extract = NULL, ...)
 \item{file}{Additional step parameter.}
 
 \item{extract}{Additional step parameter.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

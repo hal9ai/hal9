@@ -11,6 +11,7 @@ h9_histogram_chart(
   histnorm = NULL,
   barmode = NULL,
   palette = NULL,
+  rebind = NULL,
   ...
 )
 }
@@ -26,6 +27,8 @@ h9_histogram_chart(
 \item{barmode}{One of stacked or overlaid, which controls the manner in which multiple distributions selected in x are visualized.}
 
 \item{palette}{The D3 palette used to control the colors of each of the distributions in x.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

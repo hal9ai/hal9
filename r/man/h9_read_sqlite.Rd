@@ -4,7 +4,7 @@
 \alias{h9_read_sqlite}
 \title{SQLite}
 \usage{
-h9_read_sqlite(h, file = NULL, query = NULL, ...)
+h9_read_sqlite(h, file = NULL, query = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -12,6 +12,8 @@ h9_read_sqlite(h, file = NULL, query = NULL, ...)
 \item{file}{Additional step parameter.}
 
 \item{query}{Additional step parameter.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

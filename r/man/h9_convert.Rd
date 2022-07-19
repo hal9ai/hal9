@@ -10,6 +10,7 @@ h9_convert(
   dataType = NULL,
   timeConverter = NULL,
   charactersToRemove = NULL,
+  rebind = NULL,
   ...
 )
 }
@@ -23,6 +24,8 @@ h9_convert(
 \item{timeConverter}{an optional parameter to help convert date-times}
 
 \item{charactersToRemove}{a string of characters to remove}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

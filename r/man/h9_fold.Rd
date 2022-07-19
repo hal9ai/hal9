@@ -4,12 +4,14 @@
 \alias{h9_fold}
 \title{Fold}
 \usage{
-h9_fold(h, gather = NULL, ...)
+h9_fold(h, gather = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
 \item{gather}{the list of columns to convert into key-value pairs}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

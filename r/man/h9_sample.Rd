@@ -4,7 +4,7 @@
 \alias{h9_sample}
 \title{Sample}
 \usage{
-h9_sample(h, samplesize = NULL, withReplacement = NULL, ...)
+h9_sample(h, samplesize = NULL, withReplacement = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -12,6 +12,8 @@ h9_sample(h, samplesize = NULL, withReplacement = NULL, ...)
 \item{samplesize}{The size of the sample as a percentage of the size of the input dataframe}
 
 \item{withReplacement}{Allow or disallow sampling of the same row more than once. Default- True}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

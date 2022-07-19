@@ -10,6 +10,7 @@ h9_regression_chart(
   y = NULL,
   type = NULL,
   predictions = NULL,
+  rebind = NULL,
   ...
 )
 }
@@ -23,6 +24,8 @@ h9_regression_chart(
 \item{type}{Additional step parameter.}
 
 \item{predictions}{Additional step parameter.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

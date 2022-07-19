@@ -12,16 +12,22 @@
 #' @param tickrotation The angle at which to place the x-axis labels
 #' @param marginleft the left margin
 #' @param marginbottom the bottom margin
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_bar_chart <- function(h, x  = NULL, y  = NULL, type  = NULL, orientation  = NULL, palette  = NULL, fontsize  = NULL, tickrotation  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_bar_chart <- function(h, x  = NULL, y  = NULL, type  = NULL, orientation  = NULL, palette  = NULL, fontsize  = NULL, tickrotation  = NULL, marginleft  = NULL, marginbottom  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "barchart",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -38,16 +44,22 @@ h9_bar_chart <- function(h, x  = NULL, y  = NULL, type  = NULL, orientation  = N
 #' @param fontsize the size of the font in pixels
 #' @param marginleft the left margin
 #' @param marginbottom the bottom margin
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_dot_chart <- function(h, x  = NULL, color  = NULL, palette  = NULL, dotsize  = NULL, ticks  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_dot_chart <- function(h, x  = NULL, color  = NULL, palette  = NULL, dotsize  = NULL, ticks  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "dotplotchart",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -65,16 +77,22 @@ h9_dot_chart <- function(h, x  = NULL, color  = NULL, palette  = NULL, dotsize  
 #' @param fontsize the font size
 #' @param marginleft The left margin
 #' @param marginbottom the bottom margin
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_error_chart <- function(h, x  = NULL, min  = NULL, max  = NULL, open  = NULL, close  = NULL, levels  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_error_chart <- function(h, x  = NULL, min  = NULL, max  = NULL, open  = NULL, close  = NULL, levels  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "errorbarchart",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -90,16 +108,22 @@ h9_error_chart <- function(h, x  = NULL, min  = NULL, max  = NULL, open  = NULL,
 #' @param fontsize The font size
 #' @param marginleft The left margin
 #' @param marginbottom The bottom margin
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_heatmap_chart <- function(h, x  = NULL, y  = NULL, value  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_heatmap_chart <- function(h, x  = NULL, y  = NULL, value  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "heatmapchart",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -113,16 +137,22 @@ h9_heatmap_chart <- function(h, x  = NULL, y  = NULL, value  = NULL, palette  = 
 #' @param histnorm The aggregation method to apply on outputs of the aggregation functions.
 #' @param barmode One of stacked or overlaid, which controls the manner in which multiple distributions selected in x are visualized.
 #' @param palette The D3 palette used to control the colors of each of the distributions in x.
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_histogram_chart <- function(h, x  = NULL, histfunc  = NULL, histnorm  = NULL, barmode  = NULL, palette  = NULL, ...) {
+h9_histogram_chart <- function(h, x  = NULL, histfunc  = NULL, histnorm  = NULL, barmode  = NULL, palette  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "histogramchart",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -138,16 +168,22 @@ h9_histogram_chart <- function(h, x  = NULL, histfunc  = NULL, histnorm  = NULL,
 #' @param fontsize Additional step parameter.
 #' @param marginleft Additional step parameter.
 #' @param marginbottom Additional step parameter.
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_line_chart <- function(h, x  = NULL, y  = NULL, palette  = NULL, domainx  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_line_chart <- function(h, x  = NULL, y  = NULL, palette  = NULL, domainx  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "linechart",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -163,16 +199,22 @@ h9_line_chart <- function(h, x  = NULL, y  = NULL, palette  = NULL, domainx  = N
 #' @param fontsize The font size in pixels
 #' @param marginleft The margin on the left
 #' @param marginbottom The margin on the bottom
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_sankey_chart <- function(h, source  = NULL, target  = NULL, value  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_sankey_chart <- function(h, source  = NULL, target  = NULL, value  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "sankeychart",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -189,16 +231,22 @@ h9_sankey_chart <- function(h, source  = NULL, target  = NULL, value  = NULL, pa
 #' @param fontsize The size of the font to be used
 #' @param marginleft The left margin
 #' @param marginbottom The Bottom margin
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_scatter_chart <- function(h, x  = NULL, y  = NULL, color  = NULL, size  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_scatter_chart <- function(h, x  = NULL, y  = NULL, color  = NULL, size  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "scatterchart",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -213,16 +261,22 @@ h9_scatter_chart <- function(h, x  = NULL, y  = NULL, color  = NULL, size  = NUL
 #' @param fontsize The size of the font
 #' @param marginleft The left margin
 #' @param marginbottom The bottom margin
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_treemap_chart <- function(h, label  = NULL, size  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, ...) {
+h9_treemap_chart <- function(h, label  = NULL, size  = NULL, palette  = NULL, fontsize  = NULL, marginleft  = NULL, marginbottom  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "treemapchart",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 

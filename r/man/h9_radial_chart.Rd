@@ -10,6 +10,7 @@ h9_radial_chart(
   y = NULL,
   wafflesizelabel = NULL,
   palette = NULL,
+  rebind = NULL,
   ...
 )
 }
@@ -23,6 +24,8 @@ h9_radial_chart(
 \item{wafflesizelabel}{The size of the large rectangle}
 
 \item{palette}{the D3 Palette to determine the color scheme to use}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

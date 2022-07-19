@@ -4,7 +4,7 @@
 \alias{h9_derive}
 \title{Derive}
 \usage{
-h9_derive(h, column = NULL, expression = NULL, ...)
+h9_derive(h, column = NULL, expression = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -12,6 +12,8 @@ h9_derive(h, column = NULL, expression = NULL, ...)
 \item{column}{The name of the new column. If this is a column that already exists in the dataframe, the derived column replaces the exisiting one.}
 
 \item{expression}{The expression based on which the new columns are derived}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

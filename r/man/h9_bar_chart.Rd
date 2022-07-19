@@ -15,6 +15,7 @@ h9_bar_chart(
   tickrotation = NULL,
   marginleft = NULL,
   marginbottom = NULL,
+  rebind = NULL,
   ...
 )
 }
@@ -38,6 +39,8 @@ h9_bar_chart(
 \item{marginleft}{the left margin}
 
 \item{marginbottom}{the bottom margin}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

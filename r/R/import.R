@@ -6,16 +6,22 @@
 #' @param file Either the URL for the csv or a local file.
 #' @param separator A single-character delimiter string between column values (default ',')
 #' @param skip The number of lines to skip (default 0) before reading data
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_read_csv <- function(h, file  = NULL, separator  = NULL, skip  = NULL, ...) {
+h9_read_csv <- function(h, file  = NULL, separator  = NULL, skip  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "importcsv",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -25,16 +31,22 @@ h9_read_csv <- function(h, file  = NULL, separator  = NULL, skip  = NULL, ...) {
 #'
 #' @param h A h9 object created by h9_create.
 #' @param file Additional step parameter.
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_read_excel <- function(h, file  = NULL, ...) {
+h9_read_excel <- function(h, file  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "importexcel",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -45,16 +57,22 @@ h9_read_excel <- function(h, file  = NULL, ...) {
 #' @param h A h9 object created by h9_create.
 #' @param file Additional step parameter.
 #' @param extract Additional step parameter.
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_read_json <- function(h, file  = NULL, extract  = NULL, ...) {
+h9_read_json <- function(h, file  = NULL, extract  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "importjson",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -65,16 +83,22 @@ h9_read_json <- function(h, file  = NULL, extract  = NULL, ...) {
 #' @param h A h9 object created by h9_create.
 #' @param file Additional step parameter.
 #' @param query Additional step parameter.
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_read_sqlite <- function(h, file  = NULL, query  = NULL, ...) {
+h9_read_sqlite <- function(h, file  = NULL, query  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "sqlite",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 
@@ -84,16 +108,22 @@ h9_read_sqlite <- function(h, file  = NULL, query  = NULL, ...) {
 #'
 #' @param h A h9 object created by h9_create.
 #' @param dataset The dataframe to load
+#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_load <- function(h, dataset  = NULL, ...) {
+h9_load <- function(h, dataset  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
   h9_add_step(
     h,
     "dataframe",
-    matched_call = as.list(match.call())
+    rebind,
+    matched_call = args[no_rebinds]
   )
 }
 

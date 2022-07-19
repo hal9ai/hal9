@@ -4,7 +4,7 @@
 \alias{h9_slider}
 \title{Slider}
 \usage{
-h9_slider(h, min = NULL, max = NULL, step = NULL, ...)
+h9_slider(h, min = NULL, max = NULL, step = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -14,6 +14,8 @@ h9_slider(h, min = NULL, max = NULL, step = NULL, ...)
 \item{max}{Additional step parameter.}
 
 \item{step}{Additional step parameter.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

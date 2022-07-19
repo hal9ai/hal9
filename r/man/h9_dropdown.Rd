@@ -4,12 +4,14 @@
 \alias{h9_dropdown}
 \title{Dropdown}
 \usage{
-h9_dropdown(h, values = NULL, ...)
+h9_dropdown(h, values = NULL, rebind = NULL, ...)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
 
 \item{values}{Additional step parameter.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

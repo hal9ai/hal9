@@ -4,7 +4,15 @@
 \alias{h9_map_chart}
 \title{Map}
 \usage{
-h9_map_chart(h, lon = NULL, lat = NULL, size = NULL, label = NULL, ...)
+h9_map_chart(
+  h,
+  lon = NULL,
+  lat = NULL,
+  size = NULL,
+  label = NULL,
+  rebind = NULL,
+  ...
+)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
@@ -16,6 +24,8 @@ h9_map_chart(h, lon = NULL, lat = NULL, size = NULL, label = NULL, ...)
 \item{size}{The column propotional to which the points size should be.}
 
 \item{label}{The column which contains the labels of each of the verticies.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }

@@ -11,6 +11,7 @@ h9_plotly_chart(
   chartType = NULL,
   dataSizes = NULL,
   palette = NULL,
+  rebind = NULL,
   ...
 )
 }
@@ -26,6 +27,8 @@ h9_plotly_chart(
 \item{dataSizes}{The size of the marks}
 
 \item{palette}{Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.}
+
+\item{rebind}{A list of rebindings to apply to this function parameters.}
 
 \item{...}{Other h9 parameters.}
 }
