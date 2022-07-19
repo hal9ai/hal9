@@ -112,9 +112,9 @@ h9_add_step <- function(h, step, rebind = NULL, matched_call = NULL) {
 
   if (!identical(rebind, NULL)) {
     # TODO: Add support for inputs and ouputs
-    new_step$options <- list(
-      params = list(
-        rebinds = rebind
+    new_step[[1]]$options <- list(
+      rebinds = list(
+        params = rebind
       )
     )
   }
