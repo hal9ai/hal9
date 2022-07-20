@@ -21,7 +21,7 @@ h9_create <- function(
   elementId <- list(...)$elementId
 
   library <- list(
-    cloud = "https://cdn.jsdelivr.net/npm/hal9@0.2.69/dist/hal9.min.js",
+    cloud = "https://cdn.jsdelivr.net/npm/hal9@0.2.71/dist/hal9.min.js",
     devel = "https://cdn.jsdelivr.net/npm/hal9@latest/dist/hal9.dev.js",
     local = "http://localhost:8000/dist/hal9.js"
   )
