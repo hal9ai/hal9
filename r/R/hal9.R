@@ -24,7 +24,7 @@ h9_create <- function(
 
   library <- list(
     prod = paste0("https://cdn.jsdelivr.net/npm/hal9@", version, "/dist/hal9.min.js"),
-    devel = paste0("https://cdn.jsdelivr.net/npm/hal9@latest/dist/hal9.dev.js?version=", version),
+    devel = paste0("https://cdn.jsdelivr.net/npm/hal9@", version, "/dist/hal9.dev.js"),
     local = "http://localhost:8000/dist/hal9.js"
   )
 
