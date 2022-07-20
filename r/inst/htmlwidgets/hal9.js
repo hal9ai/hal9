@@ -11,20 +11,27 @@ HTMLWidgets.widget({
     return {
 
       renderValue: function(x) {
-        window.hal9 = {
-          pipeline: x.pipeline_json,
-          iframe: x.iframe,
-          id: 'hal9-root-' + Math.floor(Math.random() * 10000000)
-        };
+        const render = function() {
+          hal9.init({ iframe: true, html: el, api: x.library }, {}).then(function(hal9) {
+            hal9.load(x.pipeline_json).then(function(pid) {
+              hal9.run(pid, { html: 'output', shadow: false });
+            });
+          });
+        }
 
-        const id = x.environment != 'prod' ? window.hal9.id : 'app';
+        if (typeof(hal9) == 'undefined') {
+          const script = document.createElement('script');
+          script.id = 'hal9-script';
+          script.src = x.library;
+          document.body.appendChild(script);
 
-        const html = `<div id="${window.hal9.id}" style="height: 800px; max-height: 800px;"></div>`;
-        el.innerHTML = html;
-
-        const script = document.createElement('script');
-        script.src = x.library;
-        document.body.appendChild(script);
+          script.addEventListener('load', function() {
+            render()
+          });
+        }
+        else {
+          render();
+        }
       },
 
       resize: function(width, height) {

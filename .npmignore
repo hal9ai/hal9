@@ -1,2 +1,6 @@
-examples/
 scripts/
+.github
+.githooks
+python/
+r/
+site/
