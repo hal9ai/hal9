@@ -1,17 +1,31 @@
 [
   {
-    "objectID": "examples.html#publish",
-    "href": "examples.html#publish",
+    "objectID": "examples.html",
+    "href": "examples.html",
     "title": "Examples",
-    "section": "Publish",
-    "text": "Publish"
+    "section": "",
+    "text": "RPython\n\n\n\nlibrary(hal9)\n\nh9_create() |>\n  h9_load(mtcars) |>\n  h9_bar_chart(x = \"cyl\",\n               y = \"carb\",\n               type = \"grouped\",\n               orientation = \"horizontal\",\n               palette = \"schemePaired\",\n               fontsize = \"14\",\n               tickrotation = \"0\",\n               marginleft = \"40\",\n               marginbottom = \"30\")\n\n\n\n\n\n\n\n\n\n\"soon\"\n\n\n\n\n\n\n\n\nRPython\n\n\n\nh9_create() |>\n  h9_load(mtcars) |>\n  h9_histogram_chart(x = \"mpg\",\n                     histfunc = \"count\",\n                     histnorm = \"none\",\n                     barmode = \"stack\",\n                     palette = \"schemePaired\")\n\n\n\n\n\n\n\n\n\n\"soon\""
   },
   {
-    "objectID": "examples.html#shiny",
-    "href": "examples.html#shiny",
+    "objectID": "examples.html#transforms",
+    "href": "examples.html#transforms",
     "title": "Examples",
-    "section": "Shiny",
-    "text": "Shiny"
+    "section": "Transforms",
+    "text": "Transforms\n\nAssign\n\nRPython\n\n\n\nh9_create() |>\n  h9_load(mtcars) |>\n  h9_assign(column = \"new_column\", \n            array = \"data.indices()\")\n\n\n\n\n\n\n\n\n\"soon\"\n\n\n\n\n\n\nDerive\n\nRPython\n\n\n\nh9_create() |>\n  h9_load(mtcars) |>\n  h9_derive(column = \"new_column\",\n            expression = \"data[columns[1]]\")\n\n\n\n\n\n\n\n\n\"soon\"\n\n\n\n\n\n\nDrop\n\nRPython\n\n\n\nh9_create() |>\n  h9_load(mtcars) |>\n  h9_drop(columns = \"mpg\")\n\n\n\n\n\n\n\n\n\"soon\"\n\n\n\n\n\n\nFilter\n\nRPython\n\n\n\nh9_create() |>\n  h9_load(mtcars) |>\n  h9_filter(field = \"mpg\",\n            expression = \"field > 20\")\n\n\n\n\n\n\n\n\n\"soon\"\n\n\n\n\n\n\nFold\n\nRPython\n\n\n\nh9_create() |>\n  h9_load(mtcars) |>\n  h9_fold(gather = \"_row\")\n\n\n\n\n\n\n\n\n\"soon\"\n\n\n\n\n\n\nImpute\n\nRPython\n\n\n\nh9_create() |>\n  h9_load(airquality) |>\n  h9_impute(field = \"Ozone\",\n            method = \"mean\")\n\n\n\n\n\n\n\n\n\"soon\"\n\n\n\n\n\n\nRolling Sum\n\nRPython\n\n\n\nh9_create() |>\n  h9_load(mtcars) |>\n  h9_roll_sum(column = \"mpg\")\n\n\n\n\n\n\n\n\n\"soon\"\n\n\n\n\n\n\nSample\n\nRPython\n\n\n\nh9_create() |>\n  h9_load(mtcars) |>\n  h9_sample(samplesize = \"40\",\n            withReplacement = \"false\")\n\n\n\n\n\n\n\n\n\"soon\"\n\n\n\n\n\n\nSelect\n\nRPython\n\n\n\nh9_create() |>\n  h9_load(mtcars) |>\n  h9_select(columns = \"am\")\n\n\n\n\n\n\n\n\n\"soon\"\n\n\n\n\n\n\nSlice\n\nRPython\n\n\n\nh9_create() |>\n  h9_load(mtcars) |>\n  h9_slice(start = \"5\",\n           end = \"20\")\n\n\n\n\n\n\n\n\n\"soon\"\n\n\n\n\n\n\nSort\n\nRPython\n\n\n\nh9_create() |>\n  h9_load(mtcars) |>\n  h9_sort(field = \"mpg\",\n          order = \"desc\")\n\n\n\n\n\n\n\n\n\"soon\"\n\n\n\n\n\n\nSummarize\n\nRPython\n\n\n\nh9_create() |>\n  h9_load(mtcars) |>\n  h9_summarize(group = \"cyl\",\n               field = \"carb\",\n               summarizer = \"mean\")\n\n\n\n\n\n\n\n\n\"soon\""
+  },
+  {
+    "objectID": "getstarted.html",
+    "href": "getstarted.html",
+    "title": "Get Started",
+    "section": "",
+    "text": "RPython\n\n\n\ndevtools::install_github(\"hal9ai/hal9ai\", subdir = \"r\")\n\n\n\n\n\"soon\""
+  },
+  {
+    "objectID": "getstarted.html#create-a-pipeline",
+    "href": "getstarted.html#create-a-pipeline",
+    "title": "Get Started",
+    "section": "Create a pipeline",
+    "text": "Create a pipeline\nPipelines are a sequence of operations that allows you to import, transform, visualize and model your data in a single web app.\n\nRPython\n\n\nUsing the hal9 package, you can create a hal9 pipeline as follow:\n\nlibrary(hal9)\n\nh9_create() |>\n  h9_load(dataset = mtcars) |>\n  h9_scatter_chart(x = \"cyl\", y = \"disp\")\n\n\n\n\n\n\n\n\nh9_create() creates a h9 object. All hal9 pipelines will start with this function.\nh9_load() s used to import an R dataset into hal9. This dataset will be used throughout the entire pipeline.\nh9_scatter_chart() adds a scatter chart to the pipeline.\n\n\n\n\n\"soon\""
   },
   {
     "objectID": "index.html",
@@ -33,19 +47,5 @@
     "title": "hal9: Interactive Data Apps without Web Dev",
     "section": "Interactive",
     "text": "Interactive\n\nRPython\n\n\n\nh9_create() |>\n  h9_load(dataset = iris) |>\n  h9_slider(min = \"1\", max = \"100\", step = \"1\") |>\n  h9_sample() |>\n  h9_scatter_chart(x = \"Sepal.Length\", y = \"Sepal.Width\", color = \"Species\")\n\n\n\n\nh9.create()\n  .load(dataset = iris)\n  .slider(min = \"1\", max = \"100\", step = \"1\")\n  .sample()\n  .scatter_chart(x = \"Sepal.Length\", y = \"Sepal.Width\", color = \"Species\")"
-  },
-  {
-    "objectID": "getstarted.html",
-    "href": "getstarted.html",
-    "title": "Get Started",
-    "section": "",
-    "text": "RPython\n\n\n\ndevtools::install_github(\"hal9ai/hal9ai\", subdir = \"r\")\n\n\n\n\n\"soon\""
-  },
-  {
-    "objectID": "getstarted.html#create-a-pipeline",
-    "href": "getstarted.html#create-a-pipeline",
-    "title": "Get Started",
-    "section": "Create a pipeline",
-    "text": "Create a pipeline\nPipelines are a sequence of operations that allows you to import, transform, visualize and model your data in a single web app.\n\nRPython\n\n\nUsing the hal9 package, you can create a hal9 pipeline as follow:\n\nlibrary(hal9)\n\nh9_create() |>\n  h9_load(dataset = mtcars) |>\n  h9_scatter_chart(x = \"cyl\", y = \"disp\")\n\n\n\n\n\n\n\n\nh9_create() creates a h9 object. All hal9 pipelines will start with this function.\nh9_load() s used to import an R dataset into hal9. This dataset will be used throughout the entire pipeline.\nh9_scatter_chart() adds a scatter chart to the pipeline.\n\n\n\n\n\"soon\""
   }
 ]
