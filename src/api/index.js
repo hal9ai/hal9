@@ -14,10 +14,11 @@ import clone from '../core/utils/clone';
 import functions from '../core/utils/functions';
 
 var api = native;
-function init(options) {
+function init(options, hal9wnd) {
+  hal9wnd = hal9wnd ? hal9wnd : window.hal9;
   if (options.iframe) {
     api = iframe;
-    return iframe.init(options, window.hal9);
+    return iframe.init(options, hal9wnd);
   }
   else {
     api = native;
