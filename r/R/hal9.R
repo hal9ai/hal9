@@ -8,6 +8,7 @@
 #'   development and 'local' for local developer environment.
 #' @param iframe Should the application run inside an iframe to protect styles and
 #'   resources from the parent? Defaults to 'TRUE'.
+#' @param version The version of the runtime to use.
 #' @param ... Additional parameters
 #'
 #' @export
@@ -15,14 +16,15 @@
 h9_create <- function(
   width = "100%",
   height = "100%",
-  environment = 'cloud',
+  environment = 'prod',
   iframe = TRUE,
+  version = "0.2.71",
   ...) {
   elementId <- list(...)$elementId
 
   library <- list(
-    cloud = "https://cdn.jsdelivr.net/npm/hal9@0.2.71/dist/hal9.min.js",
-    devel = "https://cdn.jsdelivr.net/npm/hal9@latest/dist/hal9.dev.js",
+    prod = paste0("https://cdn.jsdelivr.net/npm/hal9@", version, "/dist/hal9.min.js"),
+    devel = paste0("https://cdn.jsdelivr.net/npm/hal9@latest/dist/hal9.dev.js?version=", version),
     local = "http://localhost:8000/dist/hal9.js"
   )
 
