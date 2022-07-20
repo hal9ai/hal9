@@ -1,2 +1,11 @@
 examples/
 scripts/
+.github
+.githooks
+libs/
+python/
+r/
+site/
+src/
+test/
+utils/
