@@ -20,7 +20,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@hal9ai'
       - run: yarn install
-      - run: yarn build
+      - run: yarn build:npm
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,6 +1,6 @@
 {
   "name": "hal9",
-  "version": "0.2.68",
+  "version": "0.2.69",
   "license": "MIT",
   "description": "Hal9: Composable machine-learning pipelines",
   "main": "dist/hal9.js",
@@ -10,6 +10,7 @@
     "build": "webpack --mode=production",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production",
+    "build:npm": "webpack --mode=development && cp dist/hal9.js dist/hal9.dev.js && webpack --mode=production",
     "watch": "webpack --watch",
     "test": "tape test/**/*.test.js",
     "check": "yarn flow check",
