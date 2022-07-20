@@ -14,8 +14,8 @@
 #' @export
 #'
 h9_create <- function(
-  width = "100%",
-  height = "100%",
+  width = NULL,
+  height = NULL,
   environment = 'prod',
   iframe = TRUE,
   version = "0.2.71",

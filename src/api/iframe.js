@@ -21,6 +21,8 @@ export const init = async (options, hal9wnd) => {
   iframe.style.border = 'none';
   iframe.style.width = '100%';
   iframe.style.height = '100%';
+  iframe.style.margin = 0;
+  iframe.style.padding = 0;
 
   var secret = Math.random();
   const iframehtml = `
