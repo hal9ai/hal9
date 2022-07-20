@@ -151,14 +151,31 @@ export const init = async (options, hal9wnd) => {
     secret: secret,
     postId: 0
   };
+
+  // per-iframe API used to initialize multiple instances with different iframes
+  return {
+    load: async (raw) => {
+      return await post(config, "hal9.load(params.raw)", {
+        raw: raw,
+      })
+    },
+    run: async (pipeline, context) => {
+      return await post(config, "hal9.run(params.pipeline, params.context)", {
+        pipeline: pipeline,
+        context: context,
+      }, {
+        longlisten: true
+      })
+    }
+  }
 }
 
-const post = async (code, params, options = {}) => {
+const post = async (config, code, params, options = {}) => {
   try {
     if (typeof(window) != 'undefined' && window.hal9 && window.hal9.debug) {
       const config = window.hal9.debug;
       window.hal9.debug = undefined;
-      await post("enableDebug(" + JSON.stringify(config) + ")", []);
+      await post(config, "enableDebug(" + JSON.stringify(config) + ")", []);
     }
 
     const secret = config.secret;
@@ -234,20 +251,20 @@ const post = async (code, params, options = {}) => {
 }
 
 export const create = async (pipelineid, context) => {
-  return await post("hal9.create(params.pipelineid, params.context)", {
+  return await post(config, "hal9.create(params.pipelineid, params.context)", {
     pipelineid: pipelineid,
     context: context,
   })
 }
 
 export const load = async (raw) => {
-  return await post("hal9.load(params.raw)", {
+  return await post(config, "hal9.load(params.raw)", {
     raw: raw,
   })
 }
 
 export const step = async (url, params, output, options) => {
-	return await post("hal9.step(params.url, params.params, params.output, params.options)", {
+	return await post(config, "hal9.step(params.url, params.params, params.output, params.options)", {
     url: url,
     params: params,
     output: output,
@@ -256,7 +273,7 @@ export const step = async (url, params, output, options) => {
 }
 
 export const run = async (pipeline, context) => {
-	return await post("hal9.run(params.pipeline, params.context)", {
+	return await post(config, "hal9.run(params.pipeline, params.context)", {
     pipeline: pipeline,
     context: context,
   }, {
@@ -265,7 +282,7 @@ export const run = async (pipeline, context) => {
 }
 
 export const runPipeline = async (pipelineid, context) => {
-  return await post("hal9.runPipeline(params.pipelineid, params.context)", {
+  return await post(config, "hal9.runPipeline(params.pipelineid, params.context)", {
     pipelineid: pipelineid,
     context: context,
   }, {
@@ -274,19 +291,19 @@ export const runPipeline = async (pipelineid, context) => {
 }
 
 export async function setEnv(env) {
-  return await post("hal9.environment.setEnv(params.env)", {
+  return await post(config, "hal9.environment.setEnv(params.env)", {
     env: env,
   });
 }
 
 export async function datasetsSave(dataurl) {
-  return await post("hal9.datasets.save(params.dataurl)", {
+  return await post(config, "hal9.datasets.save(params.dataurl)", {
     dataurl: dataurl,
   })
 }
 
 export async function exporttoGetSaveText(pipelineid, padding, alsoSkip) {
-  return await post("hal9.exportto.getSaveText(params.pipelineid, params.padding, params.alsoSkip)", {
+  return await post(config, "hal9.exportto.getSaveText(params.pipelineid, params.padding, params.alsoSkip)", {
     pipelineid: pipelineid,
     padding: padding,
     alsoSkip: alsoSkip,
@@ -294,50 +311,50 @@ export async function exporttoGetSaveText(pipelineid, padding, alsoSkip) {
 }
 
 export async function exporttoGetHtml(pipelineid) {
-  return await post("hal9.exportto.getHtml(params.pipelineid)", {
+  return await post(config, "hal9.exportto.getHtml(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function exporttoGetHtmlRemote(pipelinepath) {
-  return await post("hal9.exporto.getHtmlRemote(params.pipelinepath)", {
+  return await post(config, "hal9.exporto.getHtmlRemote(params.pipelinepath)", {
     pipelinepath: pipelinepath,
   })
 }
 
 export async function exporttoGetPythonScript(pipelineid) {
-  return await post("hal9.exportto.getPythonScript(params.pipelineid)", {
+  return await post(config, "hal9.exportto.getPythonScript(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function exporttoGetRScript(pipelineid) {
-  return await post("hal9.exportto.getRScript(params.pipelineid)", {
+  return await post(config, "hal9.exportto.getRScript(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function pipelinesCreate(steps) {
-  return await post("hal9.pipelines.create(params.steps)", {
+  return await post(config, "hal9.pipelines.create(params.steps)", {
     steps: steps,
   })
 }
 
 export async function pipelinesUpdate(pipelineid, steps) {
-  return await post("hal9.pipelines.update(params.pipelineid, params.steps)", {
+  return await post(config, "hal9.pipelines.update(params.pipelineid, params.steps)", {
     pipelineid: pipelineid,
     steps: steps,
   })
 }
 
 export async function pipelinesRemove(pipelineid) {
-  return await post("hal9.pipelines.remove(params.pipelineid)", {
+  return await post(config, "hal9.pipelines.remove(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function pipelinesRunStep(pipelineid, sid, context, partial) {
-  return await post("hal9.pipelines.runStep(params.pipelineid, params.sid, params.context, params.partial)", {
+  return await post(config, "hal9.pipelines.runStep(params.pipelineid, params.sid, params.context, params.partial)", {
     pipelineid: pipelineid,
     sid: sid,
     context: context,
@@ -346,7 +363,7 @@ export async function pipelinesRunStep(pipelineid, sid, context, partial) {
 }
 
 export async function pipelinesRun(pipelineid, context, partial, stepstopid) {
-  return await post("hal9.pipelines.run(params.pipelineid, params.context, params.partial, params.stepstopid)", {
+  return await post(config, "hal9.pipelines.run(params.pipelineid, params.context, params.partial, params.stepstopid)", {
     pipelineid: pipelineid,
     context: context,
     partial: partial,
@@ -357,20 +374,20 @@ export async function pipelinesRun(pipelineid, context, partial, stepstopid) {
 }
 
 export async function pipelinesGetError(pipelineid) {
-  return await post("hal9.pipelines.getError(params.pipelineid)", {
+  return await post(config, "hal9.pipelines.getError(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function pipelinesGetParams(pipelineid, sid) {
-  return await post("hal9.pipelines.getParams(params.pipelineid, params.sid)", {
+  return await post(config, "hal9.pipelines.getParams(params.pipelineid, params.sid)", {
     pipelineid: pipelineid,
     sid: sid,
   })
 }
 
 export async function pipelinesSetParams(pipelineid, sid, params) {
-  return await post("hal9.pipelines.setParams(params.pipelineid, params.sid, params.params)", {
+  return await post(config, "hal9.pipelines.setParams(params.pipelineid, params.sid, params.params)", {
     pipelineid: pipelineid,
     sid: sid,
     params: params,
@@ -378,7 +395,7 @@ export async function pipelinesSetParams(pipelineid, sid, params) {
 }
 
 export async function pipelinesMergeParams(pipelineid, sid, params) {
-  return await post("hal9.pipelines.mergeParams(params.pipelineid, params.sid, params.params)", {
+  return await post(config, "hal9.pipelines.mergeParams(params.pipelineid, params.sid, params.params)", {
     pipelineid: pipelineid,
     sid: sid,
     params: params,
@@ -386,34 +403,34 @@ export async function pipelinesMergeParams(pipelineid, sid, params) {
 }
 
 export async function pipelinesGetSteps(pipelineid) {
-  return await post("hal9.pipelines.getSteps(params.pipelineid)", {
+  return await post(config, "hal9.pipelines.getSteps(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function pipelinesUpdateStep(pipelineid, step) {
-  return await post("hal9.pipelines.updateStep(params.pipelineid, params.step)", {
+  return await post(config, "hal9.pipelines.updateStep(params.pipelineid, params.step)", {
     pipelineid: pipelineid,
     step: step,
   })
 }
 
 export async function pipelinesAddStep(pipelineid, step) {
-  return await post("hal9.pipelines.addStep(params.pipelineid, params.step)", {
+  return await post(config, "hal9.pipelines.addStep(params.pipelineid, params.step)", {
     pipelineid: pipelineid,
     step: step,
   })
 }
 
 export async function pipelinesRemoveStep(pipelineid, step) {
-  return await post("hal9.pipelines.removeStep(params.pipelineid, params.step)", {
+  return await post(config, "hal9.pipelines.removeStep(params.pipelineid, params.step)", {
     pipelineid: pipelineid,
     step: step,
   })
 }
 
 export async function pipelinesMoveStep(pipelineid, stepid, change) {
-  return await post("hal9.pipelines.moveStep(params.pipelineid, params.stepid, params.change)", {
+  return await post(config, "hal9.pipelines.moveStep(params.pipelineid, params.stepid, params.change)", {
     pipelineid: pipelineid,
     stepid: stepid,
     change: change,
@@ -421,41 +438,41 @@ export async function pipelinesMoveStep(pipelineid, stepid, change) {
 }
 
 export async function pipelinesGetNested(pipelineid) {
-  return await post("hal9.pipelines.getNested(params.pipelineid)", {
+  return await post(config, "hal9.pipelines.getNested(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function pipelinesGetStep(pipelineid, sid) {
-  return await post("hal9.pipelines.getStep(params.pipelineid, params.sid)", {
+  return await post(config, "hal9.pipelines.getStep(params.pipelineid, params.sid)", {
     pipelineid: pipelineid,
     sid: sid,
   })
 }
 
 export async function pipelinesGetRebindablesForStep(pipelineid, step) {
-  return await post("hal9.pipelines.getRebindablesForStep(params.pipelineid, params.step)", {
+  return await post(config, "hal9.pipelines.getRebindablesForStep(params.pipelineid, params.step)", {
     pipelineid: pipelineid,
     step: step,
   })
 }
 
 export async function pipelinesGetSources(pipelineid, sid) {
-  return await post("hal9.pipelines.getSources(params.pipelineid, params.sid)", {
+  return await post(config, "hal9.pipelines.getSources(params.pipelineid, params.sid)", {
     pipelineid: pipelineid,
     sid: sid,
   })
 }
 
 export async function pipelinesGetStepError(pipelineid, sid) {
-  return await post("hal9.pipelines.getStepError(params.pipelineid, params.sid)", {
+  return await post(config, "hal9.pipelines.getStepError(params.pipelineid, params.sid)", {
     pipelineid: pipelineid,
     sid: sid,
   })
 }
 
 export async function pipelinesSetScript(pipelineid, sid, script) {
-  return await post("hal9.pipelines.setScript(params.pipelineid, params.sid, params.script)", {
+  return await post(config, "hal9.pipelines.setScript(params.pipelineid, params.sid, params.script)", {
     pipelineid: pipelineid,
     sid: sid,
     script: script,
@@ -463,39 +480,39 @@ export async function pipelinesSetScript(pipelineid, sid, script) {
 }
 
 export async function pipelinesGetScript(pipelineid, sid) {
-  return await post("hal9.pipelines.getScript(params.pipelineid, params.sid)", {
+  return await post(config, "hal9.pipelines.getScript(params.pipelineid, params.sid)", {
     pipelineid: pipelineid,
     sid: sid,
   })
 }
 
 export async function pipelinesGetHashable(pipelineid) {
-  return await post("hal9.pipelines.getHashable(params.pipelineid)", {
+  return await post(config, "hal9.pipelines.getHashable(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function pipelinesLoad(pipeline) {
-  return await post("hal9.pipelines.load(params.pipeline)", {
+  return await post(config, "hal9.pipelines.load(params.pipeline)", {
     pipeline: pipeline,
   })
 }
 
 export async function pipelinesGetMaxId(pipelineid) {
-  return await post("hal9.pipelines.getMaxId(params.pipelineid)", {
+  return await post(config, "hal9.pipelines.getMaxId(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function pipelinesGetGlobal(pipelineid, name) {
-  return await post("hal9.pipelines.getGlobal(params.pipelineid, params.name)", {
+  return await post(config, "hal9.pipelines.getGlobal(params.pipelineid, params.name)", {
     pipelineid: pipelineid,
     name: name,
   })
 }
 
 export async function pipelinesSetGlobal(pipelineid, name, data) {
-  return await post("hal9.pipelines.setGlobal(params.pipelineid, params.name, params.data)", {
+  return await post(config, "hal9.pipelines.setGlobal(params.pipelineid, params.name, params.data)", {
     pipelineid: pipelineid,
     name: name,
     data: data,
@@ -503,26 +520,26 @@ export async function pipelinesSetGlobal(pipelineid, name, data) {
 }
 
 export async function pipelinesGetGlobalNames(pipelineid) {
-  return await post("hal9.pipelines.getGlobalNames(params.pipelineid)", {
+  return await post(config, "hal9.pipelines.getGlobalNames(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function pipelinesGetGlobals(pipelineid) {
-  return await post("hal9.pipelines.getGlobals(params.pipelineid)", {
+  return await post(config, "hal9.pipelines.getGlobals(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function pipelinesInvalidateStep(pipelineid, sid) {
-  return await post("hal9.pipelines.invalidateStep(params.pipelineid, params.sid)", {
+  return await post(config, "hal9.pipelines.invalidateStep(params.pipelineid, params.sid)", {
     pipelineid: pipelineid,
     sid: sid,
   })
 }
 
 export async function pipelinesSetMetadataProperty(pipelineid, name, value) {
-  return await post("hal9.pipelines.setMetadataProperty(params.pipelineid, params.name, params.value)", {
+  return await post(config, "hal9.pipelines.setMetadataProperty(params.pipelineid, params.name, params.value)", {
     pipelineid: pipelineid,
     name: name,
     value: value,
@@ -530,13 +547,13 @@ export async function pipelinesSetMetadataProperty(pipelineid, name, value) {
 }
 
 export async function pipelinesGetMetadata(pipelineid) {
-  return await post("hal9.pipelines.getMetadata(params.pipelineid)", {
+  return await post(config, "hal9.pipelines.getMetadata(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function pipelinesSetAppProperty(pipelineid, name, value) {
-  return await post("hal9.pipelines.setAppProperty(params.pipelineid, params.name, params.value)", {
+  return await post(config, "hal9.pipelines.setAppProperty(params.pipelineid, params.name, params.value)", {
     pipelineid: pipelineid,
     name: name,
     value: value,
@@ -544,7 +561,7 @@ export async function pipelinesSetAppProperty(pipelineid, name, value) {
 }
 
 export async function pipelinesGetApp(pipelineid) {
-  return await post("hal9.pipelines.getApp(params.pipelineid)", {
+  return await post(config, "hal9.pipelines.getApp(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
@@ -558,26 +575,26 @@ export async function remoteOutput(result) {
 }
 
 export async function pipelinesAbort(pipelineid) {
-  return await post("hal9.pipelines.abort(params.pipelineid)", {
+  return await post(config, "hal9.pipelines.abort(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function pipelinesIsAborted(pipelineid) {
-  return await post("hal9.pipelines.isAborted(params.pipelineid)", {
+  return await post(config, "hal9.pipelines.isAborted(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function screenshotCapture(output, options = {}) {
-  return await post("hal9.screenshot.capture(params.output, params.options)", {
+  return await post(config, "hal9.screenshot.capture(params.output, params.options)", {
     output: output,
     options: options
   })
 }
 
 export async function screenshotResize(sourceImageData, width, height) {
-  return await post("hal9.screenshot.resize(params.sourceImageData, params.width, params.height)", {
+  return await post(config, "hal9.screenshot.resize(params.sourceImageData, params.width, params.height)", {
     sourceImageData: sourceImageData,
     width: width,
     height: height
@@ -589,58 +606,58 @@ export function htmloutputSetIframeStyle(name, value) {
 }
 
 export async function htmloutputGetScrollWidth() {
-  return await post("hal9.htmloutput.getScrollWidth()", {
+  return await post(config, "hal9.htmloutput.getScrollWidth()", {
   })
 }
 
 export async function htmloutputGetScrollLeft() {
-  return await post("hal9.htmloutput.getScrollLeft()", {
+  return await post(config, "hal9.htmloutput.getScrollLeft()", {
   })
 }
 
 export async function htmloutputSetScrollLeft(pixels) {
-  return await post("hal9.htmloutput.setScrollLeft(params.pixels)", {
+  return await post(config, "hal9.htmloutput.setScrollLeft(params.pixels)", {
     pixels: pixels
   })
 }
 
 export async function htmloutputGetScrollHeight() {
-  return await post("hal9.htmloutput.getScrollHeight()", {
+  return await post(config, "hal9.htmloutput.getScrollHeight()", {
   })
 }
 
 export async function htmloutputGetScrollTop() {
-  return await post("hal9.htmloutput.getScrollTop()", {
+  return await post(config, "hal9.htmloutput.getScrollTop()", {
   })
 }
 
 export async function htmloutputSetScrollTop(pixels) {
-  return await post("hal9.htmloutput.setScrollTop(params.pixels)", {
+  return await post(config, "hal9.htmloutput.setScrollTop(params.pixels)", {
     pixels: pixels
   })
 }
 
 export async function layoutRegenerateForDocumentView(pipelineid, removeOldLayout) {
-  return await post("hal9.layout.regenerateForDocumentView(params.pipelineid, params.removeOldLayout)", {
+  return await post(config, "hal9.layout.regenerateForDocumentView(params.pipelineid, params.removeOldLayout)", {
     pipelineid: pipelineid,
     removeOldLayout: removeOldLayout,
   })
 }
 
 export async function layoutStoreAppStepLayouts(pipelineid) {
-  return await post("hal9.layout.storeAppStepLayouts(params.pipelineid)", {
+  return await post(config, "hal9.layout.storeAppStepLayouts(params.pipelineid)", {
     pipelineid: pipelineid,
   })
 }
 
 export async function layoutApplyStepLayoutsToApp(stepLayouts) {
-  return await post("hal9.layout.applyStepLayoutsToApp(params.stepLayouts)", {
+  return await post(config, "hal9.layout.applyStepLayoutsToApp(params.stepLayouts)", {
     stepLayouts: stepLayouts,
   })
 }
 
 export async function layoutSetHal9StepOverflowProperty(overflowValue) {
-  return await post("hal9.layout.setHal9StepOverflowProperty(params.overflowValue)", {
+  return await post(config, "hal9.layout.setHal9StepOverflowProperty(params.overflowValue)", {
     overflowValue: overflowValue,
   })
 }
