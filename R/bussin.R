@@ -90,3 +90,7 @@ process_request <- function(req) {
     }) |>
         setNames(uids)
 }
+
+designer_html <- function() {
+  paste(readLines(system.file("designer.html", package = "bussin")), collapse = '\n')
+}
