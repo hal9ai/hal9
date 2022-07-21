@@ -121,7 +121,7 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
         if (output) return output;
 
         var container = document.createElement('div');
-        container.className = 'hal9-step-' + step.id;
+        container.className = 'hal9-step hal9-step-' + step.id;
         container.style.width = '100%';
 
         if (langInfo.height) {

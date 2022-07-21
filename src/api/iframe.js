@@ -31,6 +31,7 @@ export const init = async (options, hal9wnd) => {
       <head>
         <base target="_blank">
         <script src='${options.api}'></script>
+        <style>${ options.css ?? ''}</style>
         <script>
           // mock localstorage for iframes to avoid errors
           const localStorageMock = (() => {

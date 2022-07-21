@@ -12,8 +12,15 @@ HTMLWidgets.widget({
     return {
 
       renderValue: function(x) {
+        const css = `
+          #output {
+            display: flex;
+            flex-direction: column;
+          }
+        `;
+
         const render = function() {
-          hal9.init({ iframe: true, html: el, api: x.library }, {}).then(function(hal9) {
+          hal9.init({ iframe: true, html: el, api: x.library, css: css }, {}).then(function(hal9) {
             hal9.load(x.pipeline_json).then(function(pid) {
               hal9.run(pid, { html: 'output', shadow: false });
             });
