@@ -151,7 +151,7 @@ export const init = async (options, hal9wnd) => {
   html.appendChild(iframe);
   await waitLoad;
 
-  if (options.editable) registerDesignerLoader(html, iframe, secret);
+  if (options.editable) registerDesignerLoader(html, iframe, secret, options.pipeline);
 
   config = {
     iframe: iframe,

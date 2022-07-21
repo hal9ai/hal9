@@ -12,7 +12,7 @@ export const getDesignerLoaderHtml = (secret) => {
   `
 }
 
-export const registerDesignerLoader = (html, iframe, secret) => {
+export const registerDesignerLoader = (html, iframe, secret, pipeline) => {
   const onResult = function(event) {
     if (!event.data || event.data.secret != secret || event.data.id != 'designer') return;
 
@@ -25,13 +25,7 @@ export const registerDesignerLoader = (html, iframe, secret) => {
     `
 
     window.hal9 = {
-      pipeline: {
-        "steps": [],
-        "params": {},
-        "outputs": {},
-        "scripts": {},
-        "version": "0.0.1"
-      }
+      pipeline: pipeline
     }
 
     const script = document.createElement('script');
