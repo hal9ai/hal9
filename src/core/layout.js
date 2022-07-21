@@ -3,7 +3,6 @@ import * as languages from './interpreters/languages'
 import * as pipelines from './pipelines';
 import * as scripts from './scripts';
 import * as snippets from './snippets';
-import { ensureDesignerLoader } from './designer';
 
 const getForDocumentView = (pipeline) => {
   return pipeline.layout;
@@ -119,8 +118,6 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
         return sandboxIfNeeded(html);
       }
       else if (isFullView && hasHtml) {
-        if (context.editable) ensureDesignerLoader(html);
-
         const output = html.querySelector(':scope .hal9-step-' + step.id);
         if (output) return output;
 

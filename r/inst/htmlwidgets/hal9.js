@@ -19,9 +19,9 @@ HTMLWidgets.widget({
         `;
 
         const render = function() {
-          hal9.init({ iframe: true, html: el, api: x.library, css: css }, {}).then(function(hal9) {
+          hal9.init({ iframe: true, html: el, api: x.library, css: css, editable: true  }, {}).then(function(hal9) {
             hal9.load(x.pipeline_json).then(function(pid) {
-              hal9.run(pid, { html: 'output', shadow: false, editable: true });
+              hal9.run(pid, { html: 'output', shadow: false });
             });
           });
         }

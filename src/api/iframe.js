@@ -1,4 +1,5 @@
 import * as dataframe from '../core/utils/dataframe';
+import { getDesignerLoaderHtml, registerDesignerLoader } from './designer';
 
 var config = {};
 var fnCallbacks = [];
@@ -134,6 +135,7 @@ export const init = async (options, hal9wnd) => {
         </style>
       </head>
       <body>
+        ${ options.editable ? getDesignerLoaderHtml(secret) : '' }
         <div id="output" style="position: relative; width: 100%; height: 100%; overflow: auto;"></div>
       </body>
     </html>
@@ -148,6 +150,8 @@ export const init = async (options, hal9wnd) => {
 
   html.appendChild(iframe);
   await waitLoad;
+
+  if (options.editable) registerDesignerLoader(html, iframe, secret);
 
   config = {
     iframe: iframe,
