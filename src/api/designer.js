@@ -29,7 +29,8 @@ export const registerDesignerLoader = (html, iframe, secret, pipeline) => {
     }
 
     const script = document.createElement('script');
-    script.src = 'https://hal9.com/hal9.notebook.js';
+    // TODO: Fix with prod or make configurable
+    script.src = 'https://devel.hal9.com/hal9.notebook.js';
     document.head.appendChild(script);
   };
 
