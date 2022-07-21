@@ -18,7 +18,7 @@ h9_create <- function(
   height = NULL,
   environment = 'prod',
   iframe = TRUE,
-  version = "0.2.73",
+  version = "0.2.74",
   ...) {
   elementId <- list(...)$elementId
 

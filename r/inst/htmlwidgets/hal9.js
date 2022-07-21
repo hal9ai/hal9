@@ -4,7 +4,6 @@ HTMLWidgets.widget({
   factory: function(el, width, height) {
     el.parentElement.style.height = "100%";
     el.parentElement.style.maxHeight = "100%";
-    el.style.padding = '4px';
     el.style.overflow = 'hidden';
 
     if (height === 0) el.style.height = '380px';
@@ -22,7 +21,7 @@ HTMLWidgets.widget({
         const render = function() {
           hal9.init({ iframe: true, html: el, api: x.library, css: css }, {}).then(function(hal9) {
             hal9.load(x.pipeline_json).then(function(pid) {
-              hal9.run(pid, { html: 'output', shadow: false });
+              hal9.run(pid, { html: 'output', shadow: false, editable: true });
             });
           });
         }

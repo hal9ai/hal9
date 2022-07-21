@@ -1,8 +1,9 @@
-import * as store from './pipelinestore.js';
+import * as store from './pipelinestore';
 import * as languages from './interpreters/languages'
-import * as pipelines from './pipelines.js';
-import * as scripts from './scripts.js';
+import * as pipelines from './pipelines';
+import * as scripts from './scripts';
 import * as snippets from './snippets';
+import { ensureDesignerLoader } from './designer';
 
 const getForDocumentView = (pipeline) => {
   return pipeline.layout;
@@ -10,6 +11,7 @@ const getForDocumentView = (pipeline) => {
 
 const generateForDocumentView = (pipeline) => {
   var html = ''
+
   for (let step of pipeline.steps) {
     const langInfo = languages.getLanguageInfo(step.language);
 
@@ -117,6 +119,8 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
         return sandboxIfNeeded(html);
       }
       else if (isFullView && hasHtml) {
+        if (context.editable) ensureDesignerLoader(html);
+
         const output = html.querySelector(':scope .hal9-step-' + step.id);
         if (output) return output;
 
@@ -140,7 +144,7 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
         if (output) return output;
 
         var container = document.createElement('div');
-        container.className = 'hal9-step-' + step.id;
+        container.className = 'hal9-step hal9-step-' + step.id;
         container.style.width = '100%';
         container.style.height = '100%';
 
