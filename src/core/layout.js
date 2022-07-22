@@ -111,18 +111,23 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
       const langInfo = languages.getLanguageInfo(step.language);
       if (langInfo.html) hasHtml = true;
 
+      const output = html.querySelector(':scope .hal9-step-' + step.id);
+      const interactiveClass = header.interactive ? ' hal9-interactive' : '';
+      if (isFullView && output && !output.classList.contains('hal9-interactive')) {
+        output.innerHTML = '';
+      }
+
       if (isFullView && hasLayout) {
-        const output = html.querySelector(':scope .hal9-step-' + step.id);
         if (output) return output;
 
         return sandboxIfNeeded(html);
       }
       else if (isFullView && hasHtml) {
-        const output = html.querySelector(':scope .hal9-step-' + step.id);
         if (output) return output;
 
         var container = document.createElement('div');
-        container.className = 'hal9-step hal9-step-' + step.id;
+
+        container.className = 'hal9-step hal9-step-' + step.id + interactiveClass;
         container.style.width = '100%';
 
         if (langInfo.height) {
@@ -137,11 +142,10 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
         return container;
       }
       else if (stepstopid == step.id) {
-        const output = html.querySelector(':scope .hal9-step-' + step.id);
         if (output) return output;
 
         var container = document.createElement('div');
-        container.className = 'hal9-step hal9-step-' + step.id;
+        container.className = 'hal9-step hal9-step-' + step.id + interactiveClass;
         container.style.width = '100%';
         container.style.height = '100%';
 
