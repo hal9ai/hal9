@@ -32,9 +32,24 @@ register_node <- function(obj, uid) {
 bs_dropdown <- function(uid, values, on_update = NULL) {
     values <- maybe_convert_to_fn(values)
     on_update <- maybe_convert_to_fn(on_update)
-    node <- Node$new(uid, "dropdown", values, list(on_update = on_update))
+    Node$new(uid, "dropdown", values, list(on_update = on_update))
     invisible(NULL)
 }
+
+#' @export 
+bs_textbox <- function(uid, default, on_update = NULL) {
+    default <- maybe_convert_to_fn(default)
+    on_update <- maybe_convert_to_fn(on_update)
+    Node$new(uid, "textbox", default, list(on_update=on_update))
+}
+#' @export
+bs_select <- function(uid, values, on_update = NULL) {
+    values <- maybe_convert_to_fn(values)
+    on_update <- maybe_convert_to_fn(on_update)
+    Node$new(uid, "dropdown", values, list(on_update = on_update))
+    invisible(NULL)
+}
+
 
 #' @export 
 bs_code <- function(uid, code) {
