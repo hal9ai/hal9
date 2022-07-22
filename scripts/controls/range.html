@@ -1,18 +1,23 @@
 <!--
   input: []
   params:
+    - name: value
+      label: Default Value
+      value:
+        - control: number
+          value: 1
     - name: min
-      label: Min Range Value
+      label: Min Value
       value:
         - control: number
           value: 1
     - name: max
-      label: Max Range Value
+      label: Max Value
       value:
         - control: number
           value: 10
     - name: step
-      label: Step Range Value
+      label: Step Increment
       value:
         - control: number
           value: 1
@@ -27,18 +32,18 @@
 <div class="sliderContainer">
   <template>
     <section>
-      <div style= "height:30px"></div>
+      <div style= "height: 30px"></div>
         <b-field>
-            <b-slider tooltip-always :min="parameter" :max="maxparam" :step="steparam" :value="value"></b-slider>
+            <b-slider tooltip-always :min="parameter" :max="maxparam" :step="steparam" v-model="value"></b-slider>
         </b-field>
     </section>
   </template>
 </div>
 
 <script>
+  var slider = value;
   var state = hal9.getState();
   state = state ? state : {};
-  let slider = 0;
   if (state.slider) {
     slider = state.slider;
     value = slider;
@@ -47,10 +52,17 @@
   var app = new Vue({
     el: html.getElementsByClassName('sliderContainer')[0],
     data: {
-      value: slider,
-      parameter: parseFloat(min),
-      maxparam: parseFloat(max),
-      steparam: parseFloat(step)
+      value: parseInt(slider),
+      parameter: parseInt(min),
+      maxparam: parseInt(max),
+      steparam: parseInt(step)
+    },
+    watch: {
+      value: function(e) {
+        state.slider = e;
+        hal9.setState(state);
+        hal9.invalidate();
+      }
     }
   })
 
@@ -59,13 +71,6 @@
 
   let sliderNumber = document.getElementsByClassName('tooltip-content')[0];
 
-  sliderNumber.addEventListener('DOMCharacterDataModified', function (event) { 
-    state.slider = event.newValue;
-    hal9.setState(state);
-    hal9.invalidate();
-    }, false);
-
   let minMaxStep = document.getElementsByClassName('b-slider-thumb')[0]
   minMaxStep.setAttribute('aria-valuemin', 3);
-  console.log(minMaxStep)
 </script>
