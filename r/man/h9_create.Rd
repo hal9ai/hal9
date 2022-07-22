@@ -5,10 +5,11 @@
 \title{Hal9 Create}
 \usage{
 h9_create(
-  width = "100\%",
-  height = "100\%",
-  environment = "cloud",
+  width = NULL,
+  height = NULL,
+  environment = "prod",
   iframe = TRUE,
+  version = "0.2.77",
   ...
 )
 }
@@ -22,6 +23,8 @@ development and 'local' for local developer environment.}
 
 \item{iframe}{Should the application run inside an iframe to protect styles and
 resources from the parent? Defaults to 'TRUE'.}
+
+\item{version}{The version of the runtime to use.}
 
 \item{...}{Additional parameters}
 }

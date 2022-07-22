@@ -4,10 +4,20 @@
 \alias{h9_slider}
 \title{Slider}
 \usage{
-h9_slider(h, min = NULL, max = NULL, step = NULL, rebind = NULL, ...)
+h9_slider(
+  h,
+  value = NULL,
+  min = NULL,
+  max = NULL,
+  step = NULL,
+  rebind = NULL,
+  ...
+)
 }
 \arguments{
 \item{h}{A h9 object created by h9_create.}
+
+\item{value}{Additional step parameter.}
 
 \item{min}{Additional step parameter.}
 

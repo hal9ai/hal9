@@ -28,6 +28,7 @@ h9_dropdown <- function(h, values  = NULL, rebind = NULL, ...) {
 #' Embed an slider element
 #'
 #' @param h A h9 object created by h9_create.
+#' @param value Additional step parameter.
 #' @param min Additional step parameter.
 #' @param max Additional step parameter.
 #' @param step Additional step parameter.
@@ -37,7 +38,7 @@ h9_dropdown <- function(h, values  = NULL, rebind = NULL, ...) {
 #' @return A list with the pipeline specification.
 #' @export
 #'
-h9_slider <- function(h, min  = NULL, max  = NULL, step  = NULL, rebind = NULL, ...) {
+h9_slider <- function(h, value  = NULL, min  = NULL, max  = NULL, step  = NULL, rebind = NULL, ...) {
 
   args <- as.list(match.call())
   no_rebinds <- which(names(args) != "rebind")
