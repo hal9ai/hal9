@@ -31,6 +31,9 @@ export const create = (pipelineid, sid, context, params, input) => {
         pipelines.invalidateStep(pipelineid, sid);
         context.invalidateSteps();
       }
+      else {
+        pipelines.run(pipelineid, context);
+      }
     },
     // Notify when invalidation triggers
     onInvalidate: function(callback) {
