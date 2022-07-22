@@ -429,6 +429,7 @@ const skipStep = (pipeline, step) => {
 
 export const run = async (pipelineid /*: pipeline */, context /* context */, partial, stepstopid /* stepid */) /*: void */ => {
   debugIf('run');
+  if (!partial) partial = function() {}
 
   var pipeline = store.get(pipelineid);
   pipeline.aborted = undefined;
