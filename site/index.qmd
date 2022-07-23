@@ -52,7 +52,7 @@ h9.create()
 
 :::
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, eval = FALSE}
 #| echo: false
 
 library(hal9)
