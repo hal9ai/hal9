@@ -1,22 +1,78 @@
 ---
-title: "hal9: Interactive Data Apps without Web Dev"
+title: "Interactive Data Apps without Web Dev"
 ---
 
-Hal9 helps you build web applications with not web development background to build rich web applications from Python and R. This project is under development in [Hal9's GitHub repo](https://github.com/hal9ai/hal9ai).
-
-## Easy to Use
-
-::: {.panel-tabset}
-
-## R
+The `hal9` package provides a code-first WYSIWYG application [designer](#designer) and a set of application [components](#components) to build browser-based data applications. You can then publish these applications as static HTML files, or perform complex server-side operations in [code](#code) with Python and R.
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(python.reticulate = FALSE)
 ```
 
+## Installation
+
+This package is under development and can only be installed from GitHub. The R package is close to being complete while development for the Python package is about to start.
+
+::: {.panel-tabset}
+
+## R
+
 ```{r, eval = FALSE}
 devtools::install_github("hal9ai/hal9ai", subdir = "r")
 ```
+
+## Python
+
+```{python, eval = FALSE}
+!pip3 install --upgrade --force-reinstall git+https://github.com/hal9ai/hal9ai.git#subdirectory=python
+```
+
+:::
+
+## Designer
+
+The app designer allows you to compose data apps by dragging and customizing controls (dropdowns, buttons, sliders) and outputs (tables, charts, etc). You can launch the designer as follows.
+
+::: {.panel-tabset}
+
+## R
+
+```{r, eval = FALSE}
+library(hal9)
+
+h9_create()
+```
+
+## Python
+
+```{python, eval = FALSE}
+import hal9 as h9
+
+h9.create()
+```
+
+:::
+
+```{r, echo = FALSE}
+#| echo: false
+
+library(hal9)
+
+h9_create(environment = "devel")
+```
+
+The designer is code-first, meaning, you can then export the data app definition by exporting the application from the "export" command. You can then check-in this code into source control to track and compare changes.
+
+## Components
+
+The designer generates code that defines controls (dropdowns, sliders, textboxes, etc.), visualizations (maps, tables, charts) and transformations (filters, sampling, add columns). You don't need to manually write this code, but you can if you choose to.
+
+The next two examples make use of controls, visualizations, and transforamtions that showcase [filtering](#filtering) and [sampling](#sampling) directly in your browser.
+
+### Filtering
+
+::: {.panel-tabset}
+
+## R
 
 ```{r, eval = FALSE}
 library(hal9)
@@ -29,10 +85,6 @@ h9_create() |>
 ```
 
 ## Python
-
-```{python, eval = FALSE}
-!pip3 install --upgrade --force-reinstall git+https://github.com/hal9ai/hal9ai.git#subdirectory=python
-```
 
 ```{python, eval = FALSE}
 import hal9 as h9
@@ -56,7 +108,7 @@ h9_create(environment = "devel") |>
   h9_scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
 ```
 
-## Interactive
+### Sampling
 
 ::: {.panel-tabset}
 
@@ -74,13 +126,14 @@ h9_create() |>
 
 ```{python, eval = FALSE}
 h9.create()
-  .load(dataset = iris)
-  .slider(value = "70", max = "100")
-  .sample(rebind = { samplesize = "slider" })
+  .load(dataset = iris) |>
+  .slider(value = "70", max = "100") |>
+  .sample(rebind = { samplesize = "slider" }) |>
   .scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
 ```
 
 :::
+
 
 ```{r}
 #| echo: false
@@ -92,5 +145,64 @@ h9_create(environment = "devel") |>
   h9_scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
 ```
 
+## Code
 
+We are adding support to perform complex Python and R based operations with server-side frameworks like [Bussin](), [Shiny]() and [Streamlit]().
+
+::: {.panel-tabset}
+
+## Bussin
+
+```{r, eval = FALSE}
+# client.R
+library(hal9)
+h9_create() |>
+  h9_textbox(name = "contents") |>
+  h9_html(name = "message")
+```
+
+```{r, eval = FALSE}
+# server.R
+library(bussin)
+
+bs_textbox(on_update = function(value) {
+  bs_set("message", paste0("<b>", bs_get("contents"), "</b>"))
+})
+```
+
+```{r, eval = FALSE}
+library(bussin)
+bs_run("client.R", "server.R")
+```
+
+## Streamlit
+
+```{python, eval = FALSE}
+import streamlit as st
+
+h9.create()
+  .dropdown()
+  .streamlit()
+```
+
+## Shiny
+
+```{r, eval = FALSE}
+# client.R
+library(shiny)
+```
+
+```{r, eval = FALSE}
+# server.R
+library(shiny)
+```
+
+```{r, eval = FALSE}
+library(shiny)
+run("client.R", "server.R")
+```
+
+:::
+
+Alternatevely, we have support for R, Python, Flask and Plumber in our cloud offering. [Contact us](info@hal9.ai) to help you get onboarded.
 
