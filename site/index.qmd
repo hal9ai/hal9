@@ -66,9 +66,7 @@ The designer is code-first, meaning, you can then export the data app definition
 
 The designer generates code that defines controls (dropdowns, sliders, textboxes, etc.), visualizations (maps, tables, charts) and transformations (filters, sampling, add columns). You don't need to manually write this code, but you can if you choose to.
 
-The next two examples make use of controls, visualizations, and transforamtions that showcase [filtering](#filtering) and [sampling](#sampling) directly in your browser.
-
-### Filtering
+The following examples showcases an application filtering the iris dataset with a dropdown and a custom filter expression.
 
 ::: {.panel-tabset}
 
@@ -108,7 +106,7 @@ h9_create(environment = "devel") |>
   h9_scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
 ```
 
-### Sampling
+This second example makes use of the `rebind` parameter to bind controls to specific properties in subsequent components.
 
 ::: {.panel-tabset}
 
@@ -147,7 +145,7 @@ h9_create(environment = "devel") |>
 
 ## Code
 
-We are adding support to perform complex Python and R based operations with server-side frameworks like [Bussin](), [Shiny]() and [Streamlit]().
+We are adding support to perform complex Python and R based operations with server-side frameworks like [Bussin](https://bussin.ai), [Shiny](https://shiny.rstudio.com/) and [Streamlit](https://streamlit.io/).
 
 ::: {.panel-tabset}
 
