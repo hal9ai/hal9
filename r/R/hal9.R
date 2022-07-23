@@ -9,6 +9,8 @@
 #' @param iframe Should the application run inside an iframe to protect styles and
 #'   resources from the parent? Defaults to 'TRUE'.
 #' @param version The version of the runtime to use.
+#' @param mode Should the application be run or designed? Valid values "run" or
+#'   "design", defaults to "run" unless the application is empty.
 #' @param ... Additional parameters
 #'
 #' @export
@@ -18,7 +20,8 @@ h9_create <- function(
   height = NULL,
   environment = 'prod',
   iframe = TRUE,
-  version = "0.2.77",
+  version = "0.2.78",
+  mode = c("run", "design"),
   ...) {
   elementId <- list(...)$elementId
 
@@ -40,12 +43,14 @@ h9_create <- function(
   )
 
   # forward options using x
+  default_mode <- ifelse(identical(length(list()), 0L), "design", "run")
   x = list(
     pipeline = pipeline,
     pipeline_json = jsonlite::toJSON(pipeline, null = "list", auto_unbox = TRUE),
     library = library[[environment]],
     environment = environment,
-    iframe = iframe
+    iframe = iframe,
+    mode = ifelse(identical(mode, c("run", "design")), default_mode, mode)
   )
 
   # create widget

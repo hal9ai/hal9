@@ -12,26 +12,30 @@ export const getDesignerLoaderHtml = (secret) => {
   `
 }
 
+export const launchDesigner = (html, pipeline) => {
+  html.innerHTML = `
+    <div style='width: 100%; padding: 6px; height: 100%'>
+      <div id='app'></div>
+    </div>
+  `
+
+  window.hal9 = {
+    pipeline: pipeline
+  }
+
+  const script = document.createElement('script');
+  // TODO: Fix with prod or make configurable
+  script.src = 'https://devel.hal9.com/hal9.notebook.js';
+  document.head.appendChild(script);
+}
+
 export const registerDesignerLoader = (html, iframe, secret, pipeline) => {
   const onResult = function(event) {
     if (!event.data || event.data.secret != secret || event.data.id != 'designer') return;
 
     iframe.remove();
 
-    html.innerHTML = `
-      <div style='width: 100%; padding: 6px; height: 100%'>
-        <div id='app'></div>
-      </div>
-    `
 
-    window.hal9 = {
-      pipeline: pipeline
-    }
-
-    const script = document.createElement('script');
-    // TODO: Fix with prod or make configurable
-    script.src = 'https://devel.hal9.com/hal9.notebook.js';
-    document.head.appendChild(script);
   };
 
   window.addEventListener('message', onResult);

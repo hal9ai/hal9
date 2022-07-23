@@ -9,16 +9,23 @@ import * as stepapi from '../core/api';
 import * as dataframe from '../core/utils/dataframe';
 
 import components from '../../scripts/components.json';
+import { launchDesigner } from './designer';
 
 import clone from '../core/utils/clone';
 import functions from '../core/utils/functions';
 
 var api = native;
-function init(options, hal9wnd) {
+async function init(options, hal9wnd) {
   hal9wnd = hal9wnd ? hal9wnd : window.hal9;
+
+  if (options.mode == 'design') {
+    launchDesigner(options.html, options.pipeline)
+    return;
+  }
+
   if (options.iframe) {
     api = iframe;
-    return iframe.init(options, hal9wnd);
+    return await iframe.init(options, hal9wnd);
   }
   else {
     api = native;
