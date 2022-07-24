@@ -4,5 +4,4 @@ node_modules/
 thumbs.db
 .idea/
 temp/
-hal9tar/
-.Rproj.user
+site/docs
