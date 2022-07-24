@@ -1,6 +1,0 @@
-/**
-  input:
-    - clipboard
-**/
-
-data = clipboard
