@@ -43,14 +43,13 @@ h9_create <- function(
   )
 
   # forward options using x
-  default_mode <- ifelse(identical(length(list()), 0L), "design", "run")
   x = list(
     pipeline = pipeline,
     pipeline_json = jsonlite::toJSON(pipeline, null = "list", auto_unbox = TRUE),
     library = library[[environment]],
     environment = environment,
     iframe = iframe,
-    mode = ifelse(identical(mode, c("run", "design")), default_mode, mode)
+    mode = ifelse(identical(mode, c("run", "design")), "default", mode)
   )
 
   # create widget

@@ -18,6 +18,10 @@ HTMLWidgets.widget({
           }
         `;
 
+        if (x.mode == 'default') {
+          x.mode = x.pipeline_json.steps.length > 0 ? 'run' : 'design';
+        }
+
         const render = function() {
           hal9.init({
             iframe: true,
