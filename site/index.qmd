@@ -38,7 +38,6 @@ The app designer allows you to compose data apps by dragging and customizing con
 
 ```{r, eval = FALSE}
 library(hal9)
-
 h9_create()
 ```
 
@@ -46,13 +45,12 @@ h9_create()
 
 ```{python, eval = FALSE}
 import hal9 as h9
-
 h9.create()
 ```
 
 :::
 
-```{r, echo = FALSE, eval = FALSE}
+```{r, echo = FALSE}
 #| echo: false
 
 library(hal9)
