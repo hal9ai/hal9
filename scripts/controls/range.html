@@ -52,10 +52,10 @@
   var app = new Vue({
     el: html.getElementsByClassName('sliderContainer')[0],
     data: {
-      value: parseInt(slider),
-      parameter: parseInt(min),
-      maxparam: parseInt(max),
-      steparam: parseInt(step)
+      value: parseFloat(slider),
+      parameter: parseFloat(min),
+      maxparam: parseFloat(max),
+      steparam: parseFloat(step)
     },
     watch: {
       value: function(e) {
