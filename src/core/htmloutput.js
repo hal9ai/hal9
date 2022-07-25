@@ -3,7 +3,7 @@ const getOutputDiv = () => {
 }
 
 export const getScrollWidth = () => {
-  return getOutputDiv().getBoundingClientRect().width;
+  return getOutputDiv().scrollWidth;
 }
 
 export const getScrollLeft = () => {
@@ -15,7 +15,7 @@ export const setScrollLeft = (pixels) => {
 }
 
 export const getScrollHeight = () => {
-  return getOutputDiv().getBoundingClientRect().height;
+  return getOutputDiv().scrollHeight;
 }
 
 export const getScrollTop = () => {
