@@ -1,3 +1,23 @@
+<!--
+  input: []
+  params:
+    - name: dataType
+      label: 'Upload your data as '
+      value:
+        - control: select
+          value: base
+          values:
+            - name: base
+              label: Base64
+            - name: txt
+              label: Text
+            - name: arrbuff
+              label: Array Buffer
+            - name: binstring
+              label: Binary String
+  output: [  html,inputFile ]
+-->
+
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
@@ -18,25 +38,6 @@
 
 
 <script>
-/**
-  input: []
-  params:
-    - name: dataType
-      label: 'Upload your data as '
-      value:
-        - control: select
-          value: base
-          values:
-            - name: base
-              label: Base64
-            - name: txt
-              label: Text
-            - name: arrbuff
-              label: Array Buffer
-            - name: binstring
-              label: Binary String
-  output: [  html,inputFile ]
-**/
   var state = hal9.getState();
   state = state ? state : {};
   var inputFile = '';
