@@ -1066,6 +1066,17 @@
       "build": "true"
     },
     {
+      "name": "rawhtml",
+      "function": "",
+      "source": "controls/rawhtml.js",
+      "language": "javascript",
+      "label": "HTML",
+      "description": "Enables to render arbitrary HTML from data",
+      "icon": "fa-brands fa-html5",
+      "dragdrop": true,
+      "build": "false"
+    },
+    {
       "name": "slider",
       "function": "slider",
       "source": "controls/range.html",

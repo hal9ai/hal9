@@ -132,6 +132,7 @@ import inputfilectrltxt from '../../scripts/controls/inputfile.html';
 import messagectrltxt from '../../scripts/controls/message.html';
 import numberctrltxt from '../../scripts/controls/number.html';
 import rangectrltxt from '../../scripts/controls/range.html';
+import rawhtmltxt from '../../scripts/controls/rawhtml.js';
 import spreadsheetctrltxt from '../../scripts/controls/spreadsheet.html';
 import textareactrltxt from '../../scripts/controls/textarea.js';
 import textboxctrltxt from '../../scripts/controls/textbox.html';
@@ -276,6 +277,7 @@ const scripts = {
   fileinput: { script: inputfilectrltxt, language: 'html' },
   message: { script: messagectrltxt, language: 'html' },
   numberinput: { script: numberctrltxt, language: 'html' },
+  rawhtml: { script: rawhtmltxt, language: 'javascript' },
   slider: { script: rangectrltxt, language: 'html' },
   sheet: { script: spreadsheetctrltxt, language: 'html' },
   textarea: { script: textareactrltxt, language: 'javascript' },
