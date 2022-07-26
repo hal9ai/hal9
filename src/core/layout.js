@@ -177,7 +177,7 @@ export const storeAppStepLayouts = (pipelineid) => {
     let stepLayout = {};
     for (const className of hal9Step.classList) {
       if (className.startsWith('hal9-step-')) {
-        stepLayout.stepId = className.slice(10);
+        stepLayout.stepId = parseInt(className.slice(10));
         break;
       }
     }
