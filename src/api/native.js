@@ -195,6 +195,10 @@ export async function pipelinesGetSteps(pipelineid) {
   return await pipelines.getSteps(pipelineid);
 }
 
+export async function pipelinesGetStepsWithHeaders(pipelineid) {
+  return await pipelines.getStepsWithHeaders(pipelineid);
+}
+
 export async function pipelinesUpdateStep(pipelineid, step) {
   return await pipelines.updateStep(pipelineid, step);
 }

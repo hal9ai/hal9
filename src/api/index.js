@@ -122,6 +122,10 @@ async function pipelinesGetSteps(pipelineid) {
   return await api.pipelinesGetSteps(pipelineid);
 }
 
+async function pipelinesGetStepsWithHeaders(pipelineid) {
+  return await api.pipelinesGetStepsWithHeaders(pipelineid);
+}
+
 async function pipelinesUpdateStep(pipelineid, step) {
   return await api.pipelinesUpdateStep(pipelineid, step);
 }
@@ -323,6 +327,7 @@ export default {
     setParams: pipelinesSetParams,
     mergeParams: pipelinesMergeParams,
     getSteps: pipelinesGetSteps,
+    getStepsWithHeaders: pipelinesGetStepsWithHeaders,
     updateStep: pipelinesUpdateStep,
     addStep: pipelinesAddStep,
     removeStep: pipelinesRemoveStep,

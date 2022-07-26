@@ -415,6 +415,12 @@ export async function pipelinesGetSteps(pipelineid) {
   })
 }
 
+export async function pipelinesGetStepsWithHeaders(pipelineid) {
+  return await post(config, "hal9.pipelines.getStepsWithHeaders(params.pipelineid)", {
+    pipelineid: pipelineid,
+  })
+}
+
 export async function pipelinesUpdateStep(pipelineid, step) {
   return await post(config, "hal9.pipelines.updateStep(params.pipelineid, params.step)", {
     pipelineid: pipelineid,

@@ -546,9 +546,24 @@ const getFields = (pipelineid /*: pipelineid */) => {
   });
 }
 
+const getStepHeader = (pipeline, step) => {
+  return snippets.parseHeader(scripts.scriptFromStep(pipeline, step).script);
+}
+
 export const getSteps = (pipelineid /*: pipelineid */) /*: steps */ => {
   var pipeline = store.get(pipelineid);
   return clone(pipeline.steps);
+}
+
+export const getStepsWithHeaders = (pipelineid /*: pipelineid */) /*: steps */ => {
+  var pipeline = store.get(pipelineid);
+  var steps = clone(pipeline.steps);
+
+  steps.map(step => {
+    step.header = getStepHeader(pipeline, step);
+  })
+
+  return steps;
 }
 
 const stepIdxFromId = (pipeline /*: pipeline */, sid /*: stepid */) => {
