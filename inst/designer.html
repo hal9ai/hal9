@@ -19,16 +19,25 @@
           manifest: server
         };
       }
+
+      function addOutputsToServer(server, htmlsteps) {
+        htmlsteps.map(function(htmlstep) {
+          server.manifest[htmlstep] = {}
+        })
+      }
     </script>
     <script>
       var state = {};
+
       function onStart() {
       }
 
-      async function onEnd(result) {
+      async function onEnd(result, htmlsteps) {
         Object.assign(state, result);
 
         const body = convertToServer(state);
+        addOutputsToServer(body, htmlsteps);
+
         console.log('Sending: \n' + JSON.stringify(body, null, 2));
 
         const resp = await fetch('/eval:object', {
