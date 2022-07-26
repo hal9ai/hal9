@@ -7,7 +7,7 @@
 
       function convertToServer(state) {
         var server = clone(state);
-        Object.keys(server).map(function(key, index) {
+        Object.keys(server).map(function(key) {
           server[key] = {
             on_update: [
               server[key]
@@ -40,7 +40,7 @@
 
         console.log('Sending: \n' + JSON.stringify(body, null, 2));
 
-        const resp = await fetch('/eval:object', {
+        const resp = await fetch('eval', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -52,38 +52,63 @@
         const updates = await resp.json();
 
         console.log('Receiving: \n' + JSON.stringify(updates, null, 2));
+
+        var params = clone(updates);
+        Object.keys(params).map(function(key) {
+          params[key] = params[key].result;
+        })
+        // window.hal9.params = params;
       }
 
       function onError(error) {
         console.error(error);
       }
 
-      window.hal9 = {
-        pipeline: {
-          "steps": [],
-          "params": {},
-          "outputs": {},
-          "scripts": {},
-          "version": "0.0.1"
-        },
-        callbacks: {
+      const pipeline = {
+        "steps": [],
+        "params": {},
+        "outputs": {},
+        "scripts": {},
+        "version": "0.0.1"
+      }
+
+      const localhost = window.location.origin.includes('localhost=true');
+
+      const environment = localhost ? 'localhost' : 'devel';
+      const libraries = {
+        localhost: 'http://localhost:8000/dist/hal9.js',
+        devel: 'https://cdn.jsdelivr.net/npm/hal9@0.2.86/dist/hal9.dev.js',
+      }
+
+      const render = function() {
+        const el = document.getElementById('app')
+
+        window.hal9.callbacks = {
           onStart: onStart,
           onEnd: onEnd,
           onError: onError
-        }
-      }
+        };
 
-      const localhost = window.location.origin.includes('127.0.0.1');
-      const environment = localhost ? 'localhost' : 'devel';
-      const libraries = {
-        localhost: 'http://localhost:8080/hal9.notebook.js',
-        devel: 'http://devel.hal9.com/hal9.notebook.js',
+        hal9.init({
+          iframe: true,
+          html: el,
+          api: libraries[environment],
+          editable: true,
+          mode: 'design',
+          pipeline: pipeline
+        }, {}).then(function(hal9) {
+          // OK
+        });
       }
 
       const script = document.createElement('script');
       script.id = 'hal9-script';
       script.src = libraries[environment];
       document.body.appendChild(script);
+
+      script.addEventListener('load', function() {
+        render()
+      });
     </script>
     <div style='width: 100%; height: 100%'>
       <div id='app'></div>
