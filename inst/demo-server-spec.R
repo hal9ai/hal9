@@ -6,7 +6,8 @@ function() {
   bussin:::designer_html()
 }
 
-#* @post /eval:object
+#* @post /eval
+#* @param manifest:object
 function(manifest) {
    bussin:::process_request(manifest)
 }
