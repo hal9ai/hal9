@@ -1,6 +1,16 @@
 <html>
   <body style="margin: 0;">
     <script>
+      function onStart() {
+      }
+
+      function onEnd(result) {
+      }
+
+      function onError(error) {
+        console.error(error);
+      }
+
       window.hal9 = {
         pipeline: {
           "steps": [],
@@ -8,10 +18,26 @@
           "outputs": {},
           "scripts": {},
           "version": "0.0.1"
+        },
+        callbacks: {
+          onStart: onStart,
+          onEnd: onEnd,
+          onError: onError
         }
       }
+
+      const localhost = window.location.origin.includes('127.0.0.1');
+      const environment = localhost ? 'localhost' : 'devel';
+      const libraries = {
+        localhost: 'http://localhost:8080/hal9.notebook.js',
+        devel: 'http://devel.hal9.com/hal9.notebook.js',
+      }
+
+      const script = document.createElement('script');
+      script.id = 'hal9-script';
+      script.src = libraries[environment];
+      document.body.appendChild(script);
     </script>
-    <script defer src="https://devel.hal9.com/hal9.notebook.js"></script>
     <div style='width: 100%; height: 100%'>
       <div id='app'></div>
     </div>
