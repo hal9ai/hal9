@@ -28,17 +28,21 @@
       async function onEnd(result) {
         Object.assign(state, result);
 
+        const body = convertToServer(state);
+        console.log('Sending: \n' + JSON.stringify(body, null, 2));
+
         const resp = await fetch('/eval:object', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(convertToServer(state))
+          body: JSON.stringify(body)
         });
 
         const updates = await resp.json();
-        console.log(updates);
+
+        console.log('Receiving: \n' + JSON.stringify(updates, null, 2));
       }
 
       function onError(error) {
