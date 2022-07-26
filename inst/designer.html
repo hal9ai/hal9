@@ -1,10 +1,44 @@
 <html>
   <body style="margin: 0;">
     <script>
+      function clone(x) {
+        return JSON.parse(JSON.stringify(x))
+      }
+
+      function convertToServer(state) {
+        var server = clone(state);
+        Object.keys(server).map(function(key, index) {
+          server[key] = {
+            on_update: [
+              server[key]
+            ]
+          }
+        });
+
+        return {
+          manifest: server
+        };
+      }
+    </script>
+    <script>
+      var state = {};
       function onStart() {
       }
 
-      function onEnd(result) {
+      async function onEnd(result) {
+        Object.assign(state, result);
+
+        const resp = await fetch('/eval:object', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(convertToServer(state))
+        });
+
+        const updates = await resp.json();
+        console.log(updates);
       }
 
       function onError(error) {
