@@ -20,7 +20,7 @@ export const launchDesigner = (html, pipeline) => {
   `
 
   window.hal9 = {
-    pipeline: pipeline
+    pipeline: pipeline,
     callbacks: window.hal9 ? window.hal9.callbacks : undefined,
     params: window.hal9 ? window.hal9.params : undefined
   }
