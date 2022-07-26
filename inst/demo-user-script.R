@@ -15,7 +15,7 @@ bs_dropdown(
 )
 
 bs_code(
-    "stat_table",
+    "rawhtml",
     {
         df <- bs_get("df")
         selected_state <- bs_get("selected_state")
