@@ -22,7 +22,7 @@ export const launchDesigner = (html, pipeline) => {
   window.hal9 = {
     pipeline: pipeline
     callbacks: window.hal9 ? window.hal9.callbacks : undefined,
-    params: window.hal9 ? window.hal9.params : undefined,
+    params: window.hal9 ? window.hal9.params : undefined
   }
 
   const script = document.createElement('script');
