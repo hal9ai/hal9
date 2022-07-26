@@ -7,7 +7,7 @@ data.frame(
     bs_set("df")
 
 bs_dropdown(
-    "dropdown_states",
+    "dropdown",
     values = c("CA", "WA", "OR"),
     on_update = function(value) {
         bs_set(value, "selected_state")
