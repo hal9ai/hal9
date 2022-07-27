@@ -83,7 +83,7 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
       if (window.hal9.layouts[pipeline.id] === layoutHTML) {
         const stepEls = html.querySelectorAll(':scope .hal9-step');
         [...stepEls].map(el => {
-          if (el.classList.contains('hal9-interactive')) {
+          if (el.classList.contains('hal9-interactive') && (context.siteMode !== 'layout')) {
             // interactive elements are not erased but rather handle interactions themselves
           }
           else {
@@ -113,7 +113,7 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
 
       const output = html.querySelector(':scope .hal9-step-' + step.id);
       const interactiveClass = header.interactive ? ' hal9-interactive' : '';
-      if (isFullView && output && !output.classList.contains('hal9-interactive')) {
+      if (isFullView && !(output?.classList.contains('hal9-interactive') && (context.siteMode !== 'layout'))) {
         output.innerHTML = '';
       }
 
