@@ -4,7 +4,7 @@ import pkg_resources
 from IPython.core.display import display, HTML
 import json
 
-json.load(open("D:\hal9ai5\scripts\import\json.json"))
+json.load(open("D:\hal9ai5\scripts\import\json.js"))
 
 def encode(data):
   if (type(data).__name__ == "DataFrame"):
@@ -19,11 +19,14 @@ class hal9:
     self.params = []
     self.outputs = []
     self.steps = []
+    self.step_max_id = 0
 
   def add_step(self, step_name):
 
-    my_file = open(pkg_resources.resource_filename('hal9', 'data/'+step_name+'.txt'))
-    step_data = my_file.readlines()
+    new_id = self.step_max_id+1
+
+    json_metadata = open(pkg_resources.resource_filename('hal9', 'data/'+step_name+'.js'))
+    json_metadata = json.load(json_metadata)
 
   def show(self, height = 400, **kwargs):
     display(HTML("""<script>
