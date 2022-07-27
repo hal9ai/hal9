@@ -1,15 +1,36 @@
 import yaml
+import glob
+import json
 
-yaml.load(open("D:\hal9ai5\scripts\import\json.js"), Loader = yaml.loader.SafeLoader) 
+files = glob.glob("../scripts/*/*.js")
+components = json.load(open("../scripts/components.json"))
 
-linhas = open("D:\hal9ai5\scripts\import\json.js").readlines()
+for step_group in components:
+    for step in components[step_group]:
 
-positions = [linhas.index(line) for line in linhas if line in ["/**\n", "**/\n"]]
+        if step["build"] != "true":
+            continue
+        
+        file = "../scripts/" + step["source"]
+        lines = open(file).readlines()
 
-file_header = ""
-for ii in range(positions[0]+1, positions[1], 1):
-    file_header = file_header + linhas[ii]
+        positions = [lines.index(line) for line in lines if line in ["/**\n", "**/\n"]]
 
-yaml.load(file_header,  Loader = yaml.loader.SafeLoader)
+        if len(positions) == 0:
+            continue
 
+        file_header = ""
+
+        for ii in range(positions[0]+1, positions[1], 1):
+            file_header = file_header + lines[ii]
+        # read only the header
+
+        head_as_dict = yaml.load(file_header,  Loader = yaml.loader.SafeLoader)
     
+        if ("params" in head_as_dict.keys()):
+            continue
+
+        step["params"] = head_as_dict["params"]
+
+        built_file = "src/hal9/data/"+step["function"]+".js"
+        json.dump(step, open(built_file, 'w'))
