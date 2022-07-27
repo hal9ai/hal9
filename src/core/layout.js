@@ -113,7 +113,7 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
 
       const output = html.querySelector(':scope .hal9-step-' + step.id);
       const interactiveClass = header.interactive ? ' hal9-interactive' : '';
-      if (isFullView && !(output?.classList.contains('hal9-interactive') && (context.siteMode !== 'layout'))) {
+      if (isFullView && output && !(output.classList.contains('hal9-interactive') && (context.siteMode !== 'layout'))) {
         output.innerHTML = '';
       }
 
