@@ -19,14 +19,33 @@ class hal9:
     self.params = []
     self.outputs = []
     self.steps = []
-    self.step_max_id = 0
+    self.last_step_id = 0
 
-  def add_step(self, step_name):
+  def add_step(self, step_name, **kwargs):
 
-    new_id = self.step_max_id+1
+    new_id = self.last_step_id+1
 
     json_metadata = open(pkg_resources.resource_filename('hal9', 'data/'+step_name+'.js'))
-    json_metadata = json.load(json_metadata)
+    component = json.load(json_metadata)
+
+    new_step = {k: component.get(k, None) for k in ('name', 'label', 'language', 'description', 'icon')}
+    new_step["params"] = None
+    new_step["id"] = new_id
+
+    self.steps.append(new_step)
+
+    param_names = [param["name"] for param in component["params"]]
+
+    param_list = [{"ph": param, "name": param["name"]} for param in component["params"]]
+    param_dict = dict(zip(param_names, param_list))
+
+    for parameter_name, parameter_value in kwargs.iteritems():
+      standard_value = param_dict[parameter_name]["value"][0]
+
+      if isinstance(standard_value, dict):
+        if standard_value["control"] == "dataframe":
+        param_dict[parameter_name]
+
 
   def show(self, height = 400, **kwargs):
     display(HTML("""<script>
