@@ -27,8 +27,12 @@ for step_group in components:
 
         head_as_dict = yaml.load(file_header,  Loader = yaml.loader.SafeLoader)
     
-        if ("params" in head_as_dict.keys()):
+        if not("params" in head_as_dict.keys()):
             continue
+
+        for parameter in head_as_dict["params"]:
+            if not("value" in parameter.keys()):
+                parameter["value"] = []
 
         step["params"] = head_as_dict["params"]
 
