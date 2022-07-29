@@ -25,3 +25,11 @@ export const getScrollTop = () => {
 export const setScrollTop = (pixels) => {
   getOutputDiv().scrollTop = pixels;
 }
+
+export const clear = () => {
+  const outputDiv = getOutputDiv();
+  outputDiv.textContent = '';
+  if (outputDiv.shadowRoot) {
+    outputDiv.shadowRoot.textContent = '';
+  }
+}

@@ -1,8 +1,9 @@
-import * as store from './pipelinestore';
+import * as htmloutput from './htmloutput';
 import * as languages from './interpreters/languages'
 import * as pipelines from './pipelines';
 import * as scripts from './scripts';
 import * as snippets from './snippets';
+import * as store from './pipelinestore';
 
 const getForDocumentView = (pipeline) => {
   return pipeline.layout;
@@ -40,6 +41,10 @@ const generateForDocumentView = (pipeline) => {
 export const regenerateForDocumentView = (pipelineid, removeOldLayout) => {
   var pipeline = store.get(pipelineid);
   pipeline.layout = generateForDocumentView(pipeline);
+  if (pipeline.steps.length === 0) {
+    removeOldLayout = true;
+    htmloutput.clear();
+  }
   if (removeOldLayout) {
     if (window.hal9?.layouts?.[pipeline.id]) {
       window.hal9.layouts[pipeline.id] = undefined;
