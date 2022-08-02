@@ -143,7 +143,46 @@ h9_create(environment = "devel") |>
 
 ## Events
 
-We are adding support to perform complex Python and R based operations with server-side frameworks like [Bussin](https://bussin.ai), [Shiny](https://shiny.rstudio.com/) and [Streamlit](https://streamlit.io/).
+In order to run complex operation in Python and R you can make use of events (`on_update`, `on_select`, etc) with arbitrary transformations. You can use `h9_set` and `h9_get` to get and set global variables to pass data across events or set control values as well.
+
+::: {.panel-tabset}
+
+## R
+
+```{r, eval = FALSE}
+# app.R
+library(hal9)
+h9_create() |>
+  h9_textbox("contents", on_update = function(value) {
+    h9_set("message", paste0("Hello <b>", h9_get("contents"), "</b>"))
+  }) |>
+  h9_html(name = "message")
+```
+
+```{r, eval = FALSE}
+hal9::h9_run("app.R")
+```
+
+## Python
+
+```{r, eval = FALSE}
+# app.py
+import hal9 as h9
+h9.create()
+  .textbox("contents", on_update(value) {
+    h9.set("message", paste0("Hello <b>", h9.get("contents"), "</b>"))
+  })
+  .html(name = "message")
+```
+
+```{r, eval = FALSE}
+import hal9 as h9
+h9.run("app.py")
+```
+
+:::
+
+If you preffer, you can split controla and events across multiple files to make the code easier to maintain and modify with the designer.
 
 ::: {.panel-tabset}
 
@@ -175,7 +214,7 @@ hal9::h9_run("controls.R", "events.R")
 # controls.py
 import hal9 as h9
 h9.create()
-  .textbox("contents") |>
+  .textbox("contents")
   .html(name = "message")
 ```
 
