@@ -98,51 +98,122 @@ h9_create() |>
 
 ```
 
+### Line
+  
+::: {.panel-tabset}
 
-```{r eval=FALSE, include=FALSE}
+## R
 
-## Visualizations
+```{r}
+tab_aux <- mtcars |> 
+  dplyr::group_by(carb) |> 
+  dplyr::summarise(media = mean(mpg))
 
-### Facets
+h9_create() |>
+  h9_load(tab_aux) |> 
+  h9_line_chart(
+    x = "carb",
+    y = "media",
+    palette = "schemePaired",
+    fontsize = "16",
+    marginleft = "40",
+    marginbottom = "30"
+  )
+```
 
+## Python
 
+```{python, eval = FALSE}
+"soon"
+```
 
-### Funnel
+:::
 
+### Sankey
 
+::: {.panel-tabset}
 
-### Map
+## R
 
+```{r}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_sankey_chart(
+    source = "carb",
+    target = "cyl",
+    value = "carb",
+    palette = "schemePaired",
+    fontsize = "16",
+    marginleft = "40",
+    marginbottom = "30"
+  )
+```
 
+## Python
 
-### Network
+```{python, eval = FALSE}
+"soon"
+```
 
+:::    
 
+### Scatter
+  
+::: {.panel-tabset}
 
-### Plotly
+## R
 
+```{r}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_scatter_chart(
+    x = "mpg",
+    y = "drat",
+    color = "cyl",
+    size = "carb",
+    palette = "schemePaired",
+    fontsize = "16",
+    marginleft = "40",
+    marginbottom = "30"
+  )
+```
 
+## Python
 
-### Radial
+```{python, eval = FALSE}
+"soon"
+```
 
-
+:::
 
 ### Regression
 
+::: {.panel-tabset}
 
+## R
 
-### Waffle
+```{r}
+tab_aux <- mtcars |> 
+  dplyr::group_by(carb) |> 
+  dplyr::summarise(media = mean(mpg))
 
-
-
-### Waterfall
-
-
-
-### Wordcloud
-
+h9_create() |>
+  h9_load(tab_aux) |> 
+  h9_regression_chart(
+    x = "carb",
+    y = "media",
+    type = "exponential", 
+    predictions = "0"
+  )
 ```
 
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::
 
 ## Transforms
 
