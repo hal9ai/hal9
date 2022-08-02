@@ -169,9 +169,7 @@ hal9::h9_run("app.R")
 # app.py
 import hal9 as h9
 h9.create()
-  .textbox("contents", on_update(value) {
-    h9.set("message", paste0("Hello <b>", h9.get("contents"), "</b>"))
-  })
+  .textbox("contents", on_update = lambda h9.set("message", "Hello " + h9.get("contents")))
   .html(name = "message")
 ```
 
@@ -221,9 +219,8 @@ h9.create()
 ```{r, eval = FALSE}
 # events.py
 import hal9 as h9
-h9.textbox("contents", on_update = function(value) {
-  h9.set("message", paste0("Hello <b>", h9.get("contents"), "</b>"))
-})
+
+h9.textbox("contents", on_update = lambda h9.set("message", "Hello " + h9.get("contents")))
 ```
 
 ```{r, eval = FALSE}
