@@ -3,4 +3,5 @@
   output: [ html ]
 **/
 
-html.innerHTML = rawhtml
+html.classList.add('app-layout-initial-width-900px');
+html.innerHTML = rawhtml;

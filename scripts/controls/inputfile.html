@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
 
-<div class="numberBoxContainer">
+<div class="inputFileContainer app-layout-initial-width-inner">
 <template>
     <b-field class="file is-primary" :class="{'has-name': !!file}">
       <b-upload v-model="file" class="file-label" @change.native="numChange">
@@ -47,7 +47,7 @@
   }
 
   var app = new Vue({
-    el: html.getElementsByClassName('numberBoxContainer')[0],
+    el: html.getElementsByClassName('inputFileContainer')[0],
     data: {
       file: null,
     },

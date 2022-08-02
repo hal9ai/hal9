@@ -189,9 +189,40 @@ export const storeAppStepLayouts = (pipelineid) => {
     if (hal9Step.style.overflow !== 'hidden') {
       console.log(`Warning: calculating app layout depends on all steps having 'overflow' set to 'hidden'`);
     }
-    stepLayout.width = hal9Step.offsetWidth + 'px';
+    let widthToUse = hal9Step.offsetWidth + 'px';
+    let heightToUse = hal9Step.offsetHeight + 'px';
+    if (hal9Step.style.width === '100%') {
+      // app layout width hasn't been set yet for this control
+      let elementRequestingWidth, requestedWidth;
+      for (const element of [hal9Step, ...(hal9Step.children)]) {
+        for (const className of element.classList) {
+          if (className.startsWith('app-layout-initial-width-')) {
+            elementRequestingWidth = element;
+            requestedWidth = className.slice(25);
+            break;
+          }
+        }
+        if (elementRequestingWidth) {
+          break;
+        }
+      }
+      if (requestedWidth === 'inner') {
+        let element = elementRequestingWidth;
+        while (element && (element.offsetWidth === hal9Step.offsetWidth)) {
+          element = element.firstElementChild;
+        }
+        if (element && (element.offsetWidth > 0)) {
+          widthToUse = element.offsetWidth + 'px';
+          heightToUse = element.offsetHeight + 'px';
+        }
+      } else if (requestedWidth) {
+        widthToUse = requestedWidth;
+        heightToUse = elementRequestingWidth.offsetHeight + 'px';
+      }
+    }
+    stepLayout.width = widthToUse;
     stepLayout.left = hal9Step.offsetLeft + 'px';
-    stepLayout.height = hal9Step.offsetHeight + 'px';
+    stepLayout.height = heightToUse;
     stepLayout.top = hal9Step.offsetTop + 'px';
     return stepLayout;
   });

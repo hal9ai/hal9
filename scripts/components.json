@@ -1095,7 +1095,7 @@
       "label": "Sheet",
       "description": "Embed a spreadsheet to collect data",
       "icon": "fa-light fa-file-spreadsheet",
-      "dragdrop": true,
+      "dragdrop": false,
       "build": "true"
     },
     {

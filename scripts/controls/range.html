@@ -29,7 +29,7 @@
 <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
 
-<div class="sliderContainer">
+<div class="sliderContainer app-layout-initial-width-325px">
   <template>
     <section>
       <div style= "height: 30px"></div>
@@ -66,11 +66,11 @@
     }
   })
 
-  document.getElementsByClassName('b-slider-track')[0].style = 'width: 300px';
-  document.getElementsByClassName('b-slider-track')[0].style.left = "16px";
+  app.$el.getElementsByClassName('b-slider-track')[0].style = 'width: 300px';
+  app.$el.getElementsByClassName('b-slider-track')[0].style.left = "16px";
 
-  let sliderNumber = document.getElementsByClassName('tooltip-content')[0];
+  let sliderNumber = app.$el.getElementsByClassName('tooltip-content')[0];
 
-  let minMaxStep = document.getElementsByClassName('b-slider-thumb')[0]
+  let minMaxStep = app.$el.getElementsByClassName('b-slider-thumb')[0];
   minMaxStep.setAttribute('aria-valuemin', 3);
 </script>

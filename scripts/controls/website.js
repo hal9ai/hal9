@@ -13,6 +13,7 @@
 data = typeof(data) != 'undefined' ? JSON.parse(JSON.stringify(data)) : null;
 
 const iframe = document.createElement('iframe');
+iframe.classList.add('app-layout-initial-width-900px');
 
 var waitForOutput = false;
 
