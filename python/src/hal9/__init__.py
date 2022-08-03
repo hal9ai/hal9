@@ -10,12 +10,20 @@ def encode(data):
   else:
     return json.dumps(data)
 
+def add_id_to_list(iterable):
+    
+    id = 0
+    for element in iterable:
+        element["id"] = id
+        id = id+1
+    return(iterable)
+
 class hal9:
   """hal9 pipeline class"""
 
   def __init__(self):
-    self.params = []
-    self.outputs = []
+    self.params = {}
+    self.outputs = {}
     self.steps = []
     self.last_step_id = 0
 
@@ -27,18 +35,43 @@ class hal9:
     component = json.load(json_metadata)
 
     new_step = {k: component.get(k, None) for k in ('name', 'label', 'language', 'description', 'icon')}
-    new_step["params"] = None
+    new_step["params"] = {}
     new_step["id"] = new_id
 
     self.steps.append(new_step)
 
-    param_names = [param["name"] for param in component["params"]]
+    step_param_list = component["params"]
+    param_names = [param["name"] for param in step_param_list]
 
-    param_list = [{"ph": param, "name": param["name"]} for param in component["params"]]
-    param_dict = dict(zip(param_names, param_list))
+    param_dict = dict(zip(param_names, step_param_list))
 
-    for parameter_name, parameter_value in kwargs.iteritems():
-      standard_value = param_dict[parameter_name]["value"][0]
+    print(kwargs)
+
+    for parameter_name, parameter_value in kwargs.items():
+      standard_value = param_dict[parameter_name]["value"]
+
+      if ~("static" in param_dict[parameter_name].keys()):
+        param_dict[parameter_name]["static"] = True
+
+      if isinstance(standard_value, list):  
+        standard_value = add_id_to_list(standard_value)
+
+        id_value = 0
+        for element in standard_value:
+          element["id"] = id_value
+          id_value = id_value + 1
+
+          if element["control"] == "dataframe":
+            element["value"] = encode(parameter_value)
+          else:
+            element["value"] = parameter_value
+      else:
+        if param_dict[parameter_name]["static"]:
+            element["value"] = parameter_value
+        else:
+            element["value"] = [{"name": parameter_value}]
+    
+    self.params[new_id] = param_dict
 
   def show(self, height = 400, **kwargs):
     display(HTML("""<script>
