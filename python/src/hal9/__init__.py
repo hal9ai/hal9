@@ -4,8 +4,6 @@ import pkg_resources
 from IPython.core.display import display, HTML
 import json
 
-json.load(open("D:\hal9ai5\scripts\import\json.js"))
-
 def encode(data):
   if (type(data).__name__ == "DataFrame"):
     return data.to_json(orient = 'records')
@@ -42,19 +40,14 @@ class hal9:
     for parameter_name, parameter_value in kwargs.iteritems():
       standard_value = param_dict[parameter_name]["value"][0]
 
-      if isinstance(standard_value, dict):
-        if standard_value["control"] == "dataframe":
-        param_dict[parameter_name]
-
-
   def show(self, height = 400, **kwargs):
     display(HTML("""<script>
     window.hal9 = {
       data: "",
       pipeline: {
-        "steps": """ + self.steps + """",
-        "params": """ + self.params + """",
-        "outputs": """ + self.outputs + """",
+        "steps": """ + encode(self.steps) + """",
+        "params": """ + encode(self.params) + """",
+        "outputs": """ + encode(self.outputs) + """",
         scripts": { "1": "data = window.hal9.data" },
         "version": "0.0.1"
       }
