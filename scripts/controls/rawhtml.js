@@ -1,7 +1,8 @@
 /**
   input: [ rawhtml ]
   output: [ html ]
+  layout:
+    - width: 900px
 **/
 
-html.classList.add('app-layout-initial-width-900px');
 html.innerHTML = rawhtml;
