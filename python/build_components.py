@@ -2,6 +2,7 @@ import yaml
 import glob
 import json
 
+files = glob.glob("~/Documents/curso-r/hal9ai/scripts/*/*.js")
 files = glob.glob("../scripts/*/*.js")
 components = json.load(open("../scripts/components.json"))
 
