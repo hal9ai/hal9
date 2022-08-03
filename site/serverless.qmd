@@ -1,6 +1,10 @@
 ---
-title: "Interactive Data Apps without Web Dev"
+title: "Serverless Apps"
 ---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(python.reticulate = FALSE)
+```
 
 ## Serverless
 
