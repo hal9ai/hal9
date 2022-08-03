@@ -8,12 +8,13 @@
           - control: textbox
             lazy: true
             value: https://hal9ai.github.io/hal9ai/examples/website.html
+  layout:
+    - width: 900px
 **/
 
 data = typeof(data) != 'undefined' ? JSON.parse(JSON.stringify(data)) : null;
 
 const iframe = document.createElement('iframe');
-iframe.classList.add('app-layout-initial-width-900px');
 
 var waitForOutput = false;
 

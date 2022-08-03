@@ -7,13 +7,15 @@
         - control: textbox
           value: NumberBox
   output: [  html,numVal ]
+  layout:
+    - width: 130px
 -->
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
 
-<div class="numberBoxContainer app-layout-initial-width-130px">
+<div class="numberBoxContainer">
   <template>
     <section>
           {{ parameter }}

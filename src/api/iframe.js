@@ -324,7 +324,7 @@ export async function exporttoGetHtml(pipelineid) {
 }
 
 export async function exporttoGetHtmlRemote(pipelinepath) {
-  return await post(config, "hal9.exporto.getHtmlRemote(params.pipelinepath)", {
+  return await post(config, "hal9.exportto.getHtmlRemote(params.pipelinepath)", {
     pipelinepath: pipelinepath,
   })
 }

@@ -2,7 +2,7 @@
 title: "Interactive Data Apps without Web Dev"
 ---
 
-The `hal9` package provides a code-first WYSIWYG application [designer](#designer) and a set of application [components](#components) to build browser-based data applications. You can then publish these applications as static HTML files, or perform complex server-side operations in [code](#code) with Python and R.
+The `hal9` package provides a code-first WYSIWYG application [designer](#designer), a set of application [components](#components), and an [events](#events) framework to build data applications. You can then publish these applications as static HTML files, or perform complex event-based operations with Python and R.
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(python.reticulate = FALSE)
@@ -141,64 +141,83 @@ h9_create(environment = "devel") |>
   h9_scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
 ```
 
-## Code
+## Events
 
-We are adding support to perform complex Python and R based operations with server-side frameworks like [Bussin](https://bussin.ai), [Shiny](https://shiny.rstudio.com/) and [Streamlit](https://streamlit.io/).
+In order to run complex operation in Python and R you can make use of events (`on_update`, `on_select`, etc) with arbitrary transformations. You can use `h9_set` and `h9_get` to get and set global variables to pass data across events or set control values as well.
 
 ::: {.panel-tabset}
 
-## Bussin
+## R
 
 ```{r, eval = FALSE}
-# client.R
 library(hal9)
 h9_create() |>
-  h9_textbox(name = "contents") |>
-  h9_html(name = "message")
+  h9_textbox("contents", on_update = function(value) {
+    h9_set("message", paste0("Hello <b>", h9_get("contents"), "</b>"))
+  }) |>
+  h9_html(name = "message") |>
+  h9_run()
 ```
+
+## Python
 
 ```{r, eval = FALSE}
-# server.R
-library(bussin)
-
-bs_textbox(on_update = function(value) {
-  bs_set("message", paste0("<b>", bs_get("contents"), "</b>"))
-})
-```
-
-```{r, eval = FALSE}
-library(bussin)
-bs_run("client.R", "server.R")
-```
-
-## Streamlit
-
-```{python, eval = FALSE}
-import streamlit as st
-
+import hal9 as h9
 h9.create()
-  .dropdown()
-  .streamlit()
-```
-
-## Shiny
-
-```{r, eval = FALSE}
-# client.R
-library(shiny)
-```
-
-```{r, eval = FALSE}
-# server.R
-library(shiny)
-```
-
-```{r, eval = FALSE}
-library(shiny)
-run("client.R", "server.R")
+  .textbox("contents", on_update = lambda h9.set("message", "Hello " + h9.get("contents")))
+  .html(name = "message")
+  .run()
 ```
 
 :::
 
-Alternatevely, we have support for R, Python, Flask and Plumber in our cloud offering. [Contact us](info@hal9.ai) to help you get onboarded.
+If you preffer, you can split controla and events across multiple files to make the code easier to maintain and modify with the designer.
+
+::: {.panel-tabset}
+
+## R
+
+```{r, eval = FALSE}
+# controls.R
+library(hal9)
+h9_create() |>
+  h9_textbox("contents") |>
+  h9_html(name = "message")
+```
+
+```{r, eval = FALSE}
+# events.R
+library(hal9)
+h9_textbox("contents", on_update = function() {
+  h9_set("message", paste0("Hello <b>", h9_get("contents"), "</b>"))
+})
+```
+
+```{r, eval = FALSE}
+hal9::h9_run("controls.R", "events.R")
+```
+
+## Python
+
+```{r, eval = FALSE}
+# controls.py
+import hal9 as h9
+h9.create()
+  .textbox("contents")
+  .html(name = "message")
+```
+
+```{r, eval = FALSE}
+# events.py
+import hal9 as h9
+
+h9.textbox("contents", on_update = lambda h9.set("message", "Hello " + h9.get("contents")))
+```
+
+```{r, eval = FALSE}
+import hal9 as h9
+h9.run("controls.py", "events.py")
+```
+
+:::
 

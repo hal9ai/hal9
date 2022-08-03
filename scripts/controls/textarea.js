@@ -1,12 +1,13 @@
 /**
   input: []
   output: [ textarea, html ]
+  layout:
+    - width: 900px
 **/
 
 var textarea = '';
 
 const textareaEl = document.createElement('textarea');
-textareaEl.classList.add('app-layout-initial-width-900px');
 textareaEl.rows = 5
 textareaEl.style.width = 'calc(100% - 6px)';
 textareaEl.style.resize = 'none';
@@ -26,3 +27,4 @@ textareaEl.onchange = function () {
 }
 
 html.appendChild(textareaEl);
+html.style.height = 'auto';

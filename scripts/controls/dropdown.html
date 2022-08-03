@@ -8,13 +8,15 @@
           value: versicolor,setosa,vergica
   output: [ dropdown, html ]
   interactive: true
+  layout:
+    - width: inner
 -->
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
 
-<div class="control app-layout-initial-width-inner">
+<div class="control">
   <template>
     <section>
       <b-select v-model="value">

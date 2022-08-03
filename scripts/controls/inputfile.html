@@ -16,13 +16,15 @@
             - name: binstring
               label: Binary String
   output: [  html,inputFile ]
+  layout:
+    - width: inner
 -->
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
 
-<div class="inputFileContainer app-layout-initial-width-inner">
+<div class="inputFileContainer">
 <template>
     <b-field class="file is-primary" :class="{'has-name': !!file}">
       <b-upload v-model="file" class="file-label" @change.native="numChange">
