@@ -19,7 +19,6 @@ def __register_node(node: _Node) -> None:
 def dropdown(uid, values, on_update = None) -> _Node:
     return _Node(uid, kind = 'Dropdown', main = values, on_update=on_update)
 
-
 def get(x: str) -> _Node:
     return global_data[x]
 
@@ -28,8 +27,6 @@ def set(name: str, value) -> None:
 
 def code(uid, codefunc) -> _Node:
     return _Node(uid = uid, kind = 'pycode', main = codefunc)
-
- 
     
 def __process_request(request: dict) -> None:
     uids = request.keys()
@@ -46,3 +43,7 @@ def __process_request(request: dict) -> None:
         response[uid] = node.evaluate(fn, args)
     return response
 
+def __get_designer():
+    with open('../../inst/designer.html') as f:
+        html = f.read()
+    return html
