@@ -5,6 +5,16 @@ import * as localparams from './executors/params';
 import clone from './utils/clone';
 
 export const create = (pipelineid, sid, context, params, input) => {
+  const doInvalidate = function() {
+    if (context.invalidateSteps) {
+      pipelines.invalidateStep(pipelineid, sid);
+      context.invalidateSteps();
+    }
+    else {
+      pipelines.run(pipelineid, context);
+    }
+  }
+
   return {
     // Retrieves the current pipeline as embedable html
     setHtml: function(html) {
@@ -14,27 +24,21 @@ export const create = (pipelineid, sid, context, params, input) => {
       return this.html;
     },
     // Saves some state for the current pipeline step
-    setState: function(state) {
+    setState: function(state, invalidate) {
       var current = pipelines.getState(pipelineid, sid);
       current = current ? current : {};
       current.api = state;
       pipelines.setState(pipelineid, sid, current);
+      if (invalidate) doInvalidate();
     },
     // Loads the state for the current pipeline step
-    getState: function() {
+    getState: function(defaultValue) {
       var current = pipelines.getState(pipelineid, sid);
-      return current ? (current.api ?? {}) : {};
+      var state = current ? current.api : {};
+      return state ? state : defaultValue;
     },
     // Notify that a pipeline step has changed
-    invalidate: function() {
-      if (context.invalidateSteps) {
-        pipelines.invalidateStep(pipelineid, sid);
-        context.invalidateSteps();
-      }
-      else {
-        pipelines.run(pipelineid, context);
-      }
-    },
+    invalidate: doInvalidate,
     // Notify when invalidation triggers
     onInvalidate: function(callback) {
       pipelines.setCallback(pipelineid, sid, 'onInvalidate', callback);
