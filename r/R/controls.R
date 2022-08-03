@@ -23,6 +23,56 @@ h9_dropdown <- function(h, values  = NULL, rebind = NULL, ...) {
   )
 }
 
+#' File Input
+#'
+#' Embed a file input control
+#'
+#' @param h A h9 object created by h9_create.
+#' @param dataType Additional step parameter.
+#' @param rebind A list of rebindings to apply to this function parameters.
+#' @param ... Other h9 parameters.
+#'
+#' @return A list with the pipeline specification.
+#' @export
+#'
+h9_file <- function(h, dataType  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
+  h9_add_step(
+    h,
+    "fileinput",
+    rebind,
+    matched_call = args[no_rebinds]
+  )
+}
+
+#' Number Input
+#'
+#' Embed a number input control
+#'
+#' @param h A h9 object created by h9_create.
+#' @param paramName Additional step parameter.
+#' @param rebind A list of rebindings to apply to this function parameters.
+#' @param ... Other h9 parameters.
+#'
+#' @return A list with the pipeline specification.
+#' @export
+#'
+h9_number <- function(h, paramName  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
+  h9_add_step(
+    h,
+    "numberinput",
+    rebind,
+    matched_call = args[no_rebinds]
+  )
+}
+
 #' Slider
 #'
 #' Embed an slider element
@@ -46,6 +96,31 @@ h9_slider <- function(h, value  = NULL, min  = NULL, max  = NULL, step  = NULL, 
   h9_add_step(
     h,
     "slider",
+    rebind,
+    matched_call = args[no_rebinds]
+  )
+}
+
+#' Text Input
+#'
+#' Embed a text input control
+#'
+#' @param h A h9 object created by h9_create.
+#' @param paramName Additional step parameter.
+#' @param rebind A list of rebindings to apply to this function parameters.
+#' @param ... Other h9 parameters.
+#'
+#' @return A list with the pipeline specification.
+#' @export
+#'
+h9_textbox <- function(h, paramName  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
+  h9_add_step(
+    h,
+    "textbox",
     rebind,
     matched_call = args[no_rebinds]
   )

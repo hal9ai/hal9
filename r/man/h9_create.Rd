@@ -9,7 +9,8 @@ h9_create(
   height = NULL,
   environment = "prod",
   iframe = TRUE,
-  version = "0.2.77",
+  version = "0.2.78",
+  mode = c("run", "design"),
   ...
 )
 }
@@ -25,6 +26,9 @@ development and 'local' for local developer environment.}
 resources from the parent? Defaults to 'TRUE'.}
 
 \item{version}{The version of the runtime to use.}
+
+\item{mode}{Should the application be run or designed? Valid values "run" or
+"design", defaults to "run" unless the application is empty.}
 
 \item{...}{Additional parameters}
 }
