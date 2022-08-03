@@ -36,7 +36,7 @@ bs_dropdown <- function(uid, values, on_update = NULL) {
     invisible(NULL)
 }
 
-#' @export 
+#' @export
 bs_textbox <- function(uid, default, on_update = NULL) {
     default <- maybe_convert_to_fn(default)
     on_update <- maybe_convert_to_fn(on_update)
