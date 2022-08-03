@@ -115,72 +115,45 @@ In order to run complex operation in Python and R you can make use of events (`o
 
 ```{r, eval = FALSE}
 library(hal9)
-h9_create() |>
-  h9_textbox("contents", on_update = function(value) {
-    h9_set("message", paste0("Hello <b>", h9_get("contents"), "</b>"))
-  }) |>
-  h9_html(name = "message") |>
-  h9_run()
-```
+app <- h9_create()
 
-## Python
-
-```{r, eval = FALSE}
-import hal9 as h9
-h9.create()
-  .textbox("contents", on_update = lambda h9.set("message", "Hello " + h9.get("contents")))
-  .html(name = "message")
-  .run()
-```
-
-:::
-
-If you preffer, you can split controla and events across multiple files to make the code easier to maintain and modify with the designer.
-
-::: {.panel-tabset}
-
-## R
-
-```{r, eval = FALSE}
-# controls.R
-library(hal9)
-h9_create() |>
-  h9_textbox("contents") |>
-  h9_html(name = "message")
-```
-
-```{r, eval = FALSE}
-# events.R
-library(hal9)
-h9_textbox("contents", on_update = function() {
+h9_textbox(app, "contents", width = "100", on_update = function(value) {
   h9_set("message", paste0("Hello <b>", h9_get("contents"), "</b>"))
 })
+
+h9_html(app, name = "message", {
+  h9_get("message")
+})
+
+h9_run(app)
 ```
 
 ```{r, eval = FALSE}
-hal9::h9_run("controls.R", "events.R")
+library(hal9)
+app <- h9_create()
+
+h9_textbox(app, "contents", on_update = function(value) {
+  h9_set("message", paste0("Hello <b>", h9_get("contents"), "</b>"))
+})
+
+h9_html(app, name = "message", {
+  h9_get("message")
+})
+
+h9_run(app)
 ```
 
 ## Python
 
 ```{r, eval = FALSE}
-# controls.py
 import hal9 as h9
-h9.create()
-  .textbox("contents")
-  .html(name = "message")
-```
+app = h9.create()
 
-```{r, eval = FALSE}
-# events.py
-import hal9 as h9
+app.textbox("contents", on_update = lambda h9.set("message", "Hello " + h9.get("contents")))
 
-h9.textbox("contents", on_update = lambda h9.set("message", "Hello " + h9.get("contents")))
-```
+app.html(name = "message")
 
-```{r, eval = FALSE}
-import hal9 as h9
-h9.run("controls.py", "events.py")
+app.run()
 ```
 
 :::
