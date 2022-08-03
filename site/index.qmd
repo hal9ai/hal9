@@ -76,7 +76,7 @@ h9_create() |>
   h9_slider(value = "70", max = "100") |>
   h9_number() |>
   h9_textbox() |>
-  h9_textarea()
+  h9_file()
 ```
 
 ## Python
@@ -89,7 +89,7 @@ h9.create()
   .slider(value = "70", max = "100")
   .number()
   .textbox()
-  .textarea()
+  .file()
 ```
 
 :::
@@ -102,7 +102,7 @@ h9_create(environment = "devel") |>
   h9_slider(value = "70", max = "100") |>
   h9_number() |>
   h9_textbox() |>
-  h9_textarea()
+  h9_file()
 ```
 
 ## Events
