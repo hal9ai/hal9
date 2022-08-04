@@ -70,6 +70,7 @@
 
         await hal9.run(pid, {
           html: 'output',
+          shadow: false,
           events: {
             onStart: onStart,
             onEnd: onEnd,
@@ -132,6 +133,7 @@
           pid = await hal9.load(pipeline);
           hal9.run(pid, {
             html: 'output',
+            shadow: false,
             events: {
               onStart: onStart,
               onEnd: onEnd,
