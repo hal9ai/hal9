@@ -20,23 +20,28 @@
         };
       }
 
-      function addOutputsToServer(server, htmlsteps) {
-        htmlsteps.map(function(htmlstep) {
-          server.manifest[htmlstep] = {}
-        })
+      function addOutputsToServer(server, steps) {
+        steps
+          .filter(function(step) {
+            return step.header && step.header.output && step.header.output.includes('html')
+          })
+          .map(function(step) {
+            server.manifest[step.name] = {}
+          })
       }
     </script>
     <script>
       var state = {};
+      var pid = undefined;
 
       function onStart() {
       }
 
-      async function onEnd(result, htmlsteps) {
+      async function onEnd(result, steps) {
         Object.assign(state, result);
 
         const body = convertToServer(state);
-        addOutputsToServer(body, htmlsteps);
+        addOutputsToServer(body, steps);
 
         console.log('Sending: \n' + JSON.stringify(body, null, 2));
 
@@ -61,7 +66,11 @@
       }
 
       function onError(error) {
-        console.error(error);
+        if (error) console.error(error);
+      }
+
+      function onEvent() {
+        alert('event');
       }
 
       var pipeline = {
@@ -72,7 +81,7 @@
         "version": "0.0.1"
       }
 
-      const localhost = window.location.origin.includes('localhost=true');
+      const localhost = window.location.search.includes('localhost');
 
       const environment = localhost ? 'localhost' : 'devel';
       const libraries = {
@@ -104,9 +113,14 @@
         }, {});
 
         if (hostopt.mode == 'run') {
-          const pid = await hal9.load(pipeline);
+          pid = await hal9.load(pipeline);
           hal9.run(pid, {
-            html: 'output'
+            html: 'output',
+            events: {
+              onStart: onStart,
+              onEnd: onEnd,
+              onError: onError
+            }
           });
         }
       }
@@ -120,8 +134,8 @@
         render()
       });
     </script>
-    <div style='width: 100%; height: 100%'>
-      <div id='app'></div>
+    <div style="width: 100%; height: 100%">
+      <div id="app"></div>
     </div>
   </body>
 </html>
