@@ -1,16 +1,12 @@
 library(bussin)
 
-data.frame(
-    state = c("CA", "WA", "OR"),
-    statistic = c(69, 420, 666)
-) |>
-    bs_set("df")
+iris |> bs_set("df")
 
 bs_dropdown(
     "dropdown",
-    values = c("CA", "WA", "OR"),
+    values = c("setosa", "versicolor"),
     on_update = function(value) {
-        bs_set(value, "selected_state")
+        bs_set(value, "selected_species")
     }
 )
 
@@ -18,8 +14,8 @@ bs_code(
     "rawhtml",
     {
         df <- bs_get("df")
-        selected_state <- bs_get("selected_state")
-        df <- df[df$state == selected_state, ]
+        selected_species <- bs_get("selected_species")
+        df <- df[df$Species == selected_species, ]
 
         knitr::kable(df, format = "html") |>
             as.character()
