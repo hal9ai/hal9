@@ -127,7 +127,7 @@ h9_slider(app, "slider", on_update = function(value) {
 h9_html(app, name = "scatterplot", {
   df <- iris |> slice_sample(prop = h9_get("slider_value")/100)
   file <- tempfile(fileext=".html")
-  ggplot(df, aes(x=Sepal.Length, y=Sepal.Width, color=Species)) + geom_point() |> ggplotly() |> partialbundle() |> htmlwidgets::saveWidget(file, selfcontained=TRUE)
+  ggplot(df, aes(x=Sepal.Length, y=Sepal.Width, color=Species)) + geom_point() |> ggplotly() |> partial_bundle() |> htmlwidgets::saveWidget(file, selfcontained=TRUE)
   paste(readLines(file), collapse="")
 })
 
