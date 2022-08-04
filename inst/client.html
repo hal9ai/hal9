@@ -26,7 +26,7 @@
             return step.header && step.header.output && step.header.output.includes('html')
           })
           .map(function(step) {
-            server.manifest[step.name] = {}
+            if (!server.manifest[step.name]) server.manifest[step.name] = {}
           })
       }
     </script>
