@@ -427,9 +427,11 @@ const skipStep = (pipeline, step) => {
   return false;
 }
 
-export const run = async (pipelineid /*: pipeline */, context /* context */, partial, stepstopid /* stepid */) /*: void */ => {
+export const run = async (pipelineid /*: pipelineid */, context /* context */, partial, stepstopid /* stepid */) /*: void */ => {
   debugIf('run');
-  if (!partial) partial = function() {}
+  if (!partial) partial = function() {};
+
+  context.events?.onStart();
 
   var pipeline = store.get(pipelineid);
   pipeline.aborted = undefined;
@@ -468,6 +470,9 @@ export const run = async (pipelineid /*: pipeline */, context /* context */, par
     if (stepstopid != undefined && step.id === stepstopid) break;
     if (context.stopped === true) break;
   };
+
+  context.events?.onError(clone(pipeline.error));
+  context.events?.onEnd(clone(pipeline.globals), getStepsWithHeaders(pipelineid));
 
   return pipelineid;
 }
