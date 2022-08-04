@@ -3,9 +3,9 @@ import pandas as pd
 
 df = pd.DataFrame({'state': ("CA", "WA", "OR"),
     'statistic': (69, 420, 666)})
-bs.set(df)
+bs.set('df', df)
 
-bs.dropdown('Dropdown', values = lambda :bs.get(df).columns, on_update=lambda x: bs.set('value', x))
+bs.dropdown('Dropdown', values = lambda :bs.get('df').columns, on_update=lambda x: bs.set('value', x))
 
 def filter_and_show_df(value):
     df = bs.get('df')

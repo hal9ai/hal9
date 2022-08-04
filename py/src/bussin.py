@@ -5,15 +5,17 @@ class _Node:
         self.uid = uid
         self.type = kind
         self.funcs = funcs
-        __register_node(self)
+        _register_node(self)
+    # def __register_node(self):
+    #     _register_node(self)
     
-    def evaluate(self, fn, args):
-        return self.funcs[fn](*args)
+    def evaluate(self, fn, fn_args):
+        return self.funcs[fn](*fn_args)
 
 global_nodes = dict()
 global_data = dict()
 
-def __register_node(node: _Node) -> None:
+def _register_node(node: _Node) -> None:
     global_nodes[node.uid] = node
     
 def dropdown(uid, values, on_update = None) -> _Node:
@@ -24,6 +26,7 @@ def get(x: str) -> _Node:
 
 def set(name: str, value) -> None:
     global_data[name] = value
+    return value
 
 def code(uid, codefunc) -> _Node:
     return _Node(uid = uid, kind = 'pycode', main = codefunc)
@@ -39,11 +42,12 @@ def __process_request(request: dict) -> None:
             args = []
         else:
             fn = list(fn_args.keys())[0]
-            args = list(fn_args.items())[0]
-        response[uid] = node.evaluate(fn, args)
+            args = list(fn_args.items())
+        response[uid] = {'result': node.evaluate(fn, args),
+                        'type': node.type}
     return response
 
-def __get_designer():
+def __get_designer() -> str:
     with open('../../inst/designer.html') as f:
         html = f.read()
     return html
