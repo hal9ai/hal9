@@ -81,29 +81,34 @@
       }
 
       const render = async function() {
-        const el = document.getElementById('app')
+        const app = document.getElementById('app')
+        const hostopt = JSON.parse('__options__');
 
         var resp = await fetch('/pipeline')
         if (resp.ok) {
           pipeline = await resp.json()
         }
 
-        hal9.init({
+        await hal9.init({
           iframe: true,
-          html: el,
+          html: app,
           api: libraries[environment],
           editable: true,
-          mode: '__mode__',
+          mode: hostopt.mode,
           pipeline: pipeline,
           events: {
             onStart: onStart,
             onEnd: onEnd,
             onError: onError
           }
-        }, {}).then(function(hal9) {
-          window.hal9api = hal9;
-          // OK
-        });
+        }, {});
+
+        if (hostopt.mode == 'run') {
+          const pid = await hal9.load(pipeline);
+          hal9.run(pid, {
+            html: 'output'
+          });
+        }
       }
 
       const script = document.createElement('script');

@@ -111,9 +111,7 @@ client_html <- function(...) {
 
   html <- paste(readLines(system.file("client.html", package = "bussin")), collapse = '\n')
 
-  for (name in names(options)) {
-    html <- gsub(paste0("__", name, "__"), options[[name]], html)
-  }
+  html <- gsub("__options__", gsub("'", "\\'", jsonlite::toJSON(options, auto_unbox = TRUE)), html)
 
   html
 }
