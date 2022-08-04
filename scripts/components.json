@@ -921,7 +921,7 @@
       "function": "html",
       "source": "languages/html.html",
       "language": "html",
-      "label": "HTML Output",
+      "label": "HTML",
       "description": "Insert a webpage snippet",
       "icon": "fa-brands fa-html5",
       "build": "false"
