@@ -106,6 +106,14 @@ process_request <- function(req) {
         setNames(uids)
 }
 
-designer_html <- function() {
-  paste(readLines(system.file("designer.html", package = "bussin")), collapse = '\n')
+client_html <- function(...) {
+  options <- list(...)
+
+  html <- paste(readLines(system.file("client.html", package = "bussin")), collapse = '\n')
+
+  for (name in names(options)) {
+    html <- gsub(paste0("__", name, "__"), options[[name]], html)
+  }
+
+  html
 }

@@ -3,7 +3,13 @@ source("./demo-user-script.R")
 #* @get /
 #* @serializer html
 function() {
-  bussin:::designer_html()
+  bussin:::client_html(mode = "run")
+}
+
+#* @get /design
+#* @serializer html
+function() {
+  bussin:::client_html(mode = "design")
 }
 
 #* @get /pipeline
