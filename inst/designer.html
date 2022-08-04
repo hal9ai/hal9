@@ -64,7 +64,7 @@
         console.error(error);
       }
 
-      const pipeline = {
+      var pipeline = {
         "steps": [],
         "params": {},
         "outputs": {},
@@ -77,17 +77,16 @@
       const environment = localhost ? 'localhost' : 'devel';
       const libraries = {
         localhost: 'http://localhost:8000/dist/hal9.js',
-        devel: 'https://cdn.jsdelivr.net/npm/hal9@0.2.86/dist/hal9.dev.js',
+        devel: 'https://cdn.jsdelivr.net/npm/hal9@0.2.88/dist/hal9.dev.js',
       }
 
-      const render = function() {
+      const render = async function() {
         const el = document.getElementById('app')
 
-        window.hal9.callbacks = {
-          onStart: onStart,
-          onEnd: onEnd,
-          onError: onError
-        };
+        var resp = await fetch('/pipeline')
+        if (resp.ok) {
+          pipeline = await resp.json()
+        }
 
         hal9.init({
           iframe: true,
@@ -95,8 +94,14 @@
           api: libraries[environment],
           editable: true,
           mode: 'design',
-          pipeline: pipeline
+          pipeline: pipeline,
+          events: {
+            onStart: onStart,
+            onEnd: onEnd,
+            onError: onError
+          }
         }, {}).then(function(hal9) {
+          window.hal9api = hal9;
           // OK
         });
       }
