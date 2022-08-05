@@ -1,6 +1,6 @@
 {
   "name": "hal9",
-  "version": "0.2.96",
+  "version": "0.2.97",
   "license": "MIT",
   "description": "Hal9: Composable machine-learning pipelines",
   "main": "dist/hal9.js",
@@ -14,7 +14,7 @@
     "watch": "webpack --watch",
     "test": "tape test/**/*.test.js",
     "check": "yarn flow check",
-    "proxy": "python3 utils/devproxy.py",
+    "proxy": "http-server -p 8000 --cors -c-1",
     "dev": "webpack-dev-server --mode development --history-api-fallback"
   },
   "dependencies": {
@@ -34,6 +34,7 @@
     "@babel/preset-env": "^7.17.10",
     "babel-loader": "^8.2.5",
     "css-loader": "^6.4.0",
+    "http-server": "^14.1.1",
     "raw-loader": "^4.0.2",
     "tape": "^5.3.1",
     "terser-webpack-plugin": "^5.3.1",
