@@ -48,6 +48,6 @@ def __process_request(request: dict) -> None:
     return response
 
 def __get_designer() -> str:
-    with open('../../inst/designer.html') as f:
+    with open('../../inst/client.html') as f:
         html = f.read()
     return html

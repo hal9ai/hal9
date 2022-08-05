@@ -11,4 +11,4 @@ def filter_and_show_df(value):
     df = bs.get('df')
     return df[df['state'] == value].to_html()
 
-bs.code('dataframe generator', filter_and_show_df)
+bs.code('rawhtml', lambda :filter_and_show_df(bs.get('value')))
