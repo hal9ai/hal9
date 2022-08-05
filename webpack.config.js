@@ -101,8 +101,17 @@ module.exports = (env, argv) => {
       })]
     },
     devServer: {
-      open: true,
-      static: ['docs']
+      devMiddleware: {
+        publicPath: '/dist',
+        writeToDisk: true,
+      },
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET',
+        'Cache-Control': 'no-store'
+      },
+      port: 8000,
+      webSocketServer: false
     },
   };
 }
