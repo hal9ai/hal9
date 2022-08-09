@@ -1,4 +1,4 @@
-import dill as pickle
+import json
 
 class _Node:
     def __init__(self, uid:str=  None, kind:str = None, **funcs) -> None:
@@ -47,7 +47,9 @@ def __process_request(request: dict) -> None:
                         'type': node.type}
     return response
 
-def __get_designer() -> str:
+def __get_designer(**options) -> str:
+    options = json.dumps(options)
     with open('../../inst/client.html') as f:
         html = f.read()
+    html = html.replace("__options__", options)
     return html
