@@ -5,7 +5,11 @@
       label: Values
       value:
         - control: textbox
-          value: versicolor,setosa,vergica
+          value: versicolor,setosa,virginica
+    - name: value
+      label: Selected
+      value:
+        - control: textbox
   output: [ dropdown, html ]
   interactive: true
   layout:
@@ -29,23 +33,18 @@
 </div>
 
 <script>
-  var state = hal9.getState();
-  state = state ? state : {};
-  values = values.split(',');
-  
-  dropdown = state.dropdown ? state.dropdown : values[0];
+  values = typeof(values) === 'object' ? values : values.split(',');
+  value = hal9.getState(values[0]);
 
   var app = new Vue({
     el: html.getElementsByClassName('control')[0],
     data: {
-      value: dropdown,
+      value: value,
       options: values
     },
     watch: {
-      value: function(e) {
-        state.dropdown = e;
-        hal9.setState(state);
-        hal9.invalidate();
+      value: function(value) {
+        hal9.setState(value, true);
       }
     }
   })

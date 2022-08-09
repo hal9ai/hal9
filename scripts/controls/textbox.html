@@ -1,12 +1,15 @@
 <!--
   input: []
   params:
-    - name: paramName
-      label: parameter Name
+    - name: label
+      label: Label
       value:
         - control: textbox
-          value: TextBox
-  output: [  html,textVal ]
+    - name: value
+      label: Value
+      value:
+        - control: textbox
+  output: [  html, value ]
   layout:
     - width: 500px
 -->
@@ -18,36 +21,24 @@
 <div class="textboxContainer">
   <template>
     <section>
-          {{ parameter }}
-            <b-input type="text"
-                v-model="value"
-                @change.native="textChange">>
-            </b-input>
+      {{ label }}
+      <b-input type="text" v-model="value">
+      </b-input>
     </section>
   </template>
 </div>
 
-
 <script>
-  var state = hal9.getState();
-  state = state ? state : {};
-  let textVal = '';
-  if (state.textVal) {
-    textVal = state.textVal;
-    value = textVal;
-  }
-
+  value = hal9.getState(value);
   var app = new Vue({
     el: html.getElementsByClassName('textboxContainer')[0],
     data: {
-      value: textVal,
-      parameter: paramName
+      value: value,
+      label: label
     },
-    methods: {
-      textChange(e){
-        state.textVal = e.target.value;
-        hal9.setState(state);
-        hal9.invalidate();
+    watch: {
+      value: function(value) {
+        hal9.setState(value, true);
       }
     }
   })

@@ -34,7 +34,7 @@ const generateForDocumentView = (pipeline) => {
     if (langInfo.html) hasHtml = true;
 
     if (hasHtml) {
-      html = html + `<div class="hal9-step hal9-step-${step.id}${heightClass}${interactiveClass}${appLayoutInitialWidthClass}" style="width: 100%; height: ${height}"></div>\n`;
+      html = html + `<div class="hal9-step hal9-step-${step.id}${heightClass}${interactiveClass}${appLayoutInitialWidthClass}" style="position: relative; width: 100%; height: ${height}"></div>\n`;
     }
   }
 
@@ -136,6 +136,7 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
         var container = document.createElement('div');
 
         container.className = 'hal9-step hal9-step-' + step.id + interactiveClass;
+        container.style.position = 'relative';
         container.style.width = '100%';
 
         if (langInfo.height) {
@@ -154,6 +155,7 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
 
         var container = document.createElement('div');
         container.className = 'hal9-step hal9-step-' + step.id + interactiveClass;
+        container.style.position = 'relative';
         container.style.width = '100%';
         container.style.height = '100%';
 

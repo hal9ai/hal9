@@ -1,3 +1,30 @@
+#' Bubbles
+#'
+#' Bigger values -> bigger bubbles
+#'
+#' @param h A h9 object created by h9_create.
+#' @param label The column in the dataframe who's values should be used as labels on the circles
+#' @param size The column in the dataframe who's values should the area of each circle be propotional to.
+#' @param palette the D3 Palette to determine the color scheme to use
+#' @param rebind A list of rebindings to apply to this function parameters.
+#' @param ... Other h9 parameters.
+#'
+#' @return A list with the pipeline specification.
+#' @export
+#'
+h9_bubble_chart <- function(h, label  = NULL, size  = NULL, palette  = NULL, rebind = NULL, ...) {
+
+  args <- as.list(match.call())
+  no_rebinds <- which(names(args) != "rebind")
+
+  h9_add_step(
+    h,
+    "bubbles",
+    rebind,
+    matched_call = args[no_rebinds]
+  )
+}
+
 #' Facets
 #'
 #' A chart of charts organized in a grid

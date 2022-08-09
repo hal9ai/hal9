@@ -63,7 +63,7 @@
   deps:
     - https://cdn.jsdelivr.net/npm/hal9-utils@latest/dist/hal9-utils.min.js
     - https://cdn.jsdelivr.net/npm/d3@6
-    - https://cdn.jsdelivr.net/npm/@observablehq/plot@0.1
+    - https://cdn.jsdelivr.net/npm/@observablehq/plot@latest
 **/
 
 data = await hal9.utils.toRows(data);
@@ -95,24 +95,17 @@ const getTitle = d => {
   return title;
 };
 
-var colorUniques = data.map(e => e[color]).filter((v, i, a) => a.indexOf(v) === i);
-const legend = hal9.utils.createLegend({ names: colorUniques, colors: d3[palette] });
-legend.style.color = hal9.isDark() ? 'white' : '';
-
-if (color) html.appendChild(legend);
-
 var plotScheme = palette.replace('scheme','');
-html.appendChild(Plot.plot({
-  marks: [colorUniques.map((_, i) => {
-    return Plot.dot(chartdata, {
+let plot = Plot.plot({
+  marks: [
+    Plot.dot(chartdata, {
       x: x ? 'x' : [],
       y: y ? 'y' : [],
       r: size ? 'size' : 5,
       fill: color ? 'color' : d3.schemeTableau10[0],
       title: d => getTitle(d),
-    })
-  }),
-  Plot.text(chartdata, {x: "x", y: "y", text: d => d.label, dy: -10})
+    }),
+    Plot.text(chartdata, { x: "x", y: "y", text: d => d.label, dy: -10 })
   ],
   x: {
     grid: true,
@@ -137,4 +130,11 @@ html.appendChild(Plot.plot({
   color: {
     scheme: color ? plotScheme : undefined,
   },
-}));
+});
+const legend = plot.legend('color', { style: { fontSize: (fontsize + 'px') } });
+if (legend) {
+  legend.style.position = 'absolute';
+  legend.style.right = '1em';
+  html.appendChild(legend);
+}
+html.appendChild(plot);

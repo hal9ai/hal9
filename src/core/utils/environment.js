@@ -26,24 +26,7 @@ export const getUserEnv = (env) => {
   return userHal9Env;
 }
 
-const isOtherDevelopment = () => {
-  if (typeof(window) === 'undefined') {
-    return false;
-  }
-  const origin = window.location.origin;
-  if (origin?.includes('mshome.net')) {
-    return origin;
-  }
-  const ancestorOrigin = window.location.ancestorOrigins?.[0];
-  if (ancestorOrigin?.includes('mshome.net')) {
-    return ancestorOrigin;
-  }
-  return false;
-}
-
 export const isDevelopment = () => {
-  if (isOtherDevelopment()) return true;
-
   if (typeof(window) == 'undefined') return false;
 
   return (!isElectron() && window.location.origin == 'file://') ||
@@ -73,8 +56,6 @@ export const getServerUrl = () => {
 
   if (hal9env == 'prod') return 'https://api.hal9.com';
 
-  if (isOtherDevelopment()) return isOtherDevelopment();
-
   if (userHal9Env === 'local' || isDevelopment()) return getLocalhostServerUrl();
 
   return 'https://api.devel.hal9.com';
@@ -88,8 +69,6 @@ export const getServerCachedUrl = () => {
   const hal9env = getId();
 
   if (hal9env == 'prod') return 'https://hal9.com';
-
-  if (isOtherDevelopment()) return isOtherDevelopment();
 
   if (userHal9Env === 'local' || isDevelopment()) return getLocalhostServerUrl();
 

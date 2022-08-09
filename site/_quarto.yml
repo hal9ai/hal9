@@ -11,6 +11,7 @@ website:
       - href: index.qmd
         text: Home
       - getstarted.qmd
+      - serverless.qmd
       - examples.qmd
       - href: ./r
         text: R documentation

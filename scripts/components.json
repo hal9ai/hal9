@@ -1128,7 +1128,7 @@
       "label": "Website",
       "description": "Embed a website and load a URL",
       "icon": "fa-light fa-browser",
-      "dragdrop": true,
+      "dragdrop": false,
       "build": "true"
     }
   ]
