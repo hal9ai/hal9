@@ -28,7 +28,15 @@ class hal9:
     self.last_step_id = 0
 
   def add_step(self, step_name, **kwargs):
+    """Adds a generic step to a pipeline instance.
 
+    This is 
+
+    >>> pipeline = h9.create()
+    >>> pipeline.add_step("load")
+    >>> pipeline.show()
+
+    """
     new_id = self.last_step_id+1
 
     json_metadata = open(pkg_resources.resource_filename('hal9', 'data/'+step_name+'.js'))
@@ -45,8 +53,6 @@ class hal9:
 
     param_dict = dict(zip(param_names, step_param_list))
 
-    print(kwargs)
-
     for parameter_name, parameter_value in kwargs.items():
       standard_value = param_dict[parameter_name]["value"]
 
@@ -62,7 +68,7 @@ class hal9:
           id_value = id_value + 1
 
           if element["control"] == "dataframe":
-            element["value"] = encode(parameter_value)
+            element["value"] = encode(parameter_value).replace("\"", "")
           else:
             element["value"] = parameter_value
       else:
@@ -74,6 +80,15 @@ class hal9:
     self.params[new_id] = param_dict
 
   def show(self, height = 400, **kwargs):
+    """Renders the pipeline content on a notebook.
+
+    This functions produces a HTML display block rendering the pipeline content.
+
+    >>> pipeline = h9.create()
+    >>> pipeline.add_step("load")
+    >>> pipeline.show()
+
+    """
     display(HTML("""<script>
     window.hal9 = {
       data: "",
