@@ -2,7 +2,7 @@
 title: "Interactive Data Apps without Web Dev"
 ---
 
-The `hal9` package provides a code-first WYSIWYG application [designer](#designer), a set of application [controls](#controls), an [events](#events) framework to build data applications, and a linbrary of [serverless](#serverless) transformations. You can then publish these applications as static HTML files, or perform complex event-based operations with Python and R.
+The `hal9` package provides a code-first WYSIWYG application [designer](#designer), a set of application [controls](#controls), an [events](#events) framework to build data applications. You can then publish these applications as static HTML files, perform complex event-based operations with Python and R, or build fully [serverless](/serverless) applications.
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(python.reticulate = FALSE)
