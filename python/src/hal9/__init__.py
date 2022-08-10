@@ -18,13 +18,14 @@ def add_id_to_list(iterable):
         id = id+1
     return(iterable)
 
-class hal9:
+class h9:
   """hal9 pipeline class"""
 
   def __init__(self):
     self.params = {}
     self.outputs = {}
     self.steps = []
+    self.html_code = ""
     self.last_step_id = 0
 
   def add_step(self, step_name, **kwargs):
@@ -79,7 +80,109 @@ class hal9:
     
     self.params[new_id] = param_dict
 
+    return(self)
+
+  def show2(self, height = 400, **kwargs):
+
+    a = 1
+
+    html_code = """
+      <script src = "https://cdn.jsdelivr.net/npm/hal9@0.2.78/dist/hal9.min.js">
+      <div style='width: 100%; padding: 6px; height: 400px'>
+        <div id='app'>
+        </div>
+      </div>
+      <script>
+        const css = `
+          #output {
+            display: flex;
+            flex-direction: column;
+          }`;
+
+        const pipeline_json = {
+          "steps": [{"name": "dataframe", "label": "DataFrame", "language": "javascript", "description": "Loads a dataframe", "icon": "fa-light fa-columns-3", "params": {}, "id": 1}],
+          "params": {"1": {"dataset": {"name": "dataset", "label": "Dataset", "description": "The dataframe to load", "value": [{"control": "dataframe", "id": 0, "value": [{cyl:1,mpg:2},{cyl:2,mpg:3 }] }], "static": true}}},
+          "outputs": {},
+          "scripts": [],
+          "version": "0.0.1"
+        }
+
+        hal9.init({
+          iframe: true,
+          html: document.getElementById('app'),
+          api: "https://cdn.jsdelivr.net/npm/hal9@0.2.78/dist/hal9.min.js",
+          css: css,
+          editable: true,
+          mode: "run",
+          pipeline: pipeline_json
+        }, {}).then(function(hal9) {
+          if (hal9) {
+            hal9.load(pipeline_json).then(function(pid) {
+              hal9.run(pid, { html: 'output', shadow: false });
+            });
+          }
+        });
+      </script>"""
+
+    self.html_code = html_code
+
+  def load(self, dataframe, rebinds):
+    """Loads a dataframe
+
+    :param DataFrame dataframe: Table to load
+    :param dict rebinds: Possible rebinds to make
+
+    >>> pipeline = h9.create()
+    >>> pipeline.load(pandas.DataFrame({"col1": [1,2], "col2": [1,2]}))
+    >>> pipeline.show()
+
+    """
+    self.add_step("load", dataframe, rebinds)
+
+    return(self)
+
   def show(self, height = 400, **kwargs):
+    """Renders the pipeline content on a notebook.
+
+    This functions produces a HTML display block rendering the pipeline content.
+
+    >>> pipeline = h9.create()
+    >>> pipeline.add_step("load")
+    >>> pipeline.show()
+
+    """
+    display(HTML("""<div id="app"></div><script>        const css = `
+          #output {
+            display: flex;
+            flex-direction: column;
+          }`;
+
+        const pipeline_json = {
+        "steps": """ + encode(self.steps) + """",
+        "params": """ + encode(self.params) + """",
+        "outputs": """ + encode(self.outputs) + """",
+        scripts": { "1": "data = window.hal9.data" },
+        "version": "0.0.1"
+      }
+
+        hal9.init({
+          iframe: true,
+          html: document.getElementById('app'),
+          api: "https://cdn.jsdelivr.net/npm/hal9@0.2.78/dist/hal9.min.js",
+          css: css,
+          editable: true,
+          mode: "run",
+          pipeline: pipeline_json
+        }, {}).then(function(hal9) {
+          if (hal9) {
+            hal9.load(pipeline_json).then(function(pid) {
+              hal9.run(pid, { html: 'output', shadow: false });
+            });
+          }
+        });
+      </script>"""))
+
+  def old_show(self, height = 400, **kwargs):
     """Renders the pipeline content on a notebook.
 
     This functions produces a HTML display block rendering the pipeline content.
@@ -104,17 +207,3 @@ class hal9:
     <script defer src="https://hal9.com/hal9.notebook.js"></script>
     <div style='width: 100%; padding: 6px; height: """ + str(height) + "px'><div id='app'></div></div>"
     ))
-
-def show(data, height = 400, **kwargs):
-  display(HTML("""<script>
-    window.hal9 = {
-      data: """ + encode(data) + """,
-      pipeline: {
-        "steps": [ { "name": "javascript", "label": "Source", "language": "javascript", "id": 1, } ],
-        "params": {}, "outputs": {}, "scripts": { "1": "data = window.hal9.data" },
-        "version": "0.0.1"
-      }
-    }
-  </script>
-  <script defer src="https://hal9.com/hal9.notebook.js"></script>
-  <div style='width: 100%; padding: 6px; height: """ + str(height) + "px'><div id='app'></div></div>"))
