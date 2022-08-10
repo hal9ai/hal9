@@ -7,6 +7,7 @@ import * as screenshot from '../core/utils/screenshot';
 import * as htmloutput from '../core/htmloutput';
 import * as layout from '../core/layout';
 import * as exportto from '../core/exportto';
+import { internal } from './internal';
 
 const runRemote = async (lambda, context) => {
   if (typeof(lambda) != 'function') {
@@ -34,7 +35,7 @@ const runRemote = async (lambda, context) => {
   return await res.json();
 };
 
-export const runPipeline = async (pipelineid, context) => {
+const runPipeline = async (pipelineid, context) => {
   if (!context) context = {};
   var updated = await pipelines.run(
     pipelineid,
@@ -128,225 +129,33 @@ export async function fetchPipeline(pipelinepath) {
   return JSON.parse(await pipelineResp.json());
 }
 
-export async function setEnv(env) {
+function NativeAPI(options) {
+  const me = this;
+  me.options = options;
+
+  Object.assign(this, internal);
+
+  Object.assign(this, {
+    create: create,
+    step: step,
+    load: load,
+    fetch: fetchPipeline,
+    run: run,
+  });
 }
 
-export async function datasetsSave(dataurl) {
-  return datasets.save(dataurl);
+export const init = (options) => {
+  options = options ? options : {};
+
+  const api = new NativeAPI(options);
+
+  if (options.makeglobal === true) {
+    // used when initializing iframe which does not support returning callbacks
+    window.hal9 = options.api ?? api;
+    return;
+  }
+  
+  return api;
 }
 
-export async function exporttoGetSaveText(pipelineid, padding, alsoSkip) {
-  return await exportto.getSaveText(pipelineid, padding, alsoSkip);
-}
-
-export async function exporttoGetHtml(pipelineid) {
-  return await exportto.getHtml(pipelineid);
-}
-
-export async function exporttoGetHtmlRemote(pipelinepath) {
-  return await exportto.getHtmlRemote(pipelinepath);
-}
-
-export async function exporttoGetPythonScript(pipelineid) {
-  return await exportto.getPythonScript(pipelineid);
-}
-
-export async function exporttoGetRScript(pipelineid) {
-  return await exportto.getRScript(pipelineid);
-}
-
-export async function pipelinesCreate(steps) {
-  return await pipelines.create(steps);
-}
-
-export async function pipelinesUpdate(pipelineid, steps) {
-  return await pipelines.update(pipelineid, steps);
-}
-
-export async function pipelinesRemove(pipelineid) {
-  return await pipelines.remove(pipelineid);
-}
-
-export async function pipelinesRunStep(pipelineid, sid, context, partial) {
-  return await pipelines.runStep(pipelineid, sid, context, partial);
-}
-
-export async function pipelinesRun(pipelineid, context, partial, stepstopid) {
-  return await pipelines.run(pipelineid, context, partial, stepstopid);
-}
-
-export async function pipelinesGetError(pipelineid) {
-  return await pipelines.getError(pipelineid);
-}
-
-export async function pipelinesGetParams(pipelineid, sid) {
-  return await pipelines.getParams(pipelineid, sid);
-}
-
-export async function pipelinesSetParams(pipelineid, sid, params) {
-  return await pipelines.setParams(pipelineid, sid, params);
-}
-
-export async function pipelinesMergeParams(pipelineid, sid, params) {
-  return await pipelines.mergeParams(pipelineid, sid, params);
-}
-
-export async function pipelinesGetSteps(pipelineid) {
-  return await pipelines.getSteps(pipelineid);
-}
-
-export async function pipelinesGetStepsWithHeaders(pipelineid) {
-  return await pipelines.getStepsWithHeaders(pipelineid);
-}
-
-export async function pipelinesUpdateStep(pipelineid, step) {
-  return await pipelines.updateStep(pipelineid, step);
-}
-
-export async function pipelinesAddStep(pipelineid, step) {
-  return await pipelines.addStep(pipelineid, step);
-}
-
-export async function pipelinesRemoveStep(pipelineid, step) {
-  return await pipelines.removeStep(pipelineid, step);
-}
-
-export async function pipelinesMoveStep(pipelineid, stepid, change) {
-  return await pipelines.moveStep(pipelineid, stepid, change);
-}
-
-export async function pipelinesGetNested(pipelineid) {
-  return await pipelines.getNested(pipelineid);
-}
-
-export async function pipelinesGetStep(pipelineid, sid) {
-  return await pipelines.getStep(pipelineid, sid);
-}
-
-export async function pipelinesGetRebindablesForStep(pipelineid, step) {
-  return await pipelines.getRebindablesForStep(pipelineid, step);
-}
-
-export async function pipelinesGetSources(pipelineid, sid) {
-  return await pipelines.getSources(pipelineid, sid);
-}
-
-export async function pipelinesGetStepError(pipelineid, sid) {
-  return await pipelines.getStepError(pipelineid, sid);
-}
-
-export async function pipelinesSetScript(pipelineid, sid, script) {
-  return await pipelines.setScript(pipelineid, sid, script);
-}
-
-export async function pipelinesGetScript(pipelineid, sid) {
-  return await pipelines.getScript(pipelineid, sid);
-}
-
-export async function pipelinesGetHashable(pipelineid) {
-  return await pipelines.getHashable(pipelineid);
-}
-
-export async function pipelinesLoad(pipeline) {
-  return await pipelines.load(pipeline);
-}
-
-export async function pipelinesGetMaxId(pipelineid) {
-  return await pipelines.getMaxId(pipelineid);
-}
-
-export async function pipelinesGetGlobal(pipelineid, name) {
-  return await pipelines.getGlobal(pipelineid, name);
-}
-
-export async function pipelinesSetGlobal(pipelineid, name, data) {
-  return await pipelines.setGlobal(pipelineid, name, data);
-}
-
-export async function pipelinesGetGlobalNames(pipelineid) {
-  return await pipelines.getGlobalNames(pipelineid);
-}
-
-export async function pipelinesGetGlobals(pipelineid) {
-  return await pipelines.getGlobals(pipelineid);
-}
-
-export async function pipelinesInvalidateStep(pipelineid, sid) {
-  return await pipelines.invalidateStep(pipelineid, sid);
-}
-
-export async function pipelinesSetMetadataProperty(pipelineid, name, value) {
-  return await pipelines.setMetadataProperty(pipelineid, name, value);
-}
-
-export async function pipelinesGetMetadata(pipelineid) {
-  return await pipelines.getMetadata(pipelineid);
-}
-
-export async function pipelinesSetAppProperty(pipelineid, name, value) {
-  return await pipelines.setAppProperty(pipelineid, name, value);
-}
-
-export async function pipelinesGetApp(pipelineid) {
-  return await pipelines.getApp(pipelineid);
-}
-
-export async function pipelinesAbort(pipelineid) {
-  return await pipelines.abort(pipelineid);
-}
-
-export async function pipelinesIsAborted(pipelineid) {
-  return await pipelines.isAborted(pipelineid);
-}
-
-export async function screenshotCapture(output, options = {}) {
-  return await screenshot.capture(output, options);
-}
-
-export async function screenshotResize(sourceImageData, width, height) {
-  return await screenshot.resize(sourceImageData, width, height);
-}
-
-export function htmloutputSetIframeStyle(name, value) {
-  // only for iframe
-}
-
-export async function htmloutputGetScrollWidth() {
-  return htmloutput.getScrollWidth();
-}
-
-export async function htmloutputGetScrollLeft() {
-  return htmloutput.getScrollLeft();
-}
-
-export async function htmloutputSetScrollLeft(pixels) {
-  htmloutput.setScrollLeft(pixels);
-}
-
-export async function htmloutputGetScrollHeight() {
-  return htmloutput.getScrollHeight();
-}
-
-export async function htmloutputGetScrollTop() {
-  return htmloutput.getScrollTop();
-}
-
-export async function htmloutputSetScrollTop(pixels) {
-  htmloutput.setScrollTop(pixels);
-}
-
-export async function layoutRegenerateForDocumentView(pipelineid, removeOldLayout) {
-  return await layout.regenerateForDocumentView(pipelineid, removeOldLayout);
-}
-
-export async function layoutStoreAppStepLayouts(pipelineid) {
-  return layout.storeAppStepLayouts(pipelineid);
-}
-
-export async function layoutApplyStepLayoutsToApp(stepLayouts) {
-  return layout.applyStepLayoutsToApp(stepLayouts);
-}
-
-export async function layoutSetHal9StepOverflowProperty(overflowValue) {
-  return layout.setHal9StepOverflowProperty(overflowValue);
-}
+export default init();

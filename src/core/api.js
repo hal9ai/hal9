@@ -37,6 +37,16 @@ export const create = (pipelineid, sid, context, params, input) => {
       var state = current ? current.api : {};
       return state ? state : defaultValue;
     },
+    // Updates state for a given dictionary value
+    updateState: function(entry, value, invalidate) {
+      var current = pipelines.getState(pipelineid, sid);
+      current = current ? current : {};
+      current.api = current.api ? current.api : {};
+      if (value) current.api[entry] = value;
+      pipelines.setState(pipelineid, sid, current);
+      if (invalidate) doInvalidate();
+      return current.api[entry];
+    },
     // Notify that a pipeline step has changed
     invalidate: doInvalidate,
     // Notify when invalidation triggers
