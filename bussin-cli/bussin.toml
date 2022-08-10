@@ -1,0 +1,4 @@
+name = "demo app"
+
+[runtimes]
+r = "/usr/local/bin/R"
