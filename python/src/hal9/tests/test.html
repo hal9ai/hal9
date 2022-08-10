@@ -1,0 +1,56 @@
+<html>
+    <body>
+        <div style='width: 100%; padding: 6px; height: 400px'>
+            <div id='app'>
+            </div>
+        </div>
+    </body>
+</html>
+<script>
+    const css = `
+      #output {
+        display: flex;
+        flex-direction: column;
+      }
+    `;
+
+    const pipeline_json = {
+      "steps": [{"name": "dataframe", "label": "DataFrame", "language": "javascript", "description": "Loads a dataframe", "icon": "fa-light fa-columns-3", "params": {}, "id": 1}],
+      "params": {"1": {"dataset": {"name": "dataset", "label": "Dataset", "description": "The dataframe to load", "value": [{"control": "dataframe", "id": 0, "value": [{cyl:1,mpg:2},{cyl:2,mpg:3 }] }], "static": true}}},
+      "outputs": {},
+      "scripts": [],
+      "version": "0.0.1"
+    }
+
+    const render = function() {
+      hal9.init({
+        iframe: true,
+        html: document.getElementById('app'),
+        api: "https://cdn.jsdelivr.net/npm/hal9@0.2.78/dist/hal9.min.js",
+        css: css,
+        editable: true,
+        mode: "run",
+        pipeline: pipeline_json
+      }, {}).then(function(hal9) {
+        if (hal9) {
+          hal9.load(pipeline_json).then(function(pid) {
+            hal9.run(pid, { html: 'output', shadow: false });
+          });
+        }
+      });
+    }
+
+    if (typeof(hal9) == 'undefined') {
+      const script = document.createElement('script');
+      script.id = 'hal9-script';
+      script.src = "https://cdn.jsdelivr.net/npm/hal9@0.2.78/dist/hal9.min.js";
+      document.body.appendChild(script);
+
+      script.addEventListener('load', function() {
+        render()
+      });
+    }
+    else {
+      render();
+    }
+  </script>
