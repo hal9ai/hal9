@@ -18,7 +18,7 @@
 h9_create <- function(
   width = NULL,
   height = NULL,
-  environment = 'prod',
+  environment = 'devel',
   iframe = TRUE,
   version = "0.3.0",
   mode = c("run", "design"),
