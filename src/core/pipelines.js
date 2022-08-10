@@ -350,10 +350,11 @@ const preparePartial = (pipeline, context, partial, renderid) => {
   if (typeof (html) === 'object') {
     const isFullView = renderid === null || renderid === undefined;
 
+    const hasSteps = pipeline.steps.length > 0;
     const oneHasHtml = pipeline.steps.map(step => stepHasHtml(pipeline, step)).filter(e => e).length > 0;
-
+    
     // add support for viewing data tables
-    if (!isFullView || !oneHasHtml) {
+    if ((!isFullView || !oneHasHtml) && hasSteps) {
       if (!oneHasHtml) {
         renderid = pipeline.steps[pipeline.steps.length - 1].id;
       }

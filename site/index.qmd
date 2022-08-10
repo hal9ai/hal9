@@ -118,45 +118,41 @@ library(hal9)
 library(ggplot2)
 library(plotly)
 
-app <- h9_create()
-
-h9_slider(app, "slider", on_update = function(value) {
+h9_slider("slider", on_update = function(value) {
   h9_set("slider_value", value)
 })
 
-h9_html(app, name = "scatterplot", {
+h9_html(name = "scatterplot", {
   df <- iris |> slice_sample(prop = h9_get("slider_value")/100)
   file <- tempfile(fileext=".html")
   (ggplot(df, aes(x=Sepal.Length, y=Sepal.Width, color=Species)) + geom_point()) |> ggplotly() |> partial_bundle() |> htmlwidgets::saveWidget(file, selfcontained=TRUE)
   paste(readLines(file), collapse="")
 })
 
-h9_run(app)
+h9_run()
 ```
 
 ## Python
 
 ```{python, eval = FALSE}
-from hal9 import App
+import hal9 as h9
 import pandas as pd
 import statsmodels.api as sm
 import plotly.express as px
 
-app = App()
-
 iris = sm.datasets.get_rdataset("iris", "datasets", cache=True).data
-app.set("iris", pd.DataFrame(iris))
+h9.set("iris", pd.DataFrame(iris))
 
-app.slider("slider", on_update = lambda value: app.set("slider_val", value))
+h9.slider("slider", on_update = lambda value: h9.set("slider_val", value))
 
 def plotSample(value):
-  df = app.get("iris").sample(frac = value/100)
+  df = h9.get("iris").sample(frac = value/100)
   fig = px.scatter(x= df["Sepal.Length"], y= df["Sepal.Width"], color= "species")
   return fig.to_html(full_html= False)
 
-app.html(name = "scatter plot", lambda : plotSample(app.get("slider_val")))
+h9.html(name = "scatter plot", lambda : plotSample(h9.get("slider_val")))
 
-app.run()
+h9.run()
 ```
 
 :::

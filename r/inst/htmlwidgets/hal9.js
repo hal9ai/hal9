@@ -18,9 +18,7 @@ HTMLWidgets.widget({
           }
         `;
 
-        if (x.mode == 'default') {
-          x.mode = x.pipeline_json.steps.length > 0 ? 'run' : 'design';
-        }
+        const mode = x.pipeline_json.steps.length > 0 ? 'run' : 'design';
 
         const render = function() {
           hal9.init({
@@ -29,12 +27,14 @@ HTMLWidgets.widget({
             api: x.library,
             css: css,
             editable: true,
-            mode: x.mode,
-            pipeline: x.pipeline_json
+            pipeline: x.pipeline_json,
+            env: 'devel'
           }, {}).then(function(hal9) {
             if (hal9) {
               hal9.load(x.pipeline_json).then(function(pid) {
-                hal9.run(pid, { html: 'output', shadow: false });
+                hal9.run(pid, { html: 'output', shadow: false }).then(function() {
+                  if (mode == 'design') hal9.design(pid);
+                })
               });
             }
           });

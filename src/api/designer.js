@@ -12,30 +12,35 @@ export const getDesignerLoaderHtml = (secret) => {
   `
 }
 
-export const launchDesigner = (html, pipeline) => {
-  html.innerHTML = `
-    <div style='width: 100%; padding: 6px; height: 100%'>
-      <div id='app'></div>
-    </div>
-  `
-
-  window.hal9 = {
-    pipeline: pipeline,
-    callbacks: window.hal9 ? window.hal9.callbacks : undefined,
-    params: window.hal9 ? window.hal9.params : undefined
-  }
-
+export const launchDesigner = async (hal9, options, pid) => {
   const script = document.createElement('script');
-  // TODO: Fix with prod or make configurable
-  script.src = 'https://devel.hal9.com/hal9.notebook.js';
+  const libraries = {
+    local: 'http://localhost:8080/hal9.notebook.js',
+    devel: 'https://devel.hal9.com/hal9.notebook.js',
+    prod: 'https://hal9.com/hal9.notebook.js'
+  }
+  script.src = libraries[options.env];
+  var waitLoad = new Promise((accept, reject) => {
+    script.addEventListener('load', accept);
+    script.addEventListener('error', reject);
+  });
+
   document.head.appendChild(script);
+  await waitLoad;
+
+  await h9d.init({
+    hal9: hal9,
+    pid: pid,
+    html: 'designer',
+    output: options.html,
+  }, {});
 }
 
 export const registerDesignerLoader = (html, iframe, secret, pipeline) => {
   const onResult = function(event) {
     if (!event.data || event.data.secret != secret || event.data.id != 'designer') return;
 
-    iframe.remove();
+    alert('TODO: Launch Designer')
 
 
   };
