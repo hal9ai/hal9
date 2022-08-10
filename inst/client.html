@@ -70,12 +70,8 @@
 
         await hal9.run(pid, {
           html: 'output',
+          iframe: true,
           shadow: false,
-          events: {
-            onStart: onStart,
-            onEnd: onEnd,
-            onError: onError
-          },
           params: params
         });
 
@@ -100,14 +96,14 @@
 
       const localhost = window.location.search.includes('localhost');
 
-      const environment = localhost ? 'localhost' : 'devel';
+      const environment = localhost ? 'local' : 'devel';
       const libraries = {
-        localhost: 'http://localhost:8000/dist/hal9.js',
-        devel: 'https://cdn.jsdelivr.net/npm/hal9@0.2.95/dist/hal9.dev.js',
+        local: 'http://localhost:8000/dist/hal9.js',
+        devel: 'https://cdn.jsdelivr.net/npm/hal9@0.3.0/dist/hal9.dev.js',
       }
 
       const render = async function() {
-        const app = document.getElementById('app')
+        const app = document.getElementById('output')
         const hostopt = JSON.parse('__options__');
 
         var resp = await fetch('/pipeline')
@@ -115,30 +111,30 @@
           pipeline = await resp.json()
         }
 
-        await hal9.init({
+        hal9 = await hal9.init({
           iframe: true,
           html: app,
           api: libraries[environment],
-          editable: true,
+          editable: hostopt.mode == 'run',
           mode: hostopt.mode,
           pipeline: pipeline,
           events: {
             onStart: onStart,
             onEnd: onEnd,
             onError: onError
-          }
+          },
+          env: environment
         }, {});
 
-        if (hostopt.mode == 'run') {
-          pid = await hal9.load(pipeline);
+        pid = await hal9.load(pipeline);
+
+        if (hostopt.mode == 'design') {
+          await hal9.design(pid);
+        } else {
           hal9.run(pid, {
+            iframe: true,
             html: 'output',
-            shadow: false,
-            events: {
-              onStart: onStart,
-              onEnd: onEnd,
-              onError: onError
-            }
+            shadow: false
           });
         }
       }
@@ -153,7 +149,8 @@
       });
     </script>
     <div style="width: 100%; height: 100%">
-      <div id="app"></div>
+      <div id="output"></div>
+      <div id="designer"></div>
     </div>
   </body>
 </html>
