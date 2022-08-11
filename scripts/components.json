@@ -150,7 +150,7 @@
       "serverWorker": true,
       "label": "Twitter",
       "description": "Search Twitter with a Hal9 server worker",
-      "icon": "icon-twitter",
+      "icon": "fa-brands fa-twitter",
       "build": "false"
     },
     {
