@@ -3,13 +3,13 @@ source("./demo-user-script.R")
 #* @get /
 #* @serializer html
 function() {
-  bussin:::client_html(mode = "run")
+  h9:::client_html(mode = "run")
 }
 
 #* @get /design
 #* @serializer html
 function() {
-  bussin:::client_html(mode = "design")
+  h9:::client_html(mode = "design")
 }
 
 #* @get /pipeline
@@ -21,5 +21,5 @@ function() {
 #* @post /eval
 #* @param manifest:object
 function(manifest) {
-   bussin:::process_request(manifest)
+   h9:::process_request(manifest)
 }

@@ -40,7 +40,7 @@ fn main() {
                 Some(app_dir) => Path::new(app_dir),
                 None => Path::new("."),
             };
-            let config = read_config(&config_path.join("bussin.toml")).unwrap();
+            let config = read_config(&config_path.join("hal9.toml")).unwrap();
         }
         None => {}
     }
