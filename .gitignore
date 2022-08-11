@@ -52,5 +52,5 @@ rsconnect/
 
 .DS_Store
 inst/pipeline.json
-bussin-cli/target
+cli/target
 */*.lock

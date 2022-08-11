@@ -29,7 +29,7 @@ register_node <- function(obj, uid) {
 }
 
 #' @export 
-bs_dropdown <- function(uid, values, on_update = NULL) {
+h9_dropdown <- function(uid, values, on_update = NULL) {
     values <- maybe_convert_to_fn(values)
     on_update <- maybe_convert_to_fn(on_update)
     Node$new(uid, "dropdown", values, list(on_update = on_update))
@@ -37,13 +37,13 @@ bs_dropdown <- function(uid, values, on_update = NULL) {
 }
 
 #' @export
-bs_textbox <- function(uid, default, on_update = NULL) {
+h9_textbox <- function(uid, default, on_update = NULL) {
     default <- maybe_convert_to_fn(default)
     on_update <- maybe_convert_to_fn(on_update)
     Node$new(uid, "textbox", default, list(on_update=on_update))
 }
 #' @export
-bs_select <- function(uid, values, on_update = NULL) {
+h9_select <- function(uid, values, on_update = NULL) {
     values <- maybe_convert_to_fn(values)
     on_update <- maybe_convert_to_fn(on_update)
     Node$new(uid, "dropdown", values, list(on_update = on_update))
@@ -52,7 +52,7 @@ bs_select <- function(uid, values, on_update = NULL) {
 
 
 #' @export 
-bs_code <- function(uid, code) {
+h9_code <- function(uid, code) {
     code <- substitute(code)
     fn_run_code <- function() eval(code)
     Node$new(uid, "R_code", fn_run_code)
@@ -68,13 +68,13 @@ maybe_convert_to_fn <- function(x) {
 }
 
 #' @export 
-bs_set <- function(value, name) {
+h9_set <- function(value, name) {
     .globals_data[[name]] <- value
     invisible(value)
 }
 
 #' @export
-bs_get <- function(name) {
+h9_get <- function(name) {
     .globals_data[[name]]
 }
 
@@ -109,7 +109,7 @@ process_request <- function(req) {
 client_html <- function(...) {
   options <- list(...)
 
-  html <- paste(readLines(system.file("client.html", package = "bussin")), collapse = '\n')
+  html <- paste(readLines(system.file("client.html", package = "hal9")), collapse = '\n')
 
   html <- gsub("__options__", gsub("'", "\\'", jsonlite::toJSON(options, auto_unbox = TRUE)), html)
 
