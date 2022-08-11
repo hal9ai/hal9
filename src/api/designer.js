@@ -31,8 +31,9 @@ export const launchDesigner = async (hal9, options, pid) => {
   if (!options.designer) {
     const html = typeof(options.html) === 'string' ? document.getElementById(options.html) : options.html;
     const designer = document.createElement('div');
-    options.designer = designer.id = "hal-designer-" + Math.round(Math.random() * 1000);
+    options.designer = designer.id = 'hal-designer-' + Math.round(Math.random() * 1000);
     html.parentNode.appendChild(designer);
+    html.style.position = 'absolute';
   }
 
   await h9d.init({
