@@ -1,9 +1,8 @@
 import * as native from './native';
 import * as iframe from './iframe';
-import clone from '../core/utils/clone';
 import { launchDesigner } from './designer';
 
-var api = Object.assign(native.init(), {
+const api = Object.assign(native.init(), {
   init: init,
 });
 
@@ -21,23 +20,22 @@ export async function init(options, hal9wnd) {
     } else {
       Object.assign(api, native.init(options, hal9wnd));
     }
-  }
-  else {
+
+    return api;
+  } else {
+    let instance;
     if (options.iframe) {
-      api = await iframe.init(options, hal9wnd);
-    }
-    else {
-      api = await native.init(options, hal9wnd);
+      instance = await iframe.init(options, hal9wnd);
+    } else {
+      instance = native.init(options, hal9wnd);
     }
 
-    if (api) {
-      api = Object.assign(api, {
-        design: async (pid) => {
-          await launchDesigner(api, options, pid)
-        }
-      })
-    }
+    instance = Object.assign(instance, {
+      design: async (pid) => {
+        await launchDesigner(instance, options, pid);
+      }
+    })
+
+    return instance;
   }
-
-  return api;
 }
