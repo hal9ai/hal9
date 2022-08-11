@@ -1,1 +1,0 @@
-{"name": "drop", "function": "drop", "source": "transforms/drop.js", "language": "javascript", "label": "Drop", "description": "Remove specific columns", "icon": "fa-light fa-layer-minus", "build": "true", "params": [{"name": "columns", "label": "Columns", "static": false, "single": false, "description": "The list of columns to remove", "value": []}]}
