@@ -30,13 +30,17 @@ export const launchDesigner = async (hal9, options, pid) => {
 
   if (!options.designer) {
     const html = typeof(options.html) === 'string' ? document.getElementById(options.html) : options.html;
-    const designer = document.createElement('div');
-    options.designer = designer.id = 'hal-designer-' + Math.round(Math.random() * 1000);
-    html.parentNode.appendChild(designer);
-
-    designer.style.height = html.style.height;
+    const designerHost = document.createElement('div');
+    
+    designerHost.style.height = html.style.height;
     html.parentNode.style.position = 'relative';
     html.style.position = 'absolute';
+
+    const designer = document.createElement('div');
+    options.designer = designer.id = 'hal-designer-' + Math.round(Math.random() * 1000);
+    designerHost.appendChild(designer);
+
+    html.parentNode.appendChild(designerHost);
   }
 
   await h9d.init({
