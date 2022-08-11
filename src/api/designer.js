@@ -33,6 +33,9 @@ export const launchDesigner = async (hal9, options, pid) => {
     const designer = document.createElement('div');
     options.designer = designer.id = 'hal-designer-' + Math.round(Math.random() * 1000);
     html.parentNode.appendChild(designer);
+
+    designer.style.height = html.style.height;
+    html.parentNode.style.position = 'relative';
     html.style.position = 'absolute';
   }
 
