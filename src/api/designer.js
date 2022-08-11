@@ -28,10 +28,17 @@ export const launchDesigner = async (hal9, options, pid) => {
   document.head.appendChild(script);
   await waitLoad;
 
+  if (!options.designer) {
+    const html = typeof(options.html) === 'string' ? document.getElementById(options.html) : options.html;
+    const designer = document.createElement('div');
+    options.designer = designer.id = "hal-designer-" + Math.round(Math.random() * 1000);
+    html.parentNode.appendChild(designer);
+  }
+
   await h9d.init({
     hal9: hal9,
     pid: pid,
-    html: 'designer',
+    html: options.designer,
     output: options.html,
   }, {});
 }
