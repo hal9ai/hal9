@@ -3,13 +3,13 @@ source("./demo-user-script.R")
 #* @get /
 #* @serializer html
 function() {
-  h9:::client_html(mode = "run")
+  hal9:::client_html(mode = "run")
 }
 
 #* @get /design
 #* @serializer html
 function() {
-  h9:::client_html(mode = "design")
+  hal9:::client_html(mode = "design")
 }
 
 #* @get /pipeline
@@ -21,5 +21,5 @@ function() {
 #* @post /eval
 #* @param manifest:object
 function(manifest) {
-   h9:::process_request(manifest)
+  hal9:::process_request(manifest)
 }
