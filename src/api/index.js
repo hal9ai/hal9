@@ -23,19 +23,21 @@ export async function init(options, hal9wnd) {
 
     return api;
   } else {
-    let instance;
+    let newApi;
     if (options.iframe) {
-      instance = await iframe.init(options, hal9wnd);
+      newApi = await iframe.init(options, hal9wnd);
     } else {
-      instance = native.init(options, hal9wnd);
+      newApi = native.init(options, hal9wnd);
     }
 
-    instance = Object.assign(instance, {
-      design: async (pid) => {
-        await launchDesigner(instance, options, pid);
-      }
-    })
+    if (newApi) {
+      Object.assign(newApi, {
+        design: async (pid) => {
+          await launchDesigner(newApi, options, pid);
+        }
+      });
+    }
 
-    return instance;
+    return newApi;
   }
 }
