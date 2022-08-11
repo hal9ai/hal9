@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "bussin"
+name = "hal9"
 version = "0.0.1"
 description = "Design Interactive Data Apps Without Web Dev"
 authors = ["Anchit Sadana", "Hal9 Inc."]
