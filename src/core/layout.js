@@ -171,13 +171,28 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
 }
 
 // be very specific, in case someone put id="output" or class="hal9-step" in their block script
-const hal9StepSelector = ':root>body>#output>.hal9-step';
+const outputSelector = ':root>body>#output';
+const hal9StepSelector = outputSelector + '>.hal9-step';
+let iframeAlertShown = false;
+
+const verifyOutputLocation = () => {
+  if (!(document.querySelector(outputSelector))) {
+    const errorMessage = 'Error: App layouts require an iframe';
+    if (!iframeAlertShown) {
+      alert(errorMessage);
+      iframeAlertShown = true;
+    }
+    console.log(errorMessage);
+  }
+}
 
 const getHal9Steps = () => {
+  verifyOutputLocation();
   return document.querySelectorAll(hal9StepSelector);
 }
 
 const getHal9StepById = (stepId) => {
+  verifyOutputLocation();
   return document.querySelector(hal9StepSelector + '-' + stepId);
 }
 
