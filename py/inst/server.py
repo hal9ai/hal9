@@ -1,7 +1,7 @@
 from typing import Any, Dict, Union
 import json
 from fastapi import FastAPI
-import bussin
+import hal9 as h9
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 import demoUserScript
@@ -17,13 +17,13 @@ async def get_pipeline():
         
 @app.get('/', response_class=HTMLResponse)
 async def run_client():
-    return bussin.__get_designer(mode = "run")
+    return h9.__get_designer(mode = "run")
 
 @app.get('/design', response_class=HTMLResponse)
 async def get_designer():
-    return bussin.__get_designer(mode = "design")
+    return h9.__get_designer(mode = "design")
 
 @app.post("/eval")
 async def create_item(manifest: Manifest):
-    return bussin.__process_request(manifest.manifest)
+    return h9.__process_request(manifest.manifest)
 
