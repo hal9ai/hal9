@@ -1,11 +1,11 @@
 # bussin
 
-CDesign Interactive Data Apps Without Web Dev
+Design Interactive Data Apps Without Web Dev
 
 ## Installation
 
 ```bash
-$ pip install bussin
+$ pip install hal9
 ```
 
 ## Usage
@@ -18,8 +18,8 @@ Interested in contributing? Check out the contributing guidelines. Please note t
 
 ## License
 
-`bussin` was created by Anchit Sadnaa. It is licensed under the terms of the MIT license.
+`hal9` was created by Anchit Sadana, Kevin Kuo and Javier Luraschi. It is licensed under the terms of the MIT license.
 
 ## Credits
 
-`bussin` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
+`hal9` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).

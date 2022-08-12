@@ -54,7 +54,7 @@ def __process_request(request: dict) -> None:
 
 def __get_designer(**options: dict) -> str:
     options = json.dumps(options)
-    with open('../../inst/client.html') as f:
+    with open('../../r/inst/client.html') as f:
         html = f.read()
     html = html.replace("__options__", options)
     return html

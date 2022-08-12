@@ -12,7 +12,7 @@ class Manifest(BaseModel):
 
 @app.get('/pipeline')
 async def get_pipeline():
-    with open('../../inst/pipeline.json') as f:
+    with open('../../r/inst/pipeline.json') as f:
         return f.read()
         
 @app.get('/', response_class=HTMLResponse)
@@ -26,4 +26,3 @@ async def get_designer():
 @app.post("/eval")
 async def create_item(manifest: Manifest):
     return h9.__process_request(manifest.manifest)
-
