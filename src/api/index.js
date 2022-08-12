@@ -12,6 +12,7 @@ export async function init(options, hal9wnd) {
   hal9wnd = hal9wnd ? hal9wnd : window.hal9;
 
   if (options.inplace) {
+    const oldInit = api.init;
     for (const key in api) {
       delete api[key];
     }
@@ -20,6 +21,7 @@ export async function init(options, hal9wnd) {
     } else {
       Object.assign(api, native.init(options, hal9wnd));
     }
+    api.init = oldInit;
 
     return api;
   } else {
@@ -36,6 +38,8 @@ export async function init(options, hal9wnd) {
           await launchDesigner(newApi, options, pid);
         }
       });
+      // init shouldn't be called on newApi again
+      delete newApi.init;
     }
 
     return newApi;
