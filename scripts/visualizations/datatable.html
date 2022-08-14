@@ -1,0 +1,45 @@
+<!--
+  input: [data]
+  params:
+    - name: removeCols
+      label: Columns to Remove
+      value:
+        - control: textbox
+          value: 
+  output: [  html ]
+-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
+<table id="table_id" class="display" style="width: 100%">
+  <thead>
+      <tr id="tableheaders_id">
+      </tr>
+  </thead>
+</table>
+
+<script>
+  let columns2Remove=[]
+  if(removeCols.length!=0){
+    columns2Remove = removeCols.split(',');
+  }
+  columnsName = []
+  Object.keys(data[0]).forEach(key => {
+    if(!columns2Remove.includes(key)){
+      columnsName.push({data:key})
+    }
+  });
+  $('#table_id').DataTable( {
+      data: data,
+     columns: columnsName
+  } );
+  let headerElement = document.getElementById("tableheaders_id");
+  for(let name of columnsName){
+    const hName = document.createElement('th');
+    hName.innerText=name.data
+    headerElement.appendChild(hName)
+  }
+</script>
