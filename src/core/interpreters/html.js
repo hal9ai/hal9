@@ -50,7 +50,7 @@ export default async function(html, header, context) {
           const loaded = new Promise((resolve, reject) => {
             const errorHandler = function(e) {
               window.removeEventListener('error', errorHandler);
-              reject(e.message);
+              reject('Failed to load ' + e.srcElement.src + (e.message ? ': ' + e.message : ''));
             }
 
             const loadHandler = function() {
