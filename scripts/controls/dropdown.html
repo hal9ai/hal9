@@ -41,6 +41,7 @@
     watch: {
       value: function(value) {
         hal9.updateState('dropdown', value, true);
+        hal9.triggerEvent('changed', value)
       }
     }
   })

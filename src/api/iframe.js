@@ -107,7 +107,10 @@ function IFrameAPI(options, hal9wnd, config) {
       context.events = {
         onStart: me.options.events.onStart,
         onEnd: me.options.events.onEnd,
-        onError: me.options.events.onError
+        onError: me.options.events.onError,
+        onChange: me.options.events.onChange,
+        onEvent: me.options.events.onEvent,
+        onInvalidate: me.options.events.onInvalidate
       }
     }
   }

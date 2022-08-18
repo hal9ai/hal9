@@ -6,7 +6,12 @@ import clone from './utils/clone';
 
 export const create = (pipelineid, sid, context, params, input) => {
   const doInvalidate = function() {
-    if (context.invalidateSteps) {
+    const callback = context?.events?.onInvalidate;
+    if (callback) {
+      const step = pipelines.getStep(pipelineid, sid);
+      callback(step);
+    }
+    else if (context.invalidateSteps) {
       pipelines.invalidateStep(pipelineid, sid);
       context.invalidateSteps();
     }
@@ -88,6 +93,11 @@ export const create = (pipelineid, sid, context, params, input) => {
     },
     getOutputs: function() {
       return pipelines.getGlobals(pipelineid);
+    },
+    triggerEvent: function(name, value) {
+      const step = pipelines.getStep(pipelineid, sid);
+      const callback = context?.events?.onEvent;
+      if (callback) callback(step, name, value);
     }
   }
 }
