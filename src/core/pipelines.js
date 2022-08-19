@@ -117,6 +117,7 @@ const createInt = (steps /*: steps */, previous /*: pipeline */) /*: pipeline */
     error: undefined,
     version: '0.0.1',
     metadata: clone(previous.metadata),
+    app: clone(previous.app),
   };
 
   pipeline.steps = steps;
