@@ -5,12 +5,21 @@ import * as interpreter from '../interpreters/interpreter';
 
 import clone from '../utils/clone';
 
+function getHtmlForLocal(html, step) {
+  if (typeof(html) == 'function')
+    return html(step);
+  else if (typeof(html) == 'string')
+    return document.getElementsByClassName(html)[0];
+  else
+    return html;
+}
+
 export default class LocalExecutor extends Executor {
   async runStep() {
     var params = localparams.paramsForFunction(this.params, this.inputs, this.deps);
 
     // add html to params
-    params['html'] = this.context['html'] ? this.context['html'](this.step) : this.context['html'];
+    params['html'] = getHtmlForLocal(this.context['html'], this.step);
     if (this.deps && this.deps.hal9) this.deps.hal9.setHtml(params['html']);
 
     // retrieve cached hal9 datasets

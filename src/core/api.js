@@ -38,8 +38,9 @@ export const create = (pipelineid, sid, context, params, input) => {
     },
     // Loads the state for the current pipeline step
     getState: function(defaultValue) {
+      if (!defaultValue) defaultValue = {};
       var current = pipelines.getState(pipelineid, sid);
-      var state = current ? current.api : {};
+      var state = current ? current.api : undefined;
       return state ? state : defaultValue;
     },
     // Updates state for a given dictionary value

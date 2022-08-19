@@ -113,6 +113,10 @@ function IFrameAPI(options, hal9wnd, config) {
         onInvalidate: me.options.events.onInvalidate
       }
     }
+
+    if (me.options.manifest) {
+      context.manifest = me.options.manifest
+    }
   }
 
   me.init = async (options, hal9wnd) => {
@@ -228,6 +232,7 @@ function IFrameAPI(options, hal9wnd, config) {
       })
     },
     runStep: async (pipelineid, sid, context, partial) => {
+      if (!context) context = {};
       enhanceContext(context);
       return await post(me.config, "hal9.pipelines.runStep(params.pipelineid, params.sid, params.context, params.partial)", {
         pipelineid: pipelineid,
