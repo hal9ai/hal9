@@ -18,6 +18,13 @@ function() {
   paste0(readLines(file.path(getwd(), "pipeline.json")), collapse = "\n")
 }
 
+#* @post /pipeline
+#* @serializer text
+function(req) {
+  writeLines(req$postBody, file.path(getwd(), "pipeline.json"))
+  "{}"
+}
+
 #* @post /eval
 #* @param manifest:object
 function(manifest) {
