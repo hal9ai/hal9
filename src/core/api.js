@@ -98,6 +98,13 @@ export const create = (pipelineid, sid, context, params, input) => {
       const step = pipelines.getStep(pipelineid, sid);
       const callback = context?.events?.onEvent;
       if (callback) callback(step, name, value);
+    },
+    onEvent: function(name, callback) {
+      var current = pipelines.getState(pipelineid, sid);
+      current = current ? current : {};
+      current.events = current.events ? current.events : {};
+      current.events[name] = callback;
+      pipelines.setState(pipelineid, sid, current);
     }
   }
 }

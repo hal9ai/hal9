@@ -16,10 +16,11 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number 
     'globals',
     'layout',
     'outputs',
+    'events',
   ];
 
   for (var key in from) {
-    if (skip.includes(key) || alsoSkip.includes(key)) continue;
+    if (skip.includes(key) || alsoSkip.includes(key) || typeof(from[key]) == 'function') continue;
     pipeline[key] = clone(from[key]);
   }
 

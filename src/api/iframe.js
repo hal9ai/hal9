@@ -187,6 +187,13 @@ function IFrameAPI(options, hal9wnd, config) {
     isNotProduction: environment.isNotProduction
   };
 
+  me.events = {
+    onChange: (changes) => {
+      const callback = me.options?.events?.onChange;
+      if (callback) callback(changes);
+    }
+  };
+
   me.datasets = {
     save: async (dataurl) => {
       return await post(me.config, "hal9.datasets.save(params.dataurl)", {

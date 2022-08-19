@@ -180,6 +180,7 @@ const stepGetDefinition = (pipeline, step) => {
 export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, context /* context */, partial) /*: boolean */ => {
   var pipeline = store.get(pipelineid);
 
+  if (!partial) partial = preparePartial(pipeline, context, partial, sid);
   if (pipeline.aborted) throw 'Pipeline stopped before finishing'
 
   const step = stepFromId(pipeline, sid);
@@ -239,7 +240,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
           delete context.params[param];
         }
         else if (Object.keys(params).includes(param)) {
-          console.log('Param ' + param + ' of type ' + typeof(input[param]) + ' matched with param in step ' + step.name + '/' + step.id)
+          console.log('Param ' + param + ' of type ' + typeof(params[param]) + ' matched with param in step ' + step.name + '/' + step.id)
 
           params[param] = {
             id: paramIdx++, name: param, label: param, value: [{
@@ -347,6 +348,8 @@ const stepHasHtml = (pipeline, step) => {
 }
 
 const preparePartial = (pipeline, context, partial, renderid) => {
+  if (!partial) partial = function() {};
+
   var html = context.html;
   if (typeof (html) === 'object') {
     const isFullView = renderid === null || renderid === undefined;
@@ -431,8 +434,6 @@ const skipStep = (pipeline, step) => {
 
 export const run = async (pipelineid /*: pipelineid */, context /* context */, partial, stepstopid /* stepid */) /*: void */ => {
   debugIf('run');
-  if (!partial) partial = function() {};
-
   context.events?.onStart();
 
   var pipeline = store.get(pipelineid);

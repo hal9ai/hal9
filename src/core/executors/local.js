@@ -26,6 +26,10 @@ export default class LocalExecutor extends Executor {
       this.callbacks.onInvalidate(Object.assign({}, this.params, this.inputs));
     }
 
+    if (this.state?.events?.onParams) {
+      for (let param of Object.keys(params)) this.state.events.onParams(param, params[param]);
+    }
+
     return result;
   }
 }
