@@ -1,16 +1,18 @@
 from typing import Any, Dict, Union
-import json
+import uvicorn
 from fastapi import FastAPI
 import hal9 as h9
-from fastapi.responses import HTMLResponse
+import os
+from fastapi.responses import HTMLResponse, PlainTextResponse
 from pydantic import BaseModel
 import demoUserScript
+
 app = FastAPI()
 
 class Manifest(BaseModel):
     manifest: Dict[Any, Union[Any, None]]
 
-@app.get('/pipeline')
+@app.get('/pipeline', response_class=PlainTextResponse)
 async def get_pipeline():
     with open('../../r/inst/pipeline.json') as f:
         return f.read()
@@ -26,3 +28,6 @@ async def get_designer():
 @app.post("/eval")
 async def create_item(manifest: Manifest):
     return h9.__process_request(manifest.manifest)
+
+if __name__ == '__main__':
+    uvicorn.run(app, host="127.0.0.1", port=8000)

@@ -5,7 +5,7 @@ df = pd.DataFrame({'state': ("CA", "WA", "OR"),
     'statistic': (69, 420, 666)})
 h9.set('df', df)
 
-h9.dropdown('Dropdown', values = lambda :h9.get('df').columns, on_update=lambda x: h9.set('value', x))
+h9.dropdown('dropdown', values = lambda :h9.get('df').columns, on_update=lambda x: h9.set('value', x))
 
 def filter_and_show_df(value):
     df = h9.get('df')
