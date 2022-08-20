@@ -34,23 +34,6 @@
         });
       }
 
-      function updateManifestDefault(steps, update, value) {
-        const candidates = steps.filter(e => e.name == update)
-        if (candidates.length == 0) return null;
-        const step = candidates[0];
-
-        const paramNames = Object.keys(step.params);
-        const inputNames = step.header.input;
-        if (paramNames.length == 0 && inputNames.length == 0) return null;
-        const paramName = inputNames.length > 0 ? inputNames[0] : paramNames[0];
-
-        var params = {};
-        manifest[update] = manifest[update] ? manifest[update] : {};
-        manifest[update][paramName] = value;
-
-        return step;
-      }
-
       async function performUpdates(names) {
         if (names.length == 0) return;
 
@@ -61,8 +44,12 @@
 
         const updates = await serverEval({ manifest: change });
         for (let update of Object.keys(updates)) {
-          const step = updateManifestDefault(steps, update, updates[update].result);
-          if (!step) continue;
+
+          const candidates = steps.filter(e => e.name == update);
+          if (candidates.length == 0) continue;
+          const step = candidates[0];
+
+          manifest[update] = updates[update].result
 
           await hal9.pipelines.runStep(pid, step.id, { html: 'hal9-step-' + step.id });
         }
