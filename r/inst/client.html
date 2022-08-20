@@ -1,53 +1,10 @@
 <html>
   <body style="margin: 0;">
     <script>
-      function clone(x) {
-        return JSON.parse(JSON.stringify(x))
-      }
-
-      function convertToServer(state) {
-        var server = clone(state);
-        Object.keys(server).map(function(key) {
-          server[key] = {
-            on_update: [
-              server[key]
-            ]
-          }
-        });
-
-        return {
-          manifest: server
-        };
-      }
-
-      function addOutputsToServer(server, steps) {
-        steps
-          .filter(function(step) {
-            return step.header && step.header.output && step.header.output.includes('html')
-          })
-          .map(function(step) {
-            if (!server.manifest[step.name]) server.manifest[step.name] = {}
-          })
-      }
-    </script>
-    <script>
-      var state = {};
       var pid = undefined;
-      var rerun = false;
+      var manifest = {};
 
-      function onStart() {
-      }
-
-      async function onEnd(result, steps) {
-        // avoid rerunning when requested from onEnd
-        if (rerun) return;
-        rerun = true;
-
-        Object.assign(state, result);
-
-        const body = convertToServer(state);
-        addOutputsToServer(body, steps);
-
+      async function serverEval(body) {
         console.log('Sending: \n' + JSON.stringify(body, null, 2));
 
         const resp = await fetch('eval', {
@@ -63,27 +20,102 @@
 
         console.log('Receiving: \n' + JSON.stringify(updates, null, 2));
 
-        var params = clone(updates);
-        Object.keys(params).map(function(key) {
-          params[key] = params[key].result;
-        });
+        return updates;
+      }
 
-        await hal9.run(pid, {
-          html: 'output',
-          iframe: true,
-          shadow: false,
-          params: params
+      async function serverSave(raw) {
+        await fetch('pipeline', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: raw
         });
+      }
 
-        rerun = false;
+      function updateManifestDefault(steps, update, value) {
+        const candidates = steps.filter(e => e.name == update)
+        if (candidates.length == 0) return null;
+        const step = candidates[0];
+
+        const paramNames = Object.keys(step.params);
+        const inputNames = step.header.input;
+        if (paramNames.length == 0 && inputNames.length == 0) return null;
+        const paramName = inputNames.length > 0 ? inputNames[0] : paramNames[0];
+
+        var params = {};
+        manifest[update] = manifest[update] ? manifest[update] : {};
+        manifest[update][paramName] = value;
+
+        return step;
+      }
+
+      async function performUpdates(names) {
+        if (names.length == 0) return;
+
+        const steps = await hal9.pipelines.getStepsWithHeaders(pid);
+
+        var change = {};
+        for (let name of names) change[name] = {};
+
+        const updates = await serverEval({ manifest: change });
+        for (let update of Object.keys(updates)) {
+          const step = updateManifestDefault(steps, update, updates[update].result);
+          if (!step) continue;
+
+          await hal9.pipelines.runStep(pid, step.id, { html: 'hal9-step-' + step.id });
+        }
+      }
+
+      async function initializeManifest(pid) {
+        const steps = await hal9.pipelines.getStepsWithHeaders(pid);
+        const names = steps.map(e => e.name);
+        await performUpdates(names);
+      }
+
+      function onStart() {
+      }
+
+      async function onEnd(result, steps) {
+        const raw = await hal9.exportto.getSaveText(pid);
+        await serverSave(raw);
+      }
+
+      async function onChange(changes) {
+        if (changes.step !== undefined || changes.stepid !== undefined) {
+          let name = '';
+          if (changes.stepid !== undefined)
+            name = (await hal9.pipelines.getStep(pid, changes.stepid)).name;
+          else
+            name = changes.step.name;
+
+          performUpdates([ name ]);
+        }
+      }
+
+      async function getForwardDependencies(source) {
+        // TODO: Actually use the deps graph.
+        const steps = await hal9.pipelines.getStepsWithHeaders(pid);
+        const deps = steps.map(e => e.name).filter(e => e != source);
+        return deps;
+      }
+
+      async function onEvent(step, event, value) {
+        var change = {}
+        change[step.name] = {}
+        change[step.name][event] = value;
+        await serverEval({ manifest: change });
+
+        const deps = await getForwardDependencies(step.name);
+        await performUpdates(deps);
+      }
+
+      function onInvalidate(step) {
       }
 
       function onError(error) {
         if (error) console.error(error);
-      }
-
-      function onEvent() {
-        alert('event');
       }
 
       var pipeline = {
@@ -99,7 +131,7 @@
       const environment = localhost ? 'local' : 'devel';
       const libraries = {
         local: 'http://localhost:8000/dist/hal9.js',
-        devel: 'https://cdn.jsdelivr.net/npm/hal9@0.3.0/dist/hal9.dev.js',
+        devel: 'https://cdn.jsdelivr.net/npm/hal9@0.3.13/dist/hal9.dev.js',
       }
 
       const render = async function() {
@@ -118,20 +150,28 @@
           editable: hostopt.mode == 'run',
           mode: hostopt.mode,
           pipeline: pipeline,
+          manifest: manifest,
           events: {
+            /* pipeline events */
             onStart: onStart,
             onEnd: onEnd,
-            onError: onError
+            onInvalidate: onInvalidate,
+            onError: onError,
+            /* runtime events */
+            onEvent: onEvent,
+            /* designer events */
+            onChange: onChange,
           },
           env: environment
         }, {});
 
         pid = await hal9.load(pipeline);
+        await initializeManifest(pid);
 
         if (hostopt.mode == 'design') {
           await hal9.design(pid);
         } else {
-          hal9.run(pid, {
+          await hal9.run(pid, {
             iframe: true,
             html: 'output',
             shadow: false
