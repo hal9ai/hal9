@@ -3,24 +3,27 @@
 
 Node <- R6::R6Class("Node", list(
     uid = NULL,
-    type = NULL,
-    main = NULL,
-    aux = NULL,
-    initialize = function(uid, type, main, aux = NULL) {
+    values = NULL,
+    events = NULL,
+    initialize = function(uid, values, events = NULL) {
         self$uid <- uid
-        self$type <- type
-        self$main <- main
-        self$aux <- aux
+        self$values <- values
+        self$events <- events
         register_node(self, self$uid)
         self
     },
     evaluate = function(fn = NULL, ...) {
-        fn <- if (is.null(fn) || fn == "main") {
-            self$main
-        } else {
-            self$aux[[fn]]
+        type <- "values"
+        if (!is.null(fn)) {
+            type <- "events"
+            result <- list(self[[type]][[fn]](...))
         }
-        fn(...)
+        else {
+            result <- lapply(names(self[[type]]), function(name) self[[type]][[name]]())
+        }
+
+        names(result) <- names(self[[type]])
+        result
     }
 ))
 
@@ -29,33 +32,20 @@ register_node <- function(obj, uid) {
 }
 
 #' @export
-h9_dropdown <- function(uid, values, on_update = NULL) {
-    values <- maybe_convert_to_fn(values)
-    on_update <- maybe_convert_to_fn(on_update)
-    Node$new(uid, "dropdown", values, list(on_update = on_update))
-    invisible(NULL)
-}
+h9_node <- function(uid, ...) {
+    args <- lapply(list(...), maybe_convert_to_fn)
 
-#' @export
-h9_textbox <- function(uid, default, on_update = NULL) {
-    default <- maybe_convert_to_fn(default)
-    on_update <- maybe_convert_to_fn(on_update)
-    Node$new(uid, "textbox", default, list(on_update = on_update))
-}
-#' @export
-h9_select <- function(uid, values, on_update = NULL) {
-    values <- maybe_convert_to_fn(values)
-    on_update <- maybe_convert_to_fn(on_update)
-    Node$new(uid, "dropdown", values, list(on_update = on_update))
-    invisible(NULL)
-}
+    values <- list()
+    events <- list()
+    for (name in names(args)) {
+        if (startsWith(name, "on_")) {
+            events[[name]] <- args[[name]]
+        } else {
+            values[[name]] <- args[[name]]
+        }
+    }
 
-
-#' @export
-h9_code <- function(uid, code) {
-    code <- substitute(code)
-    fn_run_code <- function() eval(code)
-    Node$new(uid, "R_code", fn_run_code)
+    Node$new(uid, values, events)
     invisible(NULL)
 }
 
@@ -89,19 +79,19 @@ process_request <- function(req) {
     lapply(uids, function(uid) {
         node <- get_node(uid)
         fn_args <- req[[uid]]
+        fn <- names(fn_args)
 
         if (!length(fn_args)) {
-            fn <- list("main")
-            .args <- NULL
+            results <- node$evaluate("values", fn = NULL, list())
+            list(
+              result = results
+            )
         } else {
-            fn <- names(fn_args)
             .args <- unname(fn_args)
-        }
+            do.call(node$evaluate, c(fn = fn, .args))
 
-        list(
-            result = do.call(node$evaluate, c(fn = fn, .args)),
-            type = node$type
-        )
+            list()
+        }
     }) |>
         setNames(uids)
 }
