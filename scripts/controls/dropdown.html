@@ -30,7 +30,7 @@
 
 <script>
   values = typeof(values) === 'object' ? values : values.split(',');
-  var dropdown = hal9.getState({ dropdown:  values[0] }).dropdown;
+  var dropdown = hal9.getState({}).dropdown;
 
   var app = new Vue({
     el: html.getElementsByClassName('control')[0],
