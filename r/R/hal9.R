@@ -107,8 +107,8 @@ client_html <- function(...) {
 }
 
 h9_reset <- function() {
-  .globals_nodes <- new.env()
-  .globals_data <- new.env()
+  rm(list = ls(envir = .globals_nodes), envir = .globals_nodes)
+  rm(list = ls(envir = .globals_data), envir = .globals_data)
 }
 
 #' @export
