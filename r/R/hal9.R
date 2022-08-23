@@ -114,13 +114,20 @@ h9_start_api_server <- function(script_dir, port) {
 }
 
 #' @export
-h9_start <- function(server = system.file("demo-user-script.R", package = "hal9"), port = 6806) {
-    user_code <- readLines(server)
-    server_code <- readLines(system.file("demo-server-spec.R", package = "hal9"))
+h9_start <- function(app = "app.R", port = 6806) {
+    if (!file.exists(app)) writeLines("", app)
+
+    user_code <- readLines(app)
+    server_code <- readLines(system.file("server-spec.R", package = "hal9"))
 
     api_file <- tempfile()
-    writeLines(c(user_code, server_code), api_file)
+    writeLines(c(
+        user_code,
+        paste0("app_file <- \"", normalizePath(app), "\""),
+        paste0("app_path <- \"", dirname(normalizePath(app)), "\""),
+        server_code
+    ), api_file)
 
-    pb <- plumber::plumb("./inst/demo-server-spec.R")
+    pb <- plumber::plumb(api_file)
     plumber::pr_run(pb, port = port)
 }
