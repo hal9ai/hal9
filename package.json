@@ -1,6 +1,6 @@
 {
   "name": "hal9",
-  "version": "0.3.13",
+  "version": "0.3.14",
   "license": "MIT",
   "description": "Hal9: Composable machine-learning pipelines",
   "main": "dist/hal9.js",
