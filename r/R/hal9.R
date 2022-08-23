@@ -112,3 +112,15 @@ h9_start_api_server <- function(script_dir, port) {
         plumber::pr_post("/eval", function(manifest) hal9:::process_request(manifest)) |>
         plumber::pr_run(port = port)
 }
+
+#' @export
+h9_start <- function(server = system.file("demo-user-script.R", package = "hal9"), port = 6806) {
+    user_code <- readLines(server)
+    server_code <- readLines(system.file("demo-server-spec.R", package = "hal9"))
+
+    api_file <- tempfile()
+    writeLines(c(user_code, server_code), api_file)
+
+    pb <- plumber::plumb("./inst/demo-server-spec.R")
+    plumber::pr_run(pb, port = port)
+}
