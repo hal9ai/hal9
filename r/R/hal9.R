@@ -106,8 +106,15 @@ client_html <- function(...) {
     html
 }
 
+h9_reset <- function() {
+  rm(list = ls(envir = .globals_nodes), envir = .globals_nodes)
+  rm(list = ls(envir = .globals_data), envir = .globals_data)
+}
+
 #' @export
 h9_start <- function(app = "app.R", port = 6806) {
+    h9_reset()
+
     if (!file.exists(app)) writeLines("", app)
 
     user_code <- readLines(app)
@@ -115,9 +122,13 @@ h9_start <- function(app = "app.R", port = 6806) {
 
     api_file <- tempfile()
     writeLines(c(
+        "## User Code",
         user_code,
+        "",
+        "## Hal9 Code",
         paste0("app_file <- \"", normalizePath(app), "\""),
         paste0("app_path <- \"", dirname(normalizePath(app)), "\""),
+        "",
         server_code
     ), api_file)
 
