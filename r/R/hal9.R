@@ -106,13 +106,6 @@ client_html <- function(...) {
     html
 }
 
-h9_start_api_server <- function(script_dir, port) {
-    source(script_dir)
-    plumber::pr() |>
-        plumber::pr_post("/eval", function(manifest) hal9:::process_request(manifest)) |>
-        plumber::pr_run(port = port)
-}
-
 #' @export
 h9_start <- function(app = "app.R", port = 6806) {
     if (!file.exists(app)) writeLines("", app)
