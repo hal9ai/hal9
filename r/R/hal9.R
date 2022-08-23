@@ -106,9 +106,21 @@ client_html <- function(...) {
     html
 }
 
-h9_start_api_server <- function(script_dir, port) {
-    source(script_dir)
-    plumber::pr() |>
-        plumber::pr_post("/eval", function(manifest) hal9:::process_request(manifest)) |>
-        plumber::pr_run(port = port)
+#' @export
+h9_start <- function(app = "app.R", port = 6806) {
+    if (!file.exists(app)) writeLines("", app)
+
+    user_code <- readLines(app)
+    server_code <- readLines(system.file("server-spec.R", package = "hal9"))
+
+    api_file <- tempfile()
+    writeLines(c(
+        user_code,
+        paste0("app_file <- \"", normalizePath(app), "\""),
+        paste0("app_path <- \"", dirname(normalizePath(app)), "\""),
+        server_code
+    ), api_file)
+
+    pb <- plumber::plumb(api_file)
+    plumber::pr_run(pb, port = port)
 }

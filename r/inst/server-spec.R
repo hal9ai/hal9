@@ -1,5 +1,3 @@
-source("./demo-user-script.R")
-
 #* @get /
 #* @serializer html
 function() {
@@ -15,13 +13,13 @@ function() {
 #* @get /pipeline
 #* @serializer text
 function() {
-  paste0(readLines(file.path(getwd(), "pipeline.json")), collapse = "\n")
+  paste0(readLines(file.path(app_path, "app.json")), collapse = "\n")
 }
 
 #* @post /pipeline
 #* @serializer text
 function(req) {
-  writeLines(req$postBody, file.path(getwd(), "pipeline.json"))
+  writeLines(req$postBody, file.path(app_path, "app.json"))
   "{}"
 }
 
