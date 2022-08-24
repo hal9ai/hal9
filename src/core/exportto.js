@@ -41,6 +41,10 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number 
         delete pipeline.state.steps[stepid];
       }
 
+      if (pipeline.state.steps[stepid].events) {
+        delete pipeline.state.steps[stepid].events;
+      }
+
       // serialize dataframes
       if (pipeline.state.steps[stepid]) {
         var state = pipeline.state.steps[stepid];
