@@ -239,6 +239,8 @@ function IFrameAPI(options, hal9wnd, config) {
         sid: sid,
         context: context,
         partial: partial,
+      }, {
+        longlisten: true
       })
     },
     run: async (pipelineid, context, partial, stepstopid) => {
