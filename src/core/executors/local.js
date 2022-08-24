@@ -36,7 +36,11 @@ export default class LocalExecutor extends Executor {
     }
 
     if (this.state?.events?.onParams) {
-      for (let param of Object.keys(params)) this.state.events.onParams(param, params[param]);
+      for (let onParams of this.state.events.onParams) {
+        if (typeof(onParams) == 'function') {
+          for (let param of Object.keys(params)) onParams(param, params[param]);
+        }
+      }
     }
 
     return result;
