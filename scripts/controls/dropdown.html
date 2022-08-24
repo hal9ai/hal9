@@ -30,14 +30,14 @@
 
 <script>
   values = typeof(values) === 'object' ? values : values.split(',');
-  var dropdown = hal9.getState({}).dropdown;
+  var dropdown = hal9.get('dropdown');
 
   var app = new Vue({
     el: html.getElementsByClassName('control')[0],
     data: function() {
       var vue = this;
 
-      if (hal9.onEvent) hal9.onEvent('onParams', function(param, values) {
+      hal9.onEvent('onParams', function(param, values) {
         if (param != 'values') return;
         vue.options = typeof(values) === 'object' ? values : values.split(',');
       })
@@ -49,8 +49,7 @@
     },
     watch: {
       value: function(value) {
-        if (hal9.triggerEvent) hal9.triggerEvent('on_update', value);
-        hal9.updateState('dropdown', value, true);
+        hal9.set('dropdown', value);
       }
     }
   })
