@@ -134,27 +134,7 @@
   },
   "state": {
     "steps": {
-      "11099": {
-        "events": {
-          "onParams": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ]
-        }
-      }
+      "11099": {}
     }
   }
 }
