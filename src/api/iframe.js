@@ -104,14 +104,10 @@ function IFrameAPI(options, hal9wnd, config) {
 
   function enhanceContext(context) {
     if (me.options.events) {
-      context.events = {
-        onStart: me.options.events.onStart,
-        onEnd: me.options.events.onEnd,
-        onError: me.options.events.onError,
-        onChange: me.options.events.onChange,
-        onEvent: me.options.events.onEvent,
-        onInvalidate: me.options.events.onInvalidate
-      }
+      if (!context.events) context.events = {};
+      for (let event of Object.keys(me.options.events))
+        if (context.events[event] !== me.options.events[event])
+          context.events[event] = me.options.events[event];
     }
 
     if (me.options.manifest) {
