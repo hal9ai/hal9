@@ -26,6 +26,46 @@
           "label": "Values"
         }
       }
+    },
+    {
+      "name": "numberinput",
+      "function": "number",
+      "source": "controls/number.html",
+      "language": "html",
+      "label": "Number Input",
+      "description": "Embed a number input control",
+      "icon": "fa-light fa-input-numeric",
+      "dragdrop": true,
+      "build": "true",
+      "id": 11100,
+      "params": {
+        "label": {
+          "id": 1,
+          "static": true,
+          "value": [
+            {
+              "control": "textbox",
+              "value": "Number",
+              "id": 0
+            }
+          ],
+          "name": "label",
+          "label": "Label"
+        }
+      }
+    },
+    {
+      "name": "rawhtml",
+      "function": "",
+      "source": "controls/rawhtml.js",
+      "language": "javascript",
+      "label": "HTML",
+      "description": "Enables to render arbitrary HTML from data",
+      "icon": "fa-brands fa-html5",
+      "dragdrop": true,
+      "build": "false",
+      "id": 11101,
+      "params": {}
     }
   ],
   "params": {
@@ -43,28 +83,58 @@
         "name": "values",
         "label": "Values"
       }
-    }
+    },
+    "11100": {
+      "label": {
+        "id": 1,
+        "static": true,
+        "value": [
+          {
+            "control": "textbox",
+            "value": "Number",
+            "id": 0
+          }
+        ],
+        "name": "label",
+        "label": "Label"
+      }
+    },
+    "11101": {}
   },
   "scripts": {
-    "11099": "<!--\n  input: []\n  params:\n    - name: values\n      label: Values\n      value:\n        - control: textbox\n          value: versicolor,setosa,virginica\n  output: [ dropdown, html ]\n  interactive: true\n  layout:\n    - width: inner\n-->\n\n<script src=\"https://cdn.jsdelivr.net/npm/vue@2\"></script>\n<link rel=\"stylesheet\" href=\"https://unpkg.com/buefy/dist/buefy.min.css\">\n<script src=\"https://unpkg.com/buefy/dist/buefy.min.js\"></script>\n\n<div class=\"control\">\n  <template>\n    <section>\n      <b-select v-model=\"value\">\n        <option v-for=\"o in options\" :value='o'>\n          {{ o }}\n        </option>\n      </b-select>\n    </section>\n  </template>\n</div>\n\n<script>\n  values = typeof(values) === 'object' ? values : values.split(',');\n  var dropdown = hal9.getState({ dropdown:  values[0] }).dropdown;\n\n  var app = new Vue({\n    el: html.getElementsByClassName('control')[0],\n    data: function() {\n      var vue = this;\n\n      if (hal9.onEvent) hal9.onEvent('onParams', function(param, values) {\n        if (param != 'values') return;\n        vue.options = typeof(values) === 'object' ? values : values.split(',');\n      })\n\n      return {\n        value: dropdown,\n        options: values\n      }\n    },\n    watch: {\n      value: function(value) {\n        if (hal9.triggerEvent) hal9.triggerEvent('on_update', value);\n        hal9.updateState('dropdown', value, true);\n      }\n    }\n  })\n\n  html.style.height = 'auto';\n</script>"
+    "11099": "<!--\n  input: []\n  params:\n    - name: values\n      label: Values\n      value:\n        - control: textbox\n          value: versicolor,setosa,virginica\n  output: [ dropdown, html ]\n  interactive: true\n  layout:\n    - width: inner\n-->\n\n<script src=\"https://cdn.jsdelivr.net/npm/vue@2\"></script>\n<link rel=\"stylesheet\" href=\"https://unpkg.com/buefy/dist/buefy.min.css\">\n<script src=\"https://unpkg.com/buefy/dist/buefy.min.js\"></script>\n\n<div class=\"control\">\n  <template>\n    <section>\n      <b-select v-model=\"value\">\n        <option v-for=\"o in options\" :value='o'>\n          {{ o }}\n        </option>\n      </b-select>\n    </section>\n  </template>\n</div>\n\n<script>\n  values = typeof(values) === 'object' ? values : values.split(',');\n  var dropdown = hal9.get('dropdown');\n\n  var app = new Vue({\n    el: html.getElementsByClassName('control')[0],\n    data: function() {\n      var vue = this;\n\n      hal9.onEvent('onParams', function(param, values) {\n        if (param != 'values') return;\n        vue.options = typeof(values) === 'object' ? values : values.split(',');\n      })\n\n      return {\n        value: dropdown,\n        options: values\n      }\n    },\n    watch: {\n      value: function(value) {\n        hal9.set('dropdown', value);\n      }\n    }\n  })\n\n  html.style.height = 'auto';\n</script>",
+    "11100": "<!--\n  input: []\n  params:\n    - name: label\n      label: Label\n      value:\n        - control: textbox\n          value: Number\n  output: [ html, number ]\n  layout:\n    - width: 130px\n-->\n\n<script src=\"https://cdn.jsdelivr.net/npm/vue@2\"></script>\n<link rel=\"stylesheet\" href=\"https://unpkg.com/buefy/dist/buefy.min.css\">\n<script src=\"https://unpkg.com/buefy/dist/buefy.min.js\"></script>\n\n<div class=\"control\">\n  <template>\n    <section>\n      {{ label }}\n      <b-input type=\"number\" v-model=\"value\">\n      </b-input>\n    </section>\n  </template>\n</div>\n\n<script>\n  var number = hal9.get('number');\n\n  var app = new Vue({\n    el: html.getElementsByClassName('control')[0],\n    data: function() {\n      var vue = this;\n\n      return {\n        value: number,\n        label: label\n      }\n    },\n    watch: {\n      value: function(value) {\n        hal9.set('number', value);\n      }\n    }\n  })\n\n  html.style.height = 'auto';\n</script>",
+    "11101": "/**\n  input: [ rawhtml ]\n  output: [ html ]\n  layout:\n    - width: 900px\n**/\n\nhtml.innerHTML = rawhtml;\n"
   },
   "version": "0.0.1",
   "app": {
     "stepLayouts": [
       {
         "stepId": 11099,
-        "width": "80px",
-        "left": "32px",
-        "height": "19px",
-        "top": "27px"
+        "width": "0px",
+        "left": "0px",
+        "height": "21px",
+        "top": "0px"
+      },
+      {
+        "stepId": 11100,
+        "width": "130px",
+        "left": "0px",
+        "height": "42px",
+        "top": "21px"
+      },
+      {
+        "stepId": 11101,
+        "width": "900px",
+        "left": "0px",
+        "height": "0px",
+        "top": "63px"
       }
     ]
   },
   "state": {
     "steps": {
-      "11099": {
-        "events": {}
-      }
+      "11099": {}
     }
   }
 }
