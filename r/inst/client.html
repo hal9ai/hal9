@@ -77,7 +77,9 @@
           else
             name = changes.step.name;
 
-          performUpdates([ name ]);
+          const deps = await getForwardDependencies(changes.step.name);
+          deps.push(name);
+          await performUpdates(deps);
         }
       }
 
@@ -119,7 +121,7 @@
       const environment = localhost ? 'local' : 'devel';
       const libraries = {
         local: 'http://localhost:8000/dist/hal9.js',
-        devel: 'https://cdn.jsdelivr.net/npm/hal9@0.3.16/dist/hal9.dev.js',
+        devel: 'https://cdn.jsdelivr.net/npm/hal9@0.3.17/dist/hal9.dev.js',
       }
 
       const render = async function() {
