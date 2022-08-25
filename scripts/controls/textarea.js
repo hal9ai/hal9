@@ -6,6 +6,7 @@
 **/
 
 var textarea = '';
+html.innerHTML = '';
 
 const textareaEl = document.createElement('textarea');
 textareaEl.rows = 5
