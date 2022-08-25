@@ -1,14 +1,16 @@
 import hal9 as h9
+import statsmodels.api as sm
 import pandas as pd
 
-df = pd.DataFrame({'state': ("CA", "WA", "OR"),
-    'statistic': (69, 420, 666)})
+iris = sm.datasets.get_rdataset("iris", "datasets", cache=True).data
+df = pd.DataFrame(iris)
+
 h9.set('df', df)
 
-h9.dropdown('dropdown', values = lambda :h9.get('df').columns, on_update=lambda x: h9.set('value', x))
+h9.node(uid = 'dropdown', values = lambda :h9.get('df')['Species'].unique().tolist(), on_update=lambda x: h9.set('value', x))
 
 def filter_and_show_df(value):
     df = h9.get('df')
-    return df[df['state'] == value].to_html()
+    return df[df['Species'] == value].to_html()
 
-h9.code('rawhtml', lambda :filter_and_show_df(h9.get('value')))
+h9.node('rawhtml', rawhtml = lambda :filter_and_show_df(h9.get('value')))
