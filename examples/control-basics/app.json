@@ -55,6 +55,123 @@
       }
     },
     {
+      "name": "slider",
+      "function": "slider",
+      "source": "controls/range.html",
+      "language": "html",
+      "label": "Slider",
+      "description": "Embed an slider element",
+      "icon": "fa-light fa-slider",
+      "dragdrop": true,
+      "build": "true",
+      "id": 11101,
+      "params": {
+        "value": {
+          "id": 1,
+          "static": true,
+          "value": [
+            {
+              "control": "number",
+              "value": 1,
+              "id": 0
+            }
+          ],
+          "name": "value",
+          "label": "Default Value"
+        },
+        "min": {
+          "id": 3,
+          "static": true,
+          "value": [
+            {
+              "control": "number",
+              "value": 1,
+              "id": 2
+            }
+          ],
+          "name": "min",
+          "label": "Min Value"
+        },
+        "max": {
+          "id": 5,
+          "static": true,
+          "value": [
+            {
+              "control": "number",
+              "value": 10,
+              "id": 4
+            }
+          ],
+          "name": "max",
+          "label": "Max Value"
+        },
+        "step": {
+          "id": 7,
+          "static": true,
+          "value": [
+            {
+              "control": "number",
+              "value": 1,
+              "id": 6
+            }
+          ],
+          "name": "step",
+          "label": "Step Increment"
+        }
+      }
+    },
+    {
+      "name": "textbox",
+      "function": "textbox",
+      "source": "controls/textbox.html",
+      "language": "html",
+      "label": "Text Input",
+      "description": "Embed a text input control",
+      "icon": "fa-light fa-input-text",
+      "dragdrop": true,
+      "build": "true",
+      "id": 11102,
+      "params": {
+        "label": {
+          "id": 1,
+          "static": true,
+          "value": [
+            {
+              "control": "textbox",
+              "id": 0
+            }
+          ],
+          "name": "label",
+          "label": "Label"
+        },
+        "value": {
+          "id": 3,
+          "static": true,
+          "value": [
+            {
+              "control": "textbox",
+              "id": 2
+            }
+          ],
+          "name": "value",
+          "label": "Value"
+        }
+      }
+    },
+    {
+      "name": "textarea",
+      "function": "textarea",
+      "source": "controls/textarea.js",
+      "language": "javascript",
+      "label": "Multi-line Text Input",
+      "description": "Embed a multi-line text input control",
+      "icon": "fa-light fa-paragraph",
+      "dragdrop": true,
+      "build": "true",
+      "id": 11103,
+      "params": {}
+    },
+    {
       "name": "rawhtml",
       "function": "",
       "source": "controls/rawhtml.js",
@@ -64,7 +181,7 @@
       "icon": "fa-brands fa-html5",
       "dragdrop": true,
       "build": "false",
-      "id": 11101,
+      "id": 11104,
       "params": {}
     }
   ],
@@ -99,36 +216,141 @@
         "label": "Label"
       }
     },
-    "11101": {}
+    "11101": {
+      "value": {
+        "id": 1,
+        "static": true,
+        "value": [
+          {
+            "control": "number",
+            "value": 1,
+            "id": 0
+          }
+        ],
+        "name": "value",
+        "label": "Default Value"
+      },
+      "min": {
+        "id": 3,
+        "static": true,
+        "value": [
+          {
+            "control": "number",
+            "value": 1,
+            "id": 2
+          }
+        ],
+        "name": "min",
+        "label": "Min Value"
+      },
+      "max": {
+        "id": 5,
+        "static": true,
+        "value": [
+          {
+            "control": "number",
+            "value": 10,
+            "id": 4
+          }
+        ],
+        "name": "max",
+        "label": "Max Value"
+      },
+      "step": {
+        "id": 7,
+        "static": true,
+        "value": [
+          {
+            "control": "number",
+            "value": 1,
+            "id": 6
+          }
+        ],
+        "name": "step",
+        "label": "Step Increment"
+      }
+    },
+    "11102": {
+      "label": {
+        "id": 1,
+        "static": true,
+        "value": [
+          {
+            "control": "textbox",
+            "id": 0
+          }
+        ],
+        "name": "label",
+        "label": "Label"
+      },
+      "value": {
+        "id": 3,
+        "static": true,
+        "value": [
+          {
+            "control": "textbox",
+            "id": 2
+          }
+        ],
+        "name": "value",
+        "label": "Value"
+      }
+    },
+    "11103": {},
+    "11104": {}
   },
   "scripts": {
     "11099": "<!--\n  input: []\n  params:\n    - name: values\n      label: Values\n      value:\n        - control: textbox\n          value: versicolor,setosa,virginica\n  output: [ dropdown, html ]\n  interactive: true\n  layout:\n    - width: inner\n-->\n\n<script src=\"https://cdn.jsdelivr.net/npm/vue@2\"></script>\n<link rel=\"stylesheet\" href=\"https://unpkg.com/buefy/dist/buefy.min.css\">\n<script src=\"https://unpkg.com/buefy/dist/buefy.min.js\"></script>\n\n<div class=\"control\">\n  <template>\n    <section>\n      <b-select v-model=\"value\">\n        <option v-for=\"o in options\" :value='o'>\n          {{ o }}\n        </option>\n      </b-select>\n    </section>\n  </template>\n</div>\n\n<script>\n  values = typeof(values) === 'object' ? values : values.split(',');\n  var dropdown = hal9.get('dropdown');\n\n  var app = new Vue({\n    el: html.getElementsByClassName('control')[0],\n    data: function() {\n      var vue = this;\n\n      hal9.onEvent('onParams', function(param, values) {\n        if (param != 'values') return;\n        vue.options = typeof(values) === 'object' ? values : values.split(',');\n      })\n\n      return {\n        value: dropdown,\n        options: values\n      }\n    },\n    watch: {\n      value: function(value) {\n        hal9.set('dropdown', value);\n      }\n    }\n  })\n\n  html.style.height = 'auto';\n</script>",
     "11100": "<!--\n  input: []\n  params:\n    - name: label\n      label: Label\n      value:\n        - control: textbox\n          value: Number\n  output: [ html, number ]\n  layout:\n    - width: 130px\n-->\n\n<script src=\"https://cdn.jsdelivr.net/npm/vue@2\"></script>\n<link rel=\"stylesheet\" href=\"https://unpkg.com/buefy/dist/buefy.min.css\">\n<script src=\"https://unpkg.com/buefy/dist/buefy.min.js\"></script>\n\n<div class=\"control\">\n  <template>\n    <section>\n      {{ label }}\n      <b-input type=\"number\" v-model=\"value\">\n      </b-input>\n    </section>\n  </template>\n</div>\n\n<script>\n  var number = hal9.get('number');\n\n  var app = new Vue({\n    el: html.getElementsByClassName('control')[0],\n    data: function() {\n      var vue = this;\n\n      return {\n        value: number,\n        label: label\n      }\n    },\n    watch: {\n      value: function(value) {\n        hal9.set('number', value);\n      }\n    }\n  })\n\n  html.style.height = 'auto';\n</script>",
-    "11101": "/**\n  input: [ rawhtml ]\n  output: [ html ]\n  layout:\n    - width: 900px\n**/\n\nhtml.innerHTML = rawhtml;\n"
+    "11101": "<!--\n  input: []\n  params:\n    - name: value\n      label: Default Value\n      value:\n        - control: number\n          value: 1\n    - name: min\n      label: Min Value\n      value:\n        - control: number\n          value: 1\n    - name: max\n      label: Max Value\n      value:\n        - control: number\n          value: 10\n    - name: step\n      label: Step Increment\n      value:\n        - control: number\n          value: 1\n  output: [ html, slider ]\n  interactive: true\n  layout:\n    - width: 325px\n-->\n\n<script src=\"https://cdn.jsdelivr.net/npm/vue@2\"></script>\n<link rel=\"stylesheet\" href=\"https://unpkg.com/buefy/dist/buefy.min.css\">\n<script src=\"https://unpkg.com/buefy/dist/buefy.min.js\"></script>\n\n<div class=\"sliderContainer\">\n  <template>\n    <section>\n      <div style= \"height: 30px\"></div>\n        <b-field>\n            <b-slider tooltip-always :min=\"parameter\" :max=\"maxparam\" :step=\"steparam\" v-model=\"value\"></b-slider>\n        </b-field>\n    </section>\n  </template>\n</div>\n\n<script>\n  var slider = value;\n  var state = hal9.getState();\n  state = state ? state : {};\n  if (state.slider) {\n    slider = state.slider;\n    value = slider;\n  }\n\n  var app = new Vue({\n    el: html.getElementsByClassName('sliderContainer')[0],\n    data: {\n      value: parseFloat(slider),\n      parameter: parseFloat(min),\n      maxparam: parseFloat(max),\n      steparam: parseFloat(step)\n    },\n    watch: {\n      value: function(e) {\n        state.slider = e;\n        hal9.setState(state);\n        hal9.invalidate();\n      }\n    }\n  })\n\n  app.$el.getElementsByClassName('b-slider-track')[0].style = 'width: 300px';\n  app.$el.getElementsByClassName('b-slider-track')[0].style.left = \"16px\";\n\n  let sliderNumber = app.$el.getElementsByClassName('tooltip-content')[0];\n\n  let minMaxStep = app.$el.getElementsByClassName('b-slider-thumb')[0];\n  minMaxStep.setAttribute('aria-valuemin', 3);\n</script>",
+    "11102": "<!--\n  input: []\n  params:\n    - name: label\n      label: Label\n      value:\n        - control: textbox\n    - name: value\n      label: Value\n      value:\n        - control: textbox\n  output: [  html, value ]\n  layout:\n    - width: 500px\n-->\n\n<script src=\"https://cdn.jsdelivr.net/npm/vue@2\"></script>\n<link rel=\"stylesheet\" href=\"https://unpkg.com/buefy/dist/buefy.min.css\">\n<script src=\"https://unpkg.com/buefy/dist/buefy.min.js\"></script>\n\n<div class=\"controls\">\n  <template>\n    <section>\n      {{ label }}\n      <b-input type=\"text\" v-model=\"value\">\n      </b-input>\n    </section>\n  </template>\n</div>\n\n<script>\n  var number = hal9.get('textbox');\n\n  var app = new Vue({\n    el: html.getElementsByClassName('controls')[0],\n    data: {\n      value: value,\n      label: label\n    },\n    watch: {\n      value: function(value) {\n        hal9.set('textbox', value);\n      }\n    }\n  })\n  \n  html.style.height = 'auto';\n</script>",
+    "11103": "/**\n  input: []\n  output: [ html, textarea ]\n  layout:\n    - width: 900px\n**/\n\nvar textarea = '';\nhtml.innerHTML = '';\n\nconst textareaEl = document.createElement('textarea');\ntextareaEl.rows = 5\ntextareaEl.style.width = 'calc(100% - 6px)';\ntextareaEl.style.resize = 'none';\n\nvar textarea = hal9.get('textarea');\ntextareaEl.value = textarea;\n\ntextareaEl.onchange = function () {\n  hal9.set('textarea', this.value);\n}\n\nhtml.appendChild(textareaEl);\nhtml.style.height = 'auto';\n",
+    "11104": "/**\n  input: [ rawhtml ]\n  output: [ html ]\n  layout:\n    - width: 900px\n**/\n\nhtml.innerHTML = rawhtml;\n"
   },
   "version": "0.0.1",
   "app": {
     "stepLayouts": [
       {
         "stepId": 11099,
-        "width": "0px",
-        "left": "0px",
-        "height": "21px",
-        "top": "0px"
+        "width": "249px",
+        "left": "23px",
+        "height": "44px",
+        "top": "1px"
       },
       {
         "stepId": 11100,
-        "width": "130px",
-        "left": "0px",
+        "width": "377px",
+        "left": "282px",
         "height": "42px",
-        "top": "21px"
+        "top": "3px"
       },
       {
         "stepId": 11101,
-        "width": "900px",
-        "left": "0px",
-        "height": "0px",
-        "top": "63px"
+        "width": "325px",
+        "left": "23px",
+        "height": "50px",
+        "top": "55px"
+      },
+      {
+        "stepId": 11102,
+        "width": "298px",
+        "left": "361px",
+        "height": "48px",
+        "top": "57px"
+      },
+      {
+        "stepId": 11103,
+        "width": "636px",
+        "left": "23px",
+        "height": "88px",
+        "top": "115px"
+      },
+      {
+        "stepId": 11104,
+        "width": "636px",
+        "left": "23px",
+        "height": "128px",
+        "top": "213px"
       }
     ]
   },
