@@ -1,6 +1,13 @@
 .globals_nodes <- new.env()
 .globals_data <- new.env()
 
+validateFunction <- function(fn, name, uid) {
+  if (identical(typeof(fn), NULL))
+    stop("The property '", name, "' in '", uid, "' is not defined")
+  if (!identical(typeof(fn), "closure"))
+    stop("The property '", name, "' in '", uid, "' is not a function")
+}
+
 Node <- R6::R6Class("Node", list(
     uid = NULL,
     values = NULL,
@@ -16,10 +23,15 @@ Node <- R6::R6Class("Node", list(
         type <- "values"
         if (!is.null(fn)) {
             type <- "events"
+
+            validateFunction(self[[type]][[fn]], fn, self$uid)
             result <- list(self[[type]][[fn]](...))
         }
         else {
-            result <- lapply(names(self[[type]]), function(name) self[[type]][[name]]())
+            result <- lapply(names(self[[type]]), function(name) {
+              validateFunction(self[[type]][[name]], name, self$uid)
+              self[[type]][[name]]()
+            })
         }
 
         names(result) <- names(self[[type]])
@@ -81,7 +93,11 @@ process_request <- function(req) {
         fn_args <- req[[uid]]
         fn <- names(fn_args)
 
-        if (!length(fn_args)) {
+        if (identical(node, NULL)) {
+          warning(" Node '", uid, "' is not defined")
+          list(result = list())
+        }
+        else if (!length(fn_args)) {
             results <- node$evaluate("values", fn = NULL, list())
             list(
               result = results
