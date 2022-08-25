@@ -81,7 +81,11 @@ process_request <- function(req) {
         fn_args <- req[[uid]]
         fn <- names(fn_args)
 
-        if (!length(fn_args)) {
+        if (identical(node, NULL)) {
+          warning(" Node '", uid, "' is not defined")
+          list(result = list())
+        }
+        else if (!length(fn_args)) {
             results <- node$evaluate("values", fn = NULL, list())
             list(
               result = results
