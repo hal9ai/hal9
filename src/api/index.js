@@ -11,18 +11,37 @@ export default api;
 export async function init(options, hal9wnd) {
   hal9wnd = hal9wnd ? hal9wnd : window.hal9;
 
-  for (const key in api) {
-    delete api[key];
-  }
-  if (options.iframe) {
-    Object.assign(api, await iframe.init(options, hal9wnd));
-  } else {
-    Object.assign(api, native.init(options, hal9wnd));
-  }
-
-  Object.assign(api, {
-    design: async (pid) => {
-      await launchDesigner(api, options, pid)
+  if (options.inplace) {
+    const oldInit = api.init;
+    for (const key in api) {
+      delete api[key];
     }
-  });
+    if (options.iframe) {
+      Object.assign(api, await iframe.init(options, hal9wnd));
+    } else {
+      Object.assign(api, native.init(options, hal9wnd));
+    }
+    api.init = oldInit;
+
+    return api;
+  } else {
+    let newApi;
+    if (options.iframe) {
+      newApi = await iframe.init(options, hal9wnd);
+    } else {
+      newApi = native.init(options, hal9wnd);
+    }
+
+    if (newApi) {
+      Object.assign(newApi, {
+        design: async (pid) => {
+          await launchDesigner(newApi, options, pid);
+        }
+      });
+      // init shouldn't be called on newApi again
+      delete newApi.init;
+    }
+
+    return newApi;
+  }
 }

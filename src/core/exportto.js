@@ -16,10 +16,11 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number 
     'globals',
     'layout',
     'outputs',
+    'events',
   ];
 
   for (var key in from) {
-    if (skip.includes(key) || alsoSkip.includes(key)) continue;
+    if (skip.includes(key) || alsoSkip.includes(key) || typeof(from[key]) == 'function') continue;
     pipeline[key] = clone(from[key]);
   }
 
@@ -38,6 +39,10 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number 
       const meta = pipelines.metadataFromStepScript(pipeline, step);
       if (meta.state == 'session') {
         delete pipeline.state.steps[stepid];
+      }
+
+      if (pipeline.state.steps[stepid].events) {
+        delete pipeline.state.steps[stepid].events;
       }
 
       // serialize dataframes

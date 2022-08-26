@@ -53,12 +53,6 @@ module.exports = (env, argv) => {
         loader: 'babel-loader',
         options: {
           plugins: [
-            [
-              '@babel/plugin-transform-runtime',
-              {
-                corejs: 3
-              }
-            ],
             '@babel/plugin-proposal-nullish-coalescing-operator',
             '@babel/plugin-proposal-optional-chaining'
           ]

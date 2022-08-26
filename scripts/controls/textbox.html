@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
 
-<div class="textboxContainer">
+<div class="controls">
   <template>
     <section>
       {{ label }}
@@ -29,18 +29,20 @@
 </div>
 
 <script>
-  value = hal9.getState(value);
+  var number = hal9.get('textbox');
+
   var app = new Vue({
-    el: html.getElementsByClassName('textboxContainer')[0],
+    el: html.getElementsByClassName('controls')[0],
     data: {
       value: value,
       label: label
     },
     watch: {
       value: function(value) {
-        hal9.setState(value, true);
+        hal9.set('textbox', value);
       }
     }
   })
+  
   html.style.height = 'auto';
 </script>

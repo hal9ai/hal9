@@ -48,6 +48,7 @@ export const launchDesigner = async (hal9, options, pid) => {
     pid: pid,
     html: options.designer,
     output: options.html,
+    debug: options.debug
   }, {});
 }
 

@@ -117,6 +117,7 @@ const createInt = (steps /*: steps */, previous /*: pipeline */) /*: pipeline */
     error: undefined,
     version: '0.0.1',
     metadata: clone(previous.metadata),
+    app: clone(previous.app),
   };
 
   pipeline.steps = steps;
@@ -179,6 +180,8 @@ const stepGetDefinition = (pipeline, step) => {
 export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, context /* context */, partial) /*: boolean */ => {
   var pipeline = store.get(pipelineid);
 
+  if (!context) context = {};
+  if (!partial) partial = preparePartial(pipeline, context, partial, sid);
   if (pipeline.aborted) throw 'Pipeline stopped before finishing'
 
   const step = stepFromId(pipeline, sid);
@@ -228,7 +231,12 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
       if (!Object.keys(params).includes(param)) params[param] = clone(paramsDefault[param]);
     });
 
-    if (context.params) {
+    if (context.params || context.manifest) {
+      context.params = context.params ?? {};
+      if (context.manifest && context.manifest[step.name]) {
+        context.params = clone(context.manifest[step.name])
+      }
+
       var paramIdx = Object.keys(params).length > 0 ? Math.max(...Object.keys(params).map(e => params[e].id ? params[e].id : 0)) : 0;
       Object.keys(context.params).forEach(param => {
         if (Object.keys(input).includes(param)) {
@@ -238,7 +246,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
           delete context.params[param];
         }
         else if (Object.keys(params).includes(param)) {
-          console.log('Param ' + param + ' of type ' + typeof(input[param]) + ' matched with param in step ' + step.name + '/' + step.id)
+          console.log('Param ' + param + ' of type ' + typeof(params[param]) + ' matched with param in step ' + step.name + '/' + step.id)
 
           params[param] = {
             id: paramIdx++, name: param, label: param, value: [{
@@ -313,6 +321,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
   }
   catch (e) {
     console.log('Error in step ' + step.name + ': ' + e);
+    console.log(e);
     error = e;
   }
 
@@ -346,6 +355,8 @@ const stepHasHtml = (pipeline, step) => {
 }
 
 const preparePartial = (pipeline, context, partial, renderid) => {
+  if (!partial) partial = function() {};
+
   var html = context.html;
   if (typeof (html) === 'object') {
     const isFullView = renderid === null || renderid === undefined;
@@ -430,8 +441,8 @@ const skipStep = (pipeline, step) => {
 
 export const run = async (pipelineid /*: pipelineid */, context /* context */, partial, stepstopid /* stepid */) /*: void */ => {
   debugIf('run');
-  if (!partial) partial = function() {};
 
+  if (!context) context = {};
   context.events?.onStart();
 
   var pipeline = store.get(pipelineid);
@@ -719,6 +730,7 @@ export const getSources = (pipelineid /*: pipelineid */, sid /*: number */) /*: 
 }
 
 const setErrors = (pipeline /*: pipeline */, sid /*: number */, error /*: string */) /*: void */ => {
+  if (!pipeline.errors) pipeline.errors = {};
   pipeline.errors[sid] = error;
 }
 
@@ -872,7 +884,7 @@ export const setGlobal = (pipelineid /*: pipelineid */, name /*: string */, data
 }
 
 const getGlobalsInt = (pipeline /*: pipeline */) => /*: Object */ {
-  return pipeline.globals;
+  return pipeline.globals ?? {};
 }
 
 export const getGlobals = (pipelineid /*: pipelineid */) => /*: Object */ {

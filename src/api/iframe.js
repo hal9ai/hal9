@@ -104,11 +104,14 @@ function IFrameAPI(options, hal9wnd, config) {
 
   function enhanceContext(context) {
     if (me.options.events) {
-      context.events = {
-        onStart: me.options.events.onStart,
-        onEnd: me.options.events.onEnd,
-        onError: me.options.events.onError
-      }
+      if (!context.events) context.events = {};
+      for (let event of Object.keys(me.options.events))
+        if (context.events[event] !== me.options.events[event])
+          context.events[event] = me.options.events[event];
+    }
+
+    if (me.options.manifest) {
+      context.manifest = me.options.manifest
     }
   }
 
@@ -184,6 +187,21 @@ function IFrameAPI(options, hal9wnd, config) {
     isNotProduction: environment.isNotProduction
   };
 
+  me.events = {
+    onChange: (changes) => {
+      const callback = me.options?.events?.onChange;
+      if (callback) {
+        callback(changes);
+      }
+    },
+    onRequestSave: () => {
+      const callback = me.options?.events?.onRequestSave;
+      if (callback) {
+        callback();
+      }
+    }
+  };
+
   me.datasets = {
     save: async (dataurl) => {
       return await post(me.config, "hal9.datasets.save(params.dataurl)", {
@@ -218,12 +236,15 @@ function IFrameAPI(options, hal9wnd, config) {
       })
     },
     runStep: async (pipelineid, sid, context, partial) => {
+      if (!context) context = {};
       enhanceContext(context);
       return await post(me.config, "hal9.pipelines.runStep(params.pipelineid, params.sid, params.context, params.partial)", {
         pipelineid: pipelineid,
         sid: sid,
         context: context,
         partial: partial,
+      }, {
+        longlisten: true
       })
     },
     run: async (pipelineid, context, partial, stepstopid) => {
