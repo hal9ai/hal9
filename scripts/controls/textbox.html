@@ -9,7 +9,7 @@
       label: Value
       value:
         - control: textbox
-  output: [  html, value ]
+  output: [  html, textbox ]
   layout:
     - width: 500px
 -->
@@ -29,12 +29,12 @@
 </div>
 
 <script>
-  var number = hal9.get('textbox');
+  var textbox = hal9.get('textbox');
 
   var app = new Vue({
     el: html.getElementsByClassName('controls')[0],
     data: {
-      value: value,
+      value: textbox,
       label: label
     },
     watch: {
