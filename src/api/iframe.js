@@ -190,7 +190,15 @@ function IFrameAPI(options, hal9wnd, config) {
   me.events = {
     onChange: (changes) => {
       const callback = me.options?.events?.onChange;
-      if (callback) callback(changes);
+      if (callback) {
+        callback(changes);
+      }
+    },
+    onRequestSave: () => {
+      const callback = me.options?.events?.onRequestSave;
+      if (callback) {
+        callback();
+      }
     }
   };
 
