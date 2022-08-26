@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Steps documentation &#8212; teste 0.1 documentation</title>
+    <title>Steps documentation &#8212; hal9 0.1 documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -72,7 +72,7 @@
       
       
       
-      <h1 class="site-logo" id="site-title">teste 0.1 documentation</h1>
+      <h1 class="site-logo" id="site-title">hal9 0.1 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -225,34 +225,317 @@ title="Print to PDF"
 <dl class="py class">
 <dt class="sig sig-object py" id="hal9.hal9">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hal9.</span></span><span class="sig-name descname"><span class="pre">hal9</span></span><a class="headerlink" href="#hal9.hal9" title="Permalink to this definition">#</a></dt>
+<dd><dl class="py class">
+<dt class="sig sig-object py" id="hal9.hal9.h9">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">h9</span></span><a class="headerlink" href="#hal9.hal9.h9" title="Permalink to this definition">#</a></dt>
 <dd><p>hal9 pipeline class</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="hal9.hal9.add_step">
-<span class="sig-name descname"><span class="pre">add_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.add_step" title="Permalink to this definition">#</a></dt>
-<dd><p>Adds a generic step to a pipeline instance.</p>
-<p>This is</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">h9</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span><span class="o">.</span><span class="n">add_step</span><span class="p">(</span><span class="s2">&quot;load&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
+<dt class="sig sig-object py" id="hal9.hal9.h9.assign">
+<span class="sig-name descname"><span class="pre">assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.assign" title="Permalink to this definition">#</a></dt>
+<dd><p>Attach a new column</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column</strong> (<em>str</em>) – Name of the new column</p></li>
+<li><p><strong>array</strong> (<em>str</em>) – The array to be added to the table</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hal9.hal9.load">
-<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.load" title="Permalink to this definition">#</a></dt>
-<dd><p>Add a load step to the pipeline.</p>
-<p>This function wraps the add_step method and return the pipeline with a load step added.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">h9</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;col1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;col2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]}))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
+<dt class="sig sig-object py" id="hal9.hal9.h9.bar_chart">
+<span class="sig-name descname"><span class="pre">bar_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tickrotation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginleft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginbottom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.bar_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Our first chart type needs no introduction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em>) – The variable that horizontal axis</p></li>
+<li><p><strong>y</strong> (<em>str</em>) – The variable that should be on the vertical axis.</p></li>
+<li><p><strong>type</strong> (<em>str</em>) – One of ‘grouped’ or ‘stacked’. In grouped mode, bars are placed next to each other, in stacked mode bars are placed above each other.</p></li>
+<li><p><strong>orientation</strong> (<em>str</em>) – </p></li>
+<li><p><strong>palette</strong> (<em>str</em>) – Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.</p></li>
+<li><p><strong>fontsize</strong> (<em>str</em>) – Size of the font to be used in the x and y axes.</p></li>
+<li><p><strong>tickrotation</strong> (<em>str</em>) – The angle at which to place the x-axis labels</p></li>
+<li><p><strong>marginleft</strong> (<em>str</em>) – the left margin</p></li>
+<li><p><strong>marginbottom</strong> (<em>str</em>) – the bottom margin</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hal9.hal9.show">
-<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.show" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hal9.hal9.h9.bubble_chart">
+<span class="sig-name descname"><span class="pre">bubble_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.bubble_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Bigger values -&gt; bigger bubbles</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> (<em>str</em>) – The column in the dataframe who’s values should be used as labels on the circles</p></li>
+<li><p><strong>size</strong> (<em>str</em>) – The column in the dataframe who’s values should the area of each circle be propotional to.</p></li>
+<li><p><strong>palette</strong> (<em>str</em>) – the D3 Palette to determine the color scheme to use</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.convert">
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeConverter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charactersToRemove</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.convert" title="Permalink to this definition">#</a></dt>
+<dd><p>Apply an expression to the values in a specific column</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>field</strong> (<em>str</em>) – The name of the column to convert</p></li>
+<li><p><strong>dataType</strong> (<em>str</em>) – The target data type</p></li>
+<li><p><strong>timeConverter</strong> (<em>str</em>) – an optional parameter to help convert date-times</p></li>
+<li><p><strong>charactersToRemove</strong> (<em>str</em>) – a string of characters to remove</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.derive">
+<span class="sig-name descname"><span class="pre">derive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expression</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.derive" title="Permalink to this definition">#</a></dt>
+<dd><p>Create a new column or replace an existing one via an expression</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column</strong> (<em>str</em>) – The name of the new column. If this is a column that already exists in the dataframe, the derived column replaces the exisiting one.</p></li>
+<li><p><strong>expression</strong> (<em>str</em>) – The expression based on which the new columns are derived</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.dot_chart">
+<span class="sig-name descname"><span class="pre">dot_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dotsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginleft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginbottom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.dot_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Stack data into columns of dots</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em>) – The column in the dataframe whose values should determine the position of the dots along the x-axis</p></li>
+<li><p><strong>color</strong> (<em>str</em>) – The column in the dataframe who’s values should determine the color of each dot</p></li>
+<li><p><strong>palette</strong> (<em>str</em>) – the D3 Palette to determine the color scheme to use</p></li>
+<li><p><strong>dotsize</strong> (<em>str</em>) – the size of each dot</p></li>
+<li><p><strong>ticks</strong> (<em>str</em>) – The number of ticks on the x-axis</p></li>
+<li><p><strong>fontsize</strong> (<em>str</em>) – the size of the font in pixels</p></li>
+<li><p><strong>marginleft</strong> (<em>str</em>) – the left margin</p></li>
+<li><p><strong>marginbottom</strong> (<em>str</em>) – the bottom margin</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.drop">
+<span class="sig-name descname"><span class="pre">drop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">columns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.drop" title="Permalink to this definition">#</a></dt>
+<dd><p>Remove specific columns</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>columns</strong> (<em>str</em>) – The list of columns to remove</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.error_chart">
+<span class="sig-name descname"><span class="pre">error_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">open</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">levels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginleft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginbottom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.error_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Explain financial trends with a candlestick chart</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em>) – the column in the dataframe that is the contains the values for the x coordinates</p></li>
+<li><p><strong>min</strong> (<em>str</em>) – the column in the dataframe that is the contains the values for the minimum at each x coordinate</p></li>
+<li><p><strong>max</strong> (<em>str</em>) – the column in the dataframe that is the contains the values for the maximum at each x coordinate</p></li>
+<li><p><strong>open</strong> (<em>str</em>) – the column in the dataframe the contains the values at opening at each x coordinate</p></li>
+<li><p><strong>close</strong> (<em>str</em>) – the column in the dataframe the contains the values at close m at each x coordinate</p></li>
+<li><p><strong>levels</strong> (<em>str</em>) – </p></li>
+<li><p><strong>fontsize</strong> (<em>str</em>) – the font size</p></li>
+<li><p><strong>marginleft</strong> (<em>str</em>) – The left margin</p></li>
+<li><p><strong>marginbottom</strong> (<em>str</em>) – the bottom margin</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.facets_chart">
+<span class="sig-name descname"><span class="pre">facets_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chartType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.facets_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>A chart of charts organized in a grid</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em>) – The column in the dataframe that should be along the x-axis in all the subplots.</p></li>
+<li><p><strong>y</strong> (<em>str</em>) – The column in the dataframe that should be along the y-axis in all the subplots.</p></li>
+<li><p><strong>facets</strong> (<em>str</em>) – The columns in the dataframe that should define the marks to facetted subplots in  horizontal and vertical directions of the subplots.</p></li>
+<li><p><strong>color</strong> (<em>str</em>) – The column in the dataframe that will define the color of the marks in each of the subplots.</p></li>
+<li><p><strong>chartType</strong> (<em>str</em>) – The type of chart each of the subplots. Currently supports Scatter, Bar, Line and Cell</p></li>
+<li><p><strong>palette</strong> (<em>str</em>) – Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expression</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.filter" title="Permalink to this definition">#</a></dt>
+<dd><p>Keep only the rows that satisfy a given expression for a specific column</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>field</strong> (<em>str</em>) – The column on which to filter</p></li>
+<li><p><strong>expression</strong> (<em>str</em>) – the criteria on which to filter the rows</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.fold">
+<span class="sig-name descname"><span class="pre">fold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gather</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.fold" title="Permalink to this definition">#</a></dt>
+<dd><p>Fold one or more columns into a pair of key-value columns</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gather</strong> (<em>str</em>) – the list of columns to convert into key-value pairs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.funnel_chart">
+<span class="sig-name descname"><span class="pre">funnel_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontSize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">showPercentSelection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">funnelType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.funnel_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Communicate how data narrows down</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stage</strong> (<em>str</em>) – The column in the dataframe that contains all the stages of the process</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – The column in the dataframe that contains the values corresponding to each stage of the process</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – The column in the dataframe that should be used to create labels of the stages</p></li>
+<li><p><strong>fontSize</strong> (<em>str</em>) – The font size</p></li>
+<li><p><strong>showPercentSelection</strong> (<em>str</em>) – Boolean on whether to show the percentage in each step</p></li>
+<li><p><strong>funnelType</strong> (<em>str</em>) – The type of the funnel to make. Options are 2d, 3d and flat.</p></li>
+<li><p><strong>palette</strong> (<em>str</em>) – Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.heatmap_chart">
+<span class="sig-name descname"><span class="pre">heatmap_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginleft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginbottom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.heatmap_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Draw attention to larger values with more vibrant colors in this 2D map</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em>) – The column in the dataframe that defines the x coordinates of the marks</p></li>
+<li><p><strong>y</strong> (<em>str</em>) – The column in the dataframe that defines the y coordinates of the marks</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – The column in the dataframe that defines the intensity of the colors of the marks</p></li>
+<li><p><strong>palette</strong> (<em>str</em>) – </p></li>
+<li><p><strong>fontsize</strong> (<em>str</em>) – The font size</p></li>
+<li><p><strong>marginleft</strong> (<em>str</em>) – The left margin</p></li>
+<li><p><strong>marginbottom</strong> (<em>str</em>) – The bottom margin</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.histogram_chart">
+<span class="sig-name descname"><span class="pre">histogram_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">histfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">histnorm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barmode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.histogram_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Show further granularity within buckets via optional color palettes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em>) – The name of the column in the input dataframe that who’s distribution to be visualized</p></li>
+<li><p><strong>histfunc</strong> (<em>str</em>) – The function used to aggregate the values collected in each bin for summarization.</p></li>
+<li><p><strong>histnorm</strong> (<em>str</em>) – The aggregation method to apply on outputs of the aggregation functions.</p></li>
+<li><p><strong>barmode</strong> (<em>str</em>) – One of stacked or overlaid, which controls the manner in which multiple distributions selected in x are visualized.</p></li>
+<li><p><strong>palette</strong> (<em>str</em>) – The D3 palette used to control the colors of each of the distributions in x.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.impute">
+<span class="sig-name descname"><span class="pre">impute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.impute" title="Permalink to this definition">#</a></dt>
+<dd><p>Fill in a column’s missing data with the value of an aggregation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>field</strong> (<em>str</em>) – List of columns in which to replace missing values</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – the function to use to impute the missing values. Currently available options are ‘max’, ‘min’, ‘mean’ median’, ‘zero’. Default is ‘zero’</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.line_chart">
+<span class="sig-name descname"><span class="pre">line_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domainx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginleft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginbottom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.line_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>For use with sorted X axis values only…unless you like scribbles</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em>) – The column in the dataframe which defines the x coordinate of each vertex of the line</p></li>
+<li><p><strong>y</strong> (<em>str</em>) – The column in the dataframe which defines the y coordinate of each vertex of the line</p></li>
+<li><p><strong>palette</strong> (<em>str</em>) – Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.</p></li>
+<li><p><strong>domainx</strong> (<em>str</em>) – </p></li>
+<li><p><strong>fontsize</strong> (<em>str</em>) – </p></li>
+<li><p><strong>marginleft</strong> (<em>str</em>) – </p></li>
+<li><p><strong>marginbottom</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.load" title="Permalink to this definition">#</a></dt>
+<dd><p>Loads a dataframe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dataset</strong> (<em>str</em>) – The dataframe to load</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.map_chart">
+<span class="sig-name descname"><span class="pre">map_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.map_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Clearly map out Earthly datasets that have columns for latitude and longitude</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lon</strong> (<em>str</em>) – The column that contains the values that should be interpreted as the Longitude of vertex</p></li>
+<li><p><strong>lat</strong> (<em>str</em>) – The column that contains the values that should be interpreted as the Longitude of vertex</p></li>
+<li><p><strong>size</strong> (<em>str</em>) – The column propotional to which the points size should be.</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – The column which contains the labels of each of the verticies.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.network_chart">
+<span class="sig-name descname"><span class="pre">network_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.network_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Dazzle your colleagues with this colorful animated network graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>from</strong> (<em>str</em>) – Column containing the origin vertices of all the edges in the graph</p></li>
+<li><p><strong>to</strong> (<em>str</em>) – Column containing the target vertices of all the edges in the graph</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.old_show">
+<span class="sig-name descname"><span class="pre">old_show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.old_show" title="Permalink to this definition">#</a></dt>
 <dd><p>Renders the pipeline content on a notebook.</p>
 <p>This functions produces a HTML display block rendering the pipeline content.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">h9</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
@@ -260,6 +543,321 @@ title="Print to PDF"
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.pivot">
+<span class="sig-name descname"><span class="pre">pivot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">summarizer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.pivot" title="Permalink to this definition">#</a></dt>
+<dd><p>Pivot columns into a cross-tabulation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rows</strong> (<em>str</em>) – The column whose unique values should serve as the rows of the new dataframe</p></li>
+<li><p><strong>columns</strong> (<em>str</em>) – The column whose unique values should serve as the columns of the new dataframe</p></li>
+<li><p><strong>values</strong> (<em>str</em>) – The columns whose values should be collected to serve as the individual cells of the table</p></li>
+<li><p><strong>summarizer</strong> (<em>str</em>) – the method to aggregate the collected values</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.plotly_chart">
+<span class="sig-name descname"><span class="pre">plotly_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chartType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataSizes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.plotly_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Choose from a variety of Plotly visualizations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em>) – The column that determines the x coordinates in the cartesian plane of the marks</p></li>
+<li><p><strong>y</strong> (<em>str</em>) – The column that determines the y coordinates in the cartesian plane of the marks</p></li>
+<li><p><strong>chartType</strong> (<em>str</em>) – The chart to be constructed. Currently accepts one of lines, scatter, barChart, fillArea, histogram, twoHistogram</p></li>
+<li><p><strong>dataSizes</strong> (<em>str</em>) – The size of the marks</p></li>
+<li><p><strong>palette</strong> (<em>str</em>) – Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.radial_chart">
+<span class="sig-name descname"><span class="pre">radial_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wafflesizelabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.radial_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>A circular bar chart</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em>) – The column containing the labels of the charts</p></li>
+<li><p><strong>y</strong> (<em>str</em>) – the column containing the values the areas they occupy in the rectagular area should be propotional to</p></li>
+<li><p><strong>wafflesizelabel</strong> (<em>str</em>) – The size of the large rectangle</p></li>
+<li><p><strong>palette</strong> (<em>str</em>) – the D3 Palette to determine the color scheme to use</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.read_csv">
+<span class="sig-name descname"><span class="pre">read_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.read_csv" title="Permalink to this definition">#</a></dt>
+<dd><p>Import a CSV formatted dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em>) – Either the URL for the csv or a local file.</p></li>
+<li><p><strong>separator</strong> (<em>str</em>) – A single-character delimiter string between column values (default ‘,’)</p></li>
+<li><p><strong>skip</strong> (<em>str</em>) – The number of lines to skip (default 0) before reading data</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.read_excel">
+<span class="sig-name descname"><span class="pre">read_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.read_excel" title="Permalink to this definition">#</a></dt>
+<dd><p>Import a dataset from a sheet of an Excel file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.read_json">
+<span class="sig-name descname"><span class="pre">read_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.read_json" title="Permalink to this definition">#</a></dt>
+<dd><p>Import a JSON formatted dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em>) – </p></li>
+<li><p><strong>extract</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.read_sqlite">
+<span class="sig-name descname"><span class="pre">read_sqlite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.read_sqlite" title="Permalink to this definition">#</a></dt>
+<dd><p>Query data from a SQLite database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em>) – </p></li>
+<li><p><strong>query</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.regression_chart">
+<span class="sig-name descname"><span class="pre">regression_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.regression_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Fit a regression model to a dataset to predict future values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em>) – </p></li>
+<li><p><strong>y</strong> (<em>str</em>) – </p></li>
+<li><p><strong>type</strong> (<em>str</em>) – </p></li>
+<li><p><strong>predictions</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.roll_sum">
+<span class="sig-name descname"><span class="pre">roll_sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.roll_sum" title="Permalink to this definition">#</a></dt>
+<dd><p>Create new columns from the running totals of others</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>column</strong> (<em>str</em>) – The column for which to calculate the rolling sum.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samplesize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">withReplacement</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.sample" title="Permalink to this definition">#</a></dt>
+<dd><p>Trim a dataset down to a random sample of its rows</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>samplesize</strong> (<em>str</em>) – The size of the sample as a percentage of the size of the input dataframe</p></li>
+<li><p><strong>withReplacement</strong> (<em>str</em>) – Allow or disallow sampling of the same row more than once. Default- True</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.sankey_chart">
+<span class="sig-name descname"><span class="pre">sankey_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginleft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginbottom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.sankey_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Show the flow with Captain Sankey’s signature diagram</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>str</em>) – The column containing the source nodes</p></li>
+<li><p><strong>target</strong> (<em>str</em>) – The column containing the target nodes</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – The column containing the volume of each arrow</p></li>
+<li><p><strong>palette</strong> (<em>str</em>) – Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.</p></li>
+<li><p><strong>fontsize</strong> (<em>str</em>) – The font size in pixels</p></li>
+<li><p><strong>marginleft</strong> (<em>str</em>) – The margin on the left</p></li>
+<li><p><strong>marginbottom</strong> (<em>str</em>) – The margin on the bottom</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.scatter_chart">
+<span class="sig-name descname"><span class="pre">scatter_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginleft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginbottom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.scatter_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>A tried and true classic</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em>) – The column containing the x coordinates of the marks</p></li>
+<li><p><strong>y</strong> (<em>str</em>) – The column containing the y coordinates of the marks</p></li>
+<li><p><strong>color</strong> (<em>str</em>) – The column that should be used to group the marks into different colors</p></li>
+<li><p><strong>size</strong> (<em>str</em>) – The column the marks should be propotional in area to.</p></li>
+<li><p><strong>palette</strong> (<em>str</em>) – Colors to use for the different levels of the y variable. Should be one of the valid d3.js color palettes.</p></li>
+<li><p><strong>fontsize</strong> (<em>str</em>) – The size of the font to be used</p></li>
+<li><p><strong>marginleft</strong> (<em>str</em>) – The left margin</p></li>
+<li><p><strong>marginbottom</strong> (<em>str</em>) – The Bottom margin</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">columns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.select" title="Permalink to this definition">#</a></dt>
+<dd><p>Keep only a subset of columns</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>columns</strong> (<em>str</em>) – The list of columns to keep</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.slice">
+<span class="sig-name descname"><span class="pre">slice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.slice" title="Permalink to this definition">#</a></dt>
+<dd><p>Keep only a contiguous subset of rows</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>str</em>) – The starting index(included)</p></li>
+<li><p><strong>end</strong> (<em>str</em>) – The ending index(not included)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.sort">
+<span class="sig-name descname"><span class="pre">sort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.sort" title="Permalink to this definition">#</a></dt>
+<dd><p>Sort rows of data based on the values in selected columns</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>field</strong> (<em>str</em>) – The list of columns to sort by</p></li>
+<li><p><strong>order</strong> (<em>str</em>) – The order in which to sort, default - ascending</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.summarize">
+<span class="sig-name descname"><span class="pre">summarize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">summarizer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.summarize" title="Permalink to this definition">#</a></dt>
+<dd><p>Select columns to aggregate and others to keep unmodified</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> (<em>str</em>) – The list of columns by which to group</p></li>
+<li><p><strong>field</strong> (<em>str</em>) – The list of columns who’s values to collect</p></li>
+<li><p><strong>summarizer</strong> (<em>str</em>) – The summarizer method to aggregate the values collected, default- count</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.treemap_chart">
+<span class="sig-name descname"><span class="pre">treemap_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginleft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginbottom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.treemap_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Choose a column to map into colored blocks, and another to further subdivide by size</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> (<em>str</em>) – The column to be used as labels and colorcode the rectangular sectors</p></li>
+<li><p><strong>size</strong> (<em>str</em>) – The column to which the area of the rectangular sections should be in propotion to</p></li>
+<li><p><strong>palette</strong> (<em>str</em>) – the D3 Palette to determine the color scheme to use</p></li>
+<li><p><strong>fontsize</strong> (<em>str</em>) – The size of the font</p></li>
+<li><p><strong>marginleft</strong> (<em>str</em>) – The left margin</p></li>
+<li><p><strong>marginbottom</strong> (<em>str</em>) – The bottom margin</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.waffle_chart">
+<span class="sig-name descname"><span class="pre">waffle_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wafflesizelabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.waffle_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>A square pie chart; still not edible</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em>) – </p></li>
+<li><p><strong>y</strong> (<em>str</em>) – </p></li>
+<li><p><strong>wafflesizelabel</strong> (<em>str</em>) – </p></li>
+<li><p><strong>palette</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.waterfall_chart">
+<span class="sig-name descname"><span class="pre">waterfall_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginleft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marginbottom</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.waterfall_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Lay out cascades of data next to a towering waterfall representing the total</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>str</em>) – The column that sets the x coordinates</p></li>
+<li><p><strong>y</strong> (<em>str</em>) – A cumalative sum is calculated on this column and then the difference are visualized</p></li>
+<li><p><strong>fontsize</strong> (<em>str</em>) – The font size</p></li>
+<li><p><strong>marginleft</strong> (<em>str</em>) – The left margin</p></li>
+<li><p><strong>marginbottom</strong> (<em>str</em>) – The bottom margin</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.website">
+<span class="sig-name descname"><span class="pre">website</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">site</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.website" title="Permalink to this definition">#</a></dt>
+<dd><p>Embed a website and load a URL</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>site</strong> (<em>str</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hal9.hal9.h9.wordcloud_chart">
+<span class="sig-name descname"><span class="pre">wordcloud_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hal9.hal9.h9.wordcloud_chart" title="Permalink to this definition">#</a></dt>
+<dd><p>Make the most frequent words in a dataset stand out in a trendy way</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> (<em>str</em>) – The column containing words to be added to the cloud</p></li>
+<li><p><strong>size</strong> (<em>str</em>) – The column the size of the words should be in propotion to</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </dd></dl>
@@ -288,9 +886,9 @@ title="Print to PDF"
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By fernando<br/>
+    By Hal9<br/>
   
-      &copy; Copyright 2022, fernando.<br/>
+      &copy; Copyright 2022, Hal9.<br/>
 </p>
         </footer>
     </div>
