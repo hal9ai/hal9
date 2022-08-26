@@ -64,9 +64,7 @@
       function onStart() {
       }
 
-      async function onEnd(result, steps) {
-        const raw = await hal9.exportto.getSaveText(pid);
-        await serverSave(raw);
+      function onEnd(result, steps) {
       }
 
       async function onChange(changes) {
@@ -81,6 +79,11 @@
           deps.push(name);
           await performUpdates(deps);
         }
+      }
+
+      async function onRequestSave() {
+        const saveText = await hal9.exportto.getSaveText(pid, undefined, ['state']);
+        await serverSave(saveText);
       }
 
       async function getForwardDependencies(source) {
@@ -151,6 +154,7 @@
             onEvent: onEvent,
             /* designer events */
             onChange: onChange,
+            onRequestSave: onRequestSave,
           },
           env: environment,
           debug: debug
