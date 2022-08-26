@@ -138,7 +138,8 @@
           "value": [
             {
               "control": "textbox",
-              "id": 0
+              "id": 0,
+              "value": ""
             }
           ],
           "name": "label",
@@ -150,7 +151,8 @@
           "value": [
             {
               "control": "textbox",
-              "id": 2
+              "id": 2,
+              "value": ""
             }
           ],
           "name": "value",
@@ -277,7 +279,8 @@
         "value": [
           {
             "control": "textbox",
-            "id": 0
+            "id": 0,
+            "value": ""
           }
         ],
         "name": "label",
@@ -289,7 +292,8 @@
         "value": [
           {
             "control": "textbox",
-            "id": 2
+            "id": 2,
+            "value": ""
           }
         ],
         "name": "value",
@@ -312,51 +316,49 @@
     "stepLayouts": [
       {
         "stepId": 11099,
-        "width": "249px",
-        "left": "23px",
-        "height": "44px",
-        "top": "1px"
+        "width": "298px",
+        "left": "19px",
+        "height": "43px",
+        "top": "4px"
       },
       {
         "stepId": 11100,
-        "width": "377px",
-        "left": "282px",
-        "height": "42px",
-        "top": "3px"
+        "width": "402px",
+        "left": "327px",
+        "height": "64px",
+        "top": "5px"
       },
       {
         "stepId": 11101,
-        "width": "325px",
-        "left": "23px",
-        "height": "50px",
-        "top": "55px"
+        "width": "348px",
+        "left": "21px",
+        "height": "79px",
+        "top": "50px"
       },
       {
         "stepId": 11102,
-        "width": "298px",
-        "left": "361px",
-        "height": "48px",
-        "top": "57px"
+        "width": "354px",
+        "left": "375px",
+        "height": "40px",
+        "top": "80px"
       },
       {
         "stepId": 11103,
-        "width": "636px",
-        "left": "23px",
+        "width": "707px",
+        "left": "22px",
         "height": "88px",
-        "top": "115px"
+        "top": "129px"
       },
       {
         "stepId": 11104,
-        "width": "636px",
-        "left": "23px",
-        "height": "128px",
-        "top": "213px"
+        "width": "295px",
+        "left": "22px",
+        "height": "129px",
+        "top": "217px"
       }
     ]
   },
-  "state": {
-    "steps": {
-      "11099": {}
-    }
+  "metadata": {
+    "defaultMode": "app"
   }
 }
