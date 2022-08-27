@@ -2,6 +2,7 @@ const path = require('path');
 const package = require('./package.json');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => { 
   const devel = argv.mode === 'development';
@@ -84,6 +85,9 @@ module.exports = (env, argv) => {
         HAL9ENV: JSON.stringify(process.env.HAL9_ENV ? process.env.HAL9_ENV : 'prod'),
         HAL9HOST: JSON.stringify('api')
       }),
+      new HtmlWebpackPlugin({
+        template: './src/index.html'
+      }),
     ],
     module: {
       rules: rules,
@@ -105,7 +109,11 @@ module.exports = (env, argv) => {
         'Cache-Control': 'no-store'
       },
       port: 8000,
-      webSocketServer: false
+      webSocketServer: false,
+      static: {
+        directory: path.join(__dirname, "./dist")
+      },
+      open: true
     },
   };
 }
