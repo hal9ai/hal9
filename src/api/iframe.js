@@ -1,5 +1,5 @@
 import * as dataframe from '../core/utils/dataframe';
-import { getDesignerLoaderHtml, registerDesignerLoader } from './designer';
+import { getDesignerLoaderHtml, registerDesignerLoader } from '../designer/launcher';
 
 import * as native from './native';
 import * as environment from '../core/utils/environment';

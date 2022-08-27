@@ -1,12 +1,9 @@
 import * as native from './native';
 import * as iframe from './iframe';
-import { launchDesigner } from './designer';
 
-const api = Object.assign(native.init(), {
+export const api = Object.assign(native.init(), {
   init: init,
 });
-
-export default api;
 
 export async function init(options, hal9wnd) {
   hal9wnd = hal9wnd ? hal9wnd : window.hal9;
@@ -33,11 +30,6 @@ export async function init(options, hal9wnd) {
     }
 
     if (newApi) {
-      Object.assign(newApi, {
-        design: async (pid) => {
-          await launchDesigner(newApi, options, pid);
-        }
-      });
       // init shouldn't be called on newApi again
       delete newApi.init;
     }

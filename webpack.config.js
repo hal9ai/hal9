@@ -63,8 +63,8 @@ module.exports = (env, argv) => {
 
   return {
     entry: {
-      'hal9': './src/api/index.js',
-      'hal9.min': './src/api/index.js',
+      'hal9': './src/lib/index.js',
+      'hal9.min': './src/lib/index.js',
     },
     devtool: "source-map",
     output: {
