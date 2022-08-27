@@ -14,7 +14,6 @@ const Designer = function(hostopt) {
     "version": "0.0.1"
   }
 
-  const localhost = hostopt.localhost;
   const debug = hostopt.debug;
 
   const app = document.getElementById(hostopt.hostel)
@@ -39,6 +38,7 @@ const Designer = function(hostopt) {
   }
 
   async function serverSave(raw, hostopt) {
+    if (!hostopt.designer.persist) return;
     await fetch(hostopt.designer.persist, {
       method: 'POST',
       headers: {
@@ -126,9 +126,11 @@ const Designer = function(hostopt) {
   }
 
   this.init = async function() {
-    var resp = await fetch(hostopt.designer.persist)
-    if (resp.ok) {
-      pipeline = await resp.json()
+    if (hostopt.designer.persist) {
+      var resp = await fetch(hostopt.designer.persist)
+      if (resp.ok) {
+        pipeline = await resp.json()
+      }
     }
 
     const options = {
