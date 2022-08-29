@@ -60,9 +60,9 @@ po/*~
 rsconnect/
 
 inst/pipeline.json
-hal9/target
-hal9/server/target
-hal9/cli/target
+server/target
+server/server/target
+server/cli/target
 */*.lock
 **/Cargo.lock
 internal/
