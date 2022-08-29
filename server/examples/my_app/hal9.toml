@@ -1,0 +1,10 @@
+app = "demo app"
+
+# [client]
+# design = "client.html"
+
+[[runtimes]]
+name = "r"
+platform = "R"
+# TODO: should support relative path from proj root
+script = "./examples/my_app/R/backend.R"
