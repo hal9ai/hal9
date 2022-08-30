@@ -31,11 +31,11 @@ h9_create() |>
 ```{python, eval = FALSE}
 import hal9 as h9
 
-h9.create()
+(h9.create()
   .load(iris)
   .dropdown(values = "versicolor,setosa,virginica")
   .filter(field = "Species", expression = "field == outputs.dropdown")
-  .scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
+  .scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species"))
 ```
 
 :::
@@ -67,11 +67,11 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-h9.create()
+(h9.create()
   .load(dataset = iris) |>
   .slider(value = "70", max = "100") |>
   .sample(rebind = { samplesize = "slider" }) |>
-  .scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species")
+  .scatter_chart(x = "Sepal.Length", y = "Sepal.Width", color = "Species"))
 ```
 
 :::
