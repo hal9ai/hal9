@@ -23,7 +23,7 @@ Here is an example of one such payload:
                     "name": "species_dropdown",
                     "calls": [
                         {
-                            "fn": "on_select",
+                            "fn_name": "on_select",
                             "args": [
                                 {
                                     "name": "value",
@@ -37,7 +37,7 @@ Here is an example of one such payload:
                     "name": "summary_table",
                     "calls": [
                         {
-                            "fn": "html",
+                            "fn_name": "html",
                             "args": []
                         }
 
@@ -68,7 +68,7 @@ values. As an example, the response to the above manifest could be
                     "name": "species_dropdown",
                     "calls": [
                         {
-                            "fn": "on_select",
+                            "fn_name": "on_select",
                             "result": "setosa"
                         }
                     ]
@@ -77,7 +77,7 @@ values. As an example, the response to the above manifest could be
                     "name": "summary_table",
                     "calls": [
                         {
-                            "fn": "html",
+                            "fn_name": "html",
                             "result": ["<table>\n <thead>\n  <tr>\n   <th style=\"text-align:right;\"> avg_petal_length <\/th>\n  <\/tr>\n <\/thead>\n<tbody>\n  <tr>\n   <td style=\"text-align:right;\"> 1.462 <\/td>\n  <\/tr>\n<\/tbody>\n<\/table>"] 
                         }
 
