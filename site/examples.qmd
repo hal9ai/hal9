@@ -1,5 +1,5 @@
 ---
-title: "Gallery"
+title: "Examples"
 ---
 
 `hal9` provides several modular steps. This page show several examples of parametrized steps. Several different pipelines might be used on the same document or webpage.
