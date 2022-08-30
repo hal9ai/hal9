@@ -1,0 +1,90 @@
+---
+title: "Manifests and Replies"
+---
+
+...
+
+## Manifests
+
+Whenever a frontend event triggers a computation in a compute runtime, the Hal9 client generates a manifest containing
+information required by the compute runtime to update the state of the app. The manifest is a JSON array, with each
+entry representing a call to a function associated with a node. A manifest is generated for each compute runtime, so the
+payload sent by the client consists of an array of manifests.
+
+Here is an example of one such payload:
+
+```json
+{
+    "manifests": [
+        {
+            "runtime": "r",
+            "nodes": [
+                {
+                    "name": "species_dropdown",
+                    "calls": [
+                        {
+                            "fn": "on_select",
+                            "args": [
+                                {
+                                    "name": "value",
+                                    "value": "setosa"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "summary_table",
+                    "calls": [
+                        {
+                            "fn": "main",
+                            "args": []
+                        }
+
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+In this example, we're calling the `on_select()` function of the `species_dropdown` node in the compute runtime `"r"`,
+with the value of `"setosa"` for the `value` parameter and the `main()` function of the `summary_table` node with no
+arguments.
+
+## Computed Results
+
+Upon evaluating the manifest, the compute runtime provides a similarly specified JSON array with the function return
+values. As an example, the response to the above manifest could be
+
+```json
+{
+    "responses": [
+        {
+            "runtime": "r",
+            "nodes": [
+                {
+                    "name": "species_dropdown",
+                    "calls": [
+                        {
+                            "fn": "on_select",
+                            "result": "setosa"
+                        }
+                    ]
+                },
+                {
+                    "name": "summary_table",
+                    "calls": [
+                        {
+                            "fn": "main",
+                            "result": ["<table>\n <thead>\n  <tr>\n   <th style=\"text-align:right;\"> avg_petal_length <\/th>\n  <\/tr>\n <\/thead>\n<tbody>\n  <tr>\n   <td style=\"text-align:right;\"> 1.462 <\/td>\n  <\/tr>\n<\/tbody>\n<\/table>"] 
+                        }
+
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
