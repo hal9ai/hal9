@@ -14,6 +14,7 @@ website:
         - section: "Developer (Advanced)"
           contents:
             - dev.qmd
+            - config.qmd
             - manifests.qmd
 
 format:

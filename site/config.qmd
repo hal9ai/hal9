@@ -1,0 +1,39 @@
+---
+title: "Configuration File"
+---
+
+_A configuration file is provided automatically in each new Hal9 application and does not need to be edited by the
+user unless more control over the behavior of the app is desired._
+
+Each Hal9 application contains a configuration file `hal9.toml` at the root of the app directory that contains
+information necessary to deploy it. In addition to paths to the frontend design HTML file and the compute runtime
+scripts, it can also include optional information about package dependencies, such as `renv.lock` for R runtimes
+and `requirements.txt` for Python runtimes.
+
+## Specification
+
+A config file begins with a section `[application]` that contains the name and version of the app:
+
+```toml
+[application]
+name = "my_app"
+version = "0.0.1"
+```
+
+The next section, `[client]`, contains information on the frontend of the app:
+
+```toml
+[client]
+design = "client.html"
+```
+
+Finally, the `[[runtimes]]` sections include details on the compute runtimes:
+
+```toml
+[[runtimes]]
+name = "r"
+platform = "R"
+script_dir = "R/"
+```
+
+Currently supported platforms are `"R"` and `"Python"`.
