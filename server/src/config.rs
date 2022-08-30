@@ -4,10 +4,17 @@ use std::path::PathBuf;
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct Config {
-    pub app: String,
+    pub application: Application,
     pub client: Option<Client>,
     pub runtimes: Vec<Runtime>,
 }
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct Application {
+    pub name: String,
+    pub version: String,
+}
+
 #[derive(Deserialize, Debug, Clone)]
 pub struct Client {
     pub design: String,
@@ -18,6 +25,7 @@ pub enum Platform {
     R,
     Python,
 }
+
 #[derive(Deserialize, Debug, Clone)]
 pub struct Runtime {
     pub name: String,
