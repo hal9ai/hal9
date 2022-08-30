@@ -1,0 +1,5 @@
+---
+title: "Intro"
+---
+
+This section details the technical architecture of Hal9 and is meant for contributors and advanced developers.
