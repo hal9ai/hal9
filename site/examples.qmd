@@ -1,6 +1,8 @@
 ---
-title: "Examples"
+title: "Gallery"
 ---
+
+`hal9` provides several modular steps. This page show several examples of parametrized steps. Several different pipelines might be used on the same document or webpage.
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(python.reticulate = FALSE)
@@ -37,7 +39,25 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .bar_chart(
+    x = "cyl",
+    y = "carb",
+    type = "grouped",
+    orientation = "horizontal",
+    palette = "schemePaired",
+    fontsize = "14",
+    tickrotation = "0",
+    marginleft = "40",
+    marginbottom = "30"
+))
 ```
 
 :::
@@ -75,7 +95,18 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .histogram_chart(x = "mpg",
+                   histfunc = "count",
+                   histnorm = "none",
+                   barmode = "stack",
+                   palette = "schemePaired"))
 ```
 
 :::
@@ -124,7 +155,24 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = (pd.read_csv('../input/mtcars.csv')
+.filter(["carb","mpg"])
+.groupby("carb")
+.agg("mean"))
+
+(hal9()
+  .load(mtcars)
+  .line_chart(
+    x = "carb",
+    y = "media",
+    palette = "schemePaired",
+    fontsize = "16",
+    marginleft = "40",
+    marginbottom = "30"
+  ))
 ```
 
 :::
@@ -152,7 +200,22 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .sankey_chart(
+    source = "carb",
+    target = "cyl",
+    value = "carb",
+    palette = "schemePaired",
+    fontsize = "16",
+    marginleft = "40",
+    marginbottom = "30"
+  ))
 ```
 
 :::    
@@ -181,7 +244,23 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .scatter_chart(
+    x = "mpg",
+    y = "drat",
+    color = "cyl",
+    size = "carb",
+    palette = "schemePaired",
+    fontsize = "16",
+    marginleft = "40",
+    marginbottom = "30"
+  ))
 ```
 
 :::
@@ -210,7 +289,22 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = (pd.read_csv('../input/mtcars.csv')
+.filter(["carb","mpg"])
+.groupby("carb")
+.agg("mean"))
+
+(hal9()
+  .load(mtcars)
+  .regression_chart(
+    x = "carb",
+    y = "media",
+    type = "exponential", 
+    predictions = "0"
+  ))
 ```
 
 :::
@@ -233,7 +327,17 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .assign(
+    column = "new_column", 
+    array = "data.indices()")
+)
 ```
 
 :::
@@ -260,7 +364,16 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .derive(column = "new_column",
+            expression = "data[columns[1]]")
+)
 ```
 
 :::
@@ -280,7 +393,15 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .drop(columns = "mpg")
+)
 ```
 
 :::
@@ -301,7 +422,17 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .filter(
+    field = "mpg",
+    expression = "field > 20")
+)
 ```
 
 :::
@@ -321,7 +452,15 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .fold(gather = "_row")
+)
 ```
 
 :::
@@ -342,7 +481,17 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .impute(
+    field = "Ozone",
+    method = "mean")
+)
 ```
 
 :::
@@ -368,7 +517,15 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .roll_sum(column = "mpg")
+)
 ```
 
 :::
@@ -389,7 +546,17 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .sample(
+    samplesize = "40",
+    withReplacement = "false")
+)
 ```
 
 :::
@@ -409,7 +576,15 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .select(columns = "am")
+)
 ```
 
 :::
@@ -430,7 +605,15 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .slice(start = "5",end = "20")
+)
 ```
 
 :::
@@ -451,7 +634,16 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .sort(field = "mpg",
+        order = "desc")
+)
 ```
 
 :::
@@ -473,7 +665,18 @@ h9_create() |>
 ## Python
 
 ```{python, eval = FALSE}
-"soon"
+import hal9 from hal9
+import pandas as pd
+
+mtcars = pd.read_csv('../input/mtcars.csv')
+
+(hal9()
+  .load(mtcars)
+  .summarize(
+    group = "cyl",
+    field = "carb",
+    summarizer = "mean")
+)
 ```
 
 :::
