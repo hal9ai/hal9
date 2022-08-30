@@ -16,7 +16,12 @@ class Manifest(BaseModel):
 async def get_pipeline():
     with open('../../r/inst/pipeline.json') as f:
         return f.read()
-        
+
+@app.post('/pipeline', response_class=PlainTextResponse)
+async def get_pipeline():
+    with open('../../r/inst/pipeline.json') as f:
+        return f.read()
+
 @app.get('/', response_class=HTMLResponse)
 async def run_client():
     return h9.__get_designer(mode = "run")
