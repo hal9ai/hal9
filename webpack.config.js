@@ -6,6 +6,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env, argv) => { 
   const devel = argv.mode === 'development';
+  let entries = {
+    'hal9': './src/lib/index.js',
+    'hal9.min': './src/lib/index.js',
+  }
 
   var rules = [
     {
@@ -47,6 +51,10 @@ module.exports = (env, argv) => {
       }
     });
   } else {
+    entries = {
+      'hal9': './src/lib/index.js',
+    };
+
     rules.unshift({
       test: /\.m?js$/,
       exclude: /(node_modules)/,
@@ -63,10 +71,7 @@ module.exports = (env, argv) => {
   }
 
   return {
-    entry: {
-      'hal9': './src/lib/index.js',
-      'hal9.min': './src/lib/index.js',
-    },
+    entry: entries,
     devtool: "source-map",
     output: {
       filename: '[name].js',
