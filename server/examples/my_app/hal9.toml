@@ -1,4 +1,6 @@
-app = "demo app"
+[application]
+name = "demo app"
+version = "0.0.1"
 
 # [client]
 # design = "client.html"
