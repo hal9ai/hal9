@@ -1,10 +1,10 @@
 import { api } from '../api/api';
 import { designer } from '../designer/designer';
-import { node } from '../backend/browser';
+import * as backend from '../backend/browser';
 
 const lib = Object.assign(api, {
   designer: designer,
-  node: node
+  backend: backend,
 });
 
 export default lib;

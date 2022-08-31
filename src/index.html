@@ -6,16 +6,32 @@
   </head>
   <body style="height: 100%; margin: 0;">
     <div style="width: 100%; height: 100%">
-      <div id="output"></div>
+      <div id="output" style="width: 100%; height: 100%"></div>
       <div id="designer"></div>
     </div>
     <script>
       async function start() {
+        let h9 = hal9.backend;
+        
+        h9.node('textarea', {
+          value: 'Hello from JS!',
+          on_input: function(value) {
+            h9.set('message', value);
+          }
+        })
+
+        h9.node('rawhtml', {
+          value: function() {
+            return '<b>' + h9.get('message') + '</b>';
+          }
+        })
+
         let hostopt = {
           mode: 'design',
           designer: {
-            // persist: 'pipeline',
-            eval: 'eval',
+            persist: undefined,
+            restore: undefined,
+            eval: hal9.backend.process,
           },
           hostel: 'output',
           api: 'http://localhost:8000/dist/hal9.js',

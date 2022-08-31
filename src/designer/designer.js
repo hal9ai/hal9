@@ -19,6 +19,10 @@ const Designer = function(hostopt) {
   const app = document.getElementById(hostopt.hostel)
 
   async function serverEval(body) {
+    if (typeof(hostopt.designer.eval) === 'function') {
+      return await hostopt.designer.eval(body.manifest);
+    }
+
     console.log('Sending: \n' + JSON.stringify(body, null, 2));
 
     const resp = await fetch(hostopt.designer.eval, {
@@ -39,14 +43,18 @@ const Designer = function(hostopt) {
 
   async function serverSave(raw, hostopt) {
     if (!hostopt.designer.persist) return;
-    await fetch(hostopt.designer.persist, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: raw
-    });
+    if (typeof(hostopt.designer.persist) === 'function')
+      return await hostopt.designer.persist(raw);
+    else {
+      return await fetch(hostopt.designer.persist, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: raw
+      });
+    }
   }
 
   async function performUpdates(names) {
@@ -126,7 +134,10 @@ const Designer = function(hostopt) {
   }
 
   this.init = async function() {
-    if (hostopt.designer.persist) {
+    if (typeof(hostopt.designer.restore) === 'function') {
+      pipeline = await hostopt.designer.restore();
+    }
+    else if (hostopt.designer.persist) {
       var resp = await fetch(hostopt.designer.persist)
       if (resp.ok) {
         pipeline = await resp.json()
