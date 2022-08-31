@@ -108,7 +108,7 @@ impl RuntimesController {
     fn start_r_api(script: &str, port: u16) -> Result<Child, std::io::Error> {
         Command::new("Rscript")
             .arg("-e")
-            .arg(format!("hal9:::h9_start_api_server('{script}', {port})"))
+            .arg(format!("hal9:::h9_start('{script}', {port})"))
             .spawn()
     }
 
