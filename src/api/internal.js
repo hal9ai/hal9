@@ -80,6 +80,7 @@ export const internal = {
     getApp: pipelines.getApp,
     abort: pipelines.abort,
     isAborted: pipelines.isAborted,
+    getDependencies: pipelines.getDependencies,
   },
 
   exportto: {

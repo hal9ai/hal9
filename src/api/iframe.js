@@ -443,7 +443,12 @@ function IFrameAPI(options, hal9wnd, config) {
       return await post(me.config, "hal9.pipelines.isAborted(params.pipelineid)", {
         pipelineid: pipelineid,
       })
-    }
+    },
+    getDependencies: async (pipelineid) => {
+      return await post(me.config, "hal9.pipelines.getDependencies(params.pipelineid)", {
+        pipelineid: pipelineid,
+      })
+    },
   };
     
 

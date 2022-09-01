@@ -41,6 +41,7 @@ type pipelineid = string;
 type metadata = { params: params, deps: Array<string>, environment: string };
 type block = { id: number, name: string, params: params, error: string, metadata: metadata, script: string };
 type blocks = Array<block>;
+type deps = { id: Array<id> };
 */
 
 var pipelinesStateCount = 0;
@@ -118,6 +119,7 @@ const createInt = (steps /*: steps */, previous /*: pipeline */) /*: pipeline */
     version: '0.0.1',
     metadata: clone(previous.metadata),
     app: clone(previous.app),
+    deps: {},
   };
 
   pipeline.steps = steps;
@@ -942,3 +944,9 @@ export const isAborted = async (pipelineid /*: pipelineid */) /*: boolean */ => 
   var pipeline = store.get(pipelineid);
   return pipeline.aborted === true;
 }
+
+export const getDependencies = async (pipelineid /*: pipelineid */) /*: deps */ => {
+  var pipeline = store.get(pipelineid);
+  return clone(pipeline.deps);
+}
+
