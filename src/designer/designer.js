@@ -116,10 +116,10 @@ const Designer = function(hostopt) {
     return deps;
   }
 
-  async function onEvent(step, event, value) {
+  async function onEvent(step, event, params) {
     var change = {}
     change[step.name] = {}
-    change[step.name][event] = value;
+    change[step.name][event] = params;
     await serverEval({ manifest: change });
 
     const deps = await getForwardDependencies(step.name);

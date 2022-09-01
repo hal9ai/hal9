@@ -53,7 +53,7 @@ export function node(uid, properties) {
 }
 
 export function set(uid, value) {
-  data[uid] <- value
+  data[uid] = value;
 }
 
 export function get(uid) {
@@ -63,22 +63,25 @@ export function get(uid) {
 export function process(req) {
   let uids = Object.keys(req);
 
+  let results = {};
+
   for (let uid of uids) {
     let node = nodes[uid];
-    let fnArgs = req[uid];
-    let fn = Object.keys(fnArgs);
+    let functions = req[uid];
+    let functionNames = Object.keys(functions);
 
     if (!node) {
-      return { result: {} };
+      results[uid] = {};
     }
-    else if (!fnArgs.length) {
-      let results = node.evaluate(null, {});
-      return {
-        result: results
-      }
+    else if (!Object.keys(functions).length) {
+      results[uid] = {
+        result: node.evaluate(null, {})
+      };
     } else {
-      node.evaluate(fn, fnArgs);
-      return {};
+      node.evaluate(functionNames[0], functions[functionNames[0]]);
+      results[uid] = {};
     }
   }
+
+  return results;
 }

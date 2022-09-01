@@ -15,13 +15,13 @@
         
         h9.node('textarea', {
           value: 'Hello from JS!',
-          on_input: function(value) {
+          on_update: function(value) {
             h9.set('message', value);
           }
         })
 
         h9.node('rawhtml', {
-          value: function() {
+          rawhtml: function() {
             return '<b>' + h9.get('message') + '</b>';
           }
         })
