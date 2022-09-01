@@ -135,7 +135,7 @@ h9_reset <- function() {
 h9_start <- function(app = "app.R", port = 6806) {
     h9_reset()
 
-    if (!file.exists(app)) writeLines("", app)
+      if (!file.exists(app)) writeLines("", app)
 
     user_code <- readLines(app)
     server_code <- readLines(system.file("server-spec.R", package = "hal9"))
@@ -146,7 +146,7 @@ h9_start <- function(app = "app.R", port = 6806) {
         user_code,
         "",
         "## Hal9 Code",
-        paste0("app_file <- \"", normalizePath(app), "\""),
+        paste0("app_file <- \"", normalizePath(app, winslash = "/"), "\""),
         paste0("app_path <- \"", dirname(normalizePath(app)), "\""),
         "",
         server_code
