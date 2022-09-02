@@ -60,7 +60,8 @@ impl RuntimesController {
                     RtControllerMsg::StartAll => self.launch_all().await.ok(),
                     RtControllerMsg::GetUri(x) => {
                         let uri = self.uris.get(&x).unwrap();
-                        Some(self.tx_uri.send(uri.clone()).unwrap())
+                        self.tx_uri.send(uri.clone()).unwrap_or_else(|err| panic!("{err}"));
+                        Some(())
                     }
                 };
             }
