@@ -10,6 +10,7 @@ use crossbeam::channel::bounded;
 use reqwest;
 use serde_json;
 use std::fs;
+use std::path::Path;
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::mpsc::channel;
@@ -86,10 +87,14 @@ async fn pipeline() -> Result<NamedFile> {
 
 // #[actix_web::main]
 #[tokio::main]
-pub async fn start_server() -> std::io::Result<()> {
+pub async fn start_server(app_path: String) -> std::io::Result<()> {
     use actix_web::{web, App, HttpServer};
 
-    let conf = Config::parse("./examples/my_app/hal9.toml".parse().unwrap());
+    let app_path_to_monitor = app_path.clone();
+    let config_path = PathBuf::new().join(app_path).join("hal9.toml");
+    let conf = Config::parse(config_path);
+
+    // let conf = Config::parse("./examples/my_app/hal9.toml".parse().unwrap());
 
     let (tx, rx) = channel();
     let (tx_uri, rx_uri) = bounded(0);
@@ -103,7 +108,8 @@ pub async fn start_server() -> std::io::Result<()> {
     tx.send(RtControllerMsg::GetUri(String::from("r"))).unwrap();
 
     let tx_fs = tx.clone();
-    monitor_fs_changes(String::from("./examples/my_app"), 1000, tx_fs).await;
+    // monitor_fs_changes(String::from("./examples/my_app"), 1000, tx_fs).await;
+    monitor_fs_changes(app_path_to_monitor, 1000, tx_fs).await;
 
     let last_heartbeat = web::Data::new(AtomicUsize::new(time_now().try_into().unwrap()));
     let last_heartbeat_clone = Arc::clone(&last_heartbeat);

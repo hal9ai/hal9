@@ -1,18 +1,14 @@
+#![allow(clippy::not_unsafe_ptr_arg_deref)]
+
 use crate::server::start_server;
 use extendr_api::prelude::*;
-
-/// Return string `"Hello world!"` to R.
-/// @export
-#[extendr]
-fn hello_world() -> &'static str {
-    "Hello world!"
-}
 
 /// Start server.
 /// @export
 #[extendr]
-fn h9_start2() -> u32 {
-    start_server();
+fn h9_start2(#[default = "."] path: String) -> u32 {
+    // #[allow(clippy::not_unsafe_ptr_arg_deref)]
+    start_server(path);
     0
 }
 
@@ -21,6 +17,5 @@ fn h9_start2() -> u32 {
 // See corresponding C code in `entrypoint.c`.
 extendr_module! {
     mod hal9;
-    fn hello_world;
     fn h9_start2;
 }
