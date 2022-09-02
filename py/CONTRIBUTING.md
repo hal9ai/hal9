@@ -49,6 +49,12 @@ Ready to contribute? Here's how to set up `bussin` for local development.
     $ poetry install
     ```
 
+   Or install directly as follows:
+
+    ```console
+    $ pip3 install -e .
+    ```
+
 3. Use `git` (or similar) to create a branch for local development and make your changes:
 
     ```console
