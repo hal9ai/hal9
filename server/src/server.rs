@@ -3,17 +3,18 @@ use crate::manifest::*;
 use crate::runtimes::{RtControllerMsg, RuntimesController};
 use crate::util::{monitor_fs_changes, monitor_heartbeat, time_now};
 use actix_files::NamedFile;
-use actix_web::http::Uri;
 use actix_web::{get, web, HttpResponse, Responder, Result};
 use crossbeam::channel as crossbeam_channel;
 use crossbeam::channel::bounded;
 use reqwest;
 use serde_json;
 use std::fs;
+use std::path::Path;
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::mpsc::channel;
 use std::sync::Arc;
+use url::Url;
 
 #[get("/")]
 async fn run() -> impl Responder {
@@ -45,7 +46,7 @@ async fn ping(last_heartbeat: web::Data<AtomicUsize>) -> impl Responder {
 
 async fn eval(
     tx_hander: web::Data<std::sync::mpsc::Sender<RtControllerMsg>>,
-    rx_uri_handler: web::Data<crossbeam_channel::Receiver<Uri>>,
+    rx_uri_handler: web::Data<crossbeam_channel::Receiver<Url>>,
     req: web::Json<Manifests>,
 ) -> impl Responder {
     println!("{req:?}");
@@ -54,15 +55,15 @@ async fn eval(
     let uri = rx_uri_handler.recv().unwrap();
     let manifest = req.manifests[0].nodes.clone();
 
-    let client = reqwest::Client::new();
-    let scheme = uri.scheme_str().unwrap();
-    let authority = uri.authority().unwrap().as_str();
-    let path_and_query = uri.path_and_query().unwrap().as_str();
-    let uri_str = format!("{scheme}://{authority}{path_and_query}");
+    // let client = reqwest::Client::new();
+    // let scheme = uri.scheme_str().unwrap();
+    // let authority = uri.authority().unwrap().as_str();
+    // let path_and_query = uri.path_and_query().unwrap().as_str();
+    // let uri_str = format!("{scheme}://{authority}{path_and_query}");
 
-    let params = serde_json::to_string(&manifest).unwrap();
+    // let params = serde_json::to_string(&manifest).unwrap();
 
-    println!("{:?}", params);
+    // println!("{:?}", params);
 
     // TODO: impl `Response`
 
@@ -86,10 +87,12 @@ async fn pipeline() -> Result<NamedFile> {
 
 // #[actix_web::main]
 #[tokio::main]
-pub async fn start_server() -> std::io::Result<()> {
+pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     use actix_web::{web, App, HttpServer};
 
-    let conf = Config::parse("./examples/my_app/hal9.toml".parse().unwrap());
+    let app_path_to_monitor = app_path.clone();
+    let config_path = PathBuf::new().join(app_path).join("hal9.toml");
+    let conf = Config::parse(config_path);
 
     let (tx, rx) = channel();
     let (tx_uri, rx_uri) = bounded(0);
@@ -103,7 +106,8 @@ pub async fn start_server() -> std::io::Result<()> {
     tx.send(RtControllerMsg::GetUri(String::from("r"))).unwrap();
 
     let tx_fs = tx.clone();
-    monitor_fs_changes(String::from("./examples/my_app"), 1000, tx_fs).await;
+
+    monitor_fs_changes(app_path_to_monitor, 1000, tx_fs).await;
 
     let last_heartbeat = web::Data::new(AtomicUsize::new(time_now().try_into().unwrap()));
     let last_heartbeat_clone = Arc::clone(&last_heartbeat);
@@ -122,9 +126,13 @@ pub async fn start_server() -> std::io::Result<()> {
             .service(web::resource("/eval").route(web::post().to(eval)))
     })
     .disable_signals()
-    .bind(("127.0.0.1", 6807))
-    .unwrap()
-    .run();
+    .bind(("127.0.0.1", port))
+    .unwrap();
+
+    let myport = http_server.addrs().pop().unwrap().port();
+    let http_server = http_server.run();
+
+    println!("server listening on port {myport}");
 
     let http_server_handle = http_server.handle();
 

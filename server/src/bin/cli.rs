@@ -16,9 +16,13 @@ fn main() {
     let cli = Cli::parse();
 
     match &cli.command {
-        None => {
-            start_server();
+        // None => {
+        //     start_server(String::from("."));
+        // }
+        Some(Commands::Start{ app_dir }) => {
+            start_server(app_dir.as_ref().unwrap().to_string(), 0);
         }
         Some(x) => panic!("{:?} not supported", x),
+        None => panic!("must have command")
     }
 }

@@ -1,8 +1,10 @@
-use actix_web::http::Uri;
 use crossbeam::channel;
 use std::collections::HashMap;
-use std::process::{Child, Command};
+use std::process::{Child, Command, Stdio};
 use std::sync::mpsc::Receiver;
+use std::io::Read;
+use std::str;
+use url::Url;
 
 use crate::config::{Platform, Runtime};
 use crate::runtimes;
@@ -10,9 +12,9 @@ use crate::runtimes;
 pub struct RuntimesController {
     runtimes: Vec<Runtime>,
     handles: HashMap<String, Child>,
-    uris: HashMap<String, Uri>,
+    uris: HashMap<String, Url>,
     rx: Receiver<RtControllerMsg>,
-    tx_uri: channel::Sender<Uri>,
+    tx_uri: channel::Sender<Url>,
 }
 
 fn get_runtime_names(runtimes: Vec<Runtime>) -> Vec<String> {
@@ -31,10 +33,10 @@ impl RuntimesController {
     pub fn new(
         v: Vec<Runtime>,
         rx: Receiver<RtControllerMsg>,
-        tx_uri: channel::Sender<Uri>,
+        tx_uri: channel::Sender<Url>,
     ) -> Self {
         let api_handles: HashMap<String, Child> = HashMap::new();
-        let uris: HashMap<String, Uri> = HashMap::new();
+        let uris: HashMap<String, Url> = HashMap::new();
 
         RuntimesController {
             runtimes: v,
@@ -74,23 +76,35 @@ impl RuntimesController {
 
         let runtime = runtimes.get(0).unwrap().clone();
 
-        let port = 6080;
-        let handle = match &runtime.platform {
-            Platform::R => Self::start_r_api(&runtime.script, port),
-            other => panic!("{:?} not implemented", other),
+        let port = 0;
+        let (handle, my_url) = match &runtime.platform {
+            Platform::R => {
+               let mut handle = Self::start_r_api(&runtime.script, port);
+               let mut buffer = [0; 70];
+
+               handle.as_mut().unwrap().stderr.take().unwrap().read_exact(&mut buffer);
+
+               let msg = str::from_utf8(&buffer).unwrap();
+               let plumber_intro = "Running Plumber API at";
+               let start_bytes = msg.find(plumber_intro).unwrap_or(0) +
+                   plumber_intro.len() + 1;
+               let msg = &msg[start_bytes..];
+               let end_bytes = msg.find(char::is_whitespace).unwrap_or(msg.len());
+               let runtime_api_url = &msg[..end_bytes];
+
+               (handle.unwrap(), runtime_api_url.to_owned())
+            },            
+            other => panic!("{:?} not implemented", other)
         };
 
-        println!("started api service for {}", &name);
 
-        let uri = Uri::builder()
-            .scheme("http")
-            .authority(format!("127.0.0.1:{port}"))
-            .path_and_query("/")
-            .build();
+
+        let url = Url::parse(&my_url).unwrap();
         let name2 = name.clone();
+        println!("started api service for {} at {:?}", &name, url);
 
-        self.handles.insert(name, handle.unwrap());
-        self.uris.insert(name2, uri.unwrap());
+        self.handles.insert(name, handle);
+        self.uris.insert(name2, url);
 
         Ok(())
     }
@@ -108,7 +122,9 @@ impl RuntimesController {
     fn start_r_api(script: &str, port: u16) -> Result<Child, std::io::Error> {
         Command::new("Rscript")
             .arg("-e")
-            .arg(format!("hal9:::h9_start('{script}', {port})"))
+            // .arg(format!("hal9:::h9_start('{script}', {port})"))
+            .arg(format!("hal9:::h9_start('{script}', NULL)"))
+            .stderr(Stdio::piped())
             .spawn()
     }
 
