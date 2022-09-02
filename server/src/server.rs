@@ -16,18 +16,23 @@ use std::sync::mpsc::channel;
 use std::sync::Arc;
 use url::Url;
 
-#[get("/")]
-async fn run() -> impl Responder {
-    let contents = fs::read_to_string("resources/client.html")
-        .unwrap()
+async fn run(designer_string: web::Data<String>) -> impl Responder {
+    // let contents = fs::read_to_string("resources/client.html")
+    //     .unwrap()
+    //     .replace("__options__", r#"{"mode": "run"}"#);
+
+    let contents = designer_string
+        // .unwrap()
         .replace("__options__", r#"{"mode": "run"}"#);
     HttpResponse::Ok().body(contents)
 }
 
-#[get("/design")]
-async fn design() -> impl Responder {
-    let contents = fs::read_to_string("resources/client.html")
-        .unwrap()
+async fn design(designer_string: web::Data<String>) -> impl Responder {
+    // let contents = fs::read_to_string("resources/client.html")
+    //     .unwrap()
+    //     .replace("__options__", r#"{"mode": "design"}"#);
+
+    let contents = designer_string
         .replace("__options__", r#"{"mode": "design"}"#);
     HttpResponse::Ok().body(contents)
 }
@@ -113,16 +118,20 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     let last_heartbeat = web::Data::new(AtomicUsize::new(time_now().try_into().unwrap()));
     let last_heartbeat_clone = Arc::clone(&last_heartbeat);
 
+
+    let designer_bytes = include_bytes!("../resources/client.html");
+    let designer_string: String = String::from_utf8_lossy(designer_bytes).to_string();
+
     let tx_handler = tx.clone();
     let http_server = HttpServer::new(move || {
         App::new()
+            .app_data(web::Data::new(designer_string.clone()))
             .app_data(web::Data::new(tx_handler.clone()))
             .app_data(web::Data::new(rx_uri_handler.clone()))
             .app_data(web::Data::new(last_heartbeat.clone()))
-            .service(run)
-            .service(design)
             .route("/pipeline", web::get().to(pipeline))
-            .route("/", web::get().to(pipeline))
+            .route("/design", web::get().to(design))
+            .route("/", web::get().to(run))
             .service(web::resource("/ping").to(ping))
             .service(web::resource("/eval").route(web::post().to(eval)))
     })
