@@ -18,30 +18,21 @@ Here is an example of one such payload:
     "manifests": [
         {
             "runtime": "r",
-            "nodes": [
+            "calls": [
                 {
-                    "name": "species_dropdown",
-                    "calls": [
+                    "node": "species_dropdown",
+                    "fn_name": "on_select",
+                    "args": [
                         {
-                            "fn_name": "on_select",
-                            "args": [
-                                {
-                                    "name": "value",
-                                    "value": "setosa"
-                                }
-                            ]
+                            "name": "value",
+                            "value": "setosa"
                         }
                     ]
                 },
                 {
-                    "name": "summary_table",
-                    "calls": [
-                        {
-                            "fn_name": "html",
-                            "args": []
-                        }
-
-                    ]
+                    "node": "summary_table",
+                    "fn_name": "html",
+                    "args": []
                 }
             ]
         }
@@ -50,7 +41,7 @@ Here is an example of one such payload:
 ```
 
 In this example, we're calling the `on_select()` function of the `species_dropdown` node in the compute runtime `"r"`,
-with the value of `"setosa"` for the `value` parameter and the `main()` function of the `summary_table` node with no
+with the value of `"setosa"` for the `value` parameter and the `html()` function of the `summary_table` node with no
 arguments.
 
 ## Computed Results
@@ -63,25 +54,16 @@ values. As an example, the response to the above manifest could be
     "responses": [
         {
             "runtime": "r",
-            "nodes": [
+            "calls": [
                 {
-                    "name": "species_dropdown",
-                    "calls": [
-                        {
-                            "fn_name": "on_select",
-                            "result": "setosa"
-                        }
-                    ]
+                    "node": "species_dropdown",
+                    "fn_name": "on_select",
+                    "result": "setosa"
                 },
                 {
-                    "name": "summary_table",
-                    "calls": [
-                        {
-                            "fn_name": "html",
-                            "result": ["<table>\n <thead>\n  <tr>\n   <th style=\"text-align:right;\"> avg_petal_length <\/th>\n  <\/tr>\n <\/thead>\n<tbody>\n  <tr>\n   <td style=\"text-align:right;\"> 1.462 <\/td>\n  <\/tr>\n<\/tbody>\n<\/table>"] 
-                        }
-
-                    ]
+                    "node": "summary_table",
+                    "fn_name": "html",
+                    "result": "<table>\n <thead>\n  <tr>\n   <th style=\"text-align:right;\"> avg_petal_length <\/th>\n  <\/tr>\n <\/thead>\n<tbody>\n  <tr>\n   <td style=\"text-align:right;\"> 1.462 <\/td>\n  <\/tr>\n<\/tbody>\n<\/table>" 
                 }
             ]
         }
