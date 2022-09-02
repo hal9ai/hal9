@@ -9,7 +9,7 @@ path = "src/lib.rs"
 crate-type = ['lib', 'staticlib']
 
 [[bin]]
-name = "cli"
+name = "hal9"
 path = "src/bin/cli.rs"
 
 # [[bin]]
