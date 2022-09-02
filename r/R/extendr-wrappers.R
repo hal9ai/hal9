@@ -8,11 +8,7 @@
 #' @useDynLib hal9, .registration = TRUE
 NULL
 
-#' Return string `"Hello world!"` to R.
-#' @export
-hello_world <- function() .Call(wrap__hello_world)
-
 #' Start server.
 #' @export
-h9_start2 <- function() .Call(wrap__h9_start2)
+h9_start2 <- function(path = .) .Call(wrap__h9_start2, path)
 
