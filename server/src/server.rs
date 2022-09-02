@@ -91,6 +91,7 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     use actix_web::{web, App, HttpServer};
 
     let app_path_to_monitor = app_path.clone();
+    let app_path_for_controller = app_path.clone();
     let config_path = PathBuf::new().join(app_path).join("hal9.toml");
     let conf = Config::parse(config_path);
 
@@ -98,7 +99,7 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     let (tx_uri, rx_uri) = bounded(0);
     let rx_uri_handler = rx_uri.clone();
 
-    let runtimes_controller = RuntimesController::new(conf.runtimes.clone(), rx, tx_uri);
+    let runtimes_controller = RuntimesController::new(conf.runtimes.clone(), app_path_for_controller, rx, tx_uri);
 
     runtimes_controller.monitor().unwrap();
 
