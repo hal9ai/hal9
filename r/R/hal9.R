@@ -1,41 +1,18 @@
 .globals_nodes <- new.env()
 .globals_data <- new.env()
 
-validateFunction <- function(fn, name, uid) {
-  if (identical(typeof(fn), NULL))
-    stop("The property '", name, "' in '", uid, "' is not defined")
-  if (!identical(typeof(fn), "closure"))
-    stop("The property '", name, "' in '", uid, "' is not a function")
-}
-
 Node <- R6::R6Class("Node", list(
     uid = NULL,
-    values = NULL,
-    events = NULL,
-    initialize = function(uid, values, events = NULL) {
+    fns = NULL,
+    initialize = function(uid, fns) {
         self$uid <- uid
-        self$values <- values
-        self$events <- events
+        self$fns <- fns
         register_node(self, self$uid)
         self
     },
-    evaluate = function(fn = NULL, ...) {
-        type <- "values"
-        if (!is.null(fn)) {
-            type <- "events"
-
-            validateFunction(self[[type]][[fn]], fn, self$uid)
-            result <- list(self[[type]][[fn]](...))
-        }
-        else {
-            result <- lapply(names(self[[type]]), function(name) {
-              validateFunction(self[[type]][[name]], name, self$uid)
-              self[[type]][[name]]()
-            })
-        }
-
-        names(result) <- names(self[[type]])
-        result
+    evaluate = function(fn, ...) {
+        fn <- self$fns[[fn]]
+        fn(...)
     }
 ))
 
@@ -45,19 +22,9 @@ register_node <- function(obj, uid) {
 
 #' @export
 h9_node <- function(uid, ...) {
-    args <- lapply(list(...), maybe_convert_to_fn)
+    fns <- lapply(list(...), maybe_convert_to_fn)
 
-    values <- list()
-    events <- list()
-    for (name in names(args)) {
-        if (startsWith(name, "on_")) {
-            events[[name]] <- args[[name]]
-        } else {
-            values[[name]] <- args[[name]]
-        }
-    }
-
-    Node$new(uid, values, events)
+    Node$new(uid, fns)
     invisible(NULL)
 }
 
@@ -86,37 +53,29 @@ get_node <- function(uid) {
 }
 
 process_request <- function(req) {
-    uids <- names(req)
+    lapply(req, function(call) {
+        node <- get_node(call$node)
+        fn_name <- call$fn_name
 
-    lapply(uids, function(uid) {
-        node <- get_node(uid)
-        fn_args <- req[[uid]]
-        fn <- names(fn_args)
+        fn_args_names <- call$args |> sapply(\(x) x$name)
+        fn_args_values <- call$args |> lapply(\(x) x$value)
+        fn_args <- setNames(fn_args_values, fn_args_names)
 
-        if (identical(node, NULL)) {
-          warning(" Node '", uid, "' is not defined")
-          list(result = list())
-        }
-        else if (!length(fn_args)) {
-            results <- node$evaluate("values", fn = NULL, list())
-            list(
-              result = results
-            )
-        } else {
-            .args <- unname(fn_args)
-            do.call(node$evaluate, c(fn = fn, .args))
+        result <- node$evaluate(fn_name, fn_args)
 
-            list()
-        }
-    }) |>
-        setNames(uids)
+        list(
+            node = call$node,
+            fn_name = fn_name,
+            result = result
+        )
+    })
 }
 
 client_html <- function(...) {
     options <- list(...)
     options$designer <- list(
-      persist = "pipeline",
-      eval = "eval"
+        persist = "pipeline",
+        eval = "eval"
     )
 
     html <- paste(readLines(system.file("client.html", package = "hal9")), collapse = "\n")
@@ -127,15 +86,15 @@ client_html <- function(...) {
 }
 
 h9_reset <- function() {
-  rm(list = ls(envir = .globals_nodes), envir = .globals_nodes)
-  rm(list = ls(envir = .globals_data), envir = .globals_data)
+    rm(list = ls(envir = .globals_nodes), envir = .globals_nodes)
+    rm(list = ls(envir = .globals_data), envir = .globals_data)
 }
 
 #' @export
 h9_start <- function(app = "app.R", port = 6806) {
     h9_reset()
 
-      if (!file.exists(app)) writeLines("", app)
+    if (!file.exists(app)) writeLines("", app)
 
     user_code <- readLines(app)
     server_code <- readLines(system.file("server-spec.R", package = "hal9"))
