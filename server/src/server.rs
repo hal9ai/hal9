@@ -16,18 +16,14 @@ use std::sync::mpsc::channel;
 use std::sync::Arc;
 use url::Url;
 
-#[get("/")]
-async fn run() -> impl Responder {
-    let contents = fs::read_to_string("resources/client.html")
-        .unwrap()
+async fn run(designer_string: web::Data<String>) -> impl Responder {
+    let contents = designer_string
         .replace("__options__", r#"{"mode": "run"}"#);
     HttpResponse::Ok().body(contents)
 }
 
-#[get("/design")]
-async fn design() -> impl Responder {
-    let contents = fs::read_to_string("resources/client.html")
-        .unwrap()
+async fn design(designer_string: web::Data<String>) -> impl Responder {
+    let contents = designer_string
         .replace("__options__", r#"{"mode": "design"}"#);
     HttpResponse::Ok().body(contents)
 }
@@ -91,6 +87,7 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     use actix_web::{web, App, HttpServer};
 
     let app_path_to_monitor = app_path.clone();
+    let app_path_for_controller = app_path.clone();
     let config_path = PathBuf::new().join(app_path).join("hal9.toml");
     let conf = Config::parse(config_path);
 
@@ -98,7 +95,7 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     let (tx_uri, rx_uri) = bounded(0);
     let rx_uri_handler = rx_uri.clone();
 
-    let runtimes_controller = RuntimesController::new(conf.runtimes.clone(), rx, tx_uri);
+    let runtimes_controller = RuntimesController::new(conf.runtimes.clone(), app_path_for_controller, rx, tx_uri);
 
     runtimes_controller.monitor().unwrap();
 
@@ -112,16 +109,20 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     let last_heartbeat = web::Data::new(AtomicUsize::new(time_now().try_into().unwrap()));
     let last_heartbeat_clone = Arc::clone(&last_heartbeat);
 
+
+    let designer_bytes = include_bytes!("../resources/client.html");
+    let designer_string: String = String::from_utf8_lossy(designer_bytes).to_string();
+
     let tx_handler = tx.clone();
     let http_server = HttpServer::new(move || {
         App::new()
+            .app_data(web::Data::new(designer_string.clone()))
             .app_data(web::Data::new(tx_handler.clone()))
             .app_data(web::Data::new(rx_uri_handler.clone()))
             .app_data(web::Data::new(last_heartbeat.clone()))
-            .service(run)
-            .service(design)
             .route("/pipeline", web::get().to(pipeline))
-            .route("/", web::get().to(pipeline))
+            .route("/design", web::get().to(design))
+            .route("/", web::get().to(run))
             .service(web::resource("/ping").to(ping))
             .service(web::resource("/eval").route(web::post().to(eval)))
     })
