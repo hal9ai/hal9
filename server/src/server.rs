@@ -17,21 +17,12 @@ use std::sync::Arc;
 use url::Url;
 
 async fn run(designer_string: web::Data<String>) -> impl Responder {
-    // let contents = fs::read_to_string("resources/client.html")
-    //     .unwrap()
-    //     .replace("__options__", r#"{"mode": "run"}"#);
-
     let contents = designer_string
-        // .unwrap()
         .replace("__options__", r#"{"mode": "run"}"#);
     HttpResponse::Ok().body(contents)
 }
 
 async fn design(designer_string: web::Data<String>) -> impl Responder {
-    // let contents = fs::read_to_string("resources/client.html")
-    //     .unwrap()
-    //     .replace("__options__", r#"{"mode": "design"}"#);
-
     let contents = designer_string
         .replace("__options__", r#"{"mode": "design"}"#);
     HttpResponse::Ok().body(contents)
