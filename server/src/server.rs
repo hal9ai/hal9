@@ -3,91 +3,103 @@ use crate::manifest::*;
 use crate::runtimes::{RtControllerMsg, RuntimesController};
 use crate::util::{monitor_fs_changes, monitor_heartbeat, time_now};
 use actix_files::NamedFile;
-use actix_web::{get, web, HttpResponse, Responder, Result};
+use actix_web::{web, HttpResponse, Responder, Result, FromRequest};
 use crossbeam::channel as crossbeam_channel;
 use crossbeam::channel::bounded;
 use reqwest;
 use serde_json;
-use std::fs;
-use std::path::Path;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::mpsc::channel;
 use std::sync::Arc;
 use url::Url;
+use std::io::Write;
 
-async fn run(designer_string: web::Data<String>) -> impl Responder {
-    let contents = designer_string
+struct AppState {
+    app_dir: String,
+    designer_string: String,
+    tx_handler: std::sync::mpsc::Sender<RtControllerMsg>, 
+    rx_uri_handler: crossbeam_channel::Receiver<Url>,
+    last_heartbeat: web::Data<AtomicUsize>,
+}
+
+async fn run(data: web::Data<AppState>) -> impl Responder {
+    let contents = data.designer_string
         .replace("__options__", r#"{"mode": "run"}"#);
     HttpResponse::Ok().body(contents)
 }
 
-async fn design(designer_string: web::Data<String>) -> impl Responder {
-    let contents = designer_string
+async fn design(data: web::Data<AppState>) -> impl Responder {
+    let contents = data.designer_string
         .replace("__options__", r#"{"mode": "design"}"#);
     HttpResponse::Ok().body(contents)
 }
 
-async fn ping(last_heartbeat: web::Data<AtomicUsize>) -> impl Responder {
-    last_heartbeat
+async fn ping(data: web::Data<AppState>) -> impl Responder {
+    data.last_heartbeat
         .fetch_update(Ordering::SeqCst, Ordering::SeqCst, |_| {
             Some(time_now().try_into().unwrap())
         })
         .ok();
 
-    let timestamp = last_heartbeat.load(Ordering::Relaxed);
+    let timestamp = data.last_heartbeat.load(Ordering::Relaxed);
 
     HttpResponse::Ok().body(timestamp.to_string())
 }
 
 async fn eval(
-    tx_hander: web::Data<std::sync::mpsc::Sender<RtControllerMsg>>,
-    rx_uri_handler: web::Data<crossbeam_channel::Receiver<Url>>,
+    data: web::Data<AppState>,
     req: web::Json<Manifests>,
 ) -> impl Responder {
-    println!("{req:?}");
     let rt = req.manifests[0].runtime.clone();
-    tx_hander.send(RtControllerMsg::GetUri(rt)).unwrap();
-    let uri = rx_uri_handler.recv().unwrap();
-    let manifest = req.manifests[0].nodes.clone();
+    let tx_handler = &data.tx_handler;
+    tx_handler.send(RtControllerMsg::GetUri(rt)).unwrap();
+    let rx_uri_handler = &data.rx_uri_handler;
+    let uri = rx_uri_handler.recv().unwrap().join("eval").unwrap();
+    let manifest = req.manifests[0].calls.clone();
 
-    // let client = reqwest::Client::new();
-    // let scheme = uri.scheme_str().unwrap();
-    // let authority = uri.authority().unwrap().as_str();
-    // let path_and_query = uri.path_and_query().unwrap().as_str();
-    // let uri_str = format!("{scheme}://{authority}{path_and_query}");
+    let client = reqwest::Client::new();
 
-    // let params = serde_json::to_string(&manifest).unwrap();
 
-    // println!("{:?}", params);
+    let res = client
+        .post(uri)
+        .json(&manifest)
+        .send()
+        .await
+        .unwrap()
+        .json::<RuntimeResponse>()
+        .await
+        .unwrap();
 
-    // TODO: impl `Response`
+    let response = serde_json::to_string(&res).unwrap();
 
-    // let res = client
-    //     .post(uri_str)
-    //     .json(&params)
-    //     .send()
-    //     .await
-    //     .unwrap()
-    //     .json::<Response>()
-    //     .await
-    //     .unwrap();
-
-    HttpResponse::Ok().body("")
+    HttpResponse::Ok().body(response)
 }
 
-async fn pipeline() -> Result<NamedFile> {
-    let path: PathBuf = ("app_data/pipeline.json").parse().unwrap();
-    Ok(NamedFile::open(path)?)
+async fn pipeline(data: web::Data<AppState>) -> Result<NamedFile> {
+    let design_path = PathBuf::new().join(&data.app_dir).join("app.json");
+    let design_path_str = design_path.to_str().unwrap();
+    println!("design path is {design_path_str}");
+    Ok(NamedFile::open(design_path)?)
 }
 
-// #[actix_web::main]
+async fn pipeline_post(data: web::Data<AppState>, req: String) -> impl Responder {
+    let design_path = Path::new(&data.app_dir).join("app.json");
+    let design_path_str = design_path.to_str().unwrap();
+    println!("design path is {design_path_str}");
+    let mut output = std::fs::File::create(design_path).unwrap();
+    write!(output, "{}", req).ok();
+    HttpResponse::Ok().body("{}")
+}
+
 #[tokio::main]
 pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     use actix_web::{web, App, HttpServer};
 
     let app_path_to_monitor = app_path.clone();
     let app_path_for_controller = app_path.clone();
+    let app_path_data = app_path.clone();
+
     let config_path = PathBuf::new().join(app_path).join("hal9.toml");
     let conf = Config::parse(config_path);
 
@@ -107,7 +119,7 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     monitor_fs_changes(app_path_to_monitor, 1000, tx_fs).await;
 
     let last_heartbeat = web::Data::new(AtomicUsize::new(time_now().try_into().unwrap()));
-    let last_heartbeat_clone = Arc::clone(&last_heartbeat);
+    let last_heartbeat_arc= Arc::clone(&last_heartbeat);
 
 
     let designer_bytes = include_bytes!("../resources/client.html");
@@ -116,11 +128,17 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     let tx_handler = tx.clone();
     let http_server = HttpServer::new(move || {
         App::new()
-            .app_data(web::Data::new(designer_string.clone()))
-            .app_data(web::Data::new(tx_handler.clone()))
-            .app_data(web::Data::new(rx_uri_handler.clone()))
-            .app_data(web::Data::new(last_heartbeat.clone()))
+            .app_data(web::Data::new(
+                AppState {
+                    app_dir: app_path_data.clone(),
+                    designer_string: designer_string.clone(),
+                    tx_handler: tx_handler.clone(),
+                    rx_uri_handler: rx_uri_handler.clone(),
+                    last_heartbeat: last_heartbeat.clone()
+                }
+            ))
             .route("/pipeline", web::get().to(pipeline))
+            .route("/pipeline", web::post().to(pipeline_post))
             .route("/design", web::get().to(design))
             .route("/", web::get().to(run))
             .service(web::resource("/ping").to(ping))
@@ -138,7 +156,7 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     let http_server_handle = http_server.handle();
 
     let tx_heartbeat = tx.clone();
-    monitor_heartbeat(http_server_handle, last_heartbeat_clone, 60, tx_heartbeat);
+    monitor_heartbeat(http_server_handle, last_heartbeat_arc, 60 * 5, tx_heartbeat);
 
     tokio::spawn(http_server).await?
 }
