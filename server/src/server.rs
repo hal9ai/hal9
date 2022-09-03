@@ -52,6 +52,7 @@ async fn eval(
     req: web::Json<Manifests>,
 ) -> impl Responder {
     let rt = req.manifests[0].runtime.clone();
+    let runtime = rt.clone();
     let tx_handler = &data.tx_handler;
     tx_handler.send(RtControllerMsg::GetUri(rt)).unwrap();
     let rx_uri_handler = &data.rx_uri_handler;
@@ -61,7 +62,7 @@ async fn eval(
     let client = reqwest::Client::new();
 
 
-    let res = client
+    let mut res = client
         .post(uri)
         .json(&manifest)
         .send()
@@ -70,6 +71,12 @@ async fn eval(
         .json::<RuntimeResponse>()
         .await
         .unwrap();
+    
+    res.runtime = Some(runtime);
+
+    let res = ManifestResponse {
+        responses: vec![res] 
+    };
 
     let response = serde_json::to_string(&res).unwrap();
 
