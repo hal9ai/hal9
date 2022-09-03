@@ -8,25 +8,30 @@ pub struct Manifests {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Manifest {
     pub runtime: String,
-    pub nodes: Vec<Node>,
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct Node {
-    pub name: String,
-    pub calls: Option<Vec<Call>>,
+    pub calls: Vec<Call>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Call {
+    pub node: String,
     pub fn_name: String,
     pub args: Option<Vec<Arg>>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Arg {
-    pub arg_name: String,
-    pub arg_value: String,
+    pub name: String,
+    pub value: String,
 }
 
-impl Manifest {}
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct RuntimeResponse {
+    pub responses: Vec<CallResponse>
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct CallResponse {
+    pub node: String,
+    pub fn_name: String,
+    pub result: Option<Vec<String>>,
+}

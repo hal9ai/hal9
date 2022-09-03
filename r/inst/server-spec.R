@@ -24,7 +24,8 @@ function(req) {
 }
 
 #* @post /eval
-#* @param manifest:object
-function(manifest) {
-  hal9:::process_request(manifest)
+#* @serializer json list(auto_unbox=TRUE)
+function(req) {
+  parsed <- jsonlite::fromJSON(req$postBody, simplifyDataFrame = FALSE)
+  hal9:::process_request(parsed)
 }

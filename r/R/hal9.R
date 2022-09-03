@@ -12,7 +12,11 @@ Node <- R6::R6Class("Node", list(
     },
     evaluate = function(fn, ...) {
         fn <- self$fns[[fn]]
-        fn(...)
+        if (length(...) == 0) {
+            fn()
+        } else {
+            do.call(fn, ...)
+        }
     }
 ))
 
@@ -53,7 +57,7 @@ get_node <- function(uid) {
 }
 
 process_request <- function(req) {
-    lapply(req, function(call) {
+    responses <- lapply(req, function(call) {
         node <- get_node(call$node)
         fn_name <- call$fn_name
 
@@ -66,9 +70,10 @@ process_request <- function(req) {
         list(
             node = call$node,
             fn_name = fn_name,
-            result = result
+            result = list(result)
         )
     })
+    list(responses = responses)
 }
 
 client_html <- function(...) {
