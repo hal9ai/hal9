@@ -1,3 +1,4 @@
+use actix_web::rt::Runtime;
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Debug, Clone)]
@@ -25,8 +26,14 @@ pub struct Arg {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct ManifestResponse {
+    pub responses: Vec<RuntimeResponse>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct RuntimeResponse {
-    pub responses: Vec<CallResponse>
+    pub calls: Vec<CallResponse>,
+    pub runtime: Option<String>
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

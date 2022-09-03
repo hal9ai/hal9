@@ -73,7 +73,7 @@ process_request <- function(req) {
             result = list(result)
         )
     })
-    list(responses = responses)
+    list(calls = responses)
 }
 
 client_html <- function(...) {
