@@ -106,7 +106,8 @@ impl RuntimesController {
         
         let url = Url::parse(&my_url).unwrap();
         let name2 = name.clone();
-        println!("started api service for {} at {:?}", &name, url);
+
+        println!("started api service for {} at {:?}", &name, url.as_str());
         
         self.handles.insert(name, handle);
         self.uris.insert(name2, url);
@@ -125,7 +126,6 @@ impl RuntimesController {
     }
     
     fn start_r_api(script: &str, port: u16) -> Result<Child, std::io::Error> {
-        println!("about to call rscript {script}");
         Command::new("Rscript")
         .arg("-e")
         // .arg(format!("hal9:::h9_start('{script}', {port})"))
