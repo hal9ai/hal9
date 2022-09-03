@@ -92,7 +92,6 @@ async fn pipeline_post(data: web::Data<AppState>, req: String) -> impl Responder
     HttpResponse::Ok().body("{}")
 }
 
-// #[actix_web::main]
 #[tokio::main]
 pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     use actix_web::{web, App, HttpServer};
