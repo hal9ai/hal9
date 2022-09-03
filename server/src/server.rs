@@ -157,7 +157,7 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     let http_server_handle = http_server.handle();
 
     let tx_heartbeat = tx.clone();
-    monitor_heartbeat(http_server_handle, last_heartbeat_arc, 60, tx_heartbeat);
+    monitor_heartbeat(http_server_handle, last_heartbeat_arc, 60 * 5, tx_heartbeat);
 
     tokio::spawn(http_server).await?
 }
