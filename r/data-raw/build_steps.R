@@ -82,7 +82,7 @@ for(i in 1:length(components)) {
     template |>
       paste(collapse = "\n") |>
       write(
-        file = paste0("R/", rfile),
+        file = paste0("R/gen_", rfile),
         append = TRUE
       )
   }
