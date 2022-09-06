@@ -80,11 +80,13 @@ impl RuntimesController {
         
         let runtime = runtimes.get(0).unwrap().clone();
         
+                let app_root = &self.app_root;
+                let script_path_rel = runtime.script;
+
         let port = 0;
         let (handle, my_url) = match &runtime.platform {
             Platform::R => {
-                let app_root = &self.app_root;
-                let script_path_rel = runtime.script;
+
                 let script_path = format!("{app_root}/{script_path_rel}");
                 let mut handle = Self::start_r_api(&script_path, port);
                 let mut buffer = [0; 70];
@@ -100,8 +102,27 @@ impl RuntimesController {
                 let runtime_api_url = &msg[..end_bytes];
                 
                 (handle.unwrap(), runtime_api_url.to_owned())
-            },            
-            other => panic!("{:?} not implemented", other)
+            }            
+            Platform::Python => {
+                let script_dir = app_root.to_string();
+                let mut handle = Self::start_python_api(&script_dir, port);
+                let mut buffer = [0; 180];
+
+
+                handle.as_mut().unwrap().stderr.take().unwrap().read_exact(&mut buffer);
+                
+                let msg = str::from_utf8(&buffer).unwrap();
+                let search_string_start = "Uvicorn running on ";
+
+                let start_bytes = msg.find(search_string_start).unwrap_or(0) +
+                search_string_start.len();
+                let msg = &msg[start_bytes..];
+                let end_bytes = msg.find(char::is_whitespace).unwrap_or(msg.len());
+                let runtime_api_url = &msg[..end_bytes];
+
+                (handle.unwrap(), runtime_api_url.to_owned())
+
+            }
         };
         
         let url = Url::parse(&my_url).unwrap();
@@ -128,10 +149,20 @@ impl RuntimesController {
     fn start_r_api(script: &str, port: u16) -> Result<Child, std::io::Error> {
         Command::new("Rscript")
         .arg("-e")
-        // .arg(format!("hal9:::h9_start('{script}', {port})"))
         .arg(format!("hal9:::h9_start('{script}', NULL)"))
         .stderr(Stdio::piped())
         .spawn()
+    }
+
+    fn start_python_api(script: &str, port: u16) -> Result<Child, std::io::Error> {
+        let py_cmd = format!("import hal9; hal9.start('{script}', {port})");
+        Command::new("python3")
+            .arg("-c")
+            // .arg(format!("\"{py_cmd}\""))
+            .arg(format!("{py_cmd}"))
+            .stderr(Stdio::piped())
+            .stdout(Stdio::piped())
+            .spawn()
     }
     
     pub async fn stop(&mut self, name: String) -> Result<(), std::io::Error> {

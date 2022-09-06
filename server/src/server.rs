@@ -119,7 +119,7 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     runtimes_controller.monitor().unwrap();
 
     tx.send(RtControllerMsg::StartAll).unwrap();
-    tx.send(RtControllerMsg::GetUri(String::from("r"))).unwrap();
+    // tx.send(RtControllerMsg::GetUri(String::from("r"))).unwrap();
 
     let tx_fs = tx.clone();
 

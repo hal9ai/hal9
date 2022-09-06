@@ -1,0 +1,11 @@
+[application]
+name = "demo app"
+version = "0.0.1"
+
+# [client]
+# design = "client.html"
+
+[[runtimes]]
+name = "py"
+platform = "Python"
+script = "python/app.py"
