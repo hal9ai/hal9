@@ -158,7 +158,6 @@ impl RuntimesController {
         let py_cmd = format!("import hal9; hal9.start('{script}', {port})");
         Command::new("python3")
             .arg("-c")
-            // .arg(format!("\"{py_cmd}\""))
             .arg(format!("{py_cmd}"))
             .stderr(Stdio::piped())
             .stdout(Stdio::piped())
