@@ -1,7 +1,39 @@
 #' Hal9 Create
 #'
-#' Create a h9 object.
+#' Creates a h9 object.
 #'
+#' @param ... Additional parameters
+#'
+#' @export
+#'
+h9_create <- function(
+    ...) {
+  pipeline <- list(
+    steps = list(
+    ),
+    params = list(
+    ),
+    outputs = NULL,
+    scripts = list(
+    ),
+    version = "0.0.1"
+  )
+
+  # forward options using x
+  x = list(
+    pipeline = pipeline
+  )
+
+  list(
+    x = x
+  )
+}
+
+#' Hal9 Show
+#'
+#' Shows a h9 object.
+#'
+#' @param h A h9 object
 #' @param width Width of the widget container.
 #' @param height Height of the widget container.
 #' @param environment The environment to use, production by default. Use 'devel' for
@@ -15,7 +47,8 @@
 #'
 #' @export
 #'
-h9_create <- function(
+h9_show <- function(
+  h,
   width = NULL,
   height = NULL,
   environment = 'devel',
@@ -31,38 +64,27 @@ h9_create <- function(
     local = "http://localhost:8000/dist/hal9.js"
   )
 
-  pipeline <- list(
-    steps = list(
-    ),
-    params = list(
-    ),
-    outputs = NULL,
-    scripts = list(
-    ),
-    version = "0.0.1"
-  )
+  h$x$library <- library[[environment]]
+  h$x$environment <- environment
+  h$x$iframe <- iframe
+  h$x$mode <- ifelse(identical(mode, c("run", "design")), "default", mode)
 
-  # forward options using x
-  x = list(
-    pipeline = pipeline,
-    pipeline_json = jsonlite::toJSON(pipeline, null = "list", auto_unbox = TRUE),
-    library = library[[environment]],
-    environment = environment,
-    iframe = iframe,
-    mode = ifelse(identical(mode, c("run", "design")), "default", mode)
+  h$x$pipeline_json <- jsonlite::toJSON(
+    h$x$pipeline,
+    null = "list",
+    auto_unbox = TRUE
   )
 
   # create widget
   htmlwidgets::createWidget(
     name = 'hal9',
-    x,
+    h$x,
     width = width,
     height = height,
     package = 'hal9',
     elementId = elementId,
     sizingPolicy = htmlwidgets::sizingPolicy(padding = 0)
   )
-
 }
 
 #' Shiny bindings for hal9
@@ -93,12 +115,22 @@ renderHal9 <- function(expr, env = parent.frame(), quoted = FALSE) {
   htmlwidgets::shinyRenderWidget(expr, hal9Output, env, quoted = TRUE)
 }
 
-h9_add_step <- function(h, step, rebind = NULL, matched_call = NULL) {
+.globals <- list()
+h9_default <- function() {
+  if (identical(.globals$app, NULL))
+    .globals$app <- h9_create()
+
+  .globals$app
+}
+
+h9_add_step <- function(h, step, matched_call = NULL) {
   novo_id <- lapply(h$x$pipeline$steps, function(x) x$id) |>
     as.numeric() |>
     max(0)
 
   novo_id <- novo_id + 1
+
+  rebind <- matched_call$rebind
 
   comp <- components[[which(lapply(components, function(x) x$name) == step)]]
 
@@ -164,12 +196,6 @@ h9_add_step <- function(h, step, rebind = NULL, matched_call = NULL) {
   h$x$pipeline$params <- c(
     h$x$pipeline$params,
     l_params
-  )
-
-  h$x$pipeline_json <- jsonlite::toJSON(
-    h$x$pipeline,
-    null = "list",
-    auto_unbox = TRUE
   )
 
   h

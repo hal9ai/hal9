@@ -2,24 +2,22 @@
 #'
 #' {{func_description}}
 #'
-#' @param h A h9 object created by h9_create.
+#' @param h An optional h9 object created by h9_create.
 {{params}}
-#' @param rebind A list of rebindings to apply to this function parameters.
 #' @param ... Other h9 parameters.
 #'
 #' @return A list with the pipeline specification.
 #' @export
 #'
-{{func_name}} <- function(h, {{func_params}}, rebind = NULL, ...) {
+{{func_name}} <- function(h = NULL, {{func_params}}, ...) {
+  if (identical(h, NULL)) h <- h9_default()
 
   args <- as.list(match.call())
-  no_rebinds <- which(names(args) != "rebind")
 
   h9_add_step(
     h,
     "{{step_name}}",
-    rebind,
-    matched_call = args[no_rebinds]
+    matched_call = args
   )
 }
 
