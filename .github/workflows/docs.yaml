@@ -3,12 +3,11 @@ name: CI
 on: [ push, pull_request ]
 
 jobs:
-  site:
+  docs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: quarto-dev/quarto-actions/setup@v2
-      - uses: r-lib/actions/setup-pandoc@master
       - name: Render quarto
         run: quarto render
         working-directory: ./site
@@ -24,3 +23,11 @@ jobs:
           S3_KEY: commits/${SHORT_SHA}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - uses: LouisBrunner/checks-action@v1.1.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Site Docs
+          conclusion: ${{ job.status }}
+          action_url: ${{ format('https://notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}
+          details_url: ${{ format('https://notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}
+          output: "{ \"summary\": \"${{ format('https://notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}\" }"
