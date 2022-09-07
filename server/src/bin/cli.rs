@@ -5,6 +5,9 @@ use hal9::server::start_server;
 struct Cli {
     #[clap(subcommand)]
     command: Option<Commands>,
+
+    #[clap(short, long, value_parser, default_value = "0")]
+    port: u16,
 }
 
 #[derive(Subcommand, Debug)]
@@ -17,9 +20,8 @@ fn main() {
 
     match &cli.command {
         Some(Commands::Start{ app_dir }) => {
-            start_server(app_dir.as_ref().unwrap().to_string(), 0).ok();
-        }
-        // Some(x) => panic!("{:?} not supported", x),
-        None => panic!("must have command")
+            start_server(app_dir.as_ref().unwrap().to_string(), cli.port).ok();
+        },
+        None => println!("Missing subcommand! Seek help.")
     }
 }
