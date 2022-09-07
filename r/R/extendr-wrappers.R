@@ -10,5 +10,5 @@ NULL
 
 #' Start server.
 #' @export
-h9_start2 <- function(path = .) .Call(wrap__h9_start2, path)
+h9_start2 <- function(path = ., port = NA_integer_) invisible(.Call(wrap__h9_start2, path, port))
 
