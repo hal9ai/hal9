@@ -20,7 +20,7 @@ jobs:
           FILE: './site/_site'
           AWS_REGION: 'us-west-2'
           S3_BUCKET: 'notebooks.hal9.com'
-          S3_KEY: commits/${SHORT_SHA}
+          S3_KEY: ${{ format('commits/', env.SHORT_SHA) }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - uses: LouisBrunner/checks-action@v1.1.1
@@ -28,6 +28,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: Site Docs
           conclusion: ${{ job.status }}
-          action_url: ${{ format('https://notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}
-          details_url: ${{ format('https://notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}
-          output: "{ \"summary\": \"${{ format('https://notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}\" }"
+          action_url: ${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}
+          details_url: ${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}
+          output: "{ \"summary\": \"${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}\" }"
