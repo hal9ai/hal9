@@ -4,7 +4,7 @@
 \alias{h9_start2}
 \title{Start server.}
 \usage{
-h9_start2(path = .)
+h9_start2(path = ., port = NA_integer_)
 }
 \description{
 Start server.
