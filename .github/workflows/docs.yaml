@@ -1,13 +1,12 @@
 name: CI
 
+on: [ push, pull_request ]
+
 jobs:
   site:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '15'
       - uses: quarto-dev/quarto-actions/setup@v2
       - uses: r-lib/actions/setup-pandoc@master
       - name: Render quarto
