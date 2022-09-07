@@ -85,13 +85,11 @@ async fn eval(
 
 async fn pipeline(data: web::Data<AppState>) -> Result<NamedFile> {
     let design_path = PathBuf::new().join(&data.app_dir).join("app.json");
-    let design_path_str = design_path.to_str().unwrap();
     Ok(NamedFile::open(design_path)?)
 }
 
 async fn pipeline_post(data: web::Data<AppState>, req: String) -> impl Responder {
     let design_path = Path::new(&data.app_dir).join("app.json");
-    let design_path_str = design_path.to_str().unwrap();
     let mut output = std::fs::File::create(design_path).unwrap();
     write!(output, "{}", req).ok();
     HttpResponse::Ok().body("{}")
