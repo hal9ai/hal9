@@ -1038,7 +1038,7 @@
       "source": "controls/dropdown.html",
       "language": "html",
       "label": "Dropdown",
-      "description": "Embed an HTML <select> element",
+      "description": "Embed a dropdown control",
       "icon": "fa-light fa-list-dropdown",
       "dragdrop": true,
       "build": "true"
@@ -1071,7 +1071,7 @@
       "source": "controls/rawhtml.js",
       "language": "javascript",
       "label": "HTML",
-      "description": "Enables to render arbitrary HTML from data",
+      "description": "Enables to render arbitrary HTML",
       "icon": "fa-brands fa-html5",
       "dragdrop": true,
       "build": "false"
