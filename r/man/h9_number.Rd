@@ -4,12 +4,12 @@
 \alias{h9_number}
 \title{Number Input}
 \usage{
-h9_number(uid, paramName = NULL, ...)
+h9_number(uid, label = NULL, ...)
 }
 \arguments{
 \item{uid}{Unique identifier for this element.}
 
-\item{paramName}{Additional step parameter.}
+\item{label}{Additional step parameter.}
 
 \item{...}{Other h9 parameters.}
 
