@@ -3,7 +3,7 @@ use crate::manifest::*;
 use crate::runtimes::{RtControllerMsg, RuntimesController};
 use crate::util::{monitor_fs_changes, monitor_heartbeat, time_now};
 use actix_files::NamedFile;
-use actix_web::{web, HttpResponse, Responder, Result, FromRequest};
+use actix_web::{web, HttpResponse, Responder, Result};
 use crossbeam::channel as crossbeam_channel;
 use crossbeam::channel::bounded;
 use reqwest;
