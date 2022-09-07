@@ -42,11 +42,11 @@ impl RuntimesController {
         
         RuntimesController {
             runtimes: v,
-            app_root: app_root,
+            app_root,
             handles: api_handles,
-            uris: uris,
-            rx: rx,
-            tx_uri: tx_uri,
+            uris,
+            rx,
+            tx_uri,
         }
     }
     
@@ -91,7 +91,7 @@ impl RuntimesController {
                 let mut handle = Self::start_r_api(&script_path, port);
                 let mut buffer = [0; 70];
                 
-                handle.as_mut().unwrap().stderr.take().unwrap().read_exact(&mut buffer);
+                handle.as_mut().unwrap().stderr.take().unwrap().read_exact(&mut buffer).ok();
                 
                 let msg = str::from_utf8(&buffer).unwrap();
                 let plumber_intro = "Running Plumber API at";
@@ -109,7 +109,7 @@ impl RuntimesController {
                 let mut buffer = [0; 180];
 
 
-                handle.as_mut().unwrap().stderr.take().unwrap().read_exact(&mut buffer);
+                handle.as_mut().unwrap().stderr.take().unwrap().read_exact(&mut buffer).ok();
                 
                 let msg = str::from_utf8(&buffer).unwrap();
                 let search_string_start = "Uvicorn running on ";
@@ -147,18 +147,27 @@ impl RuntimesController {
     }
     
     fn start_r_api(script: &str, port: u16) -> Result<Child, std::io::Error> {
+        let port_str = if port == 0 {
+            String::from("NULL")
+         } else {
+            port.to_string()
+         };
+
+        let r_cmd = format!("hal9:::h9_start('{script}', {port_str})");
+
         Command::new("Rscript")
         .arg("-e")
-        .arg(format!("hal9:::h9_start('{script}', NULL)"))
+        .arg(r_cmd)
         .stderr(Stdio::piped())
         .spawn()
     }
 
     fn start_python_api(script: &str, port: u16) -> Result<Child, std::io::Error> {
         let py_cmd = format!("import hal9; hal9.start('{script}', {port})");
+
         Command::new("python3")
             .arg("-c")
-            .arg(format!("{py_cmd}"))
+            .arg(py_cmd)
             .stderr(Stdio::piped())
             .stdout(Stdio::piped())
             .spawn()

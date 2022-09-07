@@ -3,7 +3,7 @@ use crate::manifest::*;
 use crate::runtimes::{RtControllerMsg, RuntimesController};
 use crate::util::{monitor_fs_changes, monitor_heartbeat, time_now};
 use actix_files::NamedFile;
-use actix_web::{web, HttpResponse, Responder, Result, FromRequest};
+use actix_web::{web, HttpResponse, Responder, Result};
 use crossbeam::channel as crossbeam_channel;
 use crossbeam::channel::bounded;
 use reqwest;
@@ -85,15 +85,11 @@ async fn eval(
 
 async fn pipeline(data: web::Data<AppState>) -> Result<NamedFile> {
     let design_path = PathBuf::new().join(&data.app_dir).join("app.json");
-    let design_path_str = design_path.to_str().unwrap();
-    println!("design path is {design_path_str}");
     Ok(NamedFile::open(design_path)?)
 }
 
 async fn pipeline_post(data: web::Data<AppState>, req: String) -> impl Responder {
     let design_path = Path::new(&data.app_dir).join("app.json");
-    let design_path_str = design_path.to_str().unwrap();
-    println!("design path is {design_path_str}");
     let mut output = std::fs::File::create(design_path).unwrap();
     write!(output, "{}", req).ok();
     HttpResponse::Ok().body("{}")

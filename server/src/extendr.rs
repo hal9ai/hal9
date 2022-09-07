@@ -8,7 +8,7 @@ use extendr_api::prelude::*;
 #[extendr]
 fn h9_start2(#[default = "."] path: String) -> u32 {
     // #[allow(clippy::not_unsafe_ptr_arg_deref)]
-    start_server(path, 0);
+    start_server(path, 0).ok();
     0
 }
 
