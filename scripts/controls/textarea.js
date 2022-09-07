@@ -1,6 +1,7 @@
 /**
   input: []
   output: [ html, textarea ]
+  events: [ on_update ]
   layout:
     - width: 900px
 **/
