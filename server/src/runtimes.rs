@@ -147,9 +147,18 @@ impl RuntimesController {
     }
     
     fn start_r_api(script: &str, port: u16) -> Result<Child, std::io::Error> {
+        let port_str = if port == 0 {
+            String::from("NULL")
+         } else {
+            port.to_string()
+         };
+
+        let r_cmd = format!("hal9:::h9_start('{script}', {port_str})");
+        println!("r cmd is {r_cmd}");
+
         Command::new("Rscript")
         .arg("-e")
-        .arg(format!("hal9:::h9_start('{script}', NULL)"))
+        .arg(r_cmd)
         .stderr(Stdio::piped())
         .spawn()
     }
