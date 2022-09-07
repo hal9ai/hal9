@@ -90,7 +90,7 @@
     },
     {
       "name": "website",
-      "function": "website",
+      "function": "",
       "source": "controls/website.js",
       "language": "javascript",
       "label": "Website",
