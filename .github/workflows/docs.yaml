@@ -1,0 +1,27 @@
+name: CI
+
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+      - uses: quarto-dev/quarto-actions/setup@v2
+      - uses: r-lib/actions/setup-pandoc@master
+      - name: Render quarto
+        run: quarto render
+        working-directory: ./site
+      - name: Add Commit SHA
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+      - uses: zdurham/s3-upload-github-action@master
+        with:
+          args: --recursive --acl public-read
+        env:
+          FILE: './site/docs'
+          AWS_REGION: 'us-west-2'
+          S3_BUCKET: 'notebooks.hal9.com'
+          S3_KEY: commits/${{ SHORT_SHA }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
