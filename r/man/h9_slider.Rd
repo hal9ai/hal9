@@ -21,9 +21,6 @@ h9_slider(uid, value = NULL, min = NULL, max = NULL, step = NULL, ...)
 
 \item{h}{An optional h9 object created by h9_create.}
 }
-\value{
-A list with the pipeline specification.
-}
 \description{
 Embed an slider element
 }

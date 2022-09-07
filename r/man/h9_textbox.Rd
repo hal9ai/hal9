@@ -17,9 +17,6 @@ h9_textbox(uid, label = NULL, value = NULL, ...)
 
 \item{h}{An optional h9 object created by h9_create.}
 }
-\value{
-A list with the pipeline specification.
-}
 \description{
 Embed a text input control
 }

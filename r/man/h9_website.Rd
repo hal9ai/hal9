@@ -15,9 +15,6 @@ h9_website(uid, site = NULL, ...)
 
 \item{h}{An optional h9 object created by h9_create.}
 }
-\value{
-A list with the pipeline specification.
-}
 \description{
 Embed a website and load a URL
 }

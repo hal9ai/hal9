@@ -7,7 +7,6 @@
 #' @param uid Unique identifier for this element.
 #' @param ... Other h9 parameters.
 #'
-#' @return A list with the pipeline specification.
 #' @export
 #'
 h9_dropdown <- function(uid, values  = NULL, ...) {
@@ -24,7 +23,6 @@ h9_dropdown <- function(uid, values  = NULL, ...) {
 #' @param uid Unique identifier for this element.
 #' @param ... Other h9 parameters.
 #'
-#' @return A list with the pipeline specification.
 #' @export
 #'
 h9_file <- function(uid, dataType  = NULL, ...) {
@@ -41,7 +39,6 @@ h9_file <- function(uid, dataType  = NULL, ...) {
 #' @param uid Unique identifier for this element.
 #' @param ... Other h9 parameters.
 #'
-#' @return A list with the pipeline specification.
 #' @export
 #'
 h9_number <- function(uid, label  = NULL, ...) {
@@ -61,7 +58,6 @@ h9_number <- function(uid, label  = NULL, ...) {
 #' @param uid Unique identifier for this element.
 #' @param ... Other h9 parameters.
 #'
-#' @return A list with the pipeline specification.
 #' @export
 #'
 h9_slider <- function(uid, value  = NULL, min  = NULL, max  = NULL, step  = NULL, ...) {
@@ -79,7 +75,6 @@ h9_slider <- function(uid, value  = NULL, min  = NULL, max  = NULL, step  = NULL
 #' @param uid Unique identifier for this element.
 #' @param ... Other h9 parameters.
 #'
-#' @return A list with the pipeline specification.
 #' @export
 #'
 h9_textbox <- function(uid, label  = NULL, value  = NULL, ...) {
@@ -96,7 +91,6 @@ h9_textbox <- function(uid, label  = NULL, value  = NULL, ...) {
 #' @param uid Unique identifier for this element.
 #' @param ... Other h9 parameters.
 #'
-#' @return A list with the pipeline specification.
 #' @export
 #'
 h9_website <- function(uid, site  = NULL, ...) {
