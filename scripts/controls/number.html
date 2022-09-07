@@ -1,12 +1,13 @@
 <!--
   input: []
   params:
-    - name: paramName
-      label: parameter Name
+    - name: label
+      label: Label
       value:
         - control: textbox
-          value: NumberBox
-  output: [  html,numVal ]
+          value: Number
+  output: [ html, number ]
+  events: [ on_update ]
   layout:
     - width: 130px
 -->
@@ -15,41 +16,35 @@
 <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
 
-<div class="numberBoxContainer">
+<div class="control">
   <template>
     <section>
-          {{ parameter }}
-            <b-input type="number"
-                v-model="value"
-                @change.native="numChange">>
-            </b-input>
+      {{ label }}
+      <b-input type="number" v-model="value">
+      </b-input>
     </section>
   </template>
 </div>
 
-
 <script>
-  var state = hal9.getState();
-  state = state ? state : {};
-  let numVal = 0;
-  if (state.numVal) {
-    numVal = state.numVal;
-    value = numVal;
-  }
+  var number = hal9.get('number');
 
   var app = new Vue({
-    el: html.getElementsByClassName('numberBoxContainer')[0],
-    data: {
-      value: numVal,
-      parameter: paramName
+    el: html.getElementsByClassName('control')[0],
+    data: function() {
+      var vue = this;
+
+      return {
+        value: number,
+        label: label
+      }
     },
-    methods: {
-      numChange(e){
-        state.numVal = e.target.value;
-        hal9.setState(state);
-        hal9.invalidate();
+    watch: {
+      value: function(value) {
+        hal9.set('number', value);
       }
     }
   })
+
   html.style.height = 'auto';
 </script>

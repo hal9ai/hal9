@@ -7,7 +7,6 @@
 #' @param uid Unique identifier for this element.
 #' @param ... Other h9 parameters.
 #'
-#' @return A list with the pipeline specification.
 #' @export
 #'
 {{func_name}} <- function(uid, {{func_params}}, ...) {

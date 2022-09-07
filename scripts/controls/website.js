@@ -1,13 +1,13 @@
 /**
-  input: [ 'data' ]
-  output: [ 'data', 'html' ]
+  input: [ data ]
+  output: [ data, html ]
   params:
-      - name: site
-        label: Website URL
-        value:
-          - control: textbox
-            lazy: true
-            value: https://hal9ai.github.io/hal9ai/examples/website.html
+    - name: site
+      label: Website URL
+      value:
+        - control: textbox
+          lazy: true
+          value: https://hal9ai.github.io/hal9ai/examples/website.html
   layout:
     - width: 900px
 **/
