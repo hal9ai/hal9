@@ -18,7 +18,7 @@ jobs:
         with:
           args: --recursive --acl public-read
         env:
-          FILE: './site/docs'
+          FILE: './site/_site'
           AWS_REGION: 'us-west-2'
           S3_BUCKET: 'notebooks.hal9.com'
           S3_KEY: commits/${SHORT_SHA}
