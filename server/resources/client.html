@@ -19,7 +19,11 @@
         hostel: 'output',
         api: libraries[environment],
         env: environment,
-        debug: window.location.search.includes('debug')
+        debug: window.location.search.includes('debug'),
+        designer: {
+          persist: 'pipeline',
+          eval: 'eval'
+        }
       });
 
       const designer = hal9.designer(hostopt);
