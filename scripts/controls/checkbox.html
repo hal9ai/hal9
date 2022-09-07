@@ -1,57 +1,45 @@
 <!--
   input: []
   params:
-    - name: paramName
-      label: parameter Name
+    - name: label
+      label: Label
       value:
         - control: textbox
-          value: checkBox
-  output: [  html,checkBoxVal ]
+          value: Checked
+  output: [ html, checked ]
+  events: [ on_update ]
 -->
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
 
-<div class="checkboxContainer">
+<div class="control">
   <template>
     <section>
-        <b-field>
-            <b-checkbox @change.native="checkChange">{{parameter}}</b-checkbox>
-        </b-field>
+      <b-field>
+        <b-checkbox v-model="value">{{ label }}</b-checkbox>
+      </b-field>
     </section>
   </template>
 </div>
 
 <script>
-  var state = hal9.getState();
-  state = state ? state : {};
-  let checkBoxVal = false;
-  if (state.checkBoxVal) {
-    checkBoxVal = state.checkBoxVal;
-    value = checkBoxVal;
-  }
+  var checked = hal9.get('checked');
+
   var app = new Vue({
-    el: html.getElementsByClassName('checkboxContainer')[0],
+    el: html.getElementsByClassName('control')[0],
     data: {
-      value: '',
-      parameter: paramName,
+      value: checked,
+      label: label,
     },
-    methods: {
-      checkChange(){
-        if(checkBoxVal == true){
-          state.checkBoxVal = false;
-          hal9.setState(state);
-          hal9.invalidate();
-        }
-        else{
-          state.checkBoxVal = true;
-          hal9.setState(state);
-          hal9.invalidate();
-        }
+    watch: {
+      value: function(value) {
+        hal9.set('checked', value);
       }
     }
   })
+  
   html.style.height = 'auto';
 </script>
 

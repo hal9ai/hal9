@@ -22,6 +22,7 @@
         - control: number
           value: 1
   output: [ html, slider ]
+  events: [ on_update ]
   interactive: true
   layout:
     - width: 325px
@@ -36,34 +37,26 @@
     <section>
       <div style= "height: 30px"></div>
         <b-field>
-            <b-slider tooltip-always :min="parameter" :max="maxparam" :step="steparam" v-model="value"></b-slider>
+            <b-slider tooltip-always :min="min" :max="max" :step="step" v-model="value"></b-slider>
         </b-field>
     </section>
   </template>
 </div>
 
 <script>
-  var slider = value;
-  var state = hal9.getState();
-  state = state ? state : {};
-  if (state.slider) {
-    slider = state.slider;
-    value = slider;
-  }
+  var slider = hal9.get('slider');
 
   var app = new Vue({
     el: html.getElementsByClassName('sliderContainer')[0],
     data: {
       value: parseFloat(slider),
-      parameter: parseFloat(min),
-      maxparam: parseFloat(max),
-      steparam: parseFloat(step)
+      min: parseFloat(min),
+      max: parseFloat(max),
+      step: parseFloat(step)
     },
     watch: {
-      value: function(e) {
-        state.slider = e;
-        hal9.setState(state);
-        hal9.invalidate();
+      value: function(value) {
+        hal9.set('slider', value);
       }
     }
   })
