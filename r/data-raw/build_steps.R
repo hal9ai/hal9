@@ -3,7 +3,7 @@ devtools::load_all()
 sources <- lapply(components, function(x) x$source)
 rfiles <- unique(sub("/.*", ".R", sources))
 
-res <- file.create(paste0("R/", rfiles), showWarnings = FALSE)
+res <- file.create(paste0("R/gen_", rfiles), showWarnings = FALSE)
 
 if (!all(res)) {
   stop(paste(
