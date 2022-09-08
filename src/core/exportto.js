@@ -61,31 +61,31 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number 
   return JSON.stringify(pipeline, null, padding === undefined ? 2 : padding);
 }
 
-export const getHtml = (pipelineid /* pipelineid */) /* string */ => {
+const getHtmlCommon = (rawDefinitionRhs, appDimensions = undefined, setenvString = '') => {
   const libraryUrl = environment.getLibraryUrl();
+  const applyAppLayoutString = (appDimensions ? ', applyAppLayout: true' : '');
+  const widthString = appDimensions?.width ?? '600px';
+  const heightString = appDimensions?.height ?? '400px';
   return `<script src="${libraryUrl}"></script>
-<div id='hal9app' style="min-width: 600px; min-height: 400px;"></div>
-<script>
+<div id='hal9app' style="min-width: ${widthString}; min-height: ${heightString};"></div>
+<script>${setenvString}
   (async function() {
-    var raw = '` + btoa(unescape(encodeURIComponent(getSaveText(pipelineid, 0)))) + `';
-    hal9.run(await hal9.load(raw), { html: document.getElementById('hal9app') });
+    const raw = ${rawDefinitionRhs};
+    hal9.run(await hal9.load(raw), { html: document.getElementById('hal9app')${applyAppLayoutString} });
   })();
 </script>`;
 }
 
-export const getHtmlRemote = (pipelinepath /* pipelinepath */) /* string */ => {
-  const libraryUrl = environment.getLibraryUrl();
+export const getHtml = (pipelineid /* pipelineid */, appDimensions) /* string */ => {
+  const rawDefinitionRhs = `'${btoa(unescape(encodeURIComponent(getSaveText(pipelineid, 0))))}'`;
+  return getHtmlCommon(rawDefinitionRhs, appDimensions);
+}
+
+export const getHtmlRemote = (pipelinepath /* pipelinepath */, appDimensions) /* string */ => {
   const env = environment.getId();
   const setenv = env != 'prod' ? `\n    hal9.environment.setEnv('${env}');` : '';
-
-  return `<script src="${libraryUrl}"></script>
-<div id='hal9app' style="min-width: 600px; min-height: 400px;"></div>
-<script>${setenv}
-  (async function() {
-    var raw = await hal9.fetch('` + pipelinepath + `');
-    hal9.run(await hal9.load(raw), { html: document.getElementById('hal9app') });
-  })();
-</script>`;
+  const rawDefinitionRhs = `await hal9.fetch('${pipelinepath}')`;
+  return getHtmlCommon(rawDefinitionRhs, appDimensions, setenv);
 }
 
 const getFunctionForComponentName = (componentName) => {

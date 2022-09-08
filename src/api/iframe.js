@@ -460,14 +460,16 @@ function IFrameAPI(options, hal9wnd, config) {
         alsoSkip: alsoSkip,
       })
     },
-    getHtml: async (pipelineid) => {
-      return await post(me.config, "hal9.exportto.getHtml(params.pipelineid)", {
+    getHtml: async (pipelineid, appDimensions) => {
+      return await post(me.config, "hal9.exportto.getHtml(params.pipelineid, params.appDimensions)", {
         pipelineid: pipelineid,
+        appDimensions: appDimensions,
       })
     },
-    getHtmlRemote: async (pipelinepath) => {
-      return await post(me.config, "hal9.exportto.getHtmlRemote(params.pipelinepath)", {
+    getHtmlRemote: async (pipelinepath, appDimensions) => {
+      return await post(me.config, "hal9.exportto.getHtmlRemote(params.pipelinepath, params.appDimensions)", {
         pipelinepath: pipelinepath,
+        appDimensions: appDimensions,
       })
     },
     getPythonScript: async (pipelineid) => {
@@ -544,6 +546,11 @@ function IFrameAPI(options, hal9wnd, config) {
     },
     applyStepLayoutsToApp: async (stepLayouts) => {
       return await post(me.config, "hal9.layout.applyStepLayoutsToApp(params.stepLayouts)", {
+        stepLayouts: stepLayouts,
+      })
+    },
+    calcAppDimensions: async (stepLayouts) => {
+      return await post(me.config, "hal9.layout.calcAppDimensions(params.stepLayouts)", {
         stepLayouts: stepLayouts,
       })
     },

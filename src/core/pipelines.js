@@ -455,6 +455,7 @@ export const run = async (pipelineid /*: pipelineid */, context /* context */, p
   if (typeof (context.html) === 'string') {
     context.html = document.getElementById(context.html);
   }
+  const appDiv = context.html;
 
   partial = preparePartial(pipeline, context, partial, stepstopid);
   layout.prepareForDocumentView(pipeline, context, stepstopid);
@@ -484,6 +485,13 @@ export const run = async (pipelineid /*: pipelineid */, context /* context */, p
     if (stepstopid != undefined && step.id === stepstopid) break;
     if (context.stopped === true) break;
   };
+
+  if (context.applyAppLayout) {
+    delete context.applyAppLayout;
+    const outputDiv = appDiv.shadowRoot;
+    layout.setHal9StepOverflowProperty('hidden', outputDiv);
+    layout.applyStepLayoutsToApp(pipeline.app.stepLayouts, outputDiv);
+  }
 
   context.events?.onError(clone(pipeline.error));
   context.events?.onEnd(clone(pipeline.globals), getStepsWithHeaders(pipelineid));

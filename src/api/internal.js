@@ -110,6 +110,7 @@ export const internal = {
     regenerateForDocumentView: layout.regenerateForDocumentView,
     storeAppStepLayouts: layout.storeAppStepLayouts,
     applyStepLayoutsToApp: layout.applyStepLayoutsToApp,
+    calcAppDimensions: layout.calcAppDimensions,
     setHal9StepOverflowProperty: layout.setHal9StepOverflowProperty,
   },
 

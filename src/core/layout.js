@@ -172,28 +172,41 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
 
 // be very specific, in case someone put id="output" or class="hal9-step" in their block script
 const outputSelector = ':root>body>#output';
-const hal9StepSelector = outputSelector + '>.hal9-step';
+const hal9StepSelector = ':scope>.hal9-step';
+const hal9StepSelectorForShadowRoot = ':host>.hal9-step';
 let iframeAlertShown = false;
 
-const verifyOutputLocation = () => {
-  if (!(document.querySelector(outputSelector))) {
-    const errorMessage = 'Error: App layouts require an iframe';
+const getOutputDiv = () => {
+  const outputDiv = document.querySelector(outputSelector);
+  if (!outputDiv) {
+    const errorMessage = `Error: can't find output div in iframe`;
     if (!iframeAlertShown) {
       alert(errorMessage);
       iframeAlertShown = true;
     }
     console.log(errorMessage);
   }
+  return outputDiv;
 }
 
-const getHal9Steps = () => {
-  verifyOutputLocation();
-  return document.querySelectorAll(hal9StepSelector);
+const getHal9Steps = (outputDiv) => {
+  let selector = hal9StepSelector;
+  if (outputDiv === undefined) {
+    outputDiv = getOutputDiv();
+  } else if (outputDiv === outputDiv.getRootNode()) {
+    selector = hal9StepSelectorForShadowRoot;
+  }
+  return outputDiv.querySelectorAll(selector);
 }
 
-const getHal9StepById = (stepId) => {
-  verifyOutputLocation();
-  return document.querySelector(hal9StepSelector + '-' + stepId);
+const getHal9StepById = (stepId, outputDiv) => {
+  let selector = hal9StepSelector + '-' + stepId;
+  if (outputDiv === undefined) {
+    outputDiv = getOutputDiv();
+  } else if (outputDiv === outputDiv.getRootNode()) {
+    selector = hal9StepSelectorForShadowRoot + '-' + stepId;
+  }
+  return outputDiv.querySelector(selector);
 }
 
 const getClassSuffixForPrefix = (classList, prefix) => {
@@ -248,9 +261,9 @@ export const storeAppStepLayouts = (pipelineid) => {
   pipelines.setAppProperty(pipelineid, 'stepLayouts', stepLayouts);
 }
 
-export const applyStepLayoutsToApp = (stepLayouts) => {
+export const applyStepLayoutsToApp = (stepLayouts, outputDiv) => {
   for (const stepLayout of stepLayouts) {
-    const hal9Step = getHal9StepById(stepLayout.stepId);
+    const hal9Step = getHal9StepById(stepLayout.stepId, outputDiv);
     if (!hal9Step) {
       // a step previously in the layout was removed
       continue;
@@ -264,8 +277,28 @@ export const applyStepLayoutsToApp = (stepLayouts) => {
   }
 }
 
-export const setHal9StepOverflowProperty = (overflowValue) => {
-  const hal9Steps = getHal9Steps();
+export const calcAppDimensions = (stepLayouts) => {
+  const appDimensions = {
+    width: 0,
+    height: 0
+  }
+  for (const stepLayout of stepLayouts) {
+    const right = parseInt(stepLayout.left) + parseInt(stepLayout.width);
+    if (right > appDimensions.width) {
+      appDimensions.width = right;
+    }
+    const bottom = parseInt(stepLayout.top) + parseInt(stepLayout.height);
+    if (bottom > appDimensions.height) {
+      appDimensions.height = bottom;
+    }
+  }
+  appDimensions.width += 'px';
+  appDimensions.height += 'px';
+  return appDimensions;
+}
+
+export const setHal9StepOverflowProperty = (overflowValue, outputDiv) => {
+  const hal9Steps = getHal9Steps(outputDiv);
   for (const hal9Step of hal9Steps) {
     if (overflowValue) {
       hal9Step.style.overflow = overflowValue;
