@@ -2,13 +2,19 @@
 
 use crate::server::start_server;
 use extendr_api::prelude::*;
+use extendr_api::wrapper::nullable::Nullable;
 
 /// Start server.
 /// @export
 #[extendr]
-fn h9_start2(#[default = "."] path: String, #[default = "NA_integer_"] port: Option<i32>) {
-    // #[allow(clippy::not_unsafe_ptr_arg_deref)]
-    let port: u16 = port.unwrap_or(0).try_into().unwrap();
+fn h9_start2(#[default = "."] path: String, #[default = "NULL"] port: Nullable<i32>) {
+    let port: u16 = match port {
+        Nullable::Null => 0,
+        Nullable::NotNull(x) => x
+    }
+    .try_into()
+    .unwrap();
+
     start_server(path, port).ok();
 }
 
