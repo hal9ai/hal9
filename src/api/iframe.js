@@ -449,6 +449,20 @@ function IFrameAPI(options, hal9wnd, config) {
         pipelineid: pipelineid,
       })
     },
+    addDependency: async (pipelineid, source, target) => {
+      return await post(me.config, "hal9.pipelines.addDependency(params.pipelineid, params.source, params.target)", {
+        pipelineid: pipelineid,
+        source: source,
+        target: target,
+      })
+    },
+    removeDependency: async (pipelineid, source, target) => {
+      return await post(me.config, "hal9.pipelines.removeDependency(params.pipelineid, params.source, params.target)", {
+        pipelineid: pipelineid,
+        source: source,
+        target: target,
+      })
+    },
   };
     
 

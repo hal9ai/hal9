@@ -41,7 +41,7 @@ type pipelineid = string;
 type metadata = { params: params, deps: Array<string>, environment: string };
 type block = { id: number, name: string, params: params, error: string, metadata: metadata, script: string };
 type blocks = Array<block>;
-type deps = { id: Array<id> };
+type deps = { [id: string]: Array<string> };
 */
 
 var pipelinesStateCount = 0;
@@ -955,6 +955,28 @@ export const isAborted = async (pipelineid /*: pipelineid */) /*: boolean */ => 
 
 export const getDependencies = async (pipelineid /*: pipelineid */) /*: deps */ => {
   var pipeline = store.get(pipelineid);
+  return clone(pipeline.deps);
+}
+
+export const addDependency = async (pipelineid /*: pipelineid */, source /*: string */, target /*: string */) /*: deps */ => {
+  var pipeline = store.get(pipelineid);
+
+  pipeline.deps = pipeline.deps || {};
+  pipeline.deps[source] = pipeline.deps[source] || [];
+
+  if (!pipeline.deps[source].includes(target)) {
+    pipeline.deps[source].push(target);
+  }
+
+  return clone(pipeline.deps);
+}
+
+export const removeDependency = async (pipelineid /*: pipelineid */, source /*: string */, target /*: string */) /*: deps */ => {
+  var pipeline = store.get(pipelineid);
+
+  pipeline.deps = pipeline.deps || {};
+  pipeline.deps[source] = (pipeline.deps[source] || []).filter(d => d !== target);
+
   return clone(pipeline.deps);
 }
 

@@ -81,6 +81,8 @@ export const internal = {
     abort: pipelines.abort,
     isAborted: pipelines.isAborted,
     getDependencies: pipelines.getDependencies,
+    addDependency: pipelines.addDependency,
+    removeDependency: pipelines.removeDependency,
   },
 
   exportto: {
