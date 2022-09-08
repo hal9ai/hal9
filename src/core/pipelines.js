@@ -105,7 +105,8 @@ const createInt = (steps /*: steps */, previous /*: pipeline */) /*: pipeline */
   steps = clone(steps);
 
   var newscripts = previous && previous.scripts ? previous.scripts : {},
-    newscripts = Object.fromEntries(Object.entries(newscripts).filter(([k, v]) => steps.map(e => e.id.toString()).includes(k)));
+    newscripts = Object.fromEntries(Object.entries(newscripts).filter(([k, v]) => steps.map(e => e.id.toString()).includes(k))),
+    newdeps = previous && previous.deps ? clone(previous.deps) : {};
 
   const pipeline = {
     id: previous.id ? previous.id : Math.floor(Math.random() * 10000000),
@@ -119,8 +120,17 @@ const createInt = (steps /*: steps */, previous /*: pipeline */) /*: pipeline */
     version: '0.0.1',
     metadata: clone(previous.metadata),
     app: clone(previous.app),
-    deps: {},
+    deps: newdeps,
   };
+
+  const stepIds = steps.map(e => e.id.toString());
+
+  pipeline.deps = Object.keys(pipeline.deps).reduce((res, key) => {
+    if (stepIds.includes(key.toString())) {
+      res[key] = pipeline.deps[key].filter(e => stepIds.includes(e.toString()));
+    }
+    return res;
+  }, {});
 
   pipeline.steps = steps;
 
@@ -647,7 +657,7 @@ export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step
 export const removeStep = (pipelineid /*: pipelineid */, step /*: step */) /*: void */ => {
   var pipeline = store.get(pipelineid);
 
-  pipeline.steps = pipeline.steps.filter(e => e.id != step.id)
+  pipeline.steps = pipeline.steps.filter(e => e.id != step.id);
 }
 
 export const moveStep = (pipelineid /*: pipelineid */, stepid /*: stepid */, change /* number */) /*: void */ => {
