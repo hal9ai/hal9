@@ -29,12 +29,14 @@ const generateForDocumentView = (pipeline) => {
     var hasHtml = header && header.output && header.output.filter(e => e == 'html').length > 0;
     var interactiveClass = header && header.interactive ? ' hal9-interactive' : '';
     const headerLayoutWidth = header?.layout?.[0]?.width;
+    const headerLayoutHeight = header?.layout?.[0]?.height;
     // "ali" is "app layout initial"
     const appLayoutInitialWidthClass = (headerLayoutWidth ? (' hal9-ali-width-' + headerLayoutWidth) : '');
+    const appLayoutInitialHeightClass = (headerLayoutHeight ? (' hal9-ali-height-' + headerLayoutHeight) : '');
     if (langInfo.html) hasHtml = true;
 
     if (hasHtml) {
-      html = html + `<div class="hal9-step hal9-step-${step.id}${heightClass}${interactiveClass}${appLayoutInitialWidthClass}" style="position: relative; width: 100%; height: ${height}"></div>\n`;
+      html = html + `<div class="hal9-step hal9-step-${step.id}${heightClass}${interactiveClass}${appLayoutInitialWidthClass}${appLayoutInitialHeightClass}" style="position: relative; width: 100%; height: ${height}"></div>\n`;
     }
   }
 
@@ -229,7 +231,7 @@ export const storeAppStepLayouts = (pipelineid) => {
     let widthToUse = hal9Step.offsetWidth + 'px';
     let heightToUse = hal9Step.offsetHeight + 'px';
     if (hal9Step.style.width === '100%') {
-      // app layout width hasn't been set yet for this control
+      // app layout hasn't been set yet for this control
       const requestedWidth = getClassSuffixForPrefix(hal9Step.classList, 'hal9-ali-width-');
       if (requestedWidth === 'inner') {
         // find the first descendant that has less width than the entire step
@@ -250,6 +252,11 @@ export const storeAppStepLayouts = (pipelineid) => {
       } else if (requestedWidth) {
         widthToUse = requestedWidth;
         heightToUse = hal9Step.offsetHeight + 'px';
+      }
+
+      const requestedHeight = getClassSuffixForPrefix(hal9Step.classList, 'hal9-ali-height-');
+      if (requestedHeight) {
+        heightToUse = requestedHeight;
       }
     }
     stepLayout.width = widthToUse;
