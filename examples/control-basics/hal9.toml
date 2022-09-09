@@ -1,0 +1,13 @@
+[application]
+name = "my_app"
+version = "0.0.1"
+
+[[runtimes]]
+name = "r"
+platform = "R"
+script_dir = "R/"
+
+[[runtimes]]
+name = "r"
+platform = "R"
+script = "app.R"
