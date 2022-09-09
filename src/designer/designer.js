@@ -20,7 +20,7 @@ const Designer = function(hostopt) {
 
   async function serverEval(body) {
     if (typeof(hostopt.designer.eval) === 'function') {
-      return await hostopt.designer.eval(body.manifest);
+      return await hostopt.designer.eval(body);
     }
 
     console.log('Sending: \n' + JSON.stringify(body, null, 2));
@@ -62,17 +62,45 @@ const Designer = function(hostopt) {
 
     const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
 
-    var change = {};
-    for (let name of names) change[name] = {};
+    let calls = [];
+    for (let name of names) {
+      let step = steps.filter(x => x.name == name);
+      if (step.length != 1) continue;
+      step = step[0];
 
-    const updates = await serverEval({ manifest: change });
-    for (let update of Object.keys(updates)) {
+      for (let param of Object.keys(step.params)) {
+        calls.push({
+          node: name,
+          fn_name: param,
+          args: []
+        });
+      }
 
-      const candidates = steps.filter(e => e.name == update);
+      for (let input of step.header.input) {
+        calls.push({
+          node: name,
+          fn_name: input,
+          args: []
+        });
+      }
+    }
+
+    const updates = await serverEval({ manifests: [
+      {
+        runtime: hostopt.designer.eval ?? 'r',
+        calls: calls
+      }
+    ]});
+
+    if (!updates.responses || updates.responses.length == 0 || !updates.responses[0].calls) return;
+    calls = updates.responses[0].calls;
+
+    for (let call of calls) {
+      const candidates = steps.filter(e => e.name == call.node);
       if (candidates.length == 0) continue;
       const step = candidates[0];
 
-      manifest[update] = updates[update].result
+      manifest[call['fn_name']] = call.result;
 
       await hal9api.pipelines.runStep(pid, step.id, { html: 'hal9-step-' + step.id });
     }
@@ -117,10 +145,18 @@ const Designer = function(hostopt) {
   }
 
   async function onEvent(step, event, params) {
-    var change = {}
-    change[step.name] = {}
-    change[step.name][event] = params;
-    await serverEval({ manifest: change });
+    var call = {
+      'node': step.name,
+      'fn_name': event,
+      'args': params
+    };
+
+    await serverEval({ manifests: [
+      {
+        runtime: hostopt.designer.eval ?? 'r',
+        calls: [ call ]
+      }
+    ]});
 
     const deps = await getForwardDependencies(step.name);
     await performUpdates(deps);

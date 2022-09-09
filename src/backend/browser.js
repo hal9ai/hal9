@@ -2,8 +2,11 @@
 var nodes = {};
 var data = {};
 
-let Node = function(uid, values, events) {
+let Node = function(uid, functions) {
   let self = this;
+
+  self.uid = uid;
+  self.functions = functions;
 
   let validateFunction = function(fn, name, uid) {
     if (!fn)
@@ -14,19 +17,12 @@ let Node = function(uid, values, events) {
 
   this.evaluate = function(fn, args) {
     let result = {};
-    if (fn) {
-      validateFunction(events[fn], fn, self.uid)
-      let flat = [];
-      for (let argName of Object.keys(args))
-        flat.push(args[argName]);
-      result[fn] = events[fn].apply(this, flat || []);
-    }
-    else {
-      for (let name of Object.keys(values)) {
-        validateFunction(values[name], name, self.uid)
-        result[name] = values[name]()
-      }
-    }
+
+    validateFunction(self.functions[fn], fn, self.uid)
+    let flat = [];
+    for (let argName of Object.keys(args))
+      flat.push(args[argName]);
+    result[fn] = self.functions[fn].apply(this, flat || []);
 
     return result;
   }
@@ -38,18 +34,13 @@ function toFunction(val) {
 }
 
 export function node(uid, properties) {
-  let values = {};
-  let events = {};
+  let functions = {};
 
   for (let property of Object.keys(properties)) {
-    if (property.startsWith('on_')) {
-      events[property] = properties[property];
-    } else {
-      values[property] = toFunction(properties[property]);
-    }
+    functions[property] = properties[property];
   }
 
-  nodes[uid] = new Node(uid, values, events);
+  nodes[uid] = new Node(uid, functions);
 }
 
 export function set(uid, value) {
@@ -61,27 +52,31 @@ export function get(uid) {
 }
 
 export function process(req) {
-  let uids = Object.keys(req);
+  let calls = req.manifests[0].calls;
 
-  let results = {};
+  let results = [];
 
-  for (let uid of uids) {
+  for (let call of calls) {
+    let uid =  call['node'];
+    let functionName = call['fn_name'];
+    let args = call['args'];
     let node = nodes[uid];
-    let functions = req[uid];
-    let functionNames = Object.keys(functions);
-
     if (!node) {
       results[uid] = {};
     }
-    else if (!Object.keys(functions).length) {
-      results[uid] = {
-        result: node.evaluate(null, {})
-      };
-    } else {
-      node.evaluate(functionNames[0], functions[functionNames[0]]);
-      results[uid] = {};
+    else {
+      results.push({
+        'node': uid,
+        'fn_name': functionName,
+        'result': node.evaluate(functionName, args)
+      });
     }
   }
 
-  return results;
+  return {
+    responses: [{
+      runtime: 'js',
+      calls: results
+    }]
+  };
 }
