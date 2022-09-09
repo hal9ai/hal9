@@ -69,7 +69,7 @@ export const getValidWorkerUrl = async function(pipelinename, headers) {
         // There is no reason to retry, if plan is needed
         shouldRetry = false;
         needPlanForWorker = true;
-        details = 'Running pipelines as APIs requires a Pro Plan';
+        details = 'Running pipelines as APIs requires a Basic Plan';
       }
     }
 
