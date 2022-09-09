@@ -43,8 +43,11 @@ def node(uid: str, **kwargs) -> None:
 
 
 def get(x: str) -> _Node:
-    return global_data[x]
-
+    if x in global_data:
+        return global_data[x]
+    else:
+        return None
+                                                                                                                            
 def set(name: str, value: Any) -> None:
     global_data[name] = value
     return value
