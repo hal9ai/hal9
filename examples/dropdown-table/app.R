@@ -4,7 +4,9 @@ iris |> h9_set("df")
 
 h9_node(
   "dropdown",
-  # values = c("setosa", "versicolor"),
+  values = function() {
+    "setosa,versicolor"
+  },
   on_update = function(value) {
     h9_set(value, "selected_species")
   }
@@ -21,4 +23,3 @@ h9_node(
       as.character()
   }
 )
-
