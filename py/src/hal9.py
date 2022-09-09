@@ -7,23 +7,13 @@ class _Node:
     """
     The base class which defines the backend execution graph
     """
-    def __init__(self, uid:str =  None, kind:str = None, values: dict[str, Callable] = None, events: dict[str, Callable] = None) -> None:
+    def __init__(self, uid:str =  None, funcs: dict[str, Callable] = None) -> None:
         self.uid = uid
-        self.type = kind
-        self.values = values
-        self.events = events
+        self.funcs = funcs
         _register_node(self)
     
-    def evaluate(self, type: str , fn: str = None, *args, **kwargs):
-        result = {}
-        values = self.values
-        events = self.events
-        if type == 'values':
-            for value, valuefunc in values.items():
-                result[value] = valuefunc(*args, **kwargs)
-        else:
-            result[fn] = events[fn](*args, **kwargs)
-        return result
+    def evaluate(self, fn: str, *args, **kwargs):
+        return self.funcs[fn](*args, **kwargs)
 
 global_nodes:dict[str, _Node] = dict()
 global_data:dict[str, Any] = dict()
@@ -32,14 +22,7 @@ def _register_node(node: _Node) -> None:
     global_nodes[node.uid] = node
     
 def node(uid: str, **kwargs) -> None:
-    values = {}
-    events = {}
-    for name in kwargs.keys():
-        if name.startswith('on_'):
-            events[name] = kwargs[name]
-        else:
-            values[name] = kwargs[name]
-    _Node(uid, kind = 'dropdown', values = values, events = events)
+    _Node(uid, funcs=kwargs)
 
 
 def get(x: str) -> _Node:
@@ -100,7 +83,7 @@ def start(path:str, port:int = 8000) -> None:
     fastapp = FastAPI()
 
     class Manifest(BaseModel):
-        manifest: Dict[Any, Union[Any, None]]
+        manifests: Dict[Any, Union[Any, None]]
 
     @fastapp.get('/pipeline', response_class=PlainTextResponse)
     async def get_pipeline():
@@ -122,7 +105,7 @@ def start(path:str, port:int = 8000) -> None:
 
     @fastapp.post("/eval")
     async def eval(manifest: Manifest):
-        return h9.__process_request(manifest.manifest)
+        return h9.__process_request(manifest)
     a = webbrowser.open('http://127.0.0.1:'+str(port)+'/design')
     print (a)
     uvicorn.run(fastapp, host="127.0.0.1", port=port)
