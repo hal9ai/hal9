@@ -2,8 +2,6 @@
 #'
 #' {{func_description}}
 #'
-#' @param h An optional h9 object created by h9_create.
-{{params}}
 #' @param uid Unique identifier for this element.
 #' @param ... Other h9 parameters.
 #'
