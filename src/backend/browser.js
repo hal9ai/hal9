@@ -20,8 +20,8 @@ let Node = function(uid, functions) {
 
     validateFunction(self.functions[fn], fn, self.uid)
     let flat = [];
-    for (let argName of Object.keys(args))
-      flat.push(args[argName]);
+    for (let arg of args)
+      flat.push(arg.value);
     result[fn] = self.functions[fn].apply(this, flat || []);
 
     return result;
