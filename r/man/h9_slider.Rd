@@ -9,17 +9,7 @@ h9_slider(uid, value = NULL, min = NULL, max = NULL, step = NULL, ...)
 \arguments{
 \item{uid}{Unique identifier for this element.}
 
-\item{value}{Additional step parameter.}
-
-\item{min}{Additional step parameter.}
-
-\item{max}{Additional step parameter.}
-
-\item{step}{Additional step parameter.}
-
 \item{...}{Other h9 parameters.}
-
-\item{h}{An optional h9 object created by h9_create.}
 }
 \description{
 Embed an slider element

@@ -9,11 +9,7 @@ h9_file(uid, dataType = NULL, ...)
 \arguments{
 \item{uid}{Unique identifier for this element.}
 
-\item{dataType}{Additional step parameter.}
-
 \item{...}{Other h9 parameters.}
-
-\item{h}{An optional h9 object created by h9_create.}
 }
 \description{
 Embed a file input control

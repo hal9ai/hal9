@@ -2,8 +2,6 @@
 #'
 #' Embed a dropdown control
 #'
-#' @param h An optional h9 object created by h9_create.
-#' @param values Additional step parameter.
 #' @param uid Unique identifier for this element.
 #' @param ... Other h9 parameters.
 #'
@@ -18,8 +16,6 @@ h9_dropdown <- function(uid, values  = NULL, ...) {
 #'
 #' Embed a file input control
 #'
-#' @param h An optional h9 object created by h9_create.
-#' @param dataType Additional step parameter.
 #' @param uid Unique identifier for this element.
 #' @param ... Other h9 parameters.
 #'
@@ -34,8 +30,6 @@ h9_file <- function(uid, dataType  = NULL, ...) {
 #'
 #' Embed a number input control
 #'
-#' @param h An optional h9 object created by h9_create.
-#' @param label Additional step parameter.
 #' @param uid Unique identifier for this element.
 #' @param ... Other h9 parameters.
 #'
@@ -50,11 +44,6 @@ h9_number <- function(uid, label  = NULL, ...) {
 #'
 #' Embed an slider element
 #'
-#' @param h An optional h9 object created by h9_create.
-#' @param value Additional step parameter.
-#' @param min Additional step parameter.
-#' @param max Additional step parameter.
-#' @param step Additional step parameter.
 #' @param uid Unique identifier for this element.
 #' @param ... Other h9 parameters.
 #'
@@ -69,9 +58,6 @@ h9_slider <- function(uid, value  = NULL, min  = NULL, max  = NULL, step  = NULL
 #'
 #' Embed a text input control
 #'
-#' @param h An optional h9 object created by h9_create.
-#' @param label Additional step parameter.
-#' @param value Additional step parameter.
 #' @param uid Unique identifier for this element.
 #' @param ... Other h9 parameters.
 #'
@@ -86,8 +72,6 @@ h9_textbox <- function(uid, label  = NULL, value  = NULL, ...) {
 #'
 #' Embed a website and load a URL
 #'
-#' @param h An optional h9 object created by h9_create.
-#' @param site Additional step parameter.
 #' @param uid Unique identifier for this element.
 #' @param ... Other h9 parameters.
 #'
