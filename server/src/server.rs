@@ -1,6 +1,7 @@
 use crate::config::Config;
 use crate::manifest::*;
 use crate::runtimes::{RtControllerMsg, RuntimesController};
+use crate::shutdown::Shutdown;
 use crate::util::{monitor_fs_changes, monitor_heartbeat, time_now};
 use actix_files::NamedFile;
 use actix_web::{web, HttpResponse, Responder, Result};
@@ -10,15 +11,17 @@ use reqwest;
 use serde_json;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicUsize, Ordering};
-use std::sync::mpsc::channel;
+use tokio::sync::mpsc::channel;
 use std::sync::Arc;
 use url::Url;
 use std::io::Write;
+use tokio::signal;
+use tokio::sync::{mpsc, broadcast};
 
 struct AppState {
     app_dir: String,
     designer_string: String,
-    tx_handler: std::sync::mpsc::Sender<RtControllerMsg>, 
+    tx_handler: tokio::sync::mpsc::Sender<RtControllerMsg>, 
     rx_uri_handler: crossbeam_channel::Receiver<Url>,
     last_heartbeat: web::Data<AtomicUsize>,
 }
@@ -54,7 +57,7 @@ async fn eval(
     let rt = req.manifests[0].runtime.clone();
     let runtime = rt.clone();
     let tx_handler = &data.tx_handler;
-    tx_handler.send(RtControllerMsg::GetUri(rt)).unwrap();
+    tx_handler.send(RtControllerMsg::GetUri(rt)).await.ok();
     let rx_uri_handler = &data.rx_uri_handler;
     let uri = rx_uri_handler.recv().unwrap().join("eval").unwrap();
     let manifest = req.manifests[0].calls.clone();
@@ -97,6 +100,11 @@ async fn pipeline_post(data: web::Data<AppState>, req: String) -> impl Responder
 
 #[tokio::main]
 pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
+
+
+    let (notify_shutdown, _) = broadcast::channel(1);
+    let (shutdown_complete_tx, mut shutdown_complete_rx) = mpsc::channel::<()>(1);
+
     use actix_web::{web, App, HttpServer};
 
     let app_path_to_monitor = app_path.clone();
@@ -106,20 +114,23 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     let config_path = PathBuf::new().join(app_path).join("hal9.toml");
     let conf = Config::parse(config_path);
 
-    let (tx, rx) = channel();
+    let (tx, rx) = channel(1);
     let (tx_uri, rx_uri) = bounded(0);
     let rx_uri_handler = rx_uri.clone();
 
-    let runtimes_controller = RuntimesController::new(conf.runtimes.clone(), app_path_for_controller, rx, tx_uri);
+    RuntimesController::new(conf.runtimes.clone(), app_path_for_controller, rx, tx_uri, Shutdown::new(notify_shutdown.subscribe()), shutdown_complete_tx.clone()).monitor().ok();
 
-    runtimes_controller.monitor().unwrap();
 
-    tx.send(RtControllerMsg::StartAll).unwrap();
-    // tx.send(RtControllerMsg::GetUri(String::from("r"))).unwrap();
+    tx.send(RtControllerMsg::StartAll).await.ok();
 
     let tx_fs = tx.clone();
 
-    monitor_fs_changes(app_path_to_monitor, 1000, tx_fs).await;
+
+    monitor_fs_changes(
+        app_path_to_monitor, tx_fs, 
+        Shutdown::new(notify_shutdown.subscribe()),
+        shutdown_complete_tx.clone(),
+    );
 
     let last_heartbeat = web::Data::new(AtomicUsize::new(time_now().try_into().unwrap()));
     let last_heartbeat_arc= Arc::clone(&last_heartbeat);
@@ -159,7 +170,23 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     let http_server_handle = http_server.handle();
 
     let tx_heartbeat = tx.clone();
-    monitor_heartbeat(http_server_handle, last_heartbeat_arc, 60 * 5, tx_heartbeat);
 
-    tokio::spawn(http_server).await?
+    monitor_heartbeat(http_server_handle, last_heartbeat_arc, 60 * 5, tx_heartbeat,
+        Shutdown::new(notify_shutdown.subscribe()),
+        shutdown_complete_tx.clone(),
+    );
+
+    match signal::ctrl_c().await {
+        Ok(()) => {
+            println!("got ctrl-c, exiting!");
+            drop(notify_shutdown);
+            drop(shutdown_complete_tx);
+            drop(tx);
+        }
+        Err(err) => {
+            eprintln!("Unable to listen for shutdown signal: {}", err);
+        },
+    };
+    let _ = shutdown_complete_rx.recv().await;
+    Ok(())
 }
