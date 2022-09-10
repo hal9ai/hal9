@@ -70,7 +70,7 @@ process_request <- function(req) {
         list(
             node = call$node,
             fn_name = fn_name,
-            result = list(result)
+            result = result
         )
     })
     list(calls = responses)
