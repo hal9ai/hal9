@@ -131,7 +131,7 @@ const RuntimeAPI = function(pipelineid, sid, context, params, input) {
   }
   
   this.set = function(name, value) {
-    this.triggerEvent('on_update', [ value ]);
+    this.triggerEvent('on_update', { value: value });
     this.updateState(name, value, true);
   }
 
