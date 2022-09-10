@@ -17,6 +17,7 @@ use url::Url;
 use std::io::Write;
 use tokio::signal;
 use tokio::sync::{mpsc, broadcast};
+use webbrowser;
 
 struct AppState {
     app_dir: String,
@@ -163,9 +164,8 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     .unwrap();
 
     let myport = http_server.addrs().pop().unwrap().port();
+    let myurl = format!("http://127.0.0.1:{myport}/design");
     let http_server = http_server.run();
-
-    println!("server listening on port {myport}");
 
     let http_server_handle = http_server.handle();
 
@@ -176,7 +176,12 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
         shutdown_complete_tx.clone(),
     );
 
-    tokio::spawn(http_server).await.ok();
+    tokio::spawn(http_server);
+
+    println!("server running at {myurl}");
+
+    webbrowser::open(&myurl).ok();
+
     match signal::ctrl_c().await {
         Ok(()) => {
             println!("got ctrl-c, exiting!");
