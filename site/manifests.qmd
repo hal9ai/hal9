@@ -44,6 +44,8 @@ In this example, we're calling the `on_select()` function of the `species_dropdo
 with the value of `"setosa"` for the `value` parameter and the `html()` function of the `summary_table` node with no
 arguments.
 
+*Note that the `value` entries of `args` can be any valid JSON.*
+
 ## Computed Results
 
 Upon evaluating the manifest, the compute runtime provides a similarly specified JSON array with the function return
@@ -70,3 +72,5 @@ values. As an example, the response to the above manifest could be
     ]
 }
 ```
+
+Here, the `result` can also be arbitrary valid JSON.
