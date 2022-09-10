@@ -22,7 +22,7 @@ actix-files = "0.6.2"
 mime = "0.3.16"
 toml = "0.5.9"
 serde = { version = "1.0", features = ["derive"] }
-notify = "4.0.17"
+notify = {version = "5.0.0", default-features = false, features = ["macos_kqueue"] }
 tokio = { version = "1.20.1", features = ["full"] }
 clap = { version = "3.2.16", features = ["derive"] }
 crossbeam = "0.8"
@@ -30,3 +30,4 @@ reqwest = { version = "0.11", features = ["json"] }
 serde_json = "1.0"
 extendr-api = '*'
 url = "2.2.2"
+futures = "*"
