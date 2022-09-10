@@ -176,6 +176,7 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
         shutdown_complete_tx.clone(),
     );
 
+    tokio::spawn(http_server).await.ok();
     match signal::ctrl_c().await {
         Ok(()) => {
             println!("got ctrl-c, exiting!");
