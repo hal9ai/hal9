@@ -87,7 +87,7 @@ const Designer = function(hostopt) {
 
     const updates = await serverEval({ manifests: [
       {
-        runtime: hostopt.designer.eval ?? 'r',
+        runtime: hostopt.designer.runtime ?? 'r',
         calls: calls
       }
     ]});
@@ -148,12 +148,17 @@ const Designer = function(hostopt) {
     var call = {
       'node': step.name,
       'fn_name': event,
-      'args': params
+      'args': Object.keys(params).map(function(name) {
+        return {
+          name: name,
+          value: params[name]
+        };
+      })
     };
 
     await serverEval({ manifests: [
       {
-        runtime: hostopt.designer.eval ?? 'r',
+        runtime: hostopt.designer.runtime ?? 'r',
         calls: [ call ]
       }
     ]});
