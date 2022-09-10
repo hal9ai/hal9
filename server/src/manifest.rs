@@ -21,7 +21,7 @@ pub struct Call {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Arg {
     pub name: String,
-    pub value: String,
+    pub value: Option<serde_json::Value>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -39,5 +39,5 @@ pub struct RuntimeResponse {
 pub struct CallResponse {
     pub node: String,
     pub fn_name: String,
-    pub result: Option<Vec<String>>,
+    pub result: Option<serde_json::Value>,
 }
