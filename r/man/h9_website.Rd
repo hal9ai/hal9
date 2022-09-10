@@ -9,11 +9,7 @@ h9_website(uid, site = NULL, ...)
 \arguments{
 \item{uid}{Unique identifier for this element.}
 
-\item{site}{Additional step parameter.}
-
 \item{...}{Other h9 parameters.}
-
-\item{h}{An optional h9 object created by h9_create.}
 }
 \description{
 Embed a website and load a URL

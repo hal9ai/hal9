@@ -9,13 +9,7 @@ h9_textbox(uid, label = NULL, value = NULL, ...)
 \arguments{
 \item{uid}{Unique identifier for this element.}
 
-\item{label}{Additional step parameter.}
-
-\item{value}{Additional step parameter.}
-
 \item{...}{Other h9 parameters.}
-
-\item{h}{An optional h9 object created by h9_create.}
 }
 \description{
 Embed a text input control
