@@ -26,7 +26,7 @@ def node(uid: str, **kwargs) -> None:
 
 
 def get(x: str) -> _Node:
-    if x in global_data:
+    if x in global_data.keys():
         return global_data[x]
     else:
         return None
@@ -36,19 +36,17 @@ def set(name: str, value: Any) -> None:
     return value
 
     
-def __process_request(request: dict) -> None:
+def __process_request(calls: dict) -> None:
     response = dict()
-    for uid in request.keys():
-        node = global_nodes[uid]
-        fn_args = request[uid]
-        fns = fn_args.keys()
-        if not len(fn_args):
-            results = node.evaluate('values')
-            response[uid]= {'result': results}
-        else:
-            fn = list(fn_args.keys())[0]
-            args = fn_args[fn]
-            response[uid] = {'result': node.evaluate('event', fn, args)}
+    call_response = list()
+    for call in calls:
+        node = get(call['node'])
+        kwargs = dict()
+        for arg in call['args']:
+            kwargs[arg['name']] = arg['value']
+        result = node.evaluate(call['fn_name'], kwargs = kwargs)
+        call_response.append({'node' : node.uid, 'fn_name': call['fn_name'], 'result' : result})
+    response['calls'] = call_response
     return response
 
 def __get_designer(**options: dict) -> str:
@@ -69,7 +67,7 @@ def start(path:str, port:int = 8000) -> None:
     import hal9 as h9
     import os
     from fastapi.responses import HTMLResponse, PlainTextResponse
-    from pydantic import BaseModel
+    # from pydantic import BaseModel
     import webbrowser
     if not os.path.exists(path):
         os.makedirs(path)
@@ -82,8 +80,8 @@ def start(path:str, port:int = 8000) -> None:
     import app
     fastapp = FastAPI()
 
-    class Manifest(BaseModel):
-        manifests: Dict[Any, Union[Any, None]]
+    # class Manifest(BaseModel):
+    #     manifests: Dict[Any, Union[Any, None]]
 
     @fastapp.get('/pipeline', response_class=PlainTextResponse)
     async def get_pipeline():
@@ -104,9 +102,9 @@ def start(path:str, port:int = 8000) -> None:
         return h9.__get_designer(mode = "design")
 
     @fastapp.post("/eval")
-    async def eval(manifest: Manifest):
-        return h9.__process_request(manifest)
+    async def eval(manifest: dict):
+        print(manifest)
+        return h9.__process_request(manifest['calls'])
     a = webbrowser.open('http://127.0.0.1:'+str(port)+'/design')
-    print (a)
     uvicorn.run(fastapp, host="127.0.0.1", port=port)
     
