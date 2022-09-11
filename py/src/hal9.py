@@ -7,23 +7,13 @@ class _Node:
     """
     The base class which defines the backend execution graph
     """
-    def __init__(self, uid:str =  None, kind:str = None, values: dict[str, Callable] = None, events: dict[str, Callable] = None) -> None:
+    def __init__(self, uid:str =  None, funcs: dict[str, Callable] = None) -> None:
         self.uid = uid
-        self.type = kind
-        self.values = values
-        self.events = events
+        self.funcs = funcs
         _register_node(self)
     
-    def evaluate(self, type: str , fn: str = None, *args, **kwargs):
-        result = {}
-        values = self.values
-        events = self.events
-        if type == 'values':
-            for value, valuefunc in values.items():
-                result[value] = valuefunc(*args, **kwargs)
-        else:
-            result[fn] = events[fn](*args, **kwargs)
-        return result
+    def evaluate(self, fn: str, *args, **kwargs):
+        return self.funcs[fn](*args, **kwargs)
 
 global_nodes:dict[str, _Node] = dict()
 global_data:dict[str, Any] = dict()
@@ -32,18 +22,11 @@ def _register_node(node: _Node) -> None:
     global_nodes[node.uid] = node
     
 def node(uid: str, **kwargs) -> None:
-    values = {}
-    events = {}
-    for name in kwargs.keys():
-        if name.startswith('on_'):
-            events[name] = kwargs[name]
-        else:
-            values[name] = kwargs[name]
-    _Node(uid, kind = 'dropdown', values = values, events = events)
+    _Node(uid, funcs=kwargs)
 
 
 def get(x: str) -> _Node:
-    if x in global_data:
+    if x in global_data.keys():
         return global_data[x]
     else:
         return None
@@ -53,19 +36,17 @@ def set(name: str, value: Any) -> None:
     return value
 
     
-def __process_request(request: dict) -> None:
+def __process_request(calls: dict) -> None:
     response = dict()
-    for uid in request.keys():
-        node = global_nodes[uid]
-        fn_args = request[uid]
-        fns = fn_args.keys()
-        if not len(fn_args):
-            results = node.evaluate('values')
-            response[uid]= {'result': results}
-        else:
-            fn = list(fn_args.keys())[0]
-            args = fn_args[fn]
-            response[uid] = {'result': node.evaluate('event', fn, args)}
+    call_response = list()
+    for call in calls:
+        node = get(call['node'])
+        kwargs = dict()
+        for arg in call['args']:
+            kwargs[arg['name']] = arg['value']
+        result = node.evaluate(call['fn_name'], kwargs = kwargs)
+        call_response.append({'node' : node.uid, 'fn_name': call['fn_name'], 'result' : result})
+    response['calls'] = call_response
     return response
 
 def __get_designer(**options: dict) -> str:
@@ -86,7 +67,7 @@ def start(path:str, port:int = 8000) -> None:
     import hal9 as h9
     import os
     from fastapi.responses import HTMLResponse, PlainTextResponse
-    from pydantic import BaseModel
+    # from pydantic import BaseModel
     import webbrowser
     if not os.path.exists(path):
         os.makedirs(path)
@@ -99,8 +80,8 @@ def start(path:str, port:int = 8000) -> None:
     import app
     fastapp = FastAPI()
 
-    class Manifest(BaseModel):
-        manifest: Dict[Any, Union[Any, None]]
+    # class Manifest(BaseModel):
+    #     manifests: Dict[Any, Union[Any, None]]
 
     @fastapp.get('/pipeline', response_class=PlainTextResponse)
     async def get_pipeline():
@@ -121,9 +102,9 @@ def start(path:str, port:int = 8000) -> None:
         return h9.__get_designer(mode = "design")
 
     @fastapp.post("/eval")
-    async def eval(manifest: Manifest):
-        return h9.__process_request(manifest.manifest)
+    async def eval(manifest: dict):
+        print(manifest)
+        return h9.__process_request(manifest['calls'])
     a = webbrowser.open('http://127.0.0.1:'+str(port)+'/design')
-    print (a)
     uvicorn.run(fastapp, host="127.0.0.1", port=port)
     
