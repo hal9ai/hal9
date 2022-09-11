@@ -27,6 +27,7 @@ rsconnect/
 
 .DS_Store
 inst/pipeline.json
+dist/
 cli/target
 */*.lock
 
