@@ -2,7 +2,7 @@ library(hal9)
 
 iris |> h9_set("df")
 
-h9_dropdown(
+h9_node(
   "dropdown",
   values = function() {
     "setosa,versicolor"
@@ -12,7 +12,7 @@ h9_dropdown(
   }
 )
 
-h9_rawhtml(
+h9_node(
   "rawhtml",
   rawhtml = function() {
     df <- h9_get("df")

@@ -4,10 +4,14 @@
 \alias{h9_file}
 \title{File Input}
 \usage{
-h9_file(uid, dataType = NULL, ...)
+h9_file(uid, dataType = NULL, on_update = NULL, ...)
 }
 \arguments{
-\item{uid}{Unique identifier for this element.}
+\item{uid}{Unique identifier for this element}
+
+\item{dataType}{Specifies the dataType for this fileinput}
+
+\item{on_update}{Function to call when the value is changed updates}
 
 \item{...}{Other h9 parameters.}
 }

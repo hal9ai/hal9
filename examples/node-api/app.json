@@ -69,20 +69,17 @@
       {
         "stepId": 11099,
         "width": "196px",
-        "left": "6px",
+        "left": "17px",
         "height": "21px",
         "top": "8px"
       },
       {
         "stepId": 11100,
         "width": "562px",
-        "left": "6px",
+        "left": "17px",
         "height": "294px",
-        "top": "73px"
+        "top": "56px"
       }
     ]
-  },
-  "metadata": {
-    "defaultMode": "app"
   }
 }

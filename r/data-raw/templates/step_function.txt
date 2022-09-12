@@ -2,12 +2,14 @@
 #'
 #' {{func_description}}
 #'
-#' @param uid Unique identifier for this element.
+#' @param uid Unique identifier for this element{{func_params_docs}}
+#' @param on_update Function to call when the value is changed updates
 #' @param ... Other h9 parameters.
 #'
 #' @export
 #'
-{{func_name}} <- function(uid, {{func_params}}, ...) {
+{{func_name}} <- function(uid, {{func_params}}on_update = NULL, ...) {
+  args <- as.list(match.call()[-1])
   node_args <- args[!names(args) %in% c("h", "", "uid")]
   do.call("h9_node", args = c(uid, node_args))
 }

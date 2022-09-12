@@ -80,7 +80,8 @@ client_html <- function(...) {
     options <- list(...)
     options$designer <- list(
         persist = "pipeline",
-        eval = "eval"
+        eval = "eval",
+        heartbeat = "ping"
     )
 
     html <- paste(readLines(system.file("client.html", package = "hal9")), collapse = "\n")

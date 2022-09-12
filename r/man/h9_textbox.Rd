@@ -4,10 +4,16 @@
 \alias{h9_textbox}
 \title{Text Input}
 \usage{
-h9_textbox(uid, label = NULL, value = NULL, ...)
+h9_textbox(uid, label = NULL, value = NULL, on_update = NULL, ...)
 }
 \arguments{
-\item{uid}{Unique identifier for this element.}
+\item{uid}{Unique identifier for this element}
+
+\item{label}{Specifies the label for this textbox}
+
+\item{value}{Specifies the value for this textbox}
+
+\item{on_update}{Function to call when the value is changed updates}
 
 \item{...}{Other h9 parameters.}
 }
