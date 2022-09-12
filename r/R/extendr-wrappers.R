@@ -10,5 +10,5 @@ NULL
 
 #' Start server.
 #' @export
-h9_start2 <- function(path = ., port = NULL) invisible(.Call(wrap__h9_start2, path, port))
+h9_start2 <- function(path = ., port = NULL, timeout = 600) invisible(.Call(wrap__h9_start2, path, port, timeout))
 

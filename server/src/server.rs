@@ -103,7 +103,7 @@ async fn pipeline_post(data: web::Data<AppState>, req: String) -> impl Responder
 }
 
 #[tokio::main]
-pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
+pub async fn start_server(app_path: String, port: u16, timeout: u32) -> std::io::Result<()> {
     
     
     let (notify_shutdown, _) = broadcast::channel(1);
@@ -175,7 +175,7 @@ pub async fn start_server(app_path: String, port: u16) -> std::io::Result<()> {
     
     let tx_heartbeat = tx.clone();
     
-    monitor_heartbeat(http_server_handle, last_heartbeat_arc, 60 * 5, tx_heartbeat,
+    monitor_heartbeat(http_server_handle, last_heartbeat_arc, timeout, tx_heartbeat,
         Shutdown::new(notify_shutdown.subscribe()),
         shutdown_complete_tx.clone(),
     );

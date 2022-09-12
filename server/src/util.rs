@@ -17,8 +17,13 @@ pub(crate) fn monitor_heartbeat(
     runtime_controller_tx: Sender<RtControllerMsg>,
     mut shutdown: Shutdown,
     _shutdown_complete_tx: mpsc::Sender<()>,
-) -> tokio::task::JoinHandle<()> {
-    tokio::spawn(async move {
+) -> Option<tokio::task::JoinHandle<()>> {
+
+    if timeout_secs == 0 {
+        return None
+    }
+
+    let handle = tokio::spawn(async move {
         let mut interval = tokio::time::interval(tokio::time::Duration::from_millis(1000));
         while !shutdown.is_shutdown() {
             tokio::select! {
@@ -46,7 +51,8 @@ pub(crate) fn monitor_heartbeat(
             }
         }
         
-    })
+    });
+    Some(handle)
 }
 
 #[allow(clippy::collapsible_match)]
