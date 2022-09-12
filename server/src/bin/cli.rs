@@ -8,6 +8,9 @@ struct Cli {
 
     #[clap(short, long, value_parser, default_value = "0")]
     port: u16,
+
+    #[clap(short, long, value_parser, default_value = "600")]
+    timeout: u32,
 }
 
 #[derive(Subcommand, Debug)]
@@ -20,7 +23,7 @@ fn main() {
 
     match &cli.command {
         Some(Commands::Start{ app_dir }) => {
-            start_server(app_dir.as_ref().unwrap().to_string(), cli.port).ok();
+            start_server(app_dir.as_ref().unwrap().to_string(), cli.port, cli.timeout).ok();
         },
         None => println!("Missing subcommand! Seek help.")
     }
