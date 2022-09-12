@@ -24,7 +24,7 @@ function(req) {
 }
 
 #* @post /eval
-#* @serializer json list(auto_unbox=TRUE)
+#* @serializer json list(auto_unbox=TRUE, null="null")
 function(req) {
   parsed <- jsonlite::fromJSON(req$postBody, simplifyDataFrame = FALSE)
   hal9:::process_request(parsed)
