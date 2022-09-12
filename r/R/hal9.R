@@ -12,6 +12,11 @@ Node <- R6::R6Class("Node", list(
     },
     evaluate = function(fn, ...) {
         fn <- self$fns[[fn]]
+
+        if (is.null(fn)) {
+            return(NULL)
+        }
+
         if (length(...) == 0) {
             fn()
         } else {
