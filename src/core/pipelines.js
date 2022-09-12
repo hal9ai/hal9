@@ -245,8 +245,8 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
 
     if (context.params || context.manifest) {
       context.params = context.params ?? {};
-      if (context.manifest && context.manifest[step.name]) {
-        context.params = clone(context.manifest[step.name])
+      if (context.manifest) {
+        context.params = clone(context.manifest)
       }
 
       var paramIdx = Object.keys(params).length > 0 ? Math.max(...Object.keys(params).map(e => params[e].id ? params[e].id : 0)) : 0;

@@ -16,15 +16,12 @@ let Node = function(uid, functions) {
   }
 
   this.evaluate = function(fn, args) {
-    let result = {};
-
     validateFunction(self.functions[fn], fn, self.uid)
     let flat = [];
     for (let arg of args)
       flat.push(arg.value);
-    result[fn] = self.functions[fn].apply(this, flat || []);
-
-    return result;
+    
+    return self.functions[fn].apply(this, flat || []);
   }
 }
 
