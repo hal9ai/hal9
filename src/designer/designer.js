@@ -185,6 +185,16 @@ const Designer = function(hostopt) {
       }
     }
 
+    if (hostopt.designer.heartbeat) {
+      const heartbeatms = hostopt.designer.heartbeatms ?? 60 * 1000;
+      setInterval(async function() {
+        var resp = await fetch(hostopt.designer.heartbeat);
+        if (resp.ok) {
+          console.error('Failed to register heartbeat: ' + (await resp.text()));
+        }
+      }, heartbeatms);
+    }
+
     const options = {
       iframe: true,
       html: app,
