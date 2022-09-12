@@ -608,7 +608,7 @@ export const init = async (options, hal9wnd) => {
   var iframe = document.createElement("iframe");
 
   // TODO: Control features based on user warning and preferences
-  // iframe.allow = 'camera;microphone';
+  iframe.allow = 'camera;microphone';
   // iframe.setAttribute('sandbox', 'allow-forms allow-downloads allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation allow-scripts allow-same-origin');
 
   iframe.setAttribute('scrolling', 'no');

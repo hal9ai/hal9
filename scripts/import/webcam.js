@@ -1,13 +1,20 @@
 /**
   input: [ data ]
   output: [ data, html ]
+  params:
+    - name: cameraType
+      value:
+        - control: select
+          value: user
+          values:
+            - name: environment
+              label: Environment
+            - name: user
+              label: User
   deps: [ 'https://unpkg.com/webcam-easy/dist/webcam-easy.min.js' ]
 **/
 
-data = data ? data : [];
-var state = hal9.getState();
-state = state ? state : [];
-state.forEach(e => data.unshift(e));
+data = hal9.get('frames');
 
 if (html) {
   var canvas = document.createElement('canvas');
@@ -21,7 +28,7 @@ if (html) {
   video.height = html.offsetHeight;
 
   var text = document.createElement('div');
-  text.innerText = 'Click to classify!'
+  text.innerText = 'Click to Capture!'
   text.style.position = 'absolute';
   text.style.zIndex = 100;
   text.style.width = '100%';
@@ -33,19 +40,18 @@ if (html) {
 
   html.style.overflow = 'auto';
 
-  const webcam = new Webcam(video, 'environment', canvas);
+  const webcam = new Webcam(video, cameraType, canvas, null);
 
   html.onclick = function() {
-   
-    data = hal9.getState();
+    debugger;
+    data = hal9.get('frames');
     data = data ? data : [];
 
     let picture = webcam.snap();
 
     data.push({ url: picture });
-    hal9.setState(data);
-    hal9.invalidate();
+    hal9.set('frames', data);
   };
 
-  webcam.start().catch(err => { console.log(err); });
+  webcam.start().catch(err => { alert(err); });
 }
