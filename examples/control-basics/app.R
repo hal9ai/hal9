@@ -1,43 +1,41 @@
 library(hal9)
 
-iris |> h9_set("df")
-
-h9_node(
+h9_number(
   "numberinput",
   on_update = function(value) {
     h9_set(value, "number")
   }
 )
 
-h9_node(
+h9_dropdown(
   "dropdown",
   on_update = function(value) {
     h9_set(value, "dropdown")
   }
 )
 
-h9_node(
+h9_textbox(
   "textbox",
   on_update = function(value) {
     h9_set(value, "textbox")
   }
 )
 
-h9_node(
+h9_textarea(
   "textarea",
   on_update = function(value) {
     h9_set(value, "textarea")
   }
 )
 
-h9_node(
+h9_slider(
   "slider",
   on_update = function(value) {
     h9_set(value, "slider")
   }
 )
 
-h9_node(
+h9_rawhtml(
   "rawhtml",
   rawhtml = function() {
     paste0(
