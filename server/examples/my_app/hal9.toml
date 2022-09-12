@@ -2,11 +2,10 @@
 name = "demo app"
 version = "0.0.1"
 
-# [client]
-# design = "client.html"
+[client]
+design = "app.json"
 
 [[runtimes]]
 name = "r"
 platform = "R"
-# TODO: should support relative path from proj root
 script = "R/backend.R"

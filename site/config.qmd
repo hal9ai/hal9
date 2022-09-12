@@ -20,11 +20,13 @@ name = "my_app"
 version = "0.0.1"
 ```
 
-The next section, `[client]`, contains information on the frontend of the app:
+The next section, `[client]`, contains information on the frontend of the app. (While we currently serialize the
+design to a JSON file, in the near future this will change to HTML in order to make further customization by web
+desginers easier.)
 
 ```toml
 [client]
-design = "client.html"
+design = "app.json"
 ```
 
 Finally, the `[[runtimes]]` sections include details on the compute runtimes:

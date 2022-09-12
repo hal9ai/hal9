@@ -5,7 +5,7 @@ use std::path::PathBuf;
 #[derive(Deserialize, Debug, Clone)]
 pub struct Config {
     pub application: Application,
-    pub client: Option<Client>,
+    pub client: Client,
     pub runtimes: Vec<Runtime>,
 }
 
