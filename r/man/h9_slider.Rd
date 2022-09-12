@@ -4,10 +4,28 @@
 \alias{h9_slider}
 \title{Slider}
 \usage{
-h9_slider(uid, value = NULL, min = NULL, max = NULL, step = NULL, ...)
+h9_slider(
+  uid,
+  value = NULL,
+  min = NULL,
+  max = NULL,
+  step = NULL,
+  on_update = NULL,
+  ...
+)
 }
 \arguments{
-\item{uid}{Unique identifier for this element.}
+\item{uid}{Unique identifier for this element}
+
+\item{value}{Specifies the value for this slider}
+
+\item{min}{Specifies the min for this slider}
+
+\item{max}{Specifies the max for this slider}
+
+\item{step}{Specifies the step for this slider}
+
+\item{on_update}{Function to call when the value is changed updates}
 
 \item{...}{Other h9 parameters.}
 }
