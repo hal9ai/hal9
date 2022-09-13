@@ -197,13 +197,13 @@ const Designer = function(hostopt) {
 
     if (hostopt.designer.heartbeat) {
       const heartbeatms = hostopt.designer.heartbeatms ?? 60 * 1000;
-      cosnt sendhb = async function() {
+      const sendhb = async function() {
         let resp;
         try {
           resp = await fetch(hostopt.designer.heartbeat);
         }
         catch(e) {
-          console.error('Failed to receive response for heartbeat');
+          console.error('Failed to receive response for heartbeat: ' + e.toString());
         }
         if (resp.ok) {
           console.error('Failed to register heartbeat: ' + (await resp.text()));
