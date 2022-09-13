@@ -39,6 +39,7 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number 
       const meta = pipelines.metadataFromStepScript(pipeline, step);
       if (meta.state == 'session') {
         delete pipeline.state.steps[stepid];
+        continue;
       }
 
       if (pipeline.state.steps[stepid].events) {
