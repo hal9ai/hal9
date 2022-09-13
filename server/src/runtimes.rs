@@ -11,7 +11,7 @@ use crate::config::{Platform, Runtime};
 use crate::runtimes;
 use crate::shutdown::Shutdown;
 
-pub struct RuntimesController {
+pub(crate) struct RuntimesController {
     runtimes: Vec<Runtime>,
     app_root: String,
     handles: HashMap<String, Child>,
@@ -27,7 +27,7 @@ fn get_runtime_names(runtimes: Vec<Runtime>) -> Vec<String> {
 }
 
 #[derive(Debug)]
-pub enum RtControllerMsg {
+pub(crate) enum RtControllerMsg {
     RestartAll,
     StopAll,
     StartAll,
@@ -59,7 +59,7 @@ impl RuntimesController {
     }
     
     
-    pub fn monitor(mut self) -> Result<(), std::io::Error> {
+    pub(crate) fn monitor(mut self) -> Result<(), std::io::Error> {
         tokio::spawn(async move {
             while !self.shutdown.is_shutdown() {
                 
@@ -90,7 +90,7 @@ impl RuntimesController {
         
     }
     
-    pub async fn launch(&mut self, name: String) -> Result<(), std::io::Error> {
+    async fn launch(&mut self, name: String) -> Result<(), std::io::Error> {
         let runtimes: Vec<Runtime> = self
         .runtimes
         .clone()
@@ -156,7 +156,7 @@ impl RuntimesController {
         Ok(())
     }
     
-    pub async fn launch_all(&mut self) -> Result<(), std::io::Error> {
+    async fn launch_all(&mut self) -> Result<(), std::io::Error> {
         let runtimes = self.runtimes.clone();
         let names = runtimes::get_runtime_names(runtimes);
         
@@ -193,7 +193,7 @@ impl RuntimesController {
         .spawn()
     }
     
-    pub async fn stop(&mut self, name: String) -> Result<(), std::io::Error> {
+    async fn stop(&mut self, name: String) -> Result<(), std::io::Error> {
         let handle = self.handles.get_mut(&name).unwrap();
         match handle.kill() {
             Ok(()) => {
@@ -206,7 +206,7 @@ impl RuntimesController {
         Ok(())
     }
     
-    pub async fn stop_all(&mut self) -> Result<(), std::io::Error> {
+    async fn stop_all(&mut self) -> Result<(), std::io::Error> {
         let runtimes = self.runtimes.clone();
         let names = runtimes::get_runtime_names(runtimes);
         
@@ -217,7 +217,7 @@ impl RuntimesController {
         Ok(())
     }
     
-    pub async fn restart_all(&mut self) -> Result<(), std::io::Error> {
+    async fn restart_all(&mut self) -> Result<(), std::io::Error> {
         self.stop_all().await?;
         self.launch_all().await?;
         Ok(())

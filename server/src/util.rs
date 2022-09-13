@@ -93,7 +93,7 @@ pub(crate) fn monitor_fs_changes(
 }
 
 
-pub fn time_now() -> u32 {
+pub(crate) fn time_now() -> u32 {
     SystemTime::now()
     .duration_since(SystemTime::UNIX_EPOCH)
     .unwrap()
