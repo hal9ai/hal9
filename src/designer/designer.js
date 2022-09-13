@@ -40,6 +40,10 @@ const Designer = function(hostopt) {
       throw('Server /' + hostopt.designer.eval + ' failed: [' + e.toString() + ']')
     }
 
+    if (!resp.ok) {
+      throw('Server /' + hostopt.designer.eval + ' failed with ' + resp.statusText + ': [' + (await resp.text()) + ']')
+    }
+
     const updates = await resp.json();
 
     console.log('Receiving: \n' + JSON.stringify(updates, null, 2));
