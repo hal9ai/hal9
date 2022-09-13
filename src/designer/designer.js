@@ -241,6 +241,12 @@ const Designer = function(hostopt) {
 
     pid = await hal9api.load(pipeline);
 
+    await hal9api.run(pid, {
+      iframe: true,
+      html: 'output',
+      shadow: false
+    });
+
     try {
       await initializeManifest(pid);
     }
@@ -261,12 +267,6 @@ const Designer = function(hostopt) {
 
     if (hostopt.mode == 'design') {
       await launchDesigner(hal9api, options, pid);
-    } else {
-      await hal9api.run(pid, {
-        iframe: true,
-        html: 'output',
-        shadow: false
-      });
     }
   }
 }
