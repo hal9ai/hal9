@@ -247,7 +247,7 @@ const Designer = function(hostopt) {
       initErr.style.lineHeight = '30px';
       initErr.style.textIndent = '6px';
       initErr.innerText = e.toString();
-      initErr.onclick = function() { debugger; initErr.remove(); }
+      initErr.onclick = function() { initErr.remove(); }
       document.body.insertBefore(initErr, document.body.firstChild);
     }
 

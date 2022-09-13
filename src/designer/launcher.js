@@ -8,7 +8,7 @@ export const getDesignerLoaderHtml = (secret) => {
         window.parent.postMessage({ secret: ${secret}, id: 'designer' }, '*');
       }
     </script>
-    <img src="${designerLogo}" style="position: absolute; right: 2px; top: 2px; width: 12px; cursor: pointer; z-index: 10000;" class="hal9-designer-loader" onclick="hal9LoadDesigner()">
+    <a target="_blank" href="https://hal9.com"><img src="${designerLogo}" style="position: absolute; right: 20px; top: 8px; width: 12px; cursor: pointer; z-index: 10000;" class="hal9-designer-loader"></a>
   `
 }
 
@@ -56,9 +56,7 @@ export const registerDesignerLoader = (html, iframe, secret, pipeline) => {
   const onResult = function(event) {
     if (!event.data || event.data.secret != secret || event.data.id != 'designer') return;
 
-    alert('TODO: Launch Designer')
-
-
+    
   };
 
   window.addEventListener('message', onResult);
