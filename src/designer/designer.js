@@ -110,7 +110,8 @@ const Designer = function(hostopt) {
       if (candidates.length == 0) continue;
       const step = candidates[0];
 
-      manifest[call['fn_name']] = call.result;
+      manifest[step.id] = manifest[step.id] ?? {};
+      manifest[step.id][call['fn_name']] = call.result;
 
       await hal9api.pipelines.runStep(pid, step.id, { html: 'hal9-step-' + step.id });
     }
