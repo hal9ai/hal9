@@ -699,7 +699,8 @@ const getDefinition = (pipeline /*: pipeline */) /*: object */ => {
   const stepDefinitions = clone(pipeline.steps.map(step => stepGetDefinition(pipeline, step)));
   return {
     steps: stepDefinitions,
-    app: clone(pipeline.app)
+    app: clone(pipeline.app),
+    deps: clone(pipeline.deps)
   }
 }
 
