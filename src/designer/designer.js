@@ -25,14 +25,20 @@ const Designer = function(hostopt) {
 
     console.log('Sending: \n' + JSON.stringify(body, null, 2));
 
-    const resp = await fetch(hostopt.designer.eval, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
+    let resp;
+    try {
+      resp = await fetch(hostopt.designer.eval, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+    }
+    catch (e) {
+      throw('Server /' + hostopt.designer.eval + ' failed: [' + e.toString() + ']')
+    }
 
     const updates = await resp.json();
 
@@ -222,7 +228,24 @@ const Designer = function(hostopt) {
     hal9api = await init(options, {});
 
     pid = await hal9api.load(pipeline);
-    await initializeManifest(pid);
+
+    try {
+      await initializeManifest(pid);
+    }
+    catch(e) {
+      const initErr = document.createElement('div');
+      initErr.style.position = 'absolute';
+      initErr.style.zIndex = 10000;
+      initErr.style.width = '100%';
+      initErr.style.background = '#FFF';
+      initErr.style.height = '30px';
+      initErr.style.overflow = 'hidden';
+      initErr.style.lineHeight = '30px';
+      initErr.style.textIndent = '6px';
+      initErr.innerText = e.toString();
+      initErr.onclick = function() { debugger; initErr.remove(); }
+      document.body.insertBefore(initErr, document.body.firstChild);
+    }
 
     if (hostopt.mode == 'design') {
       await launchDesigner(hal9api, options, pid);
