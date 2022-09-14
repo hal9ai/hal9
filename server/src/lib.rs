@@ -1,8 +1,8 @@
-pub mod config;
-pub mod extendr;
-pub mod manifest;
-pub mod runtimes;
+pub(crate) mod config;
+pub(crate) mod extendr;
+pub(crate) mod manifest;
+pub(crate) mod runtimes;
 pub mod server;
-pub mod util;
-pub mod shutdown;
-pub mod async_watcher;
+pub(crate) mod util;
+pub(crate) mod shutdown;
+pub(crate) mod async_watcher;
