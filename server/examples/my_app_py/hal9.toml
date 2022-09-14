@@ -2,8 +2,8 @@
 name = "demo app"
 version = "0.0.1"
 
-# [client]
-# design = "client.html"
+[client]
+design = "app.json"
 
 [[runtimes]]
 name = "py"
