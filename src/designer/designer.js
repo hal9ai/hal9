@@ -79,7 +79,7 @@ const Designer = function(hostopt) {
       step = step[0];
 
       let name = step.name;
-      
+
       for (let param of Object.keys(step.params)) {
         calls.push({
           node: name,
@@ -151,8 +151,8 @@ const Designer = function(hostopt) {
     const deps = await hal9api.pipelines.getDependencies(pid);
 
     if (!deps || Object.keys(deps).length == 0) {
-      const alldeps = steps.filter(e => e.id != sid).map(e => e.name);
-      return alldeps
+      const allids = steps.filter(e => e.id != sid).map(e => e.id);
+      return allids
     }
 
     const forward = {};
