@@ -62,8 +62,6 @@ def __get_designer(**options: dict) -> str:
 
 def run_script(path:str, port:int = 8000) -> None:
     import os
-    port = 8000
-    path = 'tests/app.py'
     if not os.path.exists(path):
         with open(path, 'w') as f:
             pass
