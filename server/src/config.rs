@@ -2,6 +2,9 @@ use serde::Deserialize;
 use std::fs;
 use std::path::PathBuf;
 
+// TODO: revisit dead code
+
+#[allow(dead_code)]
 #[derive(Deserialize, Debug, Clone)]
 pub(crate) struct Config {
     pub application: Application,
@@ -9,6 +12,7 @@ pub(crate) struct Config {
     pub runtimes: Vec<Runtime>,
 }
 
+#[allow(dead_code)]
 #[derive(Deserialize, Debug, Clone)]
 pub(crate) struct Application {
     pub name: String,
@@ -26,6 +30,7 @@ pub(crate) enum Platform {
     Python,
 }
 
+#[allow(dead_code)]
 #[derive(Deserialize, Debug, Clone)]
 pub(crate) struct Runtime {
     pub name: String,
