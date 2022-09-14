@@ -20,6 +20,7 @@ pub(crate) struct RuntimesController {
     tx_uri: channel::Sender<Url>,
     shutdown: Shutdown,
     _shutdown_complete_tx: mpsc::Sender<()>,
+    pub default_runtime: Option<String>,
 }
 
 fn get_runtime_names(runtimes: Vec<Runtime>) -> Vec<String> {
@@ -45,6 +46,12 @@ impl RuntimesController {
     ) -> Self {
         let api_handles: HashMap<String, Child> = HashMap::new();
         let uris: HashMap<String, Url> = HashMap::new();
+
+        let default_runtime = if v.len() == 1 {
+            Some(v[0].name.clone())
+        } else {
+            None
+        };
         
         RuntimesController {
             runtimes: v,
@@ -54,7 +61,8 @@ impl RuntimesController {
             rx,
             tx_uri,
             shutdown,
-            _shutdown_complete_tx
+            _shutdown_complete_tx,
+            default_runtime,
         }
     }
     
@@ -124,14 +132,17 @@ impl RuntimesController {
                 (handle.unwrap(), runtime_api_url.to_owned())
             }            
             Platform::Python => {
-                let script_dir = app_root.to_string();
-                let mut handle = Self::start_python_api(&script_dir, port);
+                // let script_dir = app_root.to_string();
+                let script_path = format!("{app_root}/{script_path_rel}");
+                let mut handle = Self::start_python_api(&script_path, port);
                 let mut buffer = [0; 180];
+                // let mut buffer = [0; 900];
                 
                 
                 handle.as_mut().unwrap().stderr.take().unwrap().read_exact(&mut buffer).ok();
                 
                 let msg = str::from_utf8(&buffer).unwrap();
+                println!("{msg:?}");
                 let search_string_start = "Uvicorn running on ";
                 
                 let start_bytes = msg.find(search_string_start).unwrap_or(0) +
@@ -183,7 +194,7 @@ impl RuntimesController {
     }
     
     fn start_python_api(script: &str, port: u16) -> Result<Child, std::io::Error> {
-        let py_cmd = format!("import hal9; hal9.start('{script}', {port})");
+        let py_cmd = format!("import hal9; hal9.run_script('{script}', {port})");
         
         Command::new("python3")
         .arg("-c")
