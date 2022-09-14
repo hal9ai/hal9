@@ -40,11 +40,11 @@ def __process_request(calls: dict) -> None:
     response = dict()
     call_response = list()
     for call in calls:
-        node = get(call['node'])
+        node = global_nodes[call['node']]
         kwargs = dict()
         for arg in call['args']:
             kwargs[arg['name']] = arg['value']
-        result = node.evaluate(call['fn_name'], kwargs = kwargs)
+        result = node.evaluate(call['fn_name'], **kwargs)
         call_response.append({'node' : node.uid, 'fn_name': call['fn_name'], 'result' : result})
     response['calls'] = call_response
     return response
@@ -60,51 +60,27 @@ def __get_designer(**options: dict) -> str:
     html = html.replace("__options__", options)
     return html
 
-def start(path:str, port:int = 8000) -> None:
-    from typing import Any, Dict, Union
+def run_script(path:str, port:int = 8000) -> None:
+    import os
+    if not os.path.exists(path):
+        with open(path, 'w') as f:
+            pass
+
+    servercode = """
     import uvicorn
     from fastapi import FastAPI
     import hal9 as h9
-    import os
-    from fastapi.responses import HTMLResponse, PlainTextResponse
-    # from pydantic import BaseModel
-    import webbrowser
-    if not os.path.exists(path):
-        os.makedirs(path)
-
-    sys.path.append(path)
-
-    if not os.path.exists(os.path.join(path, 'app.py')):
-        with open(os.path.join(path, 'app.py'), 'w+') as fp:
-            pass
-    import app
     fastapp = FastAPI()
-
-    # class Manifest(BaseModel):
-    #     manifests: Dict[Any, Union[Any, None]]
-
-    @fastapp.get('/pipeline', response_class=PlainTextResponse)
-    async def get_pipeline():
-        with open(os.path.join(path, 'app.json'), 'r') as f:
-            return f.read()
-
-    @fastapp.post('/pipeline', response_class=PlainTextResponse)
-    async def write_pipeline(req:dict):
-        with open(os.path.join(path, 'app.json'), 'w+') as f:
-            f.write(json.dumps(req))
-        return "{}"
-    @fastapp.get('/', response_class=HTMLResponse)
-    async def run_client():
-        return h9.__get_designer(mode = "run")
-
-    @fastapp.get('/design', response_class=HTMLResponse)
-    async def get_designer():
-        return h9.__get_designer(mode = "design")
 
     @fastapp.post("/eval")
     async def eval(manifest: dict):
         print(manifest)
         return h9.__process_request(manifest['calls'])
-    a = webbrowser.open('http://127.0.0.1:'+str(port)+'/design')
     uvicorn.run(fastapp, host="127.0.0.1", port=port)
+    """
+    with open(path, 'r') as f:
+        code = f.read()
+    glo = {'port': port}
+    code = code + '\n' + servercode
+    exec(code, glo)
     
