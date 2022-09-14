@@ -67,17 +67,19 @@ const Designer = function(hostopt) {
     }
   }
 
-  async function performUpdates(names) {
-    if (names.length == 0) return;
+  async function performUpdates(ids) {
+    if (ids.length == 0) return;
 
     const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
 
     let calls = [];
-    for (let name of names) {
-      let step = steps.filter(x => x.name == name);
+    for (let id of ids) {
+      let step = steps.filter(x => x.id == id);
       if (step.length != 1) continue;
       step = step[0];
 
+      let name = step.name;
+      
       for (let param of Object.keys(step.params)) {
         calls.push({
           node: name,
@@ -119,8 +121,8 @@ const Designer = function(hostopt) {
 
   async function initializeManifest(pid) {
     const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
-    const names = steps.map(e => e.name);
-    await performUpdates(names);
+    const ids = steps.map(e => e.ids);
+    await performUpdates(ids);
   }
 
   function onStart() {
@@ -130,16 +132,12 @@ const Designer = function(hostopt) {
   }
 
   async function onChange(changes) {
-    if (changes.step !== undefined || changes.stepid !== undefined) {
-      let name = '';
-      if (changes.stepid !== undefined)
-        name = (await hal9api.pipelines.getStep(pid, changes.stepid)).name;
-      else
-        name = changes.step.name;
+    if (changes.step !== undefined) {
+      let id = changes.step.id;
 
-      const deps = await getForwardDependencies(changes.step.name);
-      deps.push(name);
-      await performUpdates(deps);
+      const ids = await getForwardDependencies(changes.step.id);
+      ids.unshift(id);
+      await performUpdates(ids);
     }
   }
 
@@ -148,11 +146,40 @@ const Designer = function(hostopt) {
     await serverSave(saveText, hostopt);
   }
 
-  async function getForwardDependencies(source) {
-    // TODO: Actually use the deps graph.
+  async function getForwardDependencies(sid) {
     const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
-    const deps = steps.map(e => e.name).filter(e => e != source);
-    return deps;
+    const deps = await hal9api.pipelines.getDependencies(pid);
+
+    if (!deps || Object.keys(deps).length == 0) {
+      const alldeps = steps.filter(e => e.id != sid).map(e => e.name);
+      return alldeps
+    }
+
+    const forward = {};
+    for (let dep of Object.keys(deps)) {
+      let backwards = deps[dep];
+      for (let backward of backwards) {
+        if (!forward[backward]) forward[backward] = [];
+        if (!forward[backward].includes(dep)) forward[backward].push(dep);
+      }
+    }
+
+    let toadd = forward[sid] ?? [];
+    let added = {};
+
+    let maxdeps = 10000;
+    while (toadd.length > 0) {
+      if (maxdeps-- <= 0) throw('Recursive dependency or too many dependencies');
+
+      const el = toadd.shift();
+      added[el] = true;
+
+      if (forward[el]) {
+        toadd = toadd.concat(forward[el]);
+      }
+    }
+
+    return Object.keys(added).map(function(e) { return parseInt(e) });
   }
 
   async function onEvent(step, event, params) {
@@ -174,8 +201,8 @@ const Designer = function(hostopt) {
       }
     ]});
 
-    const deps = await getForwardDependencies(step.name);
-    await performUpdates(deps);
+    const ids = await getForwardDependencies(step.id);
+    await performUpdates(ids);
   }
 
   function onInvalidate(step) {
