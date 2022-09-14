@@ -5,8 +5,8 @@
     const localhost = window.location.search.includes('localhost');
     const environment = localhost ? 'local' : 'devel';
     const libraries = {
-      local: 'http://localhost:8000/dist/hal9.js',
-      devel: 'https://cdn.jsdelivr.net/npm/hal9@0.3.29/dist/hal9.dev.js',
+      local: 'http://localhost:8000/hal9.js',
+      devel: 'https://cdn.jsdelivr.net/npm/hal9@0.3.32/dist/hal9.dev.js',
     }
 
     const script = document.createElement('script');
