@@ -26,6 +26,7 @@ struct AppState {
     tx_handler: tokio::sync::mpsc::Sender<RtControllerMsg>, 
     rx_uri_handler: crossbeam_channel::Receiver<Url>,
     last_heartbeat: web::Data<AtomicUsize>,
+    default_runtime: Option<String>,
 }
 
 async fn run(data: web::Data<AppState>) -> impl Responder {
@@ -56,10 +57,12 @@ async fn eval(
     data: web::Data<AppState>,
     req: web::Json<Manifests>,
 ) -> impl Responder {
-    let rt = req.manifests[0].runtime.clone();
+    // let rt = req.manifests[0].runtime.clone();
+    // let runtime = rt.clone();
+    let rt = data.default_runtime.as_ref().unwrap();
     let runtime = rt.clone();
     let tx_handler = &data.tx_handler;
-    tx_handler.send(RtControllerMsg::GetUri(rt)).await.ok();
+    tx_handler.send(RtControllerMsg::GetUri(rt.to_string())).await.ok();
     let rx_uri_handler = &data.rx_uri_handler;
     let uri = rx_uri_handler.recv().unwrap().join("eval").unwrap();
     let manifest = req.manifests[0].calls.clone();
@@ -122,7 +125,11 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32) -> std::io:
     let (tx_uri, rx_uri) = bounded(0);
     let rx_uri_handler = rx_uri.clone();
     
-    RuntimesController::new(conf.runtimes.clone(), app_path_for_controller, rx, tx_uri, Shutdown::new(notify_shutdown.subscribe()), shutdown_complete_tx.clone()).monitor().ok();
+    let rt_controller = RuntimesController::new(conf.runtimes.clone(), app_path_for_controller, rx, tx_uri, Shutdown::new(notify_shutdown.subscribe()), shutdown_complete_tx.clone());
+
+    let default_runtime = rt_controller.default_runtime.clone();
+    
+    rt_controller.monitor().ok();
     
     
     tx.send(RtControllerMsg::StartAll).await.ok();
@@ -153,7 +160,8 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32) -> std::io:
                 designer_string: designer_string.clone(),
                 tx_handler: tx_handler.clone(),
                 rx_uri_handler: rx_uri_handler.clone(),
-                last_heartbeat: last_heartbeat.clone()
+                last_heartbeat: last_heartbeat.clone(),
+                default_runtime: default_runtime.clone(),
             }
         ))
         .route("/pipeline", web::get().to(pipeline))
