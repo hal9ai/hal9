@@ -123,7 +123,7 @@ const Designer = function(hostopt) {
 
   async function initializeManifest(pid) {
     const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
-    const ids = steps.map(e => e.ids);
+    const ids = steps.map(e => e.id);
     await performUpdates(ids);
   }
 
