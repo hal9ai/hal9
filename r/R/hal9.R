@@ -66,6 +66,16 @@ process_request <- function(req) {
         node <- get_node(call$node)
         fn_name <- call$fn_name
 
+        if (is.null(node)) {
+            return(
+                list(
+                    node = call$node,
+                    fn_name = fn_name,
+                    result = NULL
+                )
+            )
+        }
+
         fn_args_names <- call$args |> sapply(\(x) x$name)
         fn_args_values <- call$args |> lapply(\(x) x$value)
         fn_args <- setNames(fn_args_values, fn_args_names)
