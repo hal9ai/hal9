@@ -271,11 +271,16 @@ const Designer = function(hostopt) {
 
     pid = await hal9api.load(pipeline);
 
-    await hal9api.run(pid, {
-      iframe: true,
-      html: 'output',
-      shadow: false
-    });
+    try {
+      await hal9api.run(pid, {
+        iframe: true,
+        html: 'output',
+        shadow: false
+      });
+    } catch(e) {
+      // API might fail to run if there are errors in the pipeline
+      console.error(e);
+    }
 
     try {
       await initializeManifest(pid);

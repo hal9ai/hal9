@@ -31,6 +31,7 @@
 </div>
 
 <script>
+  values = typeof(values) === 'undefined' ? [] : values;
   values = typeof(values) === 'object' ? values : values.split(',');
   var dropdown = hal9.get('dropdown');
 
@@ -41,6 +42,7 @@
 
       hal9.onEvent('onParams', function(param, values) {
         if (param != 'values') return;
+        values = typeof(values) === 'undefined' ? [] : values;
         vue.options = typeof(values) === 'object' ? values : values.split(',');
       })
 
