@@ -42,7 +42,7 @@ def set(name: str, value: Any) -> None:
     return value
 
 
-def __process_request(calls: dict) -> None:
+def __process_request(calls: list) -> dict:
     response = dict()
     call_response = list()
     for call in calls:
@@ -82,9 +82,8 @@ import hal9 as h9
 fastapp = FastAPI()
 
 @fastapp.post("/eval")
-async def eval(manifest: dict):
-    print(manifest)
-    return h9.__process_request(manifest['calls'])
+async def eval(calls: list):
+    return h9.__process_request(calls)
 uvicorn.run(fastapp, host="127.0.0.1", port=port)
 """
     with open(path, 'r') as f:
