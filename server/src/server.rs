@@ -57,8 +57,6 @@ async fn eval(
     data: web::Data<AppState>,
     req: web::Json<Manifests>,
 ) -> impl Responder {
-    // let rt = req.manifests[0].runtime.clone();
-    // let runtime = rt.clone();
     let rt = data.default_runtime.as_ref().unwrap();
     let runtime = rt.clone();
     let tx_handler = &data.tx_handler;
