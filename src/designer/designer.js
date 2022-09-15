@@ -113,6 +113,8 @@ const Designer = function(hostopt) {
       const step = candidates[0];
 
       manifest[step.id] = manifest[step.id] ?? {};
+
+      if (call.result === null || call.result === undefined) continue;
       manifest[step.id][call['fn_name']] = call.result;
 
       await hal9api.pipelines.runStep(pid, step.id, { html: 'hal9-step-' + step.id });
