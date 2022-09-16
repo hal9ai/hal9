@@ -184,7 +184,7 @@ impl RuntimesController {
             port.to_string()
         };
         
-        let r_cmd = format!("hal9:::h9_start('{script}', {port_str})");
+        let r_cmd = format!("hal9:::h9_run_script('{script}', {port_str})");
         
         Command::new("Rscript")
         .arg("-e")
