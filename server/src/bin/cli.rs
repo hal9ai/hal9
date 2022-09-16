@@ -1,5 +1,6 @@
 use clap::{Parser, Subcommand};
 use hal9::server::start_server;
+use hal9::app_template::new_app;
 
 #[derive(Parser)]
 struct Cli {
@@ -16,6 +17,7 @@ struct Cli {
 #[derive(Subcommand, Debug)]
 enum Commands {
     Start { app_dir: Option<String> },
+    New { dir: String }
 }
 
 fn main() {
@@ -25,6 +27,9 @@ fn main() {
         Some(Commands::Start{ app_dir }) => {
             start_server(app_dir.as_ref().unwrap().to_string(), cli.port, cli.timeout).ok();
         },
+        Some(Commands::New { dir }) => {
+            new_app(dir.to_string()).ok();
+        }
         None => println!("Missing subcommand! Seek help.")
     }
 }
