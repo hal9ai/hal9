@@ -4,7 +4,6 @@ import { backend } from './backend'
 
 const Designer = function(hostopt) {
   let pid = undefined;
-  let manifest = {};
   let hal9api = undefined;
 
   let pipeline = {
@@ -60,7 +59,7 @@ const Designer = function(hostopt) {
       editable: hostopt.mode == 'run',
       mode: hostopt.mode,
       pipeline: pipeline,
-      manifest: manifest,
+      manifest: backendinst.manifest(),
       events: Object.assign(
         {
           onRequestSave: onRequestSave,

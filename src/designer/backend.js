@@ -244,6 +244,10 @@ const Backend = function(hostopt) {
     setInterval(sendhb, heartbeatms);
   }
 
+  this.manifest = function() {
+    return manifest;
+  }
+
   this.events = function() {
     return {
       /* pipeline events */
