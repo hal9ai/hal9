@@ -3,6 +3,7 @@
 export(h9_dropdown)
 export(h9_file)
 export(h9_get)
+export(h9_new)
 export(h9_node)
 export(h9_number)
 export(h9_rawhtml)
