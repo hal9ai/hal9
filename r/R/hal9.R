@@ -111,8 +111,7 @@ h9_reset <- function() {
     rm(list = ls(envir = .globals_data), envir = .globals_data)
 }
 
-#' @export
-h9_start <- function(app = "app.R", port = 6806) {
+h9_run_script <- function(app = "app.R", port = NULL) {
     h9_reset()
 
     if (!file.exists(app)) writeLines("", app)

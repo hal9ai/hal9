@@ -7,7 +7,7 @@ use extendr_api::wrapper::nullable::Nullable;
 /// Start server.
 /// @export
 #[extendr]
-fn h9_start2(#[default = "."] path: String, #[default = "NULL"] port: Nullable<i32>, #[default = "600"] timeout: u32) {
+fn h9_start(#[default = "."] path: String, #[default = "NULL"] port: Nullable<i32>, #[default = "600"] timeout: u32) {
     let port: u16 = match port {
         Nullable::Null => 0,
         Nullable::NotNull(x) => x
@@ -23,5 +23,5 @@ fn h9_start2(#[default = "."] path: String, #[default = "NULL"] port: Nullable<i
 // See corresponding C code in `entrypoint.c`.
 extendr_module! {
     mod hal9;
-    fn h9_start2;
+    fn h9_start;
 }
