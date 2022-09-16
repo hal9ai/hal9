@@ -2,6 +2,7 @@ const Backend = function(hostopt) {
   let pid = undefined;
   let manifest = {};
   let hal9api = undefined;
+  let backendid = undefined;
 
   async function serverEval(body) {
     if (typeof(hostopt.designer.eval) === 'function') {
@@ -194,6 +195,55 @@ const Backend = function(hostopt) {
     if (error) console.error(error);
   }
 
+  function hashCode(str) {
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+      var char = str.charCodeAt(i);
+      hash = ((hash<<5)-hash)+char;
+      hash = hash & hash;
+    }
+    return hash;
+  }
+
+  async function initBackend() {
+    if (!hostopt.designer.init) return;
+
+    const hashable = await hal9api.pipelines.getHashable(pid);
+    backendid = hashCode(hashable) + '-' + crypto.getRandomValues(new Uint32Array(2)).join('-');
+
+    try {
+      const resp = await fetch(hostopt.designer.init + '?' + new URLSearchParams({
+        backendid: backendid
+      }));
+
+      if (!resp.ok) {
+        console.error('Failed to initialize backend: ' + (await resp.text()));
+      }
+    }
+    catch(e) {
+      console.error('Failed to receive response for backend initialization: ' + e.toString());
+    }
+  }
+
+  async function initHeartbeat() {
+    if (!hostopt.designer.heartbeat) return;
+
+    const heartbeatms = hostopt.designer.heartbeatms ?? 60 * 1000;
+    const sendhb = async function() {
+      try {
+        const resp = await fetch(hostopt.designer.heartbeat);
+        if (!resp.ok) {
+          console.error('Failed to register heartbeat: ' + (await resp.text()));
+        }
+      }
+      catch(e) {
+        console.error('Failed to receive response for heartbeat: ' + e.toString());
+      }
+    }
+    sendhb();
+    setInterval(sendhb, heartbeatms);
+  }
+
   this.events = function() {
     return {
       /* pipeline events */
@@ -212,23 +262,8 @@ const Backend = function(hostopt) {
     pid = pipelineid;
     hal9api = h9api;
 
-    if (hostopt.designer.heartbeat) {
-      const heartbeatms = hostopt.designer.heartbeatms ?? 60 * 1000;
-      const sendhb = async function() {
-        let resp;
-        try {
-          resp = await fetch(hostopt.designer.heartbeat);
-        }
-        catch(e) {
-          console.error('Failed to receive response for heartbeat: ' + e.toString());
-        }
-        if (resp.ok) {
-          console.error('Failed to register heartbeat: ' + (await resp.text()));
-        }
-      }
-      sendhb();
-      setInterval(sendhb, heartbeatms);
-    }
+    await initBackend();
+    initHeartbeat();
 
     await initializeManifest(pid);
   }
