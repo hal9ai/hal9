@@ -10,6 +10,7 @@ import * as htmloutput from '../core/htmloutput';
 import * as layout from '../core/layout';
 import * as stepapi from '../core/api';
 import * as dataframe from '../core/utils/dataframe';
+import * as workers from '../core/workers';
 import components from '../../scripts/components.json';
 
 export const internal = {
@@ -135,5 +136,9 @@ export const internal = {
 
   developer: {
     components: components,
+  },
+
+  workers: {
+    getValidWorkerUrl: workers.getValidWorkerUrl
   }
 }

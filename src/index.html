@@ -11,7 +11,7 @@
     </div>
     <script>
       async function start() {
-        let h9 = hal9.backend;
+        let h9 = hal9.browser;
         
         h9.node('textarea', {
           value: 'Hello from JS!',
@@ -31,7 +31,7 @@
           designer: {
             persist: undefined,
             restore: undefined,
-            eval: hal9.backend.process,
+            eval: hal9.browser.process,
           },
           hostel: 'output',
           api: 'http://localhost:8000/hal9.js',
