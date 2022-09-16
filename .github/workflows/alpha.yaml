@@ -65,6 +65,6 @@ jobs:
           FILE: './site/docs'
           AWS_REGION: 'us-west-2'
           S3_BUCKET: 'notebooks.hal9.com'
-          S3_KEY: ''
+          S3_KEY: 'alpha'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: quarto-dev/quarto-actions/setup@v2
+      - name: Render quarto
+        run: quarto render
+        working-directory: ./site
+      - name: Add Commit SHA
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+      - uses: zdurham/s3-upload-github-action@master
+        with:
+          args: --recursive --acl public-read
+        env:
+          FILE: './site/_site'
+          AWS_REGION: 'us-west-2'
+          S3_BUCKET: 'notebooks.hal9.com'
+          S3_KEY: ''
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - uses: LouisBrunner/checks-action@v1.1.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: preview
+          conclusion: ${{ job.status }}
+          action_url: ${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}
+          details_url: ${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}
+          output: "{ \"summary\": \"${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}\" }"
