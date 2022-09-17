@@ -1,7 +1,7 @@
 TARGET_DIR = ./rust/target
 LIBDIR = $(TARGET_DIR)/release
 STATLIB = $(LIBDIR)/libhal9.a
-PKG_LIBS = -L$(LIBDIR) -lhal9
+PKG_LIBS = -L$(LIBDIR) -lhal9 -lssl -lcrypto
 
 all: C_clean
 
