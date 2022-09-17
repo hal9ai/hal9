@@ -8,7 +8,8 @@ Hal9 is a framework for building interactive data apps for data scientists and e
 
 ## Getting started
 
-Quickest place to test things out is this hosted demo: [hal9.com/design](https://hal9.com/design)
+Quickest place to test things out is this hosted demo: (coming soon)
+<!--[hal9.com/design](https://hal9.com/design)-->
 
 ### MacOS/Linux
 
