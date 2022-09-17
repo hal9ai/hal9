@@ -1,4 +1,4 @@
-# Hal9: Interactive data apps --- design visually, power with code
+# Hal9: Interactive data apps &mdash; design visually, power with code
 
 Hal9 is a framework for building interactive data apps for data scientists and engineers. It allows you to utilize your DS/ML code with minimal overhead, and frees you from having to worry about frontend web frameworks. Hal9 consists of the following components:
 
@@ -8,7 +8,7 @@ Hal9 is a framework for building interactive data apps for data scientists and e
 
 ## Getting started
 
-Quickest place to test things out is this hosted demo: (TODO)
+Quickest place to test things out is this hosted demo: [hal9.com/design](https://hal9.com/design)
 
 ### MacOS/Linux
 
