@@ -275,12 +275,59 @@ const Backend = function(hostopt) {
     await initializeManifest(pid);
   }
 
+  this.isinit = function() {
+    return !!pid;
+  }
+
   this.pipeline = async function() {
     if (!hostopt.designer.pipeline) return undefined;
 
     const resp = await fetch(hostopt.designer.pipeline + backendquery);
     if (!resp.ok) {
-      console.error('Failed to register heartbeat: ' + (await resp.text()));
+      console.error('Failed to retrieve pipeline: ' + (await resp.text()));
+    }
+
+    return await resp.json();
+  }
+
+  this.getfile = async function(path) {
+    if (!hostopt.designer.getfile) return undefined;
+
+    const resp = await fetch(hostopt.designer.getfile + backendquery, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        path: path
+      })
+    });
+    if (!resp.ok) {
+      console.error('Failed to retrive file: ' + (await resp.text()));
+      return;
+    }
+
+    return await resp.text();
+  }
+
+  this.putfile = async function(path, contents) {
+    if (!hostopt.designer.putfile) return undefined;
+
+    const resp = await fetch(hostopt.designer.putfile + backendquery, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        path: path,
+        contents: contents
+      })
+    });
+    if (!resp.ok) {
+      console.error('Failed to update file: ' + (await resp.text()));
+      return;
     }
 
     return await resp.json();
