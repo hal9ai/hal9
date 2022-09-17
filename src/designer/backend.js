@@ -3,6 +3,7 @@ const Backend = function(hostopt) {
   let manifest = {};
   let hal9api = undefined;
   let backendid = undefined;
+  let backendquery = undefined;
 
   async function serverEval(body) {
     if (typeof(hostopt.designer.eval) === 'function') {
@@ -13,7 +14,7 @@ const Backend = function(hostopt) {
 
     let resp;
     try {
-      resp = await fetch(hostopt.designer.eval, {
+      resp = await fetch(hostopt.designer.eval + backendquery, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -42,7 +43,7 @@ const Backend = function(hostopt) {
     if (typeof(hostopt.designer.persist) === 'function')
       return await hostopt.designer.persist(raw);
     else {
-      return await fetch(hostopt.designer.persist, {
+      return await fetch(hostopt.designer.persist + backendquery, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -208,13 +209,13 @@ const Backend = function(hostopt) {
   async function initBackend() {
     if (!hostopt.designer.init) return;
 
-    const hashable = await hal9api.pipelines.getHashable(pid);
-    backendid = hashCode(hashable) + '-' + crypto.getRandomValues(new Uint32Array(2)).join('-');
+    backendid = crypto.getRandomValues(new Uint32Array(2)).join('-');
+    backendquery = '?' + new URLSearchParams({
+      backendid: backendid
+    });
 
     try {
-      const resp = await fetch(hostopt.designer.init + '?' + new URLSearchParams({
-        backendid: backendid
-      }));
+      const resp = await fetch(hostopt.designer.init + backendquery);
 
       if (!resp.ok) {
         console.error('Failed to initialize backend: ' + (await resp.text()));
@@ -231,7 +232,7 @@ const Backend = function(hostopt) {
     const heartbeatms = hostopt.designer.heartbeatms ?? 60 * 1000;
     const sendhb = async function() {
       try {
-        const resp = await fetch(hostopt.designer.heartbeat);
+        const resp = await fetch(hostopt.designer.heartbeat + backendquery);
         if (!resp.ok) {
           console.error('Failed to register heartbeat: ' + (await resp.text()));
         }
@@ -262,14 +263,27 @@ const Backend = function(hostopt) {
     }
   }
 
-  this.init = async function(pipelineid, h9api) {
-    pid = pipelineid;
+  this.connect = async function(h9api) {
     hal9api = h9api;
 
     await initBackend();
     initHeartbeat();
+  }
 
+  this.init = async function(pipelineid) {
+    pid = pipelineid;
     await initializeManifest(pid);
+  }
+
+  this.pipeline = async function() {
+    if (!hostopt.designer.pipeline) return undefined;
+
+    const resp = await fetch(hostopt.designer.pipeline + backendquery);
+    if (!resp.ok) {
+      console.error('Failed to register heartbeat: ' + (await resp.text()));
+    }
+
+    return await resp.json();
   }
 }
 
