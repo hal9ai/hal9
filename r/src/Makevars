@@ -1,7 +1,12 @@
 TARGET_DIR = ./rust/target
 LIBDIR = $(TARGET_DIR)/release
 STATLIB = $(LIBDIR)/libhal9.a
-PKG_LIBS = -L$(LIBDIR) -lhal9 -lssl -lcrypto
+
+if [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
+  PKG_LIBS = -L$(LIBDIR) -lhal9 -lssl -lcrypto \
+else
+  PKG_LIBS = -L$(LIBDIR) -lhal9 \
+fi
 
 all: C_clean
 
