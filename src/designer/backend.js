@@ -108,7 +108,7 @@ const Backend = function(hostopt) {
     }
   }
 
-  async function initializeManifest(pid) {
+  async function initializeManifest() {
     const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
     const ids = steps.map(e => e.id);
     await performUpdates(ids);
@@ -272,7 +272,7 @@ const Backend = function(hostopt) {
 
   this.init = async function(pipelineid) {
     pid = pipelineid;
-    await initializeManifest(pid);
+    await initializeManifest();
   }
 
   this.isinit = function() {
@@ -331,6 +331,10 @@ const Backend = function(hostopt) {
     }
 
     return await resp.json();
+  }
+
+  this.onUpdated = async function() {
+    await initializeManifest();
   }
 }
 
