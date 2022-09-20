@@ -6,11 +6,17 @@
       value:
         - control: textbox
           value: versicolor,setosa,virginica
+    - name: value
+      label: Default
+      value:
+        - control: textbox
+          value: 
   output: [ dropdown, html ]
   events: [ on_update ]
   interactive: true
   layout:
     - width: inner
+      height: 40px
 -->
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
@@ -30,8 +36,9 @@
 </div>
 
 <script>
+  values = typeof(values) === 'undefined' ? [] : values;
   values = typeof(values) === 'object' ? values : values.split(',');
-  var dropdown = hal9.get('dropdown');
+  var dropdown = hal9.get('dropdown', value);
 
   var app = new Vue({
     el: html.getElementsByClassName('control')[0],
@@ -40,6 +47,7 @@
 
       hal9.onEvent('onParams', function(param, values) {
         if (param != 'values') return;
+        values = typeof(values) === 'undefined' ? [] : values;
         vue.options = typeof(values) === 'object' ? values : values.split(',');
       })
 
@@ -55,5 +63,5 @@
     }
   })
 
-  html.style.height = 'auto';
+  html.style.height = '40px';
 </script>

@@ -10,7 +10,7 @@ h9_dropdown(
     }
 )
 
-h9_rawhtml(
+h9_html(
     "iris_table",
     rawhtml = function() {
         sp <- h9_get("selected_species")
