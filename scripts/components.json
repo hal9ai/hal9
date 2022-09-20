@@ -9,7 +9,7 @@
       "description": "Embed a checkbox control",
       "icon": "fa-light fa-square-check",
       "dragdrop": true,
-      "build": "false"
+      "build": "true"
     },
     {
       "name": "dropdown",
@@ -97,7 +97,7 @@
       "description": "Embed a spreadsheet to collect data",
       "icon": "fa-light fa-file-spreadsheet",
       "dragdrop": false,
-      "build": "true"
+      "build": "false"
     },
     {
       "name": "textbox",
@@ -130,7 +130,7 @@
       "description": "Embed a website and load a URL",
       "icon": "fa-light fa-browser",
       "dragdrop": false,
-      "build": "true"
+      "build": "false"
     }
   ]
 }
