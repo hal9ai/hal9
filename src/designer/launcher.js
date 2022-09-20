@@ -18,8 +18,8 @@ export const launchDesigner = async (hal9, options, pid) => {
   const script = document.createElement('script');
   const libraries = {
     local: 'http://localhost:8080/hal9.notebook.js',
-    devel: 'https://devel.hal9.com/' + appVersion.devel + 'hal9.notebook.js',
-    prod: 'https://hal9.com/' + appVersion.prod + 'hal9.notebook.js'
+    devel: 'https://devel.hal9.com/' + appVersion.devel + '/hal9.notebook.js',
+    prod: 'https://hal9.com/' + appVersion.prod + '/hal9.notebook.js'
   }
   script.src = libraries[options.env];
   var waitLoad = new Promise((accept, reject) => {
