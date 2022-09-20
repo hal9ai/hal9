@@ -47,7 +47,7 @@ const RuntimeAPI = function(pipelineid, sid, context, params, input) {
     var current = pipelines.getState(pipelineid, sid);
     current = current ? current : {};
     current.api = current.api ? current.api : {};
-    if (value) current.api[entry] = value;
+    if (value !== undefined) current.api[entry] = value;
     pipelines.setState(pipelineid, sid, current);
     if (invalidate) this.invalidate();
     return current.api[entry];
@@ -135,8 +135,9 @@ const RuntimeAPI = function(pipelineid, sid, context, params, input) {
     this.updateState(name, value, true);
   }
 
-  this.get = function(name) {
-    return this.getState({})[name];
+  this.get = function(name, defval) {
+    const val = this.getState({})[name];
+    return val ?? defval;
   }
 }
 
