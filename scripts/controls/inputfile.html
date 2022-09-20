@@ -1,20 +1,22 @@
 <!--
   input: []
   params:
-    - name: dataType
-      label: 'Upload your data as '
+    - name: caption
+      label: 'Caption'
+      value:
+        - control: textbox
+          label: Text
+          value: Upload
+    - name: dragDrop
+      label: Drag and Drop
       value:
         - control: select
-          value: base
+          value: false
           values:
-            - name: base
-              label: Base64
-            - name: txt
-              label: Text
-            - name: arrbuff
-              label: Array Buffer
-            - name: binstring
-              label: Binary String
+            - name: false
+              label: No
+            - name: true
+              label: Yes
   output: [ html, inputFile ]
   events: [ on_update ]
   layout:
@@ -25,21 +27,32 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css">
 
 <div class="inputFileContainer">
 <template>
     <b-field class="file is-primary" :class="{'has-name': !!file}">
-      <b-upload v-model="file" class="file-label" @change.native="numChange">
-        <span class="file-cta">
+      <b-upload v-model="file" class="file-label" @change.native="numChange" :drag-drop="dragDrop">
+        <span v-if="!dragDrop" class="file-cta">
             <b-icon class="file-icon" icon="upload"></b-icon>
-              <span class="file-label">Click to upload</span>
+              <span class="file-label">{{ caption }}</span>
             </span>
             <span class="file-name" v-if="file">{{ file.name }}</span>
+         <section v-if="dragDrop" class="section">
+                    <div class="content has-text-centered">
+                        <p>
+                            <b-icon
+                                icon="upload"
+                                size="is-large">
+                            </b-icon>
+                        </p>
+                        <p>Drop your files here or click to upload</p>
+                    </div>
+                </section>
       </b-upload>
     </b-field>
 </template>
 </div>
-
 
 <script>
   var state = hal9.getState();
@@ -54,28 +67,21 @@
     el: html.getElementsByClassName('inputFileContainer')[0],
     data: {
       file: null,
+      caption: caption,
+      dragDrop: dragDrop
     },
     methods: {
-      numChange(e){
-        const reader = new FileReader()
+      numChange(e) {
+        const reader = new FileReader();
+
         reader.onload = async (e) => {
           const text = (e.target.result);
           state.inputFile = text
           hal9.setState(state);
           hal9.invalidate();
-      };
-      if(dataType == 'base'){
+        };
+      
         reader.readAsDataURL(e.target.files[0]);
-      }
-      else if(dataType == 'txt'){
-        reader.readAsText(e.target.files[0]);
-      }
-      else if(dataType == 'arrbuff'){
-        reader.readAsArrayBuffer(e.target.files[0]);
-      }
-      else if(dataType == 'binstring'){
-        reader.readAsBinaryString(e.target.files[0]);
-      }
       }
     }
   })
