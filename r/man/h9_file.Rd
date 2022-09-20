@@ -2,14 +2,16 @@
 % Please edit documentation in R/gen_controls.R
 \name{h9_file}
 \alias{h9_file}
-\title{File Input}
+\title{File}
 \usage{
-h9_file(uid, dataType = NULL, on_update = NULL, ...)
+h9_file(uid, caption = NULL, dragDrop = NULL, on_update = NULL, ...)
 }
 \arguments{
 \item{uid}{Unique identifier for this element}
 
-\item{dataType}{Specifies the dataType for this fileinput}
+\item{caption}{Specifies the caption for this fileinput}
+
+\item{dragDrop}{Specifies the dragDrop for this fileinput}
 
 \item{on_update}{Function to call when the value is changed updates}
 

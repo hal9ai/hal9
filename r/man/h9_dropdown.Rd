@@ -4,12 +4,14 @@
 \alias{h9_dropdown}
 \title{Dropdown}
 \usage{
-h9_dropdown(uid, values = NULL, on_update = NULL, ...)
+h9_dropdown(uid, values = NULL, value = NULL, on_update = NULL, ...)
 }
 \arguments{
 \item{uid}{Unique identifier for this element}
 
 \item{values}{Specifies the values for this dropdown}
+
+\item{value}{Specifies the value for this dropdown}
 
 \item{on_update}{Function to call when the value is changed updates}
 

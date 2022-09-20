@@ -2,7 +2,7 @@
 % Please edit documentation in R/gen_controls.R
 \name{h9_textarea}
 \alias{h9_textarea}
-\title{Multi-line Text Input}
+\title{Textarea}
 \usage{
 h9_textarea(uid, on_update = NULL, ...)
 }

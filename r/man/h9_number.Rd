@@ -2,14 +2,16 @@
 % Please edit documentation in R/gen_controls.R
 \name{h9_number}
 \alias{h9_number}
-\title{Number Input}
+\title{Number}
 \usage{
-h9_number(uid, label = NULL, on_update = NULL, ...)
+h9_number(uid, label = NULL, value = NULL, on_update = NULL, ...)
 }
 \arguments{
 \item{uid}{Unique identifier for this element}
 
 \item{label}{Specifies the label for this numberinput}
+
+\item{value}{Specifies the value for this numberinput}
 
 \item{on_update}{Function to call when the value is changed updates}
 
