@@ -1033,6 +1033,17 @@
   ],
   "Controls": [
     {
+      "name": "checkbox",
+      "function": "checkbox",
+      "source": "controls/checkbox.html",
+      "language": "html",
+      "label": "Checkbox",
+      "description": "Embed a checkbox control",
+      "icon": "fa-light fa-square-check",
+      "dragdrop": true,
+      "build": "false"
+    },
+    {
       "name": "dropdown",
       "function": "dropdown",
       "source": "controls/dropdown.html",
@@ -1053,6 +1064,17 @@
       "icon": "fa-light fa-file-import",
       "dragdrop": true,
       "build": "true"
+    },
+    {
+      "name": "message",
+      "function": "message",
+      "source": "controls/message.html",
+      "language": "html",
+      "label": "Message",
+      "description": "Embed a message element",
+      "icon": "fa-light fa-message",
+      "dragdrop": true,
+      "build": "false"
     },
     {
       "name": "numberinput",
