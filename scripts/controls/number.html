@@ -6,6 +6,11 @@
       value:
         - control: textbox
           value: Number
+    - name: value
+      label: Default
+      value:
+        - control: textbox
+          value: 
   output: [ html, number ]
   events: [ on_update ]
   layout:
@@ -28,7 +33,7 @@
 </div>
 
 <script>
-  var number = hal9.get('number');
+  var number = hal9.get('number', value);
 
   var app = new Vue({
     el: html.getElementsByClassName('control')[0],

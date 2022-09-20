@@ -6,6 +6,11 @@
       value:
         - control: textbox
           value: versicolor,setosa,virginica
+    - name: value
+      label: Default
+      value:
+        - control: textbox
+          value: 
   output: [ dropdown, html ]
   events: [ on_update ]
   interactive: true
@@ -33,7 +38,7 @@
 <script>
   values = typeof(values) === 'undefined' ? [] : values;
   values = typeof(values) === 'object' ? values : values.split(',');
-  var dropdown = hal9.get('dropdown');
+  var dropdown = hal9.get('dropdown', value);
 
   var app = new Vue({
     el: html.getElementsByClassName('control')[0],

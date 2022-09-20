@@ -2,7 +2,7 @@
   input: []
   params:
     - name: value
-      label: Default Value
+      label: Default
       value:
         - control: number
           value: 1
@@ -46,6 +46,8 @@
 
 <script>
   var slider = hal9.get('slider');
+  debugger;
+  slider = slider ? slider : value;
 
   var app = new Vue({
     el: html.getElementsByClassName('sliderContainer')[0],
