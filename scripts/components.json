@@ -1066,6 +1066,17 @@
       "build": "true"
     },
     {
+      "name": "image",
+      "function": "image",
+      "source": "controls/image.html",
+      "language": "html",
+      "label": "Image",
+      "description": "Embed an image from url or data",
+      "icon": "fa-light fa-image",
+      "dragdrop": true,
+      "build": "true"
+    },
+    {
       "name": "message",
       "function": "message",
       "source": "controls/message.html",

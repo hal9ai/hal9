@@ -128,6 +128,7 @@ import vuetxt from '../../scripts/frameworks/vue.html';
 // control scripts
 import checkboxctrltxt from '../../scripts/controls/checkbox.html';
 import dropdownctrltxt from '../../scripts/controls/dropdown.html';
+import imagectrltxt from '../../scripts/controls/image.html';
 import inputfilectrltxt from '../../scripts/controls/inputfile.html';
 import messagectrltxt from '../../scripts/controls/message.html';
 import numberctrltxt from '../../scripts/controls/number.html';
@@ -275,6 +276,7 @@ const scripts = {
   checkbox: { script: checkboxctrltxt, language: 'html' },
   dropdown: { script: dropdownctrltxt, language: 'html' },
   fileinput: { script: inputfilectrltxt, language: 'html' },
+  image: { script: imagectrltxt, language: 'html' },
   message: { script: messagectrltxt, language: 'html' },
   numberinput: { script: numberctrltxt, language: 'html' },
   rawhtml: { script: rawhtmltxt, language: 'javascript' },
