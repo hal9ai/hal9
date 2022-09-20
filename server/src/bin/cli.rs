@@ -12,6 +12,9 @@ struct Cli {
 
     #[clap(short, long, value_parser, default_value = "600")]
     timeout: u32,
+
+    #[clap(short, long, value_parser)]
+    nobrowse: bool,
 }
 
 #[derive(Subcommand, Debug)]
@@ -25,7 +28,8 @@ fn main() {
 
     match &cli.command {
         Some(Commands::Start{ app_dir }) => {
-            start_server(app_dir.as_ref().unwrap().to_string(), cli.port, cli.timeout).ok();
+            start_server(app_dir.as_ref().unwrap().to_string(), 
+            cli.port, cli.timeout, cli.nobrowse).ok();
         },
         Some(Commands::New { dir }) => {
             new_app(dir.to_string()).ok();

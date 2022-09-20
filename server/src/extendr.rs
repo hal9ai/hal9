@@ -8,7 +8,8 @@ use extendr_api::wrapper::nullable::Nullable;
 /// Start server.
 /// @export
 #[extendr]
-fn h9_start(#[default = "."] path: String, #[default = "NULL"] port: Nullable<i32>, #[default = "600"] timeout: u32) {
+fn h9_start(#[default = "."] path: String, #[default = "NULL"] port: Nullable<i32>, #[default = "600"] timeout: u32,
+            #[default = "false"] nobrowse: bool) {
     let port: u16 = match port {
         Nullable::Null => 0,
         Nullable::NotNull(x) => x
@@ -16,7 +17,7 @@ fn h9_start(#[default = "."] path: String, #[default = "NULL"] port: Nullable<i3
     .try_into()
     .unwrap();
 
-    start_server(path, port, timeout).ok();
+    start_server(path, port, timeout, nobrowse).ok();
 }
 
 /// Create a new demo app.

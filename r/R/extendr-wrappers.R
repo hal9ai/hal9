@@ -10,7 +10,7 @@ NULL
 
 #' Start server.
 #' @export
-h9_start <- function(path = ., port = NULL, timeout = 600) invisible(.Call(wrap__h9_start, path, port, timeout))
+h9_start <- function(path = ., port = NULL, timeout = 600, nobrowse = false) invisible(.Call(wrap__h9_start, path, port, timeout, nobrowse))
 
 #' Create a new demo app.
 #' @export
