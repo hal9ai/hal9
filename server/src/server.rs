@@ -104,7 +104,7 @@ async fn pipeline_post(data: web::Data<AppState>, req: String) -> impl Responder
 }
 
 #[tokio::main]
-pub async fn start_server(app_path: String, port: u16, timeout: u32) -> std::io::Result<()> {
+pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: bool) -> std::io::Result<()> {
     
     
     let (notify_shutdown, _) = broadcast::channel(1);
@@ -190,7 +190,9 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32) -> std::io:
     
     println!("server running at {myurl}");
     
-    webbrowser::open(&myurl).ok();
+    if !nobrowse {
+        webbrowser::open(&myurl).ok();
+    }
     
     match signal::ctrl_c().await {
         Ok(()) => {
