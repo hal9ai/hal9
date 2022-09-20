@@ -67,7 +67,7 @@
       "build": "true"
     },
     {
-      "name": "rawhtml",
+      "name": "html",
       "function": "html",
       "source": "controls/rawhtml.js",
       "language": "javascript",
@@ -75,7 +75,7 @@
       "description": "Enables to render arbitrary HTML",
       "icon": "fa-brands fa-html5",
       "dragdrop": true,
-      "build": "false"
+      "build": "true"
     },
     {
       "name": "slider",
