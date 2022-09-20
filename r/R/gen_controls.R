@@ -1,49 +1,103 @@
+#' Checkbox
+#'
+#' Embed a checkbox control
+#'
+#' @param uid Unique identifier for this element
+#' @param label Specifies the label for this checkbox
+#' @param checked Specifies the checked for this checkbox
+#' @param on_update Function to call when the value is changed updates
+#' @param ... Other h9 parameters.
+#'
+#' @export
+#'
+h9_checkbox <- function(uid, label = NULL, checked = NULL, on_update = NULL, ...) {
+  args <- as.list(match.call()[-1])
+  node_args <- args[!names(args) %in% c("h", "", "uid")]
+  do.call("h9_node", args = c(uid, node_args))
+}
+
 #' Dropdown
 #'
 #' Embed a dropdown control
 #'
 #' @param uid Unique identifier for this element
 #' @param values Specifies the values for this dropdown
+#' @param value Specifies the value for this dropdown
 #' @param on_update Function to call when the value is changed updates
 #' @param ... Other h9 parameters.
 #'
 #' @export
 #'
-h9_dropdown <- function(uid, values = NULL, on_update = NULL, ...) {
+h9_dropdown <- function(uid, values = NULL, value = NULL, on_update = NULL, ...) {
   args <- as.list(match.call()[-1])
   node_args <- args[!names(args) %in% c("h", "", "uid")]
   do.call("h9_node", args = c(uid, node_args))
 }
 
-#' File Input
+#' File
 #'
 #' Embed a file input control
 #'
 #' @param uid Unique identifier for this element
-#' @param dataType Specifies the dataType for this fileinput
+#' @param caption Specifies the caption for this fileinput
+#' @param dragDrop Specifies the dragDrop for this fileinput
 #' @param on_update Function to call when the value is changed updates
 #' @param ... Other h9 parameters.
 #'
 #' @export
 #'
-h9_file <- function(uid, dataType = NULL, on_update = NULL, ...) {
+h9_file <- function(uid, caption = NULL, dragDrop = NULL, on_update = NULL, ...) {
   args <- as.list(match.call()[-1])
   node_args <- args[!names(args) %in% c("h", "", "uid")]
   do.call("h9_node", args = c(uid, node_args))
 }
 
-#' Number Input
+#' Image
+#'
+#' Embed an image from url or data
+#'
+#' @param uid Unique identifier for this element
+#' @param image Specifies the image for this image
+#' @param on_update Function to call when the value is changed updates
+#' @param ... Other h9 parameters.
+#'
+#' @export
+#'
+h9_image <- function(uid, image = NULL, on_update = NULL, ...) {
+  args <- as.list(match.call()[-1])
+  node_args <- args[!names(args) %in% c("h", "", "uid")]
+  do.call("h9_node", args = c(uid, node_args))
+}
+
+#' Message
+#'
+#' Embed a message element
+#'
+#' @param uid Unique identifier for this element
+#' @param on_update Function to call when the value is changed updates
+#' @param ... Other h9 parameters.
+#'
+#' @export
+#'
+h9_message <- function(uid, on_update = NULL, ...) {
+  args <- as.list(match.call()[-1])
+  node_args <- args[!names(args) %in% c("h", "", "uid")]
+  do.call("h9_node", args = c(uid, node_args))
+}
+
+#' Number
 #'
 #' Embed a number input control
 #'
 #' @param uid Unique identifier for this element
 #' @param label Specifies the label for this numberinput
+#' @param value Specifies the value for this numberinput
 #' @param on_update Function to call when the value is changed updates
 #' @param ... Other h9 parameters.
 #'
 #' @export
 #'
-h9_number <- function(uid, label = NULL, on_update = NULL, ...) {
+h9_number <- function(uid, label = NULL, value = NULL, on_update = NULL, ...) {
   args <- as.list(match.call()[-1])
   node_args <- args[!names(args) %in% c("h", "", "uid")]
   do.call("h9_node", args = c(uid, node_args))
@@ -59,7 +113,7 @@ h9_number <- function(uid, label = NULL, on_update = NULL, ...) {
 #'
 #' @export
 #'
-h9_rawhtml <- function(uid, on_update = NULL, ...) {
+h9_html <- function(uid, on_update = NULL, ...) {
   args <- as.list(match.call()[-1])
   node_args <- args[!names(args) %in% c("h", "", "uid")]
   do.call("h9_node", args = c(uid, node_args))
@@ -85,7 +139,23 @@ h9_slider <- function(uid, value = NULL, min = NULL, max = NULL, step = NULL, on
   do.call("h9_node", args = c(uid, node_args))
 }
 
-#' Text Input
+#' Sheet
+#'
+#' Embed a spreadsheet to collect data
+#'
+#' @param uid Unique identifier for this element
+#' @param on_update Function to call when the value is changed updates
+#' @param ... Other h9 parameters.
+#'
+#' @export
+#'
+h9_sheet <- function(uid, on_update = NULL, ...) {
+  args <- as.list(match.call()[-1])
+  node_args <- args[!names(args) %in% c("h", "", "uid")]
+  do.call("h9_node", args = c(uid, node_args))
+}
+
+#' Textbox
 #'
 #' Embed a text input control
 #'
@@ -103,7 +173,7 @@ h9_textbox <- function(uid, label = NULL, value = NULL, on_update = NULL, ...) {
   do.call("h9_node", args = c(uid, node_args))
 }
 
-#' Multi-line Text Input
+#' Textarea
 #'
 #' Embed a multi-line text input control
 #'
@@ -114,6 +184,22 @@ h9_textbox <- function(uid, label = NULL, value = NULL, on_update = NULL, ...) {
 #' @export
 #'
 h9_textarea <- function(uid, on_update = NULL, ...) {
+  args <- as.list(match.call()[-1])
+  node_args <- args[!names(args) %in% c("h", "", "uid")]
+  do.call("h9_node", args = c(uid, node_args))
+}
+
+#' Website
+#'
+#' Embed a website and load a URL
+#'
+#' @param uid Unique identifier for this element
+#' @param on_update Function to call when the value is changed updates
+#' @param ... Other h9 parameters.
+#'
+#' @export
+#'
+h9_website <- function(uid, on_update = NULL, ...) {
   args <- as.list(match.call()[-1])
   node_args <- args[!names(args) %in% c("h", "", "uid")]
   do.call("h9_node", args = c(uid, node_args))
