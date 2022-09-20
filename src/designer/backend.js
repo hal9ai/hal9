@@ -1,7 +1,7 @@
 const Backend = function(hostopt) {
   let pid = undefined;
   let manifest = {};
-  let hal9api = undefined;
+  let hal9api = window.hal9;
   let backendid = undefined;
   let backendquery = '';
 
@@ -261,6 +261,14 @@ const Backend = function(hostopt) {
       /* designer events */
       onChange: onChange,
     }
+  }
+
+  this.setapi = async function(h9api) {
+    hal9api = h9api;
+  }
+
+  this.setpid = async function(pipelineid) {
+    pid = pipelineid;
   }
 
   this.connect = async function(h9api) {

@@ -71,8 +71,10 @@ const Designer = function(hostopt) {
     };
 
     hal9api = await init(options, {});
+    backendinst.setapi(hal9api);
 
     pid = await hal9api.load(pipeline);
+    backendinst.setpid(pid);
     
     try {
       await hal9api.run(pid, {
@@ -86,7 +88,7 @@ const Designer = function(hostopt) {
     }
 
     try {
-      await backendinst.init(pid, hal9api);
+      await backendinst.init(pid);
     }
     catch(e) {
       const initErr = document.createElement('div');
