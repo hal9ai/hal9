@@ -68,7 +68,7 @@
     },
     {
       "name": "rawhtml",
-      "function": "",
+      "function": "html",
       "source": "controls/rawhtml.js",
       "language": "javascript",
       "label": "HTML",
