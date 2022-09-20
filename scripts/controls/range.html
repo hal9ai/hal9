@@ -45,9 +45,7 @@
 </div>
 
 <script>
-  var slider = hal9.get('slider');
-  debugger;
-  slider = slider ? slider : value;
+  var slider = hal9.get('slider', value);
 
   var app = new Vue({
     el: html.getElementsByClassName('sliderContainer')[0],
