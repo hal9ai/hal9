@@ -119,6 +119,23 @@ h9_html <- function(uid, on_update = NULL, ...) {
   do.call("h9_node", args = c(uid, node_args))
 }
 
+#' Markdown
+#'
+#' Enables to render arbitrary markdown
+#'
+#' @param uid Unique identifier for this element
+#' @param markdown Specifies the markdown for this md
+#' @param on_update Function to call when the value is changed updates
+#' @param ... Other h9 parameters.
+#'
+#' @export
+#'
+h9_markdown <- function(uid, markdown = NULL, on_update = NULL, ...) {
+  args <- as.list(match.call()[-1])
+  node_args <- args[!names(args) %in% c("h", "", "uid")]
+  do.call("h9_node", args = c(uid, node_args))
+}
+
 #' Slider
 #'
 #' Embed an slider element
