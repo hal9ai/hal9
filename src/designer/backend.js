@@ -3,7 +3,7 @@ const Backend = function(hostopt) {
   let manifest = {};
   let hal9api = undefined;
   let backendid = undefined;
-  let backendquery = undefined;
+  let backendquery = '';
 
   async function serverEval(body) {
     if (typeof(hostopt.designer.eval) === 'function') {
