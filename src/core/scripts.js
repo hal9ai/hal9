@@ -130,6 +130,7 @@ import checkboxctrltxt from '../../scripts/controls/checkbox.html';
 import dropdownctrltxt from '../../scripts/controls/dropdown.html';
 import imagectrltxt from '../../scripts/controls/image.html';
 import inputfilectrltxt from '../../scripts/controls/inputfile.html';
+import mdctrltxt from '../../scripts/controls/markdown.js';
 import messagectrltxt from '../../scripts/controls/message.html';
 import numberctrltxt from '../../scripts/controls/number.html';
 import rangectrltxt from '../../scripts/controls/range.html';
@@ -280,6 +281,7 @@ const scripts = {
   message: { script: messagectrltxt, language: 'html' },
   numberinput: { script: numberctrltxt, language: 'html' },
   rawhtml: { script: rawhtmltxt, language: 'javascript' },
+  md: { script: mdctrltxt, language: 'js' },
   slider: { script: rangectrltxt, language: 'html' },
   sheet: { script: spreadsheetctrltxt, language: 'html' },
   textarea: { script: textareactrltxt, language: 'javascript' },

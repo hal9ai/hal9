@@ -1110,6 +1110,17 @@
       "build": "true"
     },
     {
+      "name": "md",
+      "function": "markdown",
+      "source": "controls/markdown.js",
+      "language": "javascript",
+      "label": "Markdown",
+      "description": "Enables to render arbitrary markdown",
+      "icon": "fa-brands fa-markdown",
+      "dragdrop": true,
+      "build": "true"
+    },
+    {
       "name": "slider",
       "function": "slider",
       "source": "controls/range.html",
