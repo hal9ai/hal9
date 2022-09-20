@@ -1,6 +1,17 @@
 {
   "Controls": [
     {
+      "name": "checkbox",
+      "function": "checkbox",
+      "source": "controls/checkbox.html",
+      "language": "html",
+      "label": "Checkbox",
+      "description": "Embed a checkbox control",
+      "icon": "fa-light fa-square-check",
+      "dragdrop": true,
+      "build": "false"
+    },
+    {
       "name": "dropdown",
       "function": "dropdown",
       "source": "controls/dropdown.html",
@@ -9,40 +20,62 @@
       "description": "Embed a dropdown control",
       "icon": "fa-light fa-list-dropdown",
       "dragdrop": true,
-      "build": true
+      "build": "true"
     },
     {
       "name": "fileinput",
       "function": "file",
       "source": "controls/inputfile.html",
       "language": "html",
-      "label": "File Input",
+      "label": "File",
       "description": "Embed a file input control",
       "icon": "fa-light fa-file-import",
       "dragdrop": true,
-      "build": true
+      "build": "true"
+    },
+    {
+      "name": "image",
+      "function": "image",
+      "source": "controls/image.html",
+      "language": "html",
+      "label": "Image",
+      "description": "Embed an image from url or data",
+      "icon": "fa-light fa-image",
+      "dragdrop": true,
+      "build": "true"
+    },
+    {
+      "name": "message",
+      "function": "message",
+      "source": "controls/message.html",
+      "language": "html",
+      "label": "Message",
+      "description": "Embed a message element",
+      "icon": "fa-light fa-message",
+      "dragdrop": true,
+      "build": "false"
     },
     {
       "name": "numberinput",
       "function": "number",
       "source": "controls/number.html",
       "language": "html",
-      "label": "Number Input",
+      "label": "Number",
       "description": "Embed a number input control",
       "icon": "fa-light fa-input-numeric",
       "dragdrop": true,
-      "build": true
+      "build": "true"
     },
     {
       "name": "rawhtml",
-      "function": "rawhtml",
+      "function": "",
       "source": "controls/rawhtml.js",
       "language": "javascript",
       "label": "HTML",
       "description": "Enables to render arbitrary HTML",
       "icon": "fa-brands fa-html5",
       "dragdrop": true,
-      "build": true
+      "build": "false"
     },
     {
       "name": "slider",
@@ -53,7 +86,7 @@
       "description": "Embed an slider element",
       "icon": "fa-light fa-slider",
       "dragdrop": true,
-      "build": true
+      "build": "true"
     },
     {
       "name": "sheet",
@@ -64,29 +97,29 @@
       "description": "Embed a spreadsheet to collect data",
       "icon": "fa-light fa-file-spreadsheet",
       "dragdrop": false,
-      "build": false
+      "build": "true"
     },
     {
       "name": "textbox",
       "function": "textbox",
       "source": "controls/textbox.html",
       "language": "html",
-      "label": "Text Input",
+      "label": "Textbox",
       "description": "Embed a text input control",
       "icon": "fa-light fa-input-text",
       "dragdrop": true,
-      "build": true
+      "build": "true"
     },
     {
       "name": "textarea",
       "function": "textarea",
       "source": "controls/textarea.js",
       "language": "javascript",
-      "label": "Multi-line Text Input",
+      "label": "Textarea",
       "description": "Embed a multi-line text input control",
       "icon": "fa-light fa-paragraph",
       "dragdrop": true,
-      "build": true
+      "build": "true"
     },
     {
       "name": "website",
@@ -97,7 +130,7 @@
       "description": "Embed a website and load a URL",
       "icon": "fa-light fa-browser",
       "dragdrop": false,
-      "build": false
+      "build": "true"
     }
   ]
 }

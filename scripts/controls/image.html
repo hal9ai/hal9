@@ -1,0 +1,33 @@
+<!--
+  input: []
+  params:
+    - name: image
+      label: 'Image'
+      description: Image URL or Upload.
+      value:
+        - control: 'fileload'
+          links:
+            - name: 'url'
+              label: 'Insert link'
+            - name: 'file'
+              label: 'Load file'
+          selected: 'url'
+          fileExt: '.csv'
+          value: 'https://pbs.twimg.com/media/FY5L5QxVEAAg_Ou?format=jpg&name=medium'
+  output: [ html ]
+  events: [ on_update ]
+  layout:
+    - width: inner
+      height: 200px
+-->
+
+<div>
+  <img class="imageContainer" :src="image">
+</div>
+
+<script>
+  let el = html.getElementsByClassName('imageContainer')[0];
+
+  el.src = image;
+  el.style.width = '100%';
+</script>

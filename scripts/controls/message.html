@@ -1,16 +1,42 @@
 <!--
-  input: [text]
+  input: []
   params:
-    - name: header
-      label: Header Name
+    - name: message
+      label: Message
       value:
         - control: textbox
-          value: paragraph
-    - name: paramText
-      label: Paragraph Text
+          value: "Hello World!"
+    - name: title
+      label: Title
       value:
         - control: textbox
-          value: here goes the text
+          value: Info
+    - name: mtype
+      label: 'Type'
+      value:
+        - control: select
+          value: is-success
+          values:
+            - name: is-success
+              label: Success
+            - name: is-danger
+              label: Danger
+            - name: is-info
+              label: Info
+            - name: is-warning
+              label: Warning
+            - name: is-dark
+              label: Dark
+    - name: showIcon
+      label: 'Icon'
+      value:
+        - control: select
+          value: true
+          values:
+            - name: true
+              label: Yes
+            - name: false
+              label: No
   output: [ html ]
   events: [ on_update ]
 -->
@@ -18,38 +44,36 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css">
 
-<div class="paragraphiContainer">
+<div class="control">
   <template>
     <section>
         <b-message 
-            title="Success with icon" 
-            type="is-success" 
-            has-icon 
-            aria-close-label="Close message">.
+          :title="title" 
+          :type="mtype"
+          :has-icon="showIcon"
+          aria-close-label="Close">
+          {{ message }}
         </b-message>
     </section>
   </template>
 </div>
 
-
 <script>
-if(text == "undefined" || text == null){
-  text = paramText
-}
   var app = new Vue({
-    el: html.getElementsByClassName('paragraphiContainer')[0],
-    data: {
-    },
-    methods: {
-      numChange(e){
+    el: html.getElementsByClassName('control')[0],
+    data: function() {
+      var vue = this;
+
+      return {
+        message: message,
+        title: title,
+        mtype: mtype,
+        showIcon: showIcon
       }
     }
   })
-  
-  //header text 
-  document.getElementsByClassName("message-header")[0].getElementsByTagName("p")[0].innerText = header
- //paragraph text 
- document.getElementsByClassName("media-content")[0].innerText = text
- html.style.height = 'auto';
+
+  html.style.height = 'auto';
 </script>
