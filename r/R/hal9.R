@@ -112,14 +112,7 @@ client_html <- function(...) {
     html
 }
 
-h9_reset <- function() {
-    rm(list = ls(envir = .globals_nodes), envir = .globals_nodes)
-    rm(list = ls(envir = .globals_data), envir = .globals_data)
-}
-
 h9_run_script <- function(app = "app.R", port = NULL) {
-    h9_reset()
-
     if (!file.exists(app)) writeLines("", app)
 
     user_code <- readLines(app)
