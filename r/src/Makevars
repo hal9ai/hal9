@@ -2,7 +2,7 @@ TARGET_DIR = ./rust/target
 LIBDIR = $(TARGET_DIR)/release
 STATLIB = $(LIBDIR)/libhal9.a
 
-ifeq ($(expr substr $(uname -s) 1 5), Linux)
+ifneq (,$(findstring Linux,$(shell uname -s)))
   PKG_LIBS = -L$(LIBDIR) -lhal9 -lssl -lcrypto
 else
   PKG_LIBS = -L$(LIBDIR) -lhal9
