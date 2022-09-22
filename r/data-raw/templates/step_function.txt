@@ -11,6 +11,6 @@
 {{func_name}} <- function(uid, {{func_params}}on_update = NULL, ...) {
   args <- as.list(match.call()[-1])
   node_args <- args[!names(args) %in% c("h", "", "uid")]
-  do.call("h9_node", args = c(uid, node_args))
+  h9_convert(do.call("h9_node", args = c(uid, node_args)), context = "{{func_name}}")
 }
 
