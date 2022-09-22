@@ -74,12 +74,16 @@ h9_image <- function(uid, image = NULL, on_update = NULL, ...) {
 #' Embed a message element
 #'
 #' @param uid Unique identifier for this element
+#' @param message Specifies the message for this message
+#' @param title Specifies the title for this message
+#' @param mtype Specifies the mtype for this message
+#' @param showIcon Specifies the showIcon for this message
 #' @param on_update Function to call when the value is changed updates
 #' @param ... Other h9 parameters.
 #'
 #' @export
 #'
-h9_message <- function(uid, on_update = NULL, ...) {
+h9_message <- function(uid, message = NULL, title = NULL, mtype = NULL, showIcon = NULL, on_update = NULL, ...) {
   args <- as.list(match.call()[-1])
   node_args <- args[!names(args) %in% c("h", "", "uid")]
   do.call("h9_node", args = c(uid, node_args))
@@ -156,22 +160,6 @@ h9_slider <- function(uid, value = NULL, min = NULL, max = NULL, step = NULL, on
   do.call("h9_node", args = c(uid, node_args))
 }
 
-#' Sheet
-#'
-#' Embed a spreadsheet to collect data
-#'
-#' @param uid Unique identifier for this element
-#' @param on_update Function to call when the value is changed updates
-#' @param ... Other h9 parameters.
-#'
-#' @export
-#'
-h9_sheet <- function(uid, on_update = NULL, ...) {
-  args <- as.list(match.call()[-1])
-  node_args <- args[!names(args) %in% c("h", "", "uid")]
-  do.call("h9_node", args = c(uid, node_args))
-}
-
 #' Textbox
 #'
 #' Embed a text input control
@@ -201,22 +189,6 @@ h9_textbox <- function(uid, label = NULL, value = NULL, on_update = NULL, ...) {
 #' @export
 #'
 h9_textarea <- function(uid, on_update = NULL, ...) {
-  args <- as.list(match.call()[-1])
-  node_args <- args[!names(args) %in% c("h", "", "uid")]
-  do.call("h9_node", args = c(uid, node_args))
-}
-
-#' Website
-#'
-#' Embed a website and load a URL
-#'
-#' @param uid Unique identifier for this element
-#' @param on_update Function to call when the value is changed updates
-#' @param ... Other h9 parameters.
-#'
-#' @export
-#'
-h9_website <- function(uid, on_update = NULL, ...) {
   args <- as.list(match.call()[-1])
   node_args <- args[!names(args) %in% c("h", "", "uid")]
   do.call("h9_node", args = c(uid, node_args))
