@@ -4,7 +4,7 @@
 \alias{h9_start}
 \title{Start server.}
 \usage{
-h9_start(path = ., port = NULL, timeout = 600, nobrowse = false)
+h9_start(path = ., port = NULL, timeout = 600, nobrowse = FALSE)
 }
 \description{
 Start server.

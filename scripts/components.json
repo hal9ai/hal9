@@ -9,7 +9,7 @@
       "description": "Embed a checkbox control",
       "icon": "fa-light fa-square-check",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "dropdown",
@@ -20,7 +20,7 @@
       "description": "Embed a dropdown control",
       "icon": "fa-light fa-list-dropdown",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "fileinput",
@@ -31,7 +31,7 @@
       "description": "Embed a file input control",
       "icon": "fa-light fa-file-import",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "image",
@@ -42,7 +42,7 @@
       "description": "Embed an image from url or data",
       "icon": "fa-light fa-image",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "message",
@@ -53,7 +53,7 @@
       "description": "Embed a message element",
       "icon": "fa-light fa-message",
       "dragdrop": true,
-      "build": "false"
+      "build": true
     },
     {
       "name": "numberinput",
@@ -64,7 +64,7 @@
       "description": "Embed a number input control",
       "icon": "fa-light fa-input-numeric",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "html",
@@ -75,7 +75,7 @@
       "description": "Enables to render arbitrary HTML",
       "icon": "fa-brands fa-html5",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "md",
@@ -86,7 +86,7 @@
       "description": "Enables to render arbitrary markdown",
       "icon": "fa-brands fa-markdown",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "slider",
@@ -97,7 +97,7 @@
       "description": "Embed an slider element",
       "icon": "fa-light fa-slider",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "sheet",
@@ -108,7 +108,7 @@
       "description": "Embed a spreadsheet to collect data",
       "icon": "fa-light fa-file-spreadsheet",
       "dragdrop": false,
-      "build": "false"
+      "build": false
     },
     {
       "name": "textbox",
@@ -119,7 +119,7 @@
       "description": "Embed a text input control",
       "icon": "fa-light fa-input-text",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "textarea",
@@ -130,7 +130,7 @@
       "description": "Embed a multi-line text input control",
       "icon": "fa-light fa-paragraph",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "website",
@@ -141,7 +141,7 @@
       "description": "Embed a website and load a URL",
       "icon": "fa-light fa-browser",
       "dragdrop": false,
-      "build": "false"
+      "build": false
     }
   ]
 }

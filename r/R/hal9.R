@@ -17,11 +17,14 @@ Node <- R6::R6Class("Node", list(
             return(NULL)
         }
 
+        result <- NULL
         if (length(...) == 0) {
-            fn()
+            result <- fn()
         } else {
-            do.call(fn, ...)
+            result <- do.call(fn, ...)
         }
+
+        h9_convert(result)
     }
 ))
 
