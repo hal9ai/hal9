@@ -8,7 +8,7 @@
       "label": "CSV",
       "description": "Import a CSV formatted dataset",
       "icon": "fa-light fa-file-csv",
-      "build": "true"
+      "build": true
     },
     {
       "name": "importexcel",
@@ -18,7 +18,7 @@
       "label": "Excel",
       "description": "Import a dataset from a sheet of an Excel file",
       "icon": "fa-light fa-file-excel",
-      "build": "true"
+      "build": true
     },
     {
       "name": "importjson",
@@ -28,7 +28,7 @@
       "label": "JSON",
       "description": "Import a JSON formatted dataset",
       "icon": "fa-light fa-brackets-curly",
-      "build": "true"
+      "build": true
     },
     {
       "name": "airbnb",
@@ -39,7 +39,7 @@
       "label": "Airbnb",
       "description": "Gather comments from an Airbnb listing by using a Hal9 server worker",
       "icon": "fa-brands fa-airbnb",
-      "build": "false"
+      "build": false
     },
     {
       "name": "bigquery",
@@ -49,7 +49,7 @@
       "label": "BigQuery",
       "description": "Query data from a Google Cloud BigQuery data warehouse",
       "icon": "fa-light fa-magnifying-glass",
-      "build": "false"
+      "build": false
     },
     {
       "name": "datagrabio",
@@ -59,7 +59,7 @@
       "label": "DataGrab",
       "description": "Scrape text from a website by using the DataGrab Chrome extension",
       "icon": "fa-brands fa-chrome",
-      "build": "false"
+      "build": false
     },
     {
       "name": "googlesheets",
@@ -69,7 +69,7 @@
       "label": "Google Sheets",
       "description": "Import data from a Google Sheets spreadsheet",
       "icon": "fa-light fa-file-spreadsheet",
-      "build": "false"
+      "build": false
     },
     {
       "name": "graphql",
@@ -79,7 +79,7 @@
       "label": "GraphQL",
       "description": "Query data from a GraphQL endpoint",
       "icon": "fa-light fa-comment-question",
-      "build": "false"
+      "build": false
     },
     {
       "name": "mysql",
@@ -90,7 +90,7 @@
       "label": "MySQL",
       "description": "Query data from a MySQL database by using a Hal9 server worker",
       "icon": "fa-light fa-database",
-      "build": "false"
+      "build": false
     },
     {
       "name": "powerbi",
@@ -100,7 +100,7 @@
       "label": "Power BI",
       "description": "Import data from Power BI",
       "icon": "fa-brands fa-microsoft",
-      "build": "false"
+      "build": false
     },
     {
       "name": "reddit",
@@ -110,7 +110,7 @@
       "label": "Reddit",
       "description": "Search Reddit for submissions or comments",
       "icon": "fa-brands fa-reddit",
-      "build": "false"
+      "build": false
     },
     {
       "name": "stocks",
@@ -120,7 +120,7 @@
       "label": "Stocks",
       "description": "Get stock market data provided by Financial Modeling Prep",
       "icon": "fa-light fa-arrow-trend-up",
-      "build": "false"
+      "build": false
     },
     {
       "name": "sqlite",
@@ -130,7 +130,7 @@
       "label": "SQLite",
       "description": "Query data from a SQLite database",
       "icon": "fa-light fa-database",
-      "build": "true"
+      "build": true
     },
     {
       "name": "tableau",
@@ -140,7 +140,7 @@
       "label": "Tableau",
       "description": "Import data from Tableau",
       "icon": "fa-brands fa-salesforce",
-      "build": "false"
+      "build": false
     },
     {
       "name": "twitter",
@@ -151,7 +151,7 @@
       "label": "Twitter",
       "description": "Search Twitter with a Hal9 server worker",
       "icon": "fa-brands fa-twitter",
-      "build": "false"
+      "build": false
     },
     {
       "name": "videoframes",
@@ -161,7 +161,7 @@
       "label": "Video Frames",
       "description": "Grab frames from a video file",
       "icon": "fa-light fa-photo-film",
-      "build": "false"
+      "build": false
     },
     {
       "name": "webimages",
@@ -172,7 +172,7 @@
       "label": "Web Images",
       "description": "Scrape images from a website by using a Hal9 server worker",
       "icon": "fa-light fa-images",
-      "build": "false"
+      "build": false
     },
     {
       "name": "webtables",
@@ -183,7 +183,7 @@
       "label": "Web Table",
       "description": "Scrape a table from a website by using a Hal9 server worker",
       "icon": "fa-light fa-table",
-      "build": "false"
+      "build": false
     },
     {
       "name": "webselector",
@@ -194,7 +194,7 @@
       "label": "Web Selectors",
       "description": "Scrape data matching CSS or DOM selectors on a website by using a Hal9 server worker",
       "icon": "fa-brands fa-css3-alt",
-      "build": "false"
+      "build": false
     },
     {
       "name": "webcam",
@@ -204,7 +204,7 @@
       "label": "Webcam",
       "description": "Snap a webcam photo to insert into a dataset",
       "icon": "fa-light fa-camera-web",
-      "build": "false"
+      "build": false
     },
     {
       "name": "images",
@@ -214,7 +214,7 @@
       "label": "Images Dataset",
       "description": "Sample dataset of image URLs",
       "icon": "fa-light fa-images",
-      "build": "true"
+      "build": true
     },
     {
       "name": "iris",
@@ -224,7 +224,7 @@
       "label": "Iris Dataset",
       "description": "Sample iris flowers dataset",
       "icon": "fa-light fa-file-lines",
-      "build": "true"
+      "build": true
     },
     {
       "name": "dataframe",
@@ -234,7 +234,7 @@
       "label": "DataFrame",
       "description": "Loads a dataframe",
       "icon": "fa-light fa-columns-3",
-      "build": "true"
+      "build": true
     }
   ],
   "Transform": [
@@ -246,7 +246,7 @@
       "label": "Assign",
       "description": "Attach a new column",
       "icon": "fa-light fa-layer-plus",
-      "build": "true"
+      "build": true
     },
     {
       "name": "convert",
@@ -256,7 +256,7 @@
       "label": "Convert",
       "description": "Apply an expression to the values in a specific column",
       "icon": "fa-light fa-wand",
-      "build": "true"
+      "build": true
     },
     {
       "name": "derive",
@@ -266,7 +266,7 @@
       "label": "Derive",
       "description": "Create a new column or replace an existing one via an expression",
       "icon": "fa-light fa-wand-sparkles",
-      "build": "true"
+      "build": true
     },
     {
       "name": "drop",
@@ -276,7 +276,7 @@
       "label": "Drop",
       "description": "Remove specific columns",
       "icon": "fa-light fa-layer-minus",
-      "build": "true"
+      "build": true
     },
     {
       "name": "filter",
@@ -286,7 +286,7 @@
       "label": "Filter",
       "description": "Keep only the rows that satisfy a given expression for a specific column",
       "icon": "fa-light fa-filter",
-      "build": "true"
+      "build": true
     },
     {
       "name": "fold",
@@ -296,7 +296,7 @@
       "label": "Fold",
       "description": "Fold one or more columns into a pair of key-value columns",
       "icon": "fa-light fa-paper-plane",
-      "build": "true"
+      "build": true
     },
     {
       "name": "impute",
@@ -306,7 +306,7 @@
       "label": "Impute",
       "description": "Fill in a column's missing data with the value of an aggregation",
       "icon": "fa-light fa-fill-drip",
-      "build": "true"
+      "build": true
     },
     {
       "name": "pivot",
@@ -316,7 +316,7 @@
       "label": "Pivot",
       "description": "Pivot columns into a cross-tabulation",
       "icon": "fa-light fa-table-pivot",
-      "build": "true"
+      "build": true
     },
     {
       "name": "rollingsum",
@@ -326,7 +326,7 @@
       "label": "Rolling Sum",
       "description": "Create new columns from the running totals of others",
       "icon": "fa-light fa-sigma",
-      "build": "true"
+      "build": true
     },
     {
       "name": "sample",
@@ -336,7 +336,7 @@
       "label": "Sample",
       "description": "Trim a dataset down to a random sample of its rows",
       "icon": "fa-light fa-dice",
-      "build": "true"
+      "build": true
     },
     {
       "name": "select",
@@ -346,7 +346,7 @@
       "label": "Select",
       "description": "Keep only a subset of columns",
       "icon": "fa-light fa-hand-pointer",
-      "build": "true"
+      "build": true
     },
     {
       "name": "slice",
@@ -356,7 +356,7 @@
       "label": "Slice",
       "description": "Keep only a contiguous subset of rows",
       "icon": "fa-light fa-pizza-slice",
-      "build": "true"
+      "build": true
     },
     {
       "name": "sort",
@@ -366,7 +366,7 @@
       "label": "Sort",
       "description": "Sort rows of data based on the values in selected columns",
       "icon": "fa-light fa-arrow-down-1-9",
-      "build": "true"
+      "build": true
     },
     {
       "name": "summarize",
@@ -376,7 +376,7 @@
       "label": "Summarize",
       "description": "Select columns to aggregate and others to keep unmodified",
       "icon": "fa-light fa-calculator-simple",
-      "build": "true"
+      "build": true
     }
   ],
   "Visualize": [
@@ -388,7 +388,7 @@
       "label": "Bar",
       "description": "Our first chart type needs no introduction",
       "icon": "fa-light fa-chart-bar",
-      "build": "true"
+      "build": true
     },
     {
       "name": "boxplotchart",
@@ -398,7 +398,7 @@
       "label": "Box Plot",
       "description": "Great for comparing distributions of data",
       "icon": "fa-light fa-box-open",
-      "build": "true"
+      "build": true
     },
     {
       "name": "bubbles",
@@ -408,7 +408,7 @@
       "label": "Bubbles",
       "description": "Bigger values -> bigger bubbles",
       "icon": "fa-light fa-soap",
-      "build": "true"
+      "build": true
     },
     {
       "name": "dotplotchart",
@@ -418,7 +418,7 @@
       "label": "Dot Plot",
       "description": "Stack data into columns of dots",
       "icon": "fa-light fa-arrow-up-right-dots",
-      "build": "true"
+      "build": true
     },
     {
       "name": "errorbarchart",
@@ -428,7 +428,7 @@
       "label": "Candles",
       "description": "Explain financial trends with a candlestick chart",
       "icon": "fa-light fa-chart-candlestick",
-      "build": "true"
+      "build": true
     },
     {
       "name": "facets",
@@ -438,7 +438,7 @@
       "label": "Facets",
       "description": "A chart of charts organized in a grid",
       "icon": "fa-light fa-grid",
-      "build": "true"
+      "build": true
     },
     {
       "name": "funnel",
@@ -448,7 +448,7 @@
       "label": "Funnel",
       "description": "Communicate how data narrows down",
       "icon": "fa-light fa-filters",
-      "build": "true"
+      "build": true
     },
     {
       "name": "gallery",
@@ -458,7 +458,7 @@
       "label": "Gallery",
       "description": "A showcase for image datasets",
       "icon": "fa-light fa-images",
-      "build": "false"
+      "build": false
     },
     {
       "name": "heatmapchart",
@@ -468,7 +468,7 @@
       "label": "Heatmap",
       "description": "Draw attention to larger values with more vibrant colors in this 2D map",
       "icon": "fa-light fa-fire",
-      "build": "true"
+      "build": true
     },
     {
       "name": "histogramchart",
@@ -478,7 +478,7 @@
       "label": "Histogram",
       "description": "Show further granularity within buckets via optional color palettes",
       "icon": "fa-light fa-chart-column",
-      "build": "true"
+      "build": true
     },
     {
       "name": "linechart",
@@ -488,7 +488,7 @@
       "label": "Line",
       "description": "For use with sorted X axis values only...unless you like scribbles",
       "icon": "fa-light fa-chart-line",
-      "build": "true"
+      "build": true
     },
     {
       "name": "mapchart",
@@ -498,7 +498,7 @@
       "label": "Map",
       "description": "Clearly map out Earthly datasets that have columns for latitude and longitude",
       "icon": "fa-light fa-earth-americas",
-      "build": "true"
+      "build": true
     },
     {
       "name": "network",
@@ -508,7 +508,7 @@
       "label": "Network",
       "description": "Dazzle your colleagues with this colorful animated network graph",
       "icon": "fa-light fa-chart-network",
-      "build": "true"
+      "build": true
     },
     {
       "name": "plotly",
@@ -518,7 +518,7 @@
       "label": "Plotly",
       "description": "Choose from a variety of Plotly visualizations",
       "icon": "fa-light fa-chart-simple",
-      "build": "true"
+      "build": true
     },
     {
       "name": "radialbars",
@@ -528,7 +528,7 @@
       "label": "Radial",
       "description": "A circular bar chart",
       "icon": "fa-light fa-bullseye",
-      "build": "true"
+      "build": true
     },
     {
       "name": "regressionchart",
@@ -538,7 +538,7 @@
       "label": "Regression",
       "description": "Fit a regression model to a dataset to predict future values",
       "icon": "fa-light fa-chart-line-up",
-      "build": "true"
+      "build": true
     },
     {
       "name": "sankeychart",
@@ -548,7 +548,7 @@
       "label": "Sankey",
       "description": "Show the flow with Captain Sankey's signature diagram",
       "icon": "fa-light fa-diagram-sankey",
-      "build": "true"
+      "build": true
     },
     {
       "name": "scatterchart",
@@ -558,7 +558,7 @@
       "label": "Scatter",
       "description": "A tried and true classic",
       "icon": "fa-light fa-chart-scatter",
-      "build": "true"
+      "build": true
     },
     {
       "name": "table",
@@ -568,7 +568,7 @@
       "label": "Table",
       "description": "Sort and search a dataset",
       "icon": "fa-light fa-columns-3",
-      "build": "false"
+      "build": false
     },
     {
       "name": "treemapchart",
@@ -578,7 +578,7 @@
       "label": "Treemap",
       "description": "Choose a column to map into colored blocks, and another to further subdivide by size",
       "icon": "fa-light fa-chart-tree-map",
-      "build": "true"
+      "build": true
     },
     {
       "name": "violinchart",
@@ -588,7 +588,7 @@
       "label": "Violin",
       "description": "A more descriptive box plot",
       "icon": "fa-light fa-violin",
-      "build": "true"
+      "build": true
     },
     {
       "name": "waffle",
@@ -598,7 +598,7 @@
       "label": "Waffle",
       "description": "A square pie chart; still not edible",
       "icon": "fa-light fa-waffle",
-      "build": "true"
+      "build": true
     },
     {
       "name": "waterfall",
@@ -608,7 +608,7 @@
       "label": "Waterfall",
       "description": "Lay out cascades of data next to a towering waterfall representing the total",
       "icon": "fa-light fa-chart-waterfall",
-      "build": "true"
+      "build": true
     },
     {
       "name": "wordcloud",
@@ -618,7 +618,7 @@
       "label": "Wordcloud",
       "description": "Make the most frequent words in a dataset stand out in a trendy way",
       "icon": "fa-light fa-cloud-word",
-      "build": "true"
+      "build": true
     }
   ],
   "Predict": [
@@ -631,7 +631,7 @@
       "description": "Use MobileNet's Image Classification to attempt to identify what's in an image",
       "icon": "fa-light fa-comment-image",
       "link": "https://hal9.com/hal9/image-classification",
-      "build": "false"
+      "build": false
     },
     {
       "name": "bodypix",
@@ -642,7 +642,7 @@
       "description": "Apply automated post-process motion capture dots to an image",
       "icon": "fa-light fa-person-running",
       "link": "https://hal9.com/hal9/pose-estimation",
-      "build": "false"
+      "build": false
     },
     {
       "name": "sentiment",
@@ -652,7 +652,7 @@
       "label": "Sentiment",
       "description": "Ask a neural net to predict how positively the text in a dataset will be perceived",
       "icon": "fa-light fa-thought-bubble",
-      "build": "false"
+      "build": false
     }
   ],
   "Time Series": [
@@ -665,7 +665,7 @@
       "label": "ARIMA",
       "description": "Predict using autoregressive models",
       "icon": "fa-light fa-calendar-days",
-      "build": "false"
+      "build": false
     },
     {
       "name": "timelstm",
@@ -675,7 +675,7 @@
       "label": "LSTM",
       "description": "Predict using a long-short-term-memory model",
       "icon": "fa-light fa-calendar-days",
-      "build": "false"
+      "build": false
     },
     {
       "name": "timemovingaverage",
@@ -685,7 +685,7 @@
       "label": "SMA",
       "description": "Calculate the moving average",
       "icon": "fa-light fa-calendar-days",
-      "build": "false"
+      "build": false
     },
     {
       "name": "timeprophet",
@@ -696,7 +696,7 @@
       "label": "Prophet",
       "description": "Predict using the Prophet library",
       "icon": "fa-light fa-calendar-days",
-      "build": "false"
+      "build": false
     },
     {
       "name": "timeseasonality",
@@ -706,7 +706,7 @@
       "label": "Seasons",
       "description": "Compute seasonality",
       "icon": "fa-light fa-calendar-days",
-      "build": "false"
+      "build": false
     }
   ],
   "Train": [
@@ -719,7 +719,7 @@
       "label": "Automatic",
       "description": "Use PyCaret to automatically train your model",
       "icon": "fa-light fa-brain-circuit",
-      "build": "false"
+      "build": false
     },
     {
       "name": "predict",
@@ -730,7 +730,7 @@
       "label": "Predict",
       "description": "Predict from a trained model",
       "icon": "fa-light fa-crystal-ball",
-      "build": "false"
+      "build": false
     },
     {
       "name": "linearregression",
@@ -741,7 +741,7 @@
       "label": "Linear Model",
       "description": "Train a linear regression model then predict",
       "icon": "fa-light fa-brain-circuit",
-      "build": "false"
+      "build": false
     },
     {
       "name": "logisiticregression",
@@ -752,7 +752,7 @@
       "label": "Logisitic Model",
       "description": "Train a logisitic regression model then predict",
       "icon": "fa-light fa-brain-circuit",
-      "build": "false"
+      "build": false
     },
     {
       "name": "traintest",
@@ -763,7 +763,7 @@
       "label": "Train Split",
       "description": "Split data into train and test to train models",
       "icon": "fa-light fa-split",
-      "build": "false"
+      "build": false
     }
   ],
   "Export": [
@@ -775,7 +775,7 @@
       "label": "CSV",
       "description": "Export a dataset into CSV format",
       "icon": "fa-light fa-file-csv",
-      "build": "false"
+      "build": false
     },
     {
       "name": "exportjson",
@@ -785,7 +785,7 @@
       "label": "JSON",
       "description": "Export a dataset into JSON format",
       "icon": "fa-light fa-brackets-curly",
-      "build": "false"
+      "build": false
     },
     {
       "name": "exporttext",
@@ -795,7 +795,7 @@
       "label": "Text",
       "description": "Export a dataset into a delimited string",
       "icon": "fa-light fa-text",
-      "build": "false"
+      "build": false
     }
   ],
   "Business": [
@@ -807,7 +807,7 @@
       "label": "A/B Test",
       "description": "Calculate statistics like p-value for A/B tests",
       "icon": "fa-light fa-vials",
-      "build": "false"
+      "build": false
     },
     {
       "name": "churn",
@@ -817,7 +817,7 @@
       "label": "Churn",
       "description": "Compute customer churn by providing counts of new and lost customers",
       "icon": "fa-light fa-person-from-portal",
-      "build": "false"
+      "build": false
     }
   ],
   "Statistics": [
@@ -829,7 +829,7 @@
       "label": "Shapiro-Wilk",
       "description": "Test if data is normally distributed",
       "icon": "fa-light fa-bell",
-      "build": "false"
+      "build": false
     }
   ],
   "Utilities": [
@@ -841,7 +841,7 @@
       "label": "Copy",
       "description": "Temporarily store the current state of a dataset",
       "icon": "fa-light fa-clipboard-list",
-      "build": "false"
+      "build": false
     },
     {
       "name": "paste",
@@ -851,7 +851,7 @@
       "label": "Paste",
       "description": "Restore a dataset to its previously copied state",
       "icon": "fa-light fa-paste",
-      "build": "false"
+      "build": false
     },
     {
       "name": "fetch",
@@ -862,7 +862,7 @@
       "label": "Fetch",
       "description": "Create new data columns by processing a URL column with a Hal9 server worker",
       "icon": "fa-light fa-browser",
-      "build": "false"
+      "build": false
     },
     {
       "name": "citytomap",
@@ -872,7 +872,7 @@
       "label": "Coordinates from City",
       "description": "Create latitude and longitude columns from a pair of US city and state columns",
       "icon": "fa-light fa-earth-americas",
-      "build": "false"
+      "build": false
     },
     {
       "name": "ziptomap",
@@ -882,7 +882,7 @@
       "label": "Coordinates from Zip Code",
       "description": "Create latitude and longitude columns from a US zip code column",
       "icon": "fa-light fa-earth-americas",
-      "build": "false"
+      "build": false
     },
     {
       "name": "tojson",
@@ -892,7 +892,7 @@
       "label": "To JSON",
       "description": "Convert to JSON format, useful for building APIs",
       "icon": "fa-light fa-brackets-curly",
-      "build": "false"
+      "build": false
     },
     {
       "name": "upscaler",
@@ -902,7 +902,7 @@
       "label": "Upscale",
       "description": "Magnify an image with AI enhancement",
       "icon": "fa-light fa-panorama",
-      "build": "false"
+      "build": false
     },
     {
       "name": "stop",
@@ -912,7 +912,7 @@
       "label": "Stop",
       "description": "Stops pipeline execution conditionally",
       "icon": "fa-light fa-traffic-light-stop",
-      "build": "false"
+      "build": false
     }
   ],
   "Languages": [
@@ -924,7 +924,7 @@
       "label": "HTML",
       "description": "Insert a webpage snippet",
       "icon": "fa-brands fa-html5",
-      "build": "false"
+      "build": false
     },
     {
       "name": "javascript",
@@ -934,7 +934,7 @@
       "label": "JavaScript",
       "description": "Write JavaScript code for custom data processing",
       "icon": "fa-brands fa-js-square",
-      "build": "false"
+      "build": false
     },
     {
       "name": "markdown",
@@ -944,7 +944,7 @@
       "label": "Markdown",
       "description": "Insert a section of Markdown formatted text",
       "icon": "fa-brands fa-markdown",
-      "build": "false"
+      "build": false
     },
     {
       "name": "pyodide",
@@ -954,7 +954,7 @@
       "label": "Pyodide",
       "description": "Write a Pyodide script for advanced data processing",
       "icon": "fa-brands fa-python",
-      "build": "false"
+      "build": false
     },
     {
       "name": "python",
@@ -965,7 +965,7 @@
       "label": "Python",
       "description": "Write a Python script for advanced data processing",
       "icon": "fa-brands fa-python",
-      "build": "false"
+      "build": false
     },
     {
       "name": "r",
@@ -976,7 +976,7 @@
       "label": "R",
       "description": "Write an R script for advanced data processing",
       "icon": "fa-brands fa-r-project",
-      "build": "false"
+      "build": false
     }
   ],
   "Frameworks": [
@@ -988,7 +988,7 @@
       "label": "Flask",
       "description": "Crate an API block in Python using Flask to improve speed",
       "icon": "fa-brands fa-python",
-      "build": "false"
+      "build": false
     },
     {
       "name": "plumber",
@@ -998,7 +998,7 @@
       "label": "Plumber",
       "description": "Crate an API block in R using Plumber to improve speed",
       "icon": "fa-brands fa-r-project",
-      "build": "false"
+      "build": false
     },
     {
       "name": "pyscript",
@@ -1008,7 +1008,7 @@
       "label": "PyScript",
       "description": "Use PyScript to render HTML",
       "icon": "fa-brands fa-python",
-      "build": "false"
+      "build": false
     },
     {
       "name": "react",
@@ -1018,7 +1018,7 @@
       "label": "React",
       "description": "Write a React script for advanced interactivity",
       "icon": "fa-brands fa-react",
-      "build": "false"
+      "build": false
     },
     {
       "name": "vue",
@@ -1028,7 +1028,7 @@
       "label": "Vue",
       "description": "Write a Vue script for advanced interactivity",
       "icon": "fa-brands fa-vuejs",
-      "build": "false"
+      "build": false
     }
   ],
   "Controls": [
@@ -1041,7 +1041,7 @@
       "description": "Embed a checkbox control",
       "icon": "fa-light fa-square-check",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "dropdown",
@@ -1052,7 +1052,7 @@
       "description": "Embed a dropdown control",
       "icon": "fa-light fa-list-dropdown",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "fileinput",
@@ -1063,7 +1063,7 @@
       "description": "Embed a file input control",
       "icon": "fa-light fa-file-import",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "image",
@@ -1074,7 +1074,7 @@
       "description": "Embed an image from url or data",
       "icon": "fa-light fa-image",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "message",
@@ -1085,7 +1085,7 @@
       "description": "Embed a message element",
       "icon": "fa-light fa-message",
       "dragdrop": true,
-      "build": "false"
+      "build": false
     },
     {
       "name": "numberinput",
@@ -1096,7 +1096,7 @@
       "description": "Embed a number input control",
       "icon": "fa-light fa-input-numeric",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "html",
@@ -1107,7 +1107,7 @@
       "description": "Enables to render arbitrary HTML",
       "icon": "fa-brands fa-html5",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "md",
@@ -1118,7 +1118,7 @@
       "description": "Enables to render arbitrary markdown",
       "icon": "fa-brands fa-markdown",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "slider",
@@ -1129,7 +1129,7 @@
       "description": "Embed an slider element",
       "icon": "fa-light fa-slider",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "sheet",
@@ -1140,7 +1140,7 @@
       "description": "Embed a spreadsheet to collect data",
       "icon": "fa-light fa-file-spreadsheet",
       "dragdrop": false,
-      "build": "false"
+      "build": false
     },
     {
       "name": "textbox",
@@ -1151,7 +1151,7 @@
       "description": "Embed a text input control",
       "icon": "fa-light fa-input-text",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "textarea",
@@ -1162,7 +1162,7 @@
       "description": "Embed a multi-line text input control",
       "icon": "fa-light fa-paragraph",
       "dragdrop": true,
-      "build": "true"
+      "build": true
     },
     {
       "name": "website",
@@ -1173,7 +1173,7 @@
       "description": "Embed a website and load a URL",
       "icon": "fa-light fa-browser",
       "dragdrop": false,
-      "build": "false"
+      "build": false
     }
   ]
 }
