@@ -11,12 +11,6 @@ jobs:
       - name: Render quarto
         run: quarto render
         working-directory: ./site
-      - name: Render pkgdown
-        run: |
-          Rscript -e 'install.packages("pkgdown")'
-          Rscript -e 'pkgdown::build_site("./r")'
-          cp -r  ./r/docs site/r
-        continue-on-error: true
       - name: Add Commit SHA
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
       - uses: zdurham/s3-upload-github-action@master
