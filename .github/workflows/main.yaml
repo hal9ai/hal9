@@ -54,10 +54,6 @@ jobs:
           Rscript -e 'devtools::build()'
           Rscript -e 'devtools::install()'
         working-directory: ./r
-      - name: Example Deps
-        run: |
-          Rscript -e 'install.packages(c("dplyr"))'
-        working-directory: ./r
       - name: Render pkgdown
         run: |
           Rscript -e 'install.packages("pkgdown")'
