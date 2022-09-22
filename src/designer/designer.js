@@ -1,6 +1,6 @@
 import { init } from '../api/api'
 import { launchDesigner } from './launcher'
-import { backend } from './backend'
+import { backend } from '../backend/backend'
 
 const Designer = function(hostopt) {
   let pid = undefined;

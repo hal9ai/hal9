@@ -1,9 +1,14 @@
+import clone from '../core/utils/clone';
+
 const Backend = function(hostopt) {
   let pid = undefined;
   let manifest = {};
   let hal9api = window.hal9;
   let backendid = undefined;
   let backendquery = '';
+  let defaultRuntime = hostopt.designer.runtime ?? 'js';
+
+  let runtimes = {};
 
   async function serverEval(body) {
     if (typeof(hostopt.designer.eval) === 'function') {
@@ -56,19 +61,23 @@ const Backend = function(hostopt) {
 
   async function performUpdates(ids) {
     if (ids.length == 0) return;
+    if (Object.keys(runtimes).length == 0) return;
 
     const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
 
-    let calls = [];
+    let runtimeCalls = {};
+
     for (let id of ids) {
       let step = steps.filter(x => x.id == id);
       if (step.length != 1) continue;
       step = step[0];
 
       let name = step.name;
+      let runtime = step.runtime ?? defaultRuntime;
+      runtimeCalls[runtime] = runtimeCalls[runtime] ?? [];
 
       for (let param of Object.keys(step.params)) {
-        calls.push({
+        runtimeCalls.push({
           node: name,
           fn_name: param,
           args: []
@@ -76,7 +85,7 @@ const Backend = function(hostopt) {
       }
 
       for (let input of step.header.input) {
-        calls.push({
+        runtimeCalls.push({
           node: name,
           fn_name: input,
           args: []
@@ -84,12 +93,14 @@ const Backend = function(hostopt) {
       }
     }
 
-    const updates = await serverEval({ manifests: [
-      {
-        runtime: hostopt.designer.runtime ?? 'r',
-        calls: calls
+    const manifests = Object.keys(runtimeCalls).map((runtime) => {
+      return {
+        runtime: runtime,
+        calls: runtimeCalls[runtime]
       }
-    ]});
+    })
+
+    const updates = await serverEval({ manifests: manifests });
 
     if (!updates.responses || updates.responses.length == 0 || !updates.responses[0].calls) return;
     calls = updates.responses[0].calls;
@@ -125,13 +136,13 @@ const Backend = function(hostopt) {
   }
 
   async function onChange(changes) {
-    if (changes.step !== undefined) {
-      let id = changes.step.id;
+    if (changes.step === undefined) return;
 
-      const ids = await getForwardDependencies(changes.step.id);
-      ids.unshift(id);
-      await performUpdates(ids);
-    }
+    let id = changes.step.id;
+
+    const ids = await getForwardDependencies(changes.step.id);
+    ids.unshift(id);
+    await performUpdates(ids);
   }
 
   async function getForwardDependencies(sid) {
@@ -282,8 +293,9 @@ const Backend = function(hostopt) {
     initHeartbeat();
   }
 
-  this.init = async function(pipelineid) {
+  this.init = async function(pipelineid, h9api) {
     pid = pipelineid;
+    if (h9api) hal9api = h9api;
     await initializeManifest();
   }
 
@@ -347,6 +359,14 @@ const Backend = function(hostopt) {
 
   this.onUpdated = async function() {
     await initializeManifest();
+  }
+
+  this.getruntimes = function() {
+    return clone(runtimes);
+  }
+
+  this.addruntime = function() {
+    
   }
 }
 

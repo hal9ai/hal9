@@ -1,5 +1,5 @@
 import { api } from '../api/api';
-import { backend } from '../designer/backend';
+import { backend } from '../backend/backend';
 import { designer } from '../designer/designer';
 import * as browser from '../runtimes/browser';
 
