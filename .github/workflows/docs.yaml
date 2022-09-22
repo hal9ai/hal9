@@ -1,6 +1,6 @@
 name: CI
 
-on: [ push, pull_request ]
+on: [ push ]
 
 jobs:
   docs:
@@ -31,3 +31,40 @@ jobs:
           action_url: ${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}
           details_url: ${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}
           output: "{ \"summary\": \"${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}\" }"
+  r-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+      - name: Add Commit SHA
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+      - uses: quarto-dev/quarto-actions/setup@v2
+      - uses: r-lib/actions/setup-pandoc@master
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          working-directory: ./r
+      - name: Install Hal9
+        run: |
+          Rscript -e 'install.packages("devtools")'
+          Rscript -e 'devtools::build()'
+          Rscript -e 'devtools::install()'
+        working-directory: ./r
+      - name: Render pkgdown
+        run: |
+          Rscript -e 'install.packages("pkgdown")'
+          Rscript -e 'pkgdown::build_site("./r")'
+      - uses: zdurham/s3-upload-github-action@master
+        with:
+          args: --recursive --acl public-read
+        env:
+          FILE: './r/docs'
+          AWS_REGION: 'us-west-2'
+          S3_BUCKET: 'notebooks.hal9.com'
+          S3_KEY: ${{ format('commits/{0}/r', env.SHORT_SHA) }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
