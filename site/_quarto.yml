@@ -5,15 +5,16 @@ website:
   title: "Docs"
   navbar:
     logo: logo.png
+    logo-href: https://hal9.com
     title: false
     background: primary
     left:
       - text: "Python"
-        href: /docs/python
+        href: /python
       - text: "R"
-        href: /docs/r
+        href: /r
       - text: "JavaScript"
-        href: /docs/javascript
+        href: /javascript
   sidebar:
       style: "docked"
       search: true
