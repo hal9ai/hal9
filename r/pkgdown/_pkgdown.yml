@@ -5,3 +5,7 @@ home:
 
 template:
   bootstrap: 5
+
+  includes:
+    before_navbar:
+      html: <a href="/docs"><img class="logo-nav" src="https://hal9.com/docs/logo.png"</img></a>
