@@ -20,18 +20,15 @@ const Designer = function(hostopt) {
 
   async function serverSave(raw, hostopt) {
     if (!hostopt.designer.persist) return;
-    if (typeof(hostopt.designer.persist) === 'function')
-      return await hostopt.designer.persist(raw);
-    else {
-      return await fetch(hostopt.designer.persist, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: raw
-      });
-    }
+    
+    return await fetch(hostopt.designer.persist, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: raw
+    });
   }
 
   async function onRequestSave() {

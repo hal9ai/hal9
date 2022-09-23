@@ -13,6 +13,7 @@ import components from '../../scripts/components.json';
 import clone from '../core/utils/clone';
 import functions from '../core/utils/functions';
 import { backend } from '../core/backend/backend';
+import * as workers from '../core/workers';
 
 var fnCallbacks = [];
 
@@ -103,6 +104,7 @@ function IFrameAPI(options, hal9wnd, config) {
   me.hal9wnd = hal9wnd;
   me.config = config;
   me.backend = backend;
+  me.workers = workers;
 
   function enhanceContext(context) {
     if (me.options.events) {

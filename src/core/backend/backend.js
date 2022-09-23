@@ -1,62 +1,43 @@
 import clone from '../utils/clone';
+import * as browser from './runtimes/browser';
+import * as server from './runtimes/server';
 
 const Backend = function(hostopt) {
   let pid = undefined;
   let manifest = {};
   let hal9api = window.hal9;
-  let backendid = undefined;
-  let backendquery = '';
-  let defaultRuntime = hostopt.designer.runtime ?? 'js';
+  let defaultRuntime = hostopt.runtime ?? 'js';
+  let serverurls = hostopt.designer;
+
+  let implementations = {
+    browser: browser.create(hostopt),
+    server: server.create(hostopt),
+  }
 
   let runtimes = {};
 
-  async function serverEval(body) {
-    if (typeof(hostopt.designer.eval) === 'function') {
-      return await hostopt.designer.eval(body);
+  async function implementationEval(body) {
+    const evalImplements = {};
+    body.manifests.map(e => {
+      evalImplements[e.implementation] = true;
+    });
+
+    let updates = [];
+    for (let evalImplementation of evalImplements) {
+      let implementation = implementations[evalImplementation];
+      if (!implementation) throw('Invalid implementation ' + evalImplementation);
+
+      let bodyImplementation = clone(body.manifests.filter(e => e.implementation === implementation));
+
+      bodyImplementation.map(e => {
+        delete e.implementation;
+      })
+
+      updates = updates.concat(await implementation.process(bodyImplementation));
     }
 
-    console.log('Sending: \n' + JSON.stringify(body, null, 2));
-
-    let resp;
-    try {
-      resp = await fetch(hostopt.designer.eval + backendquery, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      });
-    }
-    catch (e) {
-      throw('Server /' + hostopt.designer.eval + ' failed: [' + e.toString() + ']')
-    }
-
-    if (!resp.ok) {
-      throw('Server /' + hostopt.designer.eval + ' failed with ' + resp.statusText + ': [' + (await resp.text()) + ']')
-    }
-
-    const updates = await resp.json();
-
-    console.log('Receiving: \n' + JSON.stringify(updates, null, 2));
 
     return updates;
-  }
-
-  async function serverSave(raw, hostopt) {
-    if (!hostopt.designer.persist) return;
-    if (typeof(hostopt.designer.persist) === 'function')
-      return await hostopt.designer.persist(raw);
-    else {
-      return await fetch(hostopt.designer.persist + backendquery, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: raw
-      });
-    }
   }
 
   async function performUpdates(ids) {
@@ -100,7 +81,7 @@ const Backend = function(hostopt) {
       }
     })
 
-    const updates = await serverEval({ manifests: manifests });
+    const updates = await implementationEval({ manifests: manifests });
 
     if (!updates.responses || updates.responses.length == 0 || !updates.responses[0].calls) return;
     calls = updates.responses[0].calls;
@@ -193,12 +174,14 @@ const Backend = function(hostopt) {
       })
     };
 
-    await serverEval({ manifests: [
-      {
-        runtime: hostopt.designer.runtime ?? 'r',
+    let runtimeCalls = Object.keys(runtimes).map(function(runtime) {
+      return {
+        runtime: runtimes[runtime].name,
         calls: [ call ]
-      }
-    ]});
+      };
+    });
+
+    await implementationEval({ manifests: runtimeCalls });
 
     const ids = await getForwardDependencies(step.id);
     await performUpdates(ids);
@@ -221,43 +204,8 @@ const Backend = function(hostopt) {
     return hash;
   }
 
-  async function initBackend() {
-    if (!hostopt.designer.init) return;
-
-    backendid = crypto.getRandomValues(new Uint32Array(2)).join('-');
-    backendquery = '?' + new URLSearchParams({
-      backendid: backendid
-    });
-
-    try {
-      const resp = await fetch(hostopt.designer.init + backendquery);
-
-      if (!resp.ok) {
-        console.error('Failed to initialize backend: ' + (await resp.text()));
-      }
-    }
-    catch(e) {
-      console.error('Failed to receive response for backend initialization: ' + e.toString());
-    }
-  }
-
-  async function initHeartbeat() {
-    if (!hostopt.designer.heartbeat) return;
-
-    const heartbeatms = hostopt.designer.heartbeatms ?? 60 * 1000;
-    const sendhb = async function() {
-      try {
-        const resp = await fetch(hostopt.designer.heartbeat + backendquery);
-        if (!resp.ok) {
-          console.error('Failed to register heartbeat: ' + (await resp.text()));
-        }
-      }
-      catch(e) {
-        console.error('Failed to receive response for heartbeat: ' + e.toString());
-      }
-    }
-    sendhb();
-    setInterval(sendhb, heartbeatms);
+  async function ensureServerUrls() {
+    if (!serverurls && hostopt.serverurls) serverurls = await hostopt.serverurls();
   }
 
   this.manifest = function() {
@@ -288,9 +236,6 @@ const Backend = function(hostopt) {
 
   this.connect = async function(h9api) {
     hal9api = h9api;
-
-    await initBackend();
-    initHeartbeat();
   }
 
   this.init = async function(pipelineid, h9api) {
@@ -304,9 +249,10 @@ const Backend = function(hostopt) {
   }
 
   this.pipeline = async function() {
-    if (!hostopt.designer.pipeline) return undefined;
+    await ensureServerUrls();
+    if (!serverurls.pipeline) return undefined;
 
-    const resp = await fetch(hostopt.designer.pipeline + backendquery);
+    const resp = await fetch(serverurls.pipeline + backendquery);
     if (!resp.ok) {
       console.error('Failed to retrieve pipeline: ' + (await resp.text()));
     }
@@ -315,9 +261,10 @@ const Backend = function(hostopt) {
   }
 
   this.getfile = async function(path) {
-    if (!hostopt.designer.getfile) return undefined;
+    await ensureServerUrls();
+    if (!serverurls.getfile) return undefined;
 
-    const resp = await fetch(hostopt.designer.getfile + backendquery, {
+    const resp = await fetch(serverurls.getfile + backendquery, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -336,9 +283,10 @@ const Backend = function(hostopt) {
   }
 
   this.putfile = async function(path, contents) {
-    if (!hostopt.designer.putfile) return undefined;
+    await ensureServerUrls();
+    if (!serverurls.putfile) return undefined;
 
-    const resp = await fetch(hostopt.designer.putfile + backendquery, {
+    const resp = await fetch(serverurls.putfile + backendquery, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -367,10 +315,11 @@ const Backend = function(hostopt) {
 
   this.addruntime = function(spec) {
     if (!spec.name) throw 'The spec requires a name';
+    if (!spec.implementation) throw 'The spec requires an implementation';
     if (!spec.platform) throw 'The spec requires a platform';
     if (!spec.script) throw 'The spec requires a script';
     
-    return clone(spec);
+    runtimes[runtimes.name] = implementations[spec.implementation].addRuntime(clone(spec));
   }
 }
 
