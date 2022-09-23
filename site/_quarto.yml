@@ -7,6 +7,13 @@ website:
     logo: logo.png
     title: false
     background: primary
+    left:
+      - text: "Python"
+        href: /docs/python
+      - text: "R"
+        href: /docs/r
+      - text: "JavaScript"
+        href: /docs/javascript
   sidebar:
       style: "docked"
       search: true
