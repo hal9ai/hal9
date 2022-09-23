@@ -8,6 +8,7 @@ import * as htmloutput from '../core/htmloutput';
 import * as layout from '../core/layout';
 import * as exportto from '../core/exportto';
 import { internal } from './internal';
+import { backend } from '../core/backend/backend';
 
 const runRemote = async (lambda, context) => {
   if (typeof(lambda) != 'function') {
@@ -141,6 +142,7 @@ function NativeAPI(options) {
     load: load,
     fetch: fetchPipeline,
     run: run,
+    backend: backend
   });
 }
 

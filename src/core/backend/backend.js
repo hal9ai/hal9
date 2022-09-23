@@ -1,4 +1,4 @@
-import clone from '../core/utils/clone';
+import clone from '../utils/clone';
 
 const Backend = function(hostopt) {
   let pid = undefined;
@@ -365,8 +365,12 @@ const Backend = function(hostopt) {
     return clone(runtimes);
   }
 
-  this.addruntime = function() {
+  this.addruntime = function(spec) {
+    if (!spec.name) throw 'The spec requires a name';
+    if (!spec.platform) throw 'The spec requires a platform';
+    if (!spec.script) throw 'The spec requires a script';
     
+    return clone(spec);
   }
 }
 

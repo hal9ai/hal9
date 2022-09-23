@@ -12,6 +12,7 @@ import * as stepapi from '../core/api';
 import components from '../../scripts/components.json';
 import clone from '../core/utils/clone';
 import functions from '../core/utils/functions';
+import { backend } from '../core/backend/backend';
 
 var fnCallbacks = [];
 
@@ -101,6 +102,7 @@ function IFrameAPI(options, hal9wnd, config) {
   me.options = options;
   me.hal9wnd = hal9wnd;
   me.config = config;
+  me.backend = backend;
 
   function enhanceContext(context) {
     if (me.options.events) {
