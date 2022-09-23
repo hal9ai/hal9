@@ -917,8 +917,8 @@
   ],
   "Languages": [
     {
-      "name": "html",
-      "function": "html",
+      "name": "langhtml",
+      "function": "langhtml",
       "source": "languages/html.html",
       "language": "html",
       "label": "HTML",

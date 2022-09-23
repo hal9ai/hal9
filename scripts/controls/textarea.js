@@ -3,7 +3,7 @@
   output: [ html, textarea ]
   events: [ on_update ]
   layout:
-    - width: 900px
+    - width: 600px
 **/
 
 var textarea = '';

@@ -9,6 +9,9 @@
   output: [ html ]
   deps:
     - https://cdnjs.cloudflare.com/ajax/libs/showdown/2.0.0/showdown.min.js
+  layout:
+    - width: 600px
+      height: 450px
 **/
 
 const converter = new showdown.Converter();
