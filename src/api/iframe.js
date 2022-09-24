@@ -474,16 +474,18 @@ function IFrameAPI(options, hal9wnd, config) {
         alsoSkip: alsoSkip,
       })
     },
-    getHtml: async (pipelineid, appDimensions) => {
-      return await post(me.config, "hal9.exportto.getHtml(params.pipelineid, params.appDimensions)", {
+    getHtml: async (pipelineid, appDimensions, separateStyle) => {
+      return await post(me.config, "hal9.exportto.getHtml(params.pipelineid, params.appDimensions, params.separateStyle)", {
         pipelineid: pipelineid,
         appDimensions: appDimensions,
+        separateStyle: separateStyle,
       })
     },
-    getHtmlRemote: async (pipelinepath, appDimensions) => {
-      return await post(me.config, "hal9.exportto.getHtmlRemote(params.pipelinepath, params.appDimensions)", {
+    getHtmlRemote: async (pipelinepath, appDimensions, pipelineidForSeparateStyle) => {
+      return await post(me.config, "hal9.exportto.getHtmlRemote(params.pipelinepath, params.appDimensions, params.pipelineidForSeparateStyle)", {
         pipelinepath: pipelinepath,
         appDimensions: appDimensions,
+        pipelineidForSeparateStyle: pipelineidForSeparateStyle,
       })
     },
     getPythonScript: async (pipelineid) => {

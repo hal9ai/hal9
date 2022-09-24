@@ -284,6 +284,14 @@ export const applyStepLayoutsToApp = (stepLayouts, outputDiv) => {
   }
 }
 
+export const removeLayout = (outputDiv) => {
+  const hal9Steps = getHal9Steps(outputDiv);
+  for (const hal9Step of hal9Steps) {
+    hal9Step.classList.remove('hal9-inherit-height');
+    hal9Step.removeAttribute('style');
+  }
+}
+
 export const calcAppDimensions = (stepLayouts) => {
   const appDimensions = {
     width: 0,

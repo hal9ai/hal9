@@ -62,31 +62,62 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number 
   return JSON.stringify(pipeline, null, padding === undefined ? 2 : padding);
 }
 
-const getHtmlCommon = (rawDefinitionRhs, appDimensions = undefined, setenvString = '') => {
+// provide stepLayouts if you want a separate <style> element
+const getHtmlCommon = (rawDefinitionRhs, appDimensions = undefined, stepLayouts = undefined, setenvString = '') => {
   const libraryUrl = environment.getLibraryUrl();
-  const applyAppLayoutString = (appDimensions ? ', applyAppLayout: true' : '');
+  const applyAppLayoutString = ((appDimensions && !stepLayouts) ? ', applyAppLayout: true' : '');
   const widthString = appDimensions?.width ?? '600px';
   const heightString = appDimensions?.height ?? '400px';
+  let styleElementString = '';
+  let stylePropertyString = '';
+  if (stepLayouts && appDimensions) {
+    styleElementString += `
+<style id="hal9app-style">
+  .hal9-step {
+    position: absolute;
+    overflow: hidden;
+  }`;
+    for (const stepLayout of stepLayouts) {
+      styleElementString += `
+  .hal9-step-${stepLayout.stepId} {
+    width: ${stepLayout.width};
+    left: ${stepLayout.left};
+    height: ${stepLayout.height};
+    top: ${stepLayout.top};
+  }`;
+    }
+    styleElementString += '\n</style>';
+    stylePropertyString = `, style: 'hal9app-style'`;
+  }
   return `<script src="${libraryUrl}"></script>
-<div id='hal9app' style="min-width: ${widthString}; min-height: ${heightString};"></div>
+<div id="hal9app" style="min-width: ${widthString}; min-height: ${heightString};"></div>${styleElementString}
 <script>${setenvString}
   (async function() {
     const raw = ${rawDefinitionRhs};
-    hal9.run(await hal9.load(raw), { html: document.getElementById('hal9app')${applyAppLayoutString} });
+    hal9.run(await hal9.load(raw), { html: 'hal9app'${applyAppLayoutString}${stylePropertyString} });
   })();
 </script>`;
 }
 
-export const getHtml = (pipelineid /* pipelineid */, appDimensions) /* string */ => {
+export const getHtml = (pipelineid /* pipelineid */, appDimensions, separateStyle) /* string */ => {
   const rawDefinitionRhs = `'${btoa(unescape(encodeURIComponent(getSaveText(pipelineid, 0))))}'`;
-  return getHtmlCommon(rawDefinitionRhs, appDimensions);
+  let stepLayouts;
+  if (separateStyle) {
+    stepLayouts = pipelines.getApp(pipelineid)?.stepLayouts;
+  }
+  return getHtmlCommon(rawDefinitionRhs, appDimensions, stepLayouts);
 }
 
-export const getHtmlRemote = (pipelinepath /* pipelinepath */, appDimensions) /* string */ => {
+export const getHtmlRemote = (pipelinepath /* pipelinepath */, appDimensions, pipelineidForSeparateStyle) /* string */ => {
   const env = environment.getId();
   const setenv = env != 'prod' ? `\n    hal9.environment.setEnv('${env}');` : '';
   const rawDefinitionRhs = `await hal9.fetch('${pipelinepath}')`;
-  return getHtmlCommon(rawDefinitionRhs, appDimensions, setenv);
+  let stepLayouts;
+  if (pipelineidForSeparateStyle !== undefined) {
+    // the user might not have saved their app layout changes yet, so use the local version for step layouts
+    stepLayouts = pipelines.getApp(pipelineidForSeparateStyle)?.stepLayouts;
+  }
+  return getHtmlCommon(rawDefinitionRhs, appDimensions, stepLayouts, setenv);
 }
 
 const getFunctionForComponentName = (componentName) => {

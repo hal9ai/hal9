@@ -503,6 +503,16 @@ export const run = async (pipelineid /*: pipelineid */, context /* context */, p
     layout.applyStepLayoutsToApp(pipeline.app.stepLayouts, outputDiv);
   }
 
+  if (context.style) {
+    let style = context.style;
+    if (typeof (style) === 'string') {
+      style = document.getElementById(style);
+    }
+    const outputDiv = appDiv.shadowRoot;
+    layout.removeLayout(outputDiv);
+    outputDiv.prepend(style);
+  }
+
   context.events?.onError(clone(pipeline.error));
   context.events?.onEnd(clone(pipeline.globals), getStepsWithHeaders(pipelineid));
 
