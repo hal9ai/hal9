@@ -309,8 +309,8 @@ const Backend = function(hostopt) {
     await initializeManifest();
   }
 
-  this.getruntimes = function() {
-    return clone(runtimes);
+  this.getRuntimes = function() {
+    return Object.keys(runtimes);
   }
 
   this.addruntime = function(spec) {
