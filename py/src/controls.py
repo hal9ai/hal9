@@ -70,8 +70,3 @@ def textarea(uid: str, on_update: Callable = None, **kwargs) -> None:
 	kwargs["on_update"] = on_update
 	h9.node(uid, **kwargs)
     
-def website(uid: str, site: Callable = None, **kwargs) -> None:
-	kwargs = dict()
-	kwargs["site"] = site
-	h9.node(uid, **kwargs)
-    

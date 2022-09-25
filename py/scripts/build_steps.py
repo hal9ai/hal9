@@ -34,6 +34,8 @@ def create_kwarg_dict(y: dict):
         kwargs_dict = kwargs_dict+f'\n\tkwargs["{param}"] = {param}'
     return kwargs_dict
 for i, control in enumerate(d['Controls']):
+    if control['build'] == False:
+        continue
     script = scripts_path / Path(control['source'])
     try:
         with open(script) as s:
