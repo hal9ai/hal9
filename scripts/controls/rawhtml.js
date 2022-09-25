@@ -1,5 +1,7 @@
 /**
-  input: [ rawhtml ]
+  params:
+    - name: rawhtml
+      label: html
   output: [ html ]
   layout:
     - width: 900px
