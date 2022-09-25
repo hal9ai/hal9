@@ -12,6 +12,7 @@ fastapi = "^0.79.0"
 uvicorn = {extras = ["standard"], version = "^0.18.3"}
 
 [tool.poetry.dev-dependencies]
+PyYAML = "^6.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

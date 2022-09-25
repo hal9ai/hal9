@@ -2,7 +2,7 @@ import json
 from typing import Callable, Any
 import os
 import sys
-
+import controls
 
 class _Node:
     """
@@ -91,3 +91,15 @@ uvicorn.run(fastapp, host="127.0.0.1", port=port)
     glo = {'port': port}
     code = code + '\n' + servercode
     exec(code, glo)
+
+checkbox = controls.checkbox
+dropdown = controls.dropdown
+file = controls.file
+image = controls.image
+message = controls.message
+number = controls.number
+markdown = controls.markdown
+slider = controls.slider
+textbox = controls.textbox
+textarea = controls.textarea
+website = controls.website
