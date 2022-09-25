@@ -14,7 +14,7 @@ class _Node:
         self.funcs = funcs
         _register_node(self)
 
-    def evaluate(self, fn: str, *args, **kwargs):
+    def evaluate(self, fn: str, *args, **kwargs) -> Any:
         return self.funcs[fn](*args, **kwargs)
 
 
@@ -37,7 +37,7 @@ def get(x: str) -> Any:
         return None
 
 
-def set(name: str, value: Any) -> None:
+def set(name: str, value: Any) -> Any:
     global_data[name] = value
     return value
 
@@ -102,4 +102,4 @@ markdown = controls.markdown
 slider = controls.slider
 textbox = controls.textbox
 textarea = controls.textarea
-website = controls.website
+html = controls.html
