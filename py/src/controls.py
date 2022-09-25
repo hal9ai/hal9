@@ -44,6 +44,11 @@ def number(uid: str, label: Callable = None, value: Callable = None, on_update: 
 	kwargs["on_update"] = on_update
 	h9.node(uid, **kwargs)
     
+def html(uid: str, rawhtml: Callable = None, **kwargs) -> None:
+	kwargs = dict()
+	kwargs["rawhtml"] = rawhtml
+	h9.node(uid, **kwargs)
+    
 def markdown(uid: str, markdown: Callable = None, **kwargs) -> None:
 	kwargs = dict()
 	kwargs["markdown"] = markdown
