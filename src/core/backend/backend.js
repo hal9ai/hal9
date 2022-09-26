@@ -6,7 +6,7 @@ const Backend = function(hostopt) {
   let pid = undefined;
   let manifest = {};
   let hal9api = window.hal9;
-  let defaultRuntime = hostopt.runtime ?? 'js';
+  let defaultRuntime = hostopt.runtime;
   let serverurls = hostopt.designer;
 
   let implementations = {
@@ -312,6 +312,7 @@ const Backend = function(hostopt) {
   }
 
   this.addRuntime = async function(spec) {
+    if (!defaultRuntime) defaultRuntime = spec.platform;
     if (!spec.name) throw 'The spec requires a name';
     if (!spec.implementation) throw 'The spec requires an implementation';
     if (!spec.platform) throw 'The spec requires a platform';
@@ -319,6 +320,8 @@ const Backend = function(hostopt) {
     
     await implementations[spec.implementation].addRuntime(spec);
     runtimes[spec.name] = spec;
+
+    this.onUpdated();
   }
 }
 

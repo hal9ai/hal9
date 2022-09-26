@@ -44,7 +44,7 @@ const ServerImplementation = function(hostopt) {
     }
   }
 
-  this.process = async function() {
+  this.process = async function(body) {
     console.log('Sending: \n' + JSON.stringify(body, null, 2));
 
     let resp;
@@ -69,6 +69,8 @@ const ServerImplementation = function(hostopt) {
     const updates = await resp.json();
 
     console.log('Receiving: \n' + JSON.stringify(updates, null, 2));
+
+    return updates;
   }
 
   this.addRuntime = async function(spec) {

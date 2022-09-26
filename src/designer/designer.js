@@ -102,8 +102,17 @@ const Designer = function(hostopt) {
       document.body.insertBefore(initErr, document.body.firstChild);
     }
 
+    if (hostopt.runtime) {
+      await backendinst.addRuntime({
+        name: hostopt.runtime.name,
+        implementation: hostopt.runtime.implementation,
+        platform: hostopt.runtime.platform,
+        script: hostopt.runtime.script
+      });
+    }
+
     if (hostopt.mode == 'design') {
-      await launchDesigner(hal9api, options, pid);
+      await launchDesigner(hal9api, options, pid, backendinst);
     }
   }
 }

@@ -13,7 +13,7 @@
       async function start() {
         let h9 = hal9.browser;
         
-        h9.node('textarea', {
+        const code = `h9.node('textarea', {
           value: 'Hello from JS!',
           on_update: function(value) {
             h9.set('message', value);
@@ -24,7 +24,7 @@
           rawhtml: function() {
             return '<b>' + h9.get('message') + '</b>';
           }
-        })
+        })`;
 
         let hostopt = {
           mode: 'design',

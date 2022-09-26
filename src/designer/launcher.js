@@ -14,7 +14,7 @@ export const getDesignerLoaderHtml = (secret) => {
   `
 }
 
-export const launchDesigner = async (hal9, options, pid) => {
+export const launchDesigner = async (hal9, options, pid, backend) => {
   const script = document.createElement('script');
   const libraries = {
     local: 'http://localhost:8080/hal9.notebook.js',
@@ -47,6 +47,7 @@ export const launchDesigner = async (hal9, options, pid) => {
 
   await h9d.init({
     hal9: hal9,
+    backend: backend,
     pid: pid,
     html: options.designer,
     output: options.html,
