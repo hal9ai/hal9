@@ -22,32 +22,38 @@ const Backend = function(hostopt) {
 
   let runtimes = {};
 
+  function runtimeToImplementation(runtime) {
+    return platformToImplementations[runtimes[runtime].platform]
+  }
+
   async function implementationEval(body) {
     
     const evalImplements = {};
     body.manifests.map(e => {
-      const implementation = platformToImplementations[runtimes[e.runtime].platform];
+      const implementation = runtimeToImplementation(e.runtime);
       evalImplements[implementation] = true;
     });
 
-    let updates = [];
+    let responses = [];
     for (let name of Object.keys(evalImplements)) {
       let implementation = implementations[name];
       if (!implementation) throw('Invalid implementation ' + name);
 
       let manifests = body.manifests.filter(e => {
-        const implementation = platformToImplementations[runtimes[e.runtime].platform];
+        const implementation = runtimeToImplementation(e.runtime);
         return implementation === name;
       });
 
-      debugger;
-      updates = updates.concat(await implementation.process({
+      const response = await implementation.process({
         manifests: manifests
-      }));
+      });
+
+      responses = responses.concat(response.responses);
     }
 
-
-    return updates;
+    return {
+      responses: responses
+    };
   }
 
   async function performUpdates(ids) {
@@ -94,7 +100,7 @@ const Backend = function(hostopt) {
     const updates = await implementationEval({ manifests: manifests });
 
     if (!updates.responses || updates.responses.length == 0 || !updates.responses[0].calls) return;
-    calls = updates.responses[0].calls;
+    let calls = updates.responses[0].calls;
 
     for (let call of calls) {
       if (call.error) {
@@ -292,27 +298,9 @@ const Backend = function(hostopt) {
     return await resp.text();
   }
 
-  this.putfile = async function(path, contents) {
-    await ensureServerUrls();
-    if (!serverurls.putfile) return undefined;
-
-    const resp = await fetch(serverurls.putfile + backendquery, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        path: path,
-        contents: contents
-      })
-    });
-    if (!resp.ok) {
-      console.error('Failed to update file: ' + (await resp.text()));
-      return;
-    }
-
-    return await resp.json();
+  this.putFile = async function(runtime, path, contents) {
+    const implementation = runtimeToImplementation(runtime)
+    return implementations[implementation].putFile(runtime, path, contents);
   }
 
   this.onUpdated = async function() {
@@ -323,14 +311,14 @@ const Backend = function(hostopt) {
     return Object.keys(runtimes);
   }
 
-  this.addruntime = async function(spec) {
+  this.addRuntime = async function(spec) {
     if (!spec.name) throw 'The spec requires a name';
     if (!spec.implementation) throw 'The spec requires an implementation';
     if (!spec.platform) throw 'The spec requires a platform';
     if (!spec.script) throw 'The spec requires a script';
     
-    debugger;
-    runtimes[spec.name] = await implementations[spec.implementation].addRuntime(clone(spec));
+    await implementations[spec.implementation].addRuntime(spec);
+    runtimes[spec.name] = spec;
   }
 }
 

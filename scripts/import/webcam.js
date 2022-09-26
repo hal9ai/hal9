@@ -43,7 +43,6 @@ if (html) {
   const webcam = new Webcam(video, cameraType, canvas, null);
 
   html.onclick = function() {
-    debugger;
     data = hal9.get('frames');
     data = data ? data : [];
 

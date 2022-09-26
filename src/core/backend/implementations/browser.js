@@ -1,4 +1,6 @@
 
+
+
 const BrowserImplementation = function(hostopt) {
   var nodes = {};
   var data = {};
@@ -17,6 +19,8 @@ const BrowserImplementation = function(hostopt) {
     }
 
     this.evaluate = function(fn, args) {
+      if (!self.functions[fn]) return undefined;
+
       validateFunction(self.functions[fn], fn, self.uid)
       let flat = [];
       for (let arg of args)
@@ -81,6 +85,27 @@ const BrowserImplementation = function(hostopt) {
 
   this.addRuntime = async function(spec) {
     return spec;
+  }
+
+  this.putFile = async function(runtime, path, contents) {
+    const fnName = 'nodefn' + Math.floor(Math.random() * 10000000);
+
+    const body = `async function ${fnName}(h9) {
+
+${contents}
+
+}
+    `;
+
+    const fn = new Function('return ' + body)();
+
+    await fn({
+      node: this.node,
+      get: this.get,
+      set: this.set,
+    })
+
+    return true;
   }
 }
 

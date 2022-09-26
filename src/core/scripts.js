@@ -111,7 +111,7 @@ import tableautxt from '../../scripts/services/tableau.html';
 import twittertxt from '../../scripts/services/twitter.js';
 
 // language scripts
-import htmltxt from '../../scripts/languages/html.html';
+import langhtmltxt from '../../scripts/languages/html.html';
 import javascripttxt from '../../scripts/languages/javascript.js';
 import markdowntxt from '../../scripts/languages/markdown.md';
 import pyodidetxt from '../../scripts/languages/pyodide.py';
@@ -259,7 +259,7 @@ const scripts = {
   twitter: { script: twittertxt, language: 'javascript' },
 
   // languages
-  html: { script: htmltxt, language: 'html' },
+  langhtml: { script: langhtmltxt, language: 'html' },
   javascript: { script: javascripttxt, language: 'javascript' },
   markdown: { script: markdowntxt, language: 'markdown' },
   pyodide: { script: pyodidetxt, language: 'pyodide' },
@@ -280,7 +280,7 @@ const scripts = {
   image: { script: imagectrltxt, language: 'html' },
   message: { script: messagectrltxt, language: 'html' },
   numberinput: { script: numberctrltxt, language: 'html' },
-  rawhtml: { script: rawhtmltxt, language: 'javascript' },
+  html: { script: rawhtmltxt, language: 'javascript' },
   md: { script: mdctrltxt, language: 'js' },
   slider: { script: rangectrltxt, language: 'html' },
   sheet: { script: spreadsheetctrltxt, language: 'html' },

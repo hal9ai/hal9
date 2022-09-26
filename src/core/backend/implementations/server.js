@@ -76,6 +76,26 @@ const ServerImplementation = function(hostopt) {
     await initBackend();
     return spec;
   }
+
+  this.putFile = async function(runtime, path, contents) {
+    const resp = await fetch(serverurls.putfile + backendquery, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        path: path,
+        contents: contents
+      })
+    });
+    if (!resp.ok) {
+      console.error('Failed to update file: ' + (await resp.text()));
+      return;
+    }
+
+    return await resp.json();
+  }
 }
 
 export const create = function(hostopt) {
