@@ -1,6 +1,6 @@
 import clone from '../utils/clone';
-import * as browser from './runtimes/browser';
-import * as server from './runtimes/server';
+import * as browser from './implementations/browser';
+import * as server from './implementations/server';
 
 const Backend = function(hostopt) {
   let pid = undefined;
@@ -14,26 +14,36 @@ const Backend = function(hostopt) {
     server: server.create(hostopt),
   }
 
+  let platformToImplementations = {
+    r: 'server',
+    python: 'server',
+    js: 'browser'
+  };
+
   let runtimes = {};
 
   async function implementationEval(body) {
+    
     const evalImplements = {};
     body.manifests.map(e => {
-      evalImplements[e.implementation] = true;
+      const implementation = platformToImplementations[runtimes[e.runtime].platform];
+      evalImplements[implementation] = true;
     });
 
     let updates = [];
-    for (let evalImplementation of evalImplements) {
-      let implementation = implementations[evalImplementation];
-      if (!implementation) throw('Invalid implementation ' + evalImplementation);
+    for (let name of Object.keys(evalImplements)) {
+      let implementation = implementations[name];
+      if (!implementation) throw('Invalid implementation ' + name);
 
-      let bodyImplementation = clone(body.manifests.filter(e => e.implementation === implementation));
+      let manifests = body.manifests.filter(e => {
+        const implementation = platformToImplementations[runtimes[e.runtime].platform];
+        return implementation === name;
+      });
 
-      bodyImplementation.map(e => {
-        delete e.implementation;
-      })
-
-      updates = updates.concat(await implementation.process(bodyImplementation));
+      debugger;
+      updates = updates.concat(await implementation.process({
+        manifests: manifests
+      }));
     }
 
 
@@ -58,7 +68,7 @@ const Backend = function(hostopt) {
       runtimeCalls[runtime] = runtimeCalls[runtime] ?? [];
 
       for (let param of Object.keys(step.params)) {
-        runtimeCalls.push({
+        runtimeCalls[runtime].push({
           node: name,
           fn_name: param,
           args: []
@@ -66,7 +76,7 @@ const Backend = function(hostopt) {
       }
 
       for (let input of step.header.input) {
-        runtimeCalls.push({
+        runtimeCalls[runtime].push({
           node: name,
           fn_name: input,
           args: []
@@ -313,13 +323,14 @@ const Backend = function(hostopt) {
     return Object.keys(runtimes);
   }
 
-  this.addruntime = function(spec) {
+  this.addruntime = async function(spec) {
     if (!spec.name) throw 'The spec requires a name';
     if (!spec.implementation) throw 'The spec requires an implementation';
     if (!spec.platform) throw 'The spec requires a platform';
     if (!spec.script) throw 'The spec requires a script';
     
-    runtimes[runtimes.name] = implementations[spec.implementation].addRuntime(clone(spec));
+    debugger;
+    runtimes[spec.name] = await implementations[spec.implementation].addRuntime(clone(spec));
   }
 }
 

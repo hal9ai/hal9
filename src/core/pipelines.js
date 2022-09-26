@@ -659,6 +659,8 @@ export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step
   const scriptInfo = scripts.scriptFromStep(pipeline, step);
   step.language = scriptInfo.language;
 
+  step.header = getStepHeader(pipeline, step);
+
   pipeline.steps.push(step);
 
   return step;
