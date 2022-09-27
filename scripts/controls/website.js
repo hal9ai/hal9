@@ -10,6 +10,7 @@
           value: https://hal9ai.github.io/hal9ai/examples/website.html
   layout:
     - width: 900px
+  state: session
 **/
 
 data = typeof(data) != 'undefined' ? JSON.parse(JSON.stringify(data)) : null;

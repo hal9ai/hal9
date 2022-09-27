@@ -12,6 +12,7 @@
   layout:
     - width: 600px
       height: 450px
+  state: session
 **/
 
 const converter = new showdown.Converter();

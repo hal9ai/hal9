@@ -4,6 +4,7 @@
   events: [ on_update ]
   layout:
     - width: 600px
+  state: session
 **/
 
 var textarea = '';
