@@ -625,6 +625,8 @@ export const updateStep = (pipelineid /*: pipelineid */, step /*: step */) /*: v
 
 export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step */ => {
   step = clone(step);
+  step.source = clone(step);
+
   var pipeline = store.get(pipelineid);
 
   var maxId = getMaxId(pipelineid);
