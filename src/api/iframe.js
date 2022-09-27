@@ -467,6 +467,17 @@ function IFrameAPI(options, hal9wnd, config) {
         target: target,
       })
     },
+    getRuntimeSpecs: async (pipelineid) => {
+      return await post(me.config, "hal9.pipelines.getRuntimeSpecs(params.pipelineid)", {
+        pipelineid: pipelineid,
+      })
+    },
+    addRuntimeSpec: async (pipelineid, spec) => {
+      return await post(me.config, "hal9.pipelines.addRuntimeSpec(params.pipelineid, params.spec)", {
+        pipelineid: pipelineid,
+        spec: spec,
+      })
+    },
   };
     
 

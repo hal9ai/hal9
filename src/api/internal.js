@@ -84,6 +84,8 @@ export const internal = {
     getDependencies: pipelines.getDependencies,
     addDependency: pipelines.addDependency,
     removeDependency: pipelines.removeDependency,
+    getRuntimeSpecs: pipelines.getRuntimeSpecs,
+    addRuntimeSpec: pipelines.addRuntimeSpec,
   },
 
   exportto: {

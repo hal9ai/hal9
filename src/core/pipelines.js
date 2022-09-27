@@ -1003,3 +1003,17 @@ export const removeDependency = async (pipelineid /*: pipelineid */, source /*: 
   return clone(pipeline.deps);
 }
 
+export const getRuntimeSpecs = (pipelineid /*: pipelineid */) /*: object */ => {
+  var pipeline = store.get(pipelineid);
+  return clone(pipeline.runtimes);
+}
+
+export const addRuntimeSpec = (pipelineid /*: pipelineid */, spec /* object */) /*: object */ => {
+  var pipeline = store.get(pipelineid);
+  pipeline.runtimes = pipeline.runtimes ?? [];
+  pipeline.runtimes = pipeline.runtimes.filter(e => e.name != spec.name);
+  pipeline.runtimes.push(spec);
+
+  return clone(pipeline.runtimes);
+}
+
