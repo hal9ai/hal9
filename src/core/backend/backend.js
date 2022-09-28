@@ -204,6 +204,7 @@ const Backend = function(hostopt) {
   }
 
   function onInvalidate(step) {
+    if (hostopt.events?.onInvalidate) hostopt.events?.onInvalidate();
   }
 
   function onError(error) {
