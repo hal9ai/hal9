@@ -314,12 +314,12 @@ const Backend = function(hostopt) {
 
   this.addRuntime = async function(spec) {
     if (!defaultRuntime) defaultRuntime = spec.platform;
-    if (!spec.name) throw 'The spec requires a name';
     if (!spec.implementation) throw 'The spec requires an implementation';
-    if (!spec.platform) throw 'The spec requires a platform';
-    if (!spec.script) throw 'The spec requires a script';
     
-    await implementations[spec.implementation].addRuntime(spec);
+    const impl = implementations[spec.implementation];
+    if (!impl) throw('Implementation ' + spec.implementation + ' is not supported')
+
+    await impl.addRuntime(spec);
     runtimes[spec.name] = spec;
 
     this.onUpdated();
