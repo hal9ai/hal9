@@ -97,6 +97,10 @@ ${contents}
 }
     `;
 
+    // clear state
+    nodes = {};
+    data = {};
+
     const fn = new Function('return ' + body)();
 
     await fn({
