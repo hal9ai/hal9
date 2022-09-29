@@ -70,23 +70,28 @@ const Backend = function(hostopt) {
       step = step[0];
 
       let name = step.name;
-      let runtime = step.runtime ?? defaultRuntime;
-      runtimeCalls[runtime] = runtimeCalls[runtime] ?? [];
+      let runtimeCandidates = step.runtime ? [ step.runtime ] : Object.keys(runtimes);
 
-      for (let param of Object.keys(step.params)) {
-        runtimeCalls[runtime].push({
-          node: name,
-          fn_name: param,
-          args: []
-        });
-      }
+      for (let runtime of runtimeCandidates) {
 
-      for (let input of step.header.input) {
-        runtimeCalls[runtime].push({
-          node: name,
-          fn_name: input,
-          args: []
-        });
+        runtimeCalls[runtime] = runtimeCalls[runtime] ?? [];
+
+        for (let param of Object.keys(step.params)) {
+          runtimeCalls[runtime].push({
+            node: name,
+            fn_name: param,
+            args: []
+          });
+        }
+
+        for (let input of step.header.input) {
+          runtimeCalls[runtime].push({
+            node: name,
+            fn_name: input,
+            args: []
+          });
+        }
+
       }
     }
 
@@ -100,7 +105,12 @@ const Backend = function(hostopt) {
     const updates = await implementationEval({ manifests: manifests });
 
     if (!updates.responses || updates.responses.length == 0 || !updates.responses[0].calls) return;
-    let calls = updates.responses[0].calls;
+    
+    let calls = []
+    for (let response of updates.responses) {
+      let responseCalls = response.calls.filter(e => e.result !== null);
+      calls = calls.concat(responseCalls);
+    }
 
     for (let call of calls) {
       if (call.error) {
