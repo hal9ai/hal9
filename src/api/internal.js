@@ -91,7 +91,6 @@ export const internal = {
   exportto: {
     getSaveText: exportto.getSaveText,
     getHtml: exportto.getHtml,
-    getHtmlRemote: exportto.getHtmlRemote,
     getPythonScript: exportto.getPythonScript,
     getRScript: exportto.getRScript,
   },

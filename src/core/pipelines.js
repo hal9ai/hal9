@@ -466,6 +466,11 @@ export const run = async (pipelineid /*: pipelineid */, context /* context */, p
     context.html = document.getElementById(context.html);
   }
   const appDiv = context.html;
+  const hasHtmlSteps = (appDiv.querySelector(':scope .hal9-step') !== null);
+  if (hasHtmlSteps) {
+    context.shadow = false;
+    // TODO: finish runtime updates so that the divs don't get overwritten
+  }
 
   partial = preparePartial(pipeline, context, partial, stepstopid);
   layout.prepareForDocumentView(pipeline, context, stepstopid);
@@ -503,7 +508,9 @@ export const run = async (pipelineid /*: pipelineid */, context /* context */, p
     layout.applyStepLayoutsToApp(pipeline.app.stepLayouts, outputDiv);
   }
 
-  if (context.style) {
+  if (hasHtmlSteps) {
+    layout.removeLayout(appDiv);
+  } else if (context.style) {
     let style = context.style;
     if (typeof (style) === 'string') {
       style = document.getElementById(style);
