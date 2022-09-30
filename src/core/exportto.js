@@ -121,14 +121,24 @@ export const getHtml = (pipelineid, pipelinepath, htmlFormat) => {
   let styleElementString = '';
   let stylePropertyString = '';
   if (generateStyle) {
-    styleElementString += `<style id="hal9app-style">
+    styleElementString = '<style id="hal9app-style">';
+    if (fullPage) {
+      styleElementString += `
+  #hal9app {
+    min-width: ${widthString};
+    min-height: ${heightString};
+  }`;
+    }
+    styleElementString += `
   .hal9-step {
     position: absolute;
     overflow: hidden;
   }`;
     for (const stepLayout of stepLayouts) {
+      const step = pipelines.getStep(pipelineid, stepLayout.stepId);
+      const stepComment = '\n    /* ' + step.name + ' */';
       styleElementString += `
-  .hal9-step-${stepLayout.stepId} {
+  .hal9-step-${stepLayout.stepId} {${stepComment}
     width: ${stepLayout.width};
     left: ${stepLayout.left};
     height: ${stepLayout.height};
@@ -147,7 +157,7 @@ export const getHtml = (pipelineid, pipelinepath, htmlFormat) => {
 </script>`;
 
   if (fullPage) {
-    let appDivElementString = `<div id="hal9app" style="min-width: ${widthString}; min-height: ${heightString};">`;
+    let appDivElementString = '<div id="hal9app" data-keep-contents>';
     for (const stepLayout of stepLayouts) {
       appDivElementString += '\n' + `  <div class="hal9-step hal9-step-${stepLayout.stepId}"></div>`;
     }

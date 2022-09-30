@@ -108,7 +108,7 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
       const inheritHeights = html.querySelectorAll(':scope .hal9-inherit-height');
       [...inheritHeights].map(container => { container.style.height = height + 'px' });
     }
-    else {
+    else if (parent.dataset.keepContents === undefined) {
       window.hal9.layouts[pipeline.id] = undefined;
       parent.innerHTML = html.innerHTML = '';
     }
