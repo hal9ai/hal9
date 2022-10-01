@@ -478,6 +478,16 @@ function IFrameAPI(options, hal9wnd, config) {
         spec: spec,
       })
     },
+    getPipeline: async (pipelineid) => {
+      return await post(me.config, "hal9.pipelines.getPipeline(params.pipelineid)", {
+        pipelineid: pipelineid,
+      })
+    },
+    addPipeline: async (pipeline) => {
+      return await post(me.config, "hal9.pipelines.addPipeline(params.pipeline)", {
+        pipeline: pipeline,
+      })
+    },
   };
     
 

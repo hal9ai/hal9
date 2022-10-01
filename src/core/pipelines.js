@@ -1026,3 +1026,10 @@ export const addRuntimeSpec = (pipelineid /*: pipelineid */, spec /* object */) 
   return clone(pipeline.runtimes);
 }
 
+export const getPipeline = (pipelineid /*: pipelineid */) /*: object */ => {
+  return clone(store.get(pipelineid));
+}
+
+export const addPipeline = (pipeline /*: object */) /*: void */ => {
+  return store.add(clone(pipeline));
+}
