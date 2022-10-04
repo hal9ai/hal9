@@ -776,7 +776,19 @@ export const init = async (options, hal9wnd) => {
     iframehtml = iframehtml + `\n  ${newOutputDiv} ${ scriptHeader }\n  ${ iframeScript }\n  </body></html> `
   }
 
-  iframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(iframehtml);
+  if (options.contentsrv) {
+    var res = await fetch(options.contentsrv, {
+      method: 'POST',
+      body: JSON.stringify({ content: iframehtml }),
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    const contentdata = await res.json();
+    iframe.src = options.contentsrv + '/' + contentdata.id;
+  }
+  else {
+    iframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(iframehtml);
+  }
 
   var waitLoad = new Promise((accept, reject) => {
     iframe.addEventListener('load', accept);
