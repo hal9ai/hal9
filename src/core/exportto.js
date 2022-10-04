@@ -124,7 +124,7 @@ export const getHtml = (pipelineid, pipelinepath, htmlFormat) => {
     styleElementString = '<style id="hal9app-style">';
     if (fullPage) {
       styleElementString += `
-  #hal9app {
+  #output {
     min-width: ${widthString};
     min-height: ${heightString};
   }`;
@@ -157,7 +157,7 @@ export const getHtml = (pipelineid, pipelinepath, htmlFormat) => {
 </script>`;
 
   if (fullPage) {
-    let appDivElementString = '<div id="hal9app" data-keep-contents>';
+    let appDivElementString = '<div id="output" data-keep-contents>';
     for (const stepLayout of stepLayouts) {
       appDivElementString += '\n' + `  <div class="hal9-step hal9-step-${stepLayout.stepId}"></div>`;
     }

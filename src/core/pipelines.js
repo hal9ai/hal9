@@ -721,7 +721,8 @@ const getDefinition = (pipeline /*: pipeline */) /*: object */ => {
   return {
     steps: stepDefinitions,
     app: clone(pipeline.app),
-    deps: clone(pipeline.deps)
+    deps: clone(pipeline.deps),
+    runtimes: clone(pipeline.runtimes),
   }
 }
 

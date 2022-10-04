@@ -632,21 +632,14 @@ export const init = async (options, hal9wnd) => {
   // iframe.setAttribute('sandbox', 'allow-forms allow-downloads allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation allow-scripts allow-same-origin');
 
   iframe.setAttribute('scrolling', 'no');
+  var secret = Math.random();
 
   iframe.style.border = 'none';
   iframe.style.width = '100%';
   iframe.style.height = '100%';
   iframe.style.margin = 0;
   iframe.style.padding = 0;
-
-  var secret = Math.random();
-  const iframehtml = `
-    <!DOCTYPE html>
-    <html style="height: 100%">
-      <head>
-        <base target="_blank">
-        <script src='${options.api}'></script>
-        <style>${ options.css ?? ''}</style>
+  const iframeScript = `
         <script>
           // mock localstorage for iframes to avoid errors
           const localStorageMock = (() => {
@@ -723,7 +716,7 @@ export const init = async (options, hal9wnd) => {
             (async function() {
               try {
                 postID = event.data.id;
-              	const result = await runAsync(event.data.body, event.data.params);
+                const result = await runAsync(event.data.body, event.data.params);
 
                 window.parent.postMessage({ secret: ${secret}, id: event.data.id, result: result, html: document.body.innerText.length > 0 }, '*');
               }
@@ -734,6 +727,17 @@ export const init = async (options, hal9wnd) => {
             })();
           }); 
         </script>
+`
+  const scriptHeader = `<script src='${options.api}'></script>`;
+  const outputDiv = `<div id="output" style="position: relative; width: 100%; height: 100%; overflow: auto;"></div>
+        `;
+  var iframehtml = `
+    <!DOCTYPE html>
+    <html style="height: 100%">
+      <head>
+        <base target="_blank">
+        ${ scriptHeader }
+        <style>${ options.css ?? ''}</style>
         <style>
           body {
             height: 100%;
@@ -750,10 +754,27 @@ export const init = async (options, hal9wnd) => {
       </head>
       <body>
         ${ options.editable ? getDesignerLoaderHtml(secret) : '' }
-        <div id="output" style="position: relative; width: 100%; height: 100%; overflow: auto;"></div>
+        ${ outputDiv }
+        ${ iframeScript }
       </body>
     </html>
   `;
+
+  if (options.pipeline && options.pipeline.runtimes && options.pipeline.runtimes.some(e => e.implementation == 'html')) {
+    const htmlruntime = options.pipeline.runtimes.filter(e => e.implementation == 'html')[0];
+    iframehtml = htmlruntime.files[htmlruntime.script];
+
+    iframehtml = iframehtml.replace(/<\/body>[\s\S]*<\/html>/, '');
+    iframehtml = iframehtml.replace(/<script src=\".*hal9.*\.js\"><\/script>/, '');
+    iframehtml = iframehtml.replace(/<script>[^]+hal9\.[^]+<\/script>/, '');
+
+    var newOutputDiv = '';
+    if (!/<div id=\"output\" /.test(iframehtml)) {
+      newOutputDiv = outputDiv;
+    }
+
+    iframehtml = iframehtml + `\n  ${newOutputDiv} ${ scriptHeader }\n  ${ iframeScript }\n  </body></html> `
+  }
 
   iframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(iframehtml);
 
