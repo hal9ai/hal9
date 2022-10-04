@@ -766,7 +766,7 @@ export const init = async (options, hal9wnd) => {
 
     iframehtml = iframehtml.replace(/<\/body>[\s\S]*<\/html>/, '');
     iframehtml = iframehtml.replace(/<script src=\".*hal9.*\.js\"><\/script>/, '');
-    iframehtml = iframehtml.replace(/<script>[^]+hal9\.[^]+<\/script>/, '');
+    iframehtml = iframehtml.replace(/<script>[^]+ hal9\.run\([^]+<\/script>/, '');
 
     var newOutputDiv = '';
     if (!/<div id=\"output\" /.test(iframehtml)) {
