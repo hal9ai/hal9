@@ -74,7 +74,7 @@ export const capture = async (output, options = {}) => {
   document.body.appendChild(wrapper);
 
   const elems = [...(output.shadowRoot ? output.shadowRoot.children : output.children)];
-  const total = elems.map(e => e.querySelectorAll("*").length).reduce((a,b) => a + b);
+  const total = elems.length == 0 ? 0 : elems.map(e => e.querySelectorAll("*").length).reduce((a,b) => a + b);
 
   // cloning too many HTML elements can block the browser
   var copies = [];
