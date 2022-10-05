@@ -3,6 +3,7 @@ use hal9::server::start_server;
 use hal9::app_template::new_app;
 
 #[derive(Parser)]
+#[command(author, version, about, long_about = None)]
 struct Cli {
     #[clap(subcommand)]
     command: Option<Commands>,
