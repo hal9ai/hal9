@@ -97,7 +97,7 @@ async fn eval(
             let err_string = e.to_string();
             println!("Runtime startup error: {err_string}");
 
-            HttpResponse::InternalServerError().body(e.to_string())
+            HttpResponse::BadRequest().body(e.to_string())
         }
     }
 }
