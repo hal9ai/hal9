@@ -9,7 +9,7 @@ use extendr_api::wrapper::nullable::Nullable;
 /// @export
 #[extendr]
 fn h9_start(#[default = "."] path: String, #[default = "NULL"] port: Nullable<i32>, #[default = "600"] timeout: u32,
-            #[default = "false"] nobrowse: bool) {
+            #[default = "FALSE"] nobrowse: bool) {
     let port: u16 = match port {
         Nullable::Null => 0,
         Nullable::NotNull(x) => x
