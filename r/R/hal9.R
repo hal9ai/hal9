@@ -83,16 +83,20 @@ process_request <- function(req) {
         fn_args_values <- call$args |> lapply(\(x) x$value)
         fn_args <- setNames(fn_args_values, fn_args_names)
 
-        result <- tryCatch(
-            list(Value = node$evaluate(fn_name, fn_args)),
-            error = function(e) list(Error = paste0(e, collapse = "\\n"))
-        )
-
-        list(
-            node = call$node,
-            fn_name = fn_name,
-            result = result
-        )
+        tryCatch({
+            list(
+                node = call$node,
+                fn_name = fn_name,
+                result = node$evaluate(fn_name, fn_args)
+            )
+        },
+        error = function(e) {
+            list(
+                node = call$node,
+                fn_name = fn_name,
+                error = paste0(e, collapse = "\\n")
+            )
+        })
     })
     list(calls = responses)
 }

@@ -36,14 +36,9 @@ pub(crate) struct RuntimeResponse {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub(crate) enum FnResult {
-    Value(Option<serde_json::Value>),
-    Error(String),
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
 pub(crate) struct CallResponse {
     pub node: String,
     pub fn_name: String,
-    pub result: FnResult,
+    pub result: Option<serde_json::Value>,
+    pub error: Option<String>
 }
