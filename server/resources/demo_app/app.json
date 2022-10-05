@@ -307,24 +307,24 @@
     "stepLayouts": [
       {
         "stepId": 11105,
-        "width": "186px",
-        "left": "51px",
+        "width": "131px",
+        "left": "0px",
         "height": "40px",
-        "top": "161px"
+        "top": "30px"
       },
       {
         "stepId": 11106,
-        "width": "900px",
-        "left": "83px",
-        "height": "990px",
-        "top": "284px"
+        "width": "456px",
+        "left": "0px",
+        "height": "371px",
+        "top": "76px"
       },
       {
         "stepId": 11107,
-        "width": "390px",
-        "left": "254px",
-        "height": "75px",
-        "top": "140px"
+        "width": "317px",
+        "left": "139px",
+        "height": "70px",
+        "top": "0px"
       }
     ]
   },
@@ -333,5 +333,30 @@
       11105,
       11107
     ]
+  },
+  "runtimes": [
+    {
+      "name": "r",
+      "implementation": "server",
+      "platform": "r",
+      "script": "R/backend.R",
+      "files": {
+        "R/backend.R": "library(hal9)\n\niris |> h9_set(\"df\")\n\nh9_dropdown(\n    \"species_dropdown\",\n    values = unique(levels(iris$Species)),\n    on_update = function(value) {\n        h9_set(value, \"selected_species\")\n    }\n)\n\nh9_html(\n    \"iris_table\",\n    rawhtml = function() {\n        sp <- h9_get(\"selected_species\")\n        if (is.null(sp)) {\n            return(\"\")\n        }\n\n        out <- iris[iris$Species == sp, ]\n\n        num_rows <- h9_get(\"num_rows\")\n\n        if (!is.null(num_rows)) {\n            out <- out |> head(num_rows)\n        }\n\n        out |>\n            knitr::kable(format = \"html\") |>\n            as.character()\n    }\n)\n\nh9_slider(\"slider_rows\",\n    value = 1,\n    min = 1,\n    max = 10,\n    step = 1,\n    on_update = function(value) {\n        h9_set(value, \"num_rows\")\n    }\n)\n"
+      }
+    }
+  ],
+  "state": {
+    "steps": {
+      "11105": {
+        "api": {
+          "dropdown": "setosa"
+        }
+      },
+      "11107": {
+        "api": {
+          "slider": 8
+        }
+      }
+    }
   }
 }
