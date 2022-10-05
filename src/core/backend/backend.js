@@ -108,7 +108,7 @@ const Backend = function(hostopt) {
     
     let calls = []
     for (let response of updates.responses) {
-      let responseCalls = response.calls.filter(e => e.result !== null);
+      let responseCalls = response.calls.filter(e => e.result !== null || e.error !== undefined);
       calls = calls.concat(responseCalls);
     }
 
