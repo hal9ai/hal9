@@ -1,11 +1,14 @@
+
+
 use crossbeam::channel;
 use std::collections::HashMap;
-use std::process::{Child, Command, Stdio};
+use std::process::{Child, Command, Stdio, ChildStderr};
 use tokio::sync::mpsc::Receiver;
 use std::io::Read;
 use tokio::sync::mpsc;
 use std::str;
 use url::Url;
+use std::io::ErrorKind;
 
 use crate::config::{Platform, Runtime};
 use crate::runtimes;
@@ -14,10 +17,9 @@ use crate::shutdown::Shutdown;
 pub(crate) struct RuntimesController {
     runtimes: Vec<Runtime>,
     app_root: String,
-    handles: HashMap<String, Child>,
-    uris: HashMap<String, Url>,
+    handles: HashMap<String, RuntimeHandle>,
     rx: Receiver<RtControllerMsg>,
-    tx_uri: channel::Sender<Url>,
+    tx_uri: channel::Sender<Result<Url, std::io::Error>>,
     shutdown: Shutdown,
     _shutdown_complete_tx: mpsc::Sender<()>,
     pub default_runtime: Option<String>,
@@ -35,18 +37,80 @@ pub(crate) enum RtControllerMsg {
     GetUri(String),
 }
 
+#[derive(Debug)]
+struct RuntimeHandle {
+    pub handle: Child,
+    pub startup_result: RuntimeStartupResult,
+    _stderr: ChildStderr,
+}
+
+#[derive(Debug)]
+enum RuntimeStartupResult {
+    Success(String),
+    Failure(String),
+}
+
+impl RuntimeHandle {
+    fn get_url(&self) -> Result<Url, std::io::Error> {
+        match &self.startup_result {
+            RuntimeStartupResult::Success(url) => {
+                Ok(url.parse().unwrap())
+            },
+            RuntimeStartupResult::Failure(error) => {
+                Err(std::io::Error::new(ErrorKind::Other, error.to_owned()))
+            }
+        }
+    }
+    
+    fn read_startup_result(mut handle: Child, intro: String) -> Self {
+        let mut buf = [0; 64];
+        let mut msg_vec = Vec::new();
+        
+        let pattern = format!("{intro} http://*.+\\n");
+        let regex= regex::Regex::new(&pattern).unwrap();
+        
+        let mut stderr = handle.stderr.take().unwrap();
+        
+        let result = loop {
+            
+            let n = stderr.read(&mut buf).unwrap();
+            
+            if n == 0 {
+                // nothing left to read and no Plumber startup message detected
+                let msg = str::from_utf8(&msg_vec).unwrap().trim();
+                break RuntimeStartupResult::Failure(msg.to_owned());
+            }
+            
+            msg_vec.extend_from_slice(&buf[..n]);
+            let msg = str::from_utf8(&msg_vec).unwrap();
+            let mat = regex.find(msg);
+            
+            if let Some(m) = mat {
+                // Plumber startup message detected
+                let url = &msg[(intro.len() + 1)..m.end() - 1];
+                break RuntimeStartupResult::Success(url.to_owned());
+            };
+        };
+
+        RuntimeHandle {
+            handle,
+            startup_result: result,
+            _stderr: stderr,
+        }
+    }
+}
+
 impl RuntimesController {
-    pub(crate) fn new(
+    pub(crate) fn new (
         v: Vec<Runtime>,
         app_root: String,
         rx: Receiver<RtControllerMsg>,
-        tx_uri: channel::Sender<Url>,
+        tx_uri: channel::Sender<Result<Url, std::io::Error>>,
         shutdown: Shutdown,
         _shutdown_complete_tx: mpsc::Sender<()>
     ) -> Self {
-        let api_handles: HashMap<String, Child> = HashMap::new();
-        let uris: HashMap<String, Url> = HashMap::new();
-
+        let api_handles: HashMap<String, RuntimeHandle> = HashMap::new();
+        
         let default_runtime = if v.len() == 1 {
             Some(v[0].name.clone())
         } else {
@@ -57,7 +121,6 @@ impl RuntimesController {
             runtimes: v,
             app_root,
             handles: api_handles,
-            uris,
             rx,
             tx_uri,
             shutdown,
@@ -79,9 +142,9 @@ impl RuntimesController {
                                 RtControllerMsg::StopAll => self.stop_all().await.ok().unwrap(),
                                 RtControllerMsg::StartAll => self.launch_all().await.ok().unwrap(),
                                 RtControllerMsg::GetUri(x) => {
-                                    let uri = self.uris.get(&x).unwrap();
-                                    self.tx_uri.send(uri.clone()).unwrap_or_else(|err| panic!("{err}"));
-                                    
+                                    let handle_ref = self.handles.get(&x);
+                                    let url_result = handle_ref.as_ref().unwrap().get_url();
+                                    self.tx_uri.send(url_result).ok();
                                 }
                             }
                         }
@@ -98,6 +161,8 @@ impl RuntimesController {
         
     }
     
+    
+    
     async fn launch(&mut self, name: String) -> Result<(), std::io::Error> {
         let runtimes: Vec<Runtime> = self
         .runtimes
@@ -112,57 +177,17 @@ impl RuntimesController {
         let script_path_rel = runtime.script;
         
         let port = 0;
-        let (handle, my_url) = match &runtime.platform {
+        let script_path = format!("{app_root}/{script_path_rel}");
+        let runtime_handle = match &runtime.platform {
             Platform::R => {
-                
-                let script_path = format!("{app_root}/{script_path_rel}");
-                let mut handle = Self::start_r_api(&script_path, port);
-                let mut buffer = [0; 70];
-                
-                handle.as_mut().unwrap().stderr.take().unwrap().read_exact(&mut buffer).ok();
-                
-                let msg = str::from_utf8(&buffer).unwrap();
-                let plumber_intro = "Running Plumber API at";
-                let start_bytes = msg.find(plumber_intro).unwrap_or(0) +
-                plumber_intro.len() + 1;
-                let msg = &msg[start_bytes..];
-                let end_bytes = msg.find(char::is_whitespace).unwrap_or(msg.len());
-                let runtime_api_url = &msg[..end_bytes];
-                
-                (handle.unwrap(), runtime_api_url.to_owned())
+                Self::start_r_api(&script_path, port)
             }            
             Platform::Python => {
-                // let script_dir = app_root.to_string();
-                let script_path = format!("{app_root}/{script_path_rel}");
-                let mut handle = Self::start_python_api(&script_path, port);
-                let mut buffer = [0; 180];
-                // let mut buffer = [0; 900];
-                
-                
-                handle.as_mut().unwrap().stderr.take().unwrap().read_exact(&mut buffer).ok();
-                
-                let msg = str::from_utf8(&buffer).unwrap();
-                println!("{msg:?}");
-                let search_string_start = "Uvicorn running on ";
-                
-                let start_bytes = msg.find(search_string_start).unwrap_or(0) +
-                search_string_start.len();
-                let msg = &msg[start_bytes..];
-                let end_bytes = msg.find(char::is_whitespace).unwrap_or(msg.len());
-                let runtime_api_url = &msg[..end_bytes];
-                
-                (handle.unwrap(), runtime_api_url.to_owned())
-                
+                Self::start_python_api(&script_path, port)
             }
         };
-        
-        let url = Url::parse(&my_url).unwrap();
-        let name2 = name.clone();
-        
-        println!("started api service for {} at {:?}", &name, url.as_str());
-        
-        self.handles.insert(name, handle);
-        self.uris.insert(name2, url);
+
+        self.handles.insert(name, runtime_handle);
         
         Ok(())
     }
@@ -177,7 +202,7 @@ impl RuntimesController {
         Ok(())
     }
     
-    fn start_r_api(script: &str, port: u16) -> Result<Child, std::io::Error> {
+    fn start_r_api(script: &str, port: u16) -> RuntimeHandle {
         let port_str = if port == 0 {
             String::from("NULL")
         } else {
@@ -186,34 +211,54 @@ impl RuntimesController {
         
         let r_cmd = format!("hal9:::h9_run_script('{script}', {port_str})");
         
-        Command::new("Rscript")
+        let handle = Command::new("Rscript")
         .arg("-e")
         .arg(r_cmd)
         .stderr(Stdio::piped())
-        .spawn()
+        .spawn().unwrap();
+
+        RuntimeHandle::read_startup_result(handle, "Running plumber API at".to_owned())
     }
     
-    fn start_python_api(script: &str, port: u16) -> Result<Child, std::io::Error> {
+    fn start_python_api(script: &str, port: u16) -> RuntimeHandle {
         let py_cmd = format!("import hal9; hal9.run_script('{script}', {port})");
         
-        Command::new("python3")
+        let handle = Command::new("python3")
         .arg("-c")
         .arg(py_cmd)
         .stderr(Stdio::piped())
         .stdout(Stdio::piped())
-        .spawn()
+        .spawn().unwrap();
+
+        RuntimeHandle::read_startup_result(handle, "Unvicorn running on".to_owned())
     }
     
     async fn stop(&mut self, name: String) -> Result<(), std::io::Error> {
-        let handle = self.handles.get_mut(&name).unwrap();
-        match handle.kill() {
-            Ok(()) => {
-                self.handles.remove(&name);
-                self.uris.remove(&name);
+        
+        let runtime_handle = self.handles.get_mut(&name).unwrap();
+        match runtime_handle.startup_result {
+            RuntimeStartupResult::Success(_) => {
+                match runtime_handle.handle.kill() {
+                    Ok(()) => {
+                        println!("killed api service for {}", name);
+                    }
+                    Err(e) => panic!("{e:?}"),
+                }
             }
-            Err(e) => panic!("{:?}", e),
+            RuntimeStartupResult::Failure(_) => {
+                match runtime_handle.handle.try_wait() {
+                    Ok(_) => {
+                        println!("api service {name} successfully exited");
+                    }
+                    Err(e) => {
+                        println!("api service {name} failed to wait: {e}");
+                    }
+                }
+            }
         };
-        println!("killed api service for {}", name);
+
+        self.handles.remove(&name);
+        
         Ok(())
     }
     

@@ -112,31 +112,29 @@ client_html <- function(...) {
     html
 }
 
-h9_reset <- function() {
-    rm(list = ls(envir = .globals_nodes), envir = .globals_nodes)
-    rm(list = ls(envir = .globals_data), envir = .globals_data)
-}
-
 h9_run_script <- function(app = "app.R", port = NULL) {
-    h9_reset()
+    tryCatch(
+        {
+            if (!file.exists(app)) writeLines("", app)
 
-    if (!file.exists(app)) writeLines("", app)
+            user_code <- readLines(app)
+            server_code <- readLines(system.file("server-spec.R", package = "hal9"))
 
-    user_code <- readLines(app)
-    server_code <- readLines(system.file("server-spec.R", package = "hal9"))
+            api_file <- tempfile()
+            writeLines(c(
+                "## User Code",
+                user_code,
+                "",
+                "## Hal9 Code",
+                paste0("app_file <- \"", normalizePath(app, winslash = "/"), "\""),
+                paste0("app_path <- \"", dirname(normalizePath(app)), "\""),
+                "",
+                server_code
+            ), api_file)
 
-    api_file <- tempfile()
-    writeLines(c(
-        "## User Code",
-        user_code,
-        "",
-        "## Hal9 Code",
-        paste0("app_file <- \"", normalizePath(app, winslash = "/"), "\""),
-        paste0("app_path <- \"", dirname(normalizePath(app)), "\""),
-        "",
-        server_code
-    ), api_file)
-
-    pb <- plumber::plumb(api_file)
-    plumber::pr_run(pb, port = port)
+            pb <- plumber::plumb(api_file)
+            plumber::pr_run(pb, port = port)
+        },
+        error = function(e) message("runtime_startup_error:", paste0(e, collapse = "\n"))
+    )
 }
