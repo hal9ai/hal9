@@ -108,6 +108,8 @@ const ServerImplementation = function(hostopt) {
   }
 
   this.putFile = async function(runtime, path, contents) {
+    if (!serverurls.putfile ) return;
+    
     const resp = await fetch(serverurls.putfile + backendquery, {
       method: 'POST',
       headers: {
