@@ -44,9 +44,7 @@ const ServerImplementation = function(hostopt) {
     }
   }
 
-  this.process = async function(body) {
-    console.log('Sending: \n' + JSON.stringify(body, null, 2));
-
+  async function processOne(body) {
     let resp;
     try {
       resp = await fetch(serverurls.eval + backendquery, {
@@ -60,6 +58,25 @@ const ServerImplementation = function(hostopt) {
     }
     catch (e) {
       throw('Server /' + serverurls.eval + ' failed: [' + e.toString() + ']')
+    }
+
+    return resp;
+  }
+
+  this.process = async function(body) {
+    console.log('Sending: \n' + JSON.stringify(body, null, 2));
+
+    let retries = 8;
+    let resp;
+
+    while (retries-- > 0) {
+      resp = await processOne(body)
+
+      if (resp.status == 500) {
+        await new Promise((a) => setTimeout(a, 250))
+      }
+
+      if (resp.ok) break;
     }
 
     if (!resp.ok) {
