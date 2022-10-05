@@ -10,7 +10,7 @@ Node <- R6::R6Class("Node", list(
         register_node(self, self$uid)
         self
     },
-    evaluate = function(fn, ..., env) {
+    evaluate = function(fn, ...) {
         fn <- self$fns[[fn]]
 
         if (is.null(fn)) {
@@ -65,7 +65,6 @@ get_node <- function(uid) {
 }
 
 process_request <- function(req) {
-    env <- parent.frame()
     responses <- lapply(req, function(call) {
         node <- get_node(call$node)
         fn_name <- call$fn_name
@@ -85,7 +84,7 @@ process_request <- function(req) {
         fn_args <- setNames(fn_args_values, fn_args_names)
 
         result <- tryCatch(
-            node$evaluate(fn_name, fn_args, env = env),
+            node$evaluate(fn_name, fn_args),
             error = function(e) paste0(e, collapse = "\\n")
         )
 
