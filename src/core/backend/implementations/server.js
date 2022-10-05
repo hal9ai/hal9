@@ -45,13 +45,15 @@ const ServerImplementation = function(hostopt) {
       }
 
       if (!resp.ok) {
-        console.error('Failed to initialize backend: ' + (await resp.text()));
+        const error = 'Failed to initialize backend: ' + (await resp.text());
+        console.error(error);
+        throw error;
       }
-
-      initHeartbeat();
     }
     catch(e) {
-      console.error('Failed to receive response for backend initialization: ' + e.toString());
+      const error = 'Failed to receive response for backend initialization: ' + e.toString();
+      console.error(error);
+      throw error;
     }
   }
 
@@ -104,12 +106,13 @@ const ServerImplementation = function(hostopt) {
   this.addRuntime = async function(spec) {
     if (hostopt.serverurls) serverurls = await hostopt.serverurls();
     await initBackend();
+    initHeartbeat();
     return spec;
   }
 
   this.putFile = async function(runtime, path, contents) {
     if (!serverurls.putfile ) return;
-    
+
     const resp = await fetch(serverurls.putfile + backendquery, {
       method: 'POST',
       headers: {
