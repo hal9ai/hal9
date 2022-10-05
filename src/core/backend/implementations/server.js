@@ -31,7 +31,18 @@ const ServerImplementation = function(hostopt) {
     });
 
     try {
-      const resp = await fetch(serverurls.init + backendquery);
+      let retries = 10;
+      let resp;
+
+      while (retries-- > 0) {
+        resp = await fetch(serverurls.init + backendquery);
+
+        if (resp.status == 1000) {
+          await new Promise((a) => setTimeout(a, 250))
+        }
+
+        if (resp.ok) break;
+      }
 
       if (!resp.ok) {
         console.error('Failed to initialize backend: ' + (await resp.text()));
