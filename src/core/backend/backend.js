@@ -318,10 +318,6 @@ const Backend = function(hostopt) {
     await initializeManifest();
   }
 
-  this.getRuntimes = function() {
-    return Object.keys(runtimes);
-  }
-
   this.addRuntime = async function(spec) {
     if (!defaultRuntime) defaultRuntime = spec.platform;
     if (!spec.implementation) throw 'The spec requires an implementation';
