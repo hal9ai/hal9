@@ -32,3 +32,4 @@ extendr-api = '*'
 url = "2.2.2"
 futures = "*"
 webbrowser = "0.8.0"
+regex = "1"

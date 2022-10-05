@@ -24,7 +24,7 @@ struct AppState {
     client_design_path: String,
     designer_string: String,
     tx_handler: tokio::sync::mpsc::Sender<RtControllerMsg>, 
-    rx_uri_handler: crossbeam_channel::Receiver<Url>,
+    rx_uri_handler: crossbeam_channel::Receiver<Result<Url, std::io::Error>>,
     last_heartbeat: web::Data<AtomicUsize>,
     default_runtime: Option<String>,
 }
@@ -60,39 +60,52 @@ async fn eval(
     let rt = data.default_runtime.as_ref().unwrap();
     let runtime = rt.clone();
     let tx_handler = &data.tx_handler;
+    
+    // Ask controller for the URL of the runtime API
     tx_handler.send(RtControllerMsg::GetUri(rt.to_string())).await.ok();
     let rx_uri_handler = &data.rx_uri_handler;
-    let uri = rx_uri_handler.recv().unwrap().join("eval").unwrap();
-    let manifest = req.manifests[0].calls.clone();
     
-    let client = reqwest::Client::new();
-    
-    
-    let mut res = client
-    .post(uri)
-    .json(&manifest)
-    .send()
-    .await
-    .unwrap()
-    .json::<RuntimeResponse>()
-    .await
-    .unwrap();
-    
-    res.runtime = Some(runtime);
-    
-    let res = ManifestResponse {
-        responses: vec![res] 
-    };
-    
-    let response = serde_json::to_string(&res).unwrap();
-    
-    HttpResponse::Ok().body(response)
+    match rx_uri_handler.recv().unwrap() {
+        Ok(url) => {
+            let uri = url.join("eval").unwrap();
+            let manifest = req.manifests[0].calls.clone();
+            
+            let client = reqwest::Client::new();
+            
+            
+            let mut res = client
+                .post(uri)
+                .json(&manifest)
+                .send()
+                .await
+                .unwrap()
+                .json::<RuntimeResponse>()
+                .await
+                .unwrap();
+            
+            res.runtime = Some(runtime);
+            
+            let res = ManifestResponse {
+                responses: vec![res] 
+            };
+            
+            let response = serde_json::to_string(&res).unwrap();
+            
+            HttpResponse::Ok().body(response)
+        }
+        Err(e) => {
+            let err_string = e.to_string();
+            println!("Runtime startup error: {err_string}");
+
+            HttpResponse::InternalServerError().body(e.to_string())
+        }
+    }
 }
 
 async fn pipeline(data: web::Data<AppState>) -> Result<NamedFile> {
     let design_path = PathBuf::new()
-        .join(&data.app_dir)
-        .join(&data.client_design_path);
+    .join(&data.app_dir)
+    .join(&data.client_design_path);
     Ok(NamedFile::open(design_path)?)
 }
 
@@ -124,16 +137,14 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: b
     let rx_uri_handler = rx_uri.clone();
     
     let rt_controller = RuntimesController::new(conf.runtimes.clone(), app_path_for_controller, rx, tx_uri, Shutdown::new(notify_shutdown.subscribe()), shutdown_complete_tx.clone());
-
+    
     let default_runtime = rt_controller.default_runtime.clone();
     
     rt_controller.monitor().ok();
     
-    
-    tx.send(RtControllerMsg::StartAll).await.ok();
-    
     let tx_fs = tx.clone();
     
+    tx.send(RtControllerMsg::StartAll).await.ok();
     
     monitor_fs_changes(
         app_path_to_monitor, tx_fs, 
@@ -193,10 +204,10 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: b
     if !nobrowse {
         webbrowser::open(&myurl).ok();
     }
-    
+
     match signal::ctrl_c().await {
         Ok(()) => {
-            println!("got ctrl-c, exiting!");
+            println!("Got ctrl-c, exiting!");
             drop(notify_shutdown);
             drop(shutdown_complete_tx);
             drop(tx);
@@ -205,6 +216,7 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: b
             eprintln!("Unable to listen for shutdown signal: {}", err);
         },
     };
+
     let _ = shutdown_complete_rx.recv().await;
     Ok(())
 }
