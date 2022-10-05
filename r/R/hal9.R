@@ -14,7 +14,7 @@ Node <- R6::R6Class("Node", list(
         fn <- self$fns[[fn]]
 
         if (is.null(fn)) {
-            return(NULL)
+            stop("Function not defined for node.")
         }
 
         result <- NULL
@@ -74,7 +74,7 @@ process_request <- function(req) {
                 list(
                     node = call$node,
                     fn_name = fn_name,
-                    result = NULL
+                    result = list(Error = paste0("Node `", call$node, "` not defined in runtime."))
                 )
             )
         }
@@ -84,8 +84,8 @@ process_request <- function(req) {
         fn_args <- setNames(fn_args_values, fn_args_names)
 
         result <- tryCatch(
-            node$evaluate(fn_name, fn_args),
-            error = function(e) paste0(e, collapse = "\\n")
+            list(Value = node$evaluate(fn_name, fn_args)),
+            error = function(e) list(Error = paste0(e, collapse = "\\n"))
         )
 
         list(
