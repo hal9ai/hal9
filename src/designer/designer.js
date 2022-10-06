@@ -64,7 +64,7 @@ const Designer = function(hostopt) {
         backendinst.events()
       ),
       env: hostopt.env,
-      debug: debug
+      debug: debug,
     };
 
     hal9api = await init(options, {});
@@ -112,7 +112,9 @@ const Designer = function(hostopt) {
     }
 
     if (hostopt.mode == 'design') {
-      await launchDesigner(hal9api, options, pid, backendinst);
+      await launchDesigner(hal9api, Object.assign({
+        version: hostopt.designer.version
+      }, options), pid, backendinst);
     }
   }
 }
