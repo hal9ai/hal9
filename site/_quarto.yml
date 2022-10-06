@@ -19,13 +19,9 @@ website:
       style: "docked"
       search: true
       contents:
-        - section: "Introduction"
+        - overview.md
+        - section: "Contributing"
           contents:
-            - why.qmd
-            - roadmap.qmd
-        - section: "Developer (Advanced)"
-          contents:
-            - dev.qmd
             - config.qmd
             - manifests.qmd
 
