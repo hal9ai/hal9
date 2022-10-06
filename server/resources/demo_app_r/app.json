@@ -308,31 +308,27 @@
       {
         "stepId": 11105,
         "width": "131px",
-        "left": "0px",
+        "left": "6px",
         "height": "40px",
         "top": "30px"
       },
       {
         "stepId": 11106,
-        "width": "456px",
-        "left": "0px",
-        "height": "371px",
+        "width": "570px",
+        "left": "6px",
+        "height": "288px",
         "top": "76px"
       },
       {
         "stepId": 11107,
         "width": "317px",
-        "left": "139px",
+        "left": "137px",
         "height": "70px",
         "top": "0px"
       }
     ]
   },
   "deps": {
-    "11106": [
-      11105,
-      11107
-    ]
   },
   "runtimes": [
     {
@@ -344,19 +340,5 @@
         "R/backend.R": "library(hal9)\n\niris |> h9_set(\"df\")\n\nh9_dropdown(\n    \"species_dropdown\",\n    values = unique(levels(iris$Species)),\n    on_update = function(value) {\n        h9_set(value, \"selected_species\")\n    }\n)\n\nh9_html(\n    \"iris_table\",\n    rawhtml = function() {\n        sp <- h9_get(\"selected_species\")\n        if (is.null(sp)) {\n            return(\"\")\n        }\n\n        out <- iris[iris$Species == sp, ]\n\n        num_rows <- h9_get(\"num_rows\")\n\n        if (!is.null(num_rows)) {\n            out <- out |> head(num_rows)\n        }\n\n        out |>\n            knitr::kable(format = \"html\") |>\n            as.character()\n    }\n)\n\nh9_slider(\"slider_rows\",\n    value = 1,\n    min = 1,\n    max = 10,\n    step = 1,\n    on_update = function(value) {\n        h9_set(value, \"num_rows\")\n    }\n)\n"
       }
     }
-  ],
-  "state": {
-    "steps": {
-      "11105": {
-        "api": {
-          "dropdown": "setosa"
-        }
-      },
-      "11107": {
-        "api": {
-          "slider": 8
-        }
-      }
-    }
-  }
+  ]
 }

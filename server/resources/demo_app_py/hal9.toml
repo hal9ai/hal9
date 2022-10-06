@@ -1,0 +1,11 @@
+[application]
+name = "demo app"
+version = "0.0.1"
+
+[client]
+design = "app.json"
+
+[[runtimes]]
+name = "r"
+platform = "R"
+script = "python/backend.py"
