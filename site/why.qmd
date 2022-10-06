@@ -1,0 +1,56 @@
+---
+title: "Why"
+---
+
+For Machine Learning (ML) models to be useful, they must be made accessible to users through system integrations or standalone solutions. Integrating models into existing solutions is closely tied to ML Operations (MLOps) and is not the focus of this project; instead, this project focuses on standalone solutions by building ML applications (ML apps).
+
+Different ML app frameworks exist today: [Dash](https://plotly.com/dash/), [Genie](https://genieframework.com/), [Mercury](https://mljar.com/mercury/), [Panel](https://panel.holoviz.org/), [Shiny](https://shiny.rstudio.com/), [Streamlit](https://streamlit.io/), and [Voila](https://voila.readthedocs.io/); however, they were all buit to work with a single programming language: Python, Julia or R and are barely compatible with web technologies. In contrast, Hal9 embraces web technologies and multiple programming languages which solves many problems and enables new ML applications.
+
+## Embracing Web Technologies
+
+We believe that current frameworks are missing an opportunity to fully embrace web technologies to build faster and better web applications, following sections explore why.
+
+### Visual Designer
+
+The web provides many technologies to fully customize web applications; however, it's hard to be an expert on ML and web development, it is a full-time job to keep up with web development. However, there are many successful projects out there ([Webflow](https://webflow.io/) and [Wix](https://www.wix.com/)) that enable building web applications without web expertise. They don't try to reinvent the wheel, they simply expose HTML and CSS through WYSIWYG designers. We believe this is missing from all frameworks; for the few ones that just added a designer, it is constrained by what the framework supports, orders of magnitude behind what HTML and CSS already supports.
+
+### Web Controls
+
+Another problem of existing frameworks is that they can't reuse all the existing web controls. If you need a map, video player, web camera capture, etc. you will have to rely on the ML community to provide a wrapper specific to the ML app framework. This has worked to some degree, but is simply impossible to catch up with all web tech developments in a single ML app project. We believe that frameworks should leverage what already exists in the web community, untapping access to thousands of existing controls.
+
+### Web Designers
+
+Building a visually appealing, modern, web application is really hard without the help of a web designer. Unfortunately, all current frameworks were written in Python, R and Julia which makes it close to impossible for a web designer to modify, they have no access to HTML sources and are left performing small CSS tweaks at best. Embracing web technologies means being able to leverage their skills to build outstanding ML apps.
+
+### Web Developers
+
+Similarly, some web interactions are just too hard (if not impossible) to implement from Python, Julia and R. Those frameworks rely on cryptic extensibility mechanisms to reach out the JavaScript layer; however, almost no web developer is interested in learning these complex extension mechanisms, they want to help using the languages they know and love: HTML, CSS and JavaScript. We believe it will pay off to collaborate with web developers to build more compelling experiences.
+
+### Single Page Apps
+
+Single Page Applications (SPA) have been gaining traction for years in the web community yet, they are just barely possible to build in ML with technologies like [Pyodide](https://pyodide.org/); however, the tools are not there yet to help ML experts build and deploy such apps. We believe SPAs should be supported natively by app frameworks.
+
+### Mobile Apps
+
+Similarly, mobile apps are for now out of reach to ML experts. However, embracing web technologies in ML would also mean enabling integration with one of the major mobile app frameworks, ReactNative -- A powerful web-based framework capable of integrating web-technologies. Yet again, enabling web technologies gets us closer to bringing ML to mobile.
+
+## Multiple Programming Languages
+
+We believe the client-side should fully embrace web technologies, while the server-side provides users with the freedom to choose what language to use.
+
+### Best of Breed
+
+As ML becomes mainstream, it's no longer the case that a single programming language can be used for everything. ML experts understand that Python, Julia, Rust, R and TypeScript have all different strengths. However, integrating them with tools like [CFFI](https://cffi.readthedocs.io/en/latest/) or [Reticualte](https://rstudio.github.io/reticulate/) is just too complicated, especially during deployment.
+
+In addition, building SPAs requires us to build some components in the client using technologies like JavaScript, TypeScript or Pyodide. We can only accomplish this with a runtime that allows us to write both effortlessly. This implies that the execution model needs to be simple to be able to support multiple languages.
+
+### Simple Execution Model
+
+Current frameworks try to simplify execution for users, a noble cause that ends up creating many problems. For instance, cached-based solutions like Streamlit force users to understand how caching works and how to optimize it; frameworks like Shiny require users to learn reactivity concepts, simple at first but hard to master and troubleshoot.
+
+We believe that simplicity wins and proposed a backend that mimics HTML's execution model: A simple event-driven pattern, changing a dropdown raises an event that you can easily understand and handle.
+
+## Conclusion
+
+We strongly believe that there are many improvements to be gained by embracing web-technologies in the client and multiple-languages in the server; this will take some time but we hope you can join us in this journey as we make progress on our [roadmap](roadmap.html).
+
