@@ -4,9 +4,9 @@ use std::fs::File;
 use std::io::Write;
 
 pub fn new_app(directory: String) -> Result<(), std::io::Error> {
-    let app_config_toml = include_bytes!("../resources/demo_app/hal9.toml");
-    let app_design_json = include_bytes!("../resources/demo_app/app.json");
-    let app_backend_script = include_bytes!("../resources/demo_app/R/backend.R");
+    let app_config_toml = include_bytes!("../resources/demo_app_r/hal9.toml");
+    let app_design_json = include_bytes!("../resources/demo_app_r/app.json");
+    let app_backend_script = include_bytes!("../resources/demo_app_r/R/backend.R");
     
     let app_root: &Path = Path::new(&directory);
 
