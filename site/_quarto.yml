@@ -12,14 +12,14 @@ website:
       - text: "Python"
         href: /python
       - text: "R"
-        href: /r
+        href: /r/reference
       - text: "JavaScript"
         href: /javascript
   sidebar:
       style: "docked"
       search: true
       contents:
-        - overview.md
+        - overview.qmd
         - section: "Contributing"
           contents:
             - config.qmd
