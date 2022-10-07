@@ -1,8 +1,8 @@
 {
   "name": "hal9",
-  "version": "0.3.7",
+  "version": "0.3.68",
   "license": "MIT",
-  "description": "Hal9: Composable machine-learning pipelines",
+  "description": "Hal9: Design data apps visually, power with code",
   "main": "dist/hal9.js",
   "repository": "https://github.com/hal9ai/hal9ai",
   "author": "Hal9 Inc",
@@ -23,6 +23,7 @@
     "compare-versions": "^3.6.0",
     "core-js": "^3.23.3",
     "crypto-js": "^4.0.0",
+    "indent-string": "^5.0.0",
     "js-yaml": "4.1.0",
     "rfdc": "^1.1.4"
   },
@@ -34,6 +35,7 @@
     "@babel/preset-env": "^7.17.10",
     "babel-loader": "^8.2.5",
     "css-loader": "^6.4.0",
+    "html-webpack-plugin": "^5.5.0",
     "http-server": "^14.1.1",
     "raw-loader": "^4.0.2",
     "tape": "^5.3.1",

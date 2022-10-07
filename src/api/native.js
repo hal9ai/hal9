@@ -8,6 +8,7 @@ import * as htmloutput from '../core/htmloutput';
 import * as layout from '../core/layout';
 import * as exportto from '../core/exportto';
 import { internal } from './internal';
+import { backend } from '../core/backend/backend';
 
 const runRemote = async (lambda, context) => {
   if (typeof(lambda) != 'function') {
@@ -113,7 +114,7 @@ export async function fetchPipeline(pipelinepath) {
   const pipelineInfo = `${serverurl}/api/users/${user}/pipelines/${pipelinename}`;
 
   var serverId = environment.getId();
-  let s3Name = (serverId == 'dev' ? 'devel' : serverId) + 'hal9';
+  let s3Name = (serverId === 'prod' ? 'prod' : 'devel') + 'hal9';
 
   const infoResp = await fetch(pipelineInfo, {
   });
@@ -141,6 +142,7 @@ function NativeAPI(options) {
     load: load,
     fetch: fetchPipeline,
     run: run,
+    backend: backend
   });
 }
 

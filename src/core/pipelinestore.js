@@ -6,7 +6,7 @@ var pipelineids = {};
 export const add = function(pipeline /* pipeline */) /* pipelineid */ {
   const pipelineid = pipelinelast++;
   pipelineids[pipelineid] = clone(pipeline);
-  return pipelineid
+  return pipelineid;
 }
 
 export const remove = function(pipelineid /* pipelineid */) /* pipeline */ {

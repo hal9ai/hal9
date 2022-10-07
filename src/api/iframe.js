@@ -1,5 +1,5 @@
 import * as dataframe from '../core/utils/dataframe';
-import { getDesignerLoaderHtml, registerDesignerLoader } from './designer';
+import { getDesignerLoaderHtml, registerDesignerLoader } from '../designer/launcher';
 
 import * as native from './native';
 import * as environment from '../core/utils/environment';
@@ -12,6 +12,8 @@ import * as stepapi from '../core/api';
 import components from '../../scripts/components.json';
 import clone from '../core/utils/clone';
 import functions from '../core/utils/functions';
+import { backend } from '../core/backend/backend';
+import * as workers from '../core/workers';
 
 var fnCallbacks = [];
 
@@ -101,14 +103,19 @@ function IFrameAPI(options, hal9wnd, config) {
   me.options = options;
   me.hal9wnd = hal9wnd;
   me.config = config;
+  me.backend = backend;
+  me.workers = workers;
 
   function enhanceContext(context) {
     if (me.options.events) {
-      context.events = {
-        onStart: me.options.events.onStart,
-        onEnd: me.options.events.onEnd,
-        onError: me.options.events.onError
-      }
+      if (!context.events) context.events = {};
+      for (let event of Object.keys(me.options.events))
+        if (context.events[event] !== me.options.events[event])
+          context.events[event] = me.options.events[event];
+    }
+
+    if (me.options.manifest) {
+      context.manifest = me.options.manifest
     }
   }
 
@@ -184,6 +191,21 @@ function IFrameAPI(options, hal9wnd, config) {
     isNotProduction: environment.isNotProduction
   };
 
+  me.events = {
+    onChange: (changes) => {
+      const callback = me.options?.events?.onChange;
+      if (callback) {
+        callback(changes);
+      }
+    },
+    onRequestSave: () => {
+      const callback = me.options?.events?.onRequestSave;
+      if (callback) {
+        callback();
+      }
+    }
+  };
+
   me.datasets = {
     save: async (dataurl) => {
       return await post(me.config, "hal9.datasets.save(params.dataurl)", {
@@ -218,12 +240,15 @@ function IFrameAPI(options, hal9wnd, config) {
       })
     },
     runStep: async (pipelineid, sid, context, partial) => {
+      if (!context) context = {};
       enhanceContext(context);
       return await post(me.config, "hal9.pipelines.runStep(params.pipelineid, params.sid, params.context, params.partial)", {
         pipelineid: pipelineid,
         sid: sid,
         context: context,
         partial: partial,
+      }, {
+        longlisten: true
       })
     },
     run: async (pipelineid, context, partial, stepstopid) => {
@@ -422,7 +447,47 @@ function IFrameAPI(options, hal9wnd, config) {
       return await post(me.config, "hal9.pipelines.isAborted(params.pipelineid)", {
         pipelineid: pipelineid,
       })
-    }
+    },
+    getDependencies: async (pipelineid) => {
+      return await post(me.config, "hal9.pipelines.getDependencies(params.pipelineid)", {
+        pipelineid: pipelineid,
+      })
+    },
+    addDependency: async (pipelineid, source, target) => {
+      return await post(me.config, "hal9.pipelines.addDependency(params.pipelineid, params.source, params.target)", {
+        pipelineid: pipelineid,
+        source: source,
+        target: target,
+      })
+    },
+    removeDependency: async (pipelineid, source, target) => {
+      return await post(me.config, "hal9.pipelines.removeDependency(params.pipelineid, params.source, params.target)", {
+        pipelineid: pipelineid,
+        source: source,
+        target: target,
+      })
+    },
+    getRuntimeSpecs: async (pipelineid) => {
+      return await post(me.config, "hal9.pipelines.getRuntimeSpecs(params.pipelineid)", {
+        pipelineid: pipelineid,
+      })
+    },
+    addRuntimeSpec: async (pipelineid, spec) => {
+      return await post(me.config, "hal9.pipelines.addRuntimeSpec(params.pipelineid, params.spec)", {
+        pipelineid: pipelineid,
+        spec: spec,
+      })
+    },
+    getPipeline: async (pipelineid) => {
+      return await post(me.config, "hal9.pipelines.getPipeline(params.pipelineid)", {
+        pipelineid: pipelineid,
+      })
+    },
+    addPipeline: async (pipeline) => {
+      return await post(me.config, "hal9.pipelines.addPipeline(params.pipeline)", {
+        pipeline: pipeline,
+      })
+    },
   };
     
 
@@ -434,14 +499,11 @@ function IFrameAPI(options, hal9wnd, config) {
         alsoSkip: alsoSkip,
       })
     },
-    getHtml: async (pipelineid) => {
-      return await post(me.config, "hal9.exportto.getHtml(params.pipelineid)", {
+    getHtml: async (pipelineid, pipelinepath, htmlFormat) => {
+      return await post(me.config, "hal9.exportto.getHtml(params.pipelineid, params.pipelinepath, params.htmlFormat)", {
         pipelineid: pipelineid,
-      })
-    },
-    getHtmlRemote: async (pipelinepath) => {
-      return await post(me.config, "hal9.exportto.getHtmlRemote(params.pipelinepath)", {
         pipelinepath: pipelinepath,
+        htmlFormat: htmlFormat,
       })
     },
     getPythonScript: async (pipelineid) => {
@@ -521,6 +583,11 @@ function IFrameAPI(options, hal9wnd, config) {
         stepLayouts: stepLayouts,
       })
     },
+    calcAppDimensions: async (stepLayouts) => {
+      return await post(me.config, "hal9.layout.calcAppDimensions(params.stepLayouts)", {
+        stepLayouts: stepLayouts,
+      })
+    },
     setHal9StepOverflowProperty: async (overflowValue) => {
       return await post(me.config, "hal9.layout.setHal9StepOverflowProperty(params.overflowValue)", {
         overflowValue: overflowValue,
@@ -561,25 +628,18 @@ export const init = async (options, hal9wnd) => {
   var iframe = document.createElement("iframe");
 
   // TODO: Control features based on user warning and preferences
-  // iframe.allow = 'camera;microphone';
+  iframe.allow = 'camera;microphone';
   // iframe.setAttribute('sandbox', 'allow-forms allow-downloads allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation allow-scripts allow-same-origin');
 
   iframe.setAttribute('scrolling', 'no');
+  var secret = Math.random();
 
   iframe.style.border = 'none';
   iframe.style.width = '100%';
   iframe.style.height = '100%';
   iframe.style.margin = 0;
   iframe.style.padding = 0;
-
-  var secret = Math.random();
-  const iframehtml = `
-    <!DOCTYPE html>
-    <html style="height: 100%">
-      <head>
-        <base target="_blank">
-        <script src='${options.api}'></script>
-        <style>${ options.css ?? ''}</style>
+  const iframeScript = `
         <script>
           // mock localstorage for iframes to avoid errors
           const localStorageMock = (() => {
@@ -656,7 +716,7 @@ export const init = async (options, hal9wnd) => {
             (async function() {
               try {
                 postID = event.data.id;
-              	const result = await runAsync(event.data.body, event.data.params);
+                const result = await runAsync(event.data.body, event.data.params);
 
                 window.parent.postMessage({ secret: ${secret}, id: event.data.id, result: result, html: document.body.innerText.length > 0 }, '*');
               }
@@ -667,6 +727,17 @@ export const init = async (options, hal9wnd) => {
             })();
           }); 
         </script>
+`
+  const scriptHeader = `<script src='${options.api}'></script>`;
+  const outputDiv = `<div id="output" style="position: relative; width: 100%; height: 100%; overflow: auto;"></div>
+        `;
+  var iframehtml = `
+    <!DOCTYPE html>
+    <html style="height: 100%">
+      <head>
+        <base target="_blank">
+        ${ scriptHeader }
+        <style>${ options.css ?? ''}</style>
         <style>
           body {
             height: 100%;
@@ -683,12 +754,42 @@ export const init = async (options, hal9wnd) => {
       </head>
       <body>
         ${ options.editable ? getDesignerLoaderHtml(secret) : '' }
-        <div id="output" style="position: relative; width: 100%; height: 100%; overflow: auto;"></div>
+        ${ outputDiv }
+        ${ iframeScript }
       </body>
     </html>
   `;
 
-  iframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(iframehtml);
+  let iframesrc;
+  if (options.pipeline && options.pipeline.runtimes && options.pipeline.runtimes.some(e => e.implementation == 'html')) {
+    const htmlruntime = options.pipeline.runtimes.filter(e => e.implementation == 'html')[0];
+    iframehtml = htmlruntime.files[htmlruntime.script];
+
+    iframehtml = iframehtml.replace(/<\/body>[\s\S]*<\/html>/, '');
+    iframehtml = iframehtml.replace(/<script src=\".*hal9.*\.js\"><\/script>/, '');
+    iframehtml = iframehtml.replace(/<script>[^]+ hal9\.run\([^]+<\/script>/, '');
+
+    var newOutputDiv = '';
+    if (!/<div id=\"output\" /.test(iframehtml)) {
+      newOutputDiv = outputDiv;
+    }
+
+    iframehtml = iframehtml + `\n  ${newOutputDiv} ${ scriptHeader }\n  ${ iframeScript }\n  </body></html> `
+  
+    if (options.contentsrv) {
+      var res = await fetch(options.contentsrv, {
+        method: 'POST',
+        body: JSON.stringify({ content: iframehtml }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const contentdata = await res.json();
+      iframesrc = options.contentsrv + '/' + contentdata.id;
+    }
+  }
+
+  if (!iframesrc) iframesrc = 'data:text/html;charset=utf-8,' + encodeURIComponent(iframehtml);
+  iframe.src = iframesrc;
 
   var waitLoad = new Promise((accept, reject) => {
     iframe.addEventListener('load', accept);

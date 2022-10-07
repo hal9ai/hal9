@@ -24,7 +24,8 @@ export default async function(html, header, context) {
   script +=  `
     var result = null;
     if (hal9ModifiedHtml) {
-      const scripts = [...html.getElementsByTagName('script')];
+      const htmlref = html;
+      const scripts = [...htmlref.getElementsByTagName('script')];
 
       var hasUnknownType = false;
       for (var idx in scripts) {
@@ -50,7 +51,7 @@ export default async function(html, header, context) {
           const loaded = new Promise((resolve, reject) => {
             const errorHandler = function(e) {
               window.removeEventListener('error', errorHandler);
-              reject(e.message);
+              reject('Failed to load ' + e.srcElement.src + (e.message ? ': ' + e.message : ''));
             }
 
             const loadHandler = function() {
@@ -67,7 +68,7 @@ export default async function(html, header, context) {
             tag.addEventListener('abort', errorHandler);   
           });
 
-          html.appendChild(tag);
+          htmlref.appendChild(tag);
 
           await loaded;
         }
@@ -92,7 +93,7 @@ export default async function(html, header, context) {
         else {
           hasUnknownType = true;
         }
-      };
+      }
 
       if (hasUnknownType) {
         window.dispatchEvent(new Event('DOMContentLoaded'));

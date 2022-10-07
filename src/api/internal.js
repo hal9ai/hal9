@@ -10,6 +10,7 @@ import * as htmloutput from '../core/htmloutput';
 import * as layout from '../core/layout';
 import * as stepapi from '../core/api';
 import * as dataframe from '../core/utils/dataframe';
+import * as workers from '../core/workers';
 import components from '../../scripts/components.json';
 
 export const internal = {
@@ -80,12 +81,18 @@ export const internal = {
     getApp: pipelines.getApp,
     abort: pipelines.abort,
     isAborted: pipelines.isAborted,
+    getDependencies: pipelines.getDependencies,
+    addDependency: pipelines.addDependency,
+    removeDependency: pipelines.removeDependency,
+    getRuntimeSpecs: pipelines.getRuntimeSpecs,
+    addRuntimeSpec: pipelines.addRuntimeSpec,
+    getPipeline: pipelines.getPipeline,
+    addPipeline: pipelines.addPipeline,
   },
 
   exportto: {
     getSaveText: exportto.getSaveText,
     getHtml: exportto.getHtml,
-    getHtmlRemote: exportto.getHtmlRemote,
     getPythonScript: exportto.getPythonScript,
     getRScript: exportto.getRScript,
   },
@@ -109,6 +116,7 @@ export const internal = {
     regenerateForDocumentView: layout.regenerateForDocumentView,
     storeAppStepLayouts: layout.storeAppStepLayouts,
     applyStepLayoutsToApp: layout.applyStepLayoutsToApp,
+    calcAppDimensions: layout.calcAppDimensions,
     setHal9StepOverflowProperty: layout.setHal9StepOverflowProperty,
   },
 
@@ -131,5 +139,9 @@ export const internal = {
 
   developer: {
     components: components,
+  },
+
+  workers: {
+    getValidWorkerUrl: workers.getValidWorkerUrl
   }
 }

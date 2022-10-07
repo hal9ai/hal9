@@ -1,9 +1,12 @@
-import * as store from './pipelinestore.js';
 import components from '../../scripts/components.json';
 import clone from './utils/clone';
-import * as pipelines from './pipelines.js';
+import * as layout from './layout';
+import * as pipelines from './pipelines';
+import * as store from './pipelinestore';
 import * as dataframe from './utils/dataframe';
 import * as environment from './utils/environment'
+
+import indentString from 'indent-string';
 
 export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number */, alsoSkip = [] /*:: : Array<string> */) /*: string */ => {
   var from = store.get(pipelineid);
@@ -16,10 +19,11 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number 
     'globals',
     'layout',
     'outputs',
+    'events',
   ];
 
   for (var key in from) {
-    if (skip.includes(key) || alsoSkip.includes(key)) continue;
+    if (skip.includes(key) || alsoSkip.includes(key) || typeof(from[key]) == 'function') continue;
     pipeline[key] = clone(from[key]);
   }
 
@@ -38,6 +42,11 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number 
       const meta = pipelines.metadataFromStepScript(pipeline, step);
       if (meta.state == 'session') {
         delete pipeline.state.steps[stepid];
+        continue;
+      }
+
+      if (pipeline.state.steps[stepid].events) {
+        delete pipeline.state.steps[stepid].events;
       }
 
       // serialize dataframes
@@ -56,31 +65,121 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number 
   return JSON.stringify(pipeline, null, padding === undefined ? 2 : padding);
 }
 
-export const getHtml = (pipelineid /* pipelineid */) /* string */ => {
-  const libraryUrl = environment.getLibraryUrl();
-  return `<script src="${libraryUrl}"></script>
-<div id='hal9app' style="min-width: 600px; min-height: 400px;"></div>
-<script>
+/*
+getHtml parameters
+pipelineid: required
+pipelinepath: optional, will be referenced in the export if given
+htmlFormat: 3 string choices
+  1. 'embedCompact' for compact embed (HTML and style inserted at runtime)
+  2. 'embedStyle' for embed with customizable style (HTML inserted at runtime)
+  3. 'complete' for complete HTML page with rearrangable HTML and customizable style
+*/
+export const getHtml = (pipelineid, pipelinepath, htmlFormat) => {
+  let generateStyle;
+  let fullPage;
+  switch (htmlFormat) {
+    case 'embedCompact':
+      generateStyle = false;
+      fullPage = false;
+      break;
+    case 'embedStyle':
+      generateStyle = true;
+      fullPage = false;
+      break;
+    case 'complete':
+      generateStyle = true;
+      fullPage = true;
+      break;
+    default:
+      throw new Error('getHtml: Unknown htmlFormat');
+  }
+  const hal9LibraryScriptElementString = `<script src="${environment.getLibraryUrl()}"></script>`;
+  let setEnvString = '';
+  let rawDefinitionRhs;
+  if (pipelinepath) {
+    const env = environment.getId();
+    if (env !== 'prod') {
+      setEnvString = `\n  hal9.environment.setEnv('${env}');`;
+    }
+    rawDefinitionRhs = `await hal9.fetch('${pipelinepath}')`;
+  } else {
+    rawDefinitionRhs = `'${btoa(unescape(encodeURIComponent(getSaveText(pipelineid, 0))))}'`;
+  }
+
+  const pipelineMetadata = pipelines.getMetadata(pipelineid);
+  const appMode = (pipelineMetadata?.defaultMode === 'app');
+  let appDimensions;
+  let stepLayouts;
+  if (appMode) {
+    stepLayouts = pipelines.getApp(pipelineid).stepLayouts;
+    appDimensions = layout.calcAppDimensions(stepLayouts);
+  }
+  const applyAppLayoutString = ((appMode && !generateStyle) ? ', applyAppLayout: true' : '');
+  const widthString = appDimensions?.width ?? '600px';
+  const heightString = appDimensions?.height ?? '400px';
+
+  let styleElementString = '';
+  let stylePropertyString = '';
+  if (generateStyle) {
+    styleElementString = '<style id="hal9app-style">';
+    if (fullPage) {
+      styleElementString += `
+  #output {
+    min-width: ${widthString};
+    min-height: ${heightString};
+  }`;
+    }
+    styleElementString += `
+  .hal9-step {
+    position: absolute;
+    overflow: hidden;
+  }`;
+    for (const stepLayout of stepLayouts) {
+      const step = pipelines.getStep(pipelineid, stepLayout.stepId);
+      const stepComment = '\n    /* ' + step.name + ' */';
+      styleElementString += `
+  .hal9-step-${stepLayout.stepId} {${stepComment}
+    width: ${stepLayout.width};
+    left: ${stepLayout.left};
+    height: ${stepLayout.height};
+    top: ${stepLayout.top};
+  }`;
+    }
+    styleElementString += '\n</style>';
+    stylePropertyString = `, style: 'hal9app-style'`;
+  }
+
+  const runtimeScriptElementString = `<script>${setEnvString}
   (async function() {
-    var raw = '` + btoa(unescape(encodeURIComponent(getSaveText(pipelineid, 0)))) + `';
-    hal9.run(await hal9.load(raw), { html: document.getElementById('hal9app') });
+    const raw = ${rawDefinitionRhs};
+    hal9.run(await hal9.load(raw), { html: 'hal9app'${applyAppLayoutString}${stylePropertyString} });
   })();
 </script>`;
-}
 
-export const getHtmlRemote = (pipelinepath /* pipelinepath */) /* string */ => {
-  const libraryUrl = environment.getLibraryUrl();
-  const env = environment.getId();
-  const setenv = env != 'prod' ? `\n    hal9.environment.setEnv('${env}');` : '';
+  if (fullPage) {
+    let appDivElementString = '<div id="output" data-keep-contents>';
+    for (const stepLayout of stepLayouts) {
+      appDivElementString += '\n' + `  <div class="hal9-step hal9-step-${stepLayout.stepId}"></div>`;
+    }
+    appDivElementString += '\n</div>';
+    return `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Powered by Hal9</title>
+${indentString(hal9LibraryScriptElementString, 4)}
+${indentString(styleElementString, 4)}
+  </head>
+  <body>
+${indentString(appDivElementString, 4)}
+${indentString(runtimeScriptElementString, 4)}
+  </body>
+</html>`;
+  }
 
-  return `<script src="${libraryUrl}"></script>
-<div id='hal9app' style="min-width: 600px; min-height: 400px;"></div>
-<script>${setenv}
-  (async function() {
-    var raw = await hal9.fetch('` + pipelinepath + `');
-    hal9.run(await hal9.load(raw), { html: document.getElementById('hal9app') });
-  })();
-</script>`;
+  return `${hal9LibraryScriptElementString}
+<div id="hal9app" style="min-width: ${widthString}; min-height: ${heightString};"></div>${'\n' + styleElementString}
+${runtimeScriptElementString}`;
 }
 
 const getFunctionForComponentName = (componentName) => {

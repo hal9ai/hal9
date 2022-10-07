@@ -41,6 +41,7 @@ type pipelineid = string;
 type metadata = { params: params, deps: Array<string>, environment: string };
 type block = { id: number, name: string, params: params, error: string, metadata: metadata, script: string };
 type blocks = Array<block>;
+type deps = { [id: string]: Array<string> };
 */
 
 var pipelinesStateCount = 0;
@@ -104,7 +105,8 @@ const createInt = (steps /*: steps */, previous /*: pipeline */) /*: pipeline */
   steps = clone(steps);
 
   var newscripts = previous && previous.scripts ? previous.scripts : {},
-    newscripts = Object.fromEntries(Object.entries(newscripts).filter(([k, v]) => steps.map(e => e.id.toString()).includes(k)));
+    newscripts = Object.fromEntries(Object.entries(newscripts).filter(([k, v]) => steps.map(e => e.id.toString()).includes(k))),
+    newdeps = previous && previous.deps ? clone(previous.deps) : {};
 
   const pipeline = {
     id: previous.id ? previous.id : Math.floor(Math.random() * 10000000),
@@ -117,7 +119,18 @@ const createInt = (steps /*: steps */, previous /*: pipeline */) /*: pipeline */
     error: undefined,
     version: '0.0.1',
     metadata: clone(previous.metadata),
+    app: clone(previous.app),
+    deps: newdeps,
   };
+
+  const stepIds = steps.map(e => e.id.toString());
+
+  pipeline.deps = Object.keys(pipeline.deps).reduce((res, key) => {
+    if (stepIds.includes(key.toString())) {
+      res[key] = pipeline.deps[key].filter(e => stepIds.includes(e.toString()));
+    }
+    return res;
+  }, {});
 
   pipeline.steps = steps;
 
@@ -179,6 +192,8 @@ const stepGetDefinition = (pipeline, step) => {
 export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, context /* context */, partial) /*: boolean */ => {
   var pipeline = store.get(pipelineid);
 
+  if (!context) context = {};
+  if (!partial) partial = preparePartial(pipeline, context, partial, sid);
   if (pipeline.aborted) throw 'Pipeline stopped before finishing'
 
   const step = stepFromId(pipeline, sid);
@@ -228,7 +243,12 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
       if (!Object.keys(params).includes(param)) params[param] = clone(paramsDefault[param]);
     });
 
-    if (context.params) {
+    if (context.params || context.manifest) {
+      context.params = context.params ?? {};
+      if (context.manifest && context.manifest[sid]) {
+        context.params = clone(context.manifest[sid])
+      }
+
       var paramIdx = Object.keys(params).length > 0 ? Math.max(...Object.keys(params).map(e => params[e].id ? params[e].id : 0)) : 0;
       Object.keys(context.params).forEach(param => {
         if (Object.keys(input).includes(param)) {
@@ -238,7 +258,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
           delete context.params[param];
         }
         else if (Object.keys(params).includes(param)) {
-          console.log('Param ' + param + ' of type ' + typeof(input[param]) + ' matched with param in step ' + step.name + '/' + step.id)
+          console.log('Param ' + param + ' of type ' + typeof(params[param]) + ' matched with param in step ' + step.name + '/' + step.id)
 
           params[param] = {
             id: paramIdx++, name: param, label: param, value: [{
@@ -313,6 +333,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
   }
   catch (e) {
     console.log('Error in step ' + step.name + ': ' + e);
+    console.log(e);
     error = e;
   }
 
@@ -346,6 +367,8 @@ const stepHasHtml = (pipeline, step) => {
 }
 
 const preparePartial = (pipeline, context, partial, renderid) => {
+  if (!partial) partial = function() {};
+
   var html = context.html;
   if (typeof (html) === 'object') {
     const isFullView = renderid === null || renderid === undefined;
@@ -430,8 +453,8 @@ const skipStep = (pipeline, step) => {
 
 export const run = async (pipelineid /*: pipelineid */, context /* context */, partial, stepstopid /* stepid */) /*: void */ => {
   debugIf('run');
-  if (!partial) partial = function() {};
 
+  if (!context) context = {};
   context.events?.onStart();
 
   var pipeline = store.get(pipelineid);
@@ -441,6 +464,10 @@ export const run = async (pipelineid /*: pipelineid */, context /* context */, p
 
   if (typeof (context.html) === 'string') {
     context.html = document.getElementById(context.html);
+  }
+  const appDiv = context.html;
+  if (appDiv.dataset.keepContents !== undefined) {
+    context.shadow = false;
   }
 
   partial = preparePartial(pipeline, context, partial, stepstopid);
@@ -471,6 +498,27 @@ export const run = async (pipelineid /*: pipelineid */, context /* context */, p
     if (stepstopid != undefined && step.id === stepstopid) break;
     if (context.stopped === true) break;
   };
+
+  if (context.applyAppLayout) {
+    delete context.applyAppLayout;
+    const outputDiv = appDiv.shadowRoot;
+    layout.setHal9StepOverflowProperty('hidden', outputDiv);
+    layout.applyStepLayoutsToApp(pipeline.app.stepLayouts, outputDiv);
+  }
+
+  if (context.style) {
+    if (context.shadow === false) {
+      layout.removeLayout(appDiv);
+    } else {
+      let style = context.style;
+      if (typeof (style) === 'string') {
+        style = document.getElementById(style);
+      }
+      const outputDiv = appDiv.shadowRoot;
+      layout.removeLayout(outputDiv);
+      outputDiv.prepend(style);
+    }
+  }
 
   context.events?.onError(clone(pipeline.error));
   context.events?.onEnd(clone(pipeline.globals), getStepsWithHeaders(pipelineid));
@@ -584,6 +632,8 @@ export const updateStep = (pipelineid /*: pipelineid */, step /*: step */) /*: v
 
 export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step */ => {
   step = clone(step);
+  step.source = clone(step);
+
   var pipeline = store.get(pipelineid);
 
   var maxId = getMaxId(pipelineid);
@@ -618,6 +668,8 @@ export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step
   const scriptInfo = scripts.scriptFromStep(pipeline, step);
   step.language = scriptInfo.language;
 
+  step.header = getStepHeader(pipeline, step);
+
   pipeline.steps.push(step);
 
   return step;
@@ -626,7 +678,7 @@ export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step
 export const removeStep = (pipelineid /*: pipelineid */, step /*: step */) /*: void */ => {
   var pipeline = store.get(pipelineid);
 
-  pipeline.steps = pipeline.steps.filter(e => e.id != step.id)
+  pipeline.steps = pipeline.steps.filter(e => e.id != step.id);
 }
 
 export const moveStep = (pipelineid /*: pipelineid */, stepid /*: stepid */, change /* number */) /*: void */ => {
@@ -668,7 +720,9 @@ const getDefinition = (pipeline /*: pipeline */) /*: object */ => {
   const stepDefinitions = clone(pipeline.steps.map(step => stepGetDefinition(pipeline, step)));
   return {
     steps: stepDefinitions,
-    app: clone(pipeline.app)
+    app: clone(pipeline.app),
+    deps: clone(pipeline.deps),
+    runtimes: clone(pipeline.runtimes),
   }
 }
 
@@ -719,6 +773,7 @@ export const getSources = (pipelineid /*: pipelineid */, sid /*: number */) /*: 
 }
 
 const setErrors = (pipeline /*: pipeline */, sid /*: number */, error /*: string */) /*: void */ => {
+  if (!pipeline.errors) pipeline.errors = {};
   pipeline.errors[sid] = error;
 }
 
@@ -872,7 +927,7 @@ export const setGlobal = (pipelineid /*: pipelineid */, name /*: string */, data
 }
 
 const getGlobalsInt = (pipeline /*: pipeline */) => /*: Object */ {
-  return pipeline.globals;
+  return pipeline.globals ?? {};
 }
 
 export const getGlobals = (pipelineid /*: pipelineid */) => /*: Object */ {
@@ -929,4 +984,53 @@ export const abort = async (pipelineid /*: pipelineid */) /*: void */ => {
 export const isAborted = async (pipelineid /*: pipelineid */) /*: boolean */ => {
   var pipeline = store.get(pipelineid);
   return pipeline.aborted === true;
+}
+
+export const getDependencies = async (pipelineid /*: pipelineid */) /*: deps */ => {
+  var pipeline = store.get(pipelineid);
+  return clone(pipeline.deps);
+}
+
+export const addDependency = async (pipelineid /*: pipelineid */, source /*: string */, target /*: string */) /*: deps */ => {
+  var pipeline = store.get(pipelineid);
+
+  pipeline.deps = pipeline.deps || {};
+  pipeline.deps[source] = pipeline.deps[source] || [];
+
+  if (!pipeline.deps[source].includes(target)) {
+    pipeline.deps[source].push(target);
+  }
+
+  return clone(pipeline.deps);
+}
+
+export const removeDependency = async (pipelineid /*: pipelineid */, source /*: string */, target /*: string */) /*: deps */ => {
+  var pipeline = store.get(pipelineid);
+
+  pipeline.deps = pipeline.deps || {};
+  pipeline.deps[source] = (pipeline.deps[source] || []).filter(d => d !== target);
+
+  return clone(pipeline.deps);
+}
+
+export const getRuntimeSpecs = (pipelineid /*: pipelineid */) /*: object */ => {
+  var pipeline = store.get(pipelineid);
+  return clone(pipeline.runtimes);
+}
+
+export const addRuntimeSpec = (pipelineid /*: pipelineid */, spec /* object */) /*: object */ => {
+  var pipeline = store.get(pipelineid);
+  pipeline.runtimes = pipeline.runtimes ?? [];
+  pipeline.runtimes = pipeline.runtimes.filter(e => e.name != spec.name);
+  pipeline.runtimes.push(spec);
+
+  return clone(pipeline.runtimes);
+}
+
+export const getPipeline = (pipelineid /*: pipelineid */) /*: object */ => {
+  return clone(store.get(pipelineid));
+}
+
+export const addPipeline = (pipeline /*: object */) /*: void */ => {
+  return store.add(clone(pipeline));
 }
