@@ -6,7 +6,7 @@
     const environment = localhost ? 'local' : 'devel';
     const libraries = {
       local: 'http://localhost:8000/hal9.js',
-      devel: 'https://cdn.jsdelivr.net/npm/hal9@0.3.67/dist/hal9.dev.js',
+      devel: 'https://cdn.jsdelivr.net/npm/hal9@0.3.69/dist/hal9.dev.js',
     }
 
     const script = document.createElement('script');
@@ -26,10 +26,10 @@
           heartbeat: 'ping'
         },
         runtime: {
-            name: 'r',
+            name: 'python',
             implementation: 'server',
-            platform: 'r',
-            script: 'R/backend.R'
+            platform: 'python',
+            script: 'python/app.py'
           }
       });
 

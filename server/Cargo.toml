@@ -6,7 +6,7 @@ edition = "2021"
 [lib]
 name = "hal9"
 path = "src/lib.rs"
-crate-type = ['lib', 'staticlib']
+crate-type = ['lib', 'staticlib', 'cdylib']
 
 [[bin]]
 name = "hal9"
@@ -33,3 +33,10 @@ url = "2.2.2"
 futures = "*"
 webbrowser = "0.8.0"
 regex = "1"
+
+[dependencies.pyo3]
+version = "0.17.2"
+features = ["extension-module", "abi3-py39"]
+
+[package.metadata.maturin]
+name = "hal9._hal9"

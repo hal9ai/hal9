@@ -62,23 +62,34 @@ async fn eval(
     let tx_handler = &data.tx_handler;
     
     // Ask controller for the URL of the runtime API
+    println!("eval endpoint: asking for url of {rt}");
     tx_handler.send(RtControllerMsg::GetUri(rt.to_string())).await.ok();
     let rx_uri_handler = &data.rx_uri_handler;
     
     match rx_uri_handler.recv().unwrap() {
         Ok(url) => {
+            println!("eval endpoint: got url {url:?}");
             let uri = url.join("eval").unwrap();
             let manifest = req.manifests[0].calls.clone();
+
+            println!("posting manifest {manifest:?}");
             
             let client = reqwest::Client::new();
             
             
-            let mut res = client
+            let mut res1 = client
                 .post(uri)
                 .json(&manifest)
                 .send()
                 .await
-                .unwrap()
+                .unwrap();
+
+            // let resp_msg = &res1.text().await.unwrap();
+            // println!("got response {resp_msg:?}");
+            let req_json = serde_json::to_string(&manifest).unwrap();
+            println!("req json is {req_json:?}");
+
+            let mut res = res1
                 .json::<RuntimeResponse>()
                 .await
                 .unwrap();
@@ -92,6 +103,7 @@ async fn eval(
             let response = serde_json::to_string(&res).unwrap();
             
             HttpResponse::Ok().body(response)
+            // HttpResponse::Ok().body("")
         }
         Err(e) => {
             let err_string = e.to_string();

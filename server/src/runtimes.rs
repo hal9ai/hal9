@@ -66,7 +66,7 @@ impl RuntimeHandle {
         let mut buf = [0; 64];
         let mut msg_vec = Vec::new();
         
-        let pattern = format!("{intro} http://*.+\\n");
+        let pattern = format!("{intro} (http://*.+)\\s\\(");
         let regex= regex::Regex::new(&pattern).unwrap();
         
         let mut stderr = handle.stderr.take().unwrap();
@@ -83,11 +83,15 @@ impl RuntimeHandle {
             
             msg_vec.extend_from_slice(&buf[..n]);
             let msg = str::from_utf8(&msg_vec).unwrap();
+
+            println!("stderr from runtime process: {msg}");
             let mat = regex.find(msg);
             
             if let Some(m) = mat {
                 // Plumber startup message detected
-                let url = &msg[(intro.len() + 1)..m.end() - 1];
+                // let url = &msg[(m.start()+intro.len() + 1)..m.end() - 1];
+                let url = &msg[(m.start()+intro.len() + 1)..m.end() - 1];
+                println!("startup message detected, url is {url}");
                 break RuntimeStartupResult::Success(url.to_owned());
             };
         };
@@ -144,6 +148,7 @@ impl RuntimesController {
                                 RtControllerMsg::GetUri(x) => {
                                     let handle_ref = self.handles.get(&x);
                                     let url_result = handle_ref.as_ref().unwrap().get_url();
+                                    println!("controller: sending back url_result {url_result:?}");
                                     self.tx_uri.send(url_result).ok();
                                 }
                             }
@@ -221,7 +226,9 @@ impl RuntimesController {
     }
     
     fn start_python_api(script: &str, port: u16) -> RuntimeHandle {
+        // let py_cmd = format!("import hal9; hal9.run_script('{script}', {port})");
         let py_cmd = format!("import hal9; hal9.run_script('{script}', {port})");
+        println!("about to start python api: {py_cmd}");
         
         let handle = Command::new("python3")
         .arg("-c")
@@ -230,7 +237,7 @@ impl RuntimesController {
         .stdout(Stdio::piped())
         .spawn().unwrap();
 
-        RuntimeHandle::read_startup_result(handle, "Unvicorn running on".to_owned())
+        RuntimeHandle::read_startup_result(handle, "Uvicorn running on".to_owned())
     }
     
     async fn stop(&mut self, name: String) -> Result<(), std::io::Error> {
