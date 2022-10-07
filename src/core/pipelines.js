@@ -1015,7 +1015,7 @@ export const removeDependency = async (pipelineid /*: pipelineid */, source /*: 
 
 export const getRuntimeSpecs = (pipelineid /*: pipelineid */) /*: object */ => {
   var pipeline = store.get(pipelineid);
-  return clone(pipeline.runtimes);
+  return pipeline.runtimes ? clone(pipeline.runtimes) : [];
 }
 
 export const addRuntimeSpec = (pipelineid /*: pipelineid */, spec /* object */) /*: object */ => {
