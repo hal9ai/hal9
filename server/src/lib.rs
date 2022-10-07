@@ -1,4 +1,4 @@
-pub(crate) mod config;
+pub mod config;
 pub(crate) mod extendr;
 pub(crate) mod manifest;
 pub(crate) mod runtimes;

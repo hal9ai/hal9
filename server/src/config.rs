@@ -1,6 +1,8 @@
 use serde::Deserialize;
-use std::fs;
+use std::{fmt, fs};
 use std::path::PathBuf;
+use std::str::FromStr;
+
 
 // TODO: revisit dead code
 
@@ -25,9 +27,30 @@ pub(crate) struct Client {
 }
 
 #[derive(Deserialize, Debug, Clone)]
-pub(crate) enum Platform {
+pub enum Platform {
     R,
     Python,
+}
+
+impl fmt::Display for Platform {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Platform::R => write!(f, "R"),
+            Platform::Python => write!(f, "Python"),
+        }
+    }
+}
+
+impl FromStr for Platform {
+    type Err = ();
+
+    fn from_str(input: &str) -> Result<Platform, Self::Err> {
+        match input.to_lowercase().as_str() {
+            "r" => Ok(Platform::R),
+            "python" => Ok(Platform::Python),
+            _ => Err(())
+        }
+    }
 }
 
 #[allow(dead_code)]

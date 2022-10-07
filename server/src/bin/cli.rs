@@ -1,6 +1,8 @@
 use clap::{Parser, Subcommand};
 use hal9::server::start_server;
 use hal9::app_template::new_app;
+use hal9::config::Platform;
+use std::str::FromStr;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -16,6 +18,9 @@ struct Cli {
 
     #[clap(short, long, value_parser)]
     nobrowse: bool,
+
+    #[clap(short, long, default_value = "R")]
+    platform: String,
 }
 
 #[derive(Subcommand, Debug)]
@@ -33,7 +38,8 @@ fn main() {
             cli.port, cli.timeout, cli.nobrowse).ok();
         },
         Some(Commands::New { dir }) => {
-            new_app(dir.to_string()).ok();
+            let platform = Platform::from_str(&cli.platform).unwrap();
+            new_app(dir.to_string(), platform).ok();
         }
         None => println!("Missing subcommand! Seek help.")
     }

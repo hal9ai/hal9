@@ -2,6 +2,7 @@
 
 use crate::app_template::new_app;
 use crate::server::start_server;
+use crate::config::Platform;
 use extendr_api::prelude::*;
 use extendr_api::wrapper::nullable::Nullable;
 
@@ -24,7 +25,7 @@ fn h9_start(#[default = "."] path: String, #[default = "NULL"] port: Nullable<i3
 /// @export
 #[extendr]
 fn h9_new(path: String) {
-    new_app(path).ok();
+    new_app(path, Platform::R).ok();
 }
 
 // Macro to generate exports.
