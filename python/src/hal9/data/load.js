@@ -1,1 +1,0 @@
-{"name": "dataframe", "function": "load", "source": "import/dataframe.js", "language": "javascript", "label": "DataFrame", "description": "Loads a dataframe", "icon": "fa-light fa-columns-3", "build": "true", "params": [{"name": "dataset", "label": "Dataset", "description": "The dataframe to load", "value": [{"control": "dataframe"}]}]}
