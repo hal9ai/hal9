@@ -6,6 +6,6 @@ version = "0.0.1"
 design = "app.json"
 
 [[runtimes]]
-name = "r"
-platform = "R"
+name = "python"
+platform = "Python"
 script = "python/backend.py"
