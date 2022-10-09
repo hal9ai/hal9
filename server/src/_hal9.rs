@@ -8,7 +8,7 @@ fn start(path: &str, port: u16, timeout: u32, nobrowse: bool){
 }
 #[pyfunction(path = "\".\"")]
 fn new(path: &str) {
-    new_app(path.to_string()).ok();
+    new_app(path.to_string(), crate::config::Platform::Python).ok();
 }
 #[pymodule]
 #[pyo3(name = "_hal9")]

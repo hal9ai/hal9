@@ -66,7 +66,7 @@ impl RuntimeHandle {
         let mut buf = [0; 64];
         let mut msg_vec = Vec::new();
         
-        let pattern = format!("{intro} (http://*.+)\\s\\(");
+        let pattern = format!("{intro} (http://*.+)(?:\\s\\(|\\n)");
         let regex= regex::Regex::new(&pattern).unwrap();
         
         let mut stderr = handle.stderr.take().unwrap();

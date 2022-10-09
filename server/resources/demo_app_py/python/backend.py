@@ -7,13 +7,12 @@ df = pd.DataFrame(iris)
 
 h9.set('df', df)
 
-h9.node(uid='species_dropdown', values=lambda: h9.get('df')[
-        'Species'].unique().tolist(), on_select=lambda value: h9.set('value', value))
+h9.dropdown(uid='species_dropdown', values=lambda: h9.get('df')[
+        'Species'].unique().tolist(), on_update=lambda value: h9.set('value', value))
 
 
 def filter_and_show_df(value):
     df = h9.get('df')
     return df[df['Species'] == value].to_html()
-
-
-h9.node('summary_table', rawhtml=lambda: filter_and_show_df(h9.get('value')))
+    
+h9.html('iris_table', rawhtml=lambda: filter_and_show_df(h9.get('value')))

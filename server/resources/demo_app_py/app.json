@@ -91,135 +91,6 @@
         "cache": false,
         "invalid": null
       }
-    },
-    {
-      "name": "slider_rows",
-      "function": "slider",
-      "source": "controls/range.html",
-      "language": "html",
-      "label": "Slider",
-      "description": "Embed an slider element",
-      "icon": "fa-light fa-slider",
-      "dragdrop": true,
-      "build": "true",
-      "id": 11107,
-      "params": {
-        "value": {
-          "id": 1,
-          "static": true,
-          "value": [
-            {
-              "control": "number",
-              "value": 1,
-              "id": 0
-            }
-          ],
-          "name": "value",
-          "label": "Default Value"
-        },
-        "min": {
-          "id": 3,
-          "static": true,
-          "value": [
-            {
-              "control": "number",
-              "value": 1,
-              "id": 2
-            }
-          ],
-          "name": "min",
-          "label": "Min Value"
-        },
-        "max": {
-          "id": 5,
-          "static": true,
-          "value": [
-            {
-              "control": "number",
-              "value": 10,
-              "id": 4
-            }
-          ],
-          "name": "max",
-          "label": "Max Value"
-        },
-        "step": {
-          "id": 7,
-          "static": true,
-          "value": [
-            {
-              "control": "number",
-              "value": 1,
-              "id": 6
-            }
-          ],
-          "name": "step",
-          "label": "Step Increment"
-        }
-      },
-      "header": {
-        "input": [],
-        "params": [
-          {
-            "name": "value",
-            "label": "Default Value",
-            "value": [
-              {
-                "control": "number",
-                "value": 1
-              }
-            ]
-          },
-          {
-            "name": "min",
-            "label": "Min Value",
-            "value": [
-              {
-                "control": "number",
-                "value": 1
-              }
-            ]
-          },
-          {
-            "name": "max",
-            "label": "Max Value",
-            "value": [
-              {
-                "control": "number",
-                "value": 10
-              }
-            ]
-          },
-          {
-            "name": "step",
-            "label": "Step Increment",
-            "value": [
-              {
-                "control": "number",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "output": [
-          "html",
-          "slider"
-        ],
-        "events": [
-          "on_update"
-        ],
-        "interactive": true,
-        "layout": [
-          {
-            "width": "325px",
-            "height": "70px"
-          }
-        ],
-        "deps": [],
-        "environment": null,
-        "cache": false,
-        "invalid": null
-      }
     }
   ],
   "params": {
@@ -238,66 +109,11 @@
         "label": "Values"
       }
     },
-    "11106": {},
-    "11107": {
-      "value": {
-        "id": 1,
-        "static": true,
-        "value": [
-          {
-            "control": "number",
-            "value": 1,
-            "id": 0
-          }
-        ],
-        "name": "value",
-        "label": "Default Value"
-      },
-      "min": {
-        "id": 3,
-        "static": true,
-        "value": [
-          {
-            "control": "number",
-            "value": 1,
-            "id": 2
-          }
-        ],
-        "name": "min",
-        "label": "Min Value"
-      },
-      "max": {
-        "id": 5,
-        "static": true,
-        "value": [
-          {
-            "control": "number",
-            "value": 10,
-            "id": 4
-          }
-        ],
-        "name": "max",
-        "label": "Max Value"
-      },
-      "step": {
-        "id": 7,
-        "static": true,
-        "value": [
-          {
-            "control": "number",
-            "value": 1,
-            "id": 6
-          }
-        ],
-        "name": "step",
-        "label": "Step Increment"
-      }
-    }
+    "11106": {}
   },
   "scripts": {
     "11105": "<!--\n  input: []\n  params:\n    - name: values\n      label: Values\n      value:\n        - control: textbox\n          value: versicolor,setosa,virginica\n  output: [ dropdown, html ]\n  events: [ on_update ]\n  interactive: true\n  layout:\n    - width: inner\n      height: 40px\n-->\n\n<script src=\"https://cdn.jsdelivr.net/npm/vue@2\"></script>\n<link rel=\"stylesheet\" href=\"https://unpkg.com/buefy/dist/buefy.min.css\">\n<script src=\"https://unpkg.com/buefy/dist/buefy.min.js\"></script>\n\n<div class=\"control\">\n  <template>\n    <section>\n      <b-select v-model=\"value\">\n        <option v-for=\"o in options\" :value='o'>\n          {{ o }}\n        </option>\n      </b-select>\n    </section>\n  </template>\n</div>\n\n<script>\n  values = typeof(values) === 'object' ? values : values.split(',');\n  var dropdown = hal9.get('dropdown');\n\n  var app = new Vue({\n    el: html.getElementsByClassName('control')[0],\n    data: function() {\n      var vue = this;\n\n      hal9.onEvent('onParams', function(param, values) {\n        if (param != 'values') return;\n        vue.options = typeof(values) === 'object' ? values : values.split(',');\n      })\n\n      return {\n        value: dropdown,\n        options: values\n      }\n    },\n    watch: {\n      value: function(value) {\n        hal9.set('dropdown', value);\n      }\n    }\n  })\n\n  html.style.height = '40px';\n</script>",
-    "11106": "/**\n  input: [ rawhtml ]\n  output: [ html ]\n  layout:\n    - width: 900px\n**/\n\nhtml.innerHTML = rawhtml;\n",
-    "11107": "<!--\n  input: []\n  params:\n    - name: value\n      label: Default Value\n      value:\n        - control: number\n          value: 1\n    - name: min\n      label: Min Value\n      value:\n        - control: number\n          value: 1\n    - name: max\n      label: Max Value\n      value:\n        - control: number\n          value: 10\n    - name: step\n      label: Step Increment\n      value:\n        - control: number\n          value: 1\n  output: [ html, slider ]\n  events: [ on_update ]\n  interactive: true\n  layout:\n    - width: 325px\n      height: 70px\n-->\n\n<script src=\"https://cdn.jsdelivr.net/npm/vue@2\"></script>\n<link rel=\"stylesheet\" href=\"https://unpkg.com/buefy/dist/buefy.min.css\">\n<script src=\"https://unpkg.com/buefy/dist/buefy.min.js\"></script>\n\n<div class=\"sliderContainer\">\n  <template>\n    <section>\n      <div style= \"height: 30px\"></div>\n        <b-field>\n            <b-slider tooltip-always :min=\"min\" :max=\"max\" :step=\"step\" v-model=\"value\"></b-slider>\n        </b-field>\n    </section>\n  </template>\n</div>\n\n<script>\n  var slider = hal9.get('slider');\n\n  var app = new Vue({\n    el: html.getElementsByClassName('sliderContainer')[0],\n    data: {\n      value: parseFloat(slider),\n      min: parseFloat(min),\n      max: parseFloat(max),\n      step: parseFloat(step)\n    },\n    watch: {\n      value: function(value) {\n        hal9.set('slider', value);\n      }\n    }\n  })\n\n  app.$el.getElementsByClassName('b-slider-track')[0].style = 'width: 300px';\n  app.$el.getElementsByClassName('b-slider-track')[0].style.left = \"16px\";\n\n  let sliderNumber = app.$el.getElementsByClassName('tooltip-content')[0];\n\n  let minMaxStep = app.$el.getElementsByClassName('b-slider-thumb')[0];\n  minMaxStep.setAttribute('aria-valuemin', 3);\n</script>"
+    "11106": "/**\n  input: [ rawhtml ]\n  output: [ html ]\n  layout:\n    - width: 900px\n**/\n\nhtml.innerHTML = rawhtml;\n"
   },
   "version": "0.0.1",
   "metadata": {
@@ -318,27 +134,8 @@
         "left": "6px",
         "height": "288px",
         "top": "76px"
-      },
-      {
-        "stepId": 11107,
-        "width": "317px",
-        "left": "137px",
-        "height": "70px",
-        "top": "0px"
       }
     ]
   },
-  "deps": {
-  },
-  "runtimes": [
-    {
-      "name": "python",
-      "implementation": "server",
-      "platform": "python",
-      "script": "python/backend.py",
-      "files": {
-        "python/backend.py": ""
-      }
-    }
-  ]
+  "deps": {}
 }
