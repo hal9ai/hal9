@@ -17,8 +17,8 @@ jobs:
         python-version: 3.9
         architecture: x64
     - name: Build wheels
-      working-directory: ./python
       uses: messense/maturin-action@v1
+      working-directory: ./python
       with:
         target: ${{ matrix.target }}
         manylinux: auto
@@ -30,8 +30,8 @@ jobs:
         pip install hal9 --no-index --find-links dist --force-reinstall
         python -c "import hal9"
     - name: Upload wheels
-      working-directory: ./python
       uses: actions/upload-artifact@v2
+      working-directory: ./python
       with:
         name: wheels
         path: dist
