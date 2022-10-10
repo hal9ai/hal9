@@ -18,11 +18,10 @@ jobs:
         architecture: x64
     - name: Build wheels
       uses: messense/maturin-action@v1
-      working-directory: ./python
       with:
         target: ${{ matrix.target }}
         manylinux: auto
-        args: --release --out dist -vv
+        args: --release --out python/dist -m python/Cargo.toml -vv
     - name: Install built wheel
       working-directory: ./python
       if: matrix.target == 'x86_64'
@@ -31,10 +30,9 @@ jobs:
         python -c "import hal9"
     - name: Upload wheels
       uses: actions/upload-artifact@v2
-      working-directory: ./python
       with:
         name: wheels
-        path: dist
+        path: python/dist
 
   
   release:
