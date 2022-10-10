@@ -21,7 +21,7 @@ jobs:
       with:
         target: ${{ matrix.target }}
         manylinux: auto
-        args: --release --out dist -m python/Cargo.toml
+        args: --release --out dist -m python/Cargo.toml -vv
     - name: Install built wheel
       if: matrix.target == 'x86_64'
       run: |
