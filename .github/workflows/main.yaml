@@ -72,3 +72,4 @@ jobs:
           action_url: ${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}
           details_url: ${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}
           output: "{ \"summary\": \"${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}\" }"
+  python:
