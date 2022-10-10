@@ -7,6 +7,7 @@ on:
 jobs:
   linux:
     runs-on: ubuntu-latest
+    working-directory: ./python
     strategy:
       matrix:
         target: [x86_64, i686]
@@ -21,7 +22,7 @@ jobs:
       with:
         target: ${{ matrix.target }}
         manylinux: auto
-        args: --release --out dist -m python/Cargo.toml -vv
+        args: --release --out dist -vv
     - name: Install built wheel
       if: matrix.target == 'x86_64'
       run: |
