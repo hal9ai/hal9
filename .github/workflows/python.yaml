@@ -7,7 +7,6 @@ on:
 jobs:
   linux:
     runs-on: ubuntu-latest
-    working-directory: ./python
     strategy:
       matrix:
         target: [x86_64, i686]
@@ -18,17 +17,20 @@ jobs:
         python-version: 3.9
         architecture: x64
     - name: Build wheels
+      working-directory: ./python
       uses: messense/maturin-action@v1
       with:
         target: ${{ matrix.target }}
         manylinux: auto
         args: --release --out dist -vv
     - name: Install built wheel
+      working-directory: ./python
       if: matrix.target == 'x86_64'
       run: |
         pip install hal9 --no-index --find-links dist --force-reinstall
         python -c "import hal9"
     - name: Upload wheels
+      working-directory: ./python
       uses: actions/upload-artifact@v2
       with:
         name: wheels
