@@ -24,6 +24,10 @@ jobs:
       - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
+      - name: Install Quarto Deps
+        run: |
+          Rscript -e 'install.packages("rmarkdown")'
+        working-directory: ./r
       - name: Render quarto
         run: quarto render
         working-directory: ./site

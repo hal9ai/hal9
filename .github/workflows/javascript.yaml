@@ -1,0 +1,46 @@
+name: JavaScript
+
+on: [ push ]
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Add Commit SHA
+        run: |
+          echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+          echo "DEPLOY_URL=`javascript`" >> $GITHUB_ENV
+      - name: Deploy Path
+        run: |
+          echo "SHORT_SHA=${SHORT_SHA}"
+          echo "DEPLOY_URL=`commits/${SHORT_SHA}/javascript`" >> $GITHUB_ENV
+          echo "DEPLOY_URL=`${DEPLOY_URL}`"
+        if: github.ref != 'refs/heads/main'
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '15.x'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@hal9ai'
+      - run: yarn install
+        working-directory: ./javascript
+      - run: yarn docs
+        working-directory: ./javascript
+      - uses: zdurham/s3-upload-github-action@master
+        with:
+          args: --recursive --acl public-read
+        env:
+          FILE: './javascript/out'
+          AWS_REGION: 'us-west-2'
+          S3_BUCKET: 'notebooks.hal9.com'
+          S3_KEY: '${DEPLOY_URL}'
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - uses: LouisBrunner/checks-action@v1.1.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: preview
+          conclusion: ${{ job.status }}
+          action_url: ${{ format('https://s3.amazonaws.com/notebooks.hal9.com/{0}/index.html', env.DEPLOY_URL) }}
+          details_url: ${{ format('https://s3.amazonaws.com/notebooks.hal9.com/{0}/index.html', env.DEPLOY_URL) }}
+          output: "{ \"summary\": \"${{ format('https://s3.amazonaws.com/notebooks.hal9.com/{0}/index.html', env.DEPLOY_URL) }}\" }"
