@@ -23,7 +23,7 @@ jobs:
         uses: messense/maturin-action@v1
         with:
           target: x86_64
-          args: --release --out dist --sdist -m python/Cargo.toml -F pyo3 -b pyo3
+          args: --release --out dist --sdist -m python/ -F pyo3 -b pyo3
       - name: Install built wheel - x86_64
         run: |
           pip install hal9 --no-index --find-links dist --force-reinstall
