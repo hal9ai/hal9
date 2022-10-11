@@ -14,7 +14,7 @@ website:
       - text: "R"
         href: /r/reference
       - text: "JavaScript"
-        href: /javascript
+        href: /javascript/h9.html
   sidebar:
       style: "docked"
       search: true
