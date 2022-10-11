@@ -6,7 +6,7 @@ edition = "2021"
 [lib]
 name = "hal9"
 path = "src/lib.rs"
-crate-type = ['lib', 'staticlib', 'cdylib']
+crate-type = ['lib', 'staticlib']
 
 [[bin]]
 name = "hal9"
