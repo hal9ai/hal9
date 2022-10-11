@@ -3,12 +3,16 @@
   params:
     - name: caption
       label: 'Caption'
+      type: string
+      description: The caption to display for this control.
       value:
         - control: textbox
           label: Text
           value: Upload
     - name: dragDrop
       label: Drag and Drop
+      type: boolean
+      description: Should user be allowed to drag and drop files?
       value:
         - control: select
           value: false

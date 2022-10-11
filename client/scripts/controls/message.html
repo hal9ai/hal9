@@ -3,32 +3,40 @@
   params:
     - name: message
       label: Message
+      type: string
+      description: The text to show in the message.
       value:
         - control: textbox
           value: "Hello World!"
     - name: title
       label: Title
+      type: string
+      description: The title to show in the message.
       value:
         - control: textbox
           value: Info
     - name: mtype
       label: 'Type'
+      type: string
+      description: The type of message to display, either 'success', 'danger', 'info', 'warning', or 'darl'.
       value:
         - control: select
           value: is-success
           values:
-            - name: is-success
+            - name: success
               label: Success
-            - name: is-danger
+            - name: danger
               label: Danger
-            - name: is-info
+            - name: info
               label: Info
-            - name: is-warning
+            - name: warning
               label: Warning
-            - name: is-dark
+            - name: dark
               label: Dark
     - name: showIcon
       label: 'Icon'
+      type: boolean
+      description: Should an icon be shown?
       value:
         - control: select
           value: true
@@ -73,7 +81,7 @@
       return {
         message: message,
         title: title,
-        mtype: mtype,
+        mtype: 'is-' + mtype,
         showIcon: showIcon
       }
     }
