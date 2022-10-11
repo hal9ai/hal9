@@ -33,10 +33,7 @@ url = "2.2.2"
 futures = "*"
 webbrowser = "0.8.0"
 regex = "1"
-
-[dependencies.pyo3]
-version = "0.17.2"
-features = ["extension-module", "abi3-py39"]
+pyo3 = { version = "0.17.2", features = ["extension-module", "abi3-py39"], optional = true}
 
 [package.metadata.maturin]
 name = "hal9._hal9"
