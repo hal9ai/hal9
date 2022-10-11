@@ -1,9 +1,7 @@
 name: Client
 
-on:
-  push:
-    branches:
-      - main
+on: [ push ]
+
 jobs:
   npm:
     runs-on: ubuntu-latest
@@ -25,3 +23,4 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        if: github.ref == 'refs/heads/main'

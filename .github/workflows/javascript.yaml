@@ -7,16 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Add Commit SHA
+      - name: Deploy Prepare
         run: |
           echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
           echo "DEPLOY_URL=`javascript`" >> $GITHUB_ENV
-      - name: Deploy Path
+      - name: Deploy Commit
         run: |
           echo "SHORT_SHA=${SHORT_SHA}"
           echo "DEPLOY_URL=`commits/${SHORT_SHA}/javascript`" >> $GITHUB_ENV
-          echo "DEPLOY_URL=`${DEPLOY_URL}`"
         if: github.ref != 'refs/heads/main'
+      - name: Deploy URL
+        run: echo "DEPLOY_URL=${DEPLOY_URL}"
       - uses: actions/setup-node@v2
         with:
           node-version: '15.x'

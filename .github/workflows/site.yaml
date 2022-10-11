@@ -1,14 +1,23 @@
 name: Site
 
-on:
-  push:
-    branches:
-      - main
+on: [ push ]
+
 jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Deploy Prepare
+        run: |
+          echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+          echo "DEPLOY_URL=`/`" >> $GITHUB_ENV
+      - name: Deploy Commit
+        run: |
+          echo "SHORT_SHA=${SHORT_SHA}"
+          echo "DEPLOY_URL=`commits/${SHORT_SHA}`" >> $GITHUB_ENV
+        if: github.ref != 'refs/heads/main'
+      - name: Deploy URL
+        run: echo "DEPLOY_URL=${DEPLOY_URL}"
       - uses: quarto-dev/quarto-actions/setup@v2
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -33,20 +42,14 @@ jobs:
         working-directory: ./site
       - name: Add Commit SHA
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
-      - run: |
-          echo "$APP_COMMIT"
-          cp -R ./site/_site/* ./deployment
-          mkdir ./deployment/commits
-          mkdir ./deployment/commits/$APP_COMMIT
-          cp -R ./site/_site/* ./deployment/commits/$APP_COMMIT
       - uses: zdurham/s3-upload-github-action@master
         with:
           args: --recursive --acl public-read
         env:
-          FILE: './deployment'
+          FILE: './site/_site'
           AWS_REGION: 'us-west-2'
           S3_BUCKET: 'notebooks.hal9.com'
-          S3_KEY: ''
+          S3_KEY: '${DEPLOY_URL}'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - uses: LouisBrunner/checks-action@v1.1.1
@@ -54,6 +57,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: preview
           conclusion: ${{ job.status }}
-          action_url: ${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}
-          details_url: ${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}
-          output: "{ \"summary\": \"${{ format('https://s3.amazonaws.com/notebooks.hal9.com/commits/{0}/index.html', env.SHORT_SHA) }}\" }"
+          action_url: ${{ format('https://s3.amazonaws.com/notebooks.hal9.com/{0}index.html', env.DEPLOY_URL) }}
+          details_url: ${{ format('https://s3.amazonaws.com/notebooks.hal9.com/{0}index.html', env.DEPLOY_URL) }}
+          output: "{ \"summary\": \"${{ format('https://s3.amazonaws.com/notebooks.hal9.com/{0}index.html', env.DEPLOY_URL) }}\" }"
