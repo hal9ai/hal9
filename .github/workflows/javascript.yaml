@@ -10,11 +10,11 @@ jobs:
       - name: Deploy Prepare
         run: |
           echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
-          echo "DEPLOY_URL=`javascript`" >> $GITHUB_ENV
+          echo "DEPLOY_URL=javascript" >> $GITHUB_ENV
       - name: Deploy Commit
         run: |
           echo "SHORT_SHA=${SHORT_SHA}"
-          echo "DEPLOY_URL=`commits/${SHORT_SHA}/javascript`" >> $GITHUB_ENV
+          echo "DEPLOY_URL=commits/${SHORT_SHA}/javascript" >> $GITHUB_ENV
         if: github.ref != 'refs/heads/main'
       - name: Deploy URL
         run: echo "DEPLOY_URL=${DEPLOY_URL}"
