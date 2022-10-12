@@ -19,7 +19,7 @@ struct Cli {
     #[clap(short, long, value_parser)]
     nobrowse: bool,
 
-    #[clap(short, long, default_value = "R")]
+    #[clap(long, default_value = "R")]
     platform: String,
 }
 
