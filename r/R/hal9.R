@@ -14,7 +14,8 @@ Node <- R6::R6Class("Node", list(
         fn <- self$fns[[fn]]
 
         if (is.null(fn)) {
-            stop("Function not defined for node.")
+            # stop("Function not defined for node.")
+            return(NULL)
         }
 
         result <- NULL

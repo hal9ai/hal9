@@ -46,11 +46,14 @@ def __process_request(calls: list) -> dict:
     response = dict()
     call_response = list()
     for call in calls:
-        node = global_nodes[call['node']]
-        kwargs = dict()
-        for arg in call['args']:
-            kwargs[arg['name']] = arg['value']
-        result = node.evaluate(call['fn_name'], **kwargs)
+        if not call['node'] in global_nodes.keys():
+            result = None
+        else:
+            node = global_nodes[call['node']]
+            kwargs = dict()
+            for arg in call['args']:
+                kwargs[arg['name']] = arg['value']
+            result = node.evaluate(call['fn_name'], **kwargs)
         call_response.append(
             {'node': node.uid, 'fn_name': call['fn_name'], 'result': result})
     response['calls'] = call_response

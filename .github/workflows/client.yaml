@@ -5,7 +5,6 @@ on: [ push ]
 jobs:
   npm:
     runs-on: ubuntu-latest
-    working-directory: ./client
     env:
       HAL9_ENV: prod
     permissions:
@@ -19,8 +18,11 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@hal9ai'
       - run: yarn install
+        working-directory: ./client
       - run: yarn build:npm
+        working-directory: ./client
       - run: npm publish
+        working-directory: ./client
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         if: github.ref == 'refs/heads/main'
