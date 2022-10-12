@@ -17,7 +17,6 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          profile: minimal
           default: true
       - name: Build Server
         run: build cargo
