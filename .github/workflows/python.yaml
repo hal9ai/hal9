@@ -25,18 +25,18 @@ jobs:
         uses: messense/maturin-action@v1
         with:
           target: x86_64
-          args: -m python/Cargo.toml -F pyo3 -b pyo3
+          args: --release -m python/Cargo.toml -F pyo3 -b pyo3
       - name: Install built wheel - x86_64
         run: |
-          pip3 install hal9 --no-index --find-links python/target --force-reinstall
+          pip3 install hal9 --no-index --find-links python/target/wheels --force-reinstall
           python3 -c "import hal9"
       - name: Build wheels - universal2
         uses: messense/maturin-action@v1
         with:
-          args: --release --universal2 --out dist -m python/Cargo.toml
+          args: --release --universal2 -m python/Cargo.toml -F pyo3 -b pyo3
       - name: Install built wheel - universal2
         run: |
-          pip install hal9 --no-index --find-links dist --force-reinstall
+          pip install hal9 --no-index --find-links --find-links python/target/wheels --force-reinstall
           python -c "import hal9"
       - name: Upload wheels
         uses: actions/upload-artifact@v2
