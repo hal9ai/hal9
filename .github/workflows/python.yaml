@@ -19,6 +19,9 @@ jobs:
           toolchain: stable
           profile: minimal
           default: true
+      - name: Build Server
+        run: build cargo
+        working-directory: ./server
       - name: Build wheels - x86_64
         uses: messense/maturin-action@v1
         with:
