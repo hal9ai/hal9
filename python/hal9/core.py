@@ -17,6 +17,9 @@ class _Node:
     def evaluate(self, fn: str, *args, **kwargs) -> Any:
         return self.funcs[fn](*args, **kwargs)
 
+    def has_fn(self, fn: str) -> bool:
+        return fn in self.funcs.keys()
+
 
 global_nodes: dict[str, _Node] = dict()
 global_data: dict[str, Any] = dict()
@@ -46,16 +49,21 @@ def __process_request(calls: list) -> dict:
     response = dict()
     call_response = list()
     for call in calls:
-        if not call['node'] in global_nodes.keys():
+        try:
             result = None
-        else:
-            node = global_nodes[call['node']]
-            kwargs = dict()
-            for arg in call['args']:
-                kwargs[arg['name']] = arg['value']
-            result = node.evaluate(call['fn_name'], **kwargs)
-        call_response.append(
-            {'node': node.uid, 'fn_name': call['fn_name'], 'result': result})
+            if call['node'] in global_nodes.keys():
+                node = global_nodes[call['node']]
+                if node.has_fn(call['fn_name']):
+                    kwargs = dict()
+                    for arg in call['args']:
+                        kwargs[arg['name']] = arg['value']
+                    result = node.evaluate(call['fn_name'], **kwargs)
+
+            call_response.append(
+                {'node': call['node'], 'fn_name': call['fn_name'], 'result': result})
+        except Exception as e:
+            call_response.append(
+                {'node': node.uid, 'fn_name': call['fn_name'], 'result': None, 'error': str(e)})
     response['calls'] = call_response
     return response
 
