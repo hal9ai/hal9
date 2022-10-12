@@ -8,9 +8,14 @@ Design Interactive Data Apps Without Web Dev
 $ pip install hal9
 ```
 
-## Usage
+### Source
 
-- TODO
+```bash
+git clone https://github.com/hal9ai/hal9
+pip3 install maturin
+maturin build --release --out dist --sdist -m python/Cargo.toml
+pip3 install hal9 --no-index --find-links dist --force-reinstall
+````
 
 ## Contributing
 

@@ -1,4 +1,5 @@
 /**
+  input: []
   params:
     - name: rawhtml
       label: html
