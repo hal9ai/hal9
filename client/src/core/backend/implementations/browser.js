@@ -20,6 +20,7 @@ const BrowserImplementation = function(hostopt) {
 
     this.evaluate = function(fn, args) {
       if (!self.functions[fn]) return undefined;
+      if (typeof(self.functions[fn]) !== 'function') return self.functions[fn];
 
       validateFunction(self.functions[fn], fn, self.uid)
       let flat = [];
