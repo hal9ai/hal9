@@ -22,12 +22,13 @@ const ServerImplementation = function(hostopt) {
     setInterval(sendhb, heartbeatms);
   }
 
-  async function initBackend() {
+  async function initBackend(spec) {
     if (!serverurls.init) return;
 
     let backendid = crypto.getRandomValues(new Uint32Array(2)).join('-');
     backendquery = '?' + new URLSearchParams({
-      backendid: backendid
+      backendid: backendid,
+      platform: spec.platform
     });
 
     try {
@@ -105,7 +106,7 @@ const ServerImplementation = function(hostopt) {
 
   this.addRuntime = async function(spec) {
     if (hostopt.serverurls) serverurls = await hostopt.serverurls();
-    await initBackend();
+    await initBackend(spec);
     initHeartbeat();
     return spec;
   }
