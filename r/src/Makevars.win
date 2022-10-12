@@ -1,12 +1,12 @@
 TARGET = $(subst 64,x86_64,$(subst 32,i686,$(WIN)))-pc-windows-gnu
 
 # This is provided in Makevars.ucrt for R >= 4.2
-TOOLCHAIN ?= stable-msvc
+TOOLCHAIN ?= stable-gnu
 
 TARGET_DIR = ./rust/target
 LIBDIR = $(TARGET_DIR)/$(TARGET)/release
 STATLIB = $(LIBDIR)/libhal9.a
-PKG_LIBS = -L$(LIBDIR) -lhal9 -lws2_32 -ladvapi32 -luserenv -lbcrypt
+PKG_LIBS = -L$(LIBDIR) -lhal9 -lws2_32 -ladvapi32 -luserenv -lbcrypt -lntdll -lNcrypt -lgcrypt -lsecur32 -lcrypt32 -lole32
 
 all: C_clean
 
@@ -23,7 +23,7 @@ $(STATLIB):
 	# CARGO_LINKER is provided in Makevars.ucrt for R >= 4.2
 	export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER="$(CARGO_LINKER)" && \
 		export LIBRARY_PATH="$${LIBRARY_PATH};$(CURDIR)/$(TARGET_DIR)/libgcc_mock" && \
-		cargo +$(TOOLCHAIN) build --target=$(TARGET) -F extendr --lib --release --manifest-path=./rust/Cargo.toml --target-dir $(TARGET_DIR)
+		cargo +$(TOOLCHAIN) rustc --target=$(TARGET) -F extendr --lib --crate-type staticlib --release --manifest-path=./rust/Cargo.toml --target-dir $(TARGET_DIR)
 
 C_clean:
 	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS)
