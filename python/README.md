@@ -11,10 +11,10 @@ $ pip install hal9
 ### Source
 
 ```bash
-git clone https://github.com/hal9ai/hal9
+git clone https://github.com/hal9ai/hal9 && cd hal9
 pip3 install maturin
-maturin build --release --out dist --sdist -m python/Cargo.toml
-pip3 install hal9 --no-index --find-links dist --force-reinstall
+maturin build -m python/Cargo.toml -F pyo3 -b pyo3
+pip3 install hal9 --find-links python/target/wheel
 ````
 
 ## Contributing
