@@ -34,10 +34,6 @@ jobs:
         uses: messense/maturin-action@v1
         with:
           args: --release --universal2 -m python/Cargo.toml -F pyo3 -b pyo3
-      - name: Install built wheel - universal2
-        run: |
-          pip install hal9 --no-index --find-links --find-links python/target/wheels --force-reinstall
-          python -c "import hal9"
       - name: Upload wheels
         uses: actions/upload-artifact@v2
         with:
