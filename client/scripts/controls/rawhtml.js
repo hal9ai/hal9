@@ -2,8 +2,8 @@
   input: [ rawhtml ]
   output: [ html ]
   layout:
-    - width: 600px
-      height: 450px
+    - width: 200px
+      height: 200px
   state: session
 **/
 
