@@ -88,6 +88,7 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
     const isFullView = stepstopid === null || stepstopid === undefined;
     const layoutHTML = getForDocumentView(pipeline);
     const hasLayout = !isFullView || layoutHTML;
+    const hasHtmlRuntime = pipeline.runtimes && pipeline.runtimes.some(e => e.implementation == 'html');
 
     if (isFullView && hasLayout) {
       if (window.hal9.layouts[pipeline.id] === layoutHTML) {
@@ -100,6 +101,9 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
             el.innerHTML = '';
           }
         });
+      }
+      else if (hasHtmlRuntime) {
+        // layout is already available in iframe
       }
       else {
         parent.innerHTML = window.hal9.layouts[pipeline.id] = layoutHTML;
@@ -121,7 +125,10 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
       const langInfo = languages.getLanguageInfo(step.language);
       if (langInfo.html) hasHtml = true;
 
-      const output = html.querySelector(':scope .hal9-step-' + step.id);
+      // output might be in global scope with custom html
+      var output = html.querySelector(':scope .hal9-step-' + step.id);
+      if (!output) output = html.querySelector('.hal9-step-' + step.id);
+
       const interactiveClass = header.interactive ? ' hal9-interactive' : '';
       if (isFullView && output && !(output.classList.contains('hal9-interactive') && (context.siteMode !== 'layout'))) {
         output.innerHTML = '';
