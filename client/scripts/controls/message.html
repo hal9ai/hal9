@@ -39,10 +39,14 @@
               label: No
   output: [ html ]
   events: [ on_update ]
+  layout:
+    - width: 400px
+      height: 132px
+  state: session
 -->
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-<link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+<link rel="stylesheet" href="https://unpkg.com/buefy@0.9.22/dist/buefy.min.css">
 <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css">
 
@@ -74,6 +78,4 @@
       }
     }
   })
-
-  html.style.height = 'auto';
 </script>

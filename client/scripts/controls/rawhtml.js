@@ -1,11 +1,10 @@
 /**
-  input: []
-  params:
-    - name: rawhtml
-      label: html
+  input: [ rawhtml ]
   output: [ html ]
   layout:
-    - width: 900px
+    - width: 600px
+      height: 450px
+  state: session
 **/
 
 html.innerHTML = rawhtml;
