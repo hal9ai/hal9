@@ -505,11 +505,12 @@ function IFrameAPI(options, hal9wnd, config) {
         alsoSkip: alsoSkip,
       })
     },
-    getHtml: async (pipelineid, pipelinepath, htmlFormat) => {
-      return await post(me.config, "hal9.exportto.getHtml(params.pipelineid, params.pipelinepath, params.htmlFormat)", {
+    getHtml: async (pipelineid, pipelinepath, htmlFormat, appDivId) => {
+      return await post(me.config, "hal9.exportto.getHtml(params.pipelineid, params.pipelinepath, params.htmlFormat, params.appDivId)", {
         pipelineid: pipelineid,
         pipelinepath: pipelinepath,
         htmlFormat: htmlFormat,
+        appDivId: appDivId,
       })
     },
     getPythonScript: async (pipelineid) => {

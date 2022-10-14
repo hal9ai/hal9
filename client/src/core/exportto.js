@@ -73,8 +73,9 @@ htmlFormat: 3 string choices
   1. 'embedCompact' for compact embed (HTML and style inserted at runtime)
   2. 'embedStyle' for embed with customizable style (HTML inserted at runtime)
   3. 'complete' for complete HTML page with rearrangable HTML and customizable style
+appDivId: id of app div; optional, will be 'hal9app' if not provided
 */
-export const getHtml = (pipelineid, pipelinepath, htmlFormat) => {
+export const getHtml = (pipelineid, pipelinepath, htmlFormat, appDivId) => {
   let generateStyle;
   let fullPage;
   switch (htmlFormat) {
@@ -118,13 +119,16 @@ export const getHtml = (pipelineid, pipelinepath, htmlFormat) => {
   const widthString = appDimensions?.width ?? '600px';
   const heightString = appDimensions?.height ?? '400px';
 
+  appDivId = appDivId ?? 'hal9app';
+  const appStyleId = appDivId + '-style';
+
   let styleElementString = '';
   let stylePropertyString = '';
   if (generateStyle) {
-    styleElementString = '<style id="hal9app-style">';
+    styleElementString = `<style id="${appStyleId}">`;
     if (fullPage) {
       styleElementString += `
-  #output {
+  #${appDivId} {
     min-width: ${widthString};
     min-height: ${heightString};
   }`;
@@ -146,18 +150,18 @@ export const getHtml = (pipelineid, pipelinepath, htmlFormat) => {
   }`;
     }
     styleElementString += '\n</style>';
-    stylePropertyString = `, style: 'hal9app-style'`;
+    stylePropertyString = `, style: '${appStyleId}'`;
   }
 
   const runtimeScriptElementString = `<script>${setEnvString}
   (async function() {
     const raw = ${rawDefinitionRhs};
-    hal9.run(await hal9.load(raw), { html: 'hal9app'${applyAppLayoutString}${stylePropertyString} });
+    hal9.run(await hal9.load(raw), { html: '${appDivId}'${applyAppLayoutString}${stylePropertyString} });
   })();
 </script>`;
 
   if (fullPage) {
-    let appDivElementString = '<div id="output" data-keep-contents>';
+    let appDivElementString = `<div id="${appDivId}" data-keep-contents>`;
     for (const stepLayout of stepLayouts) {
       appDivElementString += '\n' + `  <div class="hal9-step hal9-step-${stepLayout.stepId}"></div>`;
     }
@@ -178,7 +182,7 @@ ${indentString(runtimeScriptElementString, 4)}
   }
 
   return `${hal9LibraryScriptElementString}
-<div id="hal9app" style="min-width: ${widthString}; min-height: ${heightString};"></div>${'\n' + styleElementString}
+<div id="${appDivId}" style="min-width: ${widthString}; min-height: ${heightString};"></div>${'\n' + styleElementString}
 ${runtimeScriptElementString}`;
 }
 
