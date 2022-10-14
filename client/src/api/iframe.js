@@ -478,6 +478,12 @@ function IFrameAPI(options, hal9wnd, config) {
         spec: spec,
       })
     },
+    removeRuntime: async (pipelineid, name) => {
+      return await post(me.config, "hal9.pipelines.removeRuntime(params.pipelineid, params.name)", {
+        pipelineid: pipelineid,
+        name: name,
+      })
+    },
     getPipeline: async (pipelineid) => {
       return await post(me.config, "hal9.pipelines.getPipeline(params.pipelineid)", {
         pipelineid: pipelineid,

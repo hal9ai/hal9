@@ -1027,6 +1027,12 @@ export const addRuntimeSpec = (pipelineid /*: pipelineid */, spec /* object */) 
   return clone(pipeline.runtimes);
 }
 
+export const removeRuntime = (pipelineid /*: pipelineid */, name /* string */) /*: object */ => {
+  var pipeline = store.get(pipelineid);
+  pipeline.runtimes = pipeline.runtimes.filter(e => e.name !== name)
+  return clone(pipeline.runtimes);
+}
+
 export const getPipeline = (pipelineid /*: pipelineid */) /*: object */ => {
   return clone(store.get(pipelineid));
 }
