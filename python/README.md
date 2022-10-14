@@ -10,11 +10,19 @@ $ pip install hal9
 
 ### Source
 
+Validate Python 3.9 or newer is installed
+
+```bash
+python3 --version
+```
+
+Clone and build package as follows
+
 ```bash
 git clone https://github.com/hal9ai/hal9 && cd hal9
 pip3 install maturin
 maturin build -m python/Cargo.toml -F pyo3 -b pyo3
-pip3 install hal9 --find-links python/target/wheel
+pip3 install python/target/wheels/hal9-0.1.0-cp39-abi3-macosx_10_7_x86_64.whl --force-reinstall
 ````
 
 ## Contributing

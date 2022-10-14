@@ -2,8 +2,12 @@ import json
 from typing import Callable, Any
 import os
 import sys
+import base64
+import io
+
 from hal9 import controls
 from hal9 import _hal9 as h9
+
 class _Node:
     """
     The base class which defines the backend execution graph
@@ -44,6 +48,16 @@ def set(name: str, value: Any) -> Any:
     global_data[name] = value
     return value
 
+def __convert_type(obj):
+    if "matplotlib.figure.Figure" in str(type(obj)):
+        pic_IObytes = io.BytesIO()
+        obj.savefig(pic_IObytes, format='png')
+        pic_IObytes.seek(0)
+        pic_hash = base64.b64encode(pic_IObytes.read())
+        pic_str = pic_hash.decode('ascii')
+        return "data:image/png;base64," + pic_str
+    else:
+        return obj
 
 def __process_request(calls: list) -> dict:
     response = dict()
@@ -58,6 +72,8 @@ def __process_request(calls: list) -> dict:
                     for arg in call['args']:
                         kwargs[arg['name']] = arg['value']
                     result = node.evaluate(call['fn_name'], **kwargs)
+
+            result = __convert_type(result)
 
             call_response.append(
                 {'node': call['node'], 'fn_name': call['fn_name'], 'result': result})
