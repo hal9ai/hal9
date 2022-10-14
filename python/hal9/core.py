@@ -1,5 +1,5 @@
 import json
-from typing import Callable, Any
+from typing import Callable, Any, Dict
 import os
 import sys
 import base64
@@ -13,7 +13,7 @@ class _Node:
     The base class which defines the backend execution graph
     """
 
-    def __init__(self, uid: str = None, funcs: dict[str, Callable] = None) -> None:
+    def __init__(self, uid: str = None, funcs: Dict[str, Callable] = None) -> None:
         self.uid = uid
         self.funcs = funcs
         _register_node(self)
@@ -25,8 +25,8 @@ class _Node:
         return fn in self.funcs.keys()
 
 
-global_nodes: dict[str, _Node] = dict()
-global_data: dict[str, Any] = dict()
+global_nodes: Dict[str, _Node] = dict()
+global_data: Dict[str, Any] = dict()
 
 
 def _register_node(node: _Node) -> None:
@@ -84,7 +84,7 @@ def __process_request(calls: list) -> dict:
     return response
 
 
-def __get_designer(**options: dict) -> str:
+def __get_designer(**options: Dict) -> str:
     options['designer'] = {
         'persist': 'pipeline',
         'eval': 'eval'

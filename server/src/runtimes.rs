@@ -66,7 +66,7 @@ impl RuntimeHandle {
         let mut buf = [0; 64];
         let mut msg_vec = Vec::new();
         
-        let pattern = format!("{intro} (http://*.+)(?:\\s\\(|\\n)");
+        let pattern = format!("{intro} (http://*[^\\s]+)");
         let regex= regex::Regex::new(&pattern).unwrap();
         
         let mut stderr = handle.stderr.take().unwrap();
@@ -90,7 +90,7 @@ impl RuntimeHandle {
             if let Some(m) = mat {
                 // Plumber startup message detected
                 // let url = &msg[(m.start()+intro.len() + 1)..m.end() - 1];
-                let url = &msg[(m.start()+intro.len() + 1)..m.end() - 1];
+                let url = &msg[(m.start()+intro.len() + 1)..m.end()];
                 println!("startup message detected, url is {url}");
                 break RuntimeStartupResult::Success(url.to_owned());
             };

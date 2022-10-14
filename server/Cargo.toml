@@ -29,7 +29,7 @@ url = "2.2.2"
 futures = "*"
 webbrowser = "0.8.0"
 regex = "1"
-pyo3 = { version = "0.17.2", features = ["extension-module", "abi3-py39"], optional = true}
+pyo3 = { version = "0.17.2", features = ["extension-module", "abi3-py38"], optional = true}
 
 [features]
 extendr = ["dep:extendr-api"]
