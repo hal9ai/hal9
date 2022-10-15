@@ -29,8 +29,7 @@ export const getUserEnv = (env) => {
 export const isDevelopment = () => {
   if (typeof(window) == 'undefined') return false;
 
-  return (!isElectron() && window.location.origin == 'file://') ||
-    window.location.origin.includes('//localhost');
+  return window.location.origin.includes('//localhost');
 }
 
 export const getId = () => {
