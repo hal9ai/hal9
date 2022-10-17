@@ -3,11 +3,17 @@
   params:
     - name: values
       label: Values
+      type: array
+      example: [ 'World', 'Universe' ]
+      descritpion: The values that can be selected.
       value:
         - control: textbox
           value: versicolor,setosa,virginica
     - name: value
       label: Default
+      type: string
+      example: [ 'World' ]
+      description: The default value to select.
       value:
         - control: textbox
           value: 

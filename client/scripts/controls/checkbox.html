@@ -3,11 +3,17 @@
   params:
     - name: label
       label: Label
+      type: string
+      example: Checkbox
+      description: The label to display for this control.
       value:
         - control: textbox
           value: Checked
     - name: checked
       label: 'Checked'
+      type: boolean
+      example: false
+      description: Should the checkbox be enabled by default?
       value:
         - control: select
           value: false

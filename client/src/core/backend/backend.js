@@ -51,6 +51,14 @@ const Backend = function(hostopt) {
       responses = responses.concat(response.responses);
     }
 
+    for (let response of responses) {
+      for (let call of response.calls) {
+        if (call.error) {
+          if (hostopt.events && hostopt.events.onError) hostopt.events.onError(call.error);
+        }
+      }
+    }
+
     return {
       responses: responses
     };

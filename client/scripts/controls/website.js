@@ -4,6 +4,8 @@
   params:
     - name: site
       label: Website URL
+      type: string
+      description: The URL of the website to load.
       value:
         - control: textbox
           lazy: true

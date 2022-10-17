@@ -3,6 +3,8 @@
   params:
     - name: markdown
       label: Markdown
+      type: string
+      description: A markdown string to render.
       value:
         - control: textbox
           value: Hello **World**
