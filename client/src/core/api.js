@@ -137,7 +137,7 @@ const RuntimeAPI = function(pipelineid, sid, context, params, input) {
 
   this.get = function(name, defval) {
     const val = this.getState({})[name];
-    return val ?? defval;
+    return val !== undefined ? val : defval;
   }
 }
 

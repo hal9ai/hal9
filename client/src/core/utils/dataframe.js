@@ -127,7 +127,7 @@ const pyodideEnsure = (e) => e;
 const pyodideTop = (e, limit) => e;
 
 
-const remoteTest = (e) => typeof(e) == 'object' && e.type == 'remotedf'
+const remoteTest = (e) => typeof(e) == 'object' && e !== null && e.type == 'remotedf'
 
 const remoteCast = (fn) => {
   return (e) => fn(e.subset);
