@@ -318,8 +318,14 @@ const Backend = function(hostopt) {
   }
 
   this.putFile = async function(runtime, path, contents) {
-    const implementation = runtimeToImplementation(runtime)
-    return implementations[implementation].putFile(runtime, path, contents);
+    const implementation = runtimeToImplementation(runtime);
+    try {
+      return await implementations[implementation].putFile(runtime, path, contents);
+    }
+    catch (e) {
+      if (hostopt.events && hostopt.events.onError) hostopt.events.onError(e.toString());
+      throw e;
+    }
   }
 
   this.onUpdated = async function() {
