@@ -133,8 +133,10 @@ const Backend = function(hostopt) {
 
       if (call.result === null || call.result === undefined) continue;
       manifest[step.id][call['fn_name']] = call.result;
+    }
 
-      await hal9api.pipelines.runStep(pid, step.id, { html: 'hal9-step-' + step.id });
+    for (let sid of Object.keys(manifest)) {
+      await hal9api.pipelines.runStep(pid, sid, { html: 'hal9-step-' + sid });
     }
   }
 
