@@ -7,13 +7,14 @@ Hal9 is a framework for building *interactive data apps* for data scientists and
 
 ## Getting started
 
-Quickest place to test things out is this hosted demo: [hal9.com/new](https://hal9.com/new).
+The quickest place to test things out is this hosted demo: [hal9.com/new](https://hal9.com/new).
 
-### MacOS/Linux
+Currently, to install the package locally you need a working Rust toolchain, we recommend grabbing one using 
+[rustup.rs](https://rustup.rs) if you don't have one already.
 
-Currently, to install the package you need a working Rust toolchain, we recommend grabbing one using [rustup.rs](https://rustup.rs) if you don't have one yet.
+### R 
 
-Then, you can run
+The development version of the package can be installed via
 
 ```r
 remotes::install_github("hal9ai/hal9", subdir = "r")
@@ -23,7 +24,7 @@ h9_new("my_app")
 h9_start("my_app")
 ```
 
-and this should give you a demo app to get started.
+which should give you a demo app to get started.
 
 Alternatively, if you prefer working from the terminal, you can clone this repo and run
 
@@ -34,9 +35,10 @@ hal9 new my_app
 hal9 start my_app
 ```
 
-### Windows / other languages
+### Python/JavaScript
 
-We're working on streamlining the installation process for these... if you'd like to help, give us a shout ;)
+We're working on streamlining the installation process for these, but if you're feeling adventurous and want to try
+building from source, check out the developer docs (TODO: link)
 
 ## Principles
 
