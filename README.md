@@ -35,10 +35,10 @@ hal9 new my_app
 hal9 start my_app
 ```
 
-### Python/JavaScript
+### Python
 
-We're working on streamlining the installation process for these, but if you're feeling adventurous and want to try
-building from source, check out the developer docs (TODO: link)
+We're working on streamlining the installation process, but if you're feeling adventurous and want to try
+building from source, check out the [developer docs](https://hal9.com/docs/building.html).
 
 ## Principles
 
