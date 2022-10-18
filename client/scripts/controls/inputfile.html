@@ -4,6 +4,7 @@
     - name: caption
       label: 'Caption'
       type: string
+      example: Upload
       description: The caption to display for this control.
       value:
         - control: textbox
@@ -12,6 +13,7 @@
     - name: dragDrop
       label: Drag and Drop
       type: boolean
+      example: false
       description: Should user be allowed to drag and drop files?
       value:
         - control: select
@@ -22,7 +24,7 @@
             - name: true
               label: Yes
   output: [ html, inputFile ]
-  events: [ on_update ]
+  events: []
   layout:
     - width: inner
       height: 40px

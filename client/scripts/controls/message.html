@@ -4,13 +4,15 @@
     - name: message
       label: Message
       type: string
+      example: 'Hello World!'
       description: The text to show in the message.
       value:
         - control: textbox
-          value: "Hello World!"
+          value: 'Hello World!'
     - name: title
       label: Title
       type: string
+      example: 'A Title'
       description: The title to show in the message.
       value:
         - control: textbox
@@ -18,6 +20,7 @@
     - name: mtype
       label: 'Type'
       type: string
+      example: 'info'
       description: The type of message to display, either 'success', 'danger', 'info', 'warning', or 'darl'.
       value:
         - control: select
@@ -36,6 +39,7 @@
     - name: showIcon
       label: 'Icon'
       type: boolean
+      example: true
       description: Should an icon be shown?
       value:
         - control: select

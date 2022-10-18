@@ -4,6 +4,7 @@
     - name: markdown
       label: Markdown
       type: string
+      example: 'Hello from *Markdown*'
       description: A markdown string to render.
       value:
         - control: textbox
