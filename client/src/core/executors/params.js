@@ -6,10 +6,10 @@ export const paramsForFunction = (params, inputs, deps) => {
       var value = undefined;
       if (d[e].value.length == 1) {
         const single = d[e].value[0];
-        value = single.value ? single.value : single.name;
+        value = single && single.value ? single.value : single.name;
       }
       else if (d[e].value.length > 1) {
-        value = d[e].value.map(e => e.value ? e.value : e.name);
+        value = d[e].value.map(e => e && e.value ? e.value : e.name);
       }
       return [ e, value ];
     })
