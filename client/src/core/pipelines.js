@@ -630,9 +630,11 @@ export const updateStep = (pipelineid /*: pipelineid */, step /*: step */) /*: v
   pipeline.steps[stepidx] = clone(step);
 }
 
-export const addStep = (pipelineid /*: pipelineid */, step /*: step */) /*: step */ => {
+export const addStep = async (pipelineid /*: pipelineid */, step /*: step */) /*: step */ => {
   step = clone(step);
   step.source = clone(step);
+
+  await scripts.fetchScripts([ step ]);
 
   var pipeline = store.get(pipelineid);
 
