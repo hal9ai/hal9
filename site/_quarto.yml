@@ -22,6 +22,8 @@ website:
         - overview.qmd
         - section: "Contributing"
           contents:
+            - dev.qmd
+            - building.qmd
             - config.qmd
             - manifests.qmd
 
