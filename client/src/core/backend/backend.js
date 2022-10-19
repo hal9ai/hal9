@@ -4,6 +4,8 @@ import * as server from './implementations/server';
 
 const Backend = function(hostopt) {
   let pid = undefined;
+  let pidchanged = undefined;
+
   let manifest = {};
   let hal9api = window.hal9;
   let defaultRuntime = hostopt.runtime;
@@ -269,6 +271,15 @@ const Backend = function(hostopt) {
 
   this.setpid = async function(pipelineid) {
     pid = pipelineid;
+    if (pidchanged) pidchanged(pid);
+  }
+
+  this.onpid = function(callback) {
+    pidchanged = callback;
+  }
+
+  this.getpid = function() {
+    return pid;
   }
 
   this.connect = async function(h9api) {
