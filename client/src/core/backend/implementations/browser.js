@@ -5,6 +5,9 @@ const BrowserImplementation = function(hostopt) {
   var nodes = {};
   var data = {};
 
+  var terminalOnData;
+  const originalConsole = window.console;
+
   let Node = function(uid, functions) {
     let self = this;
 
@@ -36,6 +39,24 @@ const BrowserImplementation = function(hostopt) {
     else return function() { return val };
   }
 
+  function overrideConsole() {
+    const consoleOverride = function(op, args) {
+      args = [...args];
+      originalConsole[op].apply(originalConsole, args);
+      if (terminalOnData) terminalOnData(args.join(' '));
+    }
+
+    window.console = {
+      log: function () { consoleOverride('log', arguments); },
+      error: function () { consoleOverride('error', arguments); },
+      warn: function() { consoleOverride('warn', arguments); },
+    }
+  }
+
+  function restoreConsole() {
+    window.console = originalConsole;
+  }
+
   this.node = function(uid, properties) {
     let functions = {};
 
@@ -59,21 +80,27 @@ const BrowserImplementation = function(hostopt) {
 
     let results = [];
 
-    for (let call of calls) {
-      let uid =  call['node'];
-      let functionName = call['fn_name'];
-      let args = call['args'];
-      let node = nodes[uid];
-      if (!node) {
-        results[uid] = {};
+    overrideConsole();
+    try {
+      for (let call of calls) {
+        let uid =  call['node'];
+        let functionName = call['fn_name'];
+        let args = call['args'];
+        let node = nodes[uid];
+        if (!node) {
+          results[uid] = {};
+        }
+        else {
+          results.push({
+            'node': uid,
+            'fn_name': functionName,
+            'result': node.evaluate(functionName, args)
+          });
+        }
       }
-      else {
-        results.push({
-          'node': uid,
-          'fn_name': functionName,
-          'result': node.evaluate(functionName, args)
-        });
-      }
+    }
+    finally {
+      restoreConsole();
     }
 
     return {
@@ -104,13 +131,26 @@ ${contents}
 
     const fn = new Function('return ' + body)();
 
-    await fn({
-      node: this.node,
-      get: this.get,
-      set: this.set,
-    })
+    overrideConsole()
+    try {
+      await fn({
+        node: this.node,
+        get: this.get,
+        set: this.set,
+      })
+    }
+    finally {
+      restoreConsole();
+    }
 
     return true;
+  }
+
+  this.initTerminal = async function(runtime) {
+    return {
+      read: (ondata) => terminalOnData = ondata,
+      write: (data) => null,
+    }
   }
 }
 
