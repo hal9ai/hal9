@@ -357,6 +357,20 @@ const Backend = function(hostopt) {
 
     this.onUpdated();
   }
+
+  this.initTerminal = async function(runtime) {
+    const implementation = runtimeToImplementation(runtime);
+    try {
+      if (implementations[implementation].initTerminal)
+        return await implementations[implementation].initTerminal(runtime);
+      else
+        return null;
+    }
+    catch (e) {
+      if (hostopt.events && hostopt.events.onError) hostopt.events.onError(e.toString());
+      else throw e;
+    }
+  }
 }
 
 export const backend = function(hostopt, hal9api) {
