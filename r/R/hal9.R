@@ -74,8 +74,7 @@ process_request <- function(req) {
             return(
                 list(
                     node = call$node,
-                    fn_name = fn_name,
-                    result = list(Error = paste0("Node `", call$node, "` not defined in runtime."))
+                    fn_name = fn_name
                 )
             )
         }
