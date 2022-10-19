@@ -4,7 +4,7 @@
     - name: markdown
       label: Markdown
       type: string
-      example: 'Hello from *Markdown*'
+      example: 'Hello **World**'
       description: A markdown string to render.
       value:
         - control: textbox
@@ -13,8 +13,8 @@
   deps:
     - https://cdnjs.cloudflare.com/ajax/libs/showdown/2.0.0/showdown.min.js
   layout:
-    - width: 600px
-      height: 450px
+    - width: 300px
+      height: 250px
   state: session
 **/
 

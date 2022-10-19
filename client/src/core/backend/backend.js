@@ -326,7 +326,7 @@ const Backend = function(hostopt) {
     }
     catch (e) {
       if (hostopt.events && hostopt.events.onError) hostopt.events.onError(e.toString());
-      throw e;
+      else throw e;
     }
   }
 
