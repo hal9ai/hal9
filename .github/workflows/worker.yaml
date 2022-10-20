@@ -17,11 +17,13 @@ jobs:
           username: hal9ai
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: worker/.
           push: true
           tags: hal9ai/hal9-worker:latest,hal9ai/hal9-worker:0.0.2
+          cache-from: type=registry,ref=user/app:latest
+          cache-to: type=inline
   build:
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/master'
@@ -36,8 +38,10 @@ jobs:
           username: hal9ai
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: worker/.
           push: false
           tags: hal9ai/hal9-worker:latest,hal9ai/hal9-worker:0.0.2
+          cache-from: type=registry,ref=user/app:latest
+          cache-to: type=inline
