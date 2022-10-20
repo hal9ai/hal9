@@ -19,12 +19,15 @@ website:
       style: "docked"
       search: true
       contents:
-        - overview.qmd
+        - section: "Building Apps"
+          contents:
+            - overview.qmd
+            - editing.qmd
+            - components.qmd
         - section: "Contributing"
           contents:
             - dev.qmd
             - building.qmd
-            - config.qmd
             - manifests.qmd
 
 format:

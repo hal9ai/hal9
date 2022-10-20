@@ -1,66 +1,75 @@
 ---
-title: "Overview"
+title: "Quickstart"
 eval: false
 ---
 
-> Hal9: Interactive data apps &mdash; design visually, power with code
+This guide aims to help you get started with Hal9 in your local development environment as quickly as possible.
 
-Hal9 is a framework for building *interactive data apps* for data scientists and engineers. It allows you to utilize your DS/ML code with minimal overhead, and frees you from having to worry about frontend web frameworks. Hal9 consists of the following components:
+You can also head over to the hosted demo at [https://hal9.com/new](https://hal9.com/new) without having to download
+or install things locally.
 
-- **Visual Designer**: A browser WYSIWYG interface to design your app via drag-and-drop, yet fuly customizable with HTML.
-- **Multi-Lingual Server**: Packages in R, Python, JavaScript (and more on the way!) for controlling the behavior of elements in your app.
-
-## Getting started
-
-Quickest place to test things out is this hosted demo: [hal9.com/new](https://hal9.com/new).
-
-### MacOS / Linux
+### Installation
 
 Currently, to install the package you need a working Rust toolchain, we recommend grabbing one using [rustup.rs](https://rustup.rs) if you don't have one yet.
 
-To get started, you can creat a demo app as follows:
+In addition, if you're installing the R package on *Windows*, you'll need to have [Rtools](https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html)
+installed.
+
 
 ::: {.panel-tabset group="language"}
-## Python
-```{python, python.reticulate = FALSE}
-pip3 install git+https://github.com/hal9ai/hal9.git#subdirectory=py
-
-import hal9 as h9
-h9.new("my_app")
-h9.start("my_app")
-```
 
 ## R
 
 ```{r}
 remotes::install_github("hal9ai/hal9", subdir = "r")
-
-library(hal9)
-h9_new("my_app")
-h9_start("my_app")
 ```
 
-## Terminal
+## CLI 
 
 ```{bash}
-cargo install --path server
-
-hal9 new my_app
-hal9 start my_app
+cargo install --git https://github.com/hal9ai/hal9.git
 ```
 :::
 
+### Starter apps
 
-### Windows / other languages
+The recommended way to bootstrap a new app is to use the `hal9 new` utility:
 
-We're working on streamlining the installation process for these... if you'd like to help, give us a shout ;)
+::: {.panel-tabset group="language"}
 
-## Principles
+## R
 
-- Easy to get started. You don't need to read a book or build a reactive execution graph in your head
- before you can build a dashboard.
-- First-class multi-lingual support. Power your apps with Python, or R, or combine them, *natively*, without having
-to use interop tools such as reticulate or rpy2. Rust and TypeScript APIs are being developed next, with many more to come.
-- Respect code and reproducibility. While we make it easy to build apps, all artifacts should be in standard formats
-so that you can (if you'd like) work with actual web designers on your team to fulfill corporate styling needs.
-- Seamless deployment from applications to production.
+```{r}
+library(hal9)
+h9_new("my_app")
+```
+
+## CLI
+
+```{bash}
+hal9 new my_app
+```
+
+:::
+
+This creates a new directory `my_app/` with the minimal ingredients necessary to define a Hal9 app.
+
+Now that we have an app, we can launch the server and see it in action:
+
+::: {.panel-tabset group="language"}
+
+## R
+
+```{r}
+h9_start("my_app")
+```
+
+## CLI
+
+```{bash}
+hal9 start my_app
+```
+
+:::
+
+A browser tab should now pop up, allowing you to make changes to the app.
