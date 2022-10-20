@@ -43,7 +43,7 @@ const BrowserImplementation = function(hostopt) {
     const consoleOverride = function(op, args) {
       args = [...args];
       originalConsole[op].apply(originalConsole, args);
-      if (terminalOnData) terminalOnData(args.join(' '));
+      if (terminalOnData) terminalOnData(args.join(' ') + '\n\r');
     }
 
     window.console = {
