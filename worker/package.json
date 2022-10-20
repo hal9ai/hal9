@@ -1,0 +1,45 @@
+{
+  "name": "hal9wrk",
+  "version": "0.2.0",
+  "scripts": {
+    "build": "rm -rf dist && webpack --mode development",
+    "start": "node ./dist/server.js",
+    "startR": "node ./dist/server.js --role=TestRole --local=http://localhost:5002/",
+    "startJ": "node ./dist/server.js --dockerImage=javierW_hal_0_0 --role=Generic --isDedicated=1  --local=http://localhost:5002/",
+    "debug": "node --inspect ./dist/server.js",
+    "debugR": "node --inspect ./dist/server.js --role=TestRole --local=http://localhost:5002/",
+    "clean": "rm -rf node_modules"
+  },
+  "engines": {
+    "node": ">=14.16.0",
+    "yarn": ">=1.13.0"
+  },
+  "dependencies": {
+    "apache-arrow": "^7.0.0",
+    "arquero": "^4.8.8",
+    "bunyan": "^1.8.15",
+    "child_process": "^1.0.2",
+    "crypto": "^1.0.1",
+    "exiftool-vendored": "^15.11.0",
+    "express": "^4.17.1",
+    "extract-zip": "^2.0.1",
+    "hal9": "0.3.11",
+    "lazy-require": "^4.6.0",
+    "mysql": "^2.18.1",
+    "node-fetch": "^2.6.1",
+    "node-pty": "^0.10.1",
+    "puppeteer": "^5.0.0",
+    "raw-loader": "^4.0.2",
+    "request": "^2.88.2",
+    "sharp": "^0.29.1",
+    "tempfile": "^3.0.0",
+    "util": "^0.12.3",
+    "yargs": "^15.4.1"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "9.1.0",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-node-externals": "^3.0.0"
+  }
+}

@@ -25,9 +25,9 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: worker/.
+          file: worker/Dockerfile
           push: true
-          tags: hal9ai/hal9-worker:latest,hal9ai/hal9-worker:0.0.2
+          tags: hal9ai/hal9-worker:latest,hal9ai/hal9-worker:0.2.0
           cache-from: type=registry,ref=user/app:latest
           cache-to: type=inline
   build:
@@ -46,8 +46,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: worker/.
+          file: worker/Dockerfile
           push: false
-          tags: hal9ai/hal9-worker:latest,hal9ai/hal9-worker:0.0.2
+          tags: hal9ai/hal9-worker:latest,hal9ai/hal9-worker:0.2.0
           cache-from: type=registry,ref=user/app:latest
           cache-to: type=inline
