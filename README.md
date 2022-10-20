@@ -9,8 +9,9 @@ Hal9 is a framework for building *interactive data apps* for data scientists and
 
 The quickest place to test things out is this hosted demo: [hal9.com/new](https://hal9.com/new).
 
-Currently, to install the package locally you need a working Rust toolchain, we recommend grabbing one using 
-[rustup.rs](https://rustup.rs) if you don't have one already.
+Refer to the Docs at [hal9.com/docs](https://hal9.com/docs/).
+
+Even more concise quickstart to get up and running locally (requires Rust toolchain, e.g., [rustup.rs](https://rustup.rs)):
 
 ### R 
 
