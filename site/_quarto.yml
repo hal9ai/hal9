@@ -23,10 +23,10 @@ website:
           contents:
             - overview.qmd
             - editing.qmd
-            - components.qmd
-        - section: "Contributing"
+        - section: "Advanced"
           contents:
             - dev.qmd
+            - components.qmd
             - building.qmd
             - manifests.qmd
 
