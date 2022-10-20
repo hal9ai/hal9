@@ -146,7 +146,7 @@ ${contents}
     return true;
   }
 
-  this.initTerminal = async function(runtime) {
+  this.initTerminal = async function(runtime, options) {
     return {
       read: (ondata) => terminalOnData = ondata,
       write: (data) => null,

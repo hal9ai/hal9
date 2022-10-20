@@ -358,11 +358,11 @@ const Backend = function(hostopt) {
     this.onUpdated();
   }
 
-  this.initTerminal = async function(runtime) {
+  this.initTerminal = async function(runtime, options) {
     const implementation = runtimeToImplementation(runtime);
     try {
       if (implementations[implementation].initTerminal)
-        return await implementations[implementation].initTerminal(runtime);
+        return await implementations[implementation].initTerminal(runtime, options);
       else
         return null;
     }
