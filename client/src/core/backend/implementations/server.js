@@ -136,8 +136,9 @@ const ServerImplementation = function(hostopt) {
     return await resp.json();
   }
 
-  this.initTerminal = async function(runtime) {
+  this.initTerminal = async function(runtime, options) {
     if (!serverurls.terminit) return null;
+    options = options ?? {};
 
     const resp = await fetch(serverurls.terminit, {
       method: 'POST',
@@ -145,7 +146,10 @@ const ServerImplementation = function(hostopt) {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({})
+      body: JSON.stringify({
+        cols: options.cols,
+        rows: options.rows,
+      })
     });
 
     if (!resp.ok) {
@@ -167,7 +171,7 @@ const ServerImplementation = function(hostopt) {
       const json = await resp.json();
       terminalOnData(json.output);
     }
-    setTimeout(updateTerminal, 1000);
+    setInterval(updateTerminal, 1000);
 
     return {
       read: (ondata) => terminalOnData = ondata,
@@ -190,7 +194,6 @@ const ServerImplementation = function(hostopt) {
         const json = await resp.json();
 
         setTimeout(updateTerminal, 100);
-        setTimeout(updateTerminal, 1000);
       },
     }
   }
