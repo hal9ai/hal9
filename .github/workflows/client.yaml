@@ -1,6 +1,9 @@
 name: Client
 
-on: [ push ]
+on:
+  push:
+    paths:
+      - client/**
 
 jobs:
   npm:

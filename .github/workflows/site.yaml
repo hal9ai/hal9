@@ -1,6 +1,11 @@
 name: Site
 
-on: [ push ]
+on:
+  push:
+    paths:
+      - javascript/**
+      - r/**
+      - site/**
 
 jobs:
   docs:

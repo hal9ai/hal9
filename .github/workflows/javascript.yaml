@@ -1,6 +1,9 @@
 name: JavaScript
 
-on: [ push ]
+on:
+  push:
+    paths:
+      - javascript/**
 
 jobs:
   docs:
