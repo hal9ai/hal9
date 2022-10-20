@@ -155,24 +155,43 @@ const ServerImplementation = function(hostopt) {
     const json = await resp.json();
     terminalid = json.terminalid;
 
-    setTimeout(async () => {
+    const updateTerminal = async function() {
       const resp = await fetch(serverurls.termread + "?terminalid=" + terminalid, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          terminalid: terminalid
-        })
+        body: JSON.stringify({})
       });
       const json = await resp.json();
       terminalOnData(json.output);
-    }, 1000)
+    }
+    setTimeout(updateTerminal, 1000);
 
     return {
       read: (ondata) => terminalOnData = ondata,
-      write: (data) => null,
+      write: async function(input) {
+        const resp = await fetch(serverurls.termwrite + "?terminalid=" + terminalid, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            input: input
+          })
+        });
+        if (!resp.ok) {
+          console.log('Failed to send console command: ' + ok.statusText);
+          return;
+        }
+
+        const json = await resp.json();
+
+        setTimeout(updateTerminal, 100);
+        setTimeout(updateTerminal, 1000);
+      },
     }
   }
 }
