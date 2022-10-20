@@ -3,6 +3,9 @@ const ServerImplementation = function(hostopt) {
   let backendquery = '';
   let serverurls = hostopt.designer;
 
+  let terminalid = undefined;
+  let terminalOnData = undefined;
+
   async function initHeartbeat() {
     if (!serverurls.heartbeat) return;
 
@@ -131,6 +134,46 @@ const ServerImplementation = function(hostopt) {
     }
 
     return await resp.json();
+  }
+
+  this.initTerminal = async function(runtime) {
+    if (!serverurls.terminit) return null;
+
+    const resp = await fetch(serverurls.terminit, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({})
+    });
+
+    if (!resp.ok) {
+      throw 'Failed to initialize terminal: ' + resp.statusText;
+    }
+
+    const json = await resp.json();
+    terminalid = json.terminalid;
+
+    setTimeout(async () => {
+      const resp = await fetch(serverurls.termread + "?terminalid=" + terminalid, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          terminalid: terminalid
+        })
+      });
+      const json = await resp.json();
+      terminalOnData(json.output);
+    }, 1000)
+
+    return {
+      read: (ondata) => terminalOnData = ondata,
+      write: (data) => null,
+    }
   }
 }
 
