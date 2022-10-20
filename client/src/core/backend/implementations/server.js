@@ -171,7 +171,6 @@ const ServerImplementation = function(hostopt) {
       const json = await resp.json();
       terminalOnData(json.output);
     }
-    setInterval(updateTerminal, 1000);
 
     return {
       read: (ondata) => terminalOnData = ondata,
@@ -192,8 +191,7 @@ const ServerImplementation = function(hostopt) {
         }
 
         const json = await resp.json();
-
-        setTimeout(updateTerminal, 100);
+        terminalOnData(json.output);
       },
     }
   }
