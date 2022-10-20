@@ -1,6 +1,10 @@
 name: R
 
-on: [ push ]
+on:
+  push:
+    paths:
+      - r/**
+      - server/**
 
 jobs:
   docs:

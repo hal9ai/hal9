@@ -1,6 +1,12 @@
 name: Worker
 
-on: [ push ]
+on:
+  push:
+    paths:
+      - python/**
+      - r/**
+      - server/**
+      - worker/**
 
 jobs:
   publish:
