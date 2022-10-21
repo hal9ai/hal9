@@ -26,8 +26,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 16.x
-        cache: "npm"
-        cache-dependency-path: '**/package-lock.json'
     - name: Build
       run: |
         npm ci
