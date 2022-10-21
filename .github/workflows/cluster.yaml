@@ -28,8 +28,7 @@ jobs:
         node-version: 16.x
     - name: Build
       run: |
-        npm ci
-        npx tsc
+        npm install
       working-directory: ./worker
     - name: Install Klotho 
       run: |
