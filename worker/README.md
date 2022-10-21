@@ -14,6 +14,15 @@ yarn build
 yarn start
 ```
 
+## Docker
+
+To start a Hal9 Docker worker, run:
+
+```
+docker pull hal9ai/hal9-worker:0.2.0
+docker run hal9ai/hal9-worker:0.2.0 
+```
+
 ## Backend
 
 To run the worker locally with runtimes support:
