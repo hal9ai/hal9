@@ -3,6 +3,7 @@ name: Klotho
 on:
   push:
     paths:
+      - cluster/**
       - worker/**
 
 env:
