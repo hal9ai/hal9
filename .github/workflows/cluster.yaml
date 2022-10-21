@@ -17,8 +17,8 @@ jobs:
         [[ "$AWS_REGION" != '<region>' ]] || err 'Please set your region in the workflows tab.'
         [[ "$APP_NAME" != '<app name>' ]] || err 'Please set your app name in the workflows tab.'
         [[ "$KLOTHO_EMAIL" != '<email>' ]] || err 'Please set your email in the workflows tab.'
-        [[ -n "${{ secrets.AWS_ACCESS_KEY_ID }}" ]] || err 'Please add an AWS_ACCESS_KEY_ID secret to your repository.'
-        [[ -n "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ]] || err 'Please add an AWS_SECRET_ACCESS_KEY secret to your repository.'
+        [[ -n "${{ secrets.AWS_ACCESS_KEY_ID_CLUSTER }}" ]] || err 'Please add an AWS_ACCESS_KEY_ID_CLUSTER secret to your repository.'
+        [[ -n "${{ secrets.AWS_SECRET_ACCESS_KEY_CLUSTER }}" ]] || err 'Please add an AWS_SECRET_ACCESS_KEY_CLUSTER secret to your repository.'
         [[ -n "${{ secrets.PULUMI_ACCESS_TOKEN }}" ]] || err 'Please add an PULUMI_ACCESS_TOKEN secret to your repository.'
         if [[ -f FAIL ]] ; then exit 1 ; fi
     - uses: actions/checkout@v3
@@ -60,7 +60,7 @@ jobs:
         done
       working-directory: ./worker
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_CLUSTER }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_CLUSTER }}
         PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
         PULUMI_CONFIG_PASSPHRASE: ""
