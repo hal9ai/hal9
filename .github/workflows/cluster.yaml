@@ -1,10 +1,6 @@
 name: Klotho
 
-on:
-  push:
-    paths:
-      - cluster/**
-      - worker/**
+on: push
 
 env:
   AWS_REGION: us-west-2
