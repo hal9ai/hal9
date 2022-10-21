@@ -38,7 +38,7 @@ jobs:
       working-directory: ./worker
     - name: Klotho compile
       run: |
-        "$RUNNER_TEMP/klotho" . --app "$APP_NAME"
+        "$RUNNER_TEMP/klotho" . --app "$APP_NAME" --config ../cluster/klotho.yaml
       working-directory: ./worker
     - name: copy Dockerfile
       run: |
