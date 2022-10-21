@@ -3,7 +3,7 @@ name: Klotho
 on: push
 
 env:
-  AWS_REGION: us-west-2
+  AWS_REGION: us-east-2
   APP_NAME: hal9-cluster
   KLOTHO_EMAIL: javier@hal9.ai
 jobs:
