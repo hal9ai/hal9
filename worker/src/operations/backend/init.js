@@ -32,7 +32,7 @@ function monitorSpawned(spawned, accept, reject, resolvems) {
   let stdout = '';
 
   spawned.stdout.on('data', (data) => {
-    log.info('/execute/ backend:init data: ' + data.toString());
+    log.info('/execute/ backend:init data: ' + data.toString().substr(0, 512));
   });
 
   spawned.stderr.on('data', (data) => {

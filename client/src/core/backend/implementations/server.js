@@ -81,7 +81,7 @@ const ServerImplementation = function(hostopt) {
   }
 
   this.process = async function(body) {
-    console.log('Sending: \n' + JSON.stringify(body, null, 2));
+    console.log('Sending: \n' + JSON.stringify(body, null, 2).substr(0,512));
 
     let retries = 8;
     let resp;
