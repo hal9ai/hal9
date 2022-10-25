@@ -21,7 +21,10 @@ class _Node:
         _register_node(self)
 
     def evaluate(self, fn: str, *args, **kwargs) -> Any:
-        return self.funcs[fn](*args, **kwargs)
+        if callable(self.funcs[fn]):
+            return self.funcs[fn](*args, **kwargs)
+        else:
+            return self.funcs[fn]
 
     def has_fn(self, fn: str) -> bool:
         return fn in self.funcs.keys()
