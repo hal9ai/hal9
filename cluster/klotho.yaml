@@ -1,3 +1,5 @@
 execution_units:
     main:
-        type: fargate
+        type: eks
+        pulumi_params:
+            nodeType: node
