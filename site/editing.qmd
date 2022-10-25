@@ -36,6 +36,21 @@ Let's take a look at an example from the starter app:
 
 ::: {.panel-tabset group="language"}
 
+## Python 
+
+```{python}
+import hal9 as h9
+import statsmodels.api as sm
+import pandas as pd
+
+iris = sm.datasets.get_rdataset("iris", "datasets", cache=True).data
+df = pd.DataFrame(iris)
+
+h9.set('df', df)
+
+h9.dropdown(uid='species_dropdown', values=lambda: h9.get('df')['Species'].unique().tolist(), on_update=lambda value: h9.set('value', value))
+```
+
 ## R
 
 ```{r}
@@ -46,12 +61,6 @@ h9_dropdown(
         h9_set(value, "selected_species")
     }
 )
-```
-
-## Python 
-
-```{bash}
-## TODO
 ```
 
 :::
@@ -67,6 +76,16 @@ the abridged code for it:
 
 ::: {.panel-tabset group="language"}
 
+## Python 
+
+```{python}
+def filter_and_show_df(value):
+    df = h9.get('df')
+    return df[df['Species'] == value].to_html()
+    
+h9.html('iris_table', rawhtml=lambda: filter_and_show_df(h9.get('value')))
+```
+
 ## R
 
 ```{r}
@@ -81,12 +100,6 @@ h9_html(
             knitr::kable(format = "html") |>
             as.character()
     }
-```
-
-## Python 
-
-```{bash}
-## TODO
 ```
 
 :::

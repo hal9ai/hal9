@@ -3,34 +3,38 @@
 .navbar-dark .navbar-nav .show>.nav-link,
 .navbar-dark .navbar-nav .active>.nav-link,
 .navbar-dark .navbar-nav .nav-link.active {
-    color: #528efd;
+  color: #528efd;
 }
 
 .navbar-dark .navbar-nav .nav-link {
-    color: #528efd;
+  color: #528efd;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover,
 .navbar-dark .navbar-nav .nav-link:focus {
-    color: #206dfc;
+  color: #206dfc;
 }
 
 .navbar-dark {
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 
 .navbar-brand>img {
-    height: 100%;
-    max-height: 56px;
-    object-fit: contain;
+  height: 100%;
+  max-height: 56px;
+  object-fit: contain;
 }
 
 #quarto-header nav {
-    padding-left: 1.5em;
-    padding-right: 1.5em;
-    padding-top: 0.5em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-top: 0.5em;
 }
 
 .navbar-brand {
-    padding-top: 0;
+  padding-top: 0;
+}
+
+.tab-content {
+  padding-bottom: 0;
 }
