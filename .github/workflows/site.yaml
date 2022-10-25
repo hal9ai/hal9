@@ -40,7 +40,7 @@ jobs:
           use-public-rspm: true
       - name: Install Quarto Deps
         run: |
-          Rscript -e 'install.packages("rmarkdown")'
+          Rscript -e 'install.packages("rmarkdown", "reticulate")'
         working-directory: ./r
       - name: Render quarto
         run: quarto render
