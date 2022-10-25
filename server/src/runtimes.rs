@@ -230,7 +230,7 @@ impl RuntimesController {
         let py_cmd = format!("import hal9; hal9.run_script('{script}', {port})");
         println!("about to start python api: {py_cmd}");
         
-        let handle = Command::new("python3")
+        let handle = Command::new("python")
         .arg("-c")
         .arg(py_cmd)
         .stderr(Stdio::piped())
