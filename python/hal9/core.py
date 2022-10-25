@@ -58,7 +58,7 @@ def __convert_type(obj):
         pic_hash = base64.b64encode(pic_IObytes.read())
         pic_str = pic_hash.decode('ascii')
         return "data:image/png;base64," + pic_str
-    else if "<class 'str'>" in str(type(obj)):
+    elif "<class 'str'>" in str(type(obj)):
         if re.match(r'^data:[a-z]+/[a-z]+;base64', obj) != None:
             contents = re.sub(r'^data:[a-z]+/[a-z]+;base64,', '', obj)
             decoded = base64.b64decode(contents)
