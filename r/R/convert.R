@@ -22,9 +22,10 @@ h9_convert.htmlwidget <- function(x, ...) {
 h9_convert.character <- function(x, ...) {
   if (regexpr("^data:[a-z]+/[a-z]+;base64,", x) > 0) {
     b64 <- gsub("^data:[a-z]+/[a-z]+;base64,", "", x)
-    binfile <- file(tempfile(), "wb")
+    path <- tempfile()
+    binfile <- file(path, "wb")
     close(binfile)
-    return(binfile)
+    return(path)
   }
   else {
     return(x)
