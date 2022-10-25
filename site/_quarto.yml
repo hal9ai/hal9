@@ -21,7 +21,7 @@ website:
       contents:
         - section: "Building Apps"
           contents:
-            - overview.qmd
+            - index.qmd
             - editing.qmd
         - section: "Advanced"
           contents:

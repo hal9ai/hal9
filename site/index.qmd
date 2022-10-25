@@ -10,21 +10,30 @@ or install things locally.
 
 ### Installation
 
+Install Hal9 by running:
+
+::: {.panel-tabset group="language"}
+
+## Python
+
+```{bash}
+pip install hal9
+```
+
+## R
+
 Currently, to install the package you need a working Rust toolchain, we recommend grabbing one using [rustup.rs](https://rustup.rs) if you don't have one yet.
 
 In addition, if you're installing the R package on *Windows*, you'll need to have [Rtools](https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html)
 installed.
-
-
-::: {.panel-tabset group="language"}
-
-## R
 
 ```{r}
 remotes::install_github("hal9ai/hal9", subdir = "r")
 ```
 
 ## CLI 
+
+The CLI needs a working Rust toolchain, we recommend grabbing one using [rustup.rs](https://rustup.rs) if you don't have one yet.
 
 ```{bash}
 cargo install --git https://github.com/hal9ai/hal9.git
@@ -33,9 +42,16 @@ cargo install --git https://github.com/hal9ai/hal9.git
 
 ### Starter apps
 
-The recommended way to bootstrap a new app is to use the `hal9 new` utility:
+The recommended way to bootstrap a new app is to use the `new` command:
 
 ::: {.panel-tabset group="language"}
+
+## Python
+
+```{python}
+import hal9 as h9
+h9.new("my_app")
+```
 
 ## R
 
@@ -57,6 +73,12 @@ This creates a new directory `my_app/` with the minimal ingredients necessary to
 Now that we have an app, we can launch the server and see it in action:
 
 ::: {.panel-tabset group="language"}
+
+## Python
+
+```{python}
+h9.start("my_app")
+```
 
 ## R
 
