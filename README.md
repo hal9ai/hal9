@@ -1,4 +1,5 @@
 # Hal9: Interactive data apps &mdash; design visually, power with code
+![Hal9 PyPi Downloads](https://img.shields.io/pypi/dm/hal9?label=PyPI) ![Hal9 NPM Downloads](https://img.shields.io/npm/dm/hal9.svg?label=NPM)
 
 Hal9 is a framework for building *interactive data apps* for data scientists and engineers. It allows you to utilize your DS/ML code with minimal overhead, and frees you from having to worry about frontend web frameworks. Hal9 consists of the following components:
 
@@ -7,11 +8,19 @@ Hal9 is a framework for building *interactive data apps* for data scientists and
 
 ## Getting started
 
-The quickest place to test things out is this hosted demo: [hal9.com/new](https://hal9.com/new).
+The quickest place to test things out is this hosted demo: [hal9.com/new](https://hal9.com/new). Refer to the Docs at [hal9.com/docs](https://hal9.com/docs/).
 
-Refer to the Docs at [hal9.com/docs](https://hal9.com/docs/).
+### Python
 
-Even more concise quickstart to get up and running locally (requires Rust toolchain, e.g., [rustup.rs](https://rustup.rs)):
+```bash
+pip install hal9
+```
+
+```python
+import hal9 as h9
+h9.new("my_app")
+h9.start("my_app")
+```
 
 ### R 
 
@@ -25,7 +34,9 @@ h9_new("my_app")
 h9_start("my_app")
 ```
 
-which should give you a demo app to get started.
+This requires Rust toolchain, e.g., [rustup.rs](https://rustup.rs).
+
+### CLI
 
 Alternatively, if you prefer working from the terminal, you can clone this repo and run
 
@@ -36,10 +47,7 @@ hal9 new my_app
 hal9 start my_app
 ```
 
-### Python
-
-We're working on streamlining the installation process, but if you're feeling adventurous and want to try
-building from source, check out the [developer docs](https://hal9.com/docs/building.html).
+This requires Rust toolchain, e.g., [rustup.rs](https://rustup.rs).
 
 ## Principles
 
