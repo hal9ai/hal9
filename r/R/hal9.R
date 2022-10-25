@@ -10,8 +10,7 @@ Node <- R6::R6Class("Node", list(
         register_node(self, self$uid)
         self
     },
-    evaluate = function(fn, ...) {
-        args <- list(...)
+    evaluate = function(fn, args) {
         fn <- self$fns[[fn]]
 
         if (is.null(fn)) {
