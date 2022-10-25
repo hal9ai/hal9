@@ -6,6 +6,7 @@ on:
       - javascript/**
       - r/**
       - site/**
+      - .github/workflows/site.yaml
 
 jobs:
   docs:
@@ -40,7 +41,7 @@ jobs:
           use-public-rspm: true
       - name: Install Quarto Deps
         run: |
-          Rscript -e 'install.packages("rmarkdown", "reticulate")'
+          Rscript -e 'install.packages(c("rmarkdown", "reticulate"))'
         working-directory: ./r
       - name: Render quarto
         run: quarto render

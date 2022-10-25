@@ -5,6 +5,7 @@ on:
     paths:
       - r/**
       - server/**
+      - .github/workflows/r.yaml
 
 jobs:
   docs:
