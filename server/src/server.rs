@@ -72,7 +72,8 @@ async fn eval(
             let uri = url.join("eval").unwrap();
             let manifest = req.manifests[0].calls.clone();
 
-            println!("posting manifest {manifest:?}");
+            let manifest_str: String = serde_json::to_string(&manifest).unwrap();
+            println!("posting manifest {manifest_str:.512}");
             
             let client = reqwest::Client::new();
             
@@ -86,8 +87,8 @@ async fn eval(
 
             // let resp_msg = &res1.text().await.unwrap();
             // println!("got response {resp_msg:?}");
-            let req_json = serde_json::to_string(&manifest).unwrap();
-            println!("req json is {req_json:?}");
+            let req_json = manifest_str;
+            println!("req json is {req_json:.512}");
 
             let mut res = res1
                 .json::<RuntimeResponse>()
