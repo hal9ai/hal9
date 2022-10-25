@@ -10,7 +10,7 @@ Node <- R6::R6Class("Node", list(
         register_node(self, self$uid)
         self
     },
-    evaluate = function(fn, ...) {
+    evaluate = function(fn, args) {
         fn <- self$fns[[fn]]
 
         if (is.null(fn)) {
@@ -18,11 +18,13 @@ Node <- R6::R6Class("Node", list(
             return(NULL)
         }
 
+        args <- lapply(args, h9_convert)
+
         result <- NULL
-        if (length(...) == 0) {
+        if (length(args) == 0) {
             result <- fn()
         } else {
-            result <- do.call(fn, ...)
+            result <- do.call(fn, args)
         }
 
         h9_convert(result)

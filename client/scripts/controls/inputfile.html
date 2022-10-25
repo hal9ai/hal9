@@ -10,7 +10,7 @@
         - control: textbox
           label: Text
           value: Upload
-    - name: dragDrop
+    - name: drag_drop
       label: Drag and Drop
       type: boolean
       example: false
@@ -23,8 +23,8 @@
               label: No
             - name: true
               label: Yes
-  output: [ html, inputFile ]
-  events: []
+  output: [ html, contents ]
+  events: [ on_update ]
   layout:
     - width: inner
       height: 40px
@@ -62,30 +62,22 @@
 </div>
 
 <script>
-  var state = hal9.getState();
-  state = state ? state : {};
-  var inputFile = '';
-  if (state.inputFile) {
-    inputFile = state.inputFile;
-    value = inputFile;
-  }
+  var contents = hal9.get('contents', '');
 
   var app = new Vue({
     el: html.getElementsByClassName('inputFileContainer')[0],
     data: {
       file: null,
       caption: caption,
-      dragDrop: dragDrop
+      dragDrop: drag_drop
     },
     methods: {
       numChange(e) {
         const reader = new FileReader();
 
         reader.onload = async (e) => {
-          const text = (e.target.result);
-          state.inputFile = text
-          hal9.setState(state);
-          hal9.invalidate();
+          const contents = (e.target.result);
+          hal9.set('contents', contents);
         };
       
         reader.readAsDataURL(e.target.files[0]);

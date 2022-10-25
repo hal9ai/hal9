@@ -22,7 +22,7 @@ Clone and build package as follows
 git clone https://github.com/hal9ai/hal9 && cd hal9
 pip3 install maturin
 maturin build -m python/Cargo.toml -F pyo3 -b pyo3
-pip3 install python/target/wheels/hal9-0.1.0-cp39-abi3-macosx_10_7_x86_64.whl --force-reinstall
+pip3 install python/target/wheels/* --force-reinstall
 ````
 
 ## Contributing
