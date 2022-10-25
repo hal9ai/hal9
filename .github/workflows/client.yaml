@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - client/**
+      - .github/workflows/client.yaml
 
 jobs:
   npm:

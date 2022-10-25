@@ -6,6 +6,7 @@ on:
       - javascript/**
       - r/**
       - site/**
+      - .github/workflows/site.yaml
 
 jobs:
   docs:
