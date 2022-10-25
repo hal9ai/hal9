@@ -3,6 +3,7 @@ FROM hal9ai/hal9-docker:0.0.5 as base
 COPY ./ /hal9
 
 RUN apt install -y libssl-doc
+RUN apt install python-is-python3
 
 WORKDIR "/hal9"
 RUN cargo build --manifest-path=server/Cargo.toml
