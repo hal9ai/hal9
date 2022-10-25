@@ -1,34 +1,34 @@
 import hal9 as h9
-from typing import Callable
+from typing import Callable, Union
 
-def checkbox(uid: str, label: Callable = None, checked: Callable = None, on_update: Callable = None, **kwargs) -> None:
+def checkbox(uid: str, label: Union[Callable[..., str], str] = None, checked: Union[Callable[..., bool], bool] = None, on_update: Callable = None, **kwargs) -> None:
 	kwargs = dict()
 	kwargs["label"] = label
 	kwargs["checked"] = checked
 	kwargs["on_update"] = on_update
 	h9.node(uid, **kwargs)
     
-def dropdown(uid: str, values: Callable = None, value: Callable = None, on_update: Callable = None, **kwargs) -> None:
+def dropdown(uid: str, values: Union[Callable[..., list], list] = None, value: Union[Callable[..., str], str] = None, on_update: Callable = None, **kwargs) -> None:
 	kwargs = dict()
 	kwargs["values"] = values
 	kwargs["value"] = value
 	kwargs["on_update"] = on_update
 	h9.node(uid, **kwargs)
     
-def file(uid: str, caption: Callable = None, dragDrop: Callable = None, on_update: Callable = None, **kwargs) -> None:
+def file(uid: str, caption: Union[Callable[..., str], str] = None, dragDrop: Union[Callable[..., bool], bool] = None, on_update: Callable = None, **kwargs) -> None:
 	kwargs = dict()
 	kwargs["caption"] = caption
 	kwargs["dragDrop"] = dragDrop
 	kwargs["on_update"] = on_update
 	h9.node(uid, **kwargs)
     
-def image(uid: str, image: Callable = None, on_update: Callable = None, **kwargs) -> None:
+def image(uid: str, image: Union[Callable[..., str], str] = None, on_update: Callable = None, **kwargs) -> None:
 	kwargs = dict()
 	kwargs["image"] = image
 	kwargs["on_update"] = on_update
 	h9.node(uid, **kwargs)
     
-def message(uid: str, message: Callable = None, title: Callable = None, mtype: Callable = None, showIcon: Callable = None, on_update: Callable = None, **kwargs) -> None:
+def message(uid: str, message: Union[Callable[..., str], str] = None, title: Union[Callable[..., str], str] = None, mtype: Union[Callable[..., str], str] = None, showIcon: Union[Callable[..., bool], bool] = None, on_update: Callable = None, **kwargs) -> None:
 	kwargs = dict()
 	kwargs["message"] = message
 	kwargs["title"] = title
@@ -37,24 +37,24 @@ def message(uid: str, message: Callable = None, title: Callable = None, mtype: C
 	kwargs["on_update"] = on_update
 	h9.node(uid, **kwargs)
     
-def number(uid: str, label: Callable = None, value: Callable = None, on_update: Callable = None, **kwargs) -> None:
+def number(uid: str, label: Union[Callable[..., str], str] = None, value: Union[Callable[..., str], str] = None, on_update: Callable = None, **kwargs) -> None:
 	kwargs = dict()
 	kwargs["label"] = label
 	kwargs["value"] = value
 	kwargs["on_update"] = on_update
 	h9.node(uid, **kwargs)
     
-def html(uid: str, rawhtml: Callable = None, **kwargs) -> None:
+def html(uid: str, rawhtml: Union[Callable[..., str], str] = None, **kwargs) -> None:
 	kwargs = dict()
 	kwargs["rawhtml"] = rawhtml
 	h9.node(uid, **kwargs)
     
-def markdown(uid: str, markdown: Callable = None, **kwargs) -> None:
+def markdown(uid: str, markdown: Union[Callable[..., str], str] = None, **kwargs) -> None:
 	kwargs = dict()
 	kwargs["markdown"] = markdown
 	h9.node(uid, **kwargs)
     
-def slider(uid: str, value: Callable = None, min: Callable = None, max: Callable = None, step: Callable = None, on_update: Callable = None, **kwargs) -> None:
+def slider(uid: str, value: Union[Callable[..., int], int] = None, min: Union[Callable[..., int], int] = None, max: Union[Callable[..., int], int] = None, step: Union[Callable[..., int], int] = None, on_update: Callable = None, **kwargs) -> None:
 	kwargs = dict()
 	kwargs["value"] = value
 	kwargs["min"] = min
@@ -63,7 +63,7 @@ def slider(uid: str, value: Callable = None, min: Callable = None, max: Callable
 	kwargs["on_update"] = on_update
 	h9.node(uid, **kwargs)
     
-def textbox(uid: str, label: Callable = None, value: Callable = None, on_update: Callable = None, **kwargs) -> None:
+def textbox(uid: str, label: Union[Callable[..., str], str] = None, value: Union[Callable[..., str], str] = None, on_update: Callable = None, **kwargs) -> None:
 	kwargs = dict()
 	kwargs["label"] = label
 	kwargs["value"] = value
