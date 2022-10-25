@@ -87,10 +87,15 @@ process_request <- function(req) {
 
         tryCatch(
             {
+                result <- node$evaluate(fn_name, fn_args)
+
+                # validate we can convert to json to throw an error here and not during serialization
+                jsonlite::toJSON(result)
+
                 list(
                     node = call$node,
                     fn_name = fn_name,
-                    result = node$evaluate(fn_name, fn_args)
+                    result = result
                 )
             },
             error = function(e) {
