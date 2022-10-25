@@ -4,6 +4,8 @@ import os
 import sys
 import base64
 import io
+import re
+import tempfile
 
 from hal9 import controls
 from hal9 import _hal9 as h9
@@ -56,6 +58,15 @@ def __convert_type(obj):
         pic_hash = base64.b64encode(pic_IObytes.read())
         pic_str = pic_hash.decode('ascii')
         return "data:image/png;base64," + pic_str
+    else if "<class 'str'>" in str(type(obj)):
+        if re.match(r'^data:[a-z]+/[a-z]+;base64', obj) != None:
+            contents = re.sub(r'^data:[a-z]+/[a-z]+;base64,', '', obj)
+            decoded = base64.b64decode(contents)
+            temp = tempfile.NamedTemporaryFile()
+            temp.write(decoded)
+            return temp.name
+        else:
+            return obj
     else:
         return obj
 
@@ -70,7 +81,7 @@ def __process_request(calls: list) -> dict:
                 if node.has_fn(call['fn_name']):
                     kwargs = dict()
                     for arg in call['args']:
-                        kwargs[arg['name']] = arg['value']
+                        kwargs[arg['name']] = __convert_type(arg['value'])
                     result = node.evaluate(call['fn_name'], **kwargs)
 
             result = __convert_type(result)
