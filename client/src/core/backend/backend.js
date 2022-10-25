@@ -57,6 +57,7 @@ const Backend = function(hostopt) {
       for (let call of response.calls) {
         if (call.error) {
           if (hostopt.events && hostopt.events.onError) hostopt.events.onError(call.error);
+          else throw(call.error)
         }
       }
     }
@@ -370,6 +371,11 @@ const Backend = function(hostopt) {
       if (hostopt.events && hostopt.events.onError) hostopt.events.onError(e.toString());
       else throw e;
     }
+  }
+
+  this.attachError = function(error) {
+    if (!hostopt.events) hostopt.events = {};
+    hostopt.events.onError = error;
   }
 }
 
