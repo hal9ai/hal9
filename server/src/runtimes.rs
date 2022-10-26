@@ -22,7 +22,6 @@ pub(crate) struct RuntimesController {
     tx_uri: channel::Sender<Result<Url, std::io::Error>>,
     shutdown: Shutdown,
     _shutdown_complete_tx: mpsc::Sender<()>,
-    pub default_runtime: Option<String>,
 }
 
 fn get_runtime_names(runtimes: Vec<Runtime>) -> Vec<String> {
@@ -115,12 +114,6 @@ impl RuntimesController {
     ) -> Self {
         let api_handles: HashMap<String, RuntimeHandle> = HashMap::new();
         
-        let default_runtime = if v.len() == 1 {
-            Some(v[0].name.clone())
-        } else {
-            None
-        };
-        
         RuntimesController {
             runtimes: v,
             app_root,
@@ -129,7 +122,6 @@ impl RuntimesController {
             tx_uri,
             shutdown,
             _shutdown_complete_tx,
-            default_runtime,
         }
     }
     
