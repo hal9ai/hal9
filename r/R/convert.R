@@ -20,6 +20,8 @@ h9_convert.htmlwidget <- function(x, ...) {
 
 #' @export
 h9_convert.character <- function(x, ...) {
+  if (!identical(length(x), 1L)) return()
+
   if (regexpr("^data:[a-z]+/[a-z]+;base64,", x) > 0) {
     b64 <- gsub("^data:[a-z]+/[a-z]+;base64,", "", x)
     path <- tempfile()
