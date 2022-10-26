@@ -3,6 +3,7 @@ project:
 
 website:
   title: "Docs"
+  google-analytics: "UA-188412659-2"
   navbar:
     logo: logo.png
     logo-href: https://hal9.com
@@ -29,7 +30,6 @@ website:
             - components.qmd
             - building.qmd
             - manifests.qmd
-
 format:
   html:
     theme: cosmo
