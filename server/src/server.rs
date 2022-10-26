@@ -27,7 +27,6 @@ struct AppState {
     tx_handler: tokio::sync::mpsc::Sender<RtControllerMsg>, 
     rx_uri_handler: crossbeam_channel::Receiver<Result<Url, std::io::Error>>,
     last_heartbeat: web::Data<AtomicUsize>,
-    default_runtime: Option<String>,
 }
 
 async fn run(data: web::Data<AppState>) -> impl Responder {
@@ -152,8 +151,6 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: b
     
     let rt_controller = RuntimesController::new(conf.runtimes.clone(), app_path_for_controller, rx, tx_uri, Shutdown::new(notify_shutdown.subscribe()), shutdown_complete_tx.clone());
     
-    let default_runtime = rt_controller.default_runtime.clone();
-    
     rt_controller.monitor().ok();
     
     let tx_fs = tx.clone();
@@ -184,7 +181,6 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: b
                 tx_handler: tx_handler.clone(),
                 rx_uri_handler: rx_uri_handler.clone(),
                 last_heartbeat: last_heartbeat.clone(),
-                default_runtime: default_runtime.clone(),
             }
         ))
         .route("/pipeline", web::get().to(pipeline))
