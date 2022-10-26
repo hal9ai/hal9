@@ -1,9 +1,7 @@
 import hal9 as h9
-import statsmodels.api as sm
 import pandas as pd
 
-iris = sm.datasets.get_rdataset("iris", "datasets", cache=True).data
-df = pd.DataFrame(iris)
+df = pd.read_csv('https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/0e7a9b0a5d22642a06d3d5b9bcbad9890c8ee534/iris.csv')
 
 h9.set('df', df)
 
