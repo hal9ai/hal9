@@ -1,6 +1,6 @@
 {
   "name": "hal9wrk",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "scripts": {
     "build": "rm -rf dist && webpack --mode development",
     "start": "node ./dist/server.js",
