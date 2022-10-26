@@ -18,6 +18,7 @@ use std::io::Write;
 use tokio::signal;
 use tokio::sync::{mpsc, broadcast};
 use webbrowser;
+use futures::stream::{self, StreamExt};
 
 struct AppState {
     app_dir: String,
@@ -57,61 +58,61 @@ async fn eval(
     data: web::Data<AppState>,
     req: web::Json<Manifests>,
 ) -> impl Responder {
-    let rt = data.default_runtime.as_ref().unwrap();
-    let runtime = rt.clone();
     let tx_handler = &data.tx_handler;
-    
-    // Ask controller for the URL of the runtime API
-    println!("eval endpoint: asking for url of {rt}");
-    tx_handler.send(RtControllerMsg::GetUri(rt.to_string())).await.ok();
     let rx_uri_handler = &data.rx_uri_handler;
-    
-    match rx_uri_handler.recv().unwrap() {
-        Ok(url) => {
-            println!("eval endpoint: got url {url:?}");
-            let uri = url.join("eval").unwrap();
-            let manifest = req.manifests[0].calls.clone();
 
-            let manifest_str: String = serde_json::to_string(&manifest).unwrap();
-            println!("posting manifest {manifest_str:.512}");
-            
-            let client = reqwest::Client::new();
-            
-            
-            let mut res1 = client
-                .post(uri)
-                .json(&manifest)
-                .send()
-                .await
-                .unwrap();
+    let results: Vec<Result<RuntimeResponse, std::io::Error>> = stream::iter(&req.manifests)
+        .then(|m| async move {
+        let rt = &m.runtime;
+        let manifest = m.calls.clone();
 
-            // let resp_msg = &res1.text().await.unwrap();
-            // println!("got response {resp_msg:?}");
-            let req_json = manifest_str;
-            println!("req json is {req_json:.512}");
+        tx_handler.send(RtControllerMsg::GetUri(rt.to_string())).await.ok();
 
-            let mut res = res1
-                .json::<RuntimeResponse>()
-                .await
-                .unwrap();
-            
-            res.runtime = Some(runtime);
-            
-            let res = ManifestResponse {
-                responses: vec![res] 
-            };
-            
-            let response = serde_json::to_string(&res).unwrap();
-            
-            HttpResponse::Ok().body(response)
-            // HttpResponse::Ok().body("")
+        match rx_uri_handler.recv().unwrap() {
+            Ok(url) => {
+                let uri = url.join("eval").unwrap();
+
+                let client = reqwest::Client::new();
+
+                let mut res = client
+                    .post(uri)
+                    .json(&manifest)
+                    .send()
+                    .await
+                    .unwrap()
+                    .json::<RuntimeResponse>()
+                    .await
+                    .unwrap();
+
+                res.runtime = Some(rt.to_owned());
+                Ok(res)
+
+            }
+            Err(e) => {
+                Err(e)
+            }
         }
-        Err(e) => {
-            let err_string = e.to_string();
-            println!("Runtime startup error: {err_string}");
 
-            HttpResponse::BadRequest().body(e.to_string())
-        }
+    })
+    .collect()
+    .await;
+
+    let errors: Vec<String> = results
+        .iter()
+        .filter(|res| res.is_err())
+        .map(|e| e.as_ref().unwrap_err().to_string())
+        .collect();
+
+    if errors.is_empty() {
+        HttpResponse::BadRequest().body(errors.join("\\n"))
+    } else {
+        let res = ManifestResponse {
+            responses: results.iter().map(|x| x.as_ref().unwrap().to_owned()).collect()
+        };
+
+        let response = serde_json::to_string(&res).unwrap();
+
+        HttpResponse::Ok().body(response)
     }
 }
 
