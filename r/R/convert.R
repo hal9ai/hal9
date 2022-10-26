@@ -26,6 +26,7 @@ h9_convert.character <- function(x, ...) {
     b64 <- gsub("^data:[a-z]+/[a-z]+;base64,", "", x)
     path <- tempfile()
     binfile <- file(path, "wb")
+    base64enc::base64decode(what = b64, output = binfile)
     close(binfile)
     return(path)
   }
