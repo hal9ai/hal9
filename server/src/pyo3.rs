@@ -1,6 +1,8 @@
 #[cfg(feature = "pyo3")]
 use pyo3::prelude::*;
+#[cfg(feature = "pyo3")]
 use crate::app_template::new_app;
+#[cfg(feature = "pyo3")]
 use crate::server::start_server;
 
 #[cfg(feature = "pyo3")]
