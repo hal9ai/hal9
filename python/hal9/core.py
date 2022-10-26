@@ -65,8 +65,9 @@ def __convert_type(obj):
         if re.match(r'^data:[a-z]+/[a-z]+;base64', obj) != None:
             contents = re.sub(r'^data:[a-z]+/[a-z]+;base64,', '', obj)
             decoded = base64.b64decode(contents)
-            temp = tempfile.NamedTemporaryFile()
+            temp = tempfile.NamedTemporaryFile(mode = "wb", delete = False)
             temp.write(decoded)
+            temp.close()
             return temp.name
         else:
             return obj
