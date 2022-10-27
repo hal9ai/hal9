@@ -97,7 +97,8 @@ const ServerImplementation = function(hostopt) {
     }
 
     if (!resp.ok) {
-      throw('Server /' + serverurls.eval + ' failed with ' + resp.statusText + ': [' + (await resp.text()) + ']')
+      const details = await resp.text();
+      throw('Server /' + serverurls.eval + ' failed with ' + resp.statusText + ': [' + details + ']')
     }
 
     const updates = await resp.json();

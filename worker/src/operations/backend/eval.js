@@ -22,8 +22,14 @@ export const backendeval = async (req, res) => {
     body: JSON.stringify(body)
   });
 
-  const result = await resp.json();
+  if (!resp.ok) {
+    const text = await resp.text();
+    res.status(resp.status).send(text);
+    log.info('/execute/ backend:eval failed: ' + text);
+    return;
+  }
 
+  const result = await resp.json();
   res.json(result);
 
   log.info('/execute/ backend:eval success');

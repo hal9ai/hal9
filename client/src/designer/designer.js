@@ -36,6 +36,21 @@ const Designer = function(hostopt) {
     await serverSave(saveText, hostopt);
   }
 
+  function showInitializationError(error) {
+    const initErr = document.createElement('div');
+    initErr.style.position = 'absolute';
+    initErr.style.zIndex = 10000;
+    initErr.style.width = '100%';
+    initErr.style.height = '100%';
+    initErr.style.background = '#FFF';
+    initErr.style.overflow = 'hidden';
+    initErr.style.lineHeight = '30px';
+    initErr.style.textIndent = '6px';
+    initErr.innerText = error;
+    initErr.onclick = function() { initErr.remove(); }
+    document.body.insertBefore(initErr, document.body.firstChild);
+  }
+
   this.init = async function() {
     if (typeof(hostopt.designer.restore) === 'function') {
       pipeline = await hostopt.designer.restore();
@@ -88,27 +103,23 @@ const Designer = function(hostopt) {
       await backendinst.init(pid);
     }
     catch(e) {
-      const initErr = document.createElement('div');
-      initErr.style.position = 'absolute';
-      initErr.style.zIndex = 10000;
-      initErr.style.width = '100%';
-      initErr.style.background = '#FFF';
-      initErr.style.height = '30px';
-      initErr.style.overflow = 'hidden';
-      initErr.style.lineHeight = '30px';
-      initErr.style.textIndent = '6px';
-      initErr.innerText = e.toString();
-      initErr.onclick = function() { initErr.remove(); }
-      document.body.insertBefore(initErr, document.body.firstChild);
+      showInitializationError(e.toString());
+      throw e;
     }
 
     if (hostopt.runtime) {
-      await backendinst.addRuntime({
-        name: hostopt.runtime.name,
-        implementation: hostopt.runtime.implementation,
-        platform: hostopt.runtime.platform,
-        script: hostopt.runtime.script
-      });
+      try {
+        await backendinst.addRuntime({
+          name: hostopt.runtime.name,
+          implementation: hostopt.runtime.implementation,
+          platform: hostopt.runtime.platform,
+          script: hostopt.runtime.script
+        });
+      }
+      catch(e) {
+        showInitializationError(e.toString());
+        throw e;
+      }
     }
 
     if (hostopt.mode == 'design') {
