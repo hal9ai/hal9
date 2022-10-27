@@ -1,5 +1,5 @@
 # Hal9: Interactive data apps &mdash; design visually, power with code
-![Hal9 PyPi Downloads](https://img.shields.io/pypi/dm/hal9?label=PyPI) ![Hal9 NPM Downloads](https://img.shields.io/npm/dm/hal9.svg?label=NPM)
+[![Hal9 PyPi Downloads](https://img.shields.io/pypi/dm/hal9?label=PyPI)](https://pypi.org/project/hal9/) [![Hal9 NPM Downloads](https://img.shields.io/npm/dm/hal9.svg?label=NPM)](https://www.npmjs.com/package/hal9)
 
 Hal9 is a framework for building *interactive data apps* for data scientists and engineers. It allows you to utilize your DS/ML code with minimal overhead, and frees you from having to worry about frontend web frameworks. Hal9 consists of the following components:
 
