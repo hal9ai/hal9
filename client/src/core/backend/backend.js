@@ -356,7 +356,7 @@ const Backend = function(hostopt) {
     await impl.addRuntime(spec);
     runtimes[spec.name] = spec;
 
-    this.onUpdated();
+    await this.onUpdated();
   }
 
   this.initTerminal = async function(runtime, options) {
