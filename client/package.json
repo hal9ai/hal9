@@ -22,7 +22,7 @@
     "@babel/runtime-corejs3": "^7.19.6",
     "buffer": "^6.0.3",
     "compare-versions": "^3.6.0",
-    "core-js": "^3.23.3",
+    "core-js": "^3.26.0",
     "crypto-js": "^4.0.0",
     "indent-string": "^5.0.0",
     "js-yaml": "4.1.0",
