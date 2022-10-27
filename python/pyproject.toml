@@ -1,13 +1,23 @@
 [tool.poetry]
 name = "hal9"
-version = "0.0.1"
+version = "0.1.6"
 description = "Design Interactive Data Apps Without Web Dev"
 authors = ["Anchit Sadana", "Hal9 Inc."]
 license = "MIT"
 readme = "README.md"
-
+[project]
+name = "hal9"
+version = "0.1.6"
+description = "Design Interactive Data Apps Without Web Dev"
+authors = [ {name = "Anchit Sadana", email = "anchit@hal9.com"},{name = "Javier Luraschi", email = "javier@hal9.com"}, {name = "Kevin Kuo", email = "kevin@hal9.com"}, {name = "Hal9 Inc."}]
+readme = "README.md"
+requires_python = ">=3.8"
+dependencies = [
+    "fastapi >=0.79.0",
+    "uvicorn[standard] >= 0.18.3"
+]
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 fastapi = "^0.79.0"
 uvicorn = {extras = ["standard"], version = "^0.18.3"}
 
