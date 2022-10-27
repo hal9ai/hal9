@@ -63,6 +63,5 @@ inst/pipeline.json
 server/target
 server/server/target
 server/cli/target
-*/*.lock
 **/Cargo.lock
 internal/
