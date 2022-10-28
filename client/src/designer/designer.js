@@ -107,14 +107,16 @@ const Designer = function(hostopt) {
       throw e;
     }
 
-    if (hostopt.runtime) {
+    if (hostopt.runtimes) {
       try {
-        await backendinst.addRuntime({
-          name: hostopt.runtime.name,
-          implementation: hostopt.runtime.implementation,
-          platform: hostopt.runtime.platform,
-          script: hostopt.runtime.script
-        });
+        for (const runtime of hostopt.runtimes) {
+          await backendinst.addRuntime({
+            name: runtime.name,
+            implementation: runtime.implementation ?? 'server',
+            platform: runtime.platform,
+            script: runtime.script
+          });
+        }
       }
       catch(e) {
         showInitializationError(e.toString());

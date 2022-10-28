@@ -31,6 +31,7 @@ futures = "*"
 webbrowser = "0.8.0"
 regex = "1"
 pyo3 = { version = "0.17.2", features = ["extension-module", "abi3-py38", "generate-import-lib", "generate-abi3-import-lib"], optional = true}
+json = "0.12.4"
 
 [features]
 extendr = ["dep:extendr-api"]

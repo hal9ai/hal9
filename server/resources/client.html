@@ -14,8 +14,10 @@
     script.src = libraries[environment];
     document.body.appendChild(script);
 
+    const options = JSON.parse('__options__');
+
     script.addEventListener('load', async function () {
-      let hostopt = Object.assign(JSON.parse('__options__'), {
+      let hostopt = Object.assign(options, {
         hostel: 'output',
         api: libraries[environment],
         env: environment,
@@ -26,12 +28,7 @@
           heartbeat: 'ping',
           version: '0.2.42',
         },
-        runtime: {
-            name: 'python',
-            implementation: 'server',
-            platform: 'python',
-            script: 'python/app.py'
-          }
+        runtimes: options.runtimes.map(e => Object.assign(e, { implementation: 'server' }))
       });
 
       const designer = hal9.designer(hostopt);

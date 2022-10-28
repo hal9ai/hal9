@@ -25,7 +25,7 @@ const Backend = function(hostopt) {
   let runtimes = {};
 
   function runtimeToImplementation(runtime) {
-    return platformToImplementations[runtimes[runtime].platform]
+    return platformToImplementations[runtimes[runtime].platform.toLowerCase()]
   }
 
   async function implementationEval(body) {
