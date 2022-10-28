@@ -6,13 +6,34 @@ const ServerImplementation = function(hostopt) {
   let terminalid = undefined;
   let terminalOnData = undefined;
 
+
+  let penalty = 0;
+  let requestPerSecond = 0;
+  setInterval(() => {
+    if (penalty > 0) {
+      penalty--;
+      return;
+    }
+    requestPerSecond = 0;
+  }, 1000);
+  async function safeFetch(url, options) {
+    if (requestPerSecond > 10) {
+      penalty = 60;
+      throw('More than ten requested triggered in less than a second, stopping for one minute');
+    }
+
+    console.log("RPS: " + requestPerSecond)
+    requestPerSecond++;
+    return await fetch(url, options);
+  }
+
   async function initHeartbeat() {
     if (!serverurls.heartbeat) return;
 
     const heartbeatms = serverurls.heartbeatms ?? 60 * 1000;
     const sendhb = async function() {
       try {
-        const resp = await fetch(serverurls.heartbeat + backendquery);
+        const resp = await safeFetch(serverurls.heartbeat + backendquery);
         if (!resp.ok) {
           console.error('Failed to register heartbeat: ' + (await resp.text()));
         }
@@ -39,9 +60,9 @@ const ServerImplementation = function(hostopt) {
       let resp;
 
       while (retries-- > 0) {
-        resp = await fetch(serverurls.init + backendquery);
+        resp = await safeFetch(serverurls.init + backendquery);
 
-        if (resp.status == 1000) {
+        if (!resp.ok) {
           await new Promise((a) => setTimeout(a, 250))
         }
 
@@ -64,7 +85,7 @@ const ServerImplementation = function(hostopt) {
   async function processOne(body) {
     let resp;
     try {
-      resp = await fetch(serverurls.eval + backendquery, {
+      resp = await safeFetch(serverurls.eval + backendquery, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -118,7 +139,7 @@ const ServerImplementation = function(hostopt) {
   this.putFile = async function(runtime, path, contents) {
     if (!serverurls.putfile ) return;
 
-    const resp = await fetch(serverurls.putfile + backendquery, {
+    const resp = await safeFetch(serverurls.putfile + backendquery, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -141,7 +162,7 @@ const ServerImplementation = function(hostopt) {
     if (!serverurls.terminit) return null;
     options = options ?? {};
 
-    const resp = await fetch(serverurls.terminit, {
+    const resp = await safeFetch(serverurls.terminit, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -161,7 +182,7 @@ const ServerImplementation = function(hostopt) {
     terminalid = json.terminalid;
 
     const updateTerminal = async function() {
-      const resp = await fetch(serverurls.termread + "?terminalid=" + terminalid, {
+      const resp = await safeFetch(serverurls.termread + "?terminalid=" + terminalid, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -176,7 +197,7 @@ const ServerImplementation = function(hostopt) {
     return {
       read: (ondata) => terminalOnData = ondata,
       write: async function(input) {
-        const resp = await fetch(serverurls.termwrite + "?terminalid=" + terminalid, {
+        const resp = await safeFetch(serverurls.termwrite + "?terminalid=" + terminalid, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
