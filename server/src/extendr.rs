@@ -1,7 +1,10 @@
 #![allow(clippy::not_unsafe_ptr_arg_deref)]
 
+#[cfg(feature = "extendr")]
 use crate::app_template::new_app;
+#[cfg(feature = "extendr")]
 use crate::server::start_server;
+#[cfg(feature = "extendr")]
 use crate::config::Platform;
 
 #[cfg(feature = "extendr")]

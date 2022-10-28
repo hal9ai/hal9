@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use std::{fmt, fs};
 use std::path::PathBuf;
 use std::str::FromStr;
@@ -7,7 +7,7 @@ use std::str::FromStr;
 // TODO: revisit dead code
 
 #[allow(dead_code)]
-#[derive(Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub(crate) struct Config {
     pub application: Application,
     pub client: Client,
@@ -15,18 +15,18 @@ pub(crate) struct Config {
 }
 
 #[allow(dead_code)]
-#[derive(Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub(crate) struct Application {
     pub name: String,
     pub version: String,
 }
 
-#[derive(Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub(crate) struct Client {
     pub design: String,
 }
 
-#[derive(Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum Platform {
     R,
     Python,
@@ -54,7 +54,7 @@ impl FromStr for Platform {
 }
 
 #[allow(dead_code)]
-#[derive(Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub(crate) struct Runtime {
     pub name: String,
     pub platform: Platform,
