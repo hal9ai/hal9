@@ -21,6 +21,7 @@ use webbrowser;
 use futures::stream::{self, StreamExt};
 
 struct AppState {
+    config: Config,
     app_dir: String,
     client_design_path: String,
     designer_string: String,
@@ -51,6 +52,11 @@ async fn ping(data: web::Data<AppState>) -> impl Responder {
     let timestamp = data.last_heartbeat.load(Ordering::Relaxed);
     
     HttpResponse::Ok().body(timestamp.to_string())
+}
+
+async fn get_config(data: web::Data<AppState>) -> impl Responder {
+    let config = &data.config;
+    HttpResponse::Ok().json(config)
 }
 
 async fn eval(
@@ -175,6 +181,7 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: b
         App::new()
         .app_data(web::Data::new(
             AppState {
+                config: conf.clone(),
                 app_dir: app_path_data.clone(),
                 client_design_path: conf.client.design.clone(), 
                 designer_string: designer_string.clone(),
@@ -186,6 +193,7 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: b
         .route("/pipeline", web::get().to(pipeline))
         .route("/pipeline", web::post().to(pipeline_post))
         .route("/design", web::get().to(design))
+        .route("/config", web::get().to(get_config))
         .route("/", web::get().to(run))
         .service(web::resource("/ping").to(ping))
         .service(web::resource("/eval").route(web::post().to(eval)))
