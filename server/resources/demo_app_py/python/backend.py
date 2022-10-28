@@ -6,11 +6,11 @@ df = pd.read_csv('https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7
 h9.set('df', df)
 
 h9.dropdown(uid='species_dropdown', values=lambda: h9.get('df')[
-        'Species'].unique().tolist(), on_update=lambda value: h9.set('value', value))
+        'species'].unique().tolist(), on_update=lambda value: h9.set('value', value))
 
 
 def filter_and_show_df(value):
     df = h9.get('df')
-    return df[df['Species'] == value].to_html()
+    return df[df['species'] == value].to_html()
     
 h9.html('iris_table', rawhtml=lambda: filter_and_show_df(h9.get('value')))
