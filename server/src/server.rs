@@ -108,7 +108,7 @@ async fn eval(
         .map(|e| e.as_ref().unwrap_err().to_string())
         .collect();
 
-    if errors.is_empty() {
+    if !errors.is_empty() {
         HttpResponse::BadRequest().body(errors.join("\\n"))
     } else {
         let res = ManifestResponse {
