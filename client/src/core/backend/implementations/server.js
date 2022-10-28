@@ -110,7 +110,7 @@ const ServerImplementation = function(hostopt) {
     while (retries-- > 0) {
       resp = await processOne(body)
 
-      if (resp.status == 500) {
+      if (!resp.ok) {
         await new Promise((a) => setTimeout(a, 250))
       }
 
