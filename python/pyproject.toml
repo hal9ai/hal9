@@ -14,7 +14,7 @@ readme = "README.md"
 requires_python = ">=3.8"
 dependencies = [
     "fastapi >=0.79.0",
-    "uvicorn[standard] >= 0.18.3"
+    "uvicorn[standard] >= 0.18.0"
 ]
 [tool.poetry.dependencies]
 python = "^3.8"
