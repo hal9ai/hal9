@@ -52,10 +52,17 @@
     data: function() {
       var vue = this;
 
-      hal9.onEvent('onParams', function(param, values) {
-        if (param != 'values') return;
-        values = typeof(values) === 'undefined' ? [] : values;
-        vue.options = typeof(values) === 'object' ? values : values.split(',');
+      hal9.onEvent('param', function(param, value) {
+        switch (param) {
+          case 'values':
+            value = typeof(value) === 'undefined' ? [] : value;
+            vue.options = typeof(value) === 'object' ? value : value.split(',');
+            break;
+          case 'value':
+            vue.value = value;
+            break;
+          default:
+        }
       })
 
       return {
