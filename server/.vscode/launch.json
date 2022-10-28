@@ -1,7 +1,4 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
@@ -19,7 +16,7 @@
                     "kind": "bin"
                 }
             },
-            "args": ["start", "app1"],
+            "args": [ "start", "app1" ],
             "cwd": "${workspaceFolder}"
         }
     ]
