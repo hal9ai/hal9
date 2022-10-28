@@ -62,14 +62,39 @@
 
   var app = new Vue({
     el: html.getElementsByClassName('sliderContainer')[0],
-    data: {
-      value: parseFloat(slider),
-      min: parseFloat(min),
-      max: parseFloat(max),
-      step: parseFloat(step)
+    data: function() {
+
+      var vue = this;
+
+      hal9.onEvent('param', function(param, value) {
+        switch (param) {
+          case 'value':
+            vue.value = parseFloat(value)
+            break;
+          case 'min':
+            vue.min = parseFloat(value);
+            if (vue.value < vue.min) vue.value = vue.min;
+            break;
+          case 'max':
+            vue.max = parseFloat(max);
+            if (vue.value > vue.max) vue.value = vue.max ;
+            break;
+          case 'step':
+            vue.step = parseFloat(step);
+            break;
+          default:
+        }
+      })
+
+      return {
+        value: parseFloat(slider),
+        min: parseFloat(min),
+        max: parseFloat(max),
+        step: parseFloat(step)
+      }
     },
     watch: {
-      value: function(value) {
+      value: function(value, oldvalue) {
         hal9.set('slider', value);
       }
     }
