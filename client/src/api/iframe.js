@@ -114,7 +114,7 @@ function IFrameAPI(options, hal9wnd, config) {
           context.events[event] = me.options.events[event];
     }
 
-    if (me.options.manifest) {
+    if (me.options.manifest && !context.manifest) {
       context.manifest = me.options.manifest
     }
   }
