@@ -95,6 +95,7 @@
     },
     watch: {
       value: function(value, oldvalue) {
+        if (oldvalue == value) return;
         hal9.set('slider', value);
       }
     }

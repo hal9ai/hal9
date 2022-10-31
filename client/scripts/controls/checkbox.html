@@ -54,7 +54,8 @@
       label: label,
     },
     watch: {
-      value: function(value) {
+      value: function(value, oldvalue) {
+        if (oldvalue == value) return;
         hal9.set('checked', value);
       }
     }
