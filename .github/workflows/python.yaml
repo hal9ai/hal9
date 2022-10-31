@@ -33,7 +33,7 @@ jobs:
           args: --release -m python/Cargo.toml -F pyo3 -b pyo3
       - name: Install built wheel - x86_64
         run: |
-          pip3 install hal9 --no-index --find-links python/target/wheels --force-reinstall
+          pip3 install hal9 --find-links python/target/wheels --force-reinstall
           python3 -c "import hal9"
       - name: Build wheels - universal2
         uses: messense/maturin-action@v1
