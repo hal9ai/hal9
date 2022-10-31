@@ -19,6 +19,7 @@ use tokio::signal;
 use tokio::sync::{mpsc, broadcast};
 use webbrowser;
 use futures::stream::{self, StreamExt};
+use json::object;
 
 struct AppState {
     config: Config,
@@ -30,16 +31,28 @@ struct AppState {
     last_heartbeat: web::Data<AtomicUsize>,
 }
 
+fn options_for_client(data: web::Data<AppState>, mode: String) -> String {
+    let options = object!{
+        "mode": mode,
+        "runtimes": [
+            {
+                "name": data.config.runtimes[0].name.to_string(),
+                "platform": data.config.runtimes[0].platform.to_string(),
+                "script": data.config.runtimes[0].script.to_string()
+            }
+        ]
+    };
+
+    let jsonopts: String = options.dump();
+    return data.designer_string.replace("__options__", &jsonopts)
+}
+
 async fn run(data: web::Data<AppState>) -> impl Responder {
-    let contents = data.designer_string
-    .replace("__options__", r#"{"mode": "run"}"#);
-    HttpResponse::Ok().body(contents)
+    HttpResponse::Ok().body(options_for_client(data, "run".to_string()))
 }
 
 async fn design(data: web::Data<AppState>) -> impl Responder {
-    let contents = data.designer_string
-    .replace("__options__", r#"{"mode": "design"}"#);
-    HttpResponse::Ok().body(contents)
+    HttpResponse::Ok().body(options_for_client(data, "design".to_string()))
 }
 
 async fn ping(data: web::Data<AppState>) -> impl Responder {

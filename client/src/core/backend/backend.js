@@ -25,7 +25,7 @@ const Backend = function(hostopt) {
   let runtimes = {};
 
   function runtimeToImplementation(runtime) {
-    return platformToImplementations[runtimes[runtime].platform]
+    return platformToImplementations[runtimes[runtime].platform.toLowerCase()]
   }
 
   async function implementationEval(body) {
@@ -123,6 +123,7 @@ const Backend = function(hostopt) {
       calls = calls.concat(responseCalls);
     }
 
+    let stepManifest = {};
     for (let call of calls) {
       if (call.error) {
         throw(call.error);
@@ -132,14 +133,18 @@ const Backend = function(hostopt) {
       if (candidates.length == 0) continue;
       const step = candidates[0];
 
+      stepManifest[step.id] = stepManifest[step.id] ?? {};
       manifest[step.id] = manifest[step.id] ?? {};
 
       if (call.result === null || call.result === undefined) continue;
-      manifest[step.id][call['fn_name']] = call.result;
+      manifest[step.id][call['fn_name']] = stepManifest[step.id][call['fn_name']] = call.result;
     }
 
-    for (let sid of Object.keys(manifest)) {
-      await hal9api.pipelines.runStep(pid, sid, { html: 'hal9-step-' + sid });
+    for (let sid of Object.keys(stepManifest)) {
+      await hal9api.pipelines.runStep(pid, sid, {
+        manifest: stepManifest,
+        html: 'hal9-step-' + sid
+      });
     }
   }
 
