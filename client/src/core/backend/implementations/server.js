@@ -17,9 +17,9 @@ const ServerImplementation = function(hostopt) {
     requestPerSecond = 0;
   }, 1000);
   async function safeFetch(url, options) {
-    if (requestPerSecond > 10) {
-      penalty = 60;
-      throw('More than ten requested triggered in less than a second, stopping for one minute');
+    if (requestPerSecond > 20) {
+      if (penalty <= 0) penalty = 10;
+      throw('More than twenty requested triggered in less than a second, stopping for ten seconds');
     }
 
     console.log("RPS: " + requestPerSecond)
@@ -33,7 +33,7 @@ const ServerImplementation = function(hostopt) {
     const heartbeatms = serverurls.heartbeatms ?? 60 * 1000;
     const sendhb = async function() {
       try {
-        const resp = await safeFetch(serverurls.heartbeat + backendquery);
+        const resp = await fetch(serverurls.heartbeat + backendquery);
         if (!resp.ok) {
           console.error('Failed to register heartbeat: ' + (await resp.text()));
         }
