@@ -7,7 +7,6 @@ license = "MIT"
 readme = "README.md"
 [project]
 name = "hal9"
-version = "0.1.9"
 description = "Design Interactive Data Apps Without Web Dev"
 authors = [ {name = "Anchit Sadana", email = "anchit@hal9.com"},{name = "Javier Luraschi", email = "javier@hal9.com"}, {name = "Kevin Kuo", email = "kevin@hal9.com"}, {name = "Hal9 Inc."}]
 readme = "README.md"
