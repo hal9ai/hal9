@@ -202,10 +202,14 @@ const Backend = function(hostopt) {
   }
 
   async function onEvent(step, event, params) {
+    manifest[step.id] = manifest[step.id] ?? {};
+
     var call = {
       'node': step.name,
       'fn_name': event,
       'args': Object.keys(params).map(function(name) {
+        manifest[step.id][name] = params[name];
+
         return {
           name: name,
           value: params[name]
@@ -227,7 +231,6 @@ const Backend = function(hostopt) {
   }
 
   function onInvalidate(step) {
-    if (hostopt.events?.onInvalidate) hostopt.events?.onInvalidate();
   }
 
   function onError(error) {
