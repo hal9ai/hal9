@@ -125,10 +125,6 @@ const Backend = function(hostopt) {
 
     let stepManifest = {};
     for (let call of calls) {
-      if (call.error) {
-        throw(call.error);
-      }
-
       const candidates = steps.filter(e => e.name == call.node);
       if (candidates.length == 0) continue;
       const step = candidates[0];
