@@ -12,7 +12,11 @@ const RuntimeAPI = function(pipelineid, sid, context, params, input) {
     current = current ? current : {};
     current.events = current.events ? current.events : {};
     current.events[name] = current.events[name] ? current.events[name] : [];
-    current.events[name].push(callback);
+
+    // we need to add support for multiple events but can't store in state since recreating
+    // html would lead to not cleaning the callbacks
+    current.events[name] = [ callback ];
+
     pipelines.setState(pipelineid, sid, current);
   }
 
