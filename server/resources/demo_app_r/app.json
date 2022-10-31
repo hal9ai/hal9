@@ -2,66 +2,6 @@
   "id": 8025092,
   "steps": [
     {
-      "name": "species_dropdown",
-      "function": "dropdown",
-      "source": "controls/dropdown.html",
-      "language": "html",
-      "label": "Dropdown",
-      "description": "Embed a dropdown control",
-      "icon": "fa-light fa-list-dropdown",
-      "dragdrop": true,
-      "build": "true",
-      "id": 11105,
-      "params": {
-        "values": {
-          "id": 1,
-          "static": true,
-          "value": [
-            {
-              "control": "textbox",
-              "value": "asdf",
-              "id": 0
-            }
-          ],
-          "name": "values",
-          "label": "Values"
-        }
-      },
-      "header": {
-        "input": [],
-        "params": [
-          {
-            "name": "values",
-            "label": "Values",
-            "value": [
-              {
-                "control": "textbox",
-                "value": "versicolor,setosa,virginica"
-              }
-            ]
-          }
-        ],
-        "output": [
-          "dropdown",
-          "html"
-        ],
-        "events": [
-          "on_update"
-        ],
-        "interactive": true,
-        "layout": [
-          {
-            "width": "inner",
-            "height": "40px"
-          }
-        ],
-        "deps": [],
-        "environment": null,
-        "cache": false,
-        "invalid": null
-      }
-    },
-    {
       "name": "iris_table",
       "function": "",
       "source": "controls/rawhtml.js",
@@ -93,16 +33,138 @@
       }
     },
     {
+      "name": "species_dropdown",
+      "function": "dropdown",
+      "source": {
+        "name": "dropdown",
+        "function": "dropdown",
+        "source": "controls/dropdown.html",
+        "language": "html",
+        "label": "Dropdown",
+        "description": "Embed a dropdown control",
+        "icon": "fa-light fa-list-dropdown",
+        "dragdrop": true,
+        "build": true
+      },
+      "language": "html",
+      "label": "Dropdown",
+      "description": "Embed a dropdown control",
+      "icon": "fa-light fa-list-dropdown",
+      "dragdrop": true,
+      "build": true,
+      "id": 11108,
+      "params": {
+        "values": {
+          "id": 1,
+          "static": true,
+          "value": [
+            {
+              "control": "textbox",
+              "value": "versicolor,setosa,virginica",
+              "id": 0
+            }
+          ],
+          "name": "values",
+          "label": "Values",
+          "type": "array",
+          "example": [
+            "World",
+            "Universe"
+          ],
+          "descritpion": "The values that can be selected."
+        },
+        "value": {
+          "id": 3,
+          "static": true,
+          "value": [
+            {
+              "control": "textbox",
+              "value": null,
+              "id": 2
+            }
+          ],
+          "name": "value",
+          "label": "Default",
+          "type": "string",
+          "example": "World",
+          "description": "The default value to select."
+        }
+      },
+      "header": {
+        "input": [],
+        "params": [
+          {
+            "name": "values",
+            "label": "Values",
+            "type": "array",
+            "example": [
+              "World",
+              "Universe"
+            ],
+            "descritpion": "The values that can be selected.",
+            "value": [
+              {
+                "control": "textbox",
+                "value": "versicolor,setosa,virginica"
+              }
+            ]
+          },
+          {
+            "name": "value",
+            "label": "Default",
+            "type": "string",
+            "example": "World",
+            "description": "The default value to select.",
+            "value": [
+              {
+                "control": "textbox",
+                "value": null
+              }
+            ]
+          }
+        ],
+        "output": [
+          "dropdown",
+          "html"
+        ],
+        "events": [
+          "on_update"
+        ],
+        "interactive": true,
+        "layout": [
+          {
+            "width": "inner",
+            "height": "40px"
+          }
+        ],
+        "state": "session",
+        "deps": [],
+        "environment": null,
+        "cache": false,
+        "invalid": null
+      }
+    },
+    {
       "name": "slider_rows",
       "function": "slider",
-      "source": "controls/range.html",
+      "source": {
+        "name": "slider",
+        "function": "slider",
+        "source": "controls/range.html",
+        "language": "html",
+        "label": "Slider",
+        "description": "Embed an slider element",
+        "icon": "fa-light fa-slider",
+        "dragdrop": true,
+        "build": true
+      },
       "language": "html",
       "label": "Slider",
       "description": "Embed an slider element",
       "icon": "fa-light fa-slider",
       "dragdrop": true,
-      "build": "true",
-      "id": 11107,
+      "build": true,
+      "id": 11109,
       "params": {
         "value": {
           "id": 1,
@@ -115,7 +177,10 @@
             }
           ],
           "name": "value",
-          "label": "Default Value"
+          "label": "Default",
+          "type": "numeric",
+          "example": 1,
+          "description": "The default value to set."
         },
         "min": {
           "id": 3,
@@ -128,7 +193,10 @@
             }
           ],
           "name": "min",
-          "label": "Min Value"
+          "label": "Min Value",
+          "type": "numeric",
+          "example": 1,
+          "description": "The minimum value the user can select."
         },
         "max": {
           "id": 5,
@@ -141,7 +209,10 @@
             }
           ],
           "name": "max",
-          "label": "Max Value"
+          "label": "Max Value",
+          "type": "numeric",
+          "example": 10,
+          "description": "The maximum value the user can select."
         },
         "step": {
           "id": 7,
@@ -154,7 +225,10 @@
             }
           ],
           "name": "step",
-          "label": "Step Increment"
+          "label": "Step Increment",
+          "type": "numeric",
+          "example": 1,
+          "description": "The amount to increment over each step."
         }
       },
       "header": {
@@ -162,7 +236,10 @@
         "params": [
           {
             "name": "value",
-            "label": "Default Value",
+            "label": "Default",
+            "type": "numeric",
+            "example": 1,
+            "description": "The default value to set.",
             "value": [
               {
                 "control": "number",
@@ -173,6 +250,9 @@
           {
             "name": "min",
             "label": "Min Value",
+            "type": "numeric",
+            "example": 1,
+            "description": "The minimum value the user can select.",
             "value": [
               {
                 "control": "number",
@@ -183,6 +263,9 @@
           {
             "name": "max",
             "label": "Max Value",
+            "type": "numeric",
+            "example": 10,
+            "description": "The maximum value the user can select.",
             "value": [
               {
                 "control": "number",
@@ -193,6 +276,9 @@
           {
             "name": "step",
             "label": "Step Increment",
+            "type": "numeric",
+            "example": 1,
+            "description": "The amount to increment over each step.",
             "value": [
               {
                 "control": "number",
@@ -215,6 +301,7 @@
             "height": "70px"
           }
         ],
+        "state": "session",
         "deps": [],
         "environment": null,
         "cache": false,
@@ -223,23 +310,45 @@
     }
   ],
   "params": {
-    "11105": {
+    "11106": {},
+    "11108": {
       "values": {
         "id": 1,
         "static": true,
         "value": [
           {
             "control": "textbox",
-            "value": "asdf",
+            "value": "versicolor,setosa,virginica",
             "id": 0
           }
         ],
         "name": "values",
-        "label": "Values"
+        "label": "Values",
+        "type": "array",
+        "example": [
+          "World",
+          "Universe"
+        ],
+        "descritpion": "The values that can be selected."
+      },
+      "value": {
+        "id": 3,
+        "static": true,
+        "value": [
+          {
+            "control": "textbox",
+            "value": null,
+            "id": 2
+          }
+        ],
+        "name": "value",
+        "label": "Default",
+        "type": "string",
+        "example": "World",
+        "description": "The default value to select."
       }
     },
-    "11106": {},
-    "11107": {
+    "11109": {
       "value": {
         "id": 1,
         "static": true,
@@ -251,7 +360,10 @@
           }
         ],
         "name": "value",
-        "label": "Default Value"
+        "label": "Default",
+        "type": "numeric",
+        "example": 1,
+        "description": "The default value to set."
       },
       "min": {
         "id": 3,
@@ -264,7 +376,10 @@
           }
         ],
         "name": "min",
-        "label": "Min Value"
+        "label": "Min Value",
+        "type": "numeric",
+        "example": 1,
+        "description": "The minimum value the user can select."
       },
       "max": {
         "id": 5,
@@ -277,7 +392,10 @@
           }
         ],
         "name": "max",
-        "label": "Max Value"
+        "label": "Max Value",
+        "type": "numeric",
+        "example": 10,
+        "description": "The maximum value the user can select."
       },
       "step": {
         "id": 7,
@@ -290,14 +408,17 @@
           }
         ],
         "name": "step",
-        "label": "Step Increment"
+        "label": "Step Increment",
+        "type": "numeric",
+        "example": 1,
+        "description": "The amount to increment over each step."
       }
     }
   },
   "scripts": {
-    "11105": "<!--\n  input: []\n  params:\n    - name: values\n      label: Values\n      value:\n        - control: textbox\n          value: versicolor,setosa,virginica\n  output: [ dropdown, html ]\n  events: [ on_update ]\n  interactive: true\n  layout:\n    - width: inner\n      height: 40px\n-->\n\n<script src=\"https://cdn.jsdelivr.net/npm/vue@2\"></script>\n<link rel=\"stylesheet\" href=\"https://unpkg.com/buefy/dist/buefy.min.css\">\n<script src=\"https://unpkg.com/buefy/dist/buefy.min.js\"></script>\n\n<div class=\"control\">\n  <template>\n    <section>\n      <b-select v-model=\"value\">\n        <option v-for=\"o in options\" :value='o'>\n          {{ o }}\n        </option>\n      </b-select>\n    </section>\n  </template>\n</div>\n\n<script>\n  values = typeof(values) === 'object' ? values : values.split(',');\n  var dropdown = hal9.get('dropdown');\n\n  var app = new Vue({\n    el: html.getElementsByClassName('control')[0],\n    data: function() {\n      var vue = this;\n\n      hal9.onEvent('onParams', function(param, values) {\n        if (param != 'values') return;\n        vue.options = typeof(values) === 'object' ? values : values.split(',');\n      })\n\n      return {\n        value: dropdown,\n        options: values\n      }\n    },\n    watch: {\n      value: function(value) {\n        hal9.set('dropdown', value);\n      }\n    }\n  })\n\n  html.style.height = '40px';\n</script>",
     "11106": "/**\n  input: [ rawhtml ]\n  output: [ html ]\n  layout:\n    - width: 900px\n**/\n\nhtml.innerHTML = rawhtml;\n",
-    "11107": "<!--\n  input: []\n  params:\n    - name: value\n      label: Default Value\n      value:\n        - control: number\n          value: 1\n    - name: min\n      label: Min Value\n      value:\n        - control: number\n          value: 1\n    - name: max\n      label: Max Value\n      value:\n        - control: number\n          value: 10\n    - name: step\n      label: Step Increment\n      value:\n        - control: number\n          value: 1\n  output: [ html, slider ]\n  events: [ on_update ]\n  interactive: true\n  layout:\n    - width: 325px\n      height: 70px\n-->\n\n<script src=\"https://cdn.jsdelivr.net/npm/vue@2\"></script>\n<link rel=\"stylesheet\" href=\"https://unpkg.com/buefy/dist/buefy.min.css\">\n<script src=\"https://unpkg.com/buefy/dist/buefy.min.js\"></script>\n\n<div class=\"sliderContainer\">\n  <template>\n    <section>\n      <div style= \"height: 30px\"></div>\n        <b-field>\n            <b-slider tooltip-always :min=\"min\" :max=\"max\" :step=\"step\" v-model=\"value\"></b-slider>\n        </b-field>\n    </section>\n  </template>\n</div>\n\n<script>\n  var slider = hal9.get('slider');\n\n  var app = new Vue({\n    el: html.getElementsByClassName('sliderContainer')[0],\n    data: {\n      value: parseFloat(slider),\n      min: parseFloat(min),\n      max: parseFloat(max),\n      step: parseFloat(step)\n    },\n    watch: {\n      value: function(value) {\n        hal9.set('slider', value);\n      }\n    }\n  })\n\n  app.$el.getElementsByClassName('b-slider-track')[0].style = 'width: 300px';\n  app.$el.getElementsByClassName('b-slider-track')[0].style.left = \"16px\";\n\n  let sliderNumber = app.$el.getElementsByClassName('tooltip-content')[0];\n\n  let minMaxStep = app.$el.getElementsByClassName('b-slider-thumb')[0];\n  minMaxStep.setAttribute('aria-valuemin', 3);\n</script>"
+    "11108": "<!--\n  input: []\n  params:\n    - name: values\n      label: Values\n      type: array\n      example: [ 'World', 'Universe' ]\n      descritpion: The values that can be selected.\n      value:\n        - control: textbox\n          value: versicolor,setosa,virginica\n    - name: value\n      label: Default\n      type: string\n      example: 'World'\n      description: The default value to select.\n      value:\n        - control: textbox\n          value: \n  output: [ dropdown, html ]\n  events: [ on_update ]\n  interactive: true\n  layout:\n    - width: inner\n      height: 40px\n  state: session\n-->\n\n<script src=\"https://cdn.jsdelivr.net/npm/vue@2\"></script>\n<link rel=\"stylesheet\" href=\"https://unpkg.com/buefy@0.9.22/dist/buefy.min.css\">\n<script src=\"https://unpkg.com/buefy/dist/buefy.min.js\"></script>\n\n<div class=\"control\">\n  <template>\n    <section>\n      <b-select v-model=\"value\">\n        <option v-for=\"o in options\" :value='o'>\n          {{ o }}\n        </option>\n      </b-select>\n    </section>\n  </template>\n</div>\n\n<script>\n  values = typeof(values) === 'undefined' ? [] : values;\n  values = typeof(values) === 'object' ? values : values.split(',');\n  var dropdown = hal9.get('dropdown', value);\n\n  var app = new Vue({\n    el: html.getElementsByClassName('control')[0],\n    data: function() {\n      var vue = this;\n\n      hal9.onEvent('param', function(param, value) {\n        switch (param) {\n          case 'values':\n            value = typeof(value) === 'undefined' ? [] : value;\n            vue.options = typeof(value) === 'object' ? value : value.split(',');\n            break;\n          case 'value':\n            vue.value = value;\n            break;\n          default:\n        }\n      })\n\n      return {\n        value: dropdown,\n        options: values\n      }\n    },\n    watch: {\n      value: function(value) {\n        hal9.set('dropdown', value);\n      }\n    }\n  })\n</script>",
+    "11109": "<!--\n  input: []\n  params:\n    - name: value\n      label: Default\n      type: numeric\n      example: 1\n      description: The default value to set.\n      value:\n        - control: number\n          value: 1\n    - name: min\n      label: Min Value\n      type: numeric\n      example: 1\n      description: The minimum value the user can select.\n      value:\n        - control: number\n          value: 1\n    - name: max\n      label: Max Value\n      type: numeric\n      example: 10\n      description: The maximum value the user can select.\n      value:\n        - control: number\n          value: 10\n    - name: step\n      label: Step Increment\n      type: numeric\n      example: 1\n      description: The amount to increment over each step.\n      value:\n        - control: number\n          value: 1\n  output: [ html, slider ]\n  events: [ on_update ]\n  interactive: true\n  layout:\n    - width: 325px\n      height: 70px\n  state: session\n-->\n\n<script src=\"https://cdn.jsdelivr.net/npm/vue@2\"></script>\n<link rel=\"stylesheet\" href=\"https://unpkg.com/buefy@0.9.22/dist/buefy.min.css\">\n<script src=\"https://unpkg.com/buefy/dist/buefy.min.js\"></script>\n\n<div class=\"sliderContainer\">\n  <template>\n    <section>\n      <div style= \"height: 30px\"></div>\n        <b-field>\n            <b-slider tooltip-always :min=\"min\" :max=\"max\" :step=\"step\" v-model=\"value\"></b-slider>\n        </b-field>\n    </section>\n  </template>\n</div>\n\n<script>\n  var slider = hal9.get('slider', value);\n\n  var app = new Vue({\n    el: html.getElementsByClassName('sliderContainer')[0],\n    data: function() {\n\n      var vue = this;\n\n      hal9.onEvent('param', function(param, value) {\n        switch (param) {\n          case 'value':\n            vue.value = parseFloat(value)\n            break;\n          case 'min':\n            vue.min = parseFloat(value);\n            if (vue.value < vue.min) vue.value = vue.min;\n            break;\n          case 'max':\n            vue.max = parseFloat(max);\n            if (vue.value > vue.max) vue.value = vue.max ;\n            break;\n          case 'step':\n            vue.step = parseFloat(step);\n            break;\n          default:\n        }\n      })\n\n      return {\n        value: parseFloat(slider),\n        min: parseFloat(min),\n        max: parseFloat(max),\n        step: parseFloat(step)\n      }\n    },\n    watch: {\n      value: function(value, oldvalue) {\n        hal9.set('slider', value);\n      }\n    }\n  })\n\n  app.$el.getElementsByClassName('b-slider-track')[0].style = 'width: 300px';\n  app.$el.getElementsByClassName('b-slider-track')[0].style.left = \"16px\";\n\n  let sliderNumber = app.$el.getElementsByClassName('tooltip-content')[0];\n\n  let minMaxStep = app.$el.getElementsByClassName('b-slider-thumb')[0];\n  minMaxStep.setAttribute('aria-valuemin', 3);\n</script>"
   },
   "version": "0.0.1",
   "metadata": {
@@ -306,13 +427,6 @@
   "app": {
     "stepLayouts": [
       {
-        "stepId": 11105,
-        "width": "131px",
-        "left": "6px",
-        "height": "40px",
-        "top": "30px"
-      },
-      {
         "stepId": 11106,
         "width": "570px",
         "left": "6px",
@@ -320,15 +434,26 @@
         "top": "76px"
       },
       {
-        "stepId": 11107,
-        "width": "317px",
-        "left": "137px",
+        "stepId": 11108,
+        "width": "124px",
+        "left": "6px",
+        "height": "40px",
+        "top": "30px"
+      },
+      {
+        "stepId": 11109,
+        "width": "436px",
+        "left": "140px",
         "height": "70px",
         "top": "0px"
       }
     ]
   },
   "deps": {
+    "11106": [
+      11108,
+      11109
+    ]
   },
   "runtimes": [
     {
@@ -337,7 +462,7 @@
       "platform": "r",
       "script": "R/backend.R",
       "files": {
-        "R/backend.R": "library(hal9)\n\niris |> h9_set(\"df\")\n\nh9_dropdown(\n    \"species_dropdown\",\n    values = unique(levels(iris$Species)),\n    on_update = function(value) {\n        h9_set(value, \"selected_species\")\n    }\n)\n\nh9_html(\n    \"iris_table\",\n    rawhtml = function() {\n        sp <- h9_get(\"selected_species\")\n        if (is.null(sp)) {\n            return(\"\")\n        }\n\n        out <- iris[iris$Species == sp, ]\n\n        num_rows <- h9_get(\"num_rows\")\n\n        if (!is.null(num_rows)) {\n            out <- out |> head(num_rows)\n        }\n\n        out |>\n            knitr::kable(format = \"html\") |>\n            as.character()\n    }\n)\n\nh9_slider(\"slider_rows\",\n    value = 1,\n    min = 1,\n    max = 10,\n    step = 1,\n    on_update = function(value) {\n        h9_set(value, \"num_rows\")\n    }\n)\n"
+        "R/backend.R": "library(hal9)\n\niris |> h9_set(\"df\")\n\nh9_dropdown(\n    \"species_dropdown\",\n    values = unique(levels(iris$Species)),\n    on_update = function(value) {\n        h9_set(value, \"selected_species\")\n    }\n)\n\nh9_html(\n    \"iris_table\",\n    rawhtml = function() {\n        sp <- h9_get(\"selected_species\")\n        if (is.null(sp)) {\n            return(\"\")\n        }\n\n        out <- iris[iris$Species == sp, ]\n\n        num_rows <- h9_get(\"num_rows\")\n\n        if (!is.null(num_rows)) {\n            out <- out |> head(num_rows)\n        }\n\n        out |>\n            knitr::kable(format = \"html\") |>\n            as.character()\n    }\n)\n\nh9_slider(\"slider_rows\",\n    value = 1,\n    min = 1,\n    max = 10,\n    step = 1,\n    on_update = function(value) {\n        h9_set(value, \"num_rows\")\n    }\n)\n\nh9_dropdown(\"dropdown\",\n  on_update = function(value) { h9_set(value, \"dropdown\") },\n  values = c('World','Universe'),\n  value = 'World'\n)\n\nh9_slider(\"slider\",\n  on_update = function(value) { h9_set(value, \"slider\") },\n  value = 1,\n  min = 1,\n  max = 10,\n  step = 1\n)\n"
       }
     }
   ]

@@ -2,8 +2,11 @@ library(hal9)
 
 iris |> h9_set("df")
 
+h9_set("setosa", "selected_species")
+
 h9_dropdown(
     "species_dropdown",
+    value = "setosa",
     values = unique(levels(iris$Species)),
     on_update = function(value) {
         h9_set(value, "selected_species")
@@ -33,7 +36,7 @@ h9_html(
 )
 
 h9_slider("slider_rows",
-    value = 1,
+    value = 10,
     min = 1,
     max = 10,
     step = 1,
