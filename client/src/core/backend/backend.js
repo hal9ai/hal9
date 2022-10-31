@@ -174,11 +174,6 @@ const Backend = function(hostopt) {
     const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
     const deps = await hal9api.pipelines.getDependencies(pid);
 
-    if (!deps || Object.keys(deps).length == 0) {
-      const allids = steps.filter(e => e.id != sid).map(e => e.id);
-      return allids
-    }
-
     const forward = {};
     for (let dep of Object.keys(deps)) {
       let backwards = deps[dep];
