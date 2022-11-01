@@ -9,13 +9,13 @@ website:
     logo-href: https://hal9.com
     title: false
     background: primary
-    left:
-      - text: "Python"
-        href: /python
-      - text: "R"
-        href: /r/reference
-      - text: "JavaScript"
-        href: /javascript/h9.html
+#    left:
+#      - text: "Python"
+#        href: /python
+#      - text: "R"
+#        href: /r/reference
+#      - text: "JavaScript"
+#        href: /javascript/h9.html
   sidebar:
       style: "docked"
       search: true
