@@ -153,7 +153,11 @@ const Backend = function(hostopt) {
   }
 
   async function initializeManifest() {
-    const ids = await dependencies.getInitial(pid);
+    const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
+    const ids = steps.map(e => e.id);
+
+    // const ids = await dependencies.getInitial(pid);
+    
     await performUpdates(ids);
   }
 
