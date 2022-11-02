@@ -149,8 +149,28 @@ textbox = controls.textbox
 textarea = controls.textarea
 html = controls.html
 
-def start (path: str = '.', port: int = 0, timeout: int = 600, nobrowse = False):
+def start(path: str = '.', port: int = 0, timeout: int = 600, nobrowse: bool = False):
+    """Launches an app at the specified directory
+	
+    Parameters
+    ----------
+	path: str
+		Path to the app
+	port: int
+		The port to run the app on. Default 0
+	timeout: int
+		The timeout for each function
+	nobrowse: bool
+		Whether to open the editor in a browser
+	"""
     h9.start(path, port, timeout, nobrowse)
 
-def new (path: str = '.'):
+def new(path: str = '.'):
+    """Launches an app at the specified directory
+	
+    Parameters
+    ----------
+    path: str
+		Path where to create the app
+    """
     h9.new(path)
