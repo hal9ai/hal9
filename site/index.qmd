@@ -1,6 +1,5 @@
 ---
 title: "Quickstart"
-eval: false
 ---
 
 This guide aims to help you get started with Hal9 in your local development environment as quickly as possible.
@@ -16,7 +15,7 @@ Install Hal9 by running:
 
 ## Python
 
-```{bash}
+```bash
 pip install hal9
 ```
 
@@ -27,7 +26,7 @@ Currently, to install the package you need a working Rust toolchain, we recommen
 In addition, if you're installing the R package on *Windows*, you'll need to have [Rtools](https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html)
 installed.
 
-```{r}
+```r
 remotes::install_github("hal9ai/hal9", subdir = "r")
 ```
 
@@ -35,7 +34,7 @@ remotes::install_github("hal9ai/hal9", subdir = "r")
 
 The CLI needs a working Rust toolchain, we recommend grabbing one using [rustup.rs](https://rustup.rs) if you don't have one yet.
 
-```{bash}
+```bash
 cargo install --git https://github.com/hal9ai/hal9.git
 ```
 :::
@@ -48,21 +47,21 @@ The recommended way to bootstrap a new app is to use the `new` command:
 
 ## Python
 
-```{python}
+```python
 import hal9 as h9
 h9.new("my_app")
 ```
 
 ## R
 
-```{r}
+```r
 library(hal9)
 h9_new("my_app")
 ```
 
 ## CLI
 
-```{bash}
+```bash
 hal9 new my_app
 ```
 
@@ -76,19 +75,19 @@ Now that we have an app, we can launch the server and see it in action:
 
 ## Python
 
-```{python}
+```python
 h9.start("my_app")
 ```
 
 ## R
 
-```{r}
+```r
 h9_start("my_app")
 ```
 
 ## CLI
 
-```{bash}
+```bash
 hal9 start my_app
 ```
 

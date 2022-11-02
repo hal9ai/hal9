@@ -1,6 +1,5 @@
 ---
 title: "Components"
-eval: false
 ---
 
 In Building Apps, we discuss how to launch a starter app and make changes to it. Here, we talk about the

@@ -26,7 +26,8 @@ website:
             - concepts.qmd
         - section: "Examples"
           contents:
-            - examples-iris-r.qmd
+            - example-model-python.qmd
+            - example-iris-r.qmd
         - section: "Advanced"
           contents:
             - components.qmd
