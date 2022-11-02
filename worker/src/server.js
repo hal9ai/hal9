@@ -93,6 +93,11 @@ app.get('/execute/:operation', async (req, res) => {
   await performOperation(operation, req, res);
 });
 
+/* @klotho::expose {
+ *  target = "public"
+ *  id = "app"
+ * }
+ */
 app.listen(port, () => {
   console.log(`App listening on port ${port}.`);
   register();
