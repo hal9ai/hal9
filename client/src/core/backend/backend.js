@@ -1,13 +1,16 @@
 import clone from '../utils/clone';
 import * as browser from './implementations/browser';
 import * as server from './implementations/server';
+import { Dependencies } from './dependencies';
 
 const Backend = function(hostopt) {
   let pid = undefined;
   let pidchanged = undefined;
 
+  let dependencies = undefined;
+  let hal9api = undefined;
   let manifest = {};
-  let hal9api = window.hal9;
+  
   let defaultRuntime = hostopt.runtime;
   let serverurls = hostopt.designer;
 
@@ -23,6 +26,11 @@ const Backend = function(hostopt) {
   };
 
   let runtimes = {};
+
+  function updateApi(hapi) {
+    hal9api = hapi;
+    dependencies = new Dependencies(hal9api);
+  }
 
   function runtimeToImplementation(runtime) {
     return platformToImplementations[runtimes[runtime].platform.toLowerCase()]
@@ -147,6 +155,9 @@ const Backend = function(hostopt) {
   async function initializeManifest() {
     const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
     const ids = steps.map(e => e.id);
+
+    // const ids = await dependencies.getInitial(pid);
+    
     await performUpdates(ids);
   }
 
@@ -161,41 +172,12 @@ const Backend = function(hostopt) {
 
     let id = changes.step.id;
 
-    const ids = await getForwardDependencies(changes.step.id);
+    const ids = await dependencies.getForward(pid, changes.step.id);
     ids.unshift(id);
     await performUpdates(ids);
   }
 
-  async function getForwardDependencies(sid) {
-    const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
-    const deps = await hal9api.pipelines.getDependencies(pid);
-
-    const forward = {};
-    for (let dep of Object.keys(deps)) {
-      let backwards = deps[dep];
-      for (let backward of backwards) {
-        if (!forward[backward]) forward[backward] = [];
-        if (!forward[backward].includes(dep)) forward[backward].push(dep);
-      }
-    }
-
-    let toadd = forward[sid] ?? [];
-    let added = {};
-
-    let maxdeps = 10000;
-    while (toadd.length > 0) {
-      if (maxdeps-- <= 0) throw('Recursive dependency or too many dependencies');
-
-      const el = toadd.shift();
-      added[el] = true;
-
-      if (forward[el]) {
-        toadd = toadd.concat(forward[el]);
-      }
-    }
-
-    return Object.keys(added).map(function(e) { return parseInt(e) });
-  }
+  
 
   async function onEvent(step, event, params) {
     manifest[step.id] = manifest[step.id] ?? {};
@@ -222,7 +204,7 @@ const Backend = function(hostopt) {
 
     await implementationEval({ manifests: runtimeCalls });
 
-    const ids = await getForwardDependencies(step.id);
+    const ids = await dependencies.getForward(pid, step.id);
     await performUpdates(ids);
   }
 
@@ -266,7 +248,7 @@ const Backend = function(hostopt) {
   }
 
   this.setapi = async function(h9api) {
-    hal9api = h9api;
+    updateApi(h9api);
   }
 
   this.setpid = async function(pipelineid) {
@@ -283,12 +265,12 @@ const Backend = function(hostopt) {
   }
 
   this.connect = async function(h9api) {
-    hal9api = h9api;
+    updateApi(h9api);
   }
 
   this.init = async function(pipelineid, h9api) {
     pid = pipelineid;
-    if (h9api) hal9api = h9api;
+    if (h9api) updateApi(h9api);
     await initializeManifest();
   }
 
@@ -376,6 +358,12 @@ const Backend = function(hostopt) {
     if (!hostopt.events) hostopt.events = {};
     hostopt.events.onError = error;
   }
+
+  function initialize() {
+    updateApi(window.hal9);
+  }
+
+  initialize();
 }
 
 export const backend = function(hostopt, hal9api) {
