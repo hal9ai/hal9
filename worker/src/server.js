@@ -1,4 +1,3 @@
-import express from 'express';
 import fetch from 'node-fetch';
 
 import * as hal9 from 'hal9';
@@ -9,6 +8,9 @@ import { log } from './logger';
 import { port } from './port';
 
 import { operations } from './operations/operations';
+
+// require required for klotho deployment
+const express = require('express');
 
 // hal9 gets fetch from globals
 global.fetch = fetch
