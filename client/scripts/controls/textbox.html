@@ -31,7 +31,7 @@
   <template>
     <section>
       {{ label }}
-      <b-input type="text" v-model="value">
+      <b-input type="text" :lazy="true" v-model="value">
       </b-input>
     </section>
   </template>
