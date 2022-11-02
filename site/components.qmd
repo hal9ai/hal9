@@ -1,5 +1,5 @@
 ---
-title: "Components of an App"
+title: "Components"
 eval: false
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "Building"
+title: "Compiling"
 ---
 
 This document provides instructions on buliding the client libraries for different languages.

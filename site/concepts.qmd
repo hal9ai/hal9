@@ -1,5 +1,5 @@
 ---
-title: "Editing an app"
+title: "Concepts"
 eval: false
 ---
 
@@ -7,7 +7,7 @@ We now give a brief overview of the Designer and the workflow to adding and cont
 
 ## The Designer
 
-![The Hal9 Designer](hal9_screenshot_annotated.png)
+![The Hal9 Designer](hal9-screenshot-annotated.png)
 
 The Designer consists of four panes, from left to right in the screenshot:
 

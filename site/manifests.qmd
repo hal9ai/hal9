@@ -1,10 +1,6 @@
 ---
-title: "Manifests and Replies"
+title: "Manifests"
 ---
-
-...
-
-## Manifests
 
 Whenever a frontend event triggers a computation in a compute runtime, the Hal9 client generates a manifest containing
 information required by the compute runtime to update the state of the app. The manifest is a JSON array, with each
