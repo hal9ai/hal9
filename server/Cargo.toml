@@ -16,6 +16,7 @@ path = "src/bin/cli.rs"
 [dependencies]
 actix-web = "4"
 actix-files = "0.6.2"
+actix-multipart = "0.4.0"
 mime = "0.3.16"
 toml = "0.5.9"
 serde = { version = "1.0", features = ["derive"] }
@@ -27,11 +28,12 @@ reqwest = { version = "0.11", features = ["json"] }
 serde_json = "1.0"
 extendr-api = { version = "0.3.1", optional = true }
 url = "2.2.2"
-futures = "*"
+futures = "0.3.25"
 webbrowser = "0.8.0"
 regex = "1"
 pyo3 = { version = "0.17.2", features = ["extension-module", "abi3-py38", "generate-import-lib", "generate-abi3-import-lib"], optional = true}
 json = "0.12.4"
+futures-util = "0.3.25"
 
 [features]
 extendr = ["dep:extendr-api"]

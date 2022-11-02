@@ -20,6 +20,9 @@ use tokio::sync::{mpsc, broadcast};
 use webbrowser;
 use futures::stream::{self, StreamExt};
 use json::object;
+use serde::Deserialize;
+use actix_multipart::Multipart;
+use futures_util::TryStreamExt;
 
 struct AppState {
     config: Config,
@@ -44,7 +47,8 @@ fn options_for_client(data: web::Data<AppState>, mode: String) -> String {
     };
 
     let jsonopts: String = options.dump();
-    return data.designer_string.replace("__options__", &jsonopts)
+
+    data.designer_string.replace("__options__", &jsonopts)
 }
 
 async fn run(data: web::Data<AppState>) -> impl Responder {
@@ -148,6 +152,39 @@ async fn pipeline_post(data: web::Data<AppState>, req: String) -> impl Responder
     HttpResponse::Ok().body("{}")
 }
 
+#[derive(Deserialize)]
+struct FileSpec {
+    file_path: String,
+}
+
+async fn get_file(file_spec: web::Query<FileSpec>, data: web::Data<AppState>) -> Result<NamedFile> {
+    let full_file_path = PathBuf::new()
+        .join(&data.app_dir)
+        .join(&file_spec.file_path);
+    println!("trying to open file {full_file_path:?}");
+    Ok(NamedFile::open(full_file_path)?)
+}
+
+async fn save_file(mut payload: Multipart, data: web::Data<AppState>) -> Result<HttpResponse, actix_web::Error> {
+    while let Some(mut field) = payload.try_next().await? {
+        let content_disposition = field.content_disposition();
+
+        let filename = content_disposition
+            .get_filename()
+            .unwrap();
+        let app_dir = &data.app_dir;
+        let filepath = format!("{app_dir}/{filename}");
+
+        let mut f = web::block(|| std::fs::File::create(filepath)).await??;
+
+        while let Some(chunk) = field.try_next().await? {
+            f = web::block(move || f.write_all(&chunk).map(|_| f)).await??;
+        }
+    }
+
+    Ok(HttpResponse::Ok().into())
+}
+
 #[tokio::main]
 pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: bool) -> std::io::Result<()> {
     
@@ -208,6 +245,8 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: b
         .route("/design", web::get().to(design))
         .route("/config", web::get().to(get_config))
         .route("/", web::get().to(run))
+        .route("/putfile", web::put().to(save_file))
+        .route("/getfile", web::get().to(get_file))
         .service(web::resource("/ping").to(ping))
         .service(web::resource("/eval").route(web::post().to(eval)))
     })
