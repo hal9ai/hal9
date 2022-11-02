@@ -154,13 +154,13 @@ async fn pipeline_post(data: web::Data<AppState>, req: String) -> impl Responder
 
 #[derive(Deserialize)]
 struct FileSpec {
-    file_path: String,
+    filepath: String,
 }
 
 async fn get_file(file_spec: web::Query<FileSpec>, data: web::Data<AppState>) -> Result<NamedFile> {
     let full_file_path = PathBuf::new()
         .join(&data.app_dir)
-        .join(&file_spec.file_path);
+        .join(&file_spec.filepath);
     println!("trying to open file {full_file_path:?}");
     Ok(NamedFile::open(full_file_path)?)
 }
