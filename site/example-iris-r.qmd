@@ -1,6 +1,5 @@
 ---
-title: "Iris with R"
-eval: false
+title: "Plot with R"
 ---
 
 Simple dashboard example using the iris dataset, `ggplot2`, sliders, checkboxes and dropdowns. Take a look at the live example at <a href="https://hal9.com/hal9/iris-with-r" target="_blank">hal9.com/hal9/iris-with-r</a>
@@ -9,8 +8,7 @@ Simple dashboard example using the iris dataset, `ggplot2`, sliders, checkboxes 
 	![Hal9 Iris with R](hal9-example-iris-r.png)
 </a>
 
-```{r}
-
+```r
 library(hal9)
 library(ggplot2)
 

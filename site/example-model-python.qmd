@@ -1,0 +1,63 @@
+---
+title: "Model with Python"
+---
+
+A sentiment model from Hugging Face to showcase text input, info panel and a plot. Take a look at the live example at <a href="https://hal9.com/hal9/model-with-python" target="_blank">hal9.com/hal9/model-with-python</a>
+
+<a href="https://hal9.com/hal9/model-with-python" target="_blank">
+	<img src="hal9-example-model-python.png" style="max-width: 700px"/>
+</a>
+
+```python
+import hal9 as h9
+from transformers import pipeline
+import matplotlib.pyplot as plt
+
+text_default = "The only good thing of the day was that I spend more time with my dog"
+h9.set("textbox", text_default)
+h9.set("dropdown", "")
+h9.set("results", "")
+
+h9.textbox("textbox", value=text_default, label="How was your day?", on_update=lambda value: h9.set("textbox", value))
+
+h9.dropdown("dropdown", values=["Select Model", "BERTweet", "Distilbert"], value="Select Model", on_update=lambda value: h9.set("dropdown", value))
+
+h9.html("html2", rawhtml=lambda: "Your results are:<br>" + h9.get("results"))
+
+def plot():
+  text = h9.get("textbox")
+  model = h9.get("dropdown")
+
+  if model == "BERTweet":
+    classifier = pipeline(model="finiteautomata/bertweet-base-sentiment-analysis", return_all_scores = True)
+    n = 6
+    pred = classifier(text)
+  elif model == "Distilbert":
+    classifier = pipeline("text-classification",model='bhadresh-savani/distilbert-base-uncased-emotion', return_all_scores=True)
+    n = 12
+    pred = classifier(text) 
+  else:
+    n = 2
+    pred = [[{'label': 'Sentiment', 'score': 0}]]
+
+  entries = []
+  for i in range(0,int(n/2)):
+    entries = entries + list(pred[0][i].values()) 
+  
+  labels = []
+  values = []
+  labels.insert(i, [entries[i] for i in range(0, n) if i%2 == 0]) 
+  values.insert(i,  [entries[i]*100 for i in range(0, n) if i%2 == 1])
+
+  res = ""
+  for i in range (0,int(n/2)):
+    res = res + str(labels[0][i]) + ': ' +  str(round(values[0][i], 2)) + '%<br>'
+
+  h9.set("results", res)
+
+  fig, ax = plt.subplots()
+  ax.bar(labels[0], values[0])
+  return fig
+
+h9.image("image1", image = plot)
+```
