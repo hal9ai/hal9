@@ -1,0 +1,109 @@
+---
+title: "Iris with R"
+eval: false
+---
+
+Simple dashboard example using the iris dataset, `ggplot2`, sliders, checkboxes and dropdowns. Take a look at the live example at <a href="https://hal9.com/hal9/iris-with-r" target="_blank">hal9.com/hal9/iris-with-r</a>
+
+<a href="https://hal9.com/hal9/iris-with-r" target="_blank">
+	![Hal9 Iris with R](hal9-example-iris-r.png)
+</a>
+
+```{r}
+
+library(hal9)
+library(ggplot2)
+
+h9_set("Sepal.Length", "X_val")
+h9_set("Sepal.Width", "Y_val" )
+h9_set("FALSE", "Vi")
+h9_set("FALSE", "Ve")
+h9_set("TRUE", "Se")
+h9_set(10, "X_slider")
+h9_set(10, "Y_slider")
+
+h9_markdown("title", markdown = "Plotting graphs for IRIS dataset")
+
+h9_markdown("xlabel", markdown = "X")
+
+h9_markdown("ylabel", markdown = "Y")
+
+h9_markdown("Species", markdown = "Species to include:")
+
+h9_checkbox("Se", label = "Setosa", checked = TRUE,
+  on_update = function(value) {
+    if (identical(h9_get("Se"), "TRUE"))
+      h9_set("FALSE", "Se")
+    else
+      h9_set("TRUE", "Se")
+  })
+
+h9_checkbox("Ve", label = "Versicolor", checked = NULL,
+  on_update = function(value) {
+    if (identical(h9_get("Ve"), "TRUE"))
+      h9_set("FALSE", "Ve")
+    else
+      h9_set("TRUE", "Ve")
+  })
+
+h9_checkbox("Vi", label = "Virginica", checked = NULL,
+  on_update = function(value) {
+    if (identical(h9_get("Vi"), "TRUE"))
+      h9_set("FALSE", "Vi")
+    else
+      h9_set("TRUE", "Vi")
+  })
+
+h9_dropdown(
+  "X_dropdown",
+  value = "Sepal.Length",
+  values = colnames(iris)[-5],
+  on_update = function(value) { h9_set(value, "X_val") }
+)
+
+h9_dropdown(
+  "Y_dropdown",
+  value = "Sepal.Width",
+  values = colnames(iris)[-5],
+  on_update = function(value) { h9_set(value, "Y_val") }
+)
+
+h9_slider("X_slider", on_update = function(value) {
+  h9_set(value, "X_slider")
+}, value = 10)
+
+h9_slider("Y_slider", on_update = function(value) {
+  h9_set(value, "Y_slider")
+}, value = 10)
+
+h9_image("image", function() {
+  X_val <- h9_get("X_val")
+  Y_val <- h9_get("Y_val")
+  Vi <- h9_get("Vi")
+  Ve <- h9_get("Ve")
+  Se <- h9_get("Se")
+  X_slider <- h9_get("X_slider")
+  Y_slider <- h9_get("Y_slider")
+
+  if (X_val == 'Sepal.Length'){X <- 1}
+  if (X_val == 'Sepal.Width'){X <- 2}
+  if (X_val == 'Petal.Length'){X <- 3}
+  if (X_val == 'Petal.Width'){X <- 4}
+
+  if (Y_val == 'Sepal.Length'){Y <- 1}
+  if (Y_val == 'Sepal.Width'){Y <- 2}
+  if (Y_val == 'Petal.Length'){Y <- 3}
+  if (Y_val == 'Petal.Width'){Y <- 4}
+
+  if (Vi == "FALSE"){iris <- iris[iris$Species != "virginica",]}
+  if (Ve == "FALSE"){iris <- iris[iris$Species != "versicolor",]}
+  if (Se == "FALSE"){iris <- iris[iris$Species != "setosa",]}
+
+  iris2 <- iris[(iris[,X] < X_slider & iris[,Y] < Y_slider),]
+
+  ggplot(data=iris2, aes(x=iris2[,X], y=iris2[,Y])) +
+    geom_point(aes(color = Species, shape = Species)) +
+    xlab(X_val) +  ylab(Y_val) +
+    theme_light()
+})
+```

@@ -20,15 +20,17 @@ website:
       style: "docked"
       search: true
       contents:
-        - section: "Building Apps"
+        - section: "Overview"
           contents:
             - index.qmd
-            - editing.qmd
+            - concepts.qmd
+        - section: "Examples"
+          contents:
+            - examples-iris-r.qmd
         - section: "Advanced"
           contents:
-            - dev.qmd
             - components.qmd
-            - building.qmd
+            - compiling.qmd
             - manifests.qmd
 format:
   html:
