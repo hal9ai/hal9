@@ -12,12 +12,15 @@ export function Dependencies(hal9api) {
 
     let toadd = forward[sid] ?? [];
     let added = {};
+    let result = [];
 
     let maxdeps = 10000;
     while (toadd.length > 0) {
       if (maxdeps-- <= 0) throw('Recursive dependency or too many dependencies');
 
       const el = toadd.shift();
+
+      if (!added[el]) result.push(parseInt(el));
       added[el] = true;
 
       if (forward[el]) {
@@ -25,7 +28,7 @@ export function Dependencies(hal9api) {
       }
     }
 
-    return Object.keys(added).map(function(e) { return parseInt(e) });
+    return result;
   }
 
   this.getForward = async function(pid, sid) {
