@@ -3,13 +3,6 @@ execution_units:
         type: eks
         pulumi_params:
             nodeType: node
-
-
-execution_units:
-    main:
-        type: eks
-        pulumi_params:
-            nodeType: node
             replicas: 1
             nodeConstraints:
                 instanceType: c4.xlarge
