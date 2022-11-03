@@ -315,7 +315,7 @@ const Backend = function(hostopt) {
   }
 
   this.putFile = async function(runtime, path, contents) {
-    if (typeof(serverurls.putFile) == 'function') return await serverurls.putFile(path, contents);
+    if (typeof(serverurls.putfile) == 'function') return await serverurls.putfile(path, contents);
 
     const implementation = runtimeToImplementation(runtime);
     try {

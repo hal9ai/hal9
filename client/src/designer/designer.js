@@ -110,7 +110,6 @@ const Designer = function(hostopt) {
     if (hostopt.runtimes) {
       try {
         for (const runtime of hostopt.runtimes) {
-          debugger;
           const content = await backendinst.getfile(runtime.script);
           const spec = {
             name: runtime.name,
