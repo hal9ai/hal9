@@ -248,7 +248,7 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: b
         .service(web::resource("/eval").route(web::post().to(eval)))
     })
     .disable_signals()
-    .bind(("127.0.0.1", port))
+    .bind(("0.0.0.0", port))
     .unwrap();
     
     let myport = http_server.addrs().pop().unwrap().port();
