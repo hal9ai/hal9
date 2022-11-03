@@ -2,19 +2,22 @@
 
 <body style="margin: 0;">
   <script>
+    const options = JSON.parse('__options__');
+
     const localhost = window.location.search.includes('localhost');
-    const environment = localhost ? 'local' : 'devel';
+    const envdefault = options.environment ? options.environment : 'devel';
+    const environment = localhost ? 'local' : envdefault;
+
     const libraries = {
       local: 'http://localhost:8000/hal9.js',
-      devel: 'https://cdn.jsdelivr.net/npm/hal9@0.3.93/dist/hal9.dev.js',
-    }
+      devel: 'https://cdn.jsdelivr.net/npm/hal9@0.3.97/dist/hal9.dev.js',
+      prod: 'https://cdn.jsdelivr.net/npm/hal9@0.3.97/dist/hal9.dev.js'
+    };
 
     const script = document.createElement('script');
     script.id = 'hal9-script';
     script.src = libraries[environment];
     document.body.appendChild(script);
-
-    const options = JSON.parse('__options__');
 
     script.addEventListener('load', async function () {
       let hostopt = Object.assign(options, {
@@ -26,7 +29,7 @@
           persist: 'pipeline',
           eval: 'eval',
           heartbeat: 'ping',
-          version: '0.2.44',
+          version: '0.2.48',
           getfile: async function(path) {
             const resp = await fetch('/getfile?filepath=' + path);
             const contents = await resp.text();
