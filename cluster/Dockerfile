@@ -1,4 +1,4 @@
-FROM hal9ai/hal9-worker:0.2.0 as base
+FROM hal9ai/hal9-worker:0.2.16 as base
 
 ENV PORT 3000
 
