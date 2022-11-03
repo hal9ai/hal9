@@ -282,7 +282,7 @@ const Backend = function(hostopt) {
     await ensureServerUrls();
     if (!serverurls.pipeline) return undefined;
 
-    const resp = await fetch(serverurls.pipeline + backendquery);
+    const resp = await fetch(serverurls.pipeline);
     if (!resp.ok) {
       console.error('Failed to retrieve pipeline: ' + (await resp.text()));
     }
@@ -293,8 +293,9 @@ const Backend = function(hostopt) {
   this.getfile = async function(path) {
     await ensureServerUrls();
     if (!serverurls.getfile) return undefined;
+    if (typeof(serverurls.getfile) == 'function') return await serverurls.getfile(path);
 
-    const resp = await fetch(serverurls.getfile + backendquery, {
+    const resp = await fetch(serverurls.getfile, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -304,6 +305,7 @@ const Backend = function(hostopt) {
         path: path
       })
     });
+
     if (!resp.ok) {
       console.error('Failed to retrive file: ' + (await resp.text()));
       return;
@@ -313,6 +315,8 @@ const Backend = function(hostopt) {
   }
 
   this.putFile = async function(runtime, path, contents) {
+    if (typeof(serverurls.putFile) == 'function') return await serverurls.putFile(path, contents);
+
     const implementation = runtimeToImplementation(runtime);
     try {
       return await implementations[implementation].putFile(runtime, path, contents);

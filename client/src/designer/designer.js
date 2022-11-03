@@ -110,12 +110,20 @@ const Designer = function(hostopt) {
     if (hostopt.runtimes) {
       try {
         for (const runtime of hostopt.runtimes) {
-          await backendinst.addRuntime({
+          debugger;
+          const content = await backendinst.getfile(runtime.script);
+          const spec = {
             name: runtime.name,
             implementation: runtime.implementation ?? 'server',
             platform: runtime.platform,
-            script: runtime.script
-          });
+            script: runtime.script,
+            files: {},
+          };
+
+          spec.files[runtime.script] = content;
+
+          await backendinst.addRuntime(spec);
+          await hal9api.pipelines.addRuntimeSpec(pid, spec);
         }
       }
       catch(e) {

@@ -27,6 +27,13 @@
           eval: 'eval',
           heartbeat: 'ping',
           version: '0.2.44',
+          getfile: async function(path) {
+            const resp = await fetch('/getfile?filepath=' + path);
+            const contents = await resp.text();
+            if (!resp.ok) throw('Failed to retrive file: ' + contents);
+            return contents;
+          },
+          putfile: '/putfile',
         },
         runtimes: options.runtimes.map(e => Object.assign(e, { implementation: 'server' }))
       });
