@@ -8,4 +8,4 @@ WORKDIR "/hal9/worker"
 
 RUN ./hal9 --platform python new app1
 
-CMD [ "./hal9", "--nobrowse", "--port", "3000", "start", "app1" ]
+CMD [ "./hal9", "--nobrowse", "--port", "3000", "--timeout", "0", "start", "app1" ]
