@@ -165,17 +165,14 @@ async fn get_file(file_spec: web::Query<FileSpec>, data: web::Data<AppState>) ->
     Ok(NamedFile::open(full_file_path)?)
 }
 
-async fn save_file(mut payload: Multipart, data: web::Data<AppState>) -> Result<HttpResponse, actix_web::Error> {
-    while let Some(mut field) = payload.try_next().await? {
-        let content_disposition = field.content_disposition();
+async fn save_file(mut payload: Multipart, file_spec: web::Query<FileSpec>, data: web::Data<AppState>) -> Result<HttpResponse, actix_web::Error> {
+    if let Some(mut field) = payload.try_next().await? {
 
-        let filename = content_disposition
-            .get_filename()
-            .unwrap();
+        let relative_path_to_file = &file_spec.filepath;
         let app_dir = &data.app_dir;
-        let filepath = format!("{app_dir}/{filename}");
+        let path_to_file = format!("{app_dir}/{relative_path_to_file}");
 
-        let mut f = web::block(|| std::fs::File::create(filepath)).await??;
+        let mut f = web::block(|| std::fs::File::create(path_to_file)).await??;
 
         while let Some(chunk) = field.try_next().await? {
             f = web::block(move || f.write_all(&chunk).map(|_| f)).await??;
