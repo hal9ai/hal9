@@ -1,4 +1,3 @@
-import express from 'express';
 import fetch from 'node-fetch';
 
 import * as hal9 from 'hal9';
@@ -9,6 +8,9 @@ import { log } from './logger';
 import { port } from './port';
 
 import { operations } from './operations/operations';
+
+// require required for klotho deployment
+const express = require('express');
 
 // hal9 gets fetch from globals
 global.fetch = fetch
@@ -93,6 +95,43 @@ app.get('/execute/:operation', async (req, res) => {
   await performOperation(operation, req, res);
 });
 
+app.get("/design", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+app.get("/pipeline", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+app.post("/pipeline", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+app.get("/config", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+app.post("/eval", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+app.get("/ping", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+app.get("/getfile", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+app.put("/putfile", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+/* @klotho::expose {
+ *  target = "public"
+ *  id = "app"
+ * }
+ */
 app.listen(port, () => {
   console.log(`App listening on port ${port}.`);
   register();

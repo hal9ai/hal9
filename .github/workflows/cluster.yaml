@@ -1,0 +1,66 @@
+name: Klotho
+
+on: push
+
+env:
+  AWS_REGION: us-east-2
+  APP_NAME: hal9-cluster
+  KLOTHO_EMAIL: javier@hal9.ai
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: integ_test
+    steps:
+    - name: Input checks
+      run: |
+        function err() { echo "::error title=Missing workflow configuration ::$@" ; touch FAIL ; }
+        [[ "$AWS_REGION" != '<region>' ]] || err 'Please set your region in the workflows tab.'
+        [[ "$APP_NAME" != '<app name>' ]] || err 'Please set your app name in the workflows tab.'
+        [[ "$KLOTHO_EMAIL" != '<email>' ]] || err 'Please set your email in the workflows tab.'
+        [[ -n "${{ secrets.AWS_ACCESS_KEY_ID_CLUSTER }}" ]] || err 'Please add an AWS_ACCESS_KEY_ID_CLUSTER secret to your repository.'
+        [[ -n "${{ secrets.AWS_SECRET_ACCESS_KEY_CLUSTER }}" ]] || err 'Please add an AWS_SECRET_ACCESS_KEY_CLUSTER secret to your repository.'
+        [[ -n "${{ secrets.PULUMI_ACCESS_TOKEN }}" ]] || err 'Please add an PULUMI_ACCESS_TOKEN secret to your repository.'
+        if [[ -f FAIL ]] ; then exit 1 ; fi
+    - uses: actions/checkout@v3
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+    - name: Build
+      run: |
+        npm install
+      working-directory: ./worker
+    - name: Install Klotho 
+      run: |
+        curl -fsSL http://srv.klo.dev/update/latest/linux/amd64 -o "$RUNNER_TEMP/klotho"
+        chmod +x "$RUNNER_TEMP/klotho"
+        "$RUNNER_TEMP/klotho" --login "$KLOTHO_EMAIL"
+      working-directory: ./worker
+    - name: Klotho compile
+      run: |
+        "$RUNNER_TEMP/klotho" . --app "$APP_NAME" --config ../cluster/klotho.yaml
+      working-directory: ./worker
+    - name: copy Dockerfile
+      run: |
+        cp ../cluster/Dockerfile ./compiled/main/Dockerfile
+        cat ./compiled/main/Dockerfile
+      working-directory: ./worker
+    - name: Install compiled dependencies
+      run: npm install
+      working-directory: ./worker/compiled
+    - name: Pulumi deploy
+      run: |
+        pulumi -C compiled -s "$APP_NAME" stack select --create
+        pulumi -C compiled -s "$APP_NAME" config set aws:region "${AWS_REGION}" 
+        pulumi -C compiled -s "$APP_NAME" refresh --yes
+        pulumi -C compiled -s "$APP_NAME" up --yes
+        pulumi_out="$(pulumi -C compiled -s "$APP_NAME" stack output --json)"
+        for key in $(echo "$pulumi_out" | jq -r '. | keys[]') ; do
+          echo "$pulumi_out" | jq -r '.[$key]' --arg key "$key" | sed "s/^/::notice title=$key::/"
+        done
+      working-directory: ./worker
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_CLUSTER }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_CLUSTER }}
+        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+        PULUMI_CONFIG_PASSPHRASE: ""
