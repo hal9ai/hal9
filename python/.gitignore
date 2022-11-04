@@ -16,8 +16,6 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
-# pkgdown site
-docs/
 
 # translation temp files
 po/*~
@@ -46,7 +44,7 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Sphinx documentation
-docs/_build/
+sphinx/build/
 
 .python-version
 
