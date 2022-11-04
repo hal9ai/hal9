@@ -23,6 +23,7 @@ use json::object;
 use serde::Deserialize;
 use actix_multipart::Multipart;
 use futures_util::TryStreamExt;
+use actix_web::http::header::ContentType;
 
 struct AppState {
     config: Config,
@@ -52,11 +53,15 @@ fn options_for_client(data: web::Data<AppState>, mode: String) -> String {
 }
 
 async fn run(data: web::Data<AppState>) -> impl Responder {
-    HttpResponse::Ok().body(options_for_client(data, "run".to_string()))
+    HttpResponse::Ok()
+        .append_header(ContentType::html())
+        .body(options_for_client(data, "run".to_string()))
 }
 
 async fn design(data: web::Data<AppState>) -> impl Responder {
-    HttpResponse::Ok().body(options_for_client(data, "design".to_string()))
+    HttpResponse::Ok()
+        .append_header(ContentType::html())
+        .body(options_for_client(data, "design".to_string()))
 }
 
 async fn ping(data: web::Data<AppState>) -> impl Responder {
