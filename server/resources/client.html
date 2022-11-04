@@ -31,7 +31,7 @@
           heartbeat: 'ping',
           version: '0.2.48',
           getfile: async function(path) {
-            const resp = await fetch('/getfile?filepath=' + path);
+            const resp = await fetch('getfile?filepath=' + path);
             const contents = await resp.text();
             if (!resp.ok) throw('Failed to retrive file: ' + contents);
             return contents;
@@ -41,7 +41,7 @@
 
             formData.append('data', content);
 
-            const resp = await fetch('/putfile?filepath=' + path, {
+            const resp = await fetch('putfile?filepath=' + path, {
               method: 'PUT',
               body: formData
             });
