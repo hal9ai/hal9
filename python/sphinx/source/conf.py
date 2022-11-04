@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'Hal9'
-copyright = '2022, Anchit Sadana, Kevin Kua, Javier Luraschi'
+copyright = '2022, Anchit Sadana, Kevin Kuo, Javier Luraschi'
 author = 'Anchit Sadana, Kevin Kua, Javier Luraschi'
 release = '0.1.9'
 
