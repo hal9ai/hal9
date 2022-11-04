@@ -8,14 +8,18 @@ def checkbox(uid: str, label: Union[Callable[..., str], str] = None, checked: Un
     ----------
 	uid: str
 		A short string that is a unique identifier. It should match the corresponding component on the front end
+
 	label: Union[Callable[..., str], str]
 		The label to apply to the checkbox
+
 	checked: Union[Callable[..., bool], bool]
 		The default state of the checkbox, checked if true, unchecked otherwise. Optional
+
 	on_update: Callable
 		The function to be run when the value of the checkbox is changed by the user
 	kwargs: Dict
 		A dictionary of optional keyword arguments
+
 	"""
 	kwargs = dict()
 	kwargs["label"] = label
@@ -38,6 +42,7 @@ def dropdown(uid: str, values: Union[Callable[..., list], list] = None, value: U
 		The function to be run when the value of the dropdown is changed by the user
 	kwargs: Dict
 		A dictionary of optional keyword arguments
+
 	"""
 	kwargs = dict()
 	kwargs["values"] = values
@@ -50,16 +55,17 @@ def file(uid: str, caption: Union[Callable[..., str], str] = None, dragDrop: Uni
 
 	Parameters
     ----------
-	uid: str
+	uid : str
 		A short string that is a unique identifier. It should match the corresponding component on the front end
 	caption:Union[Callable[..., str], str]
 		The label to apply to the checkbox
-	dragDrop:  Union[Callable[..., bool], bool]
+	dragDrop :  Union[Callable[..., bool], bool]
 		Whether to allow the user to drag and drop a file to the upload
-	on_update: Callable
+	on_update : Callable
 		The function to be run when the file is updated by the user
-	kwargs: Dict
+	kwargs : Dict
 		A dictionary of optional keyword arguments
+
 	"""
 	kwargs = dict()
 	kwargs["caption"] = caption
@@ -72,14 +78,15 @@ def image(uid: str, image: Union[Callable[..., str], str] = None, on_update: Cal
 
 	Parameters
     ----------
-	uid: str
+	uid : str
 		A short string that is a unique identifier. It should match the corresponding component on the front end
-	image: str
+	image : str
 		Specifies the image for this image
-	on_update: Callable
+	on_update : Callable
 		The function to be run when the file is updated by the user
-	kwargs: Dict
+	kwargs : Dict
 		A dictionary of optional keyword arguments
+
 	"""
 	kwargs = dict()
 	kwargs["image"] = image
@@ -91,20 +98,21 @@ def message(uid: str, message: Union[Callable[..., str], str] = None, title: Uni
 
 	Parameters
     ----------
-	uid: str
+	uid : str
 		A short string that is a unique identifier. It should match the corresponding component on the front end
-	message: Union[Callable[..., str], str]
+	message : Union[Callable[..., str], str]
 		Specifies the image for this image
-	title: Union[Callable[..., str], str]
+	title : Union[Callable[..., str], str]
 		Specifies the title of the message element
-	mType: Union[Callable[..., str], str]
+	mType : Union[Callable[..., str], str]
 		specifies the message type for this message control
-	showIcon: Union[Callable[..., bool], bool]
+	showIcon : Union[Callable[..., bool], bool]
 		specifies whether this message should show an icon or not
-	on_update: Callable
+	on_update : Callable
 		The function to be run when the file is updated by the user
-	kwargs: Dict
+	kwargs : Dict
 		A dictionary of optional keyword arguments
+
 	"""
 	kwargs = dict()
 	kwargs["message"] = message
@@ -119,14 +127,15 @@ def number(uid: str, label: Union[Callable[..., str], str] = None, value: Union[
 
 	Parameters
     ----------
-	uid: str
+	uid : str
 		A short string that is a unique identifier. It should match the corresponding component on the front end
-	value: Union[Callable[..., str], str]
+	value : Union[Callable[..., str], str]
 		The value of this number input component
-	on_update: Callable
+	on_update : Callable
 		The function to be run when the number input is updated
-	kwargs: Dict
+	kwargs : Dict
 		A dictionary of optional keyword arguments
+
 	"""
 	kwargs = dict()
 	kwargs["label"] = label
@@ -135,14 +144,15 @@ def number(uid: str, label: Union[Callable[..., str], str] = None, value: Union[
 	h9.node(uid, **kwargs)
     
 def html(uid: str, rawhtml: Union[Callable[..., str], str] = None, **kwargs) -> None:
-	"""Enables you to show any html on the frontend
+	"""Embed any html on the frontend
 
 	Parameters
     ----------
-	uid: str
+	uid : str
 		A short string that is a unique identifier. It should match the corresponding component on the front end
-	rawhtml: Union[Callable[..., str], str]
+	rawhtml : Union[Callable[..., str], str]
 		The html that should form the inner html of the html compenent
+
 	"""
 	kwargs = dict()
 	kwargs["rawhtml"] = rawhtml
@@ -153,10 +163,11 @@ def markdown(uid: str, markdown: Union[Callable[..., str], str] = None, **kwargs
 
 	Parameters
     ----------
-	uid: str
+	uid : str
 		A short string that is a unique identifier. It should match the corresponding component on the front end
-	markdown: Union[Callable[..., str], str]
+	markdown : Union[Callable[..., str], str]
 		A markdown like string
+
 	"""
 	kwargs = dict()
 	kwargs["markdown"] = markdown
@@ -167,18 +178,19 @@ def slider(uid: str, value: Union[Callable[..., float], float] = None, min: Unio
 	
 	Parameters
     ----------
-	uid: str
-		A short string that is a unique identifier. It should match the corresponding component on the front end
-	value: Union[Callable[..., float], float]
+	uid : str
+		A short string that is a unique identifier. It should match the corresponding component on the front end	
+	value : Union[Callable[..., float], float]
 		The default value for the slider
-	min: Union[Callable[..., float], float]
+	min : Union[Callable[..., float], float]
 		The minimum value for the the slider component
-	max: Union[Callable[..., float], float]
+	max : Union[Callable[..., float], float]
 		The maximum value for the the slider component
-	step: Union[Callable[..., float], float]
+	step : Union[Callable[..., float], float]
 		The step size of the slider component
-	on_update: Callable:
+	on_update : Callable:
 		The function to be run when the slider is updated
+
 	"""
 	kwargs = dict()
 	kwargs["value"] = value
@@ -193,14 +205,15 @@ def textbox(uid: str, label: Union[Callable[..., str], str] = None, value: Union
 
 	Parameters
     ----------
-	uid: str
+	uid : str
 		A short string that is a unique identifier. It should match the corresponding component on the front end
-	label: Union[Callable[..., str], str]
+	label : Union[Callable[..., str], str]
 		A label for this texbox component
-	value: Union[Callable[..., str], str]
+	value : Union[Callable[..., str], str]
 		The default value for the textbox
-	on_update:
+	on_update : Callable
 		The function to be run when the on update
+		
 	"""
 	kwargs = dict()
 	kwargs["label"] = label
@@ -213,10 +226,11 @@ def textarea(uid: str, on_update: Callable = None, **kwargs) -> None:
 
 	Parameters
     ----------
-	uid: str
+	uid : str
 		A short string that is a unique identifier. It should match the corresponding component on the front end
-	on_update:
+	on_update : Callable
 		The function to be run when the on update
+
 	"""
 	kwargs = dict()
 	kwargs["on_update"] = on_update

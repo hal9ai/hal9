@@ -13,6 +13,7 @@ from hal9 import _hal9 as h9
 class _Node:
     """
     The base class which defines the backend execution graph
+
     """
 
     def __init__(self, uid: str = None, funcs: Dict[str, Callable] = None) -> None:
@@ -42,7 +43,20 @@ def node(uid: str, **kwargs) -> None:
     _Node(uid, funcs=kwargs)
 
 
-def get(x: str) -> Any:
+def get(name: str) -> Any:
+    """Get some thing that was stored earlier using the set function
+
+    Parameters
+    ----------
+    name: str
+		The variable to get
+
+    Returns
+    -------
+    x : Any or None
+        Returns the object if object was stored with corresponding name earlier otherwise returns None
+
+    """
     if x in global_data.keys():
         return global_data[x]
     else:
@@ -50,6 +64,17 @@ def get(x: str) -> Any:
 
 
 def set(name: str, value: Any) -> Any:
+    """Get some thing that was stored earlier using the set function
+
+    Parameters
+    ----------
+    name: str
+		The name the object to get be 
+    
+    value: Any
+        The object that should be saved
+
+    """
     global_data[name] = value
     return value
 
@@ -162,6 +187,7 @@ def start(path: str = '.', port: int = 0, timeout: int = 600, nobrowse: bool = F
 		The timeout for each function
 	nobrowse: bool
 		Whether to open the editor in a browser
+
 	"""
     h9.start(path, port, timeout, nobrowse)
 
@@ -172,5 +198,6 @@ def new(path: str = '.'):
     ----------
     path: str
 		Path where to create the app
+
     """
     h9.new(path)
