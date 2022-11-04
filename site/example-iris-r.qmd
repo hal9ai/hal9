@@ -2,106 +2,319 @@
 title: "Plot with R"
 ---
 
-Simple dashboard example using the iris dataset, `ggplot2`, sliders, checkboxes and dropdowns. Take a look at the live example at <a href="https://hal9.com/hal9/iris-with-r" target="_blank">hal9.com/hal9/iris-with-r</a>
+Simple dashboard example using the iris dataset, `ggplot2`, sliders, checkboxes and dropdowns. Take a look at the live example at <a href="https://hal9.com/hal9/tutorial-iris-graphs-with-r" target="_blank">hal9.com/hal9/tutorial-iris-graphs-with-r</a>
 
-<a href="https://hal9.com/hal9/iris-with-r" target="_blank">
-	![Hal9 Iris with R](hal9-example-iris-r.png)
+<a href="https://hal9.com/hal9/tutorial-iris-graphs-with-r" target="_blank">
+	![Hal9 Iris with R](https://user-images.githubusercontent.com/106683564/199883384-4f5eb215-f169-4846-9179-353cf395509d.png)
 </a>
 
-```r
-library(hal9)
-library(ggplot2)
 
-h9_set("Sepal.Length", "X_val")
-h9_set("Sepal.Width", "Y_val" )
-h9_set("FALSE", "Vi")
-h9_set("FALSE", "Ve")
-h9_set("TRUE", "Se")
-h9_set(10, "X_slider")
-h9_set(10, "Y_slider")
+# Tutorial
 
-h9_markdown("title", markdown = "Plotting graphs for IRIS dataset")
+## App idea
 
-h9_markdown("xlabel", markdown = "X")
+We want to create an app that graphs scatterplots using the *Iris* dataset. We want to be able to select which species will be included in the scatterplot, and what percentage of the data will be plotted. We also want to decide which variable will be represented on the X axis and which on the Y axis.
 
-h9_markdown("ylabel", markdown = "Y")
+## Building the app in hal9
 
-h9_markdown("Species", markdown = "Species to include:")
+This is the app that we will build: [Tutorial: Iris graphs in R](https://hal9.com/hal9/tutorial-iris-graphs-with-r) !
 
-h9_checkbox("Se", label = "Setosa", checked = TRUE,
-  on_update = function(value) {
-    if (identical(h9_get("Se"), "TRUE"))
-      h9_set("FALSE", "Se")
-    else
-      h9_set("TRUE", "Se")
-  })
+### Layout
 
-h9_checkbox("Ve", label = "Versicolor", checked = NULL,
-  on_update = function(value) {
-    if (identical(h9_get("Ve"), "TRUE"))
-      h9_set("FALSE", "Ve")
-    else
-      h9_set("TRUE", "Ve")
-  })
+Once we have the idea of the app layout we are going to build and we know which components we will need, all we have to do is drag and drop the components onto the canvas. We can modify its position and size. When we switch to the "*View"* view, we will be able to see how the components are functioning with the default values.
 
-h9_checkbox("Vi", label = "Virginica", checked = NULL,
-  on_update = function(value) {
-    if (identical(h9_get("Vi"), "TRUE"))
-      h9_set("FALSE", "Vi")
-    else
-      h9_set("TRUE", "Vi")
-  })
+![](https://user-images.githubusercontent.com/106683564/199881960-3dd73a37-39ed-4e89-a246-2da234c14375.gif)
 
-h9_dropdown(
-  "X_dropdown",
-  value = "Sepal.Length",
-  values = colnames(iris)[-5],
-  on_update = function(value) { h9_set(value, "X_val") }
+
+### Modifying the components
+
+#### Unique identifiers
+
+All controls must have a unique id, and we must take into account that when we auto generate the code, all controls of the same type will have the same id. This is why one of the first things we will do is change the auto generated components code. For example, let's take a look at the code for the 3 checkboxes, we have:\
+
+```{r, eval = FALSE}
+h9_checkbox("checkbox",
+  on_update = function(value) { h9_set(value, "checkbox") },
+  label = 'Checkbox',
+  checked = FALSE
 )
 
-h9_dropdown(
-  "Y_dropdown",
-  value = "Sepal.Width",
-  values = colnames(iris)[-5],
-  on_update = function(value) { h9_set(value, "Y_val") }
+h9_checkbox("checkbox",
+  on_update = function(value) { h9_set(value, "checkbox") },
+  label = 'Checkbox',
+  checked = FALSE
 )
 
-h9_slider("X_slider", on_update = function(value) {
-  h9_set(value, "X_slider")
-}, value = 10)
-
-h9_slider("Y_slider", on_update = function(value) {
-  h9_set(value, "Y_slider")
-}, value = 10)
-
-h9_image("image", function() {
-  X_val <- h9_get("X_val")
-  Y_val <- h9_get("Y_val")
-  Vi <- h9_get("Vi")
-  Ve <- h9_get("Ve")
-  Se <- h9_get("Se")
-  X_slider <- h9_get("X_slider")
-  Y_slider <- h9_get("Y_slider")
-
-  if (X_val == 'Sepal.Length'){X <- 1}
-  if (X_val == 'Sepal.Width'){X <- 2}
-  if (X_val == 'Petal.Length'){X <- 3}
-  if (X_val == 'Petal.Width'){X <- 4}
-
-  if (Y_val == 'Sepal.Length'){Y <- 1}
-  if (Y_val == 'Sepal.Width'){Y <- 2}
-  if (Y_val == 'Petal.Length'){Y <- 3}
-  if (Y_val == 'Petal.Width'){Y <- 4}
-
-  if (Vi == "FALSE"){iris <- iris[iris$Species != "virginica",]}
-  if (Ve == "FALSE"){iris <- iris[iris$Species != "versicolor",]}
-  if (Se == "FALSE"){iris <- iris[iris$Species != "setosa",]}
-
-  iris2 <- iris[(iris[,X] < X_slider & iris[,Y] < Y_slider),]
-
-  ggplot(data=iris2, aes(x=iris2[,X], y=iris2[,Y])) +
-    geom_point(aes(color = Species, shape = Species)) +
-    xlab(X_val) +  ylab(Y_val) +
-    theme_light()
-})
+h9_checkbox("checkbox",
+  on_update = function(value) { h9_set(value, "checkbox") },
+  label = 'Checkbox',
+  checked = FALSE
+)
 ```
+
+Once we change their id, and give them a more informative label, the code should look like this:
+
+```{r, eval=FALSE}
+h9_checkbox("checkbox1",
+  on_update = function(value) { h9_set(value, "checkbox1") },
+  label = 'Versicolor',
+  checked = TRUE
+)
+
+h9_checkbox("checkbox2",
+  on_update = function(value) { h9_set(value, "checkbox2") },
+  label = 'Virginica',
+  checked = FALSE
+)
+
+h9_checkbox("checkbox3",
+  on_update = function(value) { h9_set(value, "checkbox3") },
+  label = 'Setosa',
+  checked = FALSE
+)
+
+```
+
+Note that we also changed checkbox1's value of the `checked` parameter to `TRUE`. This will cause that when the app initializes, this checkbox will be checked.
+
+We must do the same procedure with the dropdowns and we would have a code similar to this:
+
+```{r, eval = FALSE}
+
+h9_dropdown("dropdown1",
+  on_update = function(value) { h9_set(value, "dropdown1") },
+  values = colnames(iris)[-5],
+  value = colnames(iris)[1]
+)
+
+h9_dropdown("dropdown2",
+  on_update = function(value) { h9_set(value, "dropdown2") },
+  values = colnames(iris)[-5],
+  value = colnames(iris)[2]
+)
+
+```
+
+Note that as possible values of the dropdown we'll take the names of the columns of the *Iris* dataset (except *species*) and as the initial value of the first and second dropdown we will take the name of the first and second columns respectively.
+
+We have only not modified the id of the slider and the image but since these are only one of each type, their identifier is unique. We have thus guaranteed that each of the controls have a unique identifier.
+
+With the slider we intend to select the percentage of data that we want to graph, so we modify its `min`, `max` and `step` values, and we should get something like this:
+
+```{r, eval =FALSE}
+h9_slider("slider",
+  on_update = function(value) { h9_set(value, "slider") },
+  value = 90,
+  min = 0,
+  max = 100,
+  step = 10
+)
+```
+
+#### Initialize values
+
+We must initialize values for each of our components. To do so, we use the `h9_set` function, which has two arguments (the value for initializing the component and the name of the component). Then we will get the following code:
+
+```{r, eval=FALSE}
+h9_set(TRUE, "checkbox1")
+h9_set(FALSE, "checkbox2")
+h9_set(FALSE, "checkbox3")
+h9_set("Sepal.Length", "dropdown1")
+h9_set("Sepal.Width", "dropdown2")
+h9_set(90,"slider")
+
+```
+
+That should go at the beginning of our code, just after importing the libraries.
+
+#### Declaring dependencies
+
+The last important step for our components to work correctly is to declare the dependencies.
+
+In our case, the checkboxes, dropdowns and slider will be independent but the image component will depend on all the previous ones. To declare this dependency we use the properties pane and we must select each component and add its dependencies (in our case just the image component).
+
+Once the dependencies have been declared, we can switch to the "*View"* and we will see that we already have the values of our components updated and although we cannot see it, now the image will be updating every time a component on which it depends is changed.
+
+![](https://user-images.githubusercontent.com/106683564/199882304-270c8b63-30d4-4695-9637-741f0f567090.gif)
+
+
+### Some coding...
+
+#### Helper function to filter the database
+
+To filter our database, we will make a function that uses the values ​​of the checkboxes to include or exclude the species. This function will also use the value of the slider to know what percentage of the data will be shown in the graph (once the percentage is selected, the entries shown will be randomly selected).
+
+To get the values of the components, the function `h9_get` must be used. This function has only one argument, the name of the component from which you want to get the value.
+
+We must take into account that the helper function uses the values ​​of the checkbox and the slider, so it must be after them in the code.
+
+This function is defined as follows:
+
+```{r, eval = FALSE}
+filter_data <- function(){
+  ch1 <- h9_get("checkbox1")
+  ch2 <- h9_get("checkbox2")
+  ch3 <- h9_get("checkbox3")
+  sl <- h9_get("slider")
+
+  sel <- iris
+
+  if (!ch1){sel <- sel[sel$Species != "versicolor",]}
+  if (!ch2){sel <- sel[sel$Species != "virginica",]}
+  if (!ch3){sel <- sel[sel$Species != "setosa",]}
+
+  sel <- sel[sample(c(1:dim(sel)[1]),dim(sel)[1]*sl/100, replace = FALSE ),]
+  return(sel)
+}
+
+```
+
+#### Image component and ggplot2
+
+We must then modify the code of the image to make our graph. We will do this using the helper function previously created and the `ggplot2` library.
+
+The code would be as follows:
+
+```{r, eval = FALSE}
+h9_image("image", function() {
+  sel <- filter_data()
+  X <- h9_get("dropdown1")
+  Y <- h9_get("dropdown2")
+
+  ggplot(data=sel, aes(x=sel[,X], y=sel[,Y])) +
+  geom_point(aes(color = Species, shape = Species)) +
+  xlab(X) +  ylab(Y)
+  }
+)
+```
+
+At this point, our app should look like this:
+
+![](https://user-images.githubusercontent.com/106683564/199882381-f8d53d84-2963-4078-b832-ad65c807c720.gif)
+
+### Last details
+
+We can check that our app already works perfectly, but to finish it, we will add some text to it using the html output component. This will help us to make more understandable the function of each control.
+
+We must remember that all components, just like the previous ones, must have a unique identifier.
+
+![](https://user-images.githubusercontent.com/106683564/199882399-427423de-e1a9-4d86-9b0b-a590f7337acf.gif)
+
+
+***It is done!*** We can now change the values of each components and play with it
+
+![](https://user-images.githubusercontent.com/106683564/199883021-9ac4e5f3-2146-4a2a-b575-2a6bba3faeb9.gif)
+
+
+## Notes:
+
+-   To save the app we should go to *save*, then select a title, a description and an access level.
+
+![](https://user-images.githubusercontent.com/106683564/199882780-e8974811-7ae9-4862-a2f0-f1a7fff2bef2.png)
+
+
+-   The final code
+
+    ```{r, eval=FALSE}
+
+    library(hal9)
+    library(ggplot2)
+
+    h9_set(TRUE, "checkbox1")
+    h9_set(FALSE, "checkbox2")
+    h9_set(FALSE, "checkbox3")
+    h9_set("Sepal.Length", "dropdown1")
+    h9_set("Sepal.Width", "dropdown2")
+    h9_set(90,"slider")
+
+    h9_checkbox("checkbox1",
+      on_update = function(value) { h9_set(value, "checkbox1") },
+      label = 'Versicolor',
+      checked = TRUE
+    )
+
+    h9_checkbox("checkbox2",
+      on_update = function(value) { h9_set(value, "checkbox2") },
+      label = 'Virginica',
+      checked = FALSE
+    )
+
+    h9_checkbox("checkbox3",
+      on_update = function(value) { h9_set(value, "checkbox3") },
+      label = 'Setosa',
+      checked = FALSE
+    )
+
+    h9_dropdown("dropdown1",
+      on_update = function(value) { h9_set(value, "dropdown1") },
+      values = colnames(iris)[-5],
+      value = colnames(iris)[1]
+    )
+
+    h9_dropdown("dropdown2",
+      on_update = function(value) { h9_set(value, "dropdown2") },
+      values = colnames(iris)[-5],
+      value = colnames(iris)[2]
+    )
+
+    h9_slider("slider",
+      on_update = function(value) { h9_set(value, "slider") },
+      value = 90,
+      min = 0,
+      max = 100,
+      step = 10
+    )
+
+    filter_data <- function(){
+      ch1 <- h9_get("checkbox1")
+      ch2 <- h9_get("checkbox2")
+      ch3 <- h9_get("checkbox3")
+      sl <- h9_get("slider")
+
+      sel <- iris
+
+      if (!ch1){sel <- sel[sel$Species != "versicolor",]}
+      if (!ch2){sel <- sel[sel$Species != "virginica",]}
+      if (!ch3){sel <- sel[sel$Species != "setosa",]}
+
+      sel <- sel[sample(c(1:dim(sel)[1]),dim(sel)[1]*sl/100, replace = FALSE ),]
+      return(sel)
+    }
+
+    h9_image("image", function() {
+      sel <- filter_data()
+      X <- h9_get("dropdown1")
+      Y <- h9_get("dropdown2")
+
+      ggplot(data=sel, aes(x=sel[,X], y=sel[,Y])) +
+      geom_point(aes(color = Species, shape = Species)) +
+      xlab(X) +  ylab(Y)
+      }
+    )
+
+    h9_html("html_head",
+      rawhtml = '<font size=8>Iris graphs tutorial</font>'
+    )
+
+    h9_html("html_1",
+      rawhtml = 'Select the species you want to include in the graph:'
+    )
+
+    h9_html("html_2",
+      rawhtml = 'X-axis:'
+    )
+
+    h9_html("html_3",
+      rawhtml = 'Y-axis:'
+    )
+
+    h9_html("html_4",
+      rawhtml = 'Select the percentage of data you want to consider:'
+    )
+
+    ```
+
+-   The complete process
+
+    ![](https://user-images.githubusercontent.com/106683564/199882662-24ed51d9-e450-406b-bcf0-97ed21805d35.gif)
+if)
