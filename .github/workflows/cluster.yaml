@@ -5,8 +5,8 @@ on:
     paths:
       - cluster/**
       - .github/workflows/cluster.yaml
-  branches:
-    - main
+    branches:
+      - main
     
 env:
   AWS_REGION: us-east-2
