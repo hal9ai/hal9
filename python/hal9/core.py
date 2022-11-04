@@ -78,15 +78,8 @@ def set(name: str, value: Any) -> Any:
     global_data[name] = value
     return value
 
-def __convert_type(obj):
-    if "matplotlib.figure.Figure" in str(type(obj)):
-        pic_IObytes = io.BytesIO()
-        obj.savefig(pic_IObytes, format='png')
-        pic_IObytes.seek(0)
-        pic_hash = base64.b64encode(pic_IObytes.read())
-        pic_str = pic_hash.decode('ascii')
-        return "data:image/png;base64," + pic_str
-    elif "<class 'str'>" in str(type(obj)):
+def __convert_type_request(obj):
+    if "<class 'str'>" in str(type(obj)):
         if re.match(r'^data:[a-z]+/[a-z]+;base64', obj) != None:
             contents = re.sub(r'^data:[a-z]+/[a-z]+;base64,', '', obj)
             decoded = base64.b64decode(contents)
@@ -96,6 +89,17 @@ def __convert_type(obj):
             return temp.name
         else:
             return obj
+    else:
+        return obj
+
+def __convert_type_reply(obj):
+    if "matplotlib.figure.Figure" in str(type(obj)):
+        pic_IObytes = io.BytesIO()
+        obj.savefig(pic_IObytes, format='png')
+        pic_IObytes.seek(0)
+        pic_hash = base64.b64encode(pic_IObytes.read())
+        pic_str = pic_hash.decode('ascii')
+        return "data:image/png;base64," + pic_str
     else:
         return obj
 
@@ -110,10 +114,10 @@ def __process_request(calls: list) -> dict:
                 if node.has_fn(call['fn_name']):
                     kwargs = dict()
                     for arg in call['args']:
-                        kwargs[arg['name']] = __convert_type(arg['value'])
+                        kwargs[arg['name']] = __convert_type_request(arg['value'])
                     result = node.evaluate(call['fn_name'], **kwargs)
 
-            result = __convert_type(result)
+            result = __convert_type_reply(result)
 
             call_response.append(
                 {'node': call['node'], 'fn_name': call['fn_name'], 'result': result})
