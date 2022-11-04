@@ -5,12 +5,27 @@ COPY ./ /hal9
 RUN apt install -y libssl-doc
 RUN apt install python-is-python3
 
-WORKDIR "/hal9"
-RUN cargo build --manifest-path=server/Cargo.toml
-RUN R CMD INSTALL r
 
 WORKDIR "/hal9/server"
+COPY server/dummy.rs .
+COPY server/Cargo.toml .
+RUN sed -i 's#src/main.rs#dummy.rs#' Cargo.toml
 RUN cargo build
+
+
+WORKDIR "/hal9/r"
+RUN R CMD INSTALL .
+
+WORKDIR "/hal9/python"
+RUN maturin build -m Cargo.toml -F pyo3 -b pyo3
+
+WORKDIR "/hal9/server"
+RUN sed -i 's#dummy.rs#src/main.rs#' Cargo.toml
+COPY . .
+RUN cargo build
+
+WORKDIR "/hal9/r"
+RUN R CMD INSTALL .
 
 WORKDIR "/hal9/python"
 RUN maturin build -m Cargo.toml -F pyo3 -b pyo3
