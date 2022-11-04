@@ -28,7 +28,7 @@ jobs:
         with:
           file: worker/Dockerfile
           push: true
-          tags: hal9ai/hal9-worker:latest,hal9ai/hal9-worker:0.2.16
+          tags: hal9ai/hal9-worker:latest,hal9ai/hal9-worker:0.2.17
           cache-from: type=registry,ref=user/app:latest
           cache-to: type=inline
   build:
