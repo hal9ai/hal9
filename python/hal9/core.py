@@ -57,7 +57,7 @@ def get(name: str) -> Any:
         Returns the object if object was stored with corresponding name earlier otherwise returns None
 
     """
-    if x in global_data.keys():
+    if name in global_data.keys():
         return global_data[x]
     else:
         return None
