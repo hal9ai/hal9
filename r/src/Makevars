@@ -1,5 +1,5 @@
-TARGET_DIR = ./rust/target
-LIBDIR = $(TARGET_DIR)/release
+TARGET_DIR = ./rust/target/r
+LIBDIR = $(TARGET_DIR)/debug
 STATLIB = $(LIBDIR)/libhal9.a
 
 ifneq (,$(findstring Linux,$(shell uname -s)))
@@ -17,10 +17,10 @@ $(STATLIB):
 	# to set it here to ensure cargo can be invoked. It is appended to PATH and
 	# therefore is only used if cargo is absent from the user's PATH.
 	export PATH="$(PATH):$(HOME)/.cargo/bin" && \
-		cargo rustc -F extendr --lib --crate-type staticlib --release --manifest-path=./rust/Cargo.toml --target-dir $(TARGET_DIR)
+		cargo rustc -F extendr --lib --crate-type staticlib --manifest-path=./rust/Cargo.toml --target-dir $(TARGET_DIR)
 
 C_clean:
 	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS)
 
 clean:
-	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS) rust/target
+	rm -Rf $(SHLIB) $(STATLIB) $(OBJECTS) rust/target/r
