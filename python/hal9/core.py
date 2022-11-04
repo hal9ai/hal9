@@ -58,7 +58,7 @@ def get(name: str) -> Any:
 
     """
     if name in global_data.keys():
-        return global_data[x]
+        return global_data[name]
     else:
         return None
 
