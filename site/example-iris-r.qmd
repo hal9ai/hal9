@@ -4,9 +4,9 @@ title: "Plot with R"
 
 Simple dashboard example using the iris dataset, `ggplot2`, sliders, checkboxes and dropdowns. Take a look at the live example at <a href="https://hal9.com/hal9/tutorial-iris-graphs-with-r" target="_blank">hal9.com/hal9/tutorial-iris-graphs-with-r</a>
 
-<a href="https://hal9.com/hal9/tutorial-iris-graphs-with-r" target="_blank">
-	![Hal9 Iris with R](https://user-images.githubusercontent.com/106683564/199883384-4f5eb215-f169-4846-9179-353cf395509d.png)
-</a>
+<center><a href="https://hal9.com/hal9/tutorial-iris-graphs-with-r" target="_blank">
+  <img src="hal9-example-iris-r.png" style="max-width: 90%"/>
+</a></center>
 
 
 # Tutorial
@@ -23,7 +23,7 @@ This is the app that we will build: [Tutorial: Iris graphs in R](https://hal9.co
 
 Once we have the idea of the app layout we are going to build and we know which components we will need, all we have to do is drag and drop the components onto the canvas. We can modify its position and size. When we switch to the "*View"* view, we will be able to see how the components are functioning with the default values.
 
-![](https://user-images.githubusercontent.com/106683564/199881960-3dd73a37-39ed-4e89-a246-2da234c14375.gif)
+<center><img src="example-iris-r/layout.gif" style="max-width: 70%"/></center>
 
 
 ### Modifying the components
@@ -135,8 +135,7 @@ In our case, the checkboxes, dropdowns and slider will be independent but the im
 
 Once the dependencies have been declared, we can switch to the "*View"* and we will see that we already have the values of our components updated and although we cannot see it, now the image will be updating every time a component on which it depends is changed.
 
-![](https://user-images.githubusercontent.com/106683564/199882304-270c8b63-30d4-4695-9637-741f0f567090.gif)
-
+<center><img src="example-iris-r/dependencies.gif" style="max-width: 70%"/></center>
 
 ### Some coding...
 
@@ -190,7 +189,7 @@ h9_image("image", function() {
 
 At this point, our app should look like this:
 
-![](https://user-images.githubusercontent.com/106683564/199882381-f8d53d84-2963-4078-b832-ad65c807c720.gif)
+<center><img src="example-iris-r/result.gif" style="max-width: 70%"/></center>
 
 ### Last details
 
@@ -198,19 +197,18 @@ We can check that our app already works perfectly, but to finish it, we will add
 
 We must remember that all components, just like the previous ones, must have a unique identifier.
 
-![](https://user-images.githubusercontent.com/106683564/199882399-427423de-e1a9-4d86-9b0b-a590f7337acf.gif)
-
+<center><img src="example-iris-r/identifier.gif" style="max-width: 70%"/></center>
 
 ***It is done!*** We can now change the values of each components and play with it
 
-![](https://user-images.githubusercontent.com/106683564/199883021-9ac4e5f3-2146-4a2a-b575-2a6bba3faeb9.gif)
+<center><img src="example-iris-r/completed.gif" style="max-width: 70%"/></center>
 
 
 ## Notes:
 
 -   To save the app we should go to *save*, then select a title, a description and an access level.
 
-![](https://user-images.githubusercontent.com/106683564/199882780-e8974811-7ae9-4862-a2f0-f1a7fff2bef2.png)
+<center><img src="example-iris-r/save.png" style="max-width: 70%"/></center>
 
 
 -   The final code
@@ -316,5 +314,4 @@ We must remember that all components, just like the previous ones, must have a u
 
 -   The complete process
 
-    ![](https://user-images.githubusercontent.com/106683564/199882662-24ed51d9-e450-406b-bcf0-97ed21805d35.gif)
-if)
+    <center><img src="example-iris-r/allprocess.gif" style="max-width: 70%"/></center>
