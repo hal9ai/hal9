@@ -95,6 +95,38 @@ app.get('/execute/:operation', async (req, res) => {
   await performOperation(operation, req, res);
 });
 
+app.get("/design", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+app.get("/pipeline", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+app.post("/pipeline", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+app.get("/config", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+app.post("/eval", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+app.get("/ping", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+app.get("/getfile", (req, res) => {
+  res.send({}); // for klotho use
+});
+
+app.put("/putfile", (req, res) => {
+  res.send({}); // for klotho use
+});
+
 /* @klotho::expose {
  *  target = "public"
  *  id = "app"
