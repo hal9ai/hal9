@@ -99,7 +99,7 @@ To obtain the results of the sentiment analysis we will create a function that u
 
 To get the values of the components, the function `h9_get` must be used. This function has only one argument, the name of the component from which you want to get the value.
 
-We must take into account that the helper function uses the values ​​of the textbox and the dropdown, so it must be after them in the code. Also, the image component and info panel need this function, so they should come after we define it.
+We must take into account that the helper function uses the values of the textbox and the dropdown, so it must be after them in the code. Also, the image component and info panel need this function, so they should come after we define it.
 
 We defined this function as follows:
 
@@ -153,7 +153,7 @@ At this point, our app already works perfectly and should look like this:
 
 ### Last details
 
-To finish our app we will add some text to it using the html output component. This will help us to make more understandable the functioning of it. We will also restructure our app.
+To finish our app we will add some text to it using the html output component. This will help us to make it more understandable. We will also restructure our app.
 
 We must remember that all components, just like the previous ones, must have a unique identifier.
 
