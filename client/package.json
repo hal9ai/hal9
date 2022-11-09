@@ -1,6 +1,6 @@
 {
   "name": "hal9",
-  "version": "0.3.99",
+  "version": "0.3.100",
   "license": "MIT",
   "description": "Hal9: Design data apps visually, power with code",
   "main": "dist/hal9.js",

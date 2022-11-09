@@ -65,7 +65,7 @@ function toDataURL(src, callback){
   });
 }
 
-export const capture = async (output, options = {}) => {
+const captureInt = async (output, options = {}) => {
   output = typeof(output) == 'string' ? document.getElementById('output') : output;
   var html2canvas = await loadScriptObject('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js', 'html2canvas');
   
@@ -94,6 +94,11 @@ export const capture = async (output, options = {}) => {
   copy.style.filter = 'opacity(0)';
   for (let e of copies) {
     for (let img of [...e.querySelectorAll('img')]) {
+      if (options.safe) {
+        img.src = '';
+        continue;
+      }
+
       var image = new Image();
       image.src = await toDataURL(img.src);
 
@@ -103,6 +108,11 @@ export const capture = async (output, options = {}) => {
 
       img.parentElement.insertBefore(image, img);
       img.remove();
+    }
+    if (options.safe) {
+      if (e.nodeName.toLowerCase() == 'iframe') {
+        continue;
+      }
     }
     copy.appendChild(e);
   }
@@ -126,5 +136,23 @@ export const capture = async (output, options = {}) => {
   }
   else {
     return await canvasToBlob(canvas)
+  }
+}
+
+export const capture = async (output, options = {}) => {
+  try {
+    return await captureInt(output, options);
+  }
+  catch(e) {
+    console.log('Failed to gnerate image, trying safe mode: ' + e);
+    try {
+      return await captureInt(output, Object.assign(options, {
+        safe: true
+      }));
+    }
+    catch(e) {
+      console.log('Failed to gnerate image in safe mode: ' + e);
+      return '';
+    }
   }
 }
