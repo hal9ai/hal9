@@ -4,60 +4,228 @@ title: "Model with Python"
 
 A sentiment model from Hugging Face to showcase text input, info panel and a plot. Take a look at the live example at <a href="https://hal9.com/hal9/model-with-python" target="_blank">hal9.com/hal9/model-with-python</a>
 
-<a href="https://hal9.com/hal9/model-with-python" target="_blank">
+<center><a href="https://hal9.com/hal9/model-with-python" target="_blank">
 	<img src="hal9-example-model-python.png" style="max-width: 700px"/>
-</a>
+</a></center>
 
-```python
+# Tutorial
+
+## App idea
+
+We want to create an app that performs a sentiment analysis of a specific text. In this app we will need a textbox to write the text in, a dropdown to be able to select between the two different models that we want to use to perform the sentiment analysis, and finally an info panel and an image component to show our results. We will use two pretrained models from Hugging Face.
+
+## Building the app in hal9
+
+This is the app that we will build: [Tutorial: Sentiment analysis with Python](https://hal9.com/hal9/tutorial-sentiment-analysis-with-python) !
+
+### Layout
+
+Once we have the idea of the app layout we are going to build and we know which components we will need, all we have to do is drag and drop the components onto the canvas. We can modify its position and size. When we switch to the "*View"* view, we will be able to see how the components are functioning with the default values.
+
+<center><img src="example-model-python/model_1.gif" style="max-width: 70%"/></center>
+
+
+### Modifying the components
+
+#### Unique identifiers and first changes to components
+
+All controls must have a unique id, and we must take into account that when we auto generate the code, all controls of the same type will have the same id. In this case, since we don't have two components of the same type, we don't have to change their id, however, if we want we can do it. In case we want to change the component's name we just have to keep in mind that we must change the name in the component parameters and in our code.
+
+Our initial code looks like this:
+
+```{r eval=FALSE}
+
 import hal9 as h9
-from transformers import pipeline
-import matplotlib.pyplot as plt
 
-text_default = "The only good thing of the day was that I spend more time with my dog"
+h9.textbox("textbox", on_update=lambda value: h9.set("textbox", value), label=lambda: 'Label', value=lambda: '')
+
+h9.dropdown("dropdown", on_update=lambda value: h9.set("dropdown", value), values=lambda: ['World','Universe'], value=lambda: 'World')
+
+h9.image("image", on_update=lambda value: h9.set("image", value), image=lambda: 'https://pbs.twimg.com/media/FY5L5QxVEAAg_Ou?format=jpg&name=medium')
+
+h9.html("html", rawhtml=lambda: 'Hello World')
+```
+
+When we have verified that indeed all the components have unique identifiers, we can make other small changes adapting our components to the app that we want to build. For example, we should change the label of the textbox for a more informative one and we should also modify the values ​​of the dropdown.
+
+Once we have done this, the code should look like this:
+
+```{r, eval=FALSE}
+
+import hal9 as h9
+
+h9.textbox("textbox", on_update=lambda value: h9.set("textbox", value), label=lambda: 'How was your day?', value=lambda: '')
+
+h9.dropdown("dropdown", on_update=lambda value: h9.set("dropdown", value), values=lambda: ['Select model','BERTweet', 'Distilbert'], value=lambda: 'Select model')
+
+h9.image("image", on_update=lambda value: h9.set("image", value), image=lambda: 'https://pbs.twimg.com/media/FY5L5QxVEAAg_Ou?format=jpg&name=medium')
+
+h9.html("html", rawhtml=lambda: 'Hello World')
+```
+
+#### Initialize values
+
+We must initialize values for each of our components. To do so, we use the `h9_set` function, which has two arguments (the value for initializing the component and the name of the component). Then we will get the following code:
+
+```{r, eval=FALSE}
+
+text_default = "Today was the best day ever"
 h9.set("textbox", text_default)
 h9.set("dropdown", "")
 h9.set("results", "")
 
-h9.textbox("textbox", value=text_default, label="How was your day?", on_update=lambda value: h9.set("textbox", value))
+```
 
-h9.dropdown("dropdown", values=["Select Model", "BERTweet", "Distilbert"], value="Select Model", on_update=lambda value: h9.set("dropdown", value))
+That should go at the beginning of our code, just after importing the libraries.
 
-h9.html("html2", rawhtml=lambda: "Your results are:<br>" + h9.get("results"))
+#### Declaring dependencies
 
-def plot():
+The last important step for our components to work correctly is to declare the dependencies.
+
+In our case, the dropdown and textbox will be independent but the image component and the info panel will depend on the previous ones. To declare this dependency we use the properties pane and we must select each component and add its dependencies.
+
+Once the dependencies have been declared, we can switch to the "*View"* and we will see that we already have the values ​​of our components updated and although we cannot see it, now the image and the info panel will be updating every time a component on which it depends is changed.
+
+<center><img src="example-model-python/model_2.gif" style="max-width: 70%"/></center>
+
+*It is important to mention that these 3 steps do not have a specific order to be done, but they are essential for the proper functioning of the app.*
+
+
+### Some coding...
+
+#### Helper function to get the results and make the plot
+
+To obtain the results of the sentiment analysis we will create a function that uses the value of the dropdown and the textbox and computes, depending on the selected model, the results. This function will return a bar graph that shows the results and will also save a string with the sentiments and their percentages, which we will show later in the info panel.
+
+To get the values of the components, the function `h9_get` must be used. This function has only one argument, the name of the component from which you want to get the value.
+
+We must take into account that the helper function uses the values of the textbox and the dropdown, so it must be after them in the code. Also, the image component and info panel need this function, so they should come after we define it.
+
+We defined this function as follows:
+
+```{r, eval=FALSE}
+
+def results():
   text = h9.get("textbox")
   model = h9.get("dropdown")
 
   if model == "BERTweet":
     classifier = pipeline(model="finiteautomata/bertweet-base-sentiment-analysis", return_all_scores = True)
-    n = 6
     pred = classifier(text)
   elif model == "Distilbert":
     classifier = pipeline("text-classification",model='bhadresh-savani/distilbert-base-uncased-emotion', return_all_scores=True)
-    n = 12
     pred = classifier(text) 
   else:
-    n = 2
     pred = [[{'label': 'Sentiment', 'score': 0}]]
 
-  entries = []
-  for i in range(0,int(n/2)):
-    entries = entries + list(pred[0][i].values()) 
-  
-  labels = []
-  values = []
-  labels.insert(i, [entries[i] for i in range(0, n) if i%2 == 0]) 
-  values.insert(i,  [entries[i]*100 for i in range(0, n) if i%2 == 1])
+  lst = [list(pred[0][i].values()) for i in range(len(pred[0]))]
+  labels = [lst[x][0] for x in range(len(lst))]
+  values = [lst[x][1] for x in range(len(lst))]
 
   res = ""
-  for i in range (0,int(n/2)):
-    res = res + str(labels[0][i]) + ': ' +  str(round(values[0][i], 2)) + '%<br>'
+  for i in range (0,int(len(labels))):
+    res = res + str(labels[i]) + ': ' +  str(round(values[i], 2)) + '%<br>'
 
   h9.set("results", res)
 
   fig, ax = plt.subplots()
-  ax.bar(labels[0], values[0])
+  ax.bar(labels, values)
   return fig
-
-h9.image("image1", image = plot)
 ```
+
+#### Image component and information panel
+
+We must then modify the code of the image to show our graph and the info panel to show the numeric results. We will do this using the helper function previously created and the `matplotlib` library.
+
+The code would be as follows:
+
+```{r, eval = FALSE}
+h9.image("image", image = results)
+
+h9.html("html", rawhtml=lambda: "Your results are:<br>" + h9.get("results"))
+
+```
+
+At this point, our app already works perfectly and should look like this:
+
+<center><img src="example-model-python/model_3.gif" style="max-width: 70%"/></center>
+
+
+### Last details
+
+To finish our app we will add some text to it using the html output component. This will help us to make it more understandable. We will also restructure our app.
+
+We must remember that all components, just like the previous ones, must have a unique identifier.
+
+<center><img src="example-model-python/model_4.gif" style="max-width: 70%"/></center>
+
+***It is done!*** We can now change the values of each components and play with it
+
+<center><img src="example-model-python/model_5.gif" style="max-width: 70%"/></center>
+
+
+## Notes:
+
+-   To save the app we should go to *save*, then select a title, a description and an access level.
+
+<center><img src="example-model-python/save.png" style="max-width: 70%"/></center>
+
+
+-   You should import every library you will use in your code. In our code we use the `matplotlib` and the transformers `libraries`, so we import them at the beginning.
+
+
+-   The final code
+
+    ```{r, eval=FALSE}
+    import hal9 as h9
+    import matplotlib.pyplot as plt
+    from transformers import pipeline
+
+    text_default = "Today was the best day ever"
+    h9.set("textbox", text_default)
+    h9.set("dropdown", "")
+    h9.set("results", "")
+
+    h9.textbox("textbox", on_update=lambda value: h9.set("textbox", value), label=lambda: 'How was your day?', value=lambda: '')
+
+    h9.dropdown("dropdown", on_update=lambda value: h9.set("dropdown", value), values=lambda: ['Select model','BERTweet', 'Distilbert'], value=lambda: 'Select model')
+
+
+    def results():
+      text = h9.get("textbox")
+      model = h9.get("dropdown")
+
+      if model == "BERTweet":
+        classifier = pipeline(model="finiteautomata/bertweet-base-sentiment-analysis", return_all_scores = True)
+        pred = classifier(text)
+      elif model == "Distilbert":
+        classifier = pipeline("text-classification",model='bhadresh-savani/distilbert-base-uncased-emotion', return_all_scores=True)
+        pred = classifier(text) 
+      else:
+        pred = [[{'label': 'Sentiment', 'score': 0}]]
+
+      lst = [list(pred[0][i].values()) for i in range(len(pred[0]))]
+      labels = [lst[x][0] for x in range(len(lst))]
+      values = [lst[x][1] for x in range(len(lst))]
+
+      res = ""
+      for i in range (0,int(len(labels))):
+        res = res + str(labels[i]) + ': ' +  str(round(values[i], 2)) + '%<br>'
+
+      h9.set("results", res)
+
+      fig, ax = plt.subplots()
+      ax.bar(labels, values)
+      return fig
+
+    h9.image("image", image = results)
+
+    h9.html("html", rawhtml=lambda: "Your results are:<br>" + h9.get("results"))
+
+    h9.html("title", rawhtml='<font size=5>Tutorial: Sentiment analysis with Python</font>')
+
+    ```
+
+-   The complete process
+
+<center><img src="example-model-python/model_complete.gif" style="max-width: 70%"/></center>
