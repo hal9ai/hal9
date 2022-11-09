@@ -93,7 +93,7 @@ def __convert_type_request(obj):
         return obj
 
 def __convert_type_reply(obj):
-    if "matplotlib.figure.Figure" in str(type(obj)):
+    if hasattr(obj, 'savefig'):
         pic_IObytes = io.BytesIO()
         obj.savefig(pic_IObytes, format='png')
         pic_IObytes.seek(0)
