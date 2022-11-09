@@ -1,4 +1,6 @@
 
+import buttonctrltxt from '../../scripts/controls/button.html';
+import charttxt from '../../scripts/controls/chart.html';
 import checkboxctrltxt from '../../scripts/controls/checkbox.html';
 import dropdownctrltxt from '../../scripts/controls/dropdown.html';
 import imagectrltxt from '../../scripts/controls/image.html';
@@ -11,12 +13,15 @@ import rawhtmltxt from '../../scripts/controls/rawhtml.js';
 import spreadsheetctrltxt from '../../scripts/controls/spreadsheet.html';
 import textareactrltxt from '../../scripts/controls/textarea.js';
 import textboxctrltxt from '../../scripts/controls/textbox.html';
+import webcamtxt from '../../scripts/controls/webcam.html';
 import websitectrltxt from '../../scripts/controls/website.js';
 
 var fetchedScripts = {};
 
 const scripts = {
   // controls
+  button: { script: buttonctrltxt, language: 'html' },
+  chart: { script: charttxt, language: 'html' },
   checkbox: { script: checkboxctrltxt, language: 'html' },
   dropdown: { script: dropdownctrltxt, language: 'html' },
   fileinput: { script: inputfilectrltxt, language: 'html' },
@@ -29,6 +34,7 @@ const scripts = {
   sheet: { script: spreadsheetctrltxt, language: 'html' },
   textarea: { script: textareactrltxt, language: 'javascript' },
   textbox: { script: textboxctrltxt, language: 'html' },
+  webcam: { script: webcamtxt, language: 'html' },
   website: { script: websitectrltxt, language: 'javascript' },
 }
 

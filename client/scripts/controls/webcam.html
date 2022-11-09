@@ -1,0 +1,49 @@
+<!--
+  input: []
+  params:
+    - name: fps
+      label: FPS
+      type: numeric
+      example: 0
+      description: The Frames per Second to use, zero to rely on click to capture.
+      value:
+        - control: number
+          value: 0
+  output: [ html ]
+  events: [ on_image ]
+  layout:
+    - width: 160px
+      height: 120px
+  state: session
+-->
+
+<div class="webcam">
+  <video autoplay playsinline></video>
+  <canvas></canvas>
+</div>
+
+<script>
+  var webcam = html.getElementsByClassName('webcam')[0];
+
+  const video = webcam.children[0];
+  video.width = html.clientWidth;
+  video.height = html.clientHeight;
+  const canvas = webcam.children[1];
+
+  if (navigator.mediaDevices.getUserMedia) {       
+    navigator.mediaDevices.getUserMedia({video: true})
+    .then(function(stream) {
+      video.srcObject = stream;
+
+      video.addEventListener('click', function() {
+        if (fps == 0) {
+          hal9.triggerEvent('on_image');
+          alert('click')
+        }
+      })
+    })
+    .catch(function(error) {
+      console.error("No Video Camera: " + error);
+    });
+  }
+</script>
