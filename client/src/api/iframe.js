@@ -782,17 +782,17 @@ export const init = async (options, hal9wnd) => {
     }
 
     iframehtml = iframehtml + `\n  ${newOutputDiv} ${ scriptHeader }\n  ${ iframeScript }\n  </body></html> `
-  
-    if (options.contentsrv) {
-      var res = await fetch(options.contentsrv, {
-        method: 'POST',
-        body: JSON.stringify({ content: iframehtml }),
-        headers: { 'Content-Type': 'application/json' }
-      });
+  }
 
-      const contentdata = await res.json();
-      iframesrc = options.contentsrv + '/' + contentdata.id;
-    }
+  if (options.contentsrv) {
+    var res = await fetch(options.contentsrv, {
+      method: 'POST',
+      body: JSON.stringify({ content: iframehtml }),
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    const contentdata = await res.json();
+    iframesrc = options.contentsrv + '/' + contentdata.id;
   }
 
   if (!iframesrc) iframesrc = 'data:text/html;charset=utf-8,' + encodeURIComponent(iframehtml);
