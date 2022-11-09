@@ -1,6 +1,28 @@
 {
   "Controls": [
     {
+      "name": "button",
+      "function": "button",
+      "source": "controls/button.html",
+      "language": "html",
+      "label": "Button",
+      "description": "Embed a button control",
+      "icon": "fa-light fa-play",
+      "dragdrop": true,
+      "build": true
+    },
+    {
+      "name": "chart",
+      "function": "chart",
+      "source": "controls/chart.html",
+      "language": "html",
+      "label": "Chart",
+      "description": "Embed a chart",
+      "icon": "fa-light fa-chart-scatter",
+      "dragdrop": true,
+      "build": true
+    },
+    {
       "name": "checkbox",
       "function": "checkbox",
       "source": "controls/checkbox.html",
@@ -34,6 +56,17 @@
       "build": true
     },
     {
+      "name": "html",
+      "function": "html",
+      "source": "controls/rawhtml.js",
+      "language": "javascript",
+      "label": "HTML",
+      "description": "Enables to render arbitrary HTML",
+      "icon": "fa-brands fa-html5",
+      "dragdrop": true,
+      "build": true
+    },
+    {
       "name": "image",
       "function": "image",
       "source": "controls/image.html",
@@ -41,6 +74,17 @@
       "label": "Image",
       "description": "Embed an image from url or data",
       "icon": "fa-light fa-image",
+      "dragdrop": true,
+      "build": true
+    },
+    {
+      "name": "md",
+      "function": "markdown",
+      "source": "controls/markdown.js",
+      "language": "javascript",
+      "label": "Markdown",
+      "description": "Enables to render arbitrary markdown",
+      "icon": "fa-brands fa-markdown",
       "dragdrop": true,
       "build": true
     },
@@ -67,28 +111,6 @@
       "build": true
     },
     {
-      "name": "html",
-      "function": "html",
-      "source": "controls/rawhtml.js",
-      "language": "javascript",
-      "label": "HTML",
-      "description": "Enables to render arbitrary HTML",
-      "icon": "fa-brands fa-html5",
-      "dragdrop": true,
-      "build": true
-    },
-    {
-      "name": "md",
-      "function": "markdown",
-      "source": "controls/markdown.js",
-      "language": "javascript",
-      "label": "Markdown",
-      "description": "Enables to render arbitrary markdown",
-      "icon": "fa-brands fa-markdown",
-      "dragdrop": true,
-      "build": true
-    },
-    {
       "name": "slider",
       "function": "slider",
       "source": "controls/range.html",
@@ -111,6 +133,17 @@
       "build": false
     },
     {
+      "name": "textarea",
+      "function": "textarea",
+      "source": "controls/textarea.js",
+      "language": "javascript",
+      "label": "Textarea",
+      "description": "Embed a multi-line text input control",
+      "icon": "fa-light fa-paragraph",
+      "dragdrop": true,
+      "build": true
+    },
+    {
       "name": "textbox",
       "function": "textbox",
       "source": "controls/textbox.html",
@@ -122,13 +155,13 @@
       "build": true
     },
     {
-      "name": "textarea",
-      "function": "textarea",
-      "source": "controls/textarea.js",
-      "language": "javascript",
-      "label": "Textarea",
-      "description": "Embed a multi-line text input control",
-      "icon": "fa-light fa-paragraph",
+      "name": "webcam",
+      "function": "webcam",
+      "source": "controls/webcam.html",
+      "language": "html",
+      "label": "Webcam",
+      "description": "Embed a webcam control",
+      "icon": "fa-light fa-camera-web",
       "dragdrop": true,
       "build": true
     },
