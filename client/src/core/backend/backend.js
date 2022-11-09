@@ -181,6 +181,7 @@ const Backend = function(hostopt) {
 
   async function onEvent(step, event, params) {
     manifest[step.id] = manifest[step.id] ?? {};
+    params = params ?? {};
 
     var call = {
       'node': step.name,
