@@ -2,13 +2,13 @@ import clone from '../utils/clone';
 import * as browser from './implementations/browser';
 import * as server from './implementations/server';
 import { Dependencies } from './dependencies';
+import * as pipelines from '../pipelines';
 
 const Backend = function(hostopt) {
   let pid = undefined;
   let pidchanged = undefined;
 
   let dependencies = undefined;
-  let hal9api = undefined;
   let manifest = {};
   
   let defaultRuntime = hostopt.runtime;
@@ -26,11 +26,6 @@ const Backend = function(hostopt) {
   };
 
   let runtimes = {};
-
-  function updateApi(hapi) {
-    hal9api = hapi;
-    dependencies = new Dependencies(hal9api);
-  }
 
   function runtimeToImplementation(runtime) {
     return platformToImplementations[runtimes[runtime].platform.toLowerCase()]
@@ -79,7 +74,7 @@ const Backend = function(hostopt) {
     if (ids.length == 0) return;
     if (Object.keys(runtimes).length == 0) return;
 
-    const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
+    const steps = await pipelines.getStepsWithHeaders(pid);
 
     let runtimeCalls = {};
 
@@ -145,7 +140,7 @@ const Backend = function(hostopt) {
     }
 
     for (let sid of Object.keys(stepManifest)) {
-      await hal9api.pipelines.runStep(pid, sid, {
+      await pipelines.runStep(pid, sid, {
         manifest: stepManifest,
         html: 'hal9-step-' + sid
       });
@@ -153,7 +148,7 @@ const Backend = function(hostopt) {
   }
 
   async function initializeManifest() {
-    const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
+    const steps = await pipelines.getStepsWithHeaders(pid);
     const ids = steps.map(e => e.id);
 
     // const ids = await dependencies.getInitial(pid);
@@ -230,11 +225,7 @@ const Backend = function(hostopt) {
     if (!serverurls && hostopt.serverurls) serverurls = await hostopt.serverurls();
   }
 
-  this.manifest = function() {
-    return manifest;
-  }
-
-  this.events = function() {
+  function events() {
     return {
       /* pipeline events */
       onStart: onStart,
@@ -248,15 +239,6 @@ const Backend = function(hostopt) {
     }
   }
 
-  this.setapi = async function(h9api) {
-    updateApi(h9api);
-  }
-
-  this.setpid = async function(pipelineid) {
-    pid = pipelineid;
-    if (pidchanged) pidchanged(pid);
-  }
-
   this.onpid = function(callback) {
     pidchanged = callback;
   }
@@ -265,30 +247,18 @@ const Backend = function(hostopt) {
     return pid;
   }
 
-  this.connect = async function(h9api) {
-    updateApi(h9api);
-  }
-
-  this.init = async function(pipelineid, h9api) {
+  this.init = async function(pipelineid) {
     pid = pipelineid;
-    if (h9api) updateApi(h9api);
-    await initializeManifest();
-  }
-
-  this.isinit = function() {
-    return !!pid;
-  }
-
-  this.pipeline = async function() {
-    await ensureServerUrls();
-    if (!serverurls.pipeline) return undefined;
-
-    const resp = await fetch(serverurls.pipeline);
-    if (!resp.ok) {
-      console.error('Failed to retrieve pipeline: ' + (await resp.text()));
+    if (pidchanged) {
+      pidchanged(pid);
     }
 
-    return await resp.json();
+    pipelines.setPipelineContext(pid, {
+      events: events(),
+      manifest: manifest,
+    });
+
+    await initializeManifest();
   }
 
   this.getfile = async function(path) {
@@ -346,18 +316,30 @@ const Backend = function(hostopt) {
     await this.onUpdated();
   }
 
+  let terminals = [];
   this.initTerminal = async function(runtime, options) {
     const implementation = runtimeToImplementation(runtime);
     try {
-      if (implementations[implementation].initTerminal)
-        return await implementations[implementation].initTerminal(runtime, options);
-      else
+      if (implementations[implementation].initTerminal) {
+        const tid = terminals.length;
+        terminals[tid] = await implementations[implementation].initTerminal(runtime, options);
+        return tid;
+      } else {
         return null;
+      }
     }
     catch (e) {
       if (hostopt.events && hostopt.events.onError) hostopt.events.onError(e.toString());
       else throw e;
     }
+  }
+
+  this.termRead = async function(tid, ondata) {
+    terminals[tid].read(ondata);
+  }
+
+  this.termWrite = async function(tid, input) {
+    terminals[tid].write(input);
   }
 
   this.attachError = function(error) {
@@ -366,12 +348,60 @@ const Backend = function(hostopt) {
   }
 
   function initialize() {
-    updateApi(window.hal9);
+    dependencies = new Dependencies();
   }
 
   initialize();
 }
 
-export const backend = function(hostopt, hal9api) {
-  return new Backend(hostopt, hal9api);
+let backends = [];
+
+export const backend = function(hostopt) {
+  const bid = backends.length;
+  backends[bid] = new Backend(hostopt);
+  return bid;
+}
+
+export const getpid = function(bid) {
+  return backends[bid].getpid();
+}
+
+export const init = async function(bid, pipelineid) {
+  return await backends[bid].init(pipelineid);
+}
+
+export const getfile = async function(bid, path) {
+  return await backends[bid].getfile(path);
+}
+
+export const putFile = async function(bid, runtime, path, contents) {
+  return await backends[bid].putFile(runtime, path, contents);
+}
+
+export const onUpdated = async function(bid) {
+  return await backends[bid].onUpdated();
+}
+
+export const addRuntime = async function(bid, spec) {
+  return await backends[bid].addRuntime(spec);
+}
+
+export const initTerminal = async function(bid, runtime, options) {
+  return await backends[bid].initTerminal(runtime, options);
+}
+
+export const termRead = async function(bid, tid, ondata) {
+  return await backends[bid].termRead(tid, ondata);
+}
+
+export const termWrite = async function(bid, tid, input) {
+  return await backends[bid].termWrite(tid, input);
+}
+
+export const attachError = function(bid, error) {
+  return backends[bid].attachError(error);
+}
+
+export const onpid = function(bid, callback) {
+  return backends[bid].onpid(callback);
 }

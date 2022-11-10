@@ -12,7 +12,6 @@ import * as stepapi from '../core/api';
 import components from '../../scripts/components.json';
 import clone from '../core/utils/clone';
 import functions from '../core/utils/functions';
-import { backend } from '../core/backend/backend';
 import * as workers from '../core/workers';
 
 var fnCallbacks = [];
@@ -31,11 +30,17 @@ const post = async (config, code, params, options = {}) => {
 
     var onResult = null;
     var waitResponse = new Promise((accept, reject) => {
-      onResult = function(event) {
+      onResult = async function(event) {
         if (!event.data || event.data.secret != secret || event.data.id != postId) return;
 
         if (event.data.callbackid !== undefined) {
-          fnCallbacks[event.data.callbackid](...Object.values(event.data.params));
+          try {
+            const result = await fnCallbacks[event.data.callbackid](...Object.values(event.data.params));
+            iframe.contentWindow.postMessage({ secret: secret, id: postId, callbackid: event.data.callbackid, result: result }, '*');
+          }
+          catch (e) {
+            iframe.contentWindow.postMessage({ secret: secret, id: postId, callbackid: event.data.callbackid, error: e }, '*');
+          }
           return;
         }
 
@@ -103,21 +108,7 @@ function IFrameAPI(options, hal9wnd, config) {
   me.options = options;
   me.hal9wnd = hal9wnd;
   me.config = config;
-  me.backend = backend;
   me.workers = workers;
-
-  function enhanceContext(context) {
-    if (me.options.events) {
-      if (!context.events) context.events = {};
-      for (let event of Object.keys(me.options.events))
-        if (context.events[event] !== me.options.events[event])
-          context.events[event] = me.options.events[event];
-    }
-
-    if (me.options.manifest && !context.manifest) {
-      context.manifest = me.options.manifest
-    }
-  }
 
   me.init = async (options, hal9wnd) => {
     return await post(me.config, "hal9.init(params.options, params.hal9wnd)", {
@@ -149,7 +140,6 @@ function IFrameAPI(options, hal9wnd, config) {
   };
 
   me.run = async (pipeline, context) => {
-    enhanceContext(context);
     return await post(me.config, "hal9.run(params.pipeline, params.context)", {
       pipeline: pipeline,
       context: context,
@@ -159,7 +149,6 @@ function IFrameAPI(options, hal9wnd, config) {
   };
 
   me.runPipeline = async (pipelineid, context) => {
-    enhanceContext(context);
     return await post(me.config, "hal9.runPipeline(params.pipelineid, params.context)", {
       pipelineid: pipelineid,
       context: context,
@@ -240,8 +229,6 @@ function IFrameAPI(options, hal9wnd, config) {
       })
     },
     runStep: async (pipelineid, sid, context, partial) => {
-      if (!context) context = {};
-      enhanceContext(context);
       return await post(me.config, "hal9.pipelines.runStep(params.pipelineid, params.sid, params.context, params.partial)", {
         pipelineid: pipelineid,
         sid: sid,
@@ -252,7 +239,6 @@ function IFrameAPI(options, hal9wnd, config) {
       })
     },
     run: async (pipelineid, context, partial, stepstopid) => {
-      enhanceContext(context);
       return await post(me.config, "hal9.pipelines.run(params.pipelineid, params.context, params.partial, params.stepstopid)", {
         pipelineid: pipelineid,
         context: context,
@@ -602,6 +588,91 @@ function IFrameAPI(options, hal9wnd, config) {
     }
   };
 
+  me.backend = {
+    backend: async (hostopt) => {
+      return await post(me.config, "hal9.backend.backend(params.hostopt)", {
+        hostopt: hostopt
+      }, {
+        longlisten: true
+      })
+    },
+    getpid: async (bid) => {
+      return await post(me.config, "hal9.backend.getpid(params.bid)", {
+        bid: bid
+      })
+    },
+    init: async (bid, pipelineid) => {
+      return await post(me.config, "hal9.backend.init(params.bid, params.pipelineid)", {
+        bid: bid,
+        pipelineid: pipelineid
+      })
+    },
+    getfile: async (bid, path) => {
+      return await post(me.config, "hal9.backend.getfile(params.bid, params.path)", {
+        bid: bid,
+        path: path
+      })
+    },
+    putFile: async (bid, runtime, path, contents) => {
+      return await post(me.config, "hal9.backend.putFile(params.bid, params.runtime, params.path, params.contents)", {
+        bid: bid,
+        runtime: runtime,
+        path: path,
+        contents: contents
+      })
+    },
+    onUpdated: async (bid) => {
+      return await post(me.config, "hal9.backend.onUpdated(params.bid)", {
+        bid: bid
+      })
+    },
+    addRuntime: async (bid, spec) => {
+      return await post(me.config, "hal9.backend.addRuntime(params.bid, params.spec)", {
+        bid: bid,
+        spec: spec
+      })
+    },
+    initTerminal: async (bid, runtime, options) => {
+      return await post(me.config, "hal9.backend.initTerminal(params.bid, params.runtime, params.options)", {
+        bid: bid,
+        runtime: runtime,
+        options: options
+      })
+    },
+    termRead: async (bid, tid, ondata) => {
+      return await post(me.config, "hal9.backend.termRead(params.bid, params.tid, params.ondata)", {
+        bid: bid,
+        tid: tid,
+        ondata: ondata
+      }, {
+        longlisten: true
+      })
+    },
+    termWrite: async (bid, tid, input) => {
+      return await post(me.config, "hal9.backend.termWrite(params.bid, params.tid, params.input)", {
+        bid: bid,
+        tid: tid,
+        input: input
+      }, {
+        longlisten: true
+      })
+    },
+    attachError: async (bid, error) => {
+      return await post(me.config, "hal9.backend.attachError(params.bid, params.error)", {
+        bid: bid,
+        error: error
+      })
+    },
+    onpid: async (bid, callback) => {
+      return await post(me.config, "hal9.backend.onpid(params.bid, params.callback)", {
+        bid: bid,
+        callback: callback
+      }, {
+        longlisten: true
+      })
+    },
+  };
+
   me.stepapi = {
     create: stepapi.create,
   };
@@ -701,15 +772,28 @@ export const init = async (options, hal9wnd) => {
           }
 
           window.addEventListener('message', event => {
-            if (!event.data || event.data.secret != ${secret}) return;
+            if (!event.data || event.data.secret != ${secret} || event.data.callbackid !== undefined) return;
 
             const deserializeFunction = (target) => {
               if (typeof(target) == 'object' && target) {
                 Object.keys(target).forEach(key => {
                   if (typeof(target[key]) === 'string' && target[key].startsWith('___hal9___function___callback___')) {
                     const callbackid = parseInt(target[key].replace('___hal9___function___callback___', ''));
-                    target[key] = function () {
+                    target[key] = async function () {
+                      const rPromise = new Promise((a, r) => {
+                        const waitForResult = function(er) {
+                          if (!er.data || er.data.secret != ${secret} || er.data.id != event.data.id || er.data.callbackid != callbackid) return;
+                          window.removeEventListener('message', waitForResult);
+                          if (er.data.error) {
+                            r(er.data.error);
+                          } else {
+                            a(er.data.result);
+                          }
+                        }
+                        window.addEventListener('message', waitForResult)
+                      });
                       window.parent.postMessage({ secret: ${secret}, id: event.data.id, callbackid: callbackid, params: JSON.parse(JSON.stringify(arguments)) }, '*');
+                      return await rPromise;
                     };
                   }
                   else {

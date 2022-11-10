@@ -1,5 +1,5 @@
 
-
+import { loadScripts } from '../../utils/scriptloader';
 
 const BrowserImplementation = function(hostopt) {
   var nodes = {};
@@ -137,6 +137,7 @@ ${contents}
         node: this.node,
         get: this.get,
         set: this.set,
+        require: loadScripts,
       })
     }
     finally {

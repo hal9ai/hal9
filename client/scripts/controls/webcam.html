@@ -35,10 +35,10 @@
     .then(function(stream) {
       video.srcObject = stream;
 
+      hal9.triggerEvent('on_image', { value: video });
       video.addEventListener('click', function() {
         if (fps == 0) {
-          hal9.triggerEvent('on_image');
-          alert('click')
+          hal9.triggerEvent('on_image', { value: video });
         }
       })
     })
