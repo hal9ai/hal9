@@ -20,6 +20,7 @@ export const getSaveText = (pipelineid /*: pipelineid */, padding /*:: : number 
     'layout',
     'outputs',
     'events',
+    'context',
   ];
 
   for (var key in from) {

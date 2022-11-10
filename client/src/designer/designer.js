@@ -1,6 +1,6 @@
 import { init } from '../api/api'
 import { launchDesigner } from './launcher'
-import { backend } from '../core/backend/backend'
+import * as backend from '../core/backend/backend'
 
 const Designer = function(hostopt) {
   let pid = undefined;
@@ -62,8 +62,6 @@ const Designer = function(hostopt) {
       }
     }
 
-    const backendinst = backend(hostopt);
-
     const options = {
       iframe: true,
       html: app,
@@ -71,22 +69,14 @@ const Designer = function(hostopt) {
       editable: hostopt.mode == 'run',
       mode: hostopt.mode,
       pipeline: pipeline,
-      manifest: backendinst.manifest(),
-      events: Object.assign(
-        {
-          onRequestSave: onRequestSave,
-        },
-        backendinst.events()
-      ),
       env: hostopt.env,
       debug: debug,
     };
 
     hal9api = await init(options, {});
-    backendinst.setapi(hal9api);
-
     pid = await hal9api.load(pipeline);
-    backendinst.setpid(pid);
+
+    const bid = backend.backend(hostopt);
     
     try {
       await hal9api.run(pid, {
@@ -100,7 +90,7 @@ const Designer = function(hostopt) {
     }
 
     try {
-      await backendinst.init(pid);
+      await backend.init(bid, pid);
     }
     catch(e) {
       showInitializationError(e.toString());
@@ -110,7 +100,7 @@ const Designer = function(hostopt) {
     if (hostopt.runtimes) {
       try {
         for (const runtime of hostopt.runtimes) {
-          const content = await backendinst.getfile(runtime.script);
+          const content = await backend.getfile(bid, runtime.script);
           const spec = {
             name: runtime.name,
             implementation: runtime.implementation ?? 'server',
@@ -121,7 +111,7 @@ const Designer = function(hostopt) {
 
           spec.files[runtime.script] = content;
 
-          await backendinst.addRuntime(spec);
+          await backend.addRuntime(bid, spec);
           await hal9api.pipelines.addRuntimeSpec(pid, spec);
         }
       }
@@ -134,7 +124,7 @@ const Designer = function(hostopt) {
     if (hostopt.mode == 'design') {
       await launchDesigner(hal9api, Object.assign({
         version: hostopt.designer.version
-      }, options), pid, backendinst);
+      }, options), pid, bid);
     }
   }
 }

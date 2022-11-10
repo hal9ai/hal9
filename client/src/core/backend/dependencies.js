@@ -1,5 +1,6 @@
+import * as pipelines from '../pipelines';
 
-export function Dependencies(hal9api) {
+export function Dependencies() {
   function getForwardInt(sid, steps, deps) {
     const forward = {};
     for (let dep of Object.keys(deps)) {
@@ -32,8 +33,8 @@ export function Dependencies(hal9api) {
   }
 
   this.getForward = async function(pid, sid) {
-    const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
-    const deps = await hal9api.pipelines.getDependencies(pid);
+    const steps = await pipelines.getStepsWithHeaders(pid);
+    const deps = await pipelines.getDependencies(pid);
 
     return getForwardInt(sid, steps, deps);
   }
@@ -41,8 +42,8 @@ export function Dependencies(hal9api) {
   this.getInitial = async function(pid) {
     debugger;
 
-    const steps = await hal9api.pipelines.getStepsWithHeaders(pid);
-    let deps = await hal9api.pipelines.getDependencies(pid);
+    const steps = await pipelines.getStepsWithHeaders(pid);
+    let deps = await pipelines.getDependencies(pid);
 
     steps.map(step => step.id).forEach(id => {
       if (!deps[id]) deps[id] = [];

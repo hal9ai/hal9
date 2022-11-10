@@ -12,6 +12,7 @@ import * as stepapi from '../core/api';
 import * as dataframe from '../core/utils/dataframe';
 import * as workers from '../core/workers';
 import components from '../../scripts/components.json';
+import { backend } from '../core/backend/backend';
 
 export const internal = {
   remote: {
@@ -144,5 +145,20 @@ export const internal = {
 
   workers: {
     getValidWorkerUrl: workers.getValidWorkerUrl
-  }
+  },
+
+  backend: {
+    backend: backend.backend,
+    getpid: backend.getpid,
+    init: backend.init,
+    getfile: backend.getfile,
+    putFile: backend.putFile,
+    onUpdated: backend.onUpdated,
+    addRuntime: backend.addRuntime,
+    initTerminal: backend.initTerminal,
+    termRead: backend.termRead,
+    termWrite: backend.termWrite,
+    attachError: backend.attachError,
+    onpid: backend.onpid,
+  },
 }

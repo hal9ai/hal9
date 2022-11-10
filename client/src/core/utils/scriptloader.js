@@ -69,6 +69,7 @@ const loadDepsForJS = async function(deps) {
 }
 
 export const loadScripts = async function(deps) {
+  if (typeof(deps) === 'string') deps = [ deps ];
   if (typeof(window) != 'undefined')
     return await loadDepsForBrowser(deps);
   else

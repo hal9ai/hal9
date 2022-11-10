@@ -189,10 +189,27 @@ const stepGetDefinition = (pipeline, step) => {
   return step;
 }
 
+function enhanceContext(pipeline, context) {
+  if (!pipeline.context) return;
+
+  if (pipeline.context.events) {
+    if (!context.events) context.events = {};
+    for (let event of Object.keys(pipeline.context.events))
+      if (context.events[event] !== pipeline.context.events[event])
+        context.events[event] = pipeline.context.events[event];
+  }
+
+  if (pipeline.context.manifest && !context.manifest) {
+    context.manifest = pipeline.context.manifest
+  }
+}
+
 export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, context /* context */, partial) /*: boolean */ => {
   var pipeline = store.get(pipelineid);
 
   if (!context) context = {};
+  enhanceContext(pipeline, context);
+
   if (!partial) partial = preparePartial(pipeline, context, partial, sid);
   if (pipeline.aborted) throw 'Pipeline stopped before finishing'
 
@@ -453,11 +470,13 @@ const skipStep = (pipeline, step) => {
 
 export const run = async (pipelineid /*: pipelineid */, context /* context */, partial, stepstopid /* stepid */) /*: void */ => {
   debugIf('run');
+  var pipeline = store.get(pipelineid);
 
   if (!context) context = {};
+  enhanceContext(pipeline, context);
+
   context.events?.onStart();
 
-  var pipeline = store.get(pipelineid);
   pipeline.aborted = undefined;
 
   await scripts.fetchScripts(pipeline.steps);
@@ -1042,3 +1061,9 @@ export const getPipeline = (pipelineid /*: pipelineid */) /*: object */ => {
 export const addPipeline = (pipeline /*: object */) /*: void */ => {
   return store.add(clone(pipeline));
 }
+
+export const setPipelineContext = (pipelineid /*: pipelineid */, context /*: object */) /*: void */ => {
+  const pipeline = store.get(pipelineid);
+  pipeline.context = context;
+}
+
