@@ -313,6 +313,10 @@ const Backend = function(hostopt) {
     await impl.addRuntime(spec);
     runtimes[spec.name] = spec;
 
+    for (let filePath of Object.keys(spec.files)) {
+      await this.putFile(spec.name, filePath, spec.files[filePath]);
+    }
+
     await this.onUpdated();
   }
 
