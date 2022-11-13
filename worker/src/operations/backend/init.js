@@ -68,8 +68,8 @@ function monitorSpawned(spawned, accept, reject, resolvems) {
 
 function createNewApp(path, platform) {
   return new Promise((accept, reject) => {
-    log.info('/execute/ backend:init running: hal9 new ' + path);
-    const spawned = spawn('./hal9', [ '--platform', platform, 'new', path ], { timeout: 250 });
+    log.info('/execute/ backend:init running: hal9 --platform ' + platform + ' new ' + path);
+    const spawned = spawn('./hal9', [ '--platform', platform, 'new', path ], { timeout: 3000 });
     monitorSpawned(spawned, accept, reject, 0);
   });
 }
