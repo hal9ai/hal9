@@ -76,7 +76,7 @@ const Designer = function(hostopt) {
     hal9api = await init(options, {});
     pid = await hal9api.load(pipeline);
 
-    const bid = backend.backend(hostopt);
+    const bid = await hal9api.backend.backend(hostopt);
     
     try {
       await hal9api.run(pid, {
@@ -90,7 +90,7 @@ const Designer = function(hostopt) {
     }
 
     try {
-      await backend.init(bid, pid);
+      await hal9api.backend.init(bid, pid);
     }
     catch(e) {
       showInitializationError(e.toString());
@@ -100,7 +100,7 @@ const Designer = function(hostopt) {
     if (hostopt.runtimes) {
       try {
         for (const runtime of hostopt.runtimes) {
-          const content = await backend.getfile(bid, runtime.script);
+          const content = await hal9api.backend.getfile(bid, runtime.script);
           const spec = {
             name: runtime.name,
             implementation: runtime.implementation ?? 'server',
@@ -111,7 +111,7 @@ const Designer = function(hostopt) {
 
           spec.files[runtime.script] = content;
 
-          await backend.addRuntime(bid, spec);
+          await hal9api.backend.addRuntime(bid, spec);
           await hal9api.pipelines.addRuntimeSpec(pid, spec);
         }
       }
