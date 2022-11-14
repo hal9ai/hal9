@@ -42,9 +42,23 @@
 
   var app = new Vue({
     el: html.getElementsByClassName('controls')[0],
-    data: {
-      value: textbox,
-      label: label
+    data: function() {
+      const vue = this;
+      hal9.onEvent('param', function(param, value) {
+        switch (param) {
+          case 'value':
+            vue.value = value;
+            break;
+          case 'label':
+            vue.label = value;
+            break;
+          default:
+        }
+      })
+      return {
+        value: textbox,
+        label: label
+      }
     },
     watch: {
       value: function(value, oldvalue) {
