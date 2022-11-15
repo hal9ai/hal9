@@ -63,7 +63,7 @@ const Designer = function(hostopt) {
     }
 
     const options = {
-      iframe: true,
+      iframe: hostopt.mode == 'design',
       html: app,
       api: hostopt.api,
       editable: hostopt.mode == 'run',
