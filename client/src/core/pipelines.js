@@ -688,7 +688,7 @@ export const addStep = async (pipelineid /*: pipelineid */, step /*: step */) /*
 
   const scriptInfo = scripts.scriptFromStep(pipeline, step);
   step.language = scriptInfo.language;
-  step.script = scriptInfo.script;
+  pipeline.scripts[step.id] = scriptInfo.script;
 
   step.header = getStepHeader(pipeline, step);
 

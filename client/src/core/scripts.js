@@ -53,10 +53,6 @@ export const fetchScripts = async (steps /*: steps */) => {
 }
 
 export const scriptFromStep = (pipeline /* pipeline */, step /*: step */) /*: string */ => {
-  if (step.script && step.language) {
-    return { script: step.script, language: step.language };
-  }
-  
   var language = step.language;
   var text = undefined;
 
