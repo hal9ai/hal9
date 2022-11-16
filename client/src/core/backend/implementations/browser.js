@@ -21,7 +21,7 @@ const BrowserImplementation = function(hostopt) {
         throw 'The property "' + name + '" in "' + uid + '" is not a function';
     }
 
-    this.evaluate = function(fn, args) {
+    this.evaluate = async function(fn, args) {
       if (!self.functions[fn]) return undefined;
       if (typeof(self.functions[fn]) !== 'function') return self.functions[fn];
 
@@ -30,7 +30,7 @@ const BrowserImplementation = function(hostopt) {
       for (let arg of args)
         flat.push(arg.value);
       
-      return self.functions[fn].apply(this, flat || []);
+      return await self.functions[fn].apply(this, flat || []);
     }
   }
 
@@ -94,7 +94,7 @@ const BrowserImplementation = function(hostopt) {
           results.push({
             'node': uid,
             'fn_name': functionName,
-            'result': node.evaluate(functionName, args)
+            'result': await node.evaluate(functionName, args)
           });
         }
       }
