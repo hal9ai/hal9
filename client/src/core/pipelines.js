@@ -263,7 +263,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
     if (context.params || context.manifest) {
       context.params = context.params ?? {};
       if (context.manifest && context.manifest[sid]) {
-        context.params = clone(context.manifest[sid])
+        context.params = context.manifest[sid];
       }
 
       var paramIdx = Object.keys(params).length > 0 ? Math.max(...Object.keys(params).map(e => params[e].id ? params[e].id : 0)) : 0;
@@ -279,7 +279,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
 
           params[param] = {
             id: paramIdx++, name: param, label: param, value: [{
-              value: clone(context.params[param])
+              value: context.params[param]
             }]
           };
           delete context.params[param];
