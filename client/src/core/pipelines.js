@@ -35,7 +35,6 @@ type output = { id: number, name: string, label: string };
 type outputs = { [string]: Array<output> };
 type source = { id: number, name: string, label: string };
 type sources = { [id: string]: source };
-type context = { html: Object };
 type pipeline = { params: params, steps: steps, sources: sources, ... };
 type pipelineid = string;
 type metadata = { params: params, deps: Array<string>, environment: string };
@@ -47,6 +46,7 @@ type deps = { [id: string]: Array<string> };
 var pipelinesStateCount = 0;
 var pipelinesState = {};
 var pipelinesCallbacks = {};
+var pipelinesContexts = {};
 
 export const getPipelineState = (pipelineid) => {
   return pipelinesState[pipelineid];
@@ -189,18 +189,19 @@ const stepGetDefinition = (pipeline, step) => {
   return step;
 }
 
-function enhanceContext(pipeline, context) {
-  if (!pipeline.context) return;
+function enhanceContext(pid, context) {
+  if (!pipelinesContexts[pid]) return;
+  const pc = pipelinesContexts[pid];
 
-  if (pipeline.context.events) {
+  if (pc.events) {
     if (!context.events) context.events = {};
-    for (let event of Object.keys(pipeline.context.events))
-      if (context.events[event] !== pipeline.context.events[event])
-        context.events[event] = pipeline.context.events[event];
+    for (let event of Object.keys(pc.events))
+      if (context.events[event] !== pc.events[event])
+        context.events[event] = pc.events[event];
   }
 
-  if (pipeline.context.manifest && !context.manifest) {
-    context.manifest = pipeline.context.manifest
+  if (pc.manifest && !context.manifest) {
+    context.manifest = pc.manifest
   }
 }
 
@@ -208,7 +209,7 @@ export const runStep = async (pipelineid /*: pipeline */, sid /*: number */, con
   var pipeline = store.get(pipelineid);
 
   if (!context) context = {};
-  enhanceContext(pipeline, context);
+  enhanceContext(pipelineid, context);
 
   if (!partial) partial = preparePartial(pipeline, context, partial, sid);
   if (pipeline.aborted) throw 'Pipeline stopped before finishing'
@@ -473,7 +474,7 @@ export const run = async (pipelineid /*: pipelineid */, context /* context */, p
   var pipeline = store.get(pipelineid);
 
   if (!context) context = {};
-  enhanceContext(pipeline, context);
+  enhanceContext(pipelineid, context);
 
   context.events?.onStart();
 
@@ -1064,7 +1065,6 @@ export const addPipeline = (pipeline /*: object */) /*: void */ => {
 }
 
 export const setPipelineContext = (pipelineid /*: pipelineid */, context /*: object */) /*: void */ => {
-  const pipeline = store.get(pipelineid);
-  pipeline.context = context;
+  pipelinesContexts[pipelineid] = context;
 }
 
