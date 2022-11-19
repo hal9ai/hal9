@@ -79,7 +79,7 @@ async function fixScripts() {
 }
 
 hal9.onEvent('param', async function(param, value) {
-  if (!value || param != 'rawhtml') return;
+  if (value === null || param != 'rawhtml') return;
   
   html.innerHTML = value;
   await fixScripts()
