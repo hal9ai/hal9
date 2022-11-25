@@ -25,7 +25,7 @@ jobs:
         working-directory: ./client
       - run: yarn build:npm
         working-directory: ./client
-      - run: npm publish || true
+      - run: npm publish
         working-directory: ./client
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
