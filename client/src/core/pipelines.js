@@ -476,6 +476,9 @@ export const run = async (pipelineid /*: pipelineid */, context /* context */, p
   debugIf('run');
   var pipeline = store.get(pipelineid);
 
+  if (pipeline.type)
+    throw('This API does not support running ' + pipeline.type);
+
   if (!context) context = {};
   enhanceContext(pipelineid, context);
 
@@ -870,6 +873,8 @@ const getCallbacks = (pipelineid /*: pipelineid */, sid /*: number */) /*: Objec
 }
 
 export const load = async (pipeline /*: pipeline */) /*: pipelineid */ => {
+  if (pipeline.type)
+    throw('This API does not support loading ' + pipeline.type);
   
   // validate steps and transfer dataframes
   for (var idx = 0; idx < pipeline.steps.length; idx++) {
