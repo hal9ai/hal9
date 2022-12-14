@@ -12,6 +12,8 @@ import * as store from './pipelinestore.js';
 import * as api from './api.js';
 import * as scripts from './scripts.js';
 import * as layout from './layout.js';
+import * as workers from './workers.js';
+import * as backend from './backend/backend.js';
 
 import * as languages from './interpreters/languages'
 
@@ -494,6 +496,39 @@ export const run = async (pipelineid /*: pipelineid */, context /* context */, p
   const appDiv = context.html;
   if (appDiv.dataset.keepContents !== undefined) {
     context.shadow = false;
+  }
+
+  if (context.applyAppLayout || context.style) {
+    const backendObject = backend.backend({
+      serverurls: async function() {
+        const backendurl = await workers.getValidWorkerUrl();
+        return {
+          init: backendurl + '/execute/backendinit',
+          heartbeat: backendurl + '/execute/backendheartbeat',
+          eval: backendurl + '/execute/backendeval',
+          pipeline: backendurl + '/execute/backendgetpipeline',
+          getfile: backendurl + '/execute/backendgetfile',
+          putfile: backendurl + '/execute/backendputfile',
+          terminit: backendurl + '/execute/terminit',
+          termread: backendurl + '/execute/termread',
+          termwrite: backendurl + '/execute/termwrite',
+        };
+      },
+      events: {
+        onError: function(e) {
+          console.error(e);
+        }
+      }
+    });
+    await backend.init(backendObject, pipelineid);
+    const runtimes = await getRuntimeSpecs(pipelineid);
+    if (runtimes) {
+      for (const spec of runtimes) {
+        if (!['nocode', 'html', 'component'].includes(spec.implementation)) {
+          await backend.addRuntime(backendObject, spec);
+        }
+      }
+    }
   }
 
   partial = preparePartial(pipeline, context, partial, stepstopid);
