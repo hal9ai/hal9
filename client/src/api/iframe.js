@@ -813,7 +813,7 @@ export const init = async (options, hal9wnd) => {
               }
               catch(e) {
                 breakIfDebug()
-                postError(event.data.id, e && e.message ? e.message : e);
+                postError(event.data.id, (e && e.message ? e.message : e) + ': ' + (e ? e.stack : ''));
               }
             })();
           }); 
