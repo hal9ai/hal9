@@ -4,6 +4,7 @@ import * as snippets from './snippets';
 import * as operations from './utils/operations';
 import * as dataframe from './utils/dataframe';
 import clone from './utils/clone';
+import { cloneSafe } from './utils/clone-utils';
 import * as environment from './utils/environment'
 
 import * as executors from './executors/executors';
@@ -582,7 +583,7 @@ export const run = async (pipelineid /*: pipelineid */, context /* context */, p
   }
 
   context.events?.onError(clone(pipeline.error));
-  context.events?.onEnd(clone(pipeline.globals), getStepsWithHeaders(pipelineid));
+  context.events?.onEnd(cloneSafe(pipeline.globals), getStepsWithHeaders(pipelineid));
 
   return pipelineid;
 }
