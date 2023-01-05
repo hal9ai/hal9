@@ -24,18 +24,12 @@ use serde::Deserialize;
 use actix_multipart::Multipart;
 use futures_util::TryStreamExt;
 use actix_web::http::header::ContentType;
-use std::collections::HashMap;
-use uuid::{Uuid};
-use serde::{Serialize};
-use std::sync::Mutex;
-use actix_web::error::ErrorInternalServerError;
 
 struct AppState {
     config: Config,
     app_dir: String,
     client_design_path: String,
     designer_string: String,
-    html_store: Arc<Mutex<HashMap<Uuid, String>>>,
     tx_handler: tokio::sync::mpsc::Sender<RtControllerMsg>, 
     rx_uri_handler: crossbeam_channel::Receiver<Result<Url, std::io::Error>>,
     last_heartbeat: web::Data<AtomicUsize>,
@@ -45,29 +39,29 @@ fn options_for_client(data: web::Data<AppState>, mode: String) -> String {
     let options = object!{
         "mode": mode,
         "runtimes": [
-        {
-            "name": data.config.runtimes[0].name.to_string(),
-            "platform": data.config.runtimes[0].platform.to_string(),
-            "script": data.config.runtimes[0].script.to_string()
-        }
+            {
+                "name": data.config.runtimes[0].name.to_string(),
+                "platform": data.config.runtimes[0].platform.to_string(),
+                "script": data.config.runtimes[0].script.to_string()
+            }
         ]
     };
-    
+
     let jsonopts: String = options.dump();
-    
+
     data.designer_string.replace("__options__", &jsonopts)
 }
 
 async fn run(data: web::Data<AppState>) -> impl Responder {
     HttpResponse::Ok()
-    .append_header(ContentType::html())
-    .body(options_for_client(data, "run".to_string()))
+        .append_header(ContentType::html())
+        .body(options_for_client(data, "run".to_string()))
 }
 
 async fn design(data: web::Data<AppState>) -> impl Responder {
     HttpResponse::Ok()
-    .append_header(ContentType::html())
-    .body(options_for_client(data, "design".to_string()))
+        .append_header(ContentType::html())
+        .body(options_for_client(data, "design".to_string()))
 }
 
 async fn ping(data: web::Data<AppState>) -> impl Responder {
@@ -93,58 +87,58 @@ async fn eval(
 ) -> impl Responder {
     let tx_handler = &data.tx_handler;
     let rx_uri_handler = &data.rx_uri_handler;
-    
+
     let results: Vec<Result<RuntimeResponse, std::io::Error>> = stream::iter(&req.manifests)
-    .then(|m| async move {
+        .then(|m| async move {
         let rt = &m.runtime;
         let manifest = m.calls.clone();
-        
+
         tx_handler.send(RtControllerMsg::GetUri(rt.to_string())).await.ok();
-        
+
         match rx_uri_handler.recv().unwrap() {
             Ok(url) => {
                 let uri = url.join("eval").unwrap();
-                
+
                 let client = reqwest::Client::new();
-                
+
                 let mut res = client
-                .post(uri)
-                .json(&manifest)
-                .send()
-                .await
-                .unwrap()
-                .json::<RuntimeResponse>()
-                .await
-                .unwrap();
-                
+                    .post(uri)
+                    .json(&manifest)
+                    .send()
+                    .await
+                    .unwrap()
+                    .json::<RuntimeResponse>()
+                    .await
+                    .unwrap();
+
                 res.runtime = Some(rt.to_owned());
                 Ok(res)
-                
+
             }
             Err(e) => {
                 Err(e)
             }
         }
-        
+
     })
     .collect()
     .await;
-    
+
     let errors: Vec<String> = results
-    .iter()
-    .filter(|res| res.is_err())
-    .map(|e| e.as_ref().unwrap_err().to_string())
-    .collect();
-    
+        .iter()
+        .filter(|res| res.is_err())
+        .map(|e| e.as_ref().unwrap_err().to_string())
+        .collect();
+
     if !errors.is_empty() {
         HttpResponse::BadRequest().body(errors.join("\\n"))
     } else {
         let res = ManifestResponse {
             responses: results.iter().map(|x| x.as_ref().unwrap().to_owned()).collect()
         };
-        
+
         let response = serde_json::to_string(&res).unwrap();
-        
+
         HttpResponse::Ok().body(response)
     }
 }
@@ -170,66 +164,27 @@ struct FileSpec {
 
 async fn get_file(file_spec: web::Query<FileSpec>, data: web::Data<AppState>) -> Result<NamedFile> {
     let full_file_path = PathBuf::new()
-    .join(&data.app_dir)
-    .join(&file_spec.filepath);
+        .join(&data.app_dir)
+        .join(&file_spec.filepath);
     println!("trying to open file {full_file_path:?}");
     Ok(NamedFile::open(full_file_path)?)
 }
 
 async fn save_file(mut payload: Multipart, file_spec: web::Query<FileSpec>, data: web::Data<AppState>) -> Result<HttpResponse, actix_web::Error> {
     if let Some(mut field) = payload.try_next().await? {
-        
+
         let relative_path_to_file = &file_spec.filepath;
         let app_dir = &data.app_dir;
         let path_to_file = format!("{app_dir}/{relative_path_to_file}");
-        
+
         let mut f = web::block(|| std::fs::File::create(path_to_file)).await??;
-        
+
         while let Some(chunk) = field.try_next().await? {
             f = web::block(move || f.write_all(&chunk).map(|_| f)).await??;
         }
     }
-    
+
     Ok(HttpResponse::Ok().into())
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct Id {
-    id: String,
-}
-
-async fn cache_html(html: String, data: web::Data<AppState>) -> Result<HttpResponse, actix_web::Error> {
-    let id = Uuid::new_v4();
-    let mut html_map= match data.html_store.lock() {
-        Ok(html_map) => html_map,
-        Err(error) => {
-            return Ok(HttpResponse::from_error(ErrorInternalServerError(
-                format!("Failed to get lock on html_map: {}", error),
-            )))
-        }
-    };
-    
-    html_map.insert(id, html);
-    
-    let result = Id { id: id.to_string() };
-    Ok(HttpResponse::Ok().json(result))
-}
-
-async fn get_html_cache(id: web::Query<Id>, data: web::Data<AppState>) -> Result<HttpResponse, actix_web::Error> {
-    let html_map= match data.html_store.lock() {
-        Ok(html_map) => html_map,
-        Err(error) => {
-            return Ok(HttpResponse::from_error(ErrorInternalServerError(
-                format!("Failed to get lock on html_map: {}", error),
-            )))
-        }
-    }; 
-    let uuid = Uuid::parse_str(&id.id.to_string()).ok().unwrap();
-    
-    let html_string = html_map.get(&uuid).unwrap();
-    Ok(
-        HttpResponse::Ok().append_header(ContentType::html()).body(html_string.to_owned())
-    )
 }
 
 #[tokio::main]
@@ -274,9 +229,6 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: b
     let designer_string: String = String::from_utf8_lossy(designer_bytes).to_string();
     
     let tx_handler = tx.clone();
-    
-    let html_store: Arc<Mutex<HashMap<Uuid, String>>> = Arc::new(Mutex::new(HashMap::new()));
-    
     let http_server = HttpServer::new(move || {
         App::new()
         .app_data(web::Data::new(
@@ -285,7 +237,6 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: b
                 app_dir: app_path_data.clone(),
                 client_design_path: conf.client.design.clone(), 
                 designer_string: designer_string.clone(),
-                html_store: html_store.clone(),
                 tx_handler: tx_handler.clone(),
                 rx_uri_handler: rx_uri_handler.clone(),
                 last_heartbeat: last_heartbeat.clone(),
@@ -298,8 +249,6 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: b
         .route("/", web::get().to(run))
         .route("/putfile", web::put().to(save_file))
         .route("/getfile", web::get().to(get_file))
-        .route("/htmlcache", web::post().to(cache_html))
-        .route("/htmlcache", web::get().to(get_html_cache))
         .service(web::resource("/ping").to(ping))
         .service(web::resource("/eval").route(web::post().to(eval)))
     })
@@ -327,7 +276,7 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: b
     if !nobrowse {
         webbrowser::open(&myurl).ok();
     }
-    
+
     match signal::ctrl_c().await {
         Ok(()) => {
             println!("Got ctrl-c, exiting!");
@@ -339,7 +288,7 @@ pub async fn start_server(app_path: String, port: u16, timeout: u32, nobrowse: b
             eprintln!("Unable to listen for shutdown signal: {}", err);
         },
     };
-    
+
     let _ = shutdown_complete_rx.recv().await;
     Ok(())
 }
