@@ -1,6 +1,6 @@
 [package]
 name = "hal9"
-version = "0.1.17"
+version = "0.1.18"
 edition = "2021"
 rust-version = "1.64"
 
@@ -34,6 +34,14 @@ regex = "1"
 pyo3 = { version = "0.17.2", features = ["extension-module", "abi3-py38", "generate-import-lib", "generate-abi3-import-lib"], optional = true}
 json = "0.12.4"
 futures-util = "0.3.25"
+
+[dependencies.uuid]
+version = "1.2.2"
+features = [
+    "v4",                # Lets you generate random UUIDs
+    "fast-rng",          # Use a faster (but still sufficiently random) RNG
+    "macro-diagnostics", # Enable better diagnostics for compile-time UUIDs
+]
 
 [features]
 extendr = ["dep:extendr-api"]
