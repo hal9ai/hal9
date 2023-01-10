@@ -519,7 +519,8 @@ export const run = async (pipelineid /*: pipelineid */, context /* context */, p
         onError: function(e) {
           console.error(e);
         }
-      }
+      },
+      context: context
     });
     await backend.init(backendObject, pipelineid);
     const runtimes = await getRuntimeSpecs(pipelineid);
