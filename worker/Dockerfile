@@ -9,16 +9,16 @@ WORKDIR "/hal9"
 RUN cargo build --manifest-path=server/Cargo.toml
 RUN R CMD INSTALL r
 
-WORKDIR "/hal9/server"
-RUN cargo build
+# WORKDIR "/hal9/server"
+# RUN cargo build
 
-WORKDIR "/hal9/python"
-RUN maturin build -m Cargo.toml -F pyo3 -b pyo3
-RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install /hal9/server/target/wheels/* --force-reinstall -v
+# WORKDIR "/hal9/python"
+# RUN maturin build -m Cargo.toml -F pyo3 -b pyo3
+# RUN python3 -m pip install --upgrade pip
+# RUN python3 -m pip install /hal9/server/target/wheels/* --force-reinstall -v
 
-WORKDIR "/hal9"
-RUN python3 -c "import hal9"
+# WORKDIR "/hal9"
+# RUN python3 -c "import hal9"
 
 WORKDIR "/hal9/worker"
 RUN yarn
