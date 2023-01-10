@@ -142,7 +142,8 @@ const Backend = function(hostopt) {
     for (let sid of Object.keys(stepManifest)) {
       await pipelines.runStep(pid, sid, {
         manifest: stepManifest,
-        html: 'hal9-step-' + sid
+        html: 'hal9-step-' + sid,
+        root: hostopt.context ? hostopt.context.root : undefined,
       });
     }
   }

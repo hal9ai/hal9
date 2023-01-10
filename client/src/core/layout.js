@@ -84,6 +84,7 @@ export const prepareForDocumentView = (pipeline, context, stepstopid) => {
       
     const height = parent.offsetHeight;
     const html = parent.shadowRoot ? parent.shadowRoot : (context.shadow === false ? parent : parent.attachShadow({ mode: 'open' }));
+    context.root = html;
 
     const isFullView = stepstopid === null || stepstopid === undefined;
     const layoutHTML = getForDocumentView(pipeline);

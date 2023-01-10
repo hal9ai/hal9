@@ -5,13 +5,19 @@ import * as interpreter from '../interpreters/interpreter';
 
 import clone from '../utils/clone';
 
-function getHtmlForLocal(html, step) {
-  if (typeof(html) == 'function')
-    return html(step);
-  else if (typeof(html) == 'string')
-    return document.getElementsByClassName(html)[0];
+function getHtmlForLocal(context, step) {
+  if (typeof(context.html) == 'function')
+    return context.html(step);
+  else if (typeof(context.html) == 'string') {
+    if (context.root) {
+      return context.root.querySelectorAll('.' + context.html)[0]
+    }
+    else {
+      return document.getElementsByClassName(context.html)[0];
+    }
+  }
   else
-    return html;
+    return context.html;
 }
 
 export default class LocalExecutor extends Executor {
@@ -19,7 +25,7 @@ export default class LocalExecutor extends Executor {
     var params = localparams.paramsForFunction(this.params, this.inputs, this.deps);
 
     // add html to params
-    params['html'] = getHtmlForLocal(this.context['html'], this.step);
+    params['html'] = getHtmlForLocal(this.context, this.step);
     if (this.deps && this.deps.hal9) this.deps.hal9.setHtml(params['html']);
 
     // retrieve cached hal9 datasets
