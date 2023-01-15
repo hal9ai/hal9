@@ -1,4 +1,4 @@
-FROM hal9ai/hal9-docker:0.0.7 as base
+FROM hal9ai/hal9-docker:0.0.6 as base
 
 COPY ./ /hal9
 
