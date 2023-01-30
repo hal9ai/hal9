@@ -6,7 +6,7 @@ on:
       - cluster/**
       - .github/workflows/cluster.yaml
     branches:
-      - main
+      - beta-cluster
     
 env:
   AWS_REGION: us-east-2
