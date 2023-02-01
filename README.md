@@ -1,4 +1,4 @@
-# Hal9: 
+# Hal9: Data apps powered by code and LLMs
 
 [![Hal9 PyPi Downloads](https://img.shields.io/pypi/dm/hal9?label=PyPI)](https://pypi.org/project/hal9/) [![Hal9 NPM Downloads](https://img.shields.io/npm/dm/hal9.svg?label=NPM)](https://www.npmjs.com/package/hal9)
 
