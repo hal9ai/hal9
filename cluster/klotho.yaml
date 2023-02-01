@@ -1,9 +1,0 @@
-execution_units:
-    main:
-        type: eks
-        pulumi_params:
-            nodeType: node
-            replicas: 1
-            nodeConstraints:
-                instanceType: c4.xlarge
-                diskSize: 100

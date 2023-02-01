@@ -4,8 +4,7 @@ title: "Quickstart"
 
 This guide aims to help you get started with Hal9 in your local development environment as quickly as possible.
 
-You can also head over to the hosted demo at [https://hal9.com/new](https://hal9.com/new) without having to download
-or install things locally.
+You can also head over to the hosted demo at [https://hal9.com/new](https://hal9.com) without having to download or install things locally.
 
 ### Installation
 
@@ -21,23 +20,10 @@ pip install hal9
 
 ## R
 
-Currently, to install the package you need a working Rust toolchain, we recommend grabbing one using [rustup.rs](https://rustup.rs) if you don't have one yet.
-
-In addition, if you're installing the R package on *Windows*, you'll need to have [Rtools](https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html)
-installed.
 
 ```r
 remotes::install_github("hal9ai/hal9", subdir = "r")
 ```
-
-## CLI 
-
-The CLI needs a working Rust toolchain, we recommend grabbing one using [rustup.rs](https://rustup.rs) if you don't have one yet.
-
-```bash
-cargo install --git https://github.com/hal9ai/hal9.git
-```
-:::
 
 ### Starter apps
 
@@ -49,25 +35,19 @@ The recommended way to bootstrap a new app is to use the `new` command:
 
 ```python
 import hal9 as h9
-h9.new("my_app")
+h9.new("asks for your name and prints hello")
 ```
 
 ## R
 
 ```r
 library(hal9)
-h9_new("my_app")
-```
-
-## CLI
-
-```bash
-hal9 new my_app
+h9_new("asks for your name and prints hello")
 ```
 
 :::
 
-This creates a new directory `my_app/` with the minimal ingredients necessary to define a Hal9 app.
+This creates a new directory `my_app/` with the minimal ingredients necessary to run the app.
 
 Now that we have an app, we can launch the server and see it in action:
 
@@ -83,12 +63,6 @@ h9.start("my_app")
 
 ```r
 h9_start("my_app")
-```
-
-## CLI
-
-```bash
-hal9 start my_app
 ```
 
 :::

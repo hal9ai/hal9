@@ -7,8 +7,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = (env, argv) => { 
   const devel = argv.mode === 'development';
   let entries = {
-    'hal9': './src/lib/index.js',
-    'hal9.min': './src/lib/index.js',
+    'hal9': './src/index.js',
+    'hal9.min': './src/index.js',
   }
 
   var rules = [
@@ -52,7 +52,7 @@ module.exports = (env, argv) => {
     });
   } else {
     entries = {
-      'hal9': './src/lib/index.js',
+      'hal9': './src/index.js',
     };
 
     rules.unshift({

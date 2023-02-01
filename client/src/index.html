@@ -10,44 +10,6 @@
       <div id="designer"></div>
     </div>
     <script>
-      async function start() {
-        let h9 = hal9.browser;
-        
-        const code = `h9.node('textarea', {
-          value: 'Hello from JS!',
-          on_update: function(value) {
-            h9.set('message', value);
-          }
-        })
-
-        h9.node('rawhtml', {
-          rawhtml: function() {
-            return '<b>' + h9.get('message') + '</b>';
-          }
-        })`;
-
-        let hostopt = {
-          mode: 'design',
-          designer: {
-            persist: undefined,
-            restore: undefined,
-            eval: undefined // TODO: hal9.browser.process,
-          },
-          hostel: 'output',
-          api: 'http://localhost:8000/hal9.js',
-          env: 'local',
-          debug: true
-        };
-
-        const designer = hal9.designer(hostopt);
-        await designer.init();
-      };
-
-      function checkStart() {
-        if (typeof(hal9) === 'undefined') setTimeout(checkStart, 100);
-        else start();
-      }
-      checkStart();
     </script>
   </body>
 </html>

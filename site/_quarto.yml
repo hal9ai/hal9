@@ -23,16 +23,6 @@ website:
         - section: "Overview"
           contents:
             - index.qmd
-            - concepts.qmd
-        - section: "Examples"
-          contents:
-            - example-model-python.qmd
-            - example-iris-r.qmd
-        - section: "Advanced"
-          contents:
-            - components.qmd
-            - compiling.qmd
-            - manifests.qmd
 format:
   html:
     theme: cosmo

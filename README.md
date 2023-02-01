@@ -1,14 +1,15 @@
-# Hal9: Interactive data apps &mdash; design visually, power with code
+# Hal9: 
+
 [![Hal9 PyPi Downloads](https://img.shields.io/pypi/dm/hal9?label=PyPI)](https://pypi.org/project/hal9/) [![Hal9 NPM Downloads](https://img.shields.io/npm/dm/hal9.svg?label=NPM)](https://www.npmjs.com/package/hal9)
 
-Hal9 is a framework for building *interactive data apps* for data scientists and engineers. It allows you to utilize your DS/ML code with minimal overhead, and frees you from having to worry about frontend web frameworks. Hal9 consists of the following components:
+Hal9 is a framework for building *interactive data apps*. It allows you to utilize your DS/ML code with minimal overhead, and frees you from having to worry about frontend web frameworks. Hal9 consists of the following components:
 
-- **Visual Designer**: A browser WYSIWYG interface to design your app via drag-and-drop, yet fuly customizable with HTML.
-- **Multi-Lingual Server**: Packages in R, Python, JavaScript (and more on the way!) for controlling the behavior of elements in your app.
+- **LLM**: A text interface to design your app using large language models.
+- **Multi-Lingual**: Packages in R, Python (and more on the way!).
 
 ## Getting started
 
-The quickest place to test things out is this hosted demo: [hal9.com/new](https://hal9.com/new). Refer to the Docs at [hal9.com/docs](https://hal9.com/docs/).
+The quickest place to test things out is this hosted demo: [hal9.com/new](https://hal9.com). Refer to the Docs at [hal9.com/docs](https://hal9.com/docs/).
 
 ### Python
 
@@ -18,8 +19,7 @@ pip install hal9
 
 ```python
 import hal9 as h9
-h9.new("my_app")
-h9.start("my_app")
+h9.start("asks for your name and prints hello")
 ```
 
 ### R 
@@ -30,24 +30,8 @@ The development version of the package can be installed via
 remotes::install_github("hal9ai/hal9", subdir = "r")
 
 library(hal9)
-h9_new("my_app")
-h9_start("my_app")
+h9_start("asks for your name and prints hello")
 ```
-
-This requires Rust toolchain, e.g., [rustup.rs](https://rustup.rs).
-
-### CLI
-
-Alternatively, if you prefer working from the terminal, you can clone this repo and run
-
-```
-cargo install --path server
-
-hal9 new my_app
-hal9 start my_app
-```
-
-This requires Rust toolchain, e.g., [rustup.rs](https://rustup.rs).
 
 ## Principles
 
