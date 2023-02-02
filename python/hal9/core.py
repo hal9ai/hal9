@@ -10,6 +10,7 @@ def get_app(prompt :str) -> str:
     prompt : str 
             The prompt that you want the app to achieve.
     """
+
     response = requests.post('https://api.hal9.com/api/generator', json = {
         'prompt': prompt
     })
