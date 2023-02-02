@@ -10,85 +10,12 @@ on:
       - .github/workflows/python.yaml
 
 jobs:
-  macos:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-          architecture: x64
-      - name: Install Rust toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          default: true
-      - name: Build Server
-        run: cargo build
-        working-directory: ./server
-      - name: Build wheels - x86_64
-        uses: messense/maturin-action@v1
-        with:
-          target: x86_64
-          args: --release -m python/Cargo.toml -F pyo3 -b pyo3
-      - name: Install built wheel - x86_64
-        run: |
-          pip3 install hal9 --find-links python/target/wheels --force-reinstall
-          python3 -c "import hal9"
-      - name: Build wheels - universal2
-        uses: messense/maturin-action@v1
-        with:
-          args: --release --universal2 -m python/Cargo.toml -F pyo3 -b pyo3
-      - name: Upload wheels
-        uses: actions/upload-artifact@v2
-        with:
-          name: wheels
-          path: python/target/wheels
-  windows:
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        target: [x64, x86]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-          architecture: ${{ matrix.target }}
-      - name: Install Rust toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          default: true
-      - name: Build Server
-        run: cargo build
-        working-directory: ./server
-      - name: Build wheels
-        uses: messense/maturin-action@v1
-        with:
-          target: ${{ matrix.target }}
-          args: --release -m python/Cargo.toml -F pyo3 -b pyo3
-      - name: Upload wheels
-        uses: actions/upload-artifact@v2
-        with:
-          name: wheels
-          path: python/target/wheels
-  release:
-    name: Release
+  build:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    needs: [ macos, windows ]
     steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/checkout@v2
+      - name: Build and publish to pypi
+        uses: JRubics/poetry-publish@v1.16
         with:
-          name: wheels
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Publish to PyPi
-        env:
-          TWINE_USERNAME: hal9
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: |
-          pip install --upgrade twine
-          twine upload --skip-existing *
+          pypi_token: ${{ secrets.PYPI_TOKEN }}
+          package_directory: "python"

@@ -9,6 +9,7 @@ site/docs
 
 internal/
 
+poetry.lock
 # History files
 .Rhistory
 .Rapp.history
@@ -65,3 +66,13 @@ server/server/target
 server/cli/target
 **/Cargo.lock
 internal/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# PyInstaller
+*.manifest
+*.spec
