@@ -3,6 +3,13 @@ import time
 import tempfile
 import streamlit.web.bootstrap
 def get_app(prompt :str) -> str:
+    """Generate an app using that does what the prompt says
+
+    Parameters
+    ----------
+    prompt : str 
+            The prompt that you want the app to achieve.
+    """
     response = requests.post('https://api.hal9.com/api/generator', json = {
         'prompt': prompt
     })
