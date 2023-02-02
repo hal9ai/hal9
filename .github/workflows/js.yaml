@@ -3,8 +3,8 @@ name: Client
 on:
   push:
     paths:
-      - client/**
-      - .github/workflows/client.yaml
+      - js/**
+      - .github/workflows/js.yaml
 
 jobs:
   npm:
@@ -22,11 +22,11 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@hal9ai'
       - run: yarn install
-        working-directory: ./client
+        working-directory: ./js
       - run: yarn build:npm
-        working-directory: ./client
+        working-directory: ./js
       - run: npm publish
-        working-directory: ./client
+        working-directory: ./js
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         if: github.ref == 'refs/heads/main'
