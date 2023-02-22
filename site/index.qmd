@@ -25,6 +25,8 @@ pip install hal9
 remotes::install_github("hal9ai/hal9", subdir = "r")
 ```
 
+:::
+
 ### Starter apps
 
 The recommended way to bootstrap a new app is to use the `new` command:
