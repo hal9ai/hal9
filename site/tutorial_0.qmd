@@ -10,7 +10,8 @@ Creating an app in Hal9 is as easy as describing what you want in a prompt. In t
 
 The first step is go to <https://hal9.com/build> and there we will see the prompts bar where we can describe the app we need.
 
-![](images/intro.png)
+<center><img src="tutorial_0/intro.png" style="max-width: 70%"/></center>
+
 
 For our first app, we will work with the well-known `iris` dataset. We want, with this app, to be able to filter our data and make a graph with the resulting dataset. So let's go and type our first prompt.
 
@@ -18,7 +19,7 @@ For our first app, we will work with the well-known `iris` dataset. We want, wit
 
 Our first prompt will be `Load the iris dataset from sklearn.datasets` and as we can see we get the complete `iris` dataset.
 
-![](images/1.gif)
+<center><img src="tutorial_0/1.gif" style="max-width: 70%"/></center>
 
 Although in this case we have specifically requested our data from a python package, Hal9 offers several ways that we can use to get the data, including:
 
@@ -34,11 +35,11 @@ Once we have our data, we probably want to modify our app and its functionalitie
 
 Adding the prompt `add a dropdown to filter the dataset by species` we get exactly what we want, a dropdown with the *setosa, versicolor* and *virginica* valuesandwhose function will be to filter the database depending on the selected species
 
-![](images/2.gif)
+<center><img src="tutorial_0/2.gif" style="max-width: 70%"/></center>
 
 We can add other filters, for example we could write `add a slider to filter the dataset by the sepal length` , and then we could filter our dataset not only by species but also by the value of the sepal length variable, as we see below
 
-![](images/3.gif)
+<center><img src="tutorial_0/3.gif" style="max-width: 70%"/></center> 
 
 ~Note that the limits of the slider will change according to the range in which the values of this variable are for the selected species.~
 
@@ -46,7 +47,7 @@ We can add other filters, for example we could write `add a slider to filter the
 
 Once we have the database filtered, another useful functionality would be to graph our results. For this, we can even specify the library that we want to be used. Adding the following prompt `Using plotly, add a scatter plot for the filtered data` we get, as expected, a scatter plot that represents the data previously filtered by species and by sepal length.
 
-![](images/4.gif)
+<center><img src="tutorial_0/4.gif" style="max-width: 70%"/></center>
 
 Using different prompts we can specify various types of graphics, as well as change some basic characteristics.
 
@@ -56,7 +57,7 @@ When we get the app we want, we can save it, otherwise the app will be public an
 
 Once we are logged in, we can go to the *save* button and then we'll need to write a title and description for our app. Finally, we can select if the app will be public, private or accessible only with a link depending on the level of privacy we need.
 
-![](images/5.gif)
+<center><img src="tutorial_0/5.gif" style="max-width: 70%"/></center>
 
 #### Final App
 
@@ -73,8 +74,10 @@ You can see the final app in <https://hal9.com/apps/my-first-app>
 
 Often, we want to use the data we have on local storage in our applications, and the good news is that this is very easy to do in Hal9. For this, when we are on the build apps page, all we have to do is select the first option that is under the prompts bar that says "create an app from a csv file", and then select our csv.
 
-![](images/65.png) Immediately after selecting our csv file, the data will be displayed in a table and then we can introduce prompts and describe the app we want to build as we did before.
+<center><img src="tutorial_0/65.png" style="max-width: 70%"/></center>
 
-![](images/6.gif)
+Immediately after selecting our csv file, the data will be displayed in a table and then we can introduce prompts and describe the app we want to build as we did before.
+
+<center><img src="tutorial_0/6.gif" style="max-width: 70%"/></center>
 
 It is important to note that if we are not logged in, the created app will be publicly accessible and therefore, the uploaded data as well.
