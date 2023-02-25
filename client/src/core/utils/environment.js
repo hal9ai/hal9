@@ -1,10 +1,6 @@
 
 var userHal9Env = undefined;
 
-export const isElectron = () => {
-  return typeof(window) != 'undefined' && window.process != undefined && window.process.type == 'renderer';
-}
-
 export const isIOS = () => {
   if (!navigator) return false;
 

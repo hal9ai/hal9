@@ -3,11 +3,9 @@ import LocalExecutor from './local'
 import CachedExecutor from './cached'
 import IFrameExecutor from './iframe'
 
-import { isElectron } from '../utils/environment'
-
 export const executorFromMetadata = (metadata, inputs, step, context, script, params, deps, state, language, callbacks, pipelinename) => {
   if (metadata.environment === 'desktop') {
-    metadata.environment = isElectron() ? undefined : 'worker';
+    metadata.environment = 'worker';
   }
 
   const hasOutput = metadata.output && metadata.output.includes('html');

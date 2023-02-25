@@ -169,7 +169,6 @@ function IFrameAPI(options, hal9wnd, config) {
         env: env,
       });
     },
-    isElectron: environment.isElectron,
     isIOS: environment.isIOS,
     isDevelopment: environment.isDevelopment,
     getId: environment.getId,

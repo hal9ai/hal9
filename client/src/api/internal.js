@@ -21,7 +21,6 @@ export const internal = {
   },
 
   environment: {
-    isElectron: environment.isElectron,
     isIOS: environment.isIOS,
     setEnv: environment.setEnv,
     isDevelopment: environment.isDevelopment,

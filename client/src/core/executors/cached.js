@@ -10,8 +10,6 @@ import clone from '../utils/clone'
 
 import md5 from 'crypto-js/md5'
 
-import { isElectron } from '../utils/environment'
-
 const smartclone = (entries) => {
   var cloned = {};
   Object.keys(entries).forEach(name => {
@@ -57,7 +55,7 @@ export default class CachedExecutor extends Executor {
       const metadata = snippets.parseHeader(this.script);
 
       if (metadata.environment === 'desktop') {
-        metadata.environment = isElectron() ? undefined : 'worker';
+        metadata.environment = 'worker';
       }
 
       var executorClass = null;
