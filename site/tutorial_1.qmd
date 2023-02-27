@@ -24,11 +24,11 @@ Let's suppose that we want an app that takes as input the last 5 years of data o
 
 So, our first prompt will be `Get from yahoo finance the last 5 years data of litecoin close price` and we get a plot with that data requested.
 
-![](images/102-01.png)
+<center><img src="tutorial_1/102.png" style="max-width: 70%"/></center>
 
 Now, we want to predict the values for the next year using a Support Vector Regression model, so we enter the following prompt `predict using SVM the close price for the next 365 days and plot the predictions using plotly`. In this case, we get the following error:
 
-![](images/103.png)
+<center><img src="tutorial_1/103.png" style="max-width: 70%"/></center>
 
 So we can see that something in our generated code is wrong, which doesn't allow the app to work properly. How can we fix this?
 
@@ -40,11 +40,11 @@ Hal9 allows the user to view and modify the app's code as much as they want, and
 
 For this we will need to have the backend code enable. If this is not the case, our app will look as follows
 
-![](images/104.png)
+<center><img src="tutorial_1/104.png" style="max-width: 70%"/></center>
 
 To enable it we have to go to the menu in the upper right corner and select *Settings*. Then we will see a checkbox where we can disable/enable this option.
 
-![](images/7.gif)
+<center><img src="tutorial_1/7.gif" style="max-width: 70%"/></center>
 
 To fix our app we must access its code, which we can do by selecting the 'Code' option found next to 'Application'.
 
@@ -54,7 +54,7 @@ In this particular case, we had to change the date data type to be able to work 
 
 After we have fixed our app, we can save it as explained in the *"Getting started"* tutorial. Note that we can replace the previous app if we keep the same title and description, but we decide to change them to keep both apps.
 
-![](images/8.gif)
+<center><img src="tutorial_1/8.gif" style="max-width: 70%"/></center>
 
 Fixed App [Here!](https://hal9.com/apps/litecoin-prediction-app-fixed)
 
