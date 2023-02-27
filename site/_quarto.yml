@@ -22,14 +22,14 @@ website:
       contents:
         - section: "Overview"
           contents:
-            - tutorial_0.qmd
+            - index.qmd
         - section: "Tutorials"
           contents:
             - tutorial_01.qmd
             - tutorial_1.qmd
         - section: "Developer"
           contents:
-            - index.qmd
+            - quickstart.qmd
 format:
   html:
     theme: cosmo
