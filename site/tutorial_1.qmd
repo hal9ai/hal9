@@ -1,0 +1,65 @@
+---
+title: "Advanced use cases"
+format: html
+editor: visual
+---
+
+### Important concepts
+
+-   **Generative Pre-trained Transformer 3** (also know as **GPT-3**) is an autoregressive language model released in 2020 that uses deep learning to produce human-like text. This means that, given an initial text as prompt, it will produce text that continues the prompt. GPT-3 performs a variety of natural language tasks such as generate text in different languages, web content generation, language translation, natural language processing and speech recognition among others
+
+-   **Streamlit** is an open-source app framework in Python language for Machine Learning and Data Science teams. This framework helps us create web apps for data science and machine learning in a short time.
+
+**Hal9, GPT-3 and Streamlit**
+
+Hal9 uses a model based on GPT-3 that has been fine-tuned for the task of generating data web apps. Using this model, Hal9's users are empowered to create data apps by just typing prompts explaining what they want. Thus, Hal9's users don't necessarily need to have coding skills or know any app framework.
+
+It is important to mention that Hal9 enables code auditing and edition to let your team understand, expand and correct the applications created by Hal9's model. Also, when the generated code is not entirely correct, we always have the option to fix and modify our code, as we will see in this tutorial.
+
+This model will be fine-tuned as we have more apps generated, so by using it we contribute to making it better and more accurate.
+
+### Creating an App
+
+Let's suppose that we want an app that takes as input the last 5 years of data on the daily closing price of Litecoin from yahoo finances, plots the data and uses it to make predictions about this price for the next year.
+
+So, our first prompt will be `Get from yahoo finance the last 5 years data of litecoin close price` and we get a plot with that data requested.
+
+![](images/102-01.png)
+
+Now, we want to predict the values for the next year using a Support Vector Regression model, so we enter the following prompt `predict using SVM the close price for the next 365 days and plot the predictions using plotly`. In this case, we get the following error:
+
+![](images/103.png)
+
+So we can see that something in our generated code is wrong, which doesn't allow the app to work properly. How can we fix this?
+
+Broken App [Here!](https://hal9.com/apps/litecoin-prediction-app)
+
+### Fixing our app
+
+Hal9 allows the user to view and modify the app's code as much as they want, and the only requirement is that they be logged in.
+
+For this we will need to have the backend code enable. If this is not the case, our app will look as follows
+
+![](images/104.png)
+
+To enable it we have to go to the menu in the upper right corner and select *Settings*. Then we will see a checkbox where we can disable/enable this option.
+
+![](images/7.gif)
+
+To fix our app we must access its code, which we can do by selecting the 'Code' option found next to 'Application'.
+
+Once we already have access to the generated code, all we have to do is fix it taking into account the errors we got. For this we will need to have basic knowledge of Python and Streamlit.
+
+In this particular case, we had to change the date data type to be able to work with it and make our plots. Also, we changed the structure of the results to a dataframe, which will make it easier to work with these results if we decide to continue modifying the app.
+
+After we have fixed our app, we can save it as explained in the *"Getting started"* tutorial. Note that we can replace the previous app if we keep the same title and description, but we decide to change them to keep both apps.
+
+![](images/8.gif)
+
+Fixed App [Here!](https://hal9.com/apps/litecoin-prediction-app-fixed)
+
+Then, we can continue modifying our app by adding more prompts and/or adding code directly. An example of this same app modified can be found [here](https://hal9.com/apps/litecoin-price-prediction).
+
+*With the help of GPT3 and having the option to modify the code, you can make any app you can imagine.*
+
+*If you are looking for inspiration [check out our gallery](https://hal9.com/gallery) and let's create together!*
