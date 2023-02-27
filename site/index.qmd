@@ -2,7 +2,7 @@
 title: "Quickstart"
 ---
 
-This guide aims to help you get started with Hal9 in your local development environment as quickly as possible.
+This awesome guide aims to help you get started with Hal9 in your local development environment as quickly as possible.
 
 You can also head over to the hosted demo at [https://hal9.com/new](https://hal9.com) without having to download or install things locally.
 
