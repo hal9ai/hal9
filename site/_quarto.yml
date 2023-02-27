@@ -23,6 +23,16 @@ website:
         - section: "Overview"
           contents:
             - index.qmd
+        - section: "Tutorials"
+          contents:
+            - tutorial_0.qmd
+            - tutorial_01.qmd
+            - tutorial_1.qmd
+        - section: "Developer"
+          contents:
+            - components.qmd
+            - compiling.qmd
+            - manifests.qmd
 format:
   html:
     theme: cosmo
