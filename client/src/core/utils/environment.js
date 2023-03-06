@@ -50,6 +50,7 @@ export const getServerUrl = () => {
   const hal9env = getId();
 
   if (hal9env == 'prod') return 'https://api.hal9.com';
+  else if (hal9env == 'classic') return 'https://api.classic.hal9.com';
 
   if (userHal9Env === 'local' || isDevelopment()) return getLocalhostServerUrl();
 
@@ -64,6 +65,7 @@ export const getServerCachedUrl = () => {
   const hal9env = getId();
 
   if (hal9env == 'prod') return 'https://hal9.com';
+  else if (hal9env == 'classic') return 'https://classic.hal9.com';
 
   if (userHal9Env === 'local' || isDevelopment()) return getLocalhostServerUrl();
 
@@ -75,6 +77,7 @@ export const getWebsiteUrl = () => {
   const map = {
     local: 'http://localhost:5000',
     dev: 'https://devel.hal9.com',
+    classic: 'https://classic.hal9.com',
     prod: 'https://hal9.com',
   };
 

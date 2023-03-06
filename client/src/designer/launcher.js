@@ -19,6 +19,7 @@ export const launchDesigner = async (hal9, options, pid, bid) => {
   const libraries = {
     local: 'http://localhost:8080/hal9.notebook.js',
     devel: 'https://devel.hal9.com/' + (options.version ?? appVersion.devel) + '/hal9.notebook.js',
+    classic: 'https://classic.hal9.com/' + (options.version ?? appVersion.devel) + '/hal9.notebook.js',
     prod: 'https://hal9.com/' + (options.version ?? appVersion.prod) + '/hal9.notebook.js'
   }
   script.src = libraries[options.env];
