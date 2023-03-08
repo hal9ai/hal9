@@ -1,7 +1,9 @@
 import requests
 import time
 import tempfile
-import streamlit.web.bootstrap
+import sys
+import runpy
+
 def get_app(prompt :str) -> str:
     """Generate an app using that does what the prompt says
 
@@ -30,4 +32,5 @@ def get_app(prompt :str) -> str:
     with tempfile.NamedTemporaryFile(mode = "w+", prefix = 'st_app', suffix='.py') as tmp:
         tmp.write(code)
         tmp.seek(0)
-        streamlit.web.bootstrap.run(tmp.name, command_line = None, args =[], flag_options = {})
+        sys.argv = ["streamlit", "run", tmp.name ]
+        runpy.run_module("streamlit", run_name="__main__")
