@@ -1,5 +1,5 @@
 import { Streamlit } from "streamlit-component-lib";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
 const LOGIN_TOKEN_REQUEST_API_URL = "https://api.hal9.com/api/login";
 const LOGIN_PAGE_URL = "https://api.hal9.com/login";
@@ -13,12 +13,15 @@ function getHal9LoginInfoApiUrl(token: string) {
   return `${LOGIN_INFO_API_URL}?token=${token}`;
 }
 
-async function fetchLoginToken() {
+async function fetchLoginToken(): Promise<string> {
   const res = await fetch(LOGIN_TOKEN_REQUEST_API_URL, {
     method: "POST",
   });
   const resJson = await res.json();
   const token = resJson.token;
+  if (typeof token !== "string") {
+    throw new Error("Invalid token");
+  }
   return token;
 }
 
@@ -66,14 +69,6 @@ async function subscribeLoginInfo(token: string): Promise<LoginInfo> {
   }
 }
 
-async function login(): Promise<LoginInfo> {
-  const token = await fetchLoginToken();
-
-  window.open(getHal9LoginPageUrl(token), "_blank");
-
-  return subscribeLoginInfo(token);
-}
-
 interface StreamlitComponentValue {
   user: string | null;
 }
@@ -81,15 +76,36 @@ function setStreamlitComponentValue(value: StreamlitComponentValue) {
   Streamlit.setComponentValue(value);
 }
 
+const TOKEN_LOCAL_STORAGE_KEY = "hal9_login_token";
+
 function Hal9Login() {
   const [loginInfo, setLoginInfo] = useState<LoginInfo>();
 
-  const handleLoginRequest = useCallback(() => {
+  useEffect(() => {
+    // Auto-login with a token stored in localStorage.
+    const restoredToken = localStorage.getItem(TOKEN_LOCAL_STORAGE_KEY);
+    if (restoredToken == null) {
+      return;
+    }
+
+    subscribeLoginInfo(restoredToken).then((loginInfo) => {
+      setLoginInfo(loginInfo);
+      setStreamlitComponentValue({ user: loginInfo.user });
+    });
+  }, []);
+
+  const handleLoginRequest = useCallback(async () => {
     setLoginInfo(undefined);
     setStreamlitComponentValue({ user: null });
 
     try {
-      login().then((loginInfo) => {
+      const token = await fetchLoginToken();
+
+      localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, token);
+
+      window.open(getHal9LoginPageUrl(token), "_blank");
+
+      subscribeLoginInfo(token).then((loginInfo) => {
         setLoginInfo(loginInfo);
         setStreamlitComponentValue({ user: loginInfo.user });
       });
