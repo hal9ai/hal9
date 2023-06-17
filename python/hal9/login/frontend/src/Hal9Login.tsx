@@ -1,5 +1,5 @@
 import { Streamlit } from "streamlit-component-lib";
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 
 const LOGIN_TOKEN_REQUEST_API_URL = "https://api.hal9.com/api/login";
 const LOGIN_PAGE_URL = "https://api.hal9.com/login";
@@ -41,6 +41,8 @@ function isLoginInfo(obj: any): obj is LoginInfo {
 }
 
 async function subscribeLoginInfo(token: string): Promise<LoginInfo> {
+  // Ref: https://javascript.info/long-polling
+
   const res = await fetch(getHal9LoginInfoApiUrl(token));
 
   if (res.status === 502) {
