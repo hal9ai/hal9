@@ -114,7 +114,7 @@ function Hal9Login() {
     }
   }, []);
 
-  setTimeout(() => {
+  useEffect(() => {
     Streamlit.setFrameHeight();
   });
 
