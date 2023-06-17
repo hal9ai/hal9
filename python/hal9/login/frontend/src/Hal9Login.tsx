@@ -72,14 +72,24 @@ async function login(): Promise<LoginInfo> {
   return subscribeLoginInfo(token);
 }
 
+interface StreamlitComponentValue {
+  user: string | null;
+}
+function setStreamlitComponentValue(value: StreamlitComponentValue) {
+  Streamlit.setComponentValue(value);
+}
+
 function Hal9Login() {
   const [loginInfo, setLoginInfo] = useState<LoginInfo>();
 
   const handleLoginRequest = useCallback(() => {
     setLoginInfo(undefined);
+    setStreamlitComponentValue({ user: null });
+
     try {
       login().then((loginInfo) => {
         setLoginInfo(loginInfo);
+        setStreamlitComponentValue({ user: loginInfo.user });
       });
     } catch (e) {
       console.error(e);
