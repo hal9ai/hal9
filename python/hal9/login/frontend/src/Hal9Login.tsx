@@ -1,5 +1,7 @@
 import { Streamlit } from "streamlit-component-lib";
 import React, { useState, useCallback, useEffect } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
 import { fetchLoginToken, openLoginPage, subscribeLoginInfo } from "./api";
 import { LoginInfo } from "./types";
 
@@ -53,17 +55,14 @@ function Hal9Login() {
   });
 
   if (loginInfo === undefined) {
-    return <button onClick={handleLoginRequest}>Login</button>;
+    return (
+      <Button variant="contained" color="primary" onClick={handleLoginRequest}>
+        Login
+      </Button>
+    );
   }
 
-  return (
-    <div>
-      <p>
-        Logged in as <b>{loginInfo.user}</b>
-      </p>
-      <img src={loginInfo.photo} />
-    </div>
-  );
+  return <Avatar alt={loginInfo.user} src={loginInfo.photo} />;
 }
 
 export default Hal9Login;
