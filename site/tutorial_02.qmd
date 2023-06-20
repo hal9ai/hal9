@@ -16,15 +16,15 @@ The steps to do it are:
 
 -   Once you are logged in, you must go to settings and you will notice that the *Enable database support* option is not selected.
 
-![](images/120.png)
+<center><img src="tutorial_02/120.png" style="max-width: 70%"/></center>
 
 -   When you select it, a *Create* button will appear, which when pressed will give you your Postgres credentials, as it is shown below.
 
-![](images/121.png)
+<center><img src="tutorial_02/121.png" style="max-width: 70%"/></center> 
 
 These credentials give you access to a database in Postgres, which you build by connecting it to other applications where you will extract data from using differents integration frameworks. In case you do not have a technical background, we recommend using [Bracket](https://www.usebracket.com/) for this step.
 
-![](tutorial%2002/images/1.png)
+<center><img src="tutorial_02/1.png" style="max-width: 70%"/></center> 
 
 [Bracket](https://docs.usebracket.com/introduction) is a fast, code-optional way to sync data between databases, data warehouses, and SaaS tools and enables you to set up limitlessly flexible one-way or two-way syncs between any pairing of database or SaaS tool. It support differents integrations, for example Google Sheets, Notion, Snowflake, and Postgres.
 
