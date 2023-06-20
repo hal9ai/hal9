@@ -26,6 +26,7 @@ website:
         - section: "Tutorials"
           contents:
             - tutorial_01.qmd
+            - tutorial_02.qmd
             - tutorial_1.qmd
         - section: "Developer"
           contents:
