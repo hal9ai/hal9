@@ -6,7 +6,7 @@ editor: visual
 
 One of the main tasks of Hal9 is to enable users to quickly and easily create applications and conduct analysis on databases. When we have the data stored in csv files we can follow a similar approach to what was covered in the preceding tutorial to analyze it, but what happens if we have combined databases hosted in a cloud environment? or if we want to extract data from an application such as Pilot or Notion, create combined databases and analyze them in Hal9?
 
-Hal9 currently does not provide direct support for fetching data from external applications; however, it does offer a direct method of parsing this type of data sing Postgres, which is what we will be covering in this tutorial.
+Hal9 currently does not provide direct support for fetching data from external applications; however, it does offer a direct method of parsing this type of data using Postgres, which is what we will be covering in this tutorial.
 
 ### Connecting to a database warehouse using Hal9
 
@@ -29,6 +29,30 @@ These credentials give you access to a database in Postgres, which you build by 
 [Bracket](https://docs.usebracket.com/introduction) is a fast, code-optional way to sync data between databases, data warehouses, and SaaS tools and enables you to set up limitlessly flexible one-way or two-way syncs between any pairing of database or SaaS tool. It support differents integrations, for example Google Sheets, Notion, Snowflake, and Postgres.
 
 Once you are connected to your database, you can start to chat with your data!
+
+### Example: Notion \< Bracket \> Postgres \<\> Hal9
+
+Once we have the Postgres credentials that Hal9 gives us and a database on Notion, it is very easy to connect them both using Bracket as an intermediary. To do this we will use the [Bracket legacy app](https://legacy.app.usebracket.com/).
+
+In this app, we select Notion as the main data source and then select the database we want to use. In case you do not have any available database, we must select Link new bases and give permission to Bracket to access them.
+
+<center><img src="tutorial_02/122.png" style="max-width: 70%"/></center> 
+
+Then we select Postgres as the secondary data source and introduce the credentials we obtained from Hal9.
+
+<center><img src="tutorial_02/123.png" style="max-width: 70%"/></center> 
+
+Once this information has been introduced, we can check the connection and if it is successful, we can proceed to the next step, in which we will select the synchronization options.
+
+<center><img src="tutorial_02/124.png" style="max-width: 70%"/></center> 
+
+In the next step, we will review our data, the connection and the mapping established between the two databases. We will also have the option of running a test run where we will not synchronize any data, run a single run where we will only synchronize our data once, or set up the connection and run the synchronization every certain time. With the completion of this step, we will have our data ready in Postgres and these will be accessible from Hal9.
+
+As an example dataset, we use the *startups-hiring-2023* Kaggle dataset which contains information about startups and the jobs they are offering. If we enter the prompt *Which startups are hiring engineer?* in Hal9, we will get an app that shows us a table with the required information.
+
+<center><img src="tutorial_02/125.png" style="max-width: 70%"/></center> 
+
+You can check this example app [here](https://hal9.com/apps/startups-hiring-2023-example).
 
 ### Important concepts
 
