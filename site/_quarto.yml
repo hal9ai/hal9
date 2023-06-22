@@ -25,9 +25,9 @@ website:
             - index.qmd
         - section: "Tutorials"
           contents:
-            - tutorial_01.qmd
-            - tutorial_02.qmd
-            - tutorial_1.qmd
+            - own_data.qmd
+            - databases.qmd
+            - advanced.qmd
         - section: "Developer"
           contents:
             - quickstart.qmd
