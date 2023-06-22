@@ -38,19 +38,23 @@ In this app, we select Notion as the main data source and then select the databa
 
 <center><img src="tutorial_02/122.png" style="max-width: 70%"/></center> 
 
+
 Then we select Postgres as the secondary data source and introduce the credentials we obtained from Hal9.
 
 <center><img src="tutorial_02/123.png" style="max-width: 70%"/></center> 
 
+
 Once this information has been introduced, we can check the connection and if it is successful, we can proceed to the next step, in which we will select the synchronization options.
 
 <center><img src="tutorial_02/124.png" style="max-width: 70%"/></center> 
+
 
 In the next step, we will review our data, the connection and the mapping established between the two databases. We will also have the option of running a test run where we will not synchronize any data, run a single run where we will only synchronize our data once, or set up the connection and run the synchronization every certain time. With the completion of this step, we will have our data ready in Postgres and these will be accessible from Hal9.
 
 As an example dataset, we use the *startups-hiring-2023* Kaggle dataset which contains information about startups and the jobs they are offering. If we enter the prompt *Which startups are hiring engineer?* in Hal9, we will get an app that shows us a table with the required information.
 
 <center><img src="tutorial_02/125.png" style="max-width: 70%"/></center> 
+
 
 You can check this example app [here](https://hal9.com/apps/startups-hiring-2023-example).
 
