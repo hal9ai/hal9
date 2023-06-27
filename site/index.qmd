@@ -11,9 +11,9 @@ We are rolling out features to let you chat with any structured data source, no 
 <center><img src="Images/video.mp4" style="max-width: 70%"/></center>
 <br>
 
-With Hal9, you get generative AI for your data, meaning that, you can connect Hal9 to your data source and answer ChatGPT-like questions, it is that simple!
-
 ### Example 
+
+With Hal9, you get generative AI for your data, meaning that, you can connect Hal9 to your data source and answer ChatGPT-like questions, it is that simple!
 
 <center><img src="Images/getting_started.gif" style="max-width: 70%"/></center>
 <br>
