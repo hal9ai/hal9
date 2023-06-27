@@ -4,12 +4,15 @@ format: html
 editor: visual
 ---
 
-Often, we want to use the data we have on local storage in our applications, and the good news is that this is very easy to do in Hal9. For this, when we are on the build apps page, all we have to do is select the first option that is under the prompts bar that says "create an app from a csv file", and then select our csv.
+Often, we want to analize or use a CSV file in our applications, and the good news is that this is very easy to do in Hal9. 
 
-<center><img src="tutorial_01/65.png" style="max-width: 70%"/></center> 
+If you prefer a video explanation on how to do this, we recorded [this video](https://www.youtube.com/watch?v=nvgIlzM65kA) for you. Otherwise, keep reading along.
 
-Immediately after selecting our csv file, the data will be displayed in a table and then we can introduce prompts and describe the app we want to build as we did in the *"Getting Started"* tutorial.
+For this task, once we are on the [Hal9 page](https://hal9.com/), we have to select the first option that is under the prompts bar that says "Ask a question to your own CSV file", then we will get an upload dialogue where we can select a previusly uploaded CSV or we can upload a new one. Immediately after selecting our CSV file we can introduce prompts describing the app we want to build.
 
-<center><img src="tutorial_01/6.gif" style="max-width: 70%"/></center>
+<center><img src="Images/csv.gif" style="max-width: 70%"/></center>
+<br>
 
-It is important to note that if we are not logged in, the created app will be publicly accessible and therefore, the uploaded data as well.
+Once we are happy with the created app, we can click on the save button. A dialogue will then appear where we can give our app a title and description, as well as select its level of access between private, unlisted or public depending on the privacy settings we want.
+
+<center><img src="Images/save.png" style="max-width: 70%"/></center>
