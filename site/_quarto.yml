@@ -23,12 +23,17 @@ website:
         - section: "Overview"
           contents:
             - index.qmd
-        - section: "Tutorials"
+        - section: "Using"
           contents:
-            - own_data.qmd
+            - files.qmd
             - databases.qmd
-            - advanced.qmd
-        - section: "Developer"
+            - services.qmd
+        - section: "Enterprise"
+          contents:
+            - docker.qmd
+            - snowflake.qmd
+            - databricks.qmd
+        - section: "Technology"
           contents:
             - quickstart.qmd
 format:
@@ -36,6 +41,4 @@ format:
     theme: cosmo
     css: styles.css
     toc: true
-
-
 
