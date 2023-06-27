@@ -16,4 +16,3 @@ For this task, once we are on the [Hal9 page](https://hal9.com/), we have to sel
 Once we are happy with the created app, we can click on the save button. A dialogue will then appear where we can give our app a title and description, as well as select its level of access between private, unlisted or public depending on the privacy settings we want.
 
 <center><img src="Images/save.png" style="max-width: 70%"/></center>
-<br>
