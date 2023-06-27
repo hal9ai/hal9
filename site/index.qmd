@@ -4,67 +4,22 @@ format: html
 editor: visual
 ---
 
-Creating an app in Hal9 is as easy as describing what you want in a prompt. In this tutorial, you will learn how to open Hal9, create [this app](https://hal9.com/apps/my-first-app) that plots and filters data from the Iris dataset (you will find the specific prompts we used) and how to save and share your app with the world. Let's check it out!
+Hal9 is built on open source data technologies that allow you to do any predictive analytics and integrate to any system.
 
-### My first App
+We are rolling out features to let you chat with any structured data source, no matter where it lives. Here is a short video that summarizes why and how.
 
-The first step is go to <https://hal9.com/build> and there we will see the prompts bar where we can describe the app we need.
+<center><img src="https://stream.mux.com/B02OAcHXrvxhBUyOBG01Cl7j2bBGJ4nWCiMHPmqSurOUw/high.mp4" style="max-width: 70%"/></center>
+<br>
 
-<center><img src="tutorial_0/intro.png" style="max-width: 70%"/></center>
+With Hal9, you get generative AI for your data, meaning that, you can connect Hal9 to your data source and answer ChatGPT-like questions, it is that simple!
 
-For our first app, we will work with the well-known `iris` dataset. We want, with this app, to be able to filter our data and make a graph with the resulting dataset. So let's go and type our first prompt.
+### Example 
 
-#### Typing a prompt
+<center><img src="Images/getting_started.gif" style="max-width: 70%"/></center>
+<br>
 
-Our first prompt will be `Load the iris dataset from sklearn.datasets` and as we can see we get the complete `iris` dataset.
+In this example we are connected to a Postgres database to answer the following questions:
 
-<center><img src="tutorial_0/1.gif" style="max-width: 70%"/></center>
-
-Although in this case we have specifically requested our data from a python package, Hal9 offers several ways that we can use to get the data, including:
-
--   Providing a link where the data is publicly located.
--   Describing the data we need and it will take care of searching the data on the web.
--   Uploading the data in a csv file from our computer.
-
-#### Making changes with prompts
-
-Once we have our data, we probably want to modify our app and its functionalities, let's see how to do it using only prompts.
-
-##### Creating filters
-
-Adding the prompt `add a dropdown to filter the dataset by species` we get exactly what we want, a dropdown with the *setosa, versicolor* and *virginica* valuesandwhose function will be to filter the database depending on the selected species
-
-<center><img src="tutorial_0/2.gif" style="max-width: 70%"/></center>
-
-We can add other filters, for example we could write `add a slider to filter the dataset by the sepal length` , and then we could filter our dataset not only by species but also by the value of the sepal length variable, as we see below
-
-<center><img src="tutorial_0/3.gif" style="max-width: 70%"/></center>
-
-~Note that the limits of the slider will change according to the range in which the values of this variable are for the selected species.~
-
-##### Adding plots
-
-Once we have the database filtered, another useful functionality would be to graph our results. For this, we can even specify the library that we want to be used. Adding the following prompt `Using plotly, add a scatter plot for the filtered data` we get, as expected, a scatter plot that represents the data previously filtered by species and by sepal length.
-
-<center><img src="tutorial_0/4.gif" style="max-width: 70%"/></center>
-
-Using different prompts we can specify various types of graphics, as well as change some basic characteristics.
-
-#### Saving my app
-
-When we get the app we want, we can save it, otherwise the app will be public and will appear in the *Gallery*. To save our app, we must log in first, but, if you do not have an account you will need to create one (It is totally free and you only need an email).
-
-Once we are logged in, we can go to the *save* button and then we'll need to write a title and description for our app. Finally, we can select if the app will be public, private or accessible only with a link depending on the level of privacy we need.
-
-<center><img src="tutorial_0/5.gif" style="max-width: 70%"/></center>
-
-#### Final App
-
-You can see the final app in <https://hal9.com/apps/my-first-app>
-
-##### *Prompts used:*
-
--   `Load the iris dataset from sklearn.datasets`
--   `add a dropdown to filter the dataset by species`
--   `add a slider to filter the dataset by the sepal length`
--   `Using plotly, add a scatter plot for the filtered data`
+What are the sales by sales person by month?
+What are the sales for a sales person by day?
+How do sales people compare?
