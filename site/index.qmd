@@ -8,7 +8,7 @@ Hal9 is built on open source data technologies that allow you to do any predicti
 
 We are rolling out features to let you chat with any structured data source, no matter where it lives. Here is a short video that summarizes why and how.
 
-<center><img src="https://stream.mux.com/B02OAcHXrvxhBUyOBG01Cl7j2bBGJ4nWCiMHPmqSurOUw/high.mp4" style="max-width: 70%"/></center>
+<center><img src="Images/video.mp4" style="max-width: 70%"/></center>
 <br>
 
 With Hal9, you get generative AI for your data, meaning that, you can connect Hal9 to your data source and answer ChatGPT-like questions, it is that simple!
@@ -20,6 +20,6 @@ With Hal9, you get generative AI for your data, meaning that, you can connect Ha
 
 In this example we are connected to a Postgres database to answer the following questions:
 
-What are the sales by sales person by month?
-What are the sales for a sales person by day?
-How do sales people compare?
+* What are the sales by sales person by month?
+* What are the sales for a sales person by day?
+* How do sales people compare?
