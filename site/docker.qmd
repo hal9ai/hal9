@@ -10,7 +10,7 @@ With this plan, your technical team can use [Docker](https://www.docker.com/) or
 
 If you prefer walkthrough video describing the main concepts and installation steps we recorded [this video](https://www.youtube.com/watch?v=38gh3ubUOrI) for you. Otherwise, keep reading along.
 
-### Docker
+## Docker
 
 After signing up for Hal9's Enterprise Plan at [hal9.com/plans](https://hal9.com/plans), you will gain access to the installation page that contains instructions to install Hal9.
 
@@ -22,7 +22,7 @@ Your technical team will be familiar with the commands we provide to pull, build
 <center><img src="Images/console.png" style="max-width: 70%"/></center>
 <br>
 
-#### Configuration
+### Configuration
 
 Once the Hal9 Docker image is installed, you can use the provided administrator key to login to the admin console to view, monitor and configure settings across the system. Our team can assist during this process or provide additional technical resources for your team.
 
