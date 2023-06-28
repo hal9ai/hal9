@@ -33,6 +33,6 @@ In addition, you can also connect with Snowflake using hal9.com or from your ent
 
 Other posts have already covered how to make use of files, databases and services with Hal9. Since Snowflake is a database, it can be accessed as a traditional database from Hal9. 
 
-If we ask the same question as above, we will get the same answer in a similar app.
+If we use the same sample database from snowflake and we ask a similar question, in this case How many suppliers do we have per country?, we will get the answer in a Hal9 app.
 
 <center><img src="Images/snowflake_example2.png" style="max-width: 70%"/></center>
