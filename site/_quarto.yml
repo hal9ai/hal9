@@ -31,6 +31,7 @@ website:
             - services.qmd
         - section: "Enterprise"
           contents:
+            - intro.qmd
             - docker.qmd
             - snowflake.qmd
             - databricks.qmd
