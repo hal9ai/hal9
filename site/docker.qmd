@@ -1,0 +1,32 @@
+---
+title: "Docker"
+format: html
+editor: visual
+---
+
+Hal9's Enterprise plan is recommended if you work at a company with 200+ people. This plan enable your business users to answer data questions and find insights in seconds inside their own infrastructure with Hal9's conversational AI.
+
+With this plan, your technical team can use [Docker](https://www.docker.com/) or [Kubernetes](https://kubernetes.io/) to install Hal9 within your data center or private virtual cloud. Hal9 will then transform and visualize all data entirely in your infrastructure and only process metadata in Hal9's LLM API.
+
+If you prefer walkthrough video describing the main concepts and installation steps we recorded [this video](https://www.youtube.com/watch?v=38gh3ubUOrI) for you. Otherwise, keep reading along.
+
+### Docker
+
+After signing up for Hal9's Enterprise Plan at [hal9.com/plans](https://hal9.com/plans), you will gain access to the installation page that contains instructions to install Hal9.
+
+<center><img src="Images/docker.png" style="max-width: 70%"/></center>
+<br>
+
+Your technical team will be familiar with the commands we provide to pull, build and run Hal9's Docker image. We will also provide a URL with an administrator key to login to and configure Hal9.
+
+<center><img src="Images/console.png" style="max-width: 70%"/></center>
+<br>
+
+#### Configuration
+
+Once the Hal9 Docker image is installed, you can use the provided administrator key to login to the admin console to view, monitor and configure settings across the system. Our team can assist during this process or provide additional technical resources for your team.
+
+<center><img src="Images/install.png" style="max-width: 70%"/></center>
+<br>
+
+We partnered with [Auth0](https://auth0.com/) to support many authentication providers like Active Directory, OpenID and [SAML](https://auth0.com/docs/authenticate/identity-providers/enterprise-identity-providers/saml); the full list is available in [Auth0's provider list](https://auth0.com/docs/authenticate/identity-providers). You can also configure cloud storage accounts and some of the product aesthetics, like the logo image. Once configured, you can use all the functionality available in hal9.com, but in your own infrastructure.
