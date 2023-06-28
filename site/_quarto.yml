@@ -31,11 +31,10 @@ website:
             - services.qmd
         - section: "Enterprise"
           contents:
-            - intro.qmd
             - docker.qmd
             - snowflake.qmd
             - databricks.qmd
-        - section: "Technology"
+#        - section: "Technology"
 #          contents:
 #            - quickstart.qmd
 format:
