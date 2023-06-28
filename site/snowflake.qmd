@@ -22,6 +22,7 @@ Hal9 can run within Snowflake's compute resources and authentication to leverage
 For example, the following screenshot showcases asking to Snowflake: How many suppliers do we have per country? which generates an interactive analytics report.
 
 <center><img src="Images/snowflake_example.png" style="max-width: 70%"/></center>
+<br>
 
 This integration requires Hal9's Enterprise Plan, see hal9.com/plans. Users can then access our installation resources and help from our team to set this up with your technical team. Request a demo in hal9.com to discuss your particular integration requirements.
 
@@ -30,4 +31,4 @@ This integration requires Hal9's Enterprise Plan, see hal9.com/plans. Users can 
 In addition, you can also connect with Snowflake using hal9.com or from your enterprise infrastructure. Other posts have already covered how to make use of files, databases and services with Hal9. Since Snowflake is a database, it can be accessed as a traditional database from Hal9.
 
 <center><img src="Images/snowflake_example2.png" style="max-width: 70%"/></center>
-<br>
+
