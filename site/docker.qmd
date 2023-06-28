@@ -3,6 +3,7 @@ title: "Docker"
 format: html
 editor: visual
 ---
+If you prefer walkthrough video describing the main concepts and installation steps we recorded [this video](https://www.youtube.com/watch?v=38gh3ubUOrI) for you. Otherwise, keep reading along.
 
 After signing up for Hal9's Enterprise Plan at [hal9.com/plans](https://hal9.com/plans), you will gain access to the installation page that contains instructions to install Hal9.
 
