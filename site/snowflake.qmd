@@ -22,7 +22,6 @@ Hal9 can run within Snowflake's compute resources and authentication to leverage
 For example, the following screenshot showcases asking to Snowflake: How many suppliers do we have per country? which generates an interactive analytics report.
 
 <center><img src="Images/snowflake_example.png" style="max-width: 70%"/></center>
-<br>
 
 This integration requires Hal9's Enterprise Plan, see hal9.com/plans. Users can then access our installation resources and help from our team to set this up with your technical team. Request a demo in hal9.com to discuss your particular integration requirements.
 
