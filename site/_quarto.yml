@@ -21,15 +21,13 @@ website:
       search: true
       contents:
         - index.qmd
-        - section: "Overview"
-          contents:
-            - index.qmd
         - section: "Using"
           contents:
             - files.qmd
             - databases.qmd
             - services.qmd
         - section: "Enterprise"
+            - enterprise.qmd
           contents:
             - docker.qmd
             - snowflake.qmd
