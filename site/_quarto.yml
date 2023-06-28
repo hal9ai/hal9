@@ -20,7 +20,7 @@ website:
       style: "docked"
       search: true
       contents:
-        - section: "Overview"
+#        - section: "Overview"
           contents:
             - index.qmd
         - section: "Using"
