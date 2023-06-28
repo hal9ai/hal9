@@ -30,6 +30,7 @@ website:
             - databases.qmd
             - services.qmd
         - section: "Enterprise"
+          - enterprise.qmd
           contents:
             - docker.qmd
             - snowflake.qmd
