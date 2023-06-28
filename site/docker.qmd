@@ -4,14 +4,6 @@ format: html
 editor: visual
 ---
 
-Hal9's Enterprise plan is recommended if you work at a company with 200+ people. This plan enable your business users to answer data questions and find insights in seconds inside their own infrastructure with Hal9's conversational AI.
-
-With this plan, your technical team can use [Docker](https://www.docker.com/) or [Kubernetes](https://kubernetes.io/) to install Hal9 within your data center or private virtual cloud. Hal9 will then transform and visualize all data entirely in your infrastructure and only process metadata in Hal9's LLM API.
-
-If you prefer walkthrough video describing the main concepts and installation steps we recorded [this video](https://www.youtube.com/watch?v=38gh3ubUOrI) for you. Otherwise, keep reading along.
-
-### Docker
-
 After signing up for Hal9's Enterprise Plan at [hal9.com/plans](https://hal9.com/plans), you will gain access to the installation page that contains instructions to install Hal9.
 
 <center><img src="Images/docker.png" style="max-width: 70%"/></center>
