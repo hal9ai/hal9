@@ -3,14 +3,15 @@ title: "Docker"
 format: html
 editor: visual
 ---
-If you prefer walkthrough video describing the main concepts and installation steps we recorded [this video](https://www.youtube.com/watch?v=38gh3ubUOrI) for you. Otherwise, keep reading along.
+
+In this tutorial, let's see how to configure Hal9 within the Enterprise environment. If you prefer walkthrough video describing the main concepts and installation steps we recorded [this video](https://www.youtube.com/watch?v=38gh3ubUOrI) for you. Otherwise, keep reading along.
 
 After signing up for Hal9's Enterprise Plan at [hal9.com/plans](https://hal9.com/plans), you will gain access to the installation page that contains instructions to install Hal9.
 
 <center><img src="Images/docker.png" style="max-width: 70%"/></center>
 <br>
 
-Your technical team will be familiar with the commands we provide to pull, build and run Hal9's Docker image. We will also provide a URL with an administrator key to login to and configure Hal9.
+In the installation page you will find the resources that your technical team needs to install Hal9 within your own servers. Your team will be familiar with the commands we provide to pull, build and run Hal9's Docker image. We will also provide a URL with an administrator key to login to and configure Hal9.
 
 <center><img src="Images/console.png" style="max-width: 70%"/></center>
 <br>
