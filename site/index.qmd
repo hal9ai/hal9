@@ -4,17 +4,11 @@ format: html
 editor: visual
 ---
 
-```{css, echo = FALSE}
-.justify {
-  text-align: justify !important
-}
-```
-
 Hal9 is built on open source data technologies that allow you to do any predictive analytics and integrate to any system.
 
 We are rolling out features to let you chat with any structured data source, no matter where it lives. Here is a short video that summarizes why and how.
 
-<center>{{< video https://stream.mux.com/B02OAcHXrvxhBUyOBG01Cl7j2bBGJ4nWCiMHPmqSurOUw/high.mp4 width="90%" height="90%">}}<center>
+{{< video https://stream.mux.com/B02OAcHXrvxhBUyOBG01Cl7j2bBGJ4nWCiMHPmqSurOUw/high.mp4 width="90%" height="90%" >}}
 <br>
 
 ### Example 
