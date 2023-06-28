@@ -36,8 +36,8 @@ website:
             - snowflake.qmd
             - databricks.qmd
         - section: "Technology"
-          contents:
-            - quickstart.qmd
+#          contents:
+#            - quickstart.qmd
 format:
   html:
     theme: cosmo
