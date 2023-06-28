@@ -21,9 +21,9 @@ website:
       search: true
       contents:
         - index.qmd
-        - section: "Overview"
-          contents:
-            - index.qmd
+#        - section: "Overview"
+#          contents:
+#            - index.qmd
         - section: "Using"
           contents:
             - files.qmd
