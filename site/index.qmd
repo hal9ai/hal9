@@ -27,7 +27,7 @@ In this example we are connected to a database to answer the following questions
 ### Plans
 Users can use Hal9 online at [hal9.com](https://hal9.com/) with the Basic and Pro plans. The Basic plan allows the user upload CSV files, ask data questions and get sharable data solutions in seconds. The Pro plan has other additional benefits, such as database support and it allows to embed solutions in any website. For enterprise customers we also have an Enterprise plan. You can check all our plans [here](https://hal9.com/plans)
 
-#### Enterprise
+### Enterprise
 
 Hal9's Enterprise plan enable your business users to answer data questions and find insights in seconds inside their own infrastructure with Hal9's conversational AI. 
 
