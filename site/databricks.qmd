@@ -4,6 +4,8 @@ format: html
 editor: visual
 ---
 
+ <div style="text-align: justify"> 
+
 Databricks combines the best elements of data lakes and data warehouses to help you reduce costs and deliver on your data and AI initiatives faster. Hal9 supports Databricks and having them work together unleashes the most advanced analytics powered by generative AI, at any scale. 
 
 <center><img src="Images/databricks.png" style="max-width: 70%"/></center>
@@ -41,3 +43,5 @@ For example, if we use as cloud provider Azure then it will be running both, Dat
 <br>
 
 For this one, once we have Hal9 running in Azure inside a Docker image, we should go to our enterprise URL and we need to set the conecction in Hal9 using the settings panel. As soon as the connection is successfully established, we can start chatting with our data!
+
+</div>
