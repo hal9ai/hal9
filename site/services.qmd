@@ -4,6 +4,8 @@ format: html
 editor: visual
 ---
 
+ <div style="text-align: justify"> 
+
 Hal9 allows the users to connect and query a database in PostgreSQL. Not only this, but it also gives you the necessary credentials to create your database in this data warehouse.
 
 If you prefer a video explanation, we recorded [this video](https://www.youtube.com/watch?v=SiX5p7mD13g) for you. Otherwise, keep reading along.
@@ -69,3 +71,5 @@ You can check this example app [here](https://hal9.com/apps/startups-hiring-2023
 The purpose of a database is to collect real-time information for immediate use and for an application's records. On the other hand, the data warehouse collects, stores, and analyzes large volumes of historical data, for the medium- and long-term. The warehouse is the database of databases, integrating different sources of information and creating a super business intelligence system in the process. This enables much more reliable long-term decision making by having access to more data.
 
 -   An **integration framework** is a structure designed to make it easier to link up different applications, data sources, APIs, and services within an organization. It simplifies the exchange of data and components between different systems, databases, applications, and services, and allows them to interact with each other automatically. This reduces complexity and costs associated with integration across different systems. Integration frameworks also provide security and automation for the regular exchange of data, and help organizations ensure the accuracy and consistency of data across applications. Furthermore, they give organizations a unified view of their distributed systems, and the ability to quickly build and deploy new applications and services.
+
+<div>
