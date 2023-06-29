@@ -4,6 +4,8 @@ format: html
 editor: visual
 ---
 
+ <div style="text-align: justify"> 
+
 In this tutorial, let's see how to configure Hal9 within the Enterprise environment. If you prefer walkthrough video describing the main concepts and installation steps we recorded [this video](https://www.youtube.com/watch?v=38gh3ubUOrI) for you. Otherwise, keep reading along.
 
 After signing up for Hal9's Enterprise Plan at [hal9.com/plans](https://hal9.com/plans), you will gain access to the installation page that contains instructions to install Hal9.
@@ -22,5 +24,7 @@ Once the Hal9 Docker image is installed, you can use the provided administrator 
 
 <center><img src="Images/install.png" style="max-width: 70%"/></center>
 <br>
+
+</div>
 
 We partnered with [Auth0](https://auth0.com/) to support many authentication providers like Active Directory, OpenID and [SAML](https://auth0.com/docs/authenticate/identity-providers/enterprise-identity-providers/saml); the full list is available in [Auth0's provider list](https://auth0.com/docs/authenticate/identity-providers). You can also configure cloud storage accounts and some of the product aesthetics, like the logo image. Once configured, you can use all the functionality available in hal9.com, but in your own infrastructure.

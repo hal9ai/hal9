@@ -4,6 +4,8 @@ format: html
 editor: visual
 ---
 
+ <div style="text-align: justify"> 
+
 Snowflake is a cloud-based data warehouse designed to handle large volumes of structured and semi-structured data. It is possible to find data insights with generative AI directly within Snowflake or with a traditional connection from Hal9 to Snowflake. If you prefer a video explanation on how to do this we recorded [this video](https://www.youtube.com/watch?v=cc1eRIYXOEw) for you. Otherwise, keep reading along.
 
 <center><img src="Images/snowflake.png" style="max-width: 70%"/></center>
@@ -32,6 +34,8 @@ In addition, you can also connect with Snowflake using hal9.com or from your ent
 <br>
 
 Other posts have already covered how to make use of files, databases and services with Hal9. Since Snowflake is a database, it can be accessed as a traditional database from Hal9. 
+
+</div>
 
 If we use the same sample database from snowflake and we ask a similar question, in this case How many suppliers do we have per country?, we will get the answer in a Hal9 app.
 

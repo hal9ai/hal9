@@ -4,6 +4,8 @@ format: html
 editor: visual
 ---
 
+ <div style="text-align: justify"> 
+
 One of the main tasks of Hal9 is to enable users to quickly and easily create applications and conduct analysis on databases. When we have the data stored in csv files we can follow a similar approach to what was covered in the preceding tutorial to analyze it, but what happens if we have combined databases hosted in a cloud environment? or if we want to extract data from an application such as Pilot or Notion, create combined databases and analyze them in Hal9?
 
 Hal9 currently does not provide direct support for fetching data from external applications; however, it does offer a direct method of parsing this type of data using PostgreSQL and Snowflake but we are currently adding a lot of different database connectivity solutions.
@@ -19,6 +21,8 @@ You can enable database connectivity in Hal9 from the Settings menu, notice this
 
 <center><img src="Images/database.jpeg" style="max-width: 70%"/></center>
 <br>
+
+</div>
 
 Once you are connected to your database, you can start to chat with your data!
 
