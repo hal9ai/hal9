@@ -72,4 +72,4 @@ The purpose of a database is to collect real-time information for immediate use 
 
 -   An **integration framework** is a structure designed to make it easier to link up different applications, data sources, APIs, and services within an organization. It simplifies the exchange of data and components between different systems, databases, applications, and services, and allows them to interact with each other automatically. This reduces complexity and costs associated with integration across different systems. Integration frameworks also provide security and automation for the regular exchange of data, and help organizations ensure the accuracy and consistency of data across applications. Furthermore, they give organizations a unified view of their distributed systems, and the ability to quickly build and deploy new applications and services.
 
-<div>
+</div>
