@@ -8,7 +8,6 @@ editor: visual
 
 Hal9 allows the users to connect and query a database in PostgreSQL. In this tutorial, we will see how to create a PostgreSQL database on Heroku, how to connect it to services like Notion using Brackets, and how to configure Hal9 to access our database.
 
-<br>
 
 ### Creating a PostgreSQL database on Heroku
 
@@ -59,12 +58,12 @@ The steps to configure Hal9 to connect to a PostgreSQL database are:
 
 -   Once you are logged in, you must go to settings and you will notice that the *Enable database support* option is not selected.
 
-<center><img src="Images/120.png" style="max-width: 70%"/></center>(update this)
+<center><img src="Images/120.png" style="max-width: 70%"/></center>
 <br>
 
 -   When you select it, you will need to fill in the connection box, in which you must enter the URI obtained from Heroku, but replacing postgres with postgresql+psycopg2
 
-<center><img src="Images/121.png" style="max-width: 70%"/></center>(update this)
+<center><img src="Images/121.png" style="max-width: 70%"/></center>
 <br>
 
 
