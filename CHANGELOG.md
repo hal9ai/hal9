@@ -1,7 +1,5 @@
 # Changelog
 
-<!--next-version-placeholder-->
+## v2.0.0
 
-## v0.0.1 (29/07/2022)
-
-- First release!
+- Create and deploy projects

@@ -3,6 +3,10 @@
 Contributions are welcome, and they are greatly appreciated! Every little bit
 helps, and credit will always be given.
 
+## Python
+
+To contribute to the Python package, see [python/README.md](python/README.md).
+
 ## Types of Contributions
 
 ### Report Bugs
