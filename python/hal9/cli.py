@@ -32,7 +32,7 @@ def run(path):
 
     PATH: The path to the project. Required argument.
     """
-    print(f'Running {path}')
+    api_run(path)
 
 @click.command()
 @click.argument('path')
