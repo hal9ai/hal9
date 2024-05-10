@@ -4,30 +4,6 @@ import tempfile
 import sys
 import runpy
 
-def create(path :str, template :str) -> str:
-    """Create an application
-
-    Parameters
-    ----------
-    path : str 
-            Path to the application.
-    template : str 
-            The template to use.
-    """
-
-    print(f'Project created! {name}')
-
-def run(path :str) -> str:
-    """Run an application
-
-    Parameters
-    ----------
-    path : str 
-            Path to the application.
-    """
-
-    print(f'Project created! {name}')
-
 def deploy(path :str, target :str) -> str:
     """Deploy an application
 

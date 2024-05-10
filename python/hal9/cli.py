@@ -1,6 +1,8 @@
 import click
 from collections import OrderedDict
-from hal9.api import *
+from hal9.create import create as api_create
+from hal9.run import run as api_run
+from hal9.deploy import deploy as api_deploy
 
 @click.group()
 def cli():
@@ -20,7 +22,7 @@ def create(path):
 
     PATH: The path for the new project. Required argument.
     """
-    print(f'Creating: {path}')
+    api_create(path, "openai")
 
 @click.command()
 @click.argument('path')

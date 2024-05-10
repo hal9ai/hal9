@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "hal9"
-version = "2.0.2"
+version = "2.0.3"
 description = ""
 authors = ["Javier Luraschi <javier@hal9.ai>"]
 readme = "README.md"
+include = ["templates/openai/app.py"]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.9.7 || >3.9.7,<4.0"
