@@ -4,14 +4,15 @@
 
 Create and deploy generative (LLMs and [difussers](https://github.com/huggingface/diffusers)) applications (chatbots and APIs) in seconds.
 - **Open:** Use any model (OpenAI, Llama, Groq, Midjourney) and any library like (LangChainl, DSPy).
-- **Intuitive:** No need to learn an app framework (streamlit, flask), simply use stdin and stdout.
-- **Scalable:** Engineers can esily integrate your app with Docker or use Hal9's self-service enterprise cloud.
+- **Intuitive:** No need to learn app frameworks (flask), simply use stdin and stdout, or write file to disk.
+- **Scalable:** Engineers can integrate your app with scalable technilogies (Docker, Kubernetes, etc)
+- **Powerful:** Using an OS process (stdin, stdout, files) as our app contract, enables long-running agents, multiple programming languages, and complex system dependencies.
 
 Focus on AI (RAG, fine-tuning, aligment, training) and skip engineering tasks (frontend development, backend integration, deployment, operations).
 
 ## Getting started
 
-To create and deploy a chatbot in 10 seconds run the following:
+To create and share a chatbot in seconds by running the following commands:
 
 ```bash
 pip install hal9
@@ -35,8 +36,6 @@ hal9 create my-project --template langchain
 
 A template provides ready to use code with specific technologies and use cases. If you already have code, you can skip this step.
 
-Send a PR if you want to add additional templates.
-
 ## Development
 
 To make changes to your project, open `my-project/` in your IDE and modify `my-project/app.py`.
@@ -53,47 +52,37 @@ export OPENAI_KEY=YOUR_OPENAI_KEY
 
 If you customized your template with `--template` make sure to set the correct key, for example `export GROQ_KEY=YOUR_GROQ_KEY`.
 
-## Runtime
-
-Run your application as follows,
-
-```python
-python app.py
-```
-
-Use the command line tool to enter prompts, type `<enter>` twice to send the prompt to your code. Replies will be streamed back to console.
-
-From the parent folder, you can also run your application as follows:
+You can then run your application locally with:
 
 ```bash
+hal9 run .
+```
+
+or
+
+```bash
+cd ..
 hal9 run my-project
 ```
 
+This command is just a convenience wrapper over `python app.py`
+
 ## Deployment
 
-We currently support Docker and `hal9.com`. Developers can send PR's with additional technologies or providers.
+The deploy command will prepare for deployment your generative app.
 
-### Docker
-
-To deploy your project through Docker run:
+For example, you can prepare deployment as a generative app (Hal9), an API (Flask), a data app (Streamlit), or a container (Docker).
 
 ```bash
-docker build .
-docker run .
+hal9 deploy my-project --target hal9
+hal9 deploy my-project --target docker
 ```
 
-Your backend and frontend engineers can then easily consume this as an API. You can share the `my-project/` path as a GitHub repo with your infrastructure team for them to deploy to your cloud provider. There are GitHub actions available to build and deploy Docker images.
+Eeach command is tasked with preparing the deployment of your project folder. For example, `--target docker` will create a `Dockerfile` file that gets this project ready to run in cloud containers.
 
-### Hal9
+For personal use, `--target hal9` supports a free tier at `hal9.com`; enterprise support is also available to deploy with `--target hal9 --url hal9.yourcompany.com`
 
-To deploy to `hal9.com` run:
+## Contributing
 
-```bash
-hal9 deploy my-project --target hal9.com
-```
+Pull Requests are welcomed to consider additional application templates or deployment targets. See [CONTIBUTE.md](CONTIBUTE.md).
 
-When Hal9 runs in your own cloud you can replace `--target hal9.com` with the correct domain, for example:
-
-```bash
-hal9 deploy my-project --target hal9.acme.com
-```

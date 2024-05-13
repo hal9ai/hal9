@@ -13,8 +13,8 @@ def create(path :str, template :str) -> str:
             The template to use.
     """
 
-    current_dir = Path(__file__).parent
-    template_path = current_dir / "templates" / template
+    package_dir = Path(__file__).parent
+    template_path = package_dir / "templates" / template
 
     os.makedirs(path, exist_ok=True)
 

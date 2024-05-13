@@ -16,7 +16,7 @@ def cli():
 
 @click.command()
 @click.argument('path')
-def create(path):
+def create(path :str):
     """
     Create Project
 
@@ -26,7 +26,7 @@ def create(path):
 
 @click.command()
 @click.argument('path')
-def run(path):
+def run(path :str):
     """
     Run Project
 
@@ -36,13 +36,14 @@ def run(path):
 
 @click.command()
 @click.argument('path')
-def deploy(path):
+@click.option('--target', default="hal9", help='Deployment target')
+def deploy(path :str, target :str):
     """
     Deploy Project
 
     PATH: The path to the project. Required argument.
     """
-    print(f'Deploying {path}')
+    api_deploy(path, target)
 
 cli.add_command(create)
 cli.add_command(run)

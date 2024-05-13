@@ -1,8 +1,8 @@
-import requests
-import time
-import tempfile
-import sys
-import runpy
+from hal9.targets.docker import deploy as deploy_docker
+
+targets = {
+    'docker': deploy_docker,
+}
 
 def deploy(path :str, target :str) -> str:
     """Deploy an application
@@ -15,18 +15,7 @@ def deploy(path :str, target :str) -> str:
             The deployment target, defaults to 'hal9.com'.
     """
 
-    response = requests.post('https://api.hal9.com/api/v1/deploy', json = {
-        'name': 'name',
-        'title': 'title',
-        'description': 'description',
-        'access': 'access',
-        'code': 'code',
-        'prompt': 'prompt',
-        'thumbnail': 'thumbnail',
-        'token': 'token',
-        'user': 'user',
-    })
-
-    if not response.ok:
-        print('Failed to deploy')
-        exit()
+    if target in targets:
+        targets[target](path)
+    else:
+        raise Exception(f"Deployment target '{target}' is unsupported.")

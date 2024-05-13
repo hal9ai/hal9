@@ -76,3 +76,5 @@ __pycache__/
 # PyInstaller
 *.manifest
 *.spec
+
+my-project/
