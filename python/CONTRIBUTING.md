@@ -8,3 +8,9 @@ Start by installing the package:
 pip install poetry
 poetry install
 ```
+
+YOu can then run commands locally as follows:
+
+```bash
+poetry run hal9 create my-project
+```

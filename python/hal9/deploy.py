@@ -1,10 +1,12 @@
 from hal9.targets.docker import deploy as deploy_docker
+from hal9.targets.hal9 import deploy as deploy_hal9
 
 targets = {
     'docker': deploy_docker,
+    'hal9': deploy_hal9,
 }
 
-def deploy(path :str, target :str) -> str:
+def deploy(path :str, target :str, url :str) -> str:
     """Deploy an application
 
     Parameters
@@ -16,6 +18,6 @@ def deploy(path :str, target :str) -> str:
     """
 
     if target in targets:
-        targets[target](path)
+        targets[target](path, url)
     else:
         raise Exception(f"Deployment target '{target}' is unsupported.")

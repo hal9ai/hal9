@@ -37,13 +37,14 @@ def run(path :str):
 @click.command()
 @click.argument('path')
 @click.option('--target', default="hal9", help='Deployment target')
-def deploy(path :str, target :str):
+@click.option('--url', default="https://api.hal9.com", help='Deployment url')
+def deploy(path :str, target :str, url :str):
     """
     Deploy Project
 
     PATH: The path to the project. Required argument.
     """
-    api_deploy(path, target)
+    api_deploy(path, target, url)
 
 cli.add_command(create)
 cli.add_command(run)

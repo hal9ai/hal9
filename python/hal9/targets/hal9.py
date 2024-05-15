@@ -1,20 +1,70 @@
 import requests
+import os
+import tempfile
+import zipfile
+from pathlib import Path
+import time
+import base64
+import json
 
-def deploy(path :str) -> str:
-    response = requests.post('https://api.hal9.com/api/v1/deploy', json = {
-        'name': 'name',
-        'title': 'title',
-        'description': 'description',
-        'access': 'access',
-        'code': 'code',
-        'prompt': 'prompt',
-        'thumbnail': 'thumbnail',
-        'token': 'token',
-        'user': 'user',
-    })
+def project_from_path(path :str) -> str:
+    return os.path.basename(os.path.abspath(path))
 
+def create_deployment(path :str) -> str:
+    temp_dir = Path(tempfile.mkdtemp())
+    zip_path = temp_dir / 'archive.zip'
+
+    with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for root, dirs, files in os.walk(path):
+            for file in files:
+                file_path = os.path.join(root, file)
+                zipf.write(file_path, os.path.relpath(file_path, path))
+    
+    print(f"Created {zip_path}")
+    return zip_path
+
+def request_deploy(path :str, url :str) -> str:
+    project_name = project_from_path(path)
+    zip_path = create_deployment(path)
+
+    unixtime = int(time.time())
+
+    with open(zip_path, 'rb') as file:
+        file_content = file.read()
+        encoded_content = base64.b64encode(file_content).decode('utf-8')
+        upload_name = f'{project_name}-{unixtime}.zip'
+
+    # use app.py until backend supports zip content
+    with open(Path(path) / 'app.py', 'rb') as file:
+        file_content = file.read()
+        encoded_content = base64.b64encode(file_content).decode('utf-8')
+        upload_name = f'{project_name}-{unixtime}.py'
+
+    payload = {
+        'filename': upload_name,
+        'content': encoded_content,
+        'type': 'ability',
+    }
+
+    print(f'Uploading {upload_name}')
+
+    headers = {
+        'Content-Type': 'application/json',
+        'ApiKey': os.environ['HAL9_TOKEN'],
+    }
+    response = requests.post(url + '/api/v1/asset', headers = headers, data = json.dumps(payload))
+    
     if not response.ok:
-        print('Failed to deploy')
-        exit()
+        response.raise_for_status()
 
-    return
+    response_data = response.json()
+
+def deploy(path :str, url :str) -> str:
+    if 'HAL9_TOKEN' in os.environ:
+        hal9_token = os.environ['HAL9_TOKEN']
+    else:
+        exit('HAL9_TOKEN environment variable missing, see https://hal9.com/deploy')
+        # hal9_token = browser_login()
+
+    request_deploy(path, url)
+
