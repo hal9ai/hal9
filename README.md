@@ -12,7 +12,7 @@ Focus on AI (RAG, fine-tuning, aligment, training) and skip engineering tasks (f
 
 ## Getting started
 
-To create and share a chatbot in seconds by running the following commands:
+Create and share a chatbot in seconds by running the following commands:
 
 ```bash
 pip install hal9
