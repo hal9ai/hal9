@@ -20,7 +20,6 @@ def create_deployment(path :str) -> str:
                 file_path = os.path.join(root, file)
                 zipf.write(file_path, os.path.relpath(file_path, path))
     
-    print(f"Created {zip_path}")
     return zip_path
 
 def request_deploy(path :str, url :str) -> str:
@@ -46,8 +45,6 @@ def request_deploy(path :str, url :str) -> str:
         'type': 'ability',
     }
 
-    print(f'Uploading {upload_name}')
-
     headers = {
         'Content-Type': 'application/json',
         'ApiKey': os.environ['HAL9_TOKEN'],
@@ -58,6 +55,7 @@ def request_deploy(path :str, url :str) -> str:
         response.raise_for_status()
 
     response_data = response.json()
+    print(response_data['url'])
 
 def deploy(path :str, url :str) -> str:
     if 'HAL9_TOKEN' in os.environ:
