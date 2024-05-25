@@ -23,7 +23,6 @@ jobs:
         with:
           path: website/build
   deploy:
-    name: Deploy to GitHub Pages
     needs: build
     permissions:
       pages: write
