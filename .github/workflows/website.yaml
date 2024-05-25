@@ -11,9 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: redkubes/docusaurus-deploy-action@v1
+      - uses: actions/setup-node@v2
         with:
-          source-folder: website
-          git-user: $SOME_USERNAME
-          git-password: ${{ secrets.GITHUB_TOKEN }}
-          deployment-branch: gh-pages
+          node-version: '20'
+      - run: yarn
+        working-directory: website
+      - run: yarn docusaurus deploy
+        working-directory: website
