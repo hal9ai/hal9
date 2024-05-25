@@ -11,7 +11,7 @@ Create and deploy generative (LLMs and difussers) applications (chatbots and API
 <Floating title="Open"><b>Open</b> to any model (OpenAI, Llama, Groq, Midjourney) and any library like (LangChainl, DSPy).</Floating>
 <Floating title="Intuitive">No need to learn app frameworks (flask), <b>intuitively</b> use stdin and stdout, or write file to disk.</Floating>
 <Floating title="Scalable">Engineers can integrate your app with <b>scalable</b> technilogies (Docker, Kubernetes, etc).</Floating>
-<Floating title="Powerful"><b>Powerful</b> architecture for long-running agents, multiple programming languages, and complex dependencies.</Floating>
+<Floating title="Powerful"><b>Powerful</b> architecture for agents, multiple programming languages, and complex dependencies.</Floating>
 
 Focus on AI (RAG, fine-tuning, aligment, training) and skip engineering tasks (frontend development, backend integration, deployment, operations).
 
