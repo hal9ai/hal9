@@ -52,6 +52,7 @@ const config = {
       navbar: {
         logo: {
           alt: 'Hal9 Logo',
+          href: 'https://hal9.com/',
           src: 'img/hal9.png',
           srcDark: 'img/hal9-white.png',
         },
