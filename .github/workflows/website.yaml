@@ -6,6 +6,9 @@ on:
       - website/**
       - .github/workflows/website.yaml
 
+env:
+  GIT_USER: javierluraschi
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
