@@ -14,7 +14,7 @@ The previous version of GenAI was reffered to as AI and was based on Deep Neural
 
 GenAI uses AI in the opposite way -- not to classify, but to generate the content it classifies. For example, create pixels in an image that shows a cat, or create text in spanish.
 
-Read the [Learn - GenAI](learn-genai/start) section to learn everything about AI and GenAI.
+Read the *Learn - GenAI* section to learn everything about AI and GenAI.
 
 ### GenApp
 
@@ -28,5 +28,5 @@ For example, even if an AI or a robot was capbale of flying a plane autonomously
 
 We don't know exactly what the new GenApps will look like and how our jobs or world will transform, but we are certainly optimistic that GenApps will help us solve the harder problems the world is facing around health, education, climate, energy, space exploration, entertaiment, etc.
 
-Read the [Learn - GenApp](learn-genapp/start) section to learn how to create GenApps.
+Read the *Learn - GenApp* section to learn how to create GenApps.
 
