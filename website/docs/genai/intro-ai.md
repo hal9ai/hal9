@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 import RosenblattNYT from './intro-ai-nyt-learning-device-1958.jpeg';
