@@ -10,7 +10,7 @@ import GPT1 from './llm-gpt-1.png';
 
 ## Embeddings
 
-An Autoencoder is a type of [DNN](intro-ai#) that does not require classification labels but rather, performs unsupervised learning by asking the DNN to classify the the inputs of the network as the outputs. For example, when classifying the image of a cat, the pixels of that cat would be the input and the classificatio label would also be all the pixels of the cat.
+An Autoencoder is a type of [DNN](dnn.md) that does not require classification labels but rather, performs unsupervised learning by asking the DNN to classify the the inputs of the network as the outputs. For example, when classifying the image of a cat, the pixels of that cat would be the input and the classificatio label would also be all the pixels of the cat.
 
 <center><a href="https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798"><img src={Autoencoder} style={{width: 500}} /></a></center>
 

@@ -4,17 +4,17 @@ sidebar_position: 1
 
 # Intro
 
-**What is Hal9?** Hal9 is a Python library to help you write your own versions of ChatGPT -- We reffer to those applications as Generative Apps since they use GenAI.
+**What is Hal9?** Hal9 is a Python library to help you write your own versions of ChatGPT -- We refer to those applications as Generative Apps since they use GenAI.
 
 ### Generative AI
 
 Generative Artificial Intelligence (**GenAI**), a version of Artificial Intelligence (**AI**) that is good at generating content: text, images, sounds, videos, code, etc.
 
-The previous version of GenAI, reffered to as AI, was based on Deep Neural Networks (**DNN**), which are brain-inspired math equations optimized useful for content classificaiton. For example, it enabled computers to identify if pixels in an image represent a cat, or understand if text is written in Spanish.
+The previous version of GenAI, refered to as AI, was based on Deep Neural Networks (**DNN**), which are brain-inspired math equations optimized useful for content classificaiton. For example, it enabled computers to identify if pixels in an image represent a cat, or understand if text is written in Spanish.
 
 GenAI uses AI in the opposite way -- not to classify, but to generate content on its own. For example, generate pixels for a cat image, or generate text in Spanish.
 
-Read next the [Intro to AI](genai/intro-ai) section to learn the foundations that lead us to Generative AI.
+Head next to the [Deep Neural Networks](genai/dnn) section to learn the foundations that lead us to Generative AI.
 
 ### Generative Apps
 
