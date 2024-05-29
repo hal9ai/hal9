@@ -57,6 +57,7 @@ const config = {
           href: 'https://hal9.com/',
           src: 'img/hal9.png',
           srcDark: 'img/hal9-white.png',
+          target: '_self'
         },
         items: [
           {
