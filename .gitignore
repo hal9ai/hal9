@@ -75,3 +75,6 @@ __pycache__/
 *.spec
 
 my-project/
+
+# Bin files
+*.bin
