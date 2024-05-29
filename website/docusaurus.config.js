@@ -12,7 +12,7 @@ const config = {
   tagline: 'Dinosaurs are cool',
   favicon: 'img/favicon.ico',
   url: 'https://hal9.com',
-  baseUrl: '/hal9/',
+  baseUrl: '/',
   organizationName: 'hal9ai',
   projectName: 'hal9',
   plugins: ['docusaurus-plugin-sass'],
