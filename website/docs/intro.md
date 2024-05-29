@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Intro
 
-**What is Hal9?** Hal9 is a Python library to help you write your own versions of ChatGPT -- We refer to those applications as Generative Apps since they use GenAI.
+**What is Hal9?** Hal9 is a platform to help you write your own versions of ChatGPT -- We refer to those applications as Generative Apps since they use GenAI.
 
 ### Generative AI
 
@@ -28,5 +28,5 @@ For example, even if an AI or a robot was capbale of flying a airplane autonomou
 
 We don't know exactly what the new GenApps will look like and how our jobs or world will transform, but we are optimistic that GenApps will help us solve the hard problems the world is facing in healthcare, education, climate, energy, space exploration, entertaiment, and so on.
 
-Read the [Generative Apps - Hello World](genapps/hello-world) section to learn how to create your first Generative Application.
+Read the [Chatbots](genapps/chatbots) section to learn how to create your first Generative Application.
 

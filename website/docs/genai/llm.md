@@ -39,4 +39,3 @@ Transformers also surprised us with another level of emergent abilities, related
 The *Generative* term in GPT comes from the ability to generate text (embeddings) and the focus on applications that generating content for question answering, summarization, and many of the emergent abilities a GPT shows.
 
 Refer to [Advancements in Generative AI](https://arxiv.org/abs/2311.10242) for additional details or hop into the [Prompting](prompts.md) section to learn techniques to maximize the practical use of LLMs.
-
