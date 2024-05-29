@@ -31,6 +31,8 @@ const config = {
           sidebarPath: './sidebars.js',
           editUrl:
             'https://github.com/hal9ai/hal9/tree/main/docs/reference',
+          path: 'learn',
+          routeBasePath: 'learn',
         },
         blog: {
           showReadingTime: true,

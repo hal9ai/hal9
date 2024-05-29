@@ -24,5 +24,5 @@ hal9 create chatbot
 hal9 deploy chatbot
 ```
 
-To customize further, check [docs](docs/intro) section.
+Next try the [learn](learn/intro) intro section.
 
