@@ -11,7 +11,7 @@ import Imagenet from './dnn-imagenet.jpg';
 
 ## The Perceptron
 
-Back in 1958, Frank Rosenblatt believed computers should be able to recognize people and call out their names and instantly translate speech in one language or writing in another language.
+Back in 1958, [Frank Rosenblatt](https://en.wikipedia.org/wiki/Frank_Rosenblatt) believed computers should be able to recognize people and call out their names and instantly translate speech in one language or writing in another language.
 
 <center><img src={RosenblattNYT} alt="New York Times 1958 on Frank Rosenblatt" style={{width: 500}} /></center>
 
@@ -21,13 +21,13 @@ The perceptron maps stimuli to numeric inputs that are weighted into a threshold
 
 <center><img src="https://latex.codecogs.com/svg.latex?f(x) = \begin{cases} 1 & \sum_{i=1}^m w_i x_i + b > 0\\ 0 & \text{otherwise} \end{cases}" /></center>
 
-For example, if you wanted to classify the number one in an image of 2x2 pixels, you could encode these pixels into an array of values `I = [[0,1], [0,1]]` and use the perceptron equation with coefficients `W = [[-1, 1], [-1, 1]]` such that multiplying the pixels times the array of coefficients `W*I` classify the image as the number one when the value is larger than zero.
+For example, if you wanted to classify the number one in an image of 2x2 [pixels](https://en.wikipedia.org/wiki/Pixel), you could encode these pixels into an array of values `I = [[0,1], [0,1]]` and use the perceptron equation with coefficients `W = [[-1, 1], [-1, 1]]` such that multiplying the pixels times the array of coefficients `W*I` classify the image as the number one when the value is larger than zero.
 
-Minsky and Papert found out that a single perceptron can classify only datasets that are linearly separable; however, they also revealed in their book Perceptrons that layering perceptrons would bring additional classification capabilities, we refer to layered perceptrons as Neural Networks (NN). The next Figure presents the original diagram showcasing the multilayer perceptron neural network.
+Minsky and Papert found out that a single perceptron can classify only datasets that are [linearly separable](https://en.wikipedia.org/wiki/Linear_separability); however, they also revealed in their book [Perceptrons](https://direct.mit.edu/books/monograph/3132/PerceptronsAn-Introduction-to-Computational) that layering perceptrons would bring additional classification capabilities, we refer to layered perceptrons as **Neural Networks** (**NN**). The next Figure presents the original diagram showcasing the multilayer perceptron neural network.
 
 <center><img src={PerceptronLayered} alt="Multi-layered Perceptron" style={{width: 500}} /></center>
 
-These layers of chained perceptrons are what we call today Deep Neural Networks. However, Minsky and Papert had no clue as to how to find all the correct weights `W` to classify more complex values. Intuitively, we could define an image with 128x128 pixels and connect several perceptrons together; if we could only find the right `W` values, we could potentially recognize people in an image -- for many decades, we found no solution as to how to find the correct weights for complex layers with many perceptrons.
+These layers of chained perceptrons are what we call today **Deep Neural Networks** (**DNN**). However, Minsky and Papert had no clue as to how to find all the correct weights `W` to classify more complex values. Intuitively, we could define an image with 128x128 pixels and connect several perceptrons together; if we could only find the right `W` values, we could potentially recognize people in an image -- for many decades, we found no solution as to how to find the correct weights for complex layers with many perceptrons.
 
 ## Backpropagation
 
@@ -35,13 +35,15 @@ Let's go back to our 2x2 pixels image classification example. We can redefine th
 
 You can think of *f(W)-1* as the error measurement that we are trying to minimize, we don't want any random *W* values, we want weights that help us classify the image correctly.
 
-Calculus to the rescue! We can solve equations like *f(W)-1* using the [Newton–Raphson method](https://en.wikipedia.org/wiki/Newton%27s_method), which differentiates the equation, picks random numbers of W, and then moves towards the direction that gets closer to the solution (the local minima) using the derivative of the equation. Check [Khan Academy's Newton's method](https://www.khanacademy.org/math/ap-calculus-ab/ab-differentiation-1-new/ab-2-1/v/newton-leibniz-and-usain-bolt).
+Calculus to the rescue. We can solve equations like *f(W)-1* using the [Newton–Raphson method](https://en.wikipedia.org/wiki/Newton%27s_method), which differentiates the equation, picks random numbers of W, and then moves towards the direction that gets closer to the solution (the local minima) using the derivative of the equation. Check [Khan Academy's Newton's method](https://www.khanacademy.org/math/ap-calculus-ab/ab-differentiation-1-new/ab-2-1/v/newton-leibniz-and-usain-bolt).
 
 <center><a href="https://towardsdatascience.com/newton-raphson-explained-and-visualised-23f63da21bd5"><img src={NewtonMethod} alt="Multi-layered Perceptron" style={{width: 500}} /></a></center>
 
-This approach, among many other improvements beyond the scope of this introduction, is what Geoff Hinton used to find weights for networks with many layers, which we refer to as **Deep Neural Networks** (**DNN**). The strategy used in DNN is called *Backpropagation* and uses **gradient descent** as the method used to find local minima in n-dimensional spaces. The term backpropagation comes from the process of finding the local minima by propagating the weights back (from output to input) to minimize the error backwards using the derivative function to guide the direction. You can think of backpropagation as Newton-Raphson method for more complex equations. The process of finding the right weights is referred to as **training** the model.
+This approach, among many other improvements that are beyond the scope of this introduction, is what [Geoff Hinton](https://en.wikipedia.org/wiki/Geoffrey_Hinton) used to find weights for DNN.
 
-Is forth mentioning that the original perceptron function is not differentiable, to solve this problem, we replace that function that is similar enough, like a sigmoid function or a ReLU function, that are close enough and we call it a day. We also use techniques like dropout to escape local minima in our search for weights.
+The best strategy used to find weights in DNNs is called **[Backpropagation](https://en.wikipedia.org/wiki/Backpropagation)** and uses **[gradient descent](https://en.wikipedia.org/wiki/Gradient_descent)** as the method used to find local minima in n-dimensional spaces. The term backpropagation comes from the process of finding the local minima by propagating the adjustments for the weights (backwards from output to input) to minimize the error using the derivative function to guide the direction. You can think of backpropagation as Newton-Raphson method for more complex equations. The process of finding the right weights is referred to as **training** the model. Check [The spelled-out intro to neural networks and backpropagation](https://youtu.be/VMj-3S1tku0?si=V9qAvlc7UNf3Ydy0) by [Andrej Karpathy](https://karpathy.ai/) for a detailed video explanation.
+
+Is worth mentioning that the original perceptron function is not differentiable, to solve this problem, we replace it with a a function that is similar enough, like a [sigmoid function](https://en.wikipedia.org/wiki/Sigmoid_function) or a [ReLU function](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)), which are close enough to the non-differentiable [step function](https://en.wikipedia.org/wiki/Heaviside_step_function). We also use techniques like [dropout](https://en.wikipedia.org/wiki/Dilution_(neural_networks)) to prevent [overfitting](https://en.wikipedia.org/wiki/Overfitting) in our search for optimal weights.
 
 ## Autodiff
 
