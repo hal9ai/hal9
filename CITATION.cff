@@ -1,0 +1,12 @@
+# This CITATION.cff file was generated with cffinit.
+cff-version: 1.2.0
+title: Hal9
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Javier
+    family-names: Luraschi
+    affiliation: Hal9
+license: MIT
