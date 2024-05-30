@@ -1441,7 +1441,7 @@
     react-json-view-lite "^1.2.0"
     tslib "^2.6.0"
 
-"@docusaurus/plugin-google-analytics@3.3.2":
+"@docusaurus/plugin-google-analytics@3.3.2", "@docusaurus/plugin-google-analytics@^3.3.2":
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/@docusaurus/plugin-google-analytics/-/plugin-google-analytics-3.3.2.tgz#6e51ee8593c79172ed2b2ac4d33e300f04bfbc87"
   integrity sha512-jXhrEIhYPSClMBK6/IA8qf1/FBoxqGXZvg7EuBax9HaK9+kL3L0TJIlatd8jQJOMtds8mKw806TOCc3rtEad1A==
