@@ -1,7 +1,7 @@
-# Hal9: Create and Share Generative Apps
+# [Hal9](https://hal9.com/): Create and Share Generative Apps
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Hal9 PyPi Downloads](https://img.shields.io/pypi/dm/hal9?label=PyPI)](https://pypi.org/project/hal9/)
+[![Hal9 PyPi Downloads](https://pypistats.org/packages/hal9)
 [![GitHub star chart](https://img.shields.io/github/stars/hal9ai/hal9?style=flat-square)](https://star-history.com/#hal9ai/hal9)
 
 Create and deploy generative ([LLMs](https://github.com/Hannibal046/Awesome-LLM) and [diffusers](https://github.com/huggingface/diffusers)) applications (chatbots and APIs) in seconds.
@@ -86,5 +86,5 @@ For personal use, `--target hal9` supports a free tier at `hal9.com`; enterprise
 
 ## Contributing
 
-Pull Requests are welcomed to consider additional application templates or deployment targets. See [CONTIBUTE.md](CONTIBUTE.md).
+Pull Requests are welcomed to consider additional application templates or deployment targets. See [CONTRIBUTING](CONTRIBUTING).
 
