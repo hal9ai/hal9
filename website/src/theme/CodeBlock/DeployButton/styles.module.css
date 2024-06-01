@@ -1,0 +1,47 @@
+:global(.theme-code-block:hover) .deployButtonCopied {
+  opacity: 1 !important;
+}
+
+.deployButtonIcons {
+  position: relative;
+  width: 1.325rem;
+  height: 1.325rem;
+}
+
+.deployButtonIcons svg {
+  width: 2em;
+  height: 2em;
+  margin-left: -0.14em;
+  margin-top: -0.2em;
+}
+
+.deployButtonIcon,
+.deployButtonSuccessIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  fill: currentColor;
+  opacity: inherit;
+  width: inherit;
+  height: inherit;
+  transition: all var(--ifm-transition-fast) ease;
+}
+
+.deployButtonSuccessIcon {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.33);
+  opacity: 0;
+  color: #00d600;
+}
+
+.deployButtonCopied .deployButtonIcon {
+  transform: scale(0.33);
+  opacity: 0;
+}
+
+.deployButtonCopied .deployButtonSuccessIcon {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition-delay: 0.075s;
+}

@@ -27,7 +27,8 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.3.2",
-    "@docusaurus/types": "3.3.2"
+    "@docusaurus/types": "3.3.2",
+    "@iconify/react": "^5.0.1"
   },
   "browserslist": {
     "production": [
