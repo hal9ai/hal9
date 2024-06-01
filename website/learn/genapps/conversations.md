@@ -7,8 +7,8 @@ We can accomplish this with something like:
 
 ```python
 while(True):
-  echo = input()
-  print(f"Echo: {echo}")
+  echo = input("What's your name? ")
+  print(f"Hello, {echo}!")
 ```
 
 However, for various LLMs we will need to pass the conversation history. As a first approach.
