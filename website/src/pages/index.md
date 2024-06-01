@@ -32,5 +32,5 @@ hal9 deploy chatbot
 
 <div class="FloatingWrapper">
   <Floating title="Generative AI" href="learn/genai/dnn">Learn <b>Generative AI</b> concepts: neural networks, embeddings, transformers, LLMs and GPTs.</Floating>
-  <Floating title="Genearative App" href="learn/genapps/chatbots">Learn how to build <b>Geneartive Applications</b> (chatbots and APIs) that make use of Geneartive AI.</Floating>
+  <Floating title="Genearative App" href="learn/genapps/chatbots">Learn how to build <b>Generative Applications</b> (chatbots and APIs) that make use of Geneartive AI.</Floating>
 </div>

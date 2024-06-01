@@ -1,1 +1,1 @@
-See [../README.md](../README.md)
+See [../README.md](../README.md) and See [CONTRIBUTING.md](CONTRIBUTING.md)

@@ -9,6 +9,8 @@ import Imagenet from './dnn-imagenet.jpg';
 
 # Deep Neural Networks
 
+Learn the origins of AI from the perceptron to deep neural networks, covering key advancements like backpropagation, gradient descent, and the importance of GPUs and large datasets in training complex models.
+
 ## The Perceptron
 
 Back in 1958, [Frank Rosenblatt](https://en.wikipedia.org/wiki/Frank_Rosenblatt) believed computers should be able to recognize people and call out their names and instantly translate speech in one language or writing in another language.

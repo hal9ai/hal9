@@ -8,6 +8,8 @@ import GPT1 from './llm-gpt-1.png';
 
 # Large Language Models
 
+Learn foundational concepts like autoencoders, embeddings, transformers, and attention that lead to the development of GPTs and LLMs that exhibit advanced emergent abilities that generate content effectively.
+
 ## Embeddings
 
 An Autoencoder is a type of [DNN](dnn.md) that does not require classification labels but rather, performs unsupervised learning by asking the DNN to classify the inputs of the network as the outputs. For example, when classifying the image of a cat, the pixels of that cat would be the input and the classification label would also be all the pixels of the cat.
