@@ -25,7 +25,7 @@ messages = [
 ];
 
 while(True):
-  messages.append({"role": "user", "content": input("")})
+  messages.append({"role": "user", "content": input()})
   completion = OpenAI().chat.completions.create(model = "gpt-4", messages = messages)
   print(completion.choices[0].message.content)
 ```
@@ -45,7 +45,7 @@ else:
   messages = [{ "role": "system", "content": "Reply in Spanish" }];
 
 while(True):
-  messages.append({"role": "user", "content": input("")})
+  messages.append({"role": "user", "content": input()})
   completion = OpenAI().chat.completions.create(model = "gpt-4", messages = messages)
   print(completion.choices[0].message.content)
 

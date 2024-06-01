@@ -1,7 +1,7 @@
-export const Floating = ({children, title}) => (
+export const Floating = ({children, title, href}) => (
   <div
     class="floating">
-    <h1>{title}</h1>
+    {href ? <a href={href}><h1>{title}</h1></a> : (<h1>{title}</h1>)}
     {children}
   </div>
 );

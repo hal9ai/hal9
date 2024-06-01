@@ -13,7 +13,7 @@ stream = OpenAI().chat.completions.create(
   model = "gpt-4",
   messages = [
     {"role": "system", "content": "Reply in Spanish"},
-    {"role": "user", "content": input("")},
+    {"role": "user", "content": input()},
   ],
   stream = True,
  )
