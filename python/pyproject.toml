@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "hal9"
-version = "2.1.8"
+version = "2.1.9"
 description = ""
 authors = ["Javier Luraschi <javier@hal9.ai>"]
 readme = "README.md"
 include = ["templates/openai/app.py", "templates/docker/Dockerfile"]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.9.7 || >3.9.7,<4.0"
+python = ">=3.8w"
 requests = "^2.28.2"
 
 click = "^8.1.7"

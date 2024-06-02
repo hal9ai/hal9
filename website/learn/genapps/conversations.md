@@ -43,7 +43,7 @@ To make your chatbot behave correctly even after Python restarts, we can store t
 
 ```python
 from openai import OpenAI
-from hal9 import h9
+import hal9 as h9
 
 messages = h9.load("messages", [{ "role": "system", "content": "Spanish replies" }])
 

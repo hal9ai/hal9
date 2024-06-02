@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 def load(file, default):
   file_path = Path(file + ".json")

@@ -9,8 +9,20 @@ pip install poetry
 poetry install
 ```
 
-YOu can then run commands locally as follows:
+You can then run commands locally as follows:
 
 ```bash
 poetry run hal9 create my-project
+```
+
+Alternatevely,
+
+```bash
+pip install hal9
+```
+
+Followed by running as
+
+```bash
+hal9 create my-project
 ```
