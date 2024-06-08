@@ -22,7 +22,7 @@ def create_deployment(path :str) -> str:
     
     return zip_path
 
-def request_deploy(path :str, url :str) -> str:
+def request_deploy(path :str, url :str, name :str, typename :str) -> str:
     project_name = project_from_path(path)
     zip_path = create_deployment(path)
 
@@ -42,7 +42,8 @@ def request_deploy(path :str, url :str) -> str:
     payload = {
         'filename': upload_name,
         'content': encoded_content,
-        'type': 'ability',
+        'type': typename,
+        'name': name,
     }
 
     headers = {
@@ -57,12 +58,12 @@ def request_deploy(path :str, url :str) -> str:
     response_data = response.json()
     print(response_data['url'])
 
-def deploy(path :str, url :str) -> str:
+def deploy(path :str, url :str, name :str, typename :str) -> str:
     if 'HAL9_TOKEN' in os.environ:
         hal9_token = os.environ['HAL9_TOKEN']
     else:
-        exit('HAL9_TOKEN environment variable missing, see https://hal9.com/deploy')
+        exit(f'HAL9_TOKEN environment variable missing, see {url}/deploy')
         # hal9_token = browser_login()
 
-    request_deploy(path, url)
+    request_deploy(path, url, name, typename)
 

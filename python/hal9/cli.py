@@ -3,6 +3,8 @@ from collections import OrderedDict
 from hal9.create import create as api_create
 from hal9.run import run as api_run
 from hal9.deploy import deploy as api_deploy
+import datetime
+import os
 
 @click.group()
 def cli():
@@ -20,7 +22,7 @@ def create(path :str):
   """
   Create Project
 
-  PATH: The path for the new project. Required argument.
+  --path: The path for the new project. Required argument.
   """
   api_create(path, "openai")
 
@@ -30,7 +32,7 @@ def run(path :str):
   """
   Run Project
 
-  PATH: The path to the project. Required argument.
+  --path: The path to the project. Required argument.
   """
   api_run(path)
 
@@ -38,13 +40,22 @@ def run(path :str):
 @click.argument('path')
 @click.option('--target', default="hal9", help='Deployment target')
 @click.option('--url', default="https://api.hal9.com", help='Deployment url')
-def deploy(path :str, target :str, url :str):
+@click.option('--name', default=None, help='Deployment name')
+@click.option('--type', '-f', 'typename', default='ability', help='Deployment content')
+def deploy(path :str, target :str, url :str, name :str, typename :str):
   """
   Deploy Project
 
-  PATH: The path to the project. Required argument.
+  --path: The path to the project. Required argument.
+  --url: The server url to deploy to. Defaults to https://api.hal9.com.
+  --name: The server url to deploy to. Defaults to https://api.hal9.com.
+  --type: The type of content to deploy. Defaults to (chatbot) ability.
   """
-  api_deploy(path, target, url)
+
+  if (name is None):
+    name = f'{os.path.basename(path)}-{int(datetime.datetime.now().timestamp() * 1000)}'
+
+  api_deploy(path, target, url, name, typename)
 
 cli.add_command(create)
 cli.add_command(run)
