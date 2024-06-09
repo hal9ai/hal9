@@ -165,4 +165,4 @@ Prompt engineering is a powerful approach to optimizing the performance of large
 
   
 
-Refer to [Advancements in Generative AI](https://arxiv.org/abs/2311.10242) for additional details.
+Refer to [A Systematic Survey of Prompt Engineering in Large Language Models: Techniques and Applications](https://arxiv.org/pdf/2402.07927) for additional details.
