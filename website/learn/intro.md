@@ -28,5 +28,5 @@ For example, even if an AI or a robot was capbale of flying a airplane autonomou
 
 We don't know exactly what the new GenApps will look like and how our jobs or world will transform, but we are optimistic that GenApps will help us solve the hard problems the world is facing in healthcare, education, climate, energy, space exploration, entertaiment, and so on.
 
-Read the [Applications](genapps/apps) section as the first step towards learning how to create Generative Applications.
+Read the [Applications](genapps/intro) section as the first step towards learning how to create Generative Applications.
 
