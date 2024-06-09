@@ -30,22 +30,22 @@ To customize further, read the following sections.
 By default `hal9 create` we will use the OpenAI template, you can choose different ones as follows:
 
 ```bash
-hal9 create my-project --template openai
-hal9 create my-project --template midjourney
-hal9 create my-project --template groq
-hal9 create my-project --template langchain
+hal9 create my-chatbot --template openai
+hal9 create my-chatbot --template midjourney
+hal9 create my-chatbot --template groq
+hal9 create my-chatbot --template langchain
 ```
 
 A template provides ready to use code with specific technologies and use cases. If you already have code, you can skip this step.
 
 ## Development
 
-To make changes to your project, open `my-project/` in your IDE and modify `my-project/app.py`.
+To make changes to your project, open `my-chatbot/` in your IDE and modify `my-chatbot/app.py`.
 
 You can then run your project as follows:
 
 ```bash
-cd my-project
+cd my-chatbot
 
 pip install -r requirements.txt
 
@@ -64,7 +64,7 @@ or
 
 ```bash
 cd ..
-hal9 run my-project
+hal9 run my-chatbot
 ```
 
 This command is just a convenience wrapper over `python app.py`
@@ -76,8 +76,8 @@ The deploy command will prepare for deployment your generative app.
 For example, you can prepare deployment as a generative app (Hal9), an API (Flask), a data app (Streamlit), or a container (Docker).
 
 ```bash
-hal9 deploy my-project --target hal9
-hal9 deploy my-project --target docker
+hal9 deploy my-chatbot --target hal9
+hal9 deploy my-chatbot --target docker
 ```
 
 Eeach command is tasked with preparing the deployment of your project folder. For example, `--target docker` will create a `Dockerfile` file that gets this project ready to run in cloud containers.
