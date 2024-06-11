@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.2.3
+
+- Only add extensions to save and load when needed
+
 ## v2.2.0
 
 - Add support for name parameter in deploy to overwrite content
