@@ -9,6 +9,7 @@ This section will describe some of the possible use cases.
 The first approach to using code from and LLM is to run it to compute complex answers, we can accomplsih this as follows:
 
 ```python
+import hal9 as h9
 import os
 from openai import OpenAI
 
@@ -20,7 +21,7 @@ completion = OpenAI().chat.completions.create(
   ]
  )
 
-code = completion.choices[0].message.content
+code = h9.extract(completion.choices[0].message.content)
 print(code)
 exec(code)
 ```
@@ -32,6 +33,7 @@ LLMs are not really that good at doing math; however, with the help of this code
 We can take this a step further and make use of external data sources to compute even more complex questions. Let's use an spreadsheet file in CSV format to extract the headers, ask the LLM to compute a query that answers the user question, and run the results:
 
 ```python
+import hal9 as h9
 import os
 from openai import OpenAI
 import pandas as pd
@@ -54,8 +56,7 @@ completion = OpenAI().chat.completions.create(
   ]
  )
 
-code = completion.choices[0].message.content
-print(code)
+code = h9.extract(completion.choices[0].message.content)
 exec(code)
 ```
 
@@ -73,14 +74,16 @@ completion = OpenAI().chat.completions.create(
   model = "gpt-4",
   messages = [
     {"role": "system", "content": f"""
-        Only reply with plain Python code, use no markdown.
+        Only reply with plain Python code.
         Write streamlit code to answer the user requirements.
     """},
     {"role": "user", "content": input("What app do you need?")},
   ]
  )
 
-code = completion.choices[0].message.content
+code = h9.extract(completion.choices[0].message.content, "python")
+
+print("Finished creating your app")
 h9.save("app.py", code)
 ```
 

@@ -1,8 +1,12 @@
 # Changelog
 
+## v2.2.4
+
+- Add helper function `extract` to extract code blocks
+
 ## v2.2.3
 
-- Only add extensions to save and load when needed
+- Only add extensions to `save` and `load` when needed
 
 ## v2.2.0
 
@@ -10,7 +14,7 @@
 
 ## v2.1.8
 
-- Add support for load, save functions
+- Add support for `load`, `save` functions
 
 ## v2.0.0
 
