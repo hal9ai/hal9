@@ -36,7 +36,7 @@ print(completion.choices[0].message.content)
 However, the previous code will forget messages and take too long to display an answer. We can improve this using the memory and streaming concepts from the [chatbots](../apps/chatbots.md) section:
 
 ```python
-import os
+import hal9 as h9
 from openai import OpenAI
 
 messages = h9.load("messages", [{ "role": "system", "content": "Reply in Spanish" }])
@@ -61,6 +61,7 @@ h9.save("messages", messages)
 You can also make use of any other LLM and even open source LLMs. The following example makes use of Groq and Meta's Llama LLM. One advantage of using Groq over OpenAI is that their system is optimized for speed, so expect this code to run much faster:
 
 ```python
+import hal9 as h9
 from groq import Groq
 
 messages = h9.load("messages", [{ "role": "system", "content": "Reply in Spanish" }])

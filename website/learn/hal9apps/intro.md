@@ -36,8 +36,8 @@ Same for Flask APIs:
 ```bash
 pip install hal9
 
-hal9 create webapp --type flask
-hal9 deploy webapp --type flask
+hal9 create webapi --type flask
+hal9 deploy webapi --type flask
 ```
 
 Or you can even send a pull request to [Hal9's GitHub](https://github.com/hal9ai/hal9) project to extend this to any other applications.

@@ -66,7 +66,7 @@ Taking this approach even further, instead of relying on `print` to communicate 
 We will ask the LLM to generate a web application which we can then run:
 
 ```python
-import os
+import hal9 as h9
 from openai import OpenAI
 
 completion = OpenAI().chat.completions.create(
