@@ -1,6 +1,7 @@
 import json
 import os
 from pathlib import Path
+from hal9.filetotext import extract_from_url
 
 def add_extension(path):
   _, extension = os.path.splitext(path)
@@ -9,8 +10,8 @@ def add_extension(path):
   return Path(path)
 
 def get_hidden(file_path):
-    directory = path.parent
-    file_name = path.name
+    directory = file_path.parent
+    file_name = file_path.name
     hidden_file_name = "." + file_name
     hidden_path = directory / hidden_file_name
     if hidden_path.exists():
@@ -48,3 +49,10 @@ def save(name, contents, hidden = False):
     contents = json.dumps(contents, indent=2)
   
   file_path.write_text(contents)
+
+original_input = input
+def input(prompt = "", extract = True):
+  text = original_input(prompt)
+  if extract:
+    text = extract_from_url(text)
+  return text

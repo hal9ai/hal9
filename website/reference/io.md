@@ -1,6 +1,17 @@
-# Files
+# IO
 
-Convenience functions to load and save files.
+Convenience functions to process inputs and outputs.
+
+## Input
+
+`input (prompt, extract)` <br/><br/>
+
+Wraps `input()` with an optional `extract` parameter to convert URLs to text
+
+| Param | Type | Description |
+| --- | --- | --- |
+| prompt | <code>String</code> | A String, representing a default message before the input. |
+| extract | <code>Boolean</code> | `False` to not extract the contents of URL as text, defaults to `True`. Requires the `textract` package to be installed.
 
 ## Load
 
