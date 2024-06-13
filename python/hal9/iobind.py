@@ -9,16 +9,21 @@ def add_extension(path):
   return Path(path)
 
 def get_hidden(file_path):
-  hidden = f".${file_path}"
-  if hidden.exists():
-    return hidden
-  return file_path
+    directory = path.parent
+    file_name = path.name
+    hidden_file_name = "." + file_name
+    hidden_path = directory / hidden_file_name
+    if hidden_path.exists():
+        return hidden_path
+    return file_path
 
 def add_hidden(file_path, hidden):
-  prefix = ""
   if hidden:
-    prefix = "."
-  return prefix + file_path
+    directory = file_path.parent
+    file_name = file_path.name
+    hidden_file_name = "." + file_name
+    file_path = directory / hidden_file_name
+  return file_path
 
 def get_extension(file_path):
   _, extension = os.path.splitext(file_path)

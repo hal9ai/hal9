@@ -23,4 +23,4 @@ Saves to `name` file the given `contents`.
 | --- | --- | --- |
 | name | <code>String</code> | The file name of the file to save. |
 | contents | <code>String</code> | The contents of the file to save. |
-| hidden | <code>Boolean</code> | `True` to make file visible user, defaults to `False`.
+| hidden | <code>Boolean</code> | `True` to hide file from user, defaults to `False`.
