@@ -50,8 +50,9 @@ def save(name, contents, hidden = False):
   
   file_path.write_text(contents)
 
-def input(prompt, extract = True):
-  text = input(prompt)
+original_input = input
+def input(prompt = "", extract = True):
+  text = original_input(prompt)
   if extract:
     text = extract_from_url(text)
   return text
