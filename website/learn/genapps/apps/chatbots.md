@@ -41,7 +41,7 @@ word = input("Give me a word: ")
 all_words.append(word)
 print(f"I remember: {', '.join(all_words)}")
 
-h9.save("words", messages)
+h9.save("words", messages, hidden = True)
 ```
 
 In contrast to stateless, a computer program that does not need to remember its state on its own, is referred to as **stateles**. The system as a whole, chatbot and file, is indeed stateful; however, giving someone else the job of remembering state (in this case the file) makes programs more reliable, efficient, and is a concept we will use through this guide.

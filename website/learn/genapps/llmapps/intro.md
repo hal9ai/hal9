@@ -53,7 +53,7 @@ for chunk in stream:
     print(chunk.choices[0].delta.content, end="")
 
 messages.append({"role": "ai", "content": completion.choices[0].message.content})
-h9.save("messages", messages)
+h9.save("messages", messages, hidden = True)
 ```
 
 ## Groq
@@ -77,5 +77,5 @@ for chunk in completion:
   print(chunk.choices[0].delta.content or "", end="")
 
 messages.append({"role": "ai", "content": completion.choices[0].message.content})
-h9.save("messages", messages)
+h9.save("messages", messages, hidden = True)
 ```

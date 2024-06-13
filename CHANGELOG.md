@@ -1,21 +1,25 @@
 # Changelog
 
-## v2.2.4
+## 2.2.6
+
+- Add `hidden` parameter to `save` to save file as hidden
+
+## 2.2.4
 
 - Add helper function `extract` to extract code blocks
 
-## v2.2.3
+## 2.2.3
 
 - Only add extensions to `save` and `load` when needed
 
-## v2.2.0
+## 2.2.0
 
 - Add support for name parameter in deploy to overwrite content
 
-## v2.1.8
+## 2.1.8
 
 - Add support for `load`, `save` functions
 
-## v2.0.0
+## 2.0.0
 
 - Create and deploy projects

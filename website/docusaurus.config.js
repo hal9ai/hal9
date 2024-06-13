@@ -30,17 +30,17 @@ const config = {
         docs: {
           sidebarPath: './sidebars.js',
           editUrl:
-            'https://github.com/hal9ai/hal9/tree/main/docs/reference',
+            'https://github.com/hal9ai/hal9/tree/main/website/learn',
           path: 'learn',
           routeBasePath: 'learn',
         },
         blog: {
           showReadingTime: true,
           editUrl:
-            'https://github.com/hal9ai/hal9/tree/main/docs/blog',
+            'https://github.com/hal9ai/hal9/tree/main/website/blog',
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.scss'),
+          customCss: require.resolve('./src/css/custom.css'),
         },
         googleAnalytics: {
           trackingID: 'UA-188412659-2',
@@ -48,7 +48,13 @@ const config = {
       }),
     ],
   ],
-
+  plugins: [
+    ['@docusaurus/plugin-content-docs', {
+      id: 'reference',
+      path: 'reference',
+      routeBasePath: 'reference',
+    }]
+  ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -69,6 +75,7 @@ const config = {
             position: 'left',
             label: 'Learn',
           },
+          {to: '/reference/code', label: 'Reference', position: 'left'},
           {to: '/blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/hal9ai/hal9',

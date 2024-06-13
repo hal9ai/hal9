@@ -22,8 +22,7 @@ completion = OpenAI().chat.completions.create(
  )
 
 code = h9.extract(completion.choices[0].message.content)
-print(code)
-exec(code)
+print(exec(code))
 ```
 
 LLMs are not really that good at doing math; however, with the help of this code interpreter, we can run complex calculations that are impossible to run using only a LLM
@@ -57,7 +56,7 @@ completion = OpenAI().chat.completions.create(
  )
 
 code = h9.extract(completion.choices[0].message.content)
-exec(code)
+print(exec(code))
 ```
 
 ## Apps
