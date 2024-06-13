@@ -31,6 +31,6 @@ hal9 deploy chatbot
 [Learn](learn/intro) the practical and theoretical concepts to get you up to speed:
 
 <div class="FloatingWrapper">
-  <Floating title="Generative AI" href="learn/genai/dnn">Learn <b>Generative AI</b> concepts: neural networks, embeddings, transformers, LLMs and GPTs.</Floating>
-  <Floating title="Genearative App" href="learn/genapps/chatbots">Learn how to build <b>Generative Applications</b> (chatbots and APIs) that make use of Geneartive AI.</Floating>
+  <Floating title="Generative AI" href="docs/learn/genai/dnn">Learn <b>Generative AI</b> concepts: neural networks, embeddings, transformers, LLMs and GPTs.</Floating>
+  <Floating title="Genearative App" href="docs/learn/genapps/chatbots">Learn how to build <b>Generative Applications</b> (chatbots and APIs) that make use of Geneartive AI.</Floating>
 </div>
