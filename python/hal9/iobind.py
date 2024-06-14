@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from hal9.filetotext import extract_from_url
+from hal9.urls import url_contents
 
 def add_extension(path):
   _, extension = os.path.splitext(path)
@@ -54,5 +54,5 @@ original_input = input
 def input(prompt = "", extract = True):
   text = original_input(prompt)
   if extract:
-    text = extract_from_url(text)
+    text = url_contents(text)
   return text

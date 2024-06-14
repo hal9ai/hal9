@@ -4,20 +4,23 @@ import urllib.parse
 import urllib.request
 import importlib.util
 
-def extract_from_url(message):
+def is_url(prompt):
+  result = urllib.parse.urlparse(prompt)
+  return all([result.scheme, result.netloc])
+
+def url_contents(prompt):
   try:
-    result = urllib.parse.urlparse(message)
-    if not all([result.scheme, result.netloc]):
-      return message
+    if not is_url(prompt):
+      return prompt
   
     textract_spec = importlib.util.find_spec("textract")
     if textract_spec is None:
-      return message
+      return prompt
 
-    file_extension = os.path.splitext(result.path)[1]
+    file_extension = os.path.splitext(prompt)[1]
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=file_extension) as temp_file:
-      with urllib.request.urlopen(message) as response:
+      with urllib.request.urlopen(prompt) as response:
         temp_file.write(response.read())
       temp_file_path = temp_file.name
 
@@ -26,4 +29,4 @@ def extract_from_url(message):
     os.remove(temp_file_path)
     return text
   except Exception as e:
-    return message
+    return prompt
