@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Intro
 
-**What is Hal9?** Hal9 is a platform to help you write and create your own versions of ChatGPT -- We refer to these applications as Generative Apps since they use GenAI.
+**What is Hal9?** Hal9 is a platform to help you write and create your own versions of ChatGPT -- We refer to these applications as Generative Apps since they use Generative AI.
 
 ### Generative AI
 
