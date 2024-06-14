@@ -14,7 +14,9 @@ def extract_from_url(message):
     if textract_spec is None:
       return message
 
-    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+    file_extension = os.path.splitext(result.path)[1]
+
+    with tempfile.NamedTemporaryFile(delete=False, suffix=file_extension) as temp_file:
       with urllib.request.urlopen(message) as response:
         temp_file.write(response.read())
       temp_file_path = temp_file.name
