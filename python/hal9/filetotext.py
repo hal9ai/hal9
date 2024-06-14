@@ -21,6 +21,7 @@ def extract_from_url(message):
         temp_file.write(response.read())
       temp_file_path = temp_file.name
 
+    import textract
     text = textract.process(temp_file_path).decode("utf-8")
     os.remove(temp_file_path)
     return text

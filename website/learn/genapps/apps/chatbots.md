@@ -62,3 +62,16 @@ for i in range(1, 11):
 ```
 
 These concepts will prove useful to build our first generative charbot in the [LLM Apps](../llmapps/intro.md) section.
+
+## URLs
+
+Hal9 encourages uploads and links to be processed as URLs. For example, user can reference or upload a PDF as 'https://www.clickdimensions.com/links/TestPDFfile.pdf' which can be read from `input`.
+
+To help assist with processing references, Hal9 provides an `input` function which extracts the text contents of a URL directly as text to easily support managing uploads.
+
+```python
+import hal9 as h9
+
+contents = h9.input('Enter a URL: ')
+print(f"Contents: {contents}")
+```
