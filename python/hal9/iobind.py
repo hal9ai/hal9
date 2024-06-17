@@ -48,7 +48,10 @@ def save(name, contents, hidden = False):
   if (extension == "json"):
     contents = json.dumps(contents, indent=2)
   
-  file_path.write_text(contents)
+  if isinstance(contents, str):
+    path.write_text(contents)
+  elif isinstance(contents, bytes):
+    path.write_bytes(contents)
 
 original_input = input
 def input(prompt = "", extract = True):
