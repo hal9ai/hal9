@@ -32,7 +32,7 @@ def get_extension(file_path):
 
 def load(name, default):
   file_path = add_extension(name)
-  file_path = get_hidden(file_path, hidden)
+  file_path = get_hidden(file_path)
 
   if file_path.exists():
     contents = json.loads(file_path.read_text())
