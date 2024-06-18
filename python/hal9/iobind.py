@@ -49,9 +49,9 @@ def save(name, contents, hidden = False):
     contents = json.dumps(contents, indent=2)
   
   if isinstance(contents, str):
-    path.write_text(contents)
+    file_path.write_text(contents)
   elif isinstance(contents, bytes):
-    path.write_bytes(contents)
+    file_path.write_bytes(contents)
 
 original_input = input
 def input(prompt = "", extract = True):

@@ -19,14 +19,13 @@ stream = client.chat.completions.create(
     seed=1,
 )
 
-print('starting')
-
 response = ""
-for chunk in completion:
-  print(chunk.choices[0].delta.content or "", end="")
-  response = response + chunk.choices[0].delta.content
+for chunk in stream:
+  if len(chunk.choices) > 0 and chunk.choices[0].delta.content is not None: 
+    print(chunk.choices[0].delta.content or "", end="")
+    response = response + chunk.choices[0].delta.content
 
 messages.append({"role": "ai", "content": response})
 
 code = h9.extract(markdown=response,language="html")
-h9.save("app.html", code, hidden=False)
+h9.save("index.html", code, hidden=False)
