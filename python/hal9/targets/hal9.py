@@ -50,7 +50,7 @@ def request_deploy(path :str, url :str, name :str, typename :str) -> str:
         'Content-Type': 'application/json',
         'ApiKey': os.environ['HAL9_TOKEN'],
     }
-    response = requests.post(url + '/api/v1/asset', headers = headers, data = json.dumps(payload))
+    response = requests.post(url + '/api/v1/assets/upload', headers = headers, data = json.dumps(payload))
     
     if not response.ok:
         response.raise_for_status()
