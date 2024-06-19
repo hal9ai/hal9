@@ -38,12 +38,12 @@ if st.button("Roll a dice"):
 Web APIs are applications that are designed for other computer programs or services to interoperate with, if you wanted to enable other web apps to use your previous app, you would do this as follows:
 
 ```python
-from flask import Flask
+from fastapi import FastAPI
 import random
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route('/')
-def roll():
+@app.get("/")
+async def roll():
     return f"You rolled a {random.randint(1, 6)}!"
 ```

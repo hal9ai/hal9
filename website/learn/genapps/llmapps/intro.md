@@ -42,17 +42,19 @@ from openai import OpenAI
 messages = h9.load("messages", [{ "role": "system", "content": "Reply in Spanish" }])
 messages.append({"role": "user", "content": input()})
 
-completion = OpenAI().chat.completions.create(
+stream = OpenAI().chat.completions.create(
   model = "gpt-4",
   messages = messages,
   stream = True
 )
 
+content = ""
 for chunk in stream:
   if len(chunk.choices) > 0 and chunk.choices[0].delta.content is not None: 
     print(chunk.choices[0].delta.content, end="")
+    content += chunk.choices[0].delta.content
 
-messages.append({"role": "ai", "content": completion.choices[0].message.content})
+messages.append({"role": "assistant", "content": content})
 h9.save("messages", messages, hidden = True)
 ```
 
@@ -67,15 +69,18 @@ from groq import Groq
 messages = h9.load("messages", [{ "role": "system", "content": "Reply in Spanish" }])
 messages.append({"role": "user", "content": input()})
 
-completion = Groq().chat.completions.create(
+stream = Groq().chat.completions.create(
   model="llama3-70b-8192",
   messages=messages,
   stream=True
 )
 
-for chunk in completion:
-  print(chunk.choices[0].delta.content or "", end="")
+content = ""
+for chunk in stream:
+  if len(chunk.choices) > 0 and chunk.choices[0].delta.content is not None: 
+    print(chunk.choices[0].delta.content, end="")
+    content += chunk.choices[0].delta.content
 
-messages.append({"role": "ai", "content": completion.choices[0].message.content})
+messages.append({"role": "assistant", "content": content})
 h9.save("messages", messages, hidden = True)
 ```

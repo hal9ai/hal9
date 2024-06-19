@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from hal9.filetotext import extract_from_url
+from hal9.urls import url_contents
 
 def add_extension(path):
   _, extension = os.path.splitext(path)
@@ -32,7 +32,7 @@ def get_extension(file_path):
 
 def load(name, default):
   file_path = add_extension(name)
-  file_path = get_hidden(file_path, hidden)
+  file_path = get_hidden(file_path)
 
   if file_path.exists():
     contents = json.loads(file_path.read_text())
@@ -48,11 +48,14 @@ def save(name, contents, hidden = False):
   if (extension == "json"):
     contents = json.dumps(contents, indent=2)
   
-  file_path.write_text(contents)
+  if isinstance(contents, str):
+    file_path.write_text(contents)
+  elif isinstance(contents, bytes):
+    file_path.write_bytes(contents)
 
 original_input = input
 def input(prompt = "", extract = True):
   text = original_input(prompt)
   if extract:
-    text = extract_from_url(text)
+    text = url_contents(text)
   return text

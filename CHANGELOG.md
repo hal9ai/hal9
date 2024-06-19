@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.2
+
+- Added `is_url` and `url_contents` to assist URL processing
+
 ## 2.2.6
 
 - Add `hidden` parameter to `save` to save file as hidden
