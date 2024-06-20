@@ -1,12 +1,13 @@
 {
-  "name": "hal9landing",
-  "version": "0.0.16",
+  "name": "hal9",
+  "version": "2.1.0",
   "scripts": {
     "clean": "rm -rf node_modules",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
+  "license": "MIT",
   "dependencies": {
     "vue": "^2.7.14"
   },
