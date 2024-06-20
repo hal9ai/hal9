@@ -13,22 +13,6 @@ Create and deploy generative ([LLMs](https://github.com/Hannibal046/Awesome-LLM)
 
 Focus on AI (RAG, fine-tuning, alignment, training) and skip engineering tasks (frontend development, backend integration, deployment, operations).
 
-## Getting started
-
-Create a chatbot backend following the documentation in [hal9.com/docs](https://hal9.com/docs), then embed your chatbot as follows:
-
-```html
-<html>
-  <head>
-    <script src="https://cdn.jsdelivr.net/npm/hal9@latest/dist/hal9.min.js"></script>
-  </head>
-  <body>
-    <div id="hal9" style="width: 100%; height: 500px;"></div>
-    <script>hal9.init('hal9');</script>
-  <body>
-</html>
-```
-
 # Development
 
 Local setup
