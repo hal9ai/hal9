@@ -8,7 +8,7 @@
   "author": "Hal9 Inc",
   "scripts": {
     "build": "webpack --mode=production",
-    "dev": "webpack-dev-server --config src/web/web.config.js --mode development --history-api-fallback",
+    "dev": "webpack-dev-server --config webpack.config.js --mode development --history-api-fallback",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production"
   },
