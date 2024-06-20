@@ -7,7 +7,7 @@ on:
       - .github/workflows/javascript.yaml
 
 jobs:
-  docs:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -24,7 +24,7 @@ jobs:
         run: echo "DEPLOY_URL=${DEPLOY_URL}"
       - uses: actions/setup-node@v2
         with:
-          node-version: '15.x'
+          node-version: '16'
           registry-url: 'https://registry.npmjs.org'
           scope: '@hal9ai'
       - run: yarn install
