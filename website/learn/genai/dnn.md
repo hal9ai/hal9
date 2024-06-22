@@ -13,7 +13,7 @@ Learn the origins of AI from the perceptron to deep neural networks, covering ke
 
 ## The Perceptron
 
-Back in 1958, [Frank Rosenblatt](https://en.wikipedia.org/wiki/Frank_Rosenblatt) believed computers should be able to recognize people and call out their names and instantly translate speech in one language or writing in another language.
+Back in 1958, [Frank Rosenblatt](https://en.wikipedia.org/wiki/Frank_Rosenblatt) believed that computers should be able to recognize people and call out their names, instantly translate speech in some language to another, or write in another language.
 
 <center><img src={RosenblattNYT} alt="New York Times 1958 on Frank Rosenblatt" style={{width: 500}} /></center>
 
