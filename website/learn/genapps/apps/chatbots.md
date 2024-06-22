@@ -55,7 +55,6 @@ The incremental process of generating text for the user is reffered to as **stre
 ```python
 import time
 
-input("I'm going to start counting, OK?")
 for i in range(1, 11):
   print(i)
   time.sleep(1)

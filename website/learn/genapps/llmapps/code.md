@@ -17,7 +17,7 @@ completion = OpenAI().chat.completions.create(
   model = "gpt-4",
   messages = [
     {"role": "system", "content": "Only reply with plain Python code use no markdown"},
-    {"role": "user", "content": input("What would you like me to compute?")},
+    {"role": "user", "content": input()},
   ]
  )
 
@@ -51,7 +51,7 @@ completion = OpenAI().chat.completions.create(
 
         {headers}
     """},
-    {"role": "user", "content": input("Ask anything about this CSV")},
+    {"role": "user", "content": input()},
   ]
  )
 
@@ -76,7 +76,7 @@ completion = OpenAI().chat.completions.create(
         Only reply with plain Python code.
         Write streamlit code to answer the user requirements.
     """},
-    {"role": "user", "content": input("What app do you need?")},
+    {"role": "user", "content": input()},
   ]
  )
 
