@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.7
+
+- Added `event` function to append application event
+
 ## 2.3.2
 
 - Added `is_url` and `url_contents` to assist URL processing
