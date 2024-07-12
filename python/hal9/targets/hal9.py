@@ -44,6 +44,7 @@ def request_deploy(path :str, url :str, name :str, typename :str) -> str:
         'content': encoded_content,
         'type': typename,
         'name': name,
+        'format': 'b64',
     }
 
     headers = {
@@ -62,7 +63,7 @@ def deploy(path :str, url :str, name :str, typename :str) -> str:
     if 'HAL9_TOKEN' in os.environ:
         hal9_token = os.environ['HAL9_TOKEN']
     else:
-        exit(f'HAL9_TOKEN environment variable missing, see {url}/deploy')
+        exit(f'HAL9_TOKEN environment variable missing, see https://hal9.com/deploy')
         # hal9_token = browser_login()
 
     request_deploy(path, url, name, typename)

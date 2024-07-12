@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.8
+
+- Fix deployment from notebooks
+
 ## 2.3.7
 
 - Added `event` function to append application event
