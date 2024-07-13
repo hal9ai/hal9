@@ -22,6 +22,18 @@ def create_deployment(path :str) -> str:
     
     return zip_path
 
+def read_files(path):
+    files_dict = {}
+    
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            with open(file_path, 'rb') as f:
+                encoded_content = base64.b64encode(f.read()).decode('utf-8')
+                files_dict[file] = encoded_content
+    
+    return files_dict
+
 def request_deploy(path :str, url :str, name :str, typename :str) -> str:
     project_name = project_from_path(path)
     zip_path = create_deployment(path)
@@ -37,14 +49,14 @@ def request_deploy(path :str, url :str, name :str, typename :str) -> str:
     with open(Path(path) / 'app.py', 'rb') as file:
         file_content = file.read()
         encoded_content = base64.b64encode(file_content).decode('utf-8')
-        upload_name = f'{project_name}-{unixtime}.py'
+        upload_name = f'app.py'
 
     payload = {
         'filename': upload_name,
-        'content': encoded_content,
         'type': typename,
         'name': name,
         'format': 'b64',
+        'files': read_files(path),
     }
 
     headers = {
