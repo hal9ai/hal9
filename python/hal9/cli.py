@@ -5,8 +5,12 @@ from hal9.run import run as api_run
 from hal9.deploy import deploy as api_deploy
 import datetime
 import os
+import pkg_resources
+
+version = pkg_resources.get_distribution('hal9').version
 
 @click.group()
+@click.version_option(version=version)
 def cli():
   """
   Create and Deploy Generative Applications

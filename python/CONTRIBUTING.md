@@ -15,6 +15,14 @@ You can then run commands locally as follows:
 poetry run hal9 create my-project
 ```
 
+Globally install hal9 as follows:
+
+```bash
+pip install .
+```
+
+### PyPi
+
 Alternatevely,
 
 ```bash

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.9
+
+- Print version with `--version`
+
 ## 2.3.8
 
 - Fix deployment from notebooks
