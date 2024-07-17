@@ -47,7 +47,7 @@ def run(path :str):
 @click.option('--name', default=None, help='Deployment name')
 @click.option('--type', '-f', 'typename', default='ability', help='Deployment content')
 @click.option('--data', '-d', 'data', default=None, help='Deployment data path')
-def deploy(path :str, target :str, url :str, name :str, typename :str):
+def deploy(path :str, target :str, url :str, name :str, typename :str, data :str):
   """
   Deploy Project
 
@@ -60,7 +60,7 @@ def deploy(path :str, target :str, url :str, name :str, typename :str):
   if (name is None):
     name = f'{os.path.basename(path)}-{int(datetime.datetime.now().timestamp() * 1000)}'
 
-  api_deploy(path, target, url, name, typename)
+  api_deploy(path, target, url, name, typename, data)
 
 cli.add_command(create)
 cli.add_command(run)
