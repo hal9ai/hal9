@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.3
+
+- Add `--data` to CLI
+
 ## 2.4.1
 
 - Add support for `--data` in deployment

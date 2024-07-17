@@ -46,6 +46,7 @@ def run(path :str):
 @click.option('--url', default="https://api.hal9.com", help='Deployment url')
 @click.option('--name', default=None, help='Deployment name')
 @click.option('--type', '-f', 'typename', default='ability', help='Deployment content')
+@click.option('--data', '-d', 'data', default=None, help='Deployment data path')
 def deploy(path :str, target :str, url :str, name :str, typename :str):
   """
   Deploy Project
