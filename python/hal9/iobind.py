@@ -9,7 +9,7 @@ def add_extension(path, contents):
   if not extension:
     if isinstance(contents, dict):
       path = path + ".json"
-    else
+    else:
       path = path + ".pkl"
   return Path(path)
 

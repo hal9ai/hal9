@@ -1,9 +1,12 @@
 # Changelog
 
+## 2.4.1
+
+- Add support for `--data` in deployment
+
 ## 2.4.0
 
 - Add support for `pkl` files extensions
-- Add support for `--data` in deployment
 
 ## 2.3.9
 
