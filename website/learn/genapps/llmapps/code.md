@@ -59,30 +59,59 @@ code = h9.extract(completion.choices[0].message.content)
 print(exec(code))
 ```
 
-## Apps
+## Web Apps
 
-Taking this approach even further, instead of relying on `print` to communicate our answers, we can provide the user an entire interactive application for them to interact with.
+Taking this approach even further, instead of relying on `print` to communicate our answers, we can provide the user an entire web application for them to interact with.
 
-We will ask the LLM to generate a web application which we can then run:
+We will ask the LLM to generate a web application:
+
+```python
+import openai
+import os
+import hal9 as h9
+from openai import OpenAI
+
+messages = h9.load("messages", [{ "role": "system", "content": "Always reply with a single page HTML markdown block (which can use JavaScript, CSS, etc) that fulfills the user request" }])
+
+messages.append({"role": "user", "content": input()})
+
+completion = OpenAI().chat.completions.create(
+  model = "gpt-4",
+  messages = messages,
+  temperature = 0,
+  seed= 1
+)
+
+response = completion.choices[0].message.content
+messages.append({"role": "assistant", "content": response})
+h9.save("messages", messages, hidden=True)
+
+code = h9.extract(response, "html")
+h9.save("app.html", code)
+```
+
+## Analytics
+
+Instead of building web applications, you can build data analytics apps that query databases and display charts as follows:
 
 ```python
 import hal9 as h9
 from openai import OpenAI
 
+messages = h9.load("messages", [{ "role": "system", "content": "Only reply with plain Python code. Write streamlit code to answer the user requirements." }])
+
+messages.append({"role": "user", "content": input()})
+
 completion = OpenAI().chat.completions.create(
   model = "gpt-4",
-  messages = [
-    {"role": "system", "content": f"""
-        Only reply with plain Python code.
-        Write streamlit code to answer the user requirements.
-    """},
-    {"role": "user", "content": input()},
-  ]
- )
+  messages = messages
+)
 
-code = h9.extract(completion.choices[0].message.content, "python")
+response = completion.choices[0].message.content
+messages.append({"role": "assistant", "content": response})
+h9.save("messages", messages, hidden=True)
 
-print("Finished creating your app")
+code = h9.extract(response, "python")
 h9.save("app.py", code)
 ```
 
