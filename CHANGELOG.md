@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.0
+
+- Add support for `pkl` files extensions
+
 ## 2.3.9
 
 - Print version with `--version`
