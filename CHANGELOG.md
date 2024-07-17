@@ -3,6 +3,7 @@
 ## 2.4.0
 
 - Add support for `pkl` files extensions
+- Add support for `--data` in deployment
 
 ## 2.3.9
 
