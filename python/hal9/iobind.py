@@ -14,9 +14,9 @@ def add_extension(path, contents):
   return Path(path)
 
 def find_extension(file_path):
-  if (file_path + '.json').exists():
-    return file_path + '.json'
-  return file_path + '.pkl'
+  if Path(file_path + '.json').exists():
+    return Path(file_path + '.json')
+  return Path(file_path + '.pkl')
 
 def get_hidden(file_path):
     directory = file_path.parent
