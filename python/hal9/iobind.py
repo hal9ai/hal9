@@ -14,7 +14,8 @@ def add_extension(path, contents):
   return Path(path)
 
 def find_extension(file_path):
-  if Path(file_path + '.json').exists():
+  json_hidden = get_hidden(Path(file_path + '.json'))
+  if Path(file_path + '.json').exists() or Path(json_hidden).exists():
     return Path(file_path + '.json')
   return Path(file_path + '.pkl')
 
@@ -44,6 +45,7 @@ def load(name, default):
   file_path = get_hidden(file_path)
 
   extension = get_extension(file_path)
+
   if not extension:
     extension = "pkl"
 
@@ -58,6 +60,7 @@ def load(name, default):
         contents = file.read()
   else:
     contents = default
+
   return contents
 
 def save(name, contents, hidden = False):
