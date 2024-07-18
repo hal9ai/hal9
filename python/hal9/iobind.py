@@ -7,7 +7,7 @@ import pickle
 def add_extension(path, contents):
   _, extension = os.path.splitext(path)
   if not extension:
-    if isinstance(contents, dict):
+    if isinstance(contents, dict) or isinstance(contents, list):
       path = path + ".json"
     else:
       path = path + ".pkl"
