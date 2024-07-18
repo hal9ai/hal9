@@ -13,7 +13,7 @@ def add_extension(path, contents):
       path = path + ".pkl"
   return Path(path)
 
-def find_extension(path):
+def find_extension(file_path):
   if (file_path + '.json').exists():
     return file_path + '.json'
   return file_path + '.pkl'
