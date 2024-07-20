@@ -54,7 +54,7 @@ def load(name, default):
       contents = json.loads(file_path.read_text())
     elif (extension == "pkl"):
       with open(file_path, 'rb') as file:
-        contents = pickle.load(file_path)
+        contents = pickle.load(file)
     else:
       with open(file_path, 'rb') as file:
         contents = file.read()
