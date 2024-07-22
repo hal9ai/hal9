@@ -7,7 +7,7 @@ import pickle
 def add_extension(path, contents):
   _, extension = os.path.splitext(path)
   if not extension:
-    if isinstance(contents, dict) or isinstance(contents, list):
+    if isinstance(contents, dict) or isinstance(contents, list) or isinstance(contents, str):
       path = path + ".json"
     else:
       path = path + ".pkl"
@@ -74,8 +74,6 @@ def save(name, contents, hidden = False):
   
   if isinstance(contents, str):
     file_path.write_text(contents)
-  elif isinstance(contents, bytes):
-    file_path.write_bytes(contents)
   else:
     with open(file_path, 'wb') as file:
       pickle.dump(contents, file)
