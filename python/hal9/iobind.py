@@ -3,19 +3,18 @@ import os
 from pathlib import Path
 from hal9.urls import url_contents
 import pickle
+import tempfile
 
-def add_extension(path, contents):
-  _, extension = os.path.splitext(path)
+def add_extension(name, contents):
   if not extension:
     if isinstance(contents, dict) or isinstance(contents, list) or isinstance(contents, str):
       path = path + ".json"
     else:
       path = path + ".pkl"
-  return Path(path)
+  return path
 
 def find_extension(file_path):
-  json_hidden = get_hidden(Path(file_path + '.json'))
-  if Path(file_path + '.json').exists() or Path(json_hidden).exists():
+  if Path(file_path + '.json').exists() or get_hidden(Path(file_path + '.json')).exists():
     return Path(file_path + '.json')
   return Path(file_path + '.pkl')
 
@@ -27,14 +26,6 @@ def get_hidden(file_path):
     if hidden_path.exists():
         return hidden_path
     return file_path
-
-def add_hidden(file_path, hidden):
-  if hidden:
-    directory = file_path.parent
-    file_name = file_path.name
-    hidden_file_name = "." + file_name
-    file_path = directory / hidden_file_name
-  return file_path
 
 def get_extension(file_path):
   _, extension = os.path.splitext(file_path)
@@ -63,20 +54,40 @@ def load(name, default):
 
   return contents
 
-def save(name, contents, hidden = False):
-  file_path = add_extension(name, contents)
-  file_path = add_hidden(file_path, hidden)
+def save(name, contents = None, hidden = False, files = None):
+  if hidden and not name.startswith('.'):
+    name = "." + name
 
-  extension = get_extension(file_path)
-  if (extension == "json"):
-    contents = json.dumps(contents, indent=2)
-    file_path.write_text(contents)
-  
-  if isinstance(contents, str):
-    file_path.write_text(contents)
+  if files is None:
+    target_path = '.'
+    files = { name: contents }
   else:
-    with open(file_path, 'wb') as file:
-      pickle.dump(contents, file)
+    target_path = tempfile.mkdtemp()
+
+  for file_name, contents in files.items():
+    file_name = add_extension(file_name, contents)
+    file_path = Path(target_path) / file_name
+    extension = get_extension(file_name)
+
+    if (extension == "json"):
+      contents = json.dumps(contents, indent=2)
+      file_path.write_text(contents)
+    
+    if isinstance(contents, str):
+      file_path.write_text(contents)
+    else:
+      if extension == "json":
+        with open(file_path, 'wb') as file:
+          pickle.dump(contents, file)
+      else:
+        raise f"Don't know how to save {extension}"
+
+  if target_path != '.':
+    asset_definition = json.dumps({
+      "name": name
+      "files": files.keys()
+    }, indent=2)
+    Path(name + '.asset').write_text(contents)
 
 original_input = input
 def input(prompt = "", extract = True):

@@ -30,8 +30,11 @@ Returns the contents of `name` file, `default` if it does not exist.
 
 Saves to `name` file the given `contents`.
 
+An appropriate extension for the `name` will be generated based on the type of `contents`.
+
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>String</code> | The file name of the file to save. |
 | contents | <code>String</code> | The contents of the file to save. |
 | hidden | <code>Boolean</code> | `True` to hide file from user, defaults to `False`.
+| files | <code>Dictionary</code> | A dictionary mapping multiple file names to contents to save.
