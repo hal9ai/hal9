@@ -16,11 +16,10 @@ jobs:
         uses: snok/install-poetry@v1
       - name: Install dependencies
         run: |
-          python -m poetry install .
+          poetry install --no-interaction
         working-directory: "python"
       - name: Run tests
         run: |
-          pip install pytest
           pytest tests
         working-directory: "python"
   build:
