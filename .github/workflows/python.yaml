@@ -15,7 +15,7 @@ jobs:
       - name: Copy readme
         run: cp README.md python/README.md
       - name: Prepare build
-        uses: JRubics/poetry-publish@v1.16
+        uses: JRubics/poetry-publish@v2
         with:
           pypi_token: ${{ secrets.PYPI_TOKEN }}
           package_directory: "python"
