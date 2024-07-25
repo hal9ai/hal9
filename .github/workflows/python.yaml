@@ -19,5 +19,12 @@ jobs:
       - name: Build and publish to pypi
         uses: JRubics/poetry-publish@v1.16
         with:
+          poetry_publish_options: "--dry-run"
+      - name: Run tests
+        working-directory: "python"
+        run: pytest tests
+      - name: Build and publish to pypi
+        uses: JRubics/poetry-publish@v1.16
+        with:
           pypi_token: ${{ secrets.PYPI_TOKEN }}
           package_directory: "python"
