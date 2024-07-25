@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.5
+
+- `extract()` now supports extracting all files from code blocks using `filename` markdown header
+
 ## 2.5.2
 
 - Add `default` parameter to `extract()` to return default when code not found
