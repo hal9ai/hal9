@@ -18,9 +18,12 @@ jobs:
         run: |
           poetry install --no-interaction
         working-directory: "python"
-      - name: Run tests
+      - name: Install pyteset
         run: |
           pip install pytest
+        working-directory: "python"
+      - name: Run tests
+        run: |
           pytest tests
         working-directory: "python"
   build:
