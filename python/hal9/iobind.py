@@ -64,7 +64,8 @@ def save(name, contents = None, hidden = False, files = None):
     files = { name: contents }
   else:
     target_path = tempfile.mkdtemp()
-    files[name] = contents
+    if not contents is None:
+      files[name] = contents
 
   asset_files = []
   for file_name, contents in files.items():
