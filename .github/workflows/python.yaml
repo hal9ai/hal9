@@ -16,9 +16,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Copy readme
         run: cp README.md python/README.md
-      - name: Build and publish to pypi
+      - name: Prepare build
         uses: JRubics/poetry-publish@v1.16
         with:
+          package_directory: "python"
           poetry_publish_options: "--dry-run"
       - name: Run tests
         working-directory: "python"
