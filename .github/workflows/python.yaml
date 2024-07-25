@@ -1,7 +1,5 @@
 name: Python
 
-# https://raw.githubusercontent.com/messense/crfs-rs/main/.github/workflows/Python.yml
-
 on:
   push:
     paths:
@@ -19,6 +17,7 @@ jobs:
       - name: Prepare build
         uses: JRubics/poetry-publish@v1.16
         with:
+          pypi_token: ${{ secrets.PYPI_TOKEN }}
           package_directory: "python"
           poetry_publish_options: "--dry-run"
       - name: Run tests
