@@ -8,23 +8,28 @@ on:
       - .github/workflows/python.yaml
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+      - name: Install dependencies
+        run: |
+          python -m poetry install .
+        working-directory: "python"
+      - name: Run tests
+        run: |
+          pip install pytest
+          pytest tests
+        working-directory: "python"
   build:
+    needs: [ test ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Copy readme
         run: cp README.md python/README.md
-      - name: Prepare build
-        uses: JRubics/poetry-publish@v2.0
-        with:
-          pypi_token: ${{ secrets.PYPI_TOKEN }}
-          package_directory: "python"
-          poetry_publish_options: "--dry-run"
-      - name: Run tests
-        working-directory: "python"
-        run: |
-          pip install pytest
-          pytest tests
       - name: Build and publish to pypi
         uses: JRubics/poetry-publish@v1.16
         with:
