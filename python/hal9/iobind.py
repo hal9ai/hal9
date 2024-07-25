@@ -5,13 +5,18 @@ from hal9.urls import url_contents
 import pickle
 import tempfile
 
+def get_extension(file_path):
+  _, extension = os.path.splitext(file_path)
+  return extension.lstrip('.')
+
 def add_extension(name, contents):
+  extension = get_extension(name)
   if not extension:
     if isinstance(contents, dict) or isinstance(contents, list) or isinstance(contents, str):
-      path = path + ".json"
+      name = name + ".json"
     else:
-      path = path + ".pkl"
-  return path
+      name = name + ".pkl"
+  return name
 
 def find_extension(file_path):
   if Path(file_path + '.json').exists() or get_hidden(Path(file_path + '.json')).exists():
@@ -26,10 +31,6 @@ def get_hidden(file_path):
     if hidden_path.exists():
         return hidden_path
     return file_path
-
-def get_extension(file_path):
-  _, extension = os.path.splitext(file_path)
-  return extension.lstrip('.')
 
 def load(name, default):
   file_path = find_extension(name)
@@ -63,11 +64,14 @@ def save(name, contents = None, hidden = False, files = None):
     files = { name: contents }
   else:
     target_path = tempfile.mkdtemp()
+    files[name] = contents
 
+  asset_files = []
   for file_name, contents in files.items():
     file_name = add_extension(file_name, contents)
     file_path = Path(target_path) / file_name
     extension = get_extension(file_name)
+    asset_files.append(file_path)
 
     if (extension == "json"):
       contents = json.dumps(contents, indent=2)
@@ -84,10 +88,10 @@ def save(name, contents = None, hidden = False, files = None):
 
   if target_path != '.':
     asset_definition = json.dumps({
-      "name": name
-      "files": files.keys()
+      "name": name,
+      "files": [str(file) for file in asset_files]
     }, indent=2)
-    Path(name + '.asset').write_text(contents)
+    Path(name + '.asset').write_text(asset_definition)
 
 original_input = input
 def input(prompt = "", extract = True):

@@ -37,4 +37,4 @@ An appropriate extension for the `name` will be generated based on the type of `
 | name | <code>String</code> | The file name of the file to save. |
 | contents | <code>String</code> | The contents of the file to save. |
 | hidden | <code>Boolean</code> | `True` to hide file from user, defaults to `False`.
-| files | <code>Dictionary</code> | A dictionary mapping multiple file names to contents to save.
+| files | <code>Dictionary</code> | A dictionary mapping additional file names to contents to save.

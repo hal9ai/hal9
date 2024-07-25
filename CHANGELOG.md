@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.1
+
+- Add support for `files` in `save()` to persist multiple files
+
 ## 2.4.3
 
 - Add `--data` to CLI
