@@ -22,7 +22,9 @@ jobs:
           poetry_publish_options: "--dry-run"
       - name: Run tests
         working-directory: "python"
-        run: pytest tests
+        run: |
+          pip install pytest
+          pytest tests
       - name: Build and publish to pypi
         uses: JRubics/poetry-publish@v1.16
         with:
