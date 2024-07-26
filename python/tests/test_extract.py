@@ -11,6 +11,17 @@ This is a test with HTML
 """, language = "html")
   assert value == expected + "\n"
 
+def test_extract_json_filename():
+  expected = "[]"
+  value = h9.extract(f"""
+This is a test with HTML
+
+```json filename=files_structure.json
+{expected}
+```
+""", language = "json")
+  assert value == expected + "\n"
+
 def test_extract_multiple():
   value = h9.extract(f"""
 This is a test with HTML

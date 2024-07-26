@@ -1,7 +1,7 @@
 import re
 
 def extract_one(markdown, language, default = None):
-  pattern = re.compile(rf'```{language}\s+(.*?)```', re.DOTALL)
+  pattern = re.compile(rf'```{language}[^\n]*\n(.*?)```', re.DOTALL)
   code_blocks = pattern.findall(markdown)
   code = '\n'.join(code_blocks)
   if len(code) == 0:
