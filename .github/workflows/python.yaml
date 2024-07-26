@@ -17,6 +17,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install --no-interaction
+          pip install .
         working-directory: "python"
       - name: Install pyteset
         run: |
