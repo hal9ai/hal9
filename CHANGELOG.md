@@ -1,8 +1,12 @@
 # Changelog
 
+## 2.5.7
+
+- `save()` supports creating subfolders
+
 ## 2.5.5
 
-- `extract()` now supports extracting all files from code blocks using `filename` markdown header
+- `extract()` supports extracting all files from code blocks using `filename` markdown header
 
 ## 2.5.2
 

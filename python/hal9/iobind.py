@@ -71,6 +71,10 @@ def save(name, contents = None, hidden = False, files = None):
   for file_name, contents in files.items():
     file_name = add_extension(file_name, contents)
     file_path = Path(target_path) / file_name
+
+    if file_path.parent != Path('.'):
+      file_path.parent.mkdir(parents=True, exist_ok=True)
+
     extension = get_extension(file_name)
     asset_files.append(file_path)
 
