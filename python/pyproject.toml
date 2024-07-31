@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hal9"
-version = "2.5.7"
+version = "2.5.8"
 description = ""
 authors = ["Javier Luraschi <javier@hal9.ai>"]
 readme = "README.md"

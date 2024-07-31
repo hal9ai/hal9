@@ -85,7 +85,7 @@ def save(name, contents = None, hidden = False, files = None):
     if isinstance(contents, str):
       file_path.write_text(contents)
     else:
-      if extension == "json":
+      if extension == "pkl":
         with open(file_path, 'wb') as file:
           pickle.dump(contents, file)
       else:
