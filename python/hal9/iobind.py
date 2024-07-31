@@ -89,7 +89,7 @@ def save(name, contents = None, hidden = False, files = None):
         with open(file_path, 'wb') as file:
           pickle.dump(contents, file)
       else:
-        raise f"Don't know how to save {extension}"
+        raise Exception(f"Don't know how to save {extension}")
 
   if target_path != '.':
     asset_definition = json.dumps({
