@@ -8,8 +8,8 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'Hal9: Create AI Coworkers',
+  tagline: 'Hal9 provides enterprise-ready, secure, customizable, model-agnostic AI coworkers powered by the best AI libraries.',
   favicon: 'img/favicon.ico',
   url: 'https://hal9.com',
   baseUrl: '/docs/',
