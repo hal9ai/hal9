@@ -4,6 +4,7 @@ from pathlib import Path
 from hal9.urls import url_contents
 import pickle
 import tempfile
+import sys
 
 def get_extension(file_path):
   _, extension = os.path.splitext(file_path)
@@ -98,9 +99,9 @@ def save(name, contents = None, hidden = False, files = None):
     }, indent=2)
     Path(name + '.asset').write_text(asset_definition)
 
-original_input = input
-def input(prompt = "", extract = True):
-  text = original_input(prompt)
+def input(prompt = "", extract = False):
+  print(prompt, end="")
+  text = sys.stdin.read()
   if extract:
     text = url_contents(text)
   return text

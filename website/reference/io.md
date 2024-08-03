@@ -11,7 +11,7 @@ Wraps `input()` with an optional `extract` parameter to convert URLs to text
 | Param | Type | Description |
 | --- | --- | --- |
 | prompt | <code>String</code> | A String, representing a default message before the input. |
-| extract | <code>Boolean</code> | `False` to not extract the contents of URL as text, defaults to `True`. Requires the `textract` package to be installed.
+| extract | <code>Boolean</code> | `True` to extract the contents of URL as text, defaults to `False`. Requires the `textract` package to be installed.
 
 ## Load
 
