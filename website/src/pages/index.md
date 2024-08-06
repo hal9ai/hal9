@@ -9,7 +9,7 @@ import { Floating } from '../components/floating.jsx';
 Create and deploy generative (LLMs and diffusers) applications (chatbots and APIs) in seconds. Focus on AI (RAG, fine-tuning, alignment, training) and skip engineering tasks (frontend development, backend integration, deployment, operations).
 
 <div class="FloatingWrapper">
-  <Floating title="Open"><b>Open</b> to any model (OpenAI, Llama, Groq, Midjourney) and any library like (LangChainl, DSPy).</Floating>
+  <Floating title="Open"><b>Open</b> to any model (OpenAI, Llama, Groq, Midjourney) and any library like (LangChain, DSPy).</Floating>
   <Floating title="Intuitive">No need to learn app frameworks (flask), <b>intuitively</b> use `input()` and `print()`, or write file to disk.</Floating>
   <Floating title="Scalable">Engineers can integrate your app with <b>scalable</b> technologies (Docker, Kubernetes, etc).</Floating>
   <Floating title="Powerful"><b>Powerful</b> architecture for agents, multiple programming languages, and complex dependencies.</Floating>

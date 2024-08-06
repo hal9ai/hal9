@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.1
+
+- Add `complete()` and `describe()` to support handling tools
+
 ## 2.5.7
 
 - `save()` supports creating subfolders

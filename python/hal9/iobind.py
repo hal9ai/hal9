@@ -99,9 +99,12 @@ def save(name, contents = None, hidden = False, files = None):
     }, indent=2)
     Path(name + '.asset').write_text(asset_definition)
 
-def input(prompt = "", extract = False):
+def input(prompt = "", extract = False, messages = []):
   print(prompt, end="")
-  text = sys.stdin.read()
+  prompt = sys.stdin.read()
+
   if extract:
-    text = url_contents(text)
-  return text
+    prompt = url_contents(text)
+
+  messages.append({"role": "user", "content": prompt})
+  return prompt
