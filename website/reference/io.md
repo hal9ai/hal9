@@ -17,20 +17,20 @@ Wraps `input()` with an optional `extract` parameter to convert URLs to text
 
 `load (name, default)` <br/><br/>
 
-Returns the contents of `name` file, `default` if it does not exist.
+Reload the contents stored with `remember()` with `name`.
 
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>String</code> | The file name of the file to load. |
 | default | <code>Object</code> | The default object when file does not exists. |
 
+Returns the contents of `name` file, `default` if it does not exist.
+
 ## Save
 
 `save (name, contents, hidden)` <br/><br/>
 
-Saves to `name` file the given `contents`.
-
-An appropriate extension for the `name` will be generated based on the type of `contents`.
+Saves as `name` the given `contents`. Useful to share binary files with users.
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -38,3 +38,5 @@ An appropriate extension for the `name` will be generated based on the type of `
 | contents | <code>String</code> | The contents of the file to save. |
 | hidden | <code>Boolean</code> | `True` to hide file from user, defaults to `False`.
 | files | <code>Dictionary</code> | A dictionary mapping additional file names to contents to save.
+
+Saves to `name` file the given `contents` under the `storage` subfolder. An appropriate extension for the `name` will be generated based on the type of `contents`.

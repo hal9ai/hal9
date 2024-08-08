@@ -42,8 +42,13 @@ def describe_single(func):
 
   return result
 
-def describe(functions):
-  return [describe_single(func) for func in functions]
+def describe(functions, model = "openai"):
+  tools = [describe_single(func) for func in functions]
+
+  if model == "llama":
+    tools = [{ "type": "function", "function": tool} for tool in tools]
+
+  return tools
 
 def complete_openai(completion, messages = [], tools = [], show = True):
   tools = {func.__name__: func for func in tools}
@@ -101,6 +106,7 @@ def complete_llama(completion, messages = [], tools = [], show = True):
       tools = {func.__name__: func for func in tools}
       for tool_call in tool_calls:
         function_name = tool_call.function.name
+
         function_to_call = tools[function_name]
         function_args = json.loads(tool_call.function.arguments)
         response = str(function_to_call(**function_args))
@@ -108,7 +114,8 @@ def complete_llama(completion, messages = [], tools = [], show = True):
         if show:
           print(response)
     else:
-      return completion.choices[0].message.content
+      response = completion.choices[0].message.content
+      print(response)
   else:
     for chunk in completion:
       if len(chunk.choices) > 0 and chunk.choices[0].delta.content is not None: 

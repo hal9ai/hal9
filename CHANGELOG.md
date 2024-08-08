@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.2
+
+- `save()` now stores data under `/storage` to isolate files
+
 ## 2.6.1
 
 - Add `complete()` and `describe()` to support handling tools

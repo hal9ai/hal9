@@ -34,7 +34,8 @@ def get_hidden(file_path):
     return file_path
 
 def load(name, default):
-  file_path = find_extension(name)
+  file_path = "storage/" + name
+  file_path = find_extension(file_path)
   file_path = get_hidden(file_path)
 
   extension = get_extension(file_path)
@@ -61,7 +62,7 @@ def save(name, contents = None, hidden = False, files = None):
     name = "." + name
 
   if files is None:
-    target_path = '.'
+    target_path = './storage'
     files = { name: contents }
   else:
     target_path = tempfile.mkdtemp()
@@ -92,12 +93,12 @@ def save(name, contents = None, hidden = False, files = None):
       else:
         raise Exception(f"Don't know how to save {extension}")
 
-  if target_path != '.':
+  if target_path != './storage':
     asset_definition = json.dumps({
       "name": name,
       "files": [str(file) for file in asset_files]
     }, indent=2)
-    Path(name + '.asset').write_text(asset_definition)
+    Path('./storage/' + name + '.asset').write_text(asset_definition)
 
 def input(prompt = "", extract = False, messages = []):
   print(prompt, end="")
