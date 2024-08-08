@@ -45,7 +45,7 @@ def describe_single(func):
 def describe(functions):
   return [describe_single(func) for func in functions]
 
-def complete(completion, messages = [], tools = [], show = True):
+def complete_openai(completion, messages = [], tools = [], show = True):
   tools = {func.__name__: func for func in tools}
   content = result= ""
   tool_name = tool_text = ""
@@ -89,3 +89,43 @@ def complete(completion, messages = [], tools = [], show = True):
       messages.append({ "role": "function", "name": tool_name, "content": result})
 
   return content + result
+
+def complete_llama(completion, messages = [], tools = [], show = True):
+  response = ""
+  if not 'stream' in str(type(completion)).lower():
+    
+    response_message = completion.choices[0].message
+    tool_calls = response_message.tool_calls
+    
+    if tool_calls:
+      tools = {func.__name__: func for func in tools}
+      for tool_call in tool_calls:
+        function_name = tool_call.function.name
+        function_to_call = tools[function_name]
+        function_args = json.loads(tool_call.function.arguments)
+        response = str(function_to_call(**function_args))
+
+        if show:
+          print(response)
+    else:
+      return completion.choices[0].message.content
+  else:
+    for chunk in completion:
+      if len(chunk.choices) > 0 and chunk.choices[0].delta.content is not None: 
+        if show:
+          print(chunk.choices[0].delta.content, end="")
+        response += chunk.choices[0].delta.content
+
+  messages.append({"role": "assistant", "content": response})
+
+completion_handlers = {
+  "openai": complete_openai,
+  "llama": complete_llama
+}
+
+def complete(completion, messages = [], tools = [], show = True, model = "openai"):
+  if model not in completion_handlers:
+    raise Exception(f"Don't know how to complete model {model}")
+
+  return completion_handlers[model](completion, messages, tools, show)
+  
