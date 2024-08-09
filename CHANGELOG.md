@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.4
+
+- `deploy` supports `--access` to share private, public or unlisted
+
 ## 2.6.2
 
 - `save()` now stores data under `/storage` to isolate files

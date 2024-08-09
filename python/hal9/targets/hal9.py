@@ -34,7 +34,7 @@ def read_files(path):
     
     return files_dict
 
-def request_deploy(path :str, url :str, name :str, typename :str, data :str) -> str:
+def request_deploy(path :str, url :str, name :str, typename :str, data :str, access :str) -> str:
     project_name = project_from_path(path)
     zip_path = create_deployment(path)
 
@@ -58,6 +58,7 @@ def request_deploy(path :str, url :str, name :str, typename :str, data :str) -> 
         'format': 'b64',
         'files': read_files(path),
         'schemapath': data,
+        'access': access
     }
 
     headers = {
@@ -72,12 +73,12 @@ def request_deploy(path :str, url :str, name :str, typename :str, data :str) -> 
     response_data = response.json()
     print(response_data['url'])
 
-def deploy(path :str, url :str, name :str, typename :str, data :str) -> str:
+def deploy(path :str, url :str, name :str, typename :str, data :str, access :str) -> str:
     if 'HAL9_TOKEN' in os.environ:
         hal9_token = os.environ['HAL9_TOKEN']
     else:
         exit(f'HAL9_TOKEN environment variable missing, see https://hal9.com/deploy')
         # hal9_token = browser_login()
 
-    request_deploy(path, url, name, typename, data)
+    request_deploy(path, url, name, typename, data, access)
 

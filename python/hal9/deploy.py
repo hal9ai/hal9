@@ -6,7 +6,7 @@ targets = {
   'hal9': deploy_hal9,
 }
 
-def deploy(path :str, target :str, url :str, name :str, typename :str, data :str) -> str:
+def deploy(path :str, target :str, url :str, name :str, typename :str, data :str, access :str) -> str:
   """Deploy an application
 
   Parameters
@@ -21,9 +21,11 @@ def deploy(path :str, target :str, url :str, name :str, typename :str, data :str
           The deployment type, defaults to (chatbot) ability.
   data : str
           The data schema to use, defaults to empty.
+  access : str
+          The access level, defaults to 'private'.
   """
 
   if target in targets:
-    targets[target](path, url, name, typename, data)
+    targets[target](path, url, name, typename, data, access)
   else:
     raise Exception(f"Deployment target '{target}' is unsupported.")
