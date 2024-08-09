@@ -58,9 +58,9 @@ def complete_openai(completion, messages = [], tools = [], show = True):
 
   if not 'stream' in str(type(completion)).lower():
     content = completion.choices[0].message.content
-    if chunk.choices[0].message.function_call != None:
-      tool_name = chunk.choices[0].message.function_call.name
-      tool_args = json.loads(chunk.choices[0].message.function_call.arguments)
+    if completion.choices[0].message.function_call != None:
+      tool_name = completion.choices[0].message.function_call.name
+      tool_args = json.loads(completion.choices[0].message.function_call.arguments)
     if show:
       print(content)
   else:
