@@ -64,20 +64,21 @@ def complete_openai(completion, messages = [], tools = [], show = True):
     if show:
       print(content)
   else:
-    for chunk in completion:
-      if chunk.choices and len(chunk.choices) > 0 and chunk.choices[0].delta:
-        if chunk.choices[0].delta.content:
-          if show:
-            print(chunk.choices[0].delta.content, end="")
-          content += chunk.choices[0].delta.content
-        if chunk.choices[0].delta.function_call != None:
-          tool_text += chunk.choices[0].delta.function_call.arguments
-          if chunk.choices[0].delta.function_call.name:
-            tool_name = chunk.choices[0].delta.function_call.name
-          try:
-            tool_args = json.loads(tool_text)
-          except Exception as e:
-            pass
+    if completion:
+      for chunk in completion:
+        if chunk.choices and len(chunk.choices) > 0 and chunk.choices[0].delta:
+          if chunk.choices[0].delta.content:
+            if show:
+              print(chunk.choices[0].delta.content, end="")
+            content += chunk.choices[0].delta.content
+          if chunk.choices[0].delta.function_call != None:
+            tool_text += chunk.choices[0].delta.function_call.arguments
+            if chunk.choices[0].delta.function_call.name:
+              tool_name = chunk.choices[0].delta.function_call.name
+            try:
+              tool_args = json.loads(tool_text)
+            except Exception as e:
+              pass
     if show:
       print()
 
