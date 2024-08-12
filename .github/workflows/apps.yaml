@@ -17,11 +17,11 @@ jobs:
     - name: Install Hal9
       run: pip install hal9
     - name: Deploy App
-      run: hal9 deploy echo --name ECHO --access public --url https://api.devel.hal9.com
+      run: hal9 deploy apps/echo --name ECHO --access public --url https://api.devel.hal9.com
       env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN_DEVEL }}
     - name: Deploy App
-      run: hal9 deploy hal9 --name hal9 --access public --url https://api.devel.hal9.com
+      run: hal9 deploy apps/hal9 --name hal9 --access public --url https://api.devel.hal9.com
       env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN_DEVEL }}
   prod:
@@ -35,10 +35,10 @@ jobs:
     - name: Install Hal9
       run: pip install hal9
     - name: Deploy App
-      run: hal9 deploy echo --name ECHO --access public
+      run: hal9 deploy apps/echo --name ECHO --access public
       env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
     - name: Deploy App
-      run: hal9 deploy hal9 --name hal9 --access public
+      run: hal9 deploy apps/hal9 --name hal9 --access public
       env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
