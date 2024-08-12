@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.6.6
+
+- Improve error message when saving empty files in `save()`
+- Persist in `complete()` tools with Llama
+
+## 2.6.5
+
+- Minor fix 
+
 ## 2.6.4
 
 - `deploy` supports `--access` to share private, public or unlisted

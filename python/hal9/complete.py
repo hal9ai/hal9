@@ -106,11 +106,32 @@ def complete_llama(completion, messages = [], tools = [], show = True):
     if tool_calls:
       tools = {func.__name__: func for func in tools}
       for tool_call in tool_calls:
-        function_name = tool_call.function.name
+        print("tool_call.function.arguments: " + tool_call.function.arguments)
+        messages.append({
+          "role": "assistant",
+          "tool_calls": [{
+            "id": tool_call.id,
+            "function": {
+              "name": tool_call.function.name,
+              "arguments": tool_call.function.arguments
+            },
+            "type": "function"
+          }]
+        })
 
+        function_name = tool_call.function.name
         function_to_call = tools[function_name]
         function_args = json.loads(tool_call.function.arguments)
         response = str(function_to_call(**function_args))
+
+        messages.append(
+          {
+            "tool_call_id": tool_call.id,
+            "role": "tool",
+            "name": function_name,
+            "content": response
+          }
+        )
 
         if show:
           print(response)
