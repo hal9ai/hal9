@@ -1,5 +1,7 @@
 import hal9 as h9
 
-def test_save_empty_error():
-  h9.save("messages", None)
-  assert True
+def test_can_save_messages():
+  messages = ["test"]
+  h9.save("messages", messages)
+
+  assert messages == h9.load("messages", [])
