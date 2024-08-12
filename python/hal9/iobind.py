@@ -86,6 +86,8 @@ def save(name, contents = None, hidden = False, files = None):
     
     if isinstance(contents, str):
       file_path.write_text(contents)
+    elif contents is None:
+      raise Exception(f"Can't save empty contents for {name}")
     else:
       if extension == "pkl":
         with open(file_path, 'wb') as file:
