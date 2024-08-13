@@ -1,3 +1,7 @@
+---
+title: 'Start'
+---
+
 # [Hal9](https://hal9.com/): Create and Share Generative Apps
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -32,9 +36,7 @@ By default `hal9 create` we will use the OpenAI template, you can choose differe
 
 ```bash
 hal9 create my-chatbot --template openai
-hal9 create my-chatbot --template midjourney
 hal9 create my-chatbot --template groq
-hal9 create my-chatbot --template langchain
 ```
 
 A template provides ready to use code with specific technologies and use cases. If you already have code, you can skip this step.

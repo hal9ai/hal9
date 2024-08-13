@@ -70,6 +70,11 @@ const config = {
         },
         items: [
           {
+            to: '/docs',
+            label: 'Start',
+            position: 'left',
+          },
+          {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',

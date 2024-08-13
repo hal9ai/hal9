@@ -22,13 +22,14 @@ def cli():
 
 @click.command()
 @click.argument('path')
-def create(path :str):
+@click.option('--template', default="echo", help='The project template')
+def create(path :str, template :str):
   """
   Create Project
 
   --path: The path for the new project. Required argument.
   """
-  api_create(path, "openai")
+  api_create(path, template)
 
 @click.command()
 @click.argument('path')

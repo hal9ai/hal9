@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.9
+
+- Documentation improvements
+
 ## 2.6.7
 
 - Fix regression in `events()`

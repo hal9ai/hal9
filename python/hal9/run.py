@@ -17,7 +17,7 @@ def run(path :str) -> str:
     return
 
   try:
-    command = ['python', str(app_path)]
+    command = ['python3', str(app_path)]
     with subprocess.Popen(command) as proc:
       proc.wait()
   except Exception as e:

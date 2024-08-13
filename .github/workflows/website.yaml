@@ -16,6 +16,8 @@ jobs:
           node-version: 20
       - run: yarn
         working-directory: website
+      - run: yarn prebuild
+        working-directory: website
       - run: yarn build
         working-directory: website
       - name: Upload
