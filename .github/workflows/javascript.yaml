@@ -18,6 +18,8 @@ jobs:
           scope: '@hal9ai'
       - run: yarn install
         working-directory: ./javascript
+      - run: yarn build:npm
+        working-directory: ./javascript
       - run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
