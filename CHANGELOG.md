@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.7
+
+- Fix regression in `events()`
+
 ## 2.6.6
 
 - Improve error message when saving empty files in `save()`

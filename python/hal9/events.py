@@ -2,7 +2,7 @@ import json
 import os
 
 def event(name, details):
-  events_file = '.events'
+  events_file = 'storage/.events'
 
   if os.path.exists(events_file):
     with open(events_file, 'r') as file:
