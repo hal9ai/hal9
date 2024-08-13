@@ -1,6 +1,6 @@
 {
   "name": "hal9",
-  "version": "1.3.0",
+  "version": "2.1.1",
   "license": "MIT",
   "description": "Hal9: Create and Share Generative Apps",
   "main": "dist/hal9.js",
