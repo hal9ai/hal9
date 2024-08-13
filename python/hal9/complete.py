@@ -106,7 +106,6 @@ def complete_llama(completion, messages = [], tools = [], show = True):
     if tool_calls:
       tools = {func.__name__: func for func in tools}
       for tool_call in tool_calls:
-        print("tool_call.function.arguments: " + tool_call.function.arguments)
         messages.append({
           "role": "assistant",
           "tool_calls": [{
