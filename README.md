@@ -86,8 +86,3 @@ hal9 deploy my-chatbot --target docker
 Each command is tasked with preparing the deployment of your project folder. For example, `--target docker` will create a `Dockerfile` file that gets this project ready to run in cloud containers.
 
 For personal use, `--target hal9` supports a free tier at `hal9.com`; enterprise support is also available to deploy with `--target hal9 --url hal9.yourcompany.com`
-
-## Contributing
-
-Pull Requests are welcomed to consider additional application templates or deployment targets. See [CONTRIBUTING](CONTRIBUTING).
-

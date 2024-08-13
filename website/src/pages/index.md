@@ -19,7 +19,7 @@ Focus on AI (RAG, fine-tuning, alignment, training) and skip engineering tasks (
 
 ## Getting started
 
-Create and share a chatbot in seconds as follows:
+Create and share a chatbot in seconds by running the following commands:
 
 ```bash
 pip install hal9
@@ -28,84 +28,61 @@ hal9 create chatbot
 hal9 deploy chatbot
 ```
 
-Notice that `deploy` needs a `HAL9_TOKEN` environment variable with an API token you can get from [hal9.com/devs](https://hal9.com/devs). You can use this token to deploy from your local computer, a notebook or automate from GitHub.
-
-
-```bash
-HAL9_TOKEN=H9YOURTOKEN hal9 deploy chatbot
-```
-
-The code inside `/chatbot/app.py` contains a "Hello World" chatbot that reads the user prompt and echos the result back:
-
-
-```python
-prompt = input()
-print(f"Echo: {prompt}")
-```
-
-We designed this package with simplicity in mind, the job of the code is to read input and write output, that's about it. That said, you can create chatbots that use LLMs, generate images, or even use tools that connect to databases, or even build websites and games!
+To customize further, read the following sections.
 
 ## Creation
 
-By default `hal9 create` defaults to the `--template echo` template, but you can choose different ones as follows:
+By default `hal9 create` we will use the OpenAI template, you can choose different ones as follows:
 
 ```bash
-hal9 create chatbot-openai --template openai
-hal9 create chatbot-groq --template groq
+hal9 create my-chatbot --template openai
+hal9 create my-chatbot --template groq
 ```
 
-A template provides ready to use code with specific technologies and use cases. Is very popular to use OpenAI's ChatGPT-like template with `--template openai`, the code generated will look as follows:
-
-```python
-import hal9 as h9
-from openai import OpenAI
-
-messages = h9.load("messages", [])
-prompt = h9.input(messages = messages)
-
-completions = OpenAI().chat.completions.create(model = "gpt-4", messages = messages, stream = True)
-
-h9.complete(completions, messages = messages)
-h9.save("messages", messages, hidden = True)
-```
-
-The [Learn](/learn/intro) section explain in detail how this code works, but will provide a quick overview. The `hal9` package contains a helper functions to simplify your generative AI code. You can choose to not use `hal9` at all and use `input()` and `print()` statements yourself, or even sue tools like `langchain`. The `h9.load()` and `h9.save()` functions load and save data across chat sessions, our platform is stateless by default. The `h9.input()` function is a slim wrapper over `input()` that also stores the user input in the `messages`. Then `h9.complete()` is a helper function to help parse the completion results and save the result in `messages`. That's about it!
+A template provides ready to use code with specific technologies and use cases. If you already have code, you can skip this step.
 
 ## Development
 
-To make changes to your project, open `chatbot/` in your IDE and modify `chatbot/app.py`.
+To make changes to your project, open `my-chatbot/` in your IDE and modify `my-chatbot/app.py`.
 
 You can then run your project as follows:
 
 ```bash
-hal9 run chatbot
+cd my-chatbot
+
+pip install -r requirements.txt
+
+export OPENAI_KEY=YOUR_OPENAI_KEY
 ```
 
-If you customized your template with `--template` make sure to set the correct key, for example `export OPENAI_KEY=YOUR_OPENAI_KEY`.
+If you customized your template with `--template` make sure to set the correct key, for example `export GROQ_KEY=YOUR_GROQ_KEY`.
 
 You can then run your application locally with:
 
 ```bash
-hal9 run chatbot
+hal9 run .
 ```
 
-This command is just a convenience wrapper to running the code yourself with something like `python app.py`.
+or
+
+```bash
+cd ..
+hal9 run my-chatbot
+```
+
+This command is just a convenience wrapper over `python app.py`
 
 ## Deployment
 
 The deploy command will prepare for deployment your generative app.
 
-For example, you can prepare deployment as a generative app (Hal9). We have plans to also provide deployment to Docker and the open source community can expand this even further.
+For example, you can prepare deployment as a generative app (Hal9), an API (Flask), a data app (Streamlit), or a container (Docker).
 
 ```bash
-hal9 deploy chatbot --target hal9
+hal9 deploy my-chatbot --target hal9
+hal9 deploy my-chatbot --target docker
 ```
 
-Each command is tasked with preparing the deployment of your project folder. For example, `--target docker` should create a `Dockerfile` file that gets this project ready to run in cloud containers.
+Each command is tasked with preparing the deployment of your project folder. For example, `--target docker` will create a `Dockerfile` file that gets this project ready to run in cloud containers.
 
 For personal use, `--target hal9` supports a free tier at `hal9.com`; enterprise support is also available to deploy with `--target hal9 --url hal9.yourcompany.com`
-
-## Contributing
-
-Pull Requests are welcomed to consider additional application templates or deployment targets. See [CONTRIBUTING](CONTRIBUTING).
-
