@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.0
+
+- Support for `--main` deployment file in `hal9 deploy`
+
 ## 2.6.9
 
 - Documentation improvements

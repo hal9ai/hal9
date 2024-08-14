@@ -34,31 +34,16 @@ def read_files(path):
     
     return files_dict
 
-def request_deploy(path :str, url :str, name :str, typename :str, data :str, access :str) -> str:
-    project_name = project_from_path(path)
-    zip_path = create_deployment(path)
-
-    unixtime = int(time.time())
-
-    with open(zip_path, 'rb') as file:
-        file_content = file.read()
-        encoded_content = base64.b64encode(file_content).decode('utf-8')
-        upload_name = f'{project_name}-{unixtime}.zip'
-
-    # use app.py until backend supports zip content
-    with open(Path(path) / 'app.py', 'rb') as file:
-        file_content = file.read()
-        encoded_content = base64.b64encode(file_content).decode('utf-8')
-        upload_name = f'app.py'
-
+def request_deploy(path :str, url :str, name :str, typename :str, data :str, access :str, main :str) -> str:
     payload = {
-        'filename': upload_name,
+        'filename': main,
         'type': typename,
         'name': name,
         'format': 'b64',
         'files': read_files(path),
         'schemapath': data,
-        'access': access
+        'access': access,
+        'sourcefile': main
     }
 
     headers = {
@@ -73,12 +58,12 @@ def request_deploy(path :str, url :str, name :str, typename :str, data :str, acc
     response_data = response.json()
     print(response_data['url'])
 
-def deploy(path :str, url :str, name :str, typename :str, data :str, access :str) -> str:
+def deploy(path :str, url :str, name :str, typename :str, data :str, access :str, main :str) -> str:
     if 'HAL9_TOKEN' in os.environ:
         hal9_token = os.environ['HAL9_TOKEN']
     else:
         exit(f'HAL9_TOKEN environment variable missing, see https://hal9.com/deploy')
         # hal9_token = browser_login()
 
-    request_deploy(path, url, name, typename, data, access)
+    request_deploy(path, url, name, typename, data, access, main)
 

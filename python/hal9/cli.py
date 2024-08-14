@@ -49,7 +49,8 @@ def run(path :str):
 @click.option('--type', '-f', 'typename', default='ability', help='Deployment content')
 @click.option('--data', '-d', 'data', default=None, help='Deployment data path')
 @click.option('--access', '-a', 'access', default="private", help='Deployment access level')
-def deploy(path :str, target :str, url :str, name :str, typename :str, data :str, access :str):
+@click.option('--main', '-m', 'main', default="app.py", help='Deployment main file')
+def deploy(path :str, target :str, url :str, name :str, typename :str, data :str, access :str, main :str):
   """
   Deploy Project
 
@@ -57,12 +58,13 @@ def deploy(path :str, target :str, url :str, name :str, typename :str, data :str
   --url: The server url to deploy to. Defaults to https://api.hal9.com.
   --name: The server url to deploy to. Defaults to https://api.hal9.com.
   --type: The type of content to deploy. Defaults to (chatbot) ability.
+  --main: The main file deploy. Defaults to 'app.py'.
   """
 
   if (name is None):
     name = f'{os.path.basename(path)}-{int(datetime.datetime.now().timestamp() * 1000)}'
 
-  api_deploy(path, target, url, name, typename, data, access)
+  api_deploy(path, target, url, name, typename, data, access, main)
 
 cli.add_command(create)
 cli.add_command(run)
