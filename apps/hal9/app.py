@@ -49,7 +49,8 @@ completion = run(messages, tools)
 try:
   h9.complete(completion, messages = messages, tools = all_tools, show = False, model = "llama")
 except Exception as e:
-  completion = run(messages, [generic_reply])
+  one_tool = h9.describe([generic_reply], model = "llama")
+  completion = run(messages, one_tool)
   h9.complete(completion, messages = messages, tools = [generic_reply], show = False, model = "llama")
 
 h9.save("messages", messages, hidden=True)
