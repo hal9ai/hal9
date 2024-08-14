@@ -15,6 +15,14 @@ from tool_document import document_reply
 from tool_csv import csv_reply
 
 MODEL = "llama3-70b-8192"
+def run(messages, tools):
+  return Groq().chat.completions.create(
+    model = MODEL,
+    messages = messages,
+    temperature = 0,
+    seed = 1,
+    tools=tools,
+    tool_choice="auto")
 
 prompt = input("")
 h9.event('prompt', prompt)
@@ -36,15 +44,12 @@ all_tools = [
 ]
 
 tools = h9.describe(all_tools, model = "llama")
+completion = run(messages, tools)
 
-completion = Groq().chat.completions.create(
-  model = MODEL,
-  messages = messages,
-  temperature = 0,
-  seed = 1,
-  tools=tools,
-  tool_choice="auto")
-
-h9.complete(completion, messages = messages, tools = all_tools, show = False, model = "llama")
+try:
+  h9.complete(completion, messages = messages, tools = all_tools, show = False, model = "llama")
+except Exception as e:
+  completion = run(messages, [generic_reply])
+  h9.complete(completion, messages = messages, tools = [generic_reply], show = False, model = "llama")
 
 h9.save("messages", messages, hidden=True)
