@@ -9,7 +9,7 @@ def hal9_reply(prompt):
      'prompt' to respond to.
   """
 
-  context = open('tool_hal9.txt', 'r').read()
+  context = open('tools/hal9.txt', 'r').read()
   messages = [
     {"role": "system", "content": context},
     {"role": "user", "content": prompt}
