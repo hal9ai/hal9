@@ -4,15 +4,15 @@ import hal9 as h9
 import json
 import openai
 
-from tool_calculator import calculate
-from tool_game import build_game
-from tool_generic import generic_reply
-from tool_hal9 import hal9_reply
-from tool_website import build_website
-from tool_streamlit import build_streamlit
-from tool_image import create_image
-from tool_document import document_reply
-from tool_csv import csv_reply
+from tools.calculator import calculate
+from tools.game import build_game
+from tools.generic import generic_reply
+from tools.hal9 import hal9_reply
+from tools.website import build_website
+from tools.streamlit import build_streamlit
+from tools.image import create_image
+from tools.document import document_reply
+from tools.csv import csv_reply
 
 MODEL = "llama3-70b-8192"
 def run(messages, tools):
