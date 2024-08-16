@@ -24,13 +24,12 @@ def create_deployment(path :str) -> str:
 
 def read_files(path):
     files_dict = {}
-    
     for root, dirs, files in os.walk(path):
         for file in files:
-            file_path = os.path.join(root, file)
-            with open(file_path, 'rb') as f:
+            relative_path = os.path.relpath(os.path.join(root, file), path)
+            with open(os.path.join(root, file), 'rb') as f:
                 encoded_content = base64.b64encode(f.read()).decode('utf-8')
-                files_dict[file] = encoded_content
+                files_dict[relative_path] = encoded_content
     
     return files_dict
 
