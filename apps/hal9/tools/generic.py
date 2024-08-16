@@ -10,6 +10,7 @@ def generic_reply(prompt):
    """
 
    messages = h9.load("messages", [])
+   messages = [msg for msg in messages if "tool_calls" not in msg]
 
    response = Groq().chat.completions.create(
      model = "llama3-70b-8192",
