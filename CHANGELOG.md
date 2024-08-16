@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.1
+
+- Support for subfolders in `hal9` deployment
+
 ## 2.7.0
 
 - Support for `--main` deployment file in `hal9 deploy`
