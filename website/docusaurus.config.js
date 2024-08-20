@@ -97,6 +97,9 @@ const config = {
         theme: prismThemes.shadesOfPurple,
         darkTheme: prismThemes.shadesOfPurple,
       },
+      metadata: [
+        { property: 'og:image', content: 'https://hal9.com/images/hal9-social-preview.png?1' },
+      ]
     }),
 };
 
