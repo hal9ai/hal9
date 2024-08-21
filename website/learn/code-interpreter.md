@@ -75,7 +75,10 @@ import os
 import hal9 as h9
 from openai import OpenAI
 
-messages = h9.load("messages", [{ "role": "system", "content": "Always reply with a single page HTML markdown block (which can use JavaScript, CSS, etc) that fulfills the user request" }])
+messages = h9.load("messages", [{ "role": "system", "content": """
+  Always reply with a single page HTML markdown block (which can use JavaScript,
+  CSS, etc) that fulfills the user request
+""" }])
 
 messages.append({"role": "user", "content": input()})
 
@@ -102,7 +105,10 @@ Instead of building web applications, you can build data analytics apps that que
 import hal9 as h9
 from openai import OpenAI
 
-messages = h9.load("messages", [{ "role": "system", "content": "Only reply with plain Python code. Write streamlit code to answer the user requirements." }])
+messages = h9.load("messages", [{ "role": "system", "content": """
+  Only reply with plain Python code.
+  Write streamlit code to answer the user requirements.
+""" }])
 
 messages.append({"role": "user", "content": input()})
 
