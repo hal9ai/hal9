@@ -10,7 +10,7 @@ This section will describe some of the possible use cases.
 
 ## Computing
 
-The first approach to using code from and LLM is to run it to compute complex answers, we can accomplsih this as follows:
+The first approach to using code from and LLM is to run it to compute complex answers, we can accomplish this as follows:
 
 ```python
 import hal9 as h9

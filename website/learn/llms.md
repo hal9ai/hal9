@@ -8,7 +8,7 @@ This section presents how to build our first LLM chatbots using LLMs like OpenAI
 
 ## OpenAI
 
-OpenAI's API is quite popular given that all the compute is happening in the cloud, no need to find our own GPUs, and they are one of the leading LLMs in terms of quality.
+OpenAI's API is quite popular given that all the computation is happening in the cloud, no need to find our own GPUs, and they are one of the leading LLMs in terms of quality.
 
 To build this OpenAI based chatbot first define your API key:
 

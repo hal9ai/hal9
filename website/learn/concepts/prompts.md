@@ -4,7 +4,9 @@ sidebar_position: 4
 
 # Prompt Engineering
 
-Prompt engineering has emerged as an essential technique for extending the capabilities of large language models (LLMs) . This technique involves strategically designing task-specific instructions, known as prompts; It can be a question, a statement, or any text that instructs the model on what kind of response is desired. Prompts play a pivotal role in determining the quality and relevance of the model's output without altering its core parameters. Instead of updating the model parameters or require to finetune a model, prompts allow seamless integration of pre-trained models into downstream tasks by eliciting desired model behaviors based solely on the provided prompt.
+Prompt engineering has emerged as an essential technique for extending the capabilities of large language models (LLMs) . This technique involves strategically designing task-specific instructions, known as prompts; It can be a question, a statement, or any text that instructs the model on what kind of response is desired. Prompts play a pivotal role in determining the quality and relevance of the model's output without altering its core parameters.
+
+Instead of requiring model parameter updates or fine-tuning, prompts enable seamless integration of pre-trained models into downstream tasks by eliciting the desired behaviors based solely on the provided prompt.
 
 ## Prompt Engineering Techniques
 
