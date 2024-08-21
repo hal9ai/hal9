@@ -1,8 +1,4 @@
 {
   "label": "Concepts",
   "position": 99,
-  "link": {
-    "type": "generated-index",
-    "description": "Concepts relevant to Generative Artificial Intelligence"
-  }
 }
