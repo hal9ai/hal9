@@ -10,7 +10,7 @@ The previous version of GenAI (referred to as AI) was based on Deep Neural Netwo
 
 GenAI uses AI in the opposite way -- not to classify, but to generate and create new content. For example, to generate a pixel image of a cat, or a response to some text in Spanish. A response from ChatGPT would be another example of GenAI in action.
 
-Head next to the [Deep Neural Networks](genai/dnn) section to learn the foundations that lead us to Generative AI.
+Head next to the [Deep Neural Networks](dnn) section to learn the foundations that lead us to Generative AI.
 
 ## Generative Apps
 
@@ -23,6 +23,3 @@ New developer jobs will likely require writing code for such new applications to
 For example, even if an AI or a robot was capable of flying an airplane autonomously, developers might want to write code that double checks that the landing is safe, connects to the best weather services, provides flight updates to passengers, etc.
 
 We don't know exactly what the new GenApps will look like and how our jobs or world will transform, but we are optimistic that GenApps will help us solve hard problems the world is facing in healthcare, education, climate, energy, space exploration, entertaiment, and so on.
-
-Read the [Applications](genapps/intro) section as the first step towards learning how to create Generative Applications.
-

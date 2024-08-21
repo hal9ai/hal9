@@ -65,7 +65,7 @@ h9.complete(completions, messages = messages)
 h9.save("messages", messages, hidden = True)
 ```
 
-The [Learn](/learn/intro) section explain in detail how this code works, but will provide a quick overview. The `hal9` package contains a helper functions to simplify your generative AI code. You can choose to not use `hal9` at all and use `input()` and `print()` statements yourself, or even sue tools like `langchain`. The `h9.load()` and `h9.save()` functions load and save data across chat sessions, our platform is stateless by default. The `h9.input()` function is a slim wrapper over `input()` that also stores the user input in the `messages`. Then `h9.complete()` is a helper function to help parse the completion results and save the result in `messages`. That's about it!
+The [Learn](https://hal9.com/docs/learn) section explain in detail how this code works, but will provide a quick overview. The `hal9` package contains a helper functions to simplify your generative AI code. You can choose to not use `hal9` at all and use `input()` and `print()` statements yourself, or even sue tools like `langchain`. The `h9.load()` and `h9.save()` functions load and save data across chat sessions, our platform is stateless by default. The `h9.input()` function is a slim wrapper over `input()` that also stores the user input in the `messages`. Then `h9.complete()` is a helper function to help parse the completion results and save the result in `messages`. That's about it!
 
 ## Development
 
