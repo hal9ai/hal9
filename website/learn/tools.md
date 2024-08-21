@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Tools
 
 This section presents how to add tools to your LLM application.

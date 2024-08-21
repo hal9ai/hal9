@@ -2,11 +2,7 @@
 sidebar_position: 1
 ---
 
-# Intro
-
-**What is Hal9?** Hal9 is a platform to help you write and create your own versions of ChatGPT -- We refer to these applications as Generative Apps since they use Generative AI.
-
-### Generative AI
+# Generative AI
 
 Generative Artificial Intelligence (**GenAI**) is a version of Artificial Intelligence (**AI**) that is good at generating various content: text, images, sounds, videos, code, etc.
 
@@ -16,7 +12,7 @@ GenAI uses AI in the opposite way -- not to classify, but to generate and create
 
 Head next to the [Deep Neural Networks](genai/dnn) section to learn the foundations that lead us to Generative AI.
 
-### Generative Apps
+## Generative Apps
 
 Generative Applications (**GenApps**) are software applications (**apps**) written with code that make use of GenAI.
 

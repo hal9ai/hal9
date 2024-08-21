@@ -15,7 +15,20 @@ const config = {
   baseUrl: '/docs/',
   organizationName: 'hal9ai',
   projectName: 'hal9',
-  plugins: ['docusaurus-plugin-sass'],
+  plugins: [
+    'docusaurus-plugin-sass',
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          {
+            to: '/concepts',
+            from: ['/genai'],
+          },
+        ],
+      },
+    ],
+  ],
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   i18n: {

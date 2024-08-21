@@ -1,10 +1,10 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Intro
+# LLMs
 
-This section presents how to build our first LLM application using OpenAI and a chatbot interface.
+This section presents how to build our first LLM chatbots using LLMs like OpenAI and Groq.
 
 ## OpenAI
 

@@ -1,4 +1,8 @@
-# Code
+---
+sidebar_position: 3
+---
+
+# Code Interpreter
 
 Beyond generating text, we can use LLMs to generate code to help us build applications, analyze data, perform complex calculations, and much more. To accomplish this, all we have to do is get the code out of the LLM and run it or create an application with it.
 
@@ -115,7 +119,7 @@ code = h9.extract(response, "python")
 h9.save("app.py", code)
 ```
 
-You can then run the generated application as:
+Hal9 will embed and run this application automatically for you. But if you are working in your own computer you can run the generated application as follows:
 
 ```bash
 streamlit run app.py

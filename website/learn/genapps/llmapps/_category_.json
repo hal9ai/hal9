@@ -1,8 +1,0 @@
-{
-  "label": "LLM Apps",
-  "position": 3,
-  "link": {
-    "type": "generated-index",
-    "description": "Large Language Model Applications."
-  }
-}

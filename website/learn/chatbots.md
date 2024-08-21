@@ -1,13 +1,36 @@
+---
+sidebar_position: 1
+---
 
 # Chatbots
 
-This section will present techniques required to add functionality to chatbots related to remembering conversations and streaming responses which are important topics to interface with [LLMs](../../genai/llm)
+ChatGPT populatized the chat interface as the application interface to interoperate with [LLMs](../../genai/llm), tools like MidJourney have also popularized through their use of Disscord.
+
+From an applicaiton development perspective, the simplest chat interface we can build relies on input / output functions provided by the language itself.
+
+For example, the following Python code generates a chatbot that replies "Echo" to whatever the input is. Arguably this is the simplest chatbot we can create.
+
+```python
+echo = input()
+print(f"Echo: {echo}")
+```
+
+You can deploy this to Hal9 using the rocket icon in the code or by running:
+
+```
+pip install hal9
+
+hal9 create echo-chatbot
+HAL9_TOKEN=H9YOURTOKEN hal9 deploy echo-chatbot
+```
+
+Notice that `deploy` needs a `HAL9_TOKEN` environment variable with an API token you can get from [hal9.com/devs](https://hal9.com/devs). You can use this token to deploy from your local computer, a notebook or automate from GitHub.
 
 ## Memory
 
 It is expected from a chatbot to, not only reply to a message, but to also remember previous messages from the conversation.
 
-We can think of two main strategies to accomplish this. The first one (*stateful*) is to run our program "forever" and remember the conversation ourselves. The second one (*stateless*), is to store the conversation into a file that we can recover it even if our program restarts.
+We can think of two main strategies to accomplish this. The first one (**stateful**) is to run our program "forever" and remember the conversation ourselves. The second one (**stateless**), is to store the conversation into a file that we can recover it even if our program restarts.
 
 ### Stateful
 
@@ -50,7 +73,7 @@ In contrast to stateless, a computer program that does not need to remember its 
 
 For complex chatbots, generating text can take a few seconds or maybe even minutes. Users might not really understand what is going on, if our programs don't do anything for several seconds; therefore, it is a good practice to communicate to the user what is happening or generate the response incrementally. That way, users can start reading a few words as soon as they become available.
 
-The incremental process of generating text for the user is reffered to as **streamling**. We can accomplish this by printing the results incrementally calling `print` with a partial answer:
+The incremental process of generating text for the user is reffered to as **streaming**. We can accomplish this by printing the results incrementally calling `print` with a partial answer:
 
 ```python
 import time
@@ -60,7 +83,7 @@ for i in range(1, 11):
   time.sleep(1)
 ```
 
-These concepts will prove useful to build our first generative charbot in the [LLM Apps](../llmapps/intro.md) section.
+Streaming will prove useful to build generative chatbots that use LLMs.
 
 ## URLs
 
