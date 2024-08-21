@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Tools
+# Using Tools
 
 To build complex chatbots that can support multiple operations from evaluating code expressions, calling external services, browsing the web, etc. We can enable LLMs to choose tools to use in the form of callable functions.
 

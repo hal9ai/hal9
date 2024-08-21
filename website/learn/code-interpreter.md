@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Code Interpreter
+# Interpreting Code
 
 Beyond generating text, we can use LLMs to generate code to help us build applications, analyze data, perform complex calculations, and much more. To accomplish this, all we have to do is get the code out of the LLM and run it or create an application with it.
 

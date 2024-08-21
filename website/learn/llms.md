@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# LLMs
+# Using LLMs
 
 This section presents how to build our first LLM chatbots using LLMs like OpenAI and Groq.
 

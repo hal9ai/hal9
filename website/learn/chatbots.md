@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Chatbots
+# Creating Chatbots
 
 ChatGPT popularized the chat interface as the application interface to interoperate with [LLMs](concepts/llm), tools like MidJourney have also popularized through their use of Discord.
 
