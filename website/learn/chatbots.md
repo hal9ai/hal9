@@ -30,27 +30,9 @@ Notice that `deploy` needs a `HAL9_TOKEN` environment variable with an API token
 
 It is expected from a chatbot to, not only reply to a message, but to also remember previous messages from the conversation.
 
-We can think of two main strategies to accomplish this. The first one (**stateful**) is to run our program "forever" and remember the conversation ourselves. The second one (**stateless**), is to store the conversation into a file so that we can recover it even if our program restarts.
+We can think of two main strategies to accomplish this. The first one (**stateful**) is to make the program remember the state on it's own memory. The second one (**stateless**), is to store the conversation outside your program (in a file) so that we can recover it even if our program restarts.
 
-### Stateful
-
-The first strategy to remember a conversation is to keep your program running to process multiple messages. We accomplish this by running an infinite loop of question-answer cycles through as follows:
-
-```python
-all_words = []
-while(True):
-  word = input("Give me a word: ")
-  all_words.append(word)
-  print(f"I remember: {', '.join(all_words)}")
-```
-
-This method is easy to implement, but it will lose conversation context over time after your program restarts; therefore, you will likely want to avoid this approach.
-
-We refer to the memory we need to remember as the program's **state**, and a computer program that needs to remember the state is referred to as **stateful**.
-
-### Stateless
-
-To use computing resources efficiently and reliably, we can store the conversation on your computer storage as a file. Even if your program restarts, your chatbot will behave correctly and not forget the conversation.
+The stateful method is easy to implement by storing data in-memory, but it will lose conversation context over time after your program restarts; therefore, you will likely want to avoid this approach.
 
 To make your chatbot behave correctly even after it restarts, we can store the conversation messages to files. You can use any library to store and load files, but we recommend the `hal9` package convenience functions to `save` and `load` files with ease:
 
@@ -85,11 +67,11 @@ for i in range(1, 11):
 
 Streaming will prove useful to build generative chatbots that use LLMs.
 
-## URLs
+## Attachments
 
-Hal9 encourages uploads and links to be processed as URLs. For example, users can reference or upload a PDF as 'https://www.clickdimensions.com/links/TestPDFfile.pdf' which can be read from `input`.
+Hal9 encourages to attach files in a chat as URL links. For example, users can reference or upload a PDF by typing the URL https://www.clickdimensions.com/links/TestPDFfile.pdf, which can be read from `input`.
 
-To help assist with processing references, Hal9 provides an `input` function which extracts the text contents of a URL directly as text to easily support managing uploads.
+To help assist with processing links and attachments, Hal9 provides an `input` function which extracts the text contents of a URL directly as text to easily support managing uploads.
 
 ```python
 import hal9 as h9
