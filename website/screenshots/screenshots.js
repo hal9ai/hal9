@@ -55,10 +55,12 @@ async function collectScreenshots(dark) {
 
     await page.setViewport({ width: 1024, height: 600 });
     await page.goto('http://localhost:5000/explore?guest', { waitUntil: 'networkidle2' });
-    await page.screenshot({ path: '../static/screenshots/hal9-start-light.png' });
-
+    
     if (dark) await page.click('#switch-dark');
     await page.waitForTimeout(500);
+
+    await page.screenshot({ path: '../static/screenshots/hal9-start-' + (dark ? 'dark' : 'light') + '.png' });
+
     await performActions(page, actions, dark ? '-dark' : '-light');
 
     console.log('Screenshot taken and saved as screenshot.png');

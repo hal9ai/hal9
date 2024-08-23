@@ -22,12 +22,8 @@ const config = {
       {
         redirects: [
           {
-            to: '/docs/learn/concepts',
-            from: '/docs/learn/genai',
-          },
-          {
-            to: '/docs/learn/concepts/genai',
-            from: '/docs/learn/concepts',
+            to: '/docs/learn/hal9',
+            from: '/docs',
           },
         ],
       },

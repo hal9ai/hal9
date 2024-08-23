@@ -12,6 +12,4 @@ Hal9's user interface is a web application that showcases the main use cases on 
 
 Hal9's developer interface consists of a powerful open-source library which enables developers to build AI coworkers of arbitrary complexity. Developers can write and modify code from Hal9's user interface or deploy from other developer services like GitHub.
 
-<center><a href="/devs"><ThemedImage src="hal9-start" /></a></center>
-
 This enables business users to rapidly create AI coworkers and for developers to enhance them with arbitrary complexity that fulfills the business user needs.
