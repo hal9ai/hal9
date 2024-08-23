@@ -2,7 +2,7 @@
 sidebar_position: 80
 ---
 
-# Deploying Chatbots
+# Deploying Assets
 
 To explicitly deploy a chatbot to Hal9 one can use the Hal9 Command Line Interface (**CLI**) as follows:
 

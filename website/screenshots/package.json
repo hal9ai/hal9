@@ -1,0 +1,12 @@
+{
+  "name": "screenshot-script",
+  "version": "1.0.0",
+  "description": "A Node.js script to take a screenshot of localhost:5000/explore using Puppeteer",
+  "main": "screenshot.js",
+  "scripts": {
+    "start": "node screenshots.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.3.8"
+  }
+}

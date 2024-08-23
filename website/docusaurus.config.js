@@ -51,11 +51,13 @@ const config = {
           path: 'learn',
           routeBasePath: 'learn',
         },
+        /*
         blog: {
           showReadingTime: true,
           editUrl:
             'https://github.com/hal9ai/hal9/tree/main/website/blog',
         },
+        */
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -86,11 +88,13 @@ const config = {
           target: '_self'
         },
         items: [
+          /*
           {
             to: '/docs',
-            label: 'Start',
+            label: 'Docs',
             position: 'left',
           },
+          */
           {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
@@ -98,7 +102,8 @@ const config = {
             label: 'Learn',
           },
           {to: '/reference/code', label: 'Reference', position: 'left'},
-          {to: '/blog', label: 'Blog', position: 'left'},
+          /*{to: '/blog', label: 'Blog', position: 'left'},*/
+          { to: 'https://hal9.com/news', label: 'News', position: 'left' },
           {
             href: 'https://github.com/hal9ai/hal9',
             className: 'github-link',
