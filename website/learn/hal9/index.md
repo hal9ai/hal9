@@ -2,7 +2,7 @@ import ThemedImage from '../../src/components/themedimg.jsx'
 
 # Hal9: Create and Share AI Coworkers
 
-Hal9 is a platform to effortlessly create and share AI coworkers. As opposed to chatbots, AI coworkers are productivity-focused chatbots that go beyond generic information available in services like ChatGPT, Gemini, Anthropic and the like.
+Hal9 is a platform to effortlessly create and share AI coworkers. As opposed to chatbots, AI coworkers are productivity-focused chatbots that go beyond generic information available in services like ChatGPT, Gemini, Claude and the like.
 
 An AI coworker is able to connect to private enterprise datasets, integrate to enterprise communication services, build enterprise applications, and is extensible by developers with powerful open-source libraries. Therefore, AI coworkers must run securely in your own cloud to prevent sharing any private resources with anyone, including Hal9.
 

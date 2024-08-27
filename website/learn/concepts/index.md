@@ -1,6 +1,6 @@
 # Generative AI
 
-Generative Artificial Intelligence (**GenAI**) is a version of Artificial Intelligence (**AI**) that is good at generating various content: text, images, sounds, videos, code, etc.
+Generative Artificial Intelligence (**GenAI**) is a version of Artificial Intelligence (**AI**) that is good at generating content: text, images, sounds, videos, code, etc.
 
 The previous version of GenAI (referred to as AI) was based on Deep Neural Networks (**DNN**), which are brain-inspired math equations optimized for content classification. For example, it enabled computers to identify if pixels in an image represent a cat or dog, or if some text is written in Spanish or English.
 

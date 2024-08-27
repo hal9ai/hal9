@@ -8,7 +8,7 @@ import GPT1 from './llm-gpt-1.png';
 
 # Large Language Models
 
-Learn foundational concepts like autoencoders, embeddings, transformers, and attention that lead to the development of GPTs and LLMs that exhibit advanced emergent abilities that generate content effectively.
+This section presents foundational concepts related to Large Language Models (LLMs) like autoencoders, embeddings, transformers, and attention which lead to the development of GPTs which showcase emergent text-generation abilities.
 
 ## Embeddings
 
@@ -26,7 +26,7 @@ We can use a DNN to predict the next word from a given text; for example, we can
 
 However, using standard (feedforward) DNN turns out to create predictions that are not that useful. For example, if we were to use the prompt "Rose is the Queen. Who is the King's wife?" We would likely get a response like "The Queen"; or even worse, an hallucination like "Queen Elizabeth" seen in the training text.
 
-To solve that problem, variations to DNNs were explored like Recursive Neural Networks (RNNs), Long-Short Term Memory (LSTM) DNNs, and the like. Those showed improvements but it was not until the **transformer** was presented in the [Attention Is All You Need](https://arxiv.org/abs/1706.03762) paper.
+To solve that problem, variations to DNNs were explored like Recursive Neural Networks (RNNs), Long-Short Term Memory (LSTM) DNNs, and the like. Those showed improvements but significant progress was not achieved until the **transformer** was presented in the [Attention Is All You Need](https://arxiv.org/abs/1706.03762) paper.
 
 <center><a href="https://arxiv.org/abd/1706.03762"><img src={Transformer} style={{width: 380}} /></a></center>
 

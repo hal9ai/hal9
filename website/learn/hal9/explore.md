@@ -22,7 +22,7 @@ Some of the features this chatbot supports includes:
 - Generating images.
 - Generating simple websites.
 - Processing spreadsheets.
-- Building simple games.
 - Understanding documents.
+- Answering questions about Hal9.
 
 The code for Hal9's AI coworker is open-source under an MIT license and available for your technical team, see [github.com/hal9ai/hal9/tree/main/apps/hal9](https://github.com/hal9ai/hal9/tree/main/apps/hal9).
