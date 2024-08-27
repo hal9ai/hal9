@@ -53,4 +53,4 @@ The key innovation was to avoid generating the image from scratch. Instead, the 
 
 Stable diffusion, a term that will soon require further refinement, can be thought of as an umbrella concept encompassing a variety of techniques for state-of-the-art image generation. Such systems typically use transformers for tunable text-to-image controls and latent diffusion for generating hyper-realistic images. The following example was generated with Hal9 and Flux. Use the following link to create your own:
 
-<center><a href="https://hal9.com"><img src={FluxHal9} style={{width: 500}} /></a></center>
+<center><a href="https://hal9.com/apps/flux"><img src={FluxHal9} style={{width: 500}} /></a></center>
