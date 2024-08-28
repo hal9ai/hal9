@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Building Coworkers
 
-ChatGPT popularized the chat interface as the application interface to interoperate with [LLMs](../concepts/llm), tools like MidJourney have also popularized through their use of Discord.
+ChatGPT popularized the chat interface as the application interface to interoperate with [LLMs](../genai/llm), tools like MidJourney have also popularized through their use of Discord.
 
 From an application development perspective, the simplest chat interface we can build relies on input / output functions provided by the language itself.
 

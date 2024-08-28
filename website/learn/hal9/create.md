@@ -22,7 +22,7 @@ The name defines the title for your chatbot and also the URL path used to access
 
 The description field services two purposes. First, it is used when browsing additional details for your chatbot. Secondly, some templates use the description to customize the experience and the behavior of your coworkers.
 
-For example, the description field might be used as the system prompt in some cases, see also [prompts](../concepts/prompts) concept section.
+For example, the description field might be used as the system prompt in some cases, see also [prompts](../genai/prompts) concept section.
 
 <center><a href="/create"><ThemedImage src="hal9-create-description" /></a></center>
 

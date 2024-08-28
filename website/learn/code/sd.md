@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Generating Images
 
-To generate images, you can use [stable diffusion](../concepts/sd.md) techniques with models like DallE, Flux, etc.
+To generate images, you can use [stable diffusion](../genai/sd.md) techniques with models like DallE, Flux, etc.
 
 ## Flux
 
