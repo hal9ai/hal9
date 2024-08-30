@@ -10,6 +10,8 @@ import base64
 import mimetypes
 
 def file_to_dataurl(file_path):
+    if not file_path:
+        return None
     if not os.path.exists(file_path):
         return None
     mime_type, _ = mimetypes.guess_type(file_path)
