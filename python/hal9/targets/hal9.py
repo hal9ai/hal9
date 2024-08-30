@@ -6,6 +6,28 @@ from pathlib import Path
 import time
 import base64
 import json
+import base64
+import mimetypes
+
+def file_to_dataurl(file_path):
+    if not os.path.exists(file_path):
+        return None
+    mime_type, _ = mimetypes.guess_type(file_path)
+    if mime_type not in ['image/jpeg', 'image/png']:
+        raise ValueError("Unsupported file type. Only JPEG and PNG are allowed.")
+    
+    # Read the file content in binary mode
+    with open(file_path, 'rb') as file:
+        file_data = file.read()
+    base64_data = base64.b64encode(file_data).decode('utf-8')
+    data_url = f"data:{mime_type};base64,{base64_data}"
+    return data_url
+
+def complete_filename(directory, filename):
+    for file in os.listdir(directory):
+        if file.startswith(filename):
+            return os.path.abspath(os.path.join(directory, file))
+    return None
 
 def project_from_path(path :str) -> str:
     return os.path.basename(os.path.abspath(path))
@@ -22,10 +44,13 @@ def create_deployment(path :str) -> str:
     
     return zip_path
 
-def read_files(path):
+def read_files(path :str, exclude :str = None):
     files_dict = {}
     for root, dirs, files in os.walk(path):
         for file in files:
+            if exclude and file.startswith(exclude):
+                continue
+
             relative_path = os.path.relpath(os.path.join(root, file), path)
             with open(os.path.join(root, file), 'rb') as f:
                 encoded_content = base64.b64encode(f.read()).decode('utf-8')
@@ -34,15 +59,18 @@ def read_files(path):
     return files_dict
 
 def request_deploy(path :str, url :str, name :str, typename :str, data :str, access :str, main :str) -> str:
+    thumbnail = file_to_dataurl(complete_filename(path, "thumbnail."))
+
     payload = {
         'filename': main,
         'type': typename,
         'name': name,
         'format': 'b64',
-        'files': read_files(path),
+        'files': read_files(path, "thumbnail."),
         'schemapath': data,
         'access': access,
-        'sourcefile': main
+        'sourcefile': main,
+        'thumbnail': thumbnail
     }
 
     headers = {

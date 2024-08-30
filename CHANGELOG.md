@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.2
+
+- Support to assign thumbnail file in deploy
+
 ## 2.7.1
 
 - Support for subfolders in `hal9` deployment
