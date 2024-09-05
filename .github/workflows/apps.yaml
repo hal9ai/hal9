@@ -17,17 +17,21 @@ jobs:
     - name: Install Hal9
       run: pip install hal9
     - name: Deploy Echo
-      run: hal9 deploy apps/echo --name ECHO --access public --url https://api.devel.hal9.com
+      run: hal9 deploy apps/echo --name ECHO --access public --url https://api.devel.hal9.com --title Echo --description "Echoes user input"
       env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN_DEVEL }}
     - name: Deploy Hal9
-      run: hal9 deploy apps/hal9 --name hal9 --access public --url https://api.devel.hal9.com
+      run: hal9 deploy apps/hal9 --name hal9 --access public --url https://api.devel.hal9.com --title Hal9 --description "Conversations and content creation"
       env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN_DEVEL }}
     - name: Deploy flux
-      run: hal9 deploy apps/flux --name flux --access public --url https://api.devel.hal9.com
+      run: hal9 deploy apps/flux --name flux --access public --url https://api.devel.hal9.com --title Flux --description "Photorealistic content creation"
       env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN_DEVEL }}
+    - name: Deploy Browser
+      run: hal9 deploy apps/browser --name browser --access unlisted --title Browser --description "Capable of browsing the web"
+      env:
+          HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
   prod:
     runs-on: ubuntu-latest
     steps:
@@ -39,14 +43,20 @@ jobs:
     - name: Install Hal9
       run: pip install hal9
     - name: Deploy Echo
-      run: hal9 deploy apps/echo --name ECHO --access public
+      run: hal9 deploy apps/echo --name ECHO --access public --title Echo --description "Echoes user input"
       env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
     - name: Deploy Hal9
-      run: hal9 deploy apps/hal9 --name hal9 --access public
+      run: hal9 deploy apps/hal9 --name hal9 --access public --title Hal9 --description "Conversations and content creation"
       env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
     - name: Deploy Flux
-      run: hal9 deploy apps/flux --name flux --access public
+      run: hal9 deploy apps/flux --name flux --access public --title Flux --description "Photorealistic content creation"
       env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
+    - name: Deploy Browser
+      run: hal9 deploy apps/browser --name browser --access unlisted --title Browser --description "Capable of browsing the web"
+      env:
+          HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
+
+
