@@ -46,25 +46,29 @@ def run(path :str):
 @click.option('--target', default="hal9", help='Deployment target')
 @click.option('--url', default="https://api.hal9.com", help='Deployment url')
 @click.option('--name', default=None, help='Deployment name')
-@click.option('--type', '-f', 'typename', default='ability', help='Deployment content')
+@click.option('--type', '-t', 'typename', default='ability', help='Deployment content')
 @click.option('--data', '-d', 'data', default=None, help='Deployment data path')
 @click.option('--access', '-a', 'access', default="private", help='Deployment access level')
 @click.option('--main', '-m', 'main', default="app.py", help='Deployment main file')
-def deploy(path :str, target :str, url :str, name :str, typename :str, data :str, access :str, main :str):
+@click.option('--title', '-l', 'title', default=None, help='Deployment title')
+@click.option('--description', '-s', 'description', default=None, help='Deployment description')
+def deploy(path :str, target :str, url :str, name :str, typename :str, data :str, access :str, main :str, title :str, description :str):
   """
   Deploy Project
 
   --path: The path to the project. Required argument.
   --url: The server url to deploy to. Defaults to https://api.hal9.com.
-  --name: The server url to deploy to. Defaults to https://api.hal9.com.
+  --name: The deployment name.
   --type: The type of content to deploy. Defaults to (chatbot) ability.
   --main: The main file deploy. Defaults to 'app.py'.
+  --title: The deployment title.
+  --description: deployment The description.
   """
 
   if (name is None):
     name = f'{os.path.basename(path)}-{int(datetime.datetime.now().timestamp() * 1000)}'
 
-  api_deploy(path, target, url, name, typename, data, access, main)
+  api_deploy(path, target, url, name, typename, data, access, main, title, description)
 
 cli.add_command(create)
 cli.add_command(run)

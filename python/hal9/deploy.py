@@ -6,7 +6,7 @@ targets = {
   'hal9': deploy_hal9,
 }
 
-def deploy(path :str, target :str, url :str, name :str, typename :str, data :str, access :str, main :str) -> str:
+def deploy(path :str, target :str, url :str, name :str, typename :str, data :str, access :str, main :str, title :str, description :str) -> str:
   """Deploy an application
 
   Parameters
@@ -25,9 +25,13 @@ def deploy(path :str, target :str, url :str, name :str, typename :str, data :str
           The access level, defaults to 'private'.
   main : str
           The main file to use, defaults to 'app.py'.
+  title : str
+          The deployment title, defaults to name.
+  description : str
+          The deployment description, defaults to empty.
   """
 
   if target in targets:
-    targets[target](path, url, name, typename, data, access, main)
+    targets[target](path, url, name, typename, data, access, main, title, description)
   else:
     raise Exception(f"Deployment target '{target}' is unsupported.")
