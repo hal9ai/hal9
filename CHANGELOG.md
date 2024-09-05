@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.7.4
+
+- Better error message for incorrect `save()` param order
+- Support handing PIL images in `save()`
+- Support title and description in `hal9` deployment
+- Support arbitrary runtimes and `hal9` describe
+
 ## 2.7.2
 
 - Support to assign thumbnail file in deploy
