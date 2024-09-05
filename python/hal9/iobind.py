@@ -5,6 +5,7 @@ from hal9.urls import url_contents
 import pickle
 import tempfile
 import sys
+import shutil
 
 def get_extension(file_path):
   _, extension = os.path.splitext(file_path)
@@ -12,9 +13,13 @@ def get_extension(file_path):
 
 def add_extension(name, contents):
   extension = get_extension(name)
+
   if not extension:
+    contents_type = str(type(contents))
     if isinstance(contents, dict) or isinstance(contents, list) or isinstance(contents, str):
       name = name + ".json"
+    elif contents_type == "<class 'PIL.Image.Image'>":
+      name = name + ".jpg"
     else:
       name = name + ".pkl"
   return name
@@ -76,6 +81,7 @@ def save(name, contents = None, hidden = False, files = None):
   for file_name, contents in files.items():
     file_name = add_extension(file_name, contents)
     file_path = Path(target_path) / file_name
+    contents_type = str(type(contents))
 
     if file_path.parent != Path('.'):
       file_path.parent.mkdir(parents=True, exist_ok=True)
@@ -95,8 +101,12 @@ def save(name, contents = None, hidden = False, files = None):
       if extension == "pkl":
         with open(file_path, 'wb') as file:
           pickle.dump(contents, file)
+      elif extension == "jpg":
+        temp_path = Path(tempfile.mkdtemp()) / name
+        contents.save(temp_path, format="JPEG")
+        shutil.copy(temp_path, file_path)
       else:
-        raise Exception(f"Don't know how to save {extension}")
+        raise Exception(f"Don't know how to save {extension} for {contents_type}")
 
   if target_path != './storage':
     asset_definition = json.dumps({
