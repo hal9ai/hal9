@@ -58,6 +58,9 @@ def load(name, default):
   return contents
 
 def save(name, contents = None, hidden = False, files = None):
+  if not isinstance(name, str):
+    raise Exception(f"The name parameter in save() must be a string, got {str(type(name))}")
+
   if hidden and not name.startswith('.'):
     name = "." + name
 
