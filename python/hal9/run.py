@@ -1,24 +1,44 @@
-import subprocess
 from pathlib import Path
 
-def run(path :str) -> str:
+from hal9.runtimes.image import run as run_image
+from hal9.runtimes.python import run as run_python
+
+runtime_types = {
+  "python": run_python,
+  "image": run_image,
+  "jpg": run_image,
+  "png": run_image,
+}
+
+def run(path :str, source :str = "app.py", runtime :str = "python", port :str = "8080") -> str:
   """Run an application
 
   Parameters
   ----------
   path : str 
           Path to the application.
+  source : str 
+          The main file to run. Defaults to 'app.py'.
+  runtime : str 
+          The runtime to use to run the source. Defaults to 'python'.
   """
 
-  app_path = Path(path) / 'app.py'
+  source_path = Path(path) / source
 
-  if not app_path.is_file():
-    print(f"Failed to run {app_path}")
+  if not source_path.is_file():
+    print(f"Failed to run {source_path}")
     return
 
   try:
-    command = ['python3', str(app_path)]
-    with subprocess.Popen(command) as proc:
-      proc.wait()
+    if runtime in runtime_types:
+      runtime_types[runtime](source_path, port)
+    else:
+      print(f"Unsupported runtime: {runtime}")
   except Exception as e:
-    print(f"An error occurred while running app.py: {e}")
+    print(f"An error occurred while running {source}: {e}")
+
+def run_describe():
+  keys = list(runtime_types.keys())
+  return {
+    'runtimes': keys
+  }

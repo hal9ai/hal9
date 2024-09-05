@@ -2,10 +2,12 @@ import click
 from collections import OrderedDict
 from hal9.create import create as api_create
 from hal9.run import run as api_run
+from hal9.run import run_describe as api_run_describe
 from hal9.deploy import deploy as api_deploy
 import datetime
 import os
 import pkg_resources
+import json
 
 version = pkg_resources.get_distribution('hal9').version
 
@@ -33,13 +35,19 @@ def create(path :str, template :str):
 
 @click.command()
 @click.argument('path')
-def run(path :str):
+@click.option('--source', default=None, help='Main source file')
+@click.option('--runtime', default=None, help='Runtime to use')
+@click.option('--port', default=None, help='Port to use, optional')
+def run(path :str, source :str = "app.py", runtime :str = "type", port :str = "8080"):
   """
   Run Project
 
   --path: The path to the project. Required argument.
+  --source: The main source file to run. Defaults to 'app.py'.
+  --runtime: The type of content to run. Defaults to 'python'.
+  --port: The port to use when content requires one. Defaults to '8080'.
   """
-  api_run(path)
+  api_run(path, source, runtime, port)
 
 @click.command()
 @click.argument('path')
@@ -70,9 +78,20 @@ def deploy(path :str, target :str, url :str, name :str, typename :str, data :str
 
   api_deploy(path, target, url, name, typename, data, access, main, title, description)
 
+@click.command()
+@click.argument('command')
+def describe(command :str = "runtime"):
+  """
+  Describe Command
+
+  --command: Describes commands. Defaults to 'run'.
+  """
+  print(json.dumps(api_run_describe()))
+
 cli.add_command(create)
 cli.add_command(run)
 cli.add_command(deploy)
+cli.add_command(describe)
 
 if __name__ == "__main__":
   cli()
