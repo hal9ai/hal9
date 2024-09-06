@@ -31,7 +31,7 @@ jobs:
     - name: Deploy Browser
       run: hal9 deploy apps/browser --name browser --access unlisted --url https://api.devel.hal9.com --title Browser --description "Capable of browsing the web"
       env:
-          HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
+          HAL9_TOKEN: ${{ secrets.HAL9_TOKEN_DEVEL }}
   prod:
     runs-on: ubuntu-latest
     steps:
