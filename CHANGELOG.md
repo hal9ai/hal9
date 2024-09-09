@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.7.5
+
+- New lines in `input()` are now handled with feed character
+- Signal ready state when `input()` called a second time
+
 ## 2.7.4
 
 - Better error message for incorrect `save()` param order
