@@ -8,6 +8,7 @@ import sys
 import shutil
 
 input_original = input
+input_first = True
 
 def get_extension(file_path):
   _, extension = os.path.splitext(file_path)
@@ -117,7 +118,16 @@ def save(name, contents = None, hidden = False, files = None):
     }, indent=2)
     Path('./storage/' + name + '.asset').write_text(asset_definition)
 
+def ready():
+  with open("storage/.output", 'w') as file:
+    file.write("")
+
 def input(prompt = "", extract = False, messages = []):
+  global input_first
+  if not input_first:
+    ready()
+  input_first = False
+
   print(prompt, end="")
   prompt = input_original()
   prompt = prompt.replace('\f', '\n')
