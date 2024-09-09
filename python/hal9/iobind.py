@@ -7,6 +7,8 @@ import tempfile
 import sys
 import shutil
 
+input_original = input
+
 def get_extension(file_path):
   _, extension = os.path.splitext(file_path)
   return extension.lstrip('.')
@@ -117,7 +119,8 @@ def save(name, contents = None, hidden = False, files = None):
 
 def input(prompt = "", extract = False, messages = []):
   print(prompt, end="")
-  prompt = sys.stdin.read()
+  prompt = input_original()
+  prompt = prompt.replace('\f', '\n')
 
   if extract:
     prompt = url_contents(text)
