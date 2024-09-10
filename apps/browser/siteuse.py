@@ -11,6 +11,22 @@ import pyppeteer
 browser = await pyppeteer.launch()
 page = await browser.newPage()
 
+Here is an example on the kind of code you can generate:
+
+# find element with text donate and click it use '*' to support any element
+button_with_xpath = await page.xpath('//*[contains(text(), "donate")]')
+await button_with_xpath.click()
+
+# set username to 'new value' with type() and evaluating JavaScript dynamically, type() preferred
+await page.type('input[name="username"]', 'new value')
+
+# scroll to bottom of page by evaluating arbitrary javascript
+await page.evaluate('''() => {
+  window.scrollTo(0, document.body.scrollHeight);
+}''')
+
+---
+
 At the beginning of the code, use print() to communicate what the code will do.
 Only reply with a code block for python code.
 """
