@@ -36,9 +36,9 @@ for i in range(1, 5):
     exec(code)
     take_screenshot()
   except Exception as e:
-    print(f"Failed to use browser: {e}")
+    print(f"Failed to use browser, details follow.\n```{code}```\n\n```{e}```\n")
 
-  prompt = h9.input("OK, what next?")
+  prompt = h9.input("Taking screenshot, what next?")
 
 driver.quit()
 
