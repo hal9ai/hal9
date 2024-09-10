@@ -25,6 +25,6 @@ def site_use(prompt, current):
   completion = OpenAI().chat.completions.create(model = "gpt-4", messages = messages)
   content = completion.choices[0].message.content
   extracted = h9.extract(content, language = "*")
-  if len(extracted) == 0:
+  if not extracted or len(extracted) == 0:
     return content
   return extracted
