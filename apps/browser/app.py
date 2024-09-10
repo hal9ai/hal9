@@ -31,7 +31,7 @@ site = site_find(prompt)
 driver.get(site)
 
 for i in range(1, 5):
-  code = ""
+  code = "# No code generated"
   try:
     code = site_use(prompt, driver.current_url)
     exec(code)
