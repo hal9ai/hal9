@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.6
+
+- `extract()` can now return original content with `language = "*"`
+
 ## 2.7.5
 
 - New lines in `input()` are now handled with feed character

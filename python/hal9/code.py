@@ -5,7 +5,10 @@ def extract_one(markdown, language, default = None):
   code_blocks = pattern.findall(markdown)
   code = '\n'.join(code_blocks)
   if len(code) == 0:
-    return default
+    if language == "*":
+      return markdown
+    else:
+      return default
   return code
 
 def extract_all(markdown, default=None):
