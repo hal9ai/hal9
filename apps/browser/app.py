@@ -30,6 +30,8 @@ driver = webdriver.Chrome(options=chrome_options)
 
 prompt = h9.input()
 site = site_find(prompt)
+
+print(f"Navigating to {site}")
 driver.get(site)
 
 for i in range(1, 5):
@@ -44,7 +46,7 @@ for i in range(1, 5):
   except Exception as e:
     print(f"Failed to use browser, details follow.\n```\n{code}\n```\n\n```\n{e}\n```\n")
 
-  prompt = h9.input("Taking screenshot, what next?")
+  prompt = h9.input(f"Taking screenshot for step {i}/5, what next?")
 
 driver.quit()
 
