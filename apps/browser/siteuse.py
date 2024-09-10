@@ -1,5 +1,5 @@
 import hal9 as h9
-from groq import Groq
+from openai import OpenAI
 
 system_prompt = """
 Only write python code using selenium to perform the user request. The code will be run dynamically with eval().
@@ -22,7 +22,7 @@ def site_use(prompt, current):
     { "role": "system", "content":  system_prompt},
     { "role": "user", "content": f"Driver alredy in page {current}. User requests: {prompt}" }
   ]
-  completion = Groq().chat.completions.create(model = "llama3-70b-8192", messages = messages)
+  completion = OpenAI().chat.completions.create(model = "gpt-4", messages = messages)
   content = completion.choices[0].message.content
   extracted = h9.extract(content, language = "*")
   if len(extracted) == 0:
