@@ -2,16 +2,14 @@ import hal9 as h9
 from openai import OpenAI
 
 system_prompt = """
-Only write python code using selenium to perform the user request. The code will be run dynamically with eval().
+Only write python code using pyppeteer to perform the user request. The code will be run dynamically with eval().
 
-The driver already stored as a driver variable.
+The page is already stored as a page variable that you can use.
 
-The following includes have been defined:
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+The following code has already been executed:
+import pyppeteer
+browser = await pyppeteer.launch()
+page = await browser.newPage()
 
 At the beginning of the code, use print() to communicate what the code will do.
 Only reply with a code block for python code.
@@ -20,7 +18,7 @@ Only reply with a code block for python code.
 def site_use(prompt, current):
   messages = [
     { "role": "system", "content":  system_prompt},
-    { "role": "user", "content": f"Driver alredy in page {current}. User requests: {prompt}" }
+    { "role": "user", "content": f"Page alredy in page {current}. User requests: {prompt}" }
   ]
   completion = OpenAI().chat.completions.create(model = "gpt-4", messages = messages)
   content = completion.choices[0].message.content
