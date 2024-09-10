@@ -22,6 +22,24 @@ This is a test with HTML
 """, language = "json")
   assert value == expected + "\n"
 
+def test_extract_any():
+  expected = "[]"
+  value = h9.extract(f"""
+```
+{expected}
+```
+""", language="*")
+  assert value == expected + "\n"
+
+def test_extract_any_with_python():
+  expected = "[]"
+  value = h9.extract(f"""
+```python
+{expected}
+```
+""", language="*")
+  assert value == expected + "\n"
+
 def test_extract_multiple():
   value = h9.extract(f"""
 This is a test with HTML
