@@ -13,7 +13,7 @@ from sitefind import site_find
 from siteuse import site_use
 
 def take_screenshot():
-  time.sleep(1)
+  time.sleep(2)
   driver.save_screenshot("screenshot.png")
   shutil.copy("screenshot.png", f"storage/screenshot-{int(time.time())}.png")
 
@@ -36,7 +36,7 @@ for i in range(1, 5):
     exec(code)
     take_screenshot()
   except Exception as e:
-    print(f"Failed to use browser, details follow.\n```{code}```\n\n```{e}```\n")
+    print(f"Failed to use browser, details follow.\n```{code}```\n\n```\n{e}```\n")
 
   prompt = h9.input("Taking screenshot, what next?")
 

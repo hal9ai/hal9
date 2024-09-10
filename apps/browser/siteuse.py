@@ -13,6 +13,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+At the beginning of the code, use print() to communicate what the code will do.
 Only reply with a code block for python code.
 """
 
@@ -24,4 +25,6 @@ def site_use(prompt, current):
   completion = Groq().chat.completions.create(model = "llama3-70b-8192", messages = messages)
   content = completion.choices[0].message.content
   extracted = h9.extract(content, language = "*")
+  if len(extracted) == 0:
+    return content
   return extracted
