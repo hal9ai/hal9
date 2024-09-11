@@ -22,7 +22,11 @@ def wrap_in_async_function(code):
 
 async def main():
   custom_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
-  browser = await pyppeteer.launch()
+  browser = await pyppeteer.launch(
+    headless=True,
+    args=['--no-sandbox', '--disable-setuid-sandbox']
+  )
+
   page = await browser.newPage()
 
   await page.setUserAgent(custom_user_agent)
