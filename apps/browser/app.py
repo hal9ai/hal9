@@ -35,10 +35,10 @@ async def main():
   prompt = h9.input()
   site = site_find(prompt)
 
-  print(f"Navigating to {site}")
+  print(f"Starting new browser session. Navigating to {site}")
   await page.goto(site)
 
-  for i in range(1, 5):
+  while True:
     code = "# No code generated"
     try:
       code = site_use(prompt, page.url)
