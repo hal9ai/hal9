@@ -31,7 +31,6 @@ async def main():
 
   await page.setUserAgent(custom_user_agent)
 
-  # Get the input and find the site
   prompt = h9.input()
   site = site_find(prompt)
 
@@ -39,6 +38,7 @@ async def main():
   await page.goto(site)
 
   while True:
+    start_time = time.time()
     code = "# No code generated"
     try:
       code = site_use(prompt, page.url)
@@ -50,12 +50,15 @@ async def main():
 
       await local_vars['dynamic_async_func'](page)
 
+      prompt = h9.input(f"Taking screenshot, what next?")
       await take_screenshot(page, i)
     except Exception as e:
       print(f"Failed to use browser:\n```\n{e}\n```\n")
       print(f"Available Memory: {(psutil.virtual_memory().available/ (1024 ** 2)):.2f} MB")
-
-    prompt = h9.input(f"Taking screenshot for step {i}/5, what next?")
+      prompt = h9.input(f"Last request failed, should I retry?")
+      prompt = f"Failed to run the following code:\n\n{code}\n\nCode triggered the following error:\n\n{e}.\n\nAsked users to retry, user replied: " + prompt
+    
+    h9.event("command", print(f"[{(time.time()-start_time):.1f}s] {prompt[:30]}"))
 
   await browser.close()
 
