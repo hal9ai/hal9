@@ -40,12 +40,15 @@ async def main():
       code = site_use(prompt, page.url)
       wrapped_code = wrap_in_async_function(code)
       local_vars = {}
+      
+      print(f"```\n{wrapped_code}\n```")
       exec(wrapped_code, {}, local_vars)
+
       await local_vars['dynamic_async_func'](page)
 
       await take_screenshot(page, i)
     except Exception as e:
-      print(f"Failed to use browser, details follow.\n```\n{code}\n```\n\n```\n{e}\n```\n")
+      print(f"Failed to use browser:\n```\n{e}\n```\n")
       print(f"Available Memory: {(psutil.virtual_memory().available/ (1024 ** 2)):.2f} MB")
 
     prompt = h9.input(f"Taking screenshot for step {i}/5, what next?")
