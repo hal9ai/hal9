@@ -21,6 +21,8 @@ def wrap_in_async_function(code):
   return wrapped_code
 
 async def main():
+  print(f"Starting new browser session...")
+
   custom_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
   browser = await pyppeteer.launch(
     headless=True,
@@ -34,7 +36,6 @@ async def main():
   prompt = h9.input()
   site = site_find(prompt)
 
-  print(f"Starting new browser session. Navigating to {site}")
   await page.goto(site)
 
   while True:
@@ -50,7 +51,6 @@ async def main():
 
       await local_vars['dynamic_async_func'](page)
 
-      prompt = h9.input(f"Taking screenshot, what next?")
       await take_screenshot(page, i)
     except Exception as e:
       print(f"Failed to use browser:\n```\n{e}\n```\n")
@@ -61,8 +61,5 @@ async def main():
     h9.event("command", print(f"[{(time.time()-start_time):.1f}s] {prompt[:30]}"))
 
   await browser.close()
-
-  print("Five tasks completed, this browser session is restarting.")
-  print("🌐 I can browse the web, how can I help?")
 
 asyncio.get_event_loop().run_until_complete(main())
