@@ -52,6 +52,7 @@ async def main():
       await local_vars['dynamic_async_func'](page)
 
       await take_screenshot(page, i)
+      h9.input()
     except Exception as e:
       print(f"Failed to use browser:\n```\n{e}\n```\n")
       print(f"Available Memory: {(psutil.virtual_memory().available/ (1024 ** 2)):.2f} MB")
