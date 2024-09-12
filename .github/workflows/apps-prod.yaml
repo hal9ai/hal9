@@ -5,6 +5,7 @@ on:
     branches:
       - release
     paths:
+      - .github/workflows/apps*
       - apps/**
 
 jobs:
