@@ -39,19 +39,26 @@ async def main():
   await page.goto(site)
 
   while True:
-    start_time = time.time()
+    time_entries = []
+    time_start = time.time()
+
     code = "# No code generated"
     try:
       code = site_use(prompt, page.url)
+      time_entries.append(time.time()-time_start)
+
       wrapped_code = wrap_in_async_function(code)
       local_vars = {}
       
       print(f"```\n{code}\n```")
       exec(wrapped_code, {}, local_vars)
+      time_entries.append(time.time()-time_start)
 
       await local_vars['dynamic_async_func'](page)
 
       await take_screenshot(page)
+      time_entries.append(time.time()-time_start)
+
       prompt = h9.input()
     except Exception as e:
       print(f"Failed to use browser:\n```\n{e}\n```\n")
@@ -59,7 +66,8 @@ async def main():
       prompt = h9.input(f"Last request failed, should I retry?")
       prompt = f"Failed to run the following code:\n\n{code}\n\nCode triggered the following error:\n\n{e}.\n\nAsked users to retry, user replied: " + prompt
     
-    h9.event("command", f"[{(time.time()-start_time):.1f}s] {prompt[:30]}")
+    time_str = ', '.join(f"{entry:.1f}s" for entry in time_entries)
+    h9.event("command", f"[{time_str}] {prompt[:30]}")
 
   await browser.close()
 
