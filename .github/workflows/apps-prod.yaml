@@ -34,3 +34,7 @@ jobs:
       run: hal9 deploy apps/browser --name browser --access unlisted --title Browser --description "Capable of browsing the web"
       env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
+    - name: Deploy OpenAI
+      run: hal9 deploy apps/openai --name openai --access unlisted --title OpenAI --description "Makes use of OpenAI O1"
+      env:
+          HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
