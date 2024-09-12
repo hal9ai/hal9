@@ -46,20 +46,20 @@ async def main():
       wrapped_code = wrap_in_async_function(code)
       local_vars = {}
       
-      print(f"```\n{wrapped_code}\n```")
+      print(f"```\n{code}\n```")
       exec(wrapped_code, {}, local_vars)
 
       await local_vars['dynamic_async_func'](page)
 
       await take_screenshot(page)
-      h9.input()
+      prompt = h9.input()
     except Exception as e:
       print(f"Failed to use browser:\n```\n{e}\n```\n")
       print(f"Available Memory: {(psutil.virtual_memory().available/ (1024 ** 2)):.2f} MB")
       prompt = h9.input(f"Last request failed, should I retry?")
       prompt = f"Failed to run the following code:\n\n{code}\n\nCode triggered the following error:\n\n{e}.\n\nAsked users to retry, user replied: " + prompt
     
-    h9.event("command", print(f"[{(time.time()-start_time):.1f}s] {prompt[:30]}"))
+    h9.event("command", f"[{(time.time()-start_time):.1f}s] {prompt[:30]}")
 
   await browser.close()
 
