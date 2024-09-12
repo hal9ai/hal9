@@ -10,7 +10,7 @@ import psutil
 from sitefind import site_find
 from siteuse import site_use
 
-async def take_screenshot(page, step):
+async def take_screenshot(page):
   await asyncio.sleep(2)
   await page.screenshot({'path': "screenshot.png"})
   shutil.copy("screenshot.png", f"storage/screenshot-{int(time.time())}.png")
@@ -51,7 +51,7 @@ async def main():
 
       await local_vars['dynamic_async_func'](page)
 
-      await take_screenshot(page, i)
+      await take_screenshot(page)
       h9.input()
     except Exception as e:
       print(f"Failed to use browser:\n```\n{e}\n```\n")
