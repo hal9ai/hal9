@@ -33,21 +33,24 @@ Only reply with a code block for python code.
 """
 
 def site_use(prompt, current, elements):
+  elements_str = "\n".join([f"{item['text']}: {item['query']}" for item in elements])
+
   messages = [
     { "role": "system", "content":  system_prompt},
     { "role": "user", "content": f"""
     Page is in URL: {current}.
 
-    The following dictionary contains all the elements in the page and their query selectors to use:
-
-    {json.dumps(elements)}
+    The following lines contains all the text elements in the page and their query selectors to use, first the clickable text the selector.
+    {elements_str}
 
     User requests: {prompt}
     """ }
   ]
+
   completion = OpenAI().chat.completions.create(model = "gpt-4", messages = messages)
   content = completion.choices[0].message.content
   extracted = h9.extract(content, language = "*")
   if not extracted or len(extracted) == 0:
     return content
+  
   return extracted

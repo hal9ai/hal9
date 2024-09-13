@@ -10,15 +10,13 @@ from sitefind import site_find
 from siteuse import site_use
 
 async def take_screenshot(page):
-  await asyncio.sleep(2)
+  await asyncio.sleep(3)
   await page.screenshot({'path': "screenshot.png"})
   shutil.copy("screenshot.png", f"storage/screenshot-{int(time.time())}.png")
 
 async def extract_elements(page):
   extract_js = open('extract.js', 'r').read()
-  elements = await page.evaluate(extract_js)
-  print(elements)
-  return elements
+  return await page.evaluate(extract_js)
 
 def wrap_in_async_function(code):
   indented_code = "\n".join("    " + line for line in code.splitlines() if line.strip())  # Indent each line by 4 spaces
@@ -31,7 +29,7 @@ async def main():
   custom_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
   browser = await pyppeteer.launch(
     headless=True,
-    args=['--no-sandbox', '--disable-setuid-sandbox']
+    args=['--no-sandbox', '--disable-setuid-sandbox', f"--window-size=1470,832"]
   )
 
   page = await browser.newPage()
