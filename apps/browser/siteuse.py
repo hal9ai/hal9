@@ -1,5 +1,6 @@
 import hal9 as h9
 from openai import OpenAI
+import json
 
 system_prompt = """
 Only write python code using pyppeteer to perform the user request. The code will be run dynamically with eval().
@@ -31,10 +32,18 @@ At the beginning of the code, use print() to communicate what the code will do.
 Only reply with a code block for python code.
 """
 
-def site_use(prompt, current):
+def site_use(prompt, current, elements):
   messages = [
     { "role": "system", "content":  system_prompt},
-    { "role": "user", "content": f"Page alredy in page {current}. User requests: {prompt}" }
+    { "role": "user", "content": f"""
+    Page is in URL: {current}.
+
+    The following dictionary contains all the elements in the page and their query selectors to use:
+
+    {json.dumps(elements)}
+
+    User requests: {prompt}
+    """ }
   ]
   completion = OpenAI().chat.completions.create(model = "gpt-4", messages = messages)
   content = completion.choices[0].message.content

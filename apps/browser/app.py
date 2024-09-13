@@ -5,7 +5,6 @@ import json
 import hal9 as h9
 import shutil
 import time
-import psutil
 
 from sitefind import site_find
 from siteuse import site_use
@@ -14,6 +13,12 @@ async def take_screenshot(page):
   await asyncio.sleep(2)
   await page.screenshot({'path': "screenshot.png"})
   shutil.copy("screenshot.png", f"storage/screenshot-{int(time.time())}.png")
+
+async def extract_elements(page):
+  extract_js = open('extract.js', 'r').read()
+  elements = await page.evaluate(extract_js)
+  print(elements)
+  return elements
 
 def wrap_in_async_function(code):
   indented_code = "\n".join("    " + line for line in code.splitlines() if line.strip())  # Indent each line by 4 spaces
@@ -37,6 +42,7 @@ async def main():
   site = site_find(prompt)
 
   await page.goto(site)
+  elements = await extract_elements(page)
 
   while True:
     time_entries = []
@@ -44,7 +50,7 @@ async def main():
 
     code = "# No code generated"
     try:
-      code = site_use(prompt, page.url)
+      code = site_use(prompt, page.url, elements)
       time_entries.append(time.time()-time_start)
 
       wrapped_code = wrap_in_async_function(code)
@@ -59,10 +65,11 @@ async def main():
       await take_screenshot(page)
       time_entries.append(time.time()-time_start)
 
+      elements = await extract_elements(page)
+
       prompt = h9.input()
     except Exception as e:
       print(f"Failed to use browser:\n```\n{e}\n```\n")
-      print(f"Available Memory: {(psutil.virtual_memory().available/ (1024 ** 2)):.2f} MB")
       prompt = h9.input(f"Last request failed, should I retry?")
       prompt = f"Failed to run the following code:\n\n{code}\n\nCode triggered the following error:\n\n{e}.\n\nAsked users to retry, user replied: " + prompt
     
