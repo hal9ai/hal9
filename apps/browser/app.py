@@ -10,7 +10,7 @@ from sitefind import site_find
 from siteuse import site_use
 
 async def take_screenshot(page):
-  await asyncio.sleep(3)
+  await asyncio.sleep(5)
   await page.screenshot({'path': "screenshot.png"})
   shutil.copy("screenshot.png", f"storage/screenshot-{int(time.time())}.png")
 
@@ -29,10 +29,11 @@ async def main():
   custom_user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
   browser = await pyppeteer.launch(
     headless=True,
-    args=['--no-sandbox', '--disable-setuid-sandbox', f"--window-size=1470,832"]
+    args=['--no-sandbox', '--disable-setuid-sandbox']
   )
 
   page = await browser.newPage()
+  await page.setViewport(viewport={'width': 1280, 'height': 800})
 
   await page.setUserAgent(custom_user_agent)
 
@@ -68,6 +69,13 @@ async def main():
       prompt = h9.input()
     except Exception as e:
       print(f"Failed to use browser:\n```\n{e}\n```\n")
+
+      try:
+        await take_screenshot(page)
+        elements = await extract_elements(page)
+      except Exception as e:
+        print("Failed to get elements from page")
+
       prompt = h9.input(f"Last request failed, should I retry?")
       prompt = f"Failed to run the following code:\n\n{code}\n\nCode triggered the following error:\n\n{e}.\n\nAsked users to retry, user replied: " + prompt
     
