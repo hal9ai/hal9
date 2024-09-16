@@ -87,12 +87,17 @@ def complete_openai(completion, messages = [], tools = [], show = True):
 
   if tool_args:
     if tool_name in tools:
+      error = False
       try:
         result = str(tools[tool_name](**tool_args))
       except Exception as e:
+        error = True
         result = str(e)
-        print(result)
+
       messages.append({ "role": "function", "name": tool_name, "content": result})
+      
+      if error:
+          raise Exception(result)
 
   return content + result
 
@@ -121,7 +126,13 @@ def complete_llama(completion, messages = [], tools = [], show = True):
         function_name = tool_call.function.name
         function_to_call = tools[function_name]
         function_args = json.loads(tool_call.function.arguments)
-        response = str(function_to_call(**function_args))
+
+        error = False
+        try:
+          response = str(function_to_call(**function_args))
+        except Exception as e:
+          error = True
+          response = str(e)
 
         messages.append(
           {
@@ -131,6 +142,9 @@ def complete_llama(completion, messages = [], tools = [], show = True):
             "content": response
           }
         )
+
+        if error:
+          raise Exception(response)
 
         if show:
           print(response)

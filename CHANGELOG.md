@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.7
+
+- Throw errors in `complete()` when tool fails to allow proper handling
+
 ## 2.7.6
 
 - `extract()` can now return original content with `language = "*"`
