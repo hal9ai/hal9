@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.8
+
+- Add support to run chainlit applications
+
 ## 2.7.7
 
 - Throw errors in `complete()` when tool fails to allow proper handling

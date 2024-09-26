@@ -37,7 +37,7 @@ def create(path :str, template :str):
 @click.argument('path')
 @click.option('--source', default=None, help='Main source file')
 @click.option('--runtime', default=None, help='Runtime to use')
-@click.option('--port', default=None, help='Port to use, optional')
+@click.option('--port', default="8080", help='Port to use, optional')
 def run(path :str, source :str = "app.py", runtime :str = "type", port :str = "8080"):
   """
   Run Project
