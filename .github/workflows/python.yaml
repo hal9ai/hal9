@@ -44,7 +44,7 @@ jobs:
           source .venv/bin/activate
           poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
         working-directory: "python"
-      - name: Debug Poetry Config
+      - name: Debug Poetry Configuration
         run: |
           source .venv/bin/activate
           poetry config --list
