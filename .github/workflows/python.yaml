@@ -42,7 +42,7 @@ jobs:
         working-directory: "python"
       - name: Run tests
         run: |
-	  source .venv/bin/activate
+          source .venv/bin/activate
           pytest tests
         working-directory: "python"
   build:
