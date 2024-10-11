@@ -21,12 +21,12 @@ jobs:
         working-directory: "python"
       - name: Configure Poetry with PyPI token
         run: |
-          source python/.venv/bin/activate
+          source .venv/bin/activate
           poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
         working-directory: "python"
       - name: Debug Poetry Config
         run: |
-          source python/.venv/bin/activate
+          source .venv/bin/activate
           poetry config --list
         working-directory: "python"
       - name: Install dependencies
