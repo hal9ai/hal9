@@ -16,6 +16,9 @@ jobs:
         uses: snok/install-poetry@v1
       - name: Install dependencies
         run: |
+          sudo apt install python3-venv
+          python3 -m venv venv
+          source venv/bin/activate
           poetry install --no-interaction
           pip install .
         working-directory: "python"
