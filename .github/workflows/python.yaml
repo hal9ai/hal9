@@ -21,6 +21,7 @@ jobs:
           source .venv/bin/activate
           poetry install --no-interaction
           pip install .
+          poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
         working-directory: "python"
       - name: Install pyteset
         run: |
