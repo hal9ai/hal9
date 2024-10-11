@@ -21,7 +21,6 @@ jobs:
           source .venv/bin/activate
           poetry install --no-interaction
           pip install .
-          poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
         working-directory: "python"
       - name: Install pyteset
         run: |
@@ -40,6 +39,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: Copy readme
         run: cp README.md python/README.md
+      - name: Configure Poetry with PyPI token
+        run: |
+          source .venv/bin/activate
+          poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
+        working-directory: "python"
       - name: Build and publish to pypi
         uses: JRubics/poetry-publish@v1.16
         with:
