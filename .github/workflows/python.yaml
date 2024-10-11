@@ -16,15 +16,15 @@ jobs:
         uses: snok/install-poetry@v1
       - name: Install dependencies
         run: |
-	  sudo apt install python3-venv
-	  python3 -m venv .venv
-	  source .venv/bin/activate
+          sudo apt install python3-venv
+          python3 -m venv .venv
+          source .venv/bin/activate
           poetry install --no-interaction
           pip install .
         working-directory: "python"
       - name: Install pyteset
         run: |
-	  source .venv/bin/activate
+          source .venv/bin/activate
           pip install pytest
         working-directory: "python"
       - name: Run tests
