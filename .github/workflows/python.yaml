@@ -14,13 +14,30 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install Poetry
         uses: snok/install-poetry@v1
+      - name: Creating virtual environment
+        run: | 
+          sudo apt install python3-venv
+          python3 -m venv .venv
+        working-directory: "python"
+      - name: Configure Poetry with PyPI token
+        run: |
+          source .venv/bin/activate
+          poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
+        working-directory: "python"
+      - name: Debug Poetry Config
+        run: |
+          source .venv/bin/activate
+          poetry config --list
+        working-directory: "python"
       - name: Install dependencies
         run: |
+          source .venv/bin/activate
           poetry install --no-interaction
           pip install .
         working-directory: "python"
       - name: Install pyteset
         run: |
+          source .venv/bin/activate
           pip install pytest
         working-directory: "python"
       - name: Run tests
