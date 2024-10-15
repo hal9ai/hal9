@@ -10,7 +10,7 @@ from io import BytesIO
 
 def flux_image(prompt, filename):
   output = replicate.run("black-forest-labs/flux-dev", input={"prompt": prompt})
-  
+
   header, encoded = output[0].url.split(',', 1)
 
   data = base64.b64decode(encoded)
