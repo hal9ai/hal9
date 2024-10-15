@@ -8,7 +8,7 @@ import shutil
 
 def flux_image(prompt, filename):
   output = replicate.run("black-forest-labs/flux-dev", input={"prompt": prompt})
-  image_url = output[0]
+  image_url = 'http://' + output[0]
 
   response = requests.get(image_url)
   response.raise_for_status()
