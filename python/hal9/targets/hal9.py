@@ -49,10 +49,10 @@ def create_deployment(path :str) -> str:
 def read_files(path :str, exclude :str = None):
     files_dict = {}
     for root, dirs, files in os.walk(path):
+        dirs[:] = [d for d in dirs if not d.startswith('.') and d != '__pycache__']
         for file in files:
-            if exclude and file.startswith(exclude):
+            if file.startswith('.') or (exclude and file.startswith(exclude)):
                 continue
-
             relative_path = os.path.relpath(os.path.join(root, file), path)
             with open(os.path.join(root, file), 'rb') as f:
                 encoded_content = base64.b64encode(f.read()).decode('utf-8')
