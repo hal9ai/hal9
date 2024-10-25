@@ -41,6 +41,7 @@ print(f"Echo: {prompt}")
 
 We designed this package with simplicity in mind, the job of the code is to read input and write output, that's about it. That said, you can create chatbots that use LLMs, generate images, or even use tools that connect to databases, or even build websites and games!
 
+![alt text](image.png)
 ## Creation
 
 By default `hal9 create` defaults to the `--template echo` template, but you can choose different ones as follows:
