@@ -12,7 +12,7 @@ from siteuse import site_use
 async def take_screenshot(page):
   await asyncio.sleep(5)
   await page.screenshot({'path': "screenshot.png"})
-  shutil.copy("screenshot.png", f"storage/screenshot-{int(time.time())}.png")
+  shutil.copy("screenshot.png", f".storage/screenshot-{int(time.time())}.png")
 
 async def extract_elements(page):
   extract_js = open('extract.js', 'r').read()

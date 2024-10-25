@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.0
+
+- `save()` now stores data under `/.storage`
+
 ## 2.7.8
 
 - Add support to run chainlit applications

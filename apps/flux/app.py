@@ -17,7 +17,7 @@ def flux_image(prompt, filename):
   image = Image.open(BytesIO(data))
   image.save(filename, format="JPEG")
 
-  shutil.copy(filename, f"storage/{filename}")
+  shutil.copy(filename, f".storage/{filename}")
 
 prompt = input()
 flux_image(prompt, "hal9-flux.jpg")
