@@ -116,7 +116,7 @@ def save(name, contents = None, hidden = False, files = None):
       "name": name,
       "files": [str(file) for file in asset_files]
     }, indent=2)
-    Path('./storage/' + name + '.asset').write_text(asset_definition)
+    Path('./.storage/' + name + '.asset').write_text(asset_definition)
 
 def ready():
   with open(".storage/.output", 'w') as file:
