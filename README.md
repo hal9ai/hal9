@@ -28,8 +28,11 @@ Notice that `deploy` needs a `HAL9_TOKEN` environment variable with an API token
 
 
 ```bash
-HAL9_TOKEN=H9YOURTOKEN hal9 deploy chatbot
+HAL9_TOKEN=H9YOURTOKEN hal9 deploy chatbot --name my_first_chatbot
 ```
+As easy as that you have created your first chatbot!
+
+![alt text](image-2.png)
 
 The code inside `/chatbot/app.py` contains a "Hello World" chatbot that reads the user prompt and echos the result back:
 
@@ -41,7 +44,6 @@ print(f"Echo: {prompt}")
 
 We designed this package with simplicity in mind, the job of the code is to read input and write output, that's about it. That said, you can create chatbots that use LLMs, generate images, or even use tools that connect to databases, or even build websites and games!
 
-![alt text](image.png)
 ## Creation
 
 By default `hal9 create` defaults to the `--template echo` template, but you can choose different ones as follows:
