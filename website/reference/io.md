@@ -39,4 +39,4 @@ Saves as `name` the given `contents`. Useful to share binary files with users.
 | hidden | <code>Boolean</code> | `True` to hide file from user, defaults to `False`.
 | files | <code>Dictionary</code> | A dictionary mapping additional file names to contents to save.
 
-Saves to `name` file the given `contents` under the `storage` subfolder. An appropriate extension for the `name` will be generated based on the type of `contents`.
+Saves to `name` file the given `contents` under the `.storage` subfolder. An appropriate extension for the `name` will be generated based on the type of `contents`.
