@@ -69,3 +69,13 @@ jobs:
         run: hal9 deploy apps/openai --name openai --access public --title OpenAI --description "Makes use of OpenAI O1"
         env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
+  
+  deploy_swarm:
+    runs-on: ubuntu-latest
+    needs: setup
+    if: contains(github.event.commits.*.added, 'apps/swarm') || contains(github.event.commits.*.modified, 'apps/swarm')
+    steps:
+      - name: Deploy Swarm
+        run: hal9 deploy apps/swarm --name swarm --access public --title Swarm --description "Uses OpenAI's Swarm."
+        env:
+          HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
