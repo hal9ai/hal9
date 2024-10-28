@@ -9,33 +9,63 @@ on:
       - apps/**
 
 jobs:
-  prod:
+  setup:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v1
-      with:
-        python-version: '3.10'
-    - name: Install Hal9
-      run: pip install hal9
-    - name: Deploy Echo
-      run: hal9 deploy apps/echo --name ECHO --access public --title Echo --description "Echoes user input"
-      env:
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.10'
+      - name: Install Hal9
+        run: pip install hal9
+
+  deploy_echo:
+    runs-on: ubuntu-latest
+    needs: setup
+    if: contains(github.event.commits.*.added, 'apps/echo') || contains(github.event.commits.*.modified, 'apps/echo')
+    steps:
+      - name: Deploy Echo
+        run: hal9 deploy apps/echo --name ECHO --access public --title Echo --description "Echoes user input"
+        env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
-    - name: Deploy Hal9
-      run: hal9 deploy apps/hal9 --name hal9 --access public --title Hal9 --description "Conversations and content creation"
-      env:
+
+  deploy_hal9:
+    runs-on: ubuntu-latest
+    needs: setup
+    if: contains(github.event.commits.*.added, 'apps/hal9') || contains(github.event.commits.*.modified, 'apps/hal9')
+    steps:
+      - name: Deploy Hal9
+        run: hal9 deploy apps/hal9 --name hal9 --access public --title Hal9 --description "Conversations and content creation"
+        env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
-    - name: Deploy Flux
-      run: hal9 deploy apps/flux --name flux --access public --title Flux --description "Photorealistic content creation"
-      env:
+
+  deploy_flux:
+    runs-on: ubuntu-latest
+    needs: setup
+    if: contains(github.event.commits.*.added, 'apps/flux') || contains(github.event.commits.*.modified, 'apps/flux')
+    steps:
+      - name: Deploy Flux
+        run: hal9 deploy apps/flux --name flux --access public --title Flux --description "Photorealistic content creation"
+        env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
-    - name: Deploy Browser
-      run: hal9 deploy apps/browser --name browser --access unlisted --title Browser --description "Capable of browsing the web"
-      env:
+
+  deploy_browser:
+    runs-on: ubuntu-latest
+    needs: setup
+    if: contains(github.event.commits.*.added, 'apps/browser') || contains(github.event.commits.*.modified, 'apps/browser')
+    steps:
+      - name: Deploy Browser
+        run: hal9 deploy apps/browser --name browser --access unlisted --title Browser --description "Capable of browsing the web"
+        env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
-    - name: Deploy OpenAI
-      run: hal9 deploy apps/openai --name openai --access public --title OpenAI --description "Makes use of OpenAI O1"
-      env:
+
+  deploy_openai:
+    runs-on: ubuntu-latest
+    needs: setup
+    if: contains(github.event.commits.*.added, 'apps/openai') || contains(github.event.commits.*.modified, 'apps/openai')
+    steps:
+      - name: Deploy OpenAI
+        run: hal9 deploy apps/openai --name openai --access public --title OpenAI --description "Makes use of OpenAI O1"
+        env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
