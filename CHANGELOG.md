@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.8.0
+
+- `save()` now stores data under `/.storage`
+
+## 2.7.10
+
+- Ignore __pycache__ folder and hidden files identified with . at the beginning
+
+## 2.7.9
+
+- fix error message when HAL9_TOKEN is missing
+
 ## 2.7.8
 
 - Add support to run chainlit applications
