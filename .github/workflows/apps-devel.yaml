@@ -3,7 +3,7 @@ name: Apps
 on:
   push:
     branches:
-      - release
+      - main
     paths:
       - .github/workflows/apps*
       - apps/**
