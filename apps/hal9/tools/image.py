@@ -26,7 +26,7 @@ def create_image(prompt, filename):
 
   response = requests.get(url)
 
-  with open('storage/' + filename, 'wb') as file:
+  with open('.storage/' + filename, 'wb') as file:
     file.write(response.content)
 
   return f"Generated a {filename} that {prompt}"
