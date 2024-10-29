@@ -80,11 +80,17 @@ You can then run your project as follows:
 hal9 run chatbot
 ```
 
-If you customized your template with `--template` make sure to set the correct key, for example, if you are using the OpenAI template use:
+If you customized your template with `--template` make sure to set the correct key, for example, if you are using the OpenAI template use for Linux or macOS:
 
 ```bash
 export OPENAI_KEY=YOUR_OPENAI_KEY.
 ```
+For Windows use:
+
+```bash
+set OPENAI_KEY=YOUR_OPENAI_KEY.
+```
+
 For more information on obtaining and using your OpenAI API key, please refer to the [OpenAI API Key documentation](https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key).
 
 
