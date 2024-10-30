@@ -28,8 +28,11 @@ Notice that `deploy` needs a `HAL9_TOKEN` environment variable with an API token
 
 
 ```bash
-HAL9_TOKEN=H9YOURTOKEN hal9 deploy chatbot
+HAL9_TOKEN=H9YOURTOKEN hal9 deploy chatbot --name my_first_chatbot
 ```
+As easy as that you have created your first chatbot!
+
+![alt text](image-2.png)
 
 The code inside `/chatbot/app.py` contains a "Hello World" chatbot that reads the user prompt and echos the result back:
 
@@ -77,7 +80,18 @@ You can then run your project as follows:
 hal9 run chatbot
 ```
 
-If you customized your template with `--template` make sure to set the correct key, for example `export OPENAI_KEY=YOUR_OPENAI_KEY`.
+If you customized your template with `--template` make sure to set the correct key, for example, if you are using the OpenAI emplate use for Linux or macOS:
+
+```bash
+export OPENAI_KEY=YOUR_OPENAI_KEY.
+```
+For Windows use:
+
+```bash
+set OPENAI_KEY=YOUR_OPENAI_KEY.
+```
+For more information on obtaining and using your OpenAI API key, please refer to the [OpenAI API Key documentation](https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key).
+
 
 You can then run your application locally with:
 
