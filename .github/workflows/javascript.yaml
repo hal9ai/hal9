@@ -2,6 +2,8 @@ name: JavaScript
 
 on:
   push:
+    branches:
+      - main
     paths:
       - javascript/**
       - .github/workflows/javascript.yaml
