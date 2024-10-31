@@ -46,4 +46,5 @@ jobs:
             hal9 deploy apps/openai --name openai --access public --url https://api.devel.hal9.com --title OpenAI --description "Makes use of OpenAI O1";
           elif [[ "$file" == apps/swarm/* ]]; then
             hal9 deploy apps/swarm --name swarm --access public --url https://api.devel.hal9.com --title Swarm --description "Makes use of OpenAI Swarm";
+          fi
         done
