@@ -8,7 +8,7 @@ def flux_image(prompt, filename):
   try:
     output = replicate.run("black-forest-labs/flux-dev", input={"prompt": prompt})
   except Exception as e:
-    print("Couldn't generate that image. Please try a different prompt.")
+    print("Couldn't generate that image. Please try a different prompt!")
     print(f"Error: {e}")
 
   encoded_image = output[0].read()
