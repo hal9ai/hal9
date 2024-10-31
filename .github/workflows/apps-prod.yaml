@@ -44,4 +44,6 @@ jobs:
             hal9 deploy apps/browser --name browser --access unlisted --url https://api.devel.hal9.com --title Browser --description "Capable of browsing the web"
           elif [[ "$file" == apps/openai/* ]]; then
             hal9 deploy apps/openai --name openai --access public --url https://api.devel.hal9.com --title OpenAI --description "Makes use of OpenAI O1"
+          elif [[ "$file" == apps/swarm/* ]]; then
+            hal9 deploy apps/swarm --name swarm --access public --url https://api.devel.hal9.com --title Swarm --description "Makes use of OpenAI Swarm"
         done
