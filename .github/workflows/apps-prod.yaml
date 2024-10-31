@@ -40,6 +40,6 @@ jobs:
       env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
     - name: Deploy Swarm
-      run: hal9 deploy apps/openai --name swarm --access public --title Swarm --description "Makes use of OpenAI Swarm"
+      run: hal9 deploy apps/swarm --name swarm --access public --title Swarm --description "Makes use of OpenAI Swarm"
       env:
           HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
