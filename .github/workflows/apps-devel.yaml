@@ -35,15 +35,15 @@ jobs:
         for file in ${ALL_CHANGED_FILES}; do
           echo "$file was changed"
           if [[ "$file" == apps/flux/* ]]; then
-            hal9 deploy apps/flux --name flux --access public --url https://api.devel.hal9.com --title Flux --description "Photorealistic content creation"
+            hal9 deploy apps/flux --name flux --access public --url https://api.devel.hal9.com --title Flux --description "Photorealistic content creation";
           elif [[ "$file" == apps/echo/* ]]; then
-            hal9 deploy apps/echo --name ECHO --access public --url https://api.devel.hal9.com --title Echo --description "Echoes user input"
+            hal9 deploy apps/echo --name ECHO --access public --url https://api.devel.hal9.com --title Echo --description "Echoes user input";
           elif [[ "$file" == apps/hal9/* ]]; then
-            hal9 deploy apps/hal9 --name hal9 --access public --url https://api.devel.hal9.com --title Hal9 --description "Conversations and content creation"
+            hal9 deploy apps/hal9 --name hal9 --access public --url https://api.devel.hal9.com --title Hal9 --description "Conversations and content creation";
           elif [[ "$file" == apps/browser/* ]]; then
-            hal9 deploy apps/browser --name browser --access unlisted --url https://api.devel.hal9.com --title Browser --description "Capable of browsing the web"
+            hal9 deploy apps/browser --name browser --access unlisted --url https://api.devel.hal9.com --title Browser --description "Capable of browsing the web";
           elif [[ "$file" == apps/openai/* ]]; then
-            hal9 deploy apps/openai --name openai --access public --url https://api.devel.hal9.com --title OpenAI --description "Makes use of OpenAI O1"
+            hal9 deploy apps/openai --name openai --access public --url https://api.devel.hal9.com --title OpenAI --description "Makes use of OpenAI O1";
           elif [[ "$file" == apps/swarm/* ]]; then
-            hal9 deploy apps/swarm --name swarm --access public --url https://api.devel.hal9.com --title Swarm --description "Makes use of OpenAI Swarm"
+            hal9 deploy apps/swarm --name swarm --access public --url https://api.devel.hal9.com --title Swarm --description "Makes use of OpenAI Swarm";
         done
