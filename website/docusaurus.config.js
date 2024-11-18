@@ -97,8 +97,8 @@ const config = {
             position: 'left',
             label: 'Learn',
           },
-          {to: '/reference/code', label: 'Reference', position: 'left'},
-          /*{to: '/blog', label: 'Blog', position: 'left'},*/
+          { to: '/reference/code', label: 'Reference', position: 'left' },
+          { to: '/blog', label: 'Blog', position: 'left' },
           { to: 'https://hal9.com/news', label: 'News', position: 'left' },
           {
             href: 'https://github.com/hal9ai/hal9',
