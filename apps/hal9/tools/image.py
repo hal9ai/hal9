@@ -1,32 +1,23 @@
-import hal9 as h9
-import openai
-import os
-import requests
+from PIL import Image
+from io import BytesIO
+import shutil
+import replicate
 
-def create_image(prompt, filename):
+def create_image(prompt):
   """
   Creates an image or photograph for the user
     'prompt' with the description of the image or photograph
-    'filename' a descriptive filename with png extension for the image or photograph to generate
   """
-  client = openai.AzureOpenAI(
-    azure_endpoint = 'https://hal9-azure-openai-eastus.openai.azure.com/',
-    api_key = os.environ['DALLE_AZURE'],
-    api_version = "2024-02-01",
-  )
+  filename = "hal9-flux.jpg"
+  try:
+    output = replicate.run("black-forest-labs/flux-dev", input={"prompt": prompt})
+    encoded_image = output[0].read()
+    image = Image.open(BytesIO(encoded_image))
 
-  response = client.images.generate(
-    model="dall-e-3",
-    prompt=prompt,
-    size="1024x1024",
-    quality="standard",
-    n=1,
-  )
-  url = response.data[0].url
+    image.save(filename, format="JPEG")
 
-  response = requests.get(url)
+    shutil.copy(filename, f".storage/{filename}")
 
-  with open('.storage/' + filename, 'wb') as file:
-    file.write(response.content)
-
-  return f"Generated a {filename} that {prompt}"
+    return f"Generated a {filename} that {prompt}"
+  except Exception as e:
+    return f"Couldn't generate that image. Please try a different prompt. \n\n Error: {e}"
