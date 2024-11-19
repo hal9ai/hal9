@@ -44,7 +44,7 @@ Our model’s performance with text-to-SQL queries shows both its strengths and 
 
 **Goal query:**
 ```SQL
-ELECT count(*) 
+SELECT count(*) 
 FROM routes AS T1 
 JOIN airports AS T2 
 ON T1.dst_apid  =  T2.apid 
