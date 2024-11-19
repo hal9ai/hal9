@@ -44,11 +44,12 @@ all_tools = [
 ]
 
 tools = h9.describe(all_tools, model = "llama")
-completion = run(messages, tools)
 
 try:
+  completion = run(messages, tools)
   h9.complete(completion, messages = messages, tools = all_tools, show = False, model = "llama")
 except Exception as e:
+  h9.event('error', e)
   one_tool = h9.describe([generic_reply], model = "llama")
   completion = run(messages, one_tool)
   h9.complete(completion, messages = messages, tools = [generic_reply], show = False, model = "llama")
