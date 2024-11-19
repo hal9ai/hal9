@@ -119,6 +119,16 @@ const config = {
         { property: 'og:image', content: 'https://hal9.com/images/hal9-social-preview.png?1' },
       ]
     }),
+  scripts: [
+    {
+      src: 'https://www.googletagmanager.com/gtag/js?id=UA-188412659-2',
+      async: true,
+    },
+    {
+      src: 'https://tools.luckyorange.com/core/lo.js?site-id=f19acd01',
+      async: true,
+    },
+  ],
 };
 
 export default config;
