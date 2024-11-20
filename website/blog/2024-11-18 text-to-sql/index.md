@@ -20,22 +20,21 @@ Among all the testing we have done, we found two main challenges when trying to 
 To overcome these challenges, we chose to use prompt engineering as our primary approach.
 
 
-## The importance of precise prompt engineering
+## The Importance of Precise Prompt Engineering
 One often tends to overestimate the capabilities of LLMs to completely understand the depths of a natural language prompt. Because of this, it is not uncommon to see someone spitting a horrendously written prompt on ChatGPT, and, surprisingly, still get a relatively decent answer. This doesn’t happen when one is trying to implement robust and stable agents capable of writing industry-level code that gets real meaningful insights. 
 
 In fact, among different text-to-SQL benchmarks, prompt engineering models are the ones often leading in the top ten positions. This highlights two main things: first, how accessible and adaptable prompt engineering can be; and second, the substantial improvement in results that prompt engineering offers. With the right approach, prompt engineering transforms LLMs from general-purpose assistants to highly specialized tools capable of meeting demanding SQL generation requirements. 
 
-
-## Our approach
+## Approach
 Mixing some of our own ideas with the recommendations from the top-performing papers, we came up with the following prompt engineering model:
 - **Divide and conquer:** understanding that agents can often hallucinate when given long instructions, we divided the SQL query generation process into three distinct stages, assigning each task to a specialized agent.
 - **Precision is key:** we cannot stress enough the importance of structuring correctly the instructions given to the agent. In particular, we found that using delimiters, clear examples, and step-by-step guidance helped each agent stay focused and reduce errors.
 - **Clarity through structure:** with the latest structured-output capabilities of advanced LLMs, we found that enforcing a format for sine agent’s responses significantly improved stability and precision.
 
-## Our results
+## Results
 To explore whether LLMs can effectively serve as query writers, we conducted an initial evaluation of our approach. As of November 2024, in the last iteration of our development, this approach got us an exact match accuracy —where generated SQL queries matched expected results exactly— of 89% across 100 randomly selected questions from the first Spider Benchmark,  a well-regarded dataset for evaluating text-to-SQL models (See [Spider: Yale Semantic Parsing and Text-to-SQL Challenge](https://yale-lily.github.io/spider) for more information). This, in fact, would have placed us in second place, just behind the “MiniSeek” paper. 
 
-### Some examples: successes and limitations
+### Insights into Examples, Achievements, and Challenges
 Our model’s performance with text-to-SQL queries shows both its strengths and areas where improvement is needed. Below are examples that illustrate correct query generation as well as cases that reveal limitations.
 
 **1.** Our model didn't seem to struggle that much writing relatively complex queries:
@@ -44,7 +43,7 @@ Our model’s performance with text-to-SQL queries shows both its strengths and 
 
 **Goal query:**
 ```SQL
-ELECT count(*) 
+SELECT count(*) 
 FROM routes AS T1 
 JOIN airports AS T2 
 ON T1.dst_apid  =  T2.apid 
@@ -140,14 +139,16 @@ HAVING COUNT(membership_register_branch.Member_ID) > (
 ```
 
 
-## Going beyond academic benchmarks
+## Going Beyond Academic Benchmarks
 While academic evaluations provide valuable insights, they often fall short of addressing the necessities and complexities of real-world industry applications. For instance, a quick look at the testing databases of this project reveals its limitations: they lack the diversity, scale, and complexity typical of production-level industry databases. However, this doesn't diminish the validity of our findings. LLMs have demonstrated the potential to generate industry-grade SQL queries. Still, the effectiveness of any approach depends heavily on the unique characteristics of the database, such as its size, schema complexity, naming conventions, data sparsity, relationship depth, and even the consistency of its documentation.
 
-## Interacting with the model: try it yourself
+## Try It Out for Yourself
 Curious to see the model in action? We've set up a few interactive demos at [hal9's website](https://hal9.com/), where you can explore its capabilities by asking questions about a sample database. This is your chance to test its strengths, uncover its limitations, and see how well it handles different types of queries. Whether you're looking for simple counts or more complex aggregations, the demo is a great way to get hands-on experience with text-to-SQL in a real-world context.
 
-- Baseball database agent: This agent answers questions about a baseball database. It contains a total of 26 tables with 553,693 rows; including information about players, teams, awards, and game statistics. Feel free to try it in this [link](https://hal9.com/demos/baseball_agent).
-![Screenshot of conversation with baseball agent](baseball_agent_ss.png)
+**Baseball Database**: This agent answers questions about a baseball database. It contains a total of 26 tables with 553,693 rows; including information about players, teams, awards, and game statistics. Feel free to try it in this [link](https://hal9.com/demos/baseball_agent).
 
-- Formula 1 database agent: This agent answers questions about a formula 1 database. It contains a total of 13 tables with 88,380 rows; including circuits, races, drivers, constructors, and seasons. It tracks results, standings, qualifying rounds, lap times, and pit stops, providing a full view of the performance and status of drivers and teams across F1 history. You can try it [here](https://hal9.com/demos/formula1_agentd).
-![Screenshot of conversation with formula 1 agent](formula_1_agent_ss.png)
+[![Screenshot of conversation with baseball agent](baseball_agent_ss.png)](https://hal9.com/demos/baseball_agent)
+
+**Formula 1 Database**: This agent answers questions about a formula 1 database. It contains a total of 13 tables with 88,380 rows; including circuits, races, drivers, constructors, and seasons. It tracks results, standings, qualifying rounds, lap times, and pit stops, providing a full view of the performance and status of drivers and teams across F1 history. You can try it [here](https://hal9.com/demos/formula1_agentd).
+
+[![Screenshot of conversation with formula 1 agent](formula_1_agent_ss.png)](https://hal9.com/demos/formula1_agentd)
