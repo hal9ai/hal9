@@ -1,11 +1,14 @@
-\-\-- title: \"Using OpenAI Swarm with Hal9: Unlocking New Potential for
-Enterprise AI\" authors: \"Karan Saxena\" date: \"2024-11-18\" tags:
-\[\"AI\", \"Swarm Intelligence\", \"Enterprise Solutions\"\]
-description: \"Explore the integration of OpenAI Swarm with Hal9 to
-unlock innovative AI capabilities for enterprises.\" \-\--
+--- 
+title: "Using OpenAI Swarm with Hal9: Unlocking New Potential for Enterprise AI"
+authors: "Karan Saxena" 
+tags:
+  - "AI"
+  - "Swarm Intelligence"
+description: "Explore the integration of OpenAI Swarm with Hal9 to
+unlock innovative AI capabilities" 
+---
 
-\## Using OpenAI Swarm with Hal9: Unlocking New Potential for Enterprise
-AI
+## Using OpenAI Swarm with Hal9: Unlocking New Potential for EnterpriseAI
 
 As enterprises seek innovative ways to harness the power of AI,
 combining the best tools for flexibility, speed, and collaborative
@@ -21,7 +24,7 @@ asset for enterprise use, and how integrating it with Hal9 can transform
 your AI-driven applications. We\'ll also walk through some example code
 and provide visuals generated with this integration.
 
-\### What is OpenAI Swarm?
+### What is OpenAI Swarm?
 
 OpenAI Swarm is a system designed to run multiple AI models in parallel,
 each contributing to a collective response based on the input provided.
@@ -31,7 +34,7 @@ responses. This can be incredibly useful for applications requiring deep
 analytical insights, creative brainstorming, or decision-making in
 complex scenarios.
 
-\### Why Use OpenAI Swarm with Hal9?
+### Why Use OpenAI Swarm with Hal9?
 
 Hal9 makes it simple for businesses to customize and deploy AI models at
 scale. By integrating OpenAI Swarm with Hal9, enterprises can harness
@@ -39,16 +42,16 @@ the combined power of multiple AI models tailored specifically for their
 unique needs. This setup is especially advantageous in scenarios where a
 single model may not capture the full spectrum of insights required.
 
-\### Example Code
+### Example Code
 
-\`\`\`python import json import hal9 as h9 from dotenv import
+```python 
+import json import hal9 as h9 from dotenv import
 load_dotenv from swarm import Swarm, Agent, repl from recommendations
 import book_recommendation, comic_recommendation, movie_recommendation
 
 load_dotenv()
 
-\# Define transfer functions def transfer_to_receptionist(): return
-receptionist
+Define transfer functions def transfer_to_receptionist(): return receptionist
 
 def transfer_to_book_expert(): return book_expert
 
@@ -56,11 +59,8 @@ def transfer_to_comic_expert(): return comic_expert
 
 def transfer_to_movie_expert(): return movie_expert
 
-\# Define expert agents book_expert = Agent( name=\"Book Expert\",
-instructions=\"You are a classic books expert. Provide book
-recommendations. If the conversation drifts away, return to the
-receptionist.\", functions=\[book_recommendation,
-transfer_to_receptionist\], )
+#Define expert agents book_expert = Agent( name="Book Expert", instructions="You are a classic books expert. Provide bookrecommendations.
+#If the conversation drifts away, return to the receptionist.", functions=[book_recommendation, transfer_to_receptionist], )
 
 comic_expert = Agent( name=\"Comic Expert\", instructions=\"You are an
 expert in comics. Provide comic recommendations. If the conversation
@@ -95,3 +95,18 @@ messages.extend(response.messages) agent = response.agent
 
 h9.save(\'messages\', messages, hidden=True) h9.save(\'last_agent\',
 agent.name, hidden=True)
+```
+
+## Code Explanation
+
+This code is a recommendation system using a "swarm" of AI agents on the Hal9 platform, each specializing in a category: books, comics, or movies.
+
+#### •	Agents: There are four agents: receptionist, book_expert, comic_expert, and movie_expert. The receptionist determines the user’s interest and directs them to the appropriate expert.
+#### •	Functionality: Each expert agent provides recommendations in its domain, and if the conversation shifts away, it returns control to the receptionist.
+#### •	Session Management: The code maintains conversation history and the last active agent, enabling smooth, continuous interactions.
+#### •	Execution: The system takes user input, selects the relevant agent, generates a response, and logs any tool (function) calls made for recommendations.
+This setup allows for interactive, specialized recommendations that adapt to user preferences in real-time.
+
+
+## Sample Conversation
+![movie recommendations](https://github.com/user-attachments/assets/bdb64b5d-b3df-4fc6-815e-9eae4277c29d)
