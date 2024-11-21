@@ -11,9 +11,9 @@ client = openai.AzureOpenAI(
 )
 
 def build_game(user_game_request):
-   """
-   Build a complex video game from a short text description.
-     'user_game_request' is the requested user game to build.
+   """Use this tool when a user explicitly requests to build a video game or provides a brief description resembling a video game concept.
+Parameters:
+     'user_game_request' = is the requested user game to build.
    """
    number_of_steps = 3
 
