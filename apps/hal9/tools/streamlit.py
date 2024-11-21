@@ -4,9 +4,9 @@ import os
 import json
 
 def build_streamlit(prompt):
-  """
-  Builds or modifies a streamlit application ideal to solve problems with Python that require data analysis
-    'prompt' with user change or requirements
+  """Use this tool when a user requests a Streamlit app or asks to modify a previously generated one.
+Parameters:
+    'prompt' = with user change or requirements
   """
   client = openai.AzureOpenAI(
     azure_endpoint = 'https://openai-hal9.openai.azure.com/',

@@ -4,9 +4,9 @@ import hal9 as h9
 import json
 
 def generic_reply(prompt):
-   """
-   Reply to anything that other tools do not support.
-     'prompt' to respond to.
+   """Use this tool for general knowledge questions. If unsure which tool to select, default to this one.
+Parameters:
+  'prompt' = user input
    """
 
    messages = h9.load("messages", [])

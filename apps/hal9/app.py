@@ -14,7 +14,7 @@ from tools.image import create_image
 from tools.document import document_reply
 from tools.csv import csv_reply
 
-MODEL = "llama3-70b-8192"
+MODEL = "llama3-groq-70b-8192-tool-use-preview"
 def run(messages, tools):
   return Groq().chat.completions.create(
     model = MODEL,
@@ -22,12 +22,14 @@ def run(messages, tools):
     temperature = 0,
     seed = 1,
     tools=tools,
-    tool_choice="auto")
+    tool_choice = "required",)
 
 prompt = input("")
 h9.event('prompt', prompt)
 
 messages = h9.load("messages", [])
+if len(messages) <= 0:
+  messages.append({"role": "system", "content": "You are Hal9, a helpful and highly capable AI assistant. Your primary responsibility is to analyze user questions and select the most appropriate tool to provide precise, relevant, and actionable responses. Always prioritize using the right tool to ensure efficiency and clarity in your answers."})
 messages.append({"role": "user", "content": prompt})
 h9.save("messages", messages, hidden=True)
 

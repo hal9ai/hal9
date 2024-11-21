@@ -1,1 +1,2 @@
 replicate==1.0.3
+groq==0.12.0
