@@ -5,6 +5,8 @@ authors: [diego]
 tags: [SQL, LLMs]
 ---
 
+import ThemedImage from '../../src/components/themedimg.jsx'
+
 Some people look surprised when they learn which programming language is the most used in today’s industry: believe it or not, it's SQL. According to the 2024 edition of IEEE’s programming languages ranking, SQL is the language most sought after by employers, closely followed by Python and Java. This trend, we think, can be attributed to two main factors: the continuous rise of cloud-based system architectures, and a general lack of deep technical knowledge among end users who still need access to data insights. 
 
 So how do LLMs come into play? Large language models have demonstrated high coding capabilities, even in the most esoteric and cryptic languages. Considering SQL’s relatively high-level syntax, in this blog post we’ll try to answer the following question: can LLMs write correct, effective, and meaningful SQL queries? Short answer: Yes – with a little help from some cutting-edge prompt engineering techniques.
@@ -147,8 +149,10 @@ Curious to see the model in action? We've set up a few interactive demos at [hal
 
 **Baseball Database**: This agent answers questions about a baseball database. It contains a total of 26 tables with 553,693 rows; including information about players, teams, awards, and game statistics. Feel free to try it in this [link](https://hal9.com/demos/baseball_agent).
 
-[![Screenshot of conversation with baseball agent](baseball_agent_ss.png)](https://hal9.com/demos/baseball_agent)
+<center><a href="https://hal9.com/demos/baseball_agent"><ThemedImage src="baseball-agent"/></a></center>
 
 **Formula 1 Database**: This agent answers questions about a formula 1 database. It contains a total of 13 tables with 88,380 rows; including circuits, races, drivers, constructors, and seasons. It tracks results, standings, qualifying rounds, lap times, and pit stops, providing a full view of the performance and status of drivers and teams across F1 history. You can try it [here](https://hal9.com/demos/formula1_agentd).
 
-[![Screenshot of conversation with formula 1 agent](formula_1_agent_ss.png)](https://hal9.com/demos/formula1_agentd)
+<center><a href="https://hal9.com/demos/formula1_agent"><ThemedImage src="formula-1-agent"/></a></center>
+
+
