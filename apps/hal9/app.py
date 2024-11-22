@@ -13,6 +13,7 @@ from tools.streamlit import build_streamlit
 from tools.image import create_image
 from tools.document import document_reply
 from tools.csv import csv_reply
+from tools.image_analyzer import image_analyzer
 
 MODEL = "llama3-groq-70b-8192-tool-use-preview"
 def run(messages, tools):
@@ -42,7 +43,8 @@ all_tools = [
   build_streamlit,
   create_image,
   document_reply,
-  csv_reply
+  csv_reply,
+  image_analyzer
 ]
 
 tools = h9.describe(all_tools, model = "llama")
@@ -51,7 +53,7 @@ try:
   completion = run(messages, tools)
   h9.complete(completion, messages = messages, tools = all_tools, show = False, model = "llama")
 except Exception as e:
-  h9.event('error', e)
+  h9.event('error', str(e))
   one_tool = h9.describe([generic_reply], model = "llama")
   completion = run(messages, one_tool)
   h9.complete(completion, messages = messages, tools = [generic_reply], show = False, model = "llama")
