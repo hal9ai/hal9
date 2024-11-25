@@ -1,7 +1,8 @@
 --- 
+slug: openai-swarm
 title: "Using OpenAI Swarm with Hal9: Unlocking New Potential for Enterprise AI"
 authors: [karan] 
-tags: [AI, Swarm Intelligence]
+tags: [Swarm, OpenAI]
 description: "Explore the integration of OpenAI Swarm with Hal9 to
 unlock innovative AI capabilities" 
 ---
