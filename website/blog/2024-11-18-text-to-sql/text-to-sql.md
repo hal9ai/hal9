@@ -5,10 +5,6 @@ authors: [diego]
 tags: [SQL, LLMs]
 ---
 
-<head>
-  <meta property="og:image" content="blog-formula-1-agent.png" />
-</head>
-
 import ThemedImage from '../../src/components/themedimg.jsx'
 
 Some people look surprised when they learn which programming language is the most used in today’s industry: believe it or not, it's SQL. According to the 2024 edition of IEEE’s programming languages ranking, SQL is the language most sought after by employers, closely followed by Python and Java. This trend, we think, can be attributed to two main factors: the continuous rise of cloud-based system architectures, and a general lack of deep technical knowledge among end users who still need access to data insights. 
