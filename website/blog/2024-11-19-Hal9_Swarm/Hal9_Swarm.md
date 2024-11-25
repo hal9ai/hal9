@@ -6,6 +6,10 @@ description: "Explore the integration of OpenAI Swarm with Hal9 to
 unlock innovative AI capabilities" 
 ---
 
+<head>
+  <meta property="og:image" content="blog-movie-recommendations-light.png" />
+</head>
+
 import ThemedImage from '../../src/components/themedimg.jsx'
 
 ## Using OpenAI Swarm with Hal9: Unlocking New Potential for EnterpriseAI
@@ -123,4 +127,4 @@ This code is a recommendation system using a "swarm" of AI agents on the Hal9 pl
 This setup allows for interactive, specialized recommendations that adapt to user preferences in real-time.
 
 ## Sample Conversation
-<center><a href="https://hal9.com/demos/swarm"><ThemedImage src="movie-recommendations"/></a></center>
+<center><a href="https://hal9.com/demos/swarm"><ThemedImage src="blog-movie-recommendations"/></a></center>
