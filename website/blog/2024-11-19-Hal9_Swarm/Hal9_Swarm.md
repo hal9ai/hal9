@@ -50,7 +50,9 @@ single model may not capture the full spectrum of insights required.
 ### Example Code
 
 ```python 
-import json import hal9 as h9 from dotenv import
+import json
+import hal9 as h9
+from dotenv import
 load_dotenv from swarm import Swarm, Agent, repl 
 from recommendations import book_recommendation, comic_recommendation, movie_recommendation
 
