@@ -2,6 +2,9 @@ import json
 import os
 
 def event(name, details):
+  if not os.path.exists('.storage'):
+    os.mkdir('.storage')
+
   events_file = '.storage/.events'
 
   if os.path.exists(events_file):

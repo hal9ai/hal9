@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.1
+
+- Automatically create `.storage` folder when it does not exist
+
 ## 2.8.0
 
 - `save()` now stores data under `/.storage`

@@ -41,7 +41,13 @@ def get_hidden(file_path):
         return hidden_path
     return file_path
 
+def ensure_storage():
+  if not os.path.exists('.storage'):
+    os.mkdir('.storage')
+
 def load(name, default):
+  ensure_storage()
+
   file_path = ".storage/" + name
   file_path = find_extension(file_path)
   file_path = get_hidden(file_path)
@@ -66,6 +72,8 @@ def load(name, default):
   return contents
 
 def save(name, contents = None, hidden = False, files = None):
+  ensure_storage()
+  
   if not isinstance(name, str):
     raise Exception(f"The name parameter in save() must be a string, got {str(type(name))}")
 
