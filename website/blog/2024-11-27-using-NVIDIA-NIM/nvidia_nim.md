@@ -192,7 +192,7 @@ def get_image_data(url: str) -> str:
 ### Try It Yourself
 Curious to see how it works? We’ve hosted our AI-detecting chatbot on our website, so you can try it out for yourself! Just upload or link an image, and the chatbot will tell you if it’s AI-generated. [Click here to try our AI-Detecting Chatbot](https://hal9.com/demos/ai-detector)
 
-<center><a href="https://hal9.com/demos/ai-detector"><ThemedImage src="nvidia_nim"/></a></center>
+<center><a href="https://hal9.com/demos/ai-detector"><ThemedImage src="blog-nvidia-nim"/></a></center>
 
 ### Conclusion
 By combining NVIDIA NIM’s advanced AI capabilities with Hal9’s user-friendly deployment services, we were able to create and host an AI-generated image detection tool in no time. This example highlights not only the power of these platforms but also their accessibility for developers and businesses alike.
