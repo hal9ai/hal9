@@ -51,3 +51,15 @@ function go() {
 
 h9.save("index.html", files=files)
 ````
+
+If you prefer to save the files without `h9.save()`, you can saave them under a subfolder under `./storage`. In order to render this folder correctly, use an appropriate extension; for example, `html` for a website:
+
+````py
+base_path = './.storage/website.index.html/'
+os.makedirs(base_path, exist_ok=True)
+
+for filename, content in files.items():
+  file_path = os.path.join(base_path, filename)
+  with open(file_path, 'w', encoding='utf-8') as file:
+    file.write(content)
+````
