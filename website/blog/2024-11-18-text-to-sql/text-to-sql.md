@@ -151,7 +151,7 @@ Curious to see the model in action? We've set up a few interactive demos at [hal
 
 <center><a href="https://hal9.com/demos/baseball_agent"><ThemedImage src="blog-baseball-agent"/></a></center>
 
-**Formula 1 Database**: This agent answers questions about a formula 1 database. It contains a total of 13 tables with 88,380 rows; including circuits, races, drivers, constructors, and seasons. It tracks results, standings, qualifying rounds, lap times, and pit stops, providing a full view of the performance and status of drivers and teams across F1 history. You can try it [here](https://hal9.com/demos/formula1_agentd).
+**Formula 1 Database**: This agent answers questions about a formula 1 database. It contains a total of 13 tables with 88,380 rows; including circuits, races, drivers, constructors, and seasons. It tracks results, standings, qualifying rounds, lap times, and pit stops, providing a full view of the performance and status of drivers and teams across F1 history. You can try it [here](https://hal9.com/demos/formula1_agent).
 
 <center><a href="https://hal9.com/demos/formula1_agent"><ThemedImage src="blog-formula-1-agent"/></a></center>
 
