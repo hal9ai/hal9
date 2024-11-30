@@ -1,9 +1,13 @@
 ---
-slug: NVIDIA-NIM
+slug: nvidia-nim
 title: "Using NVIDIA NIM to Spot AI-Generated Images" 
 authors: [diego]
-tags: [Generative AI, NVIDIA NIM, AI Detection]
+tags: [NVIDIA, NIM, AI Detection]
 ---
+
+<head>
+  <meta property="og:image" content="blog-nvidia-nim-light.png" />
+</head>
 
 import ThemedImage from '../../src/components/themedimg.jsx'
 
