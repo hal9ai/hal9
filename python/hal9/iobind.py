@@ -71,7 +71,7 @@ def load(name, default):
 
   return contents
 
-def save(name, contents = None, hidden = False, files = None):
+def save(name, contents = None, hidden = False, files = None, encoding = None):
   ensure_storage()
   
   if not isinstance(name, str):
@@ -102,10 +102,10 @@ def save(name, contents = None, hidden = False, files = None):
 
     if (extension == "json"):
       contents = json.dumps(contents, indent=2)
-      file_path.write_text(contents)
+      file_path.write_text(contents, encoding=encoding)
     
     if isinstance(contents, str):
-      file_path.write_text(contents)
+      file_path.write_text(contents, encoding=encoding)
     elif contents is None:
       raise Exception(f"Can't save empty contents for {name}")
     else:
