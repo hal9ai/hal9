@@ -71,7 +71,7 @@ def load(name, default):
 
   return contents
 
-def save(name, contents = None, hidden = False, files = None):
+def save(name, contents = None, hidden = False, files = None, encoding = None):
   ensure_storage()
   
   if not isinstance(name, str):
@@ -100,24 +100,22 @@ def save(name, contents = None, hidden = False, files = None):
     extension = get_extension(file_name)
     asset_files.append(file_path)
 
-    if (extension == "json"):
+    if extension == "json":
       contents = json.dumps(contents, indent=2)
-      file_path.write_text(contents)
-    
-    if isinstance(contents, str):
-      file_path.write_text(contents)
+      file_path.write_text(contents, encoding=encoding)
+    elif extension == "pkl":
+      with open(file_path, 'wb') as file:
+        pickle.dump(contents, file)
+    elif extension == "jpg":
+      temp_path = Path(tempfile.mkdtemp()) / name
+      contents.save(temp_path, format="JPEG")
+      shutil.copy(temp_path, file_path)
+    elif isinstance(contents, str):
+      file_path.write_text(contents, encoding=encoding)
     elif contents is None:
       raise Exception(f"Can't save empty contents for {name}")
     else:
-      if extension == "pkl":
-        with open(file_path, 'wb') as file:
-          pickle.dump(contents, file)
-      elif extension == "jpg":
-        temp_path = Path(tempfile.mkdtemp()) / name
-        contents.save(temp_path, format="JPEG")
-        shutil.copy(temp_path, file_path)
-      else:
-        raise Exception(f"Don't know how to save {extension} for {contents_type}")
+      raise Exception(f"Don't know how to save {extension} for {contents_type}")
 
   if target_path != './.storage':
     asset_definition = json.dumps({
