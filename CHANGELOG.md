@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.2
+
+- Add support to run r applications with plumber and shiny
+
 ## 2.8.1
 
 - Automatically create `.storage` folder when it does not exist

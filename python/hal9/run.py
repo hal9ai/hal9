@@ -3,6 +3,8 @@ from pathlib import Path
 from hal9.runtimes.image import run as run_image
 from hal9.runtimes.python import run as run_python
 from hal9.runtimes.chainlit import run as run_chainlit
+from hal9.runtimes.r import run as run_r
+from hal9.runtimes.plumber import run as run_plumber
 
 runtime_types = {
   "python": run_python,
@@ -10,6 +12,9 @@ runtime_types = {
   "jpg": run_image,
   "png": run_image,
   "chainlit": run_chainlit,
+  "r": run_r,
+  "shiny": run_r,
+  "plumber": run_plumber,
 }
 
 def run(path :str, source :str = "app.py", runtime :str = "python", port :str = "8080") -> str:
