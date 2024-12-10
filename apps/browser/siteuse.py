@@ -32,6 +32,11 @@ At the beginning of the code, use print() to communicate what the code will do.
 Only reply with a code block for python code.
 """
 
+client = OpenAI(
+    base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
+    api_key = "h9" 
+)
+
 def site_use(prompt, current, elements):
   elements_str = "\n".join([f"{item['text']}: {item['query']}" for item in elements])
 
@@ -47,7 +52,7 @@ def site_use(prompt, current, elements):
     """ }
   ]
 
-  completion = OpenAI().chat.completions.create(model = "gpt-4", messages = messages)
+  completion = client.chat.completions.create(model = "gpt-4", messages = messages)
   content = completion.choices[0].message.content
   extracted = h9.extract(content, language = "*")
   if not extracted or len(extracted) == 0:

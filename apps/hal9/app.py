@@ -2,7 +2,7 @@ from groq import Groq
 import os
 import hal9 as h9
 import json
-import openai
+from openai import OpenAI
 
 from tools.calculator import calculate
 from tools.game import build_game
@@ -17,7 +17,12 @@ from tools.image_analyzer import image_analyzer
 
 MODEL = "llama3-groq-70b-8192-tool-use-preview"
 def run(messages, tools):
-  return Groq().chat.completions.create(
+  client = OpenAI(
+    base_url="http://localhost:5000/proxy/server=https://api.groq.com/openai/v1",
+    api_key = "h9"
+  )
+  
+  return client.chat.completions.create(
     model = MODEL,
     messages = messages,
     temperature = 0,

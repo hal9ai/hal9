@@ -8,9 +8,9 @@ Parameters:
     'prompt' = description of what the user wants to analyze in the image. If the user does not specify, it should default to "What's in this image?"
 """
     client = openai.AzureOpenAI(
-    azure_endpoint = 'https://openai-hal9.openai.azure.com/',
-    api_key = os.environ['OPENAI_AZURE'],
-    api_version = '2024-02-15-preview',
+        azure_endpoint = 'http://localhost:5000/proxy/server=https://openai-hal9.openai.azure.com/',
+        api_key = 'h1',
+        api_version = '2023-05-15'
     )
 
     response = client.chat.completions.create(

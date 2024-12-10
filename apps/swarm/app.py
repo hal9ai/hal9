@@ -1,7 +1,9 @@
-import json
-import hal9 as h9
 from dotenv import load_dotenv
-from swarm import Swarm, Agent, repl
+import hal9 as h9
+import json
+from openai import OpenAI
+from swarm import Swarm, Agent
+
 from recomendations import book_recommendation, comic_recommendation, movie_recommendation
 
 load_dotenv()
@@ -42,7 +44,12 @@ receptionist = Agent(
     functions=[transfer_to_book_expert, transfer_to_comic_expert, transfer_to_movie_expert],
 )
 
-client = Swarm()
+client = OpenAI(
+    base_url="http://localhost:5000/proxy/server=https://api.anthropic.com/v1/messages",
+    api_key = "h9"
+) 
+swarm = Swarm(client = client)
+
 messages = h9.load('messages', [])
 
 agents = {'Receptionist': receptionist,
@@ -53,7 +60,7 @@ agent = agents[h9.load('last_agent', 'Receptionist')]
 user_input = input()
 messages.append({"role": "user", "content": user_input})
 
-response = client.run(
+response = swarm.run(
     agent=agent,
     messages=messages
 )
