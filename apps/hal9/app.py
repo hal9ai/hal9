@@ -24,12 +24,12 @@ if is_url(user_input):
     file_extension = filename.split(".")[-1] if "." in filename else "No extension"
     download_file(user_input)
     messages = insert_message(messages, "system", f"Consider using the file available at path: './.storage/.{filename}' for the following questions.")
-    messages = insert_message(messages, "assistant", f"Im ready to response questions about your file: {filename}")
+    messages = insert_message(messages, "assistant", f"I'm ready to answer questions about your file: {filename}")
     if file_extension.lower() == "pdf":
         generate_text_embeddings_parquet(user_input)
     if file_extension.lower() in ['jpg', 'jpeg', 'png','webp']:
         add_images_descriptions(f"./.storage/.{filename}")
-    print(f"Im ready to response questions about your file: {filename}")
+    print(f"I'm ready to answer questions about your file: {filename}")
 else:
     user_input = user_input.replace("\f", "\n")
     messages = insert_message(messages, "user", user_input)
