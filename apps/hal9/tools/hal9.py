@@ -1,26 +1,34 @@
+from data import DATA
 from groq import Groq
-import os
-import hal9 as h9
-import json
+from utils import stream_print
 
-def hal9_reply(prompt):
-  """
-   Reply to questions about Hal9.
-     'prompt' to respond to.
-  """
+def answer_hal9_questions(user_input):
+    response = Groq().chat.completions.create(
+     model = "llama3-70b-8192",
+     messages = [{"role": "system", "content": DATA["hal9"]},{"role": "user", "content": user_input}],
+    temperature = 0,
+    seed = 1)
 
-  context = open('tools/hal9.txt', 'r').read()
-  messages = [
-    {"role": "system", "content": context},
-    {"role": "user", "content": prompt}
-  ]
+    text_response = response.choices[0].message.content
+    stream_print(text_response)
+    return text_response
 
-  stream = Groq().chat.completions.create(model = "llama3-70b-8192", messages = messages, temperature = 0, seed = 1, stream = True)
-
-  response = ""
-  for chunk in stream:
-    if len(chunk.choices) > 0 and chunk.choices[0].delta.content is not None: 
-      print(chunk.choices[0].delta.content, end="")
-      response += chunk.choices[0].delta.content
-
-  return response
+answer_hal9_questions_description = {
+    "type": "function",
+    "function": {
+        "name": "answer_hal9_questions",
+        "description": "Handles questions related to Hal9 or this chatbot-web capabilities",
+        "strict": True,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "user_input": {
+                    "type": "string",
+                    "description": "Take the user input and pass the same string to the function",
+                },
+            },
+            "required": ["user_input"],
+            "additionalProperties": False,
+        },
+    }
+}
