@@ -9,9 +9,9 @@ def build_website(prompt):
     'prompt' with user change or requirements
   """
   client = openai.AzureOpenAI(
-    azure_endpoint = 'https://openai-hal9.openai.azure.com/',
-    api_key = os.environ['OPENAI_AZURE'],
-    api_version = '2023-05-15',
+    azure_endpoint = 'http://localhost:5000/proxy/server=https://openai-hal9.openai.azure.com/',
+    api_key = 'h1',
+    api_version = '2023-05-15'
   )
 
   system = """You can build html applications for user requests. Your replies can include markdown code blocks but they must include a filename parameter after the language. For example,

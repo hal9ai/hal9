@@ -1,4 +1,4 @@
-from groq import Groq
+from openai import OpenAI
 import os
 import hal9 as h9
 import json
@@ -15,7 +15,17 @@ def hal9_reply(prompt):
     {"role": "user", "content": prompt}
   ]
 
-  stream = Groq().chat.completions.create(model = "llama3-70b-8192", messages = messages, temperature = 0, seed = 1, stream = True)
+  client = OpenAI(
+    base_url="http://localhost:5000/proxy/server=https://api.groq.com/openai/v1",
+    api_key = "h9"
+    )
+  
+  stream = client.chat.completions.create(
+    model = "llama3-70b-8192", 
+    messages = messages, 
+    temperature = 0, 
+    seed = 1, 
+    stream = True)
 
   response = ""
   for chunk in stream:

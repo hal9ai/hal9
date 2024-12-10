@@ -5,9 +5,9 @@ import json
 import time
 
 client = openai.AzureOpenAI(
-    azure_endpoint='https://openai-hal9.openai.azure.com/',
-    api_key=os.environ['OPENAI_AZURE'],
-    api_version='2023-05-15',
+   azure_endpoint = 'http://localhost:5000/proxy/server=https://openai-hal9.openai.azure.com/',
+   api_key = 'h1',
+   api_version = '2023-05-15'
 )
 
 def build_game(user_game_request):
