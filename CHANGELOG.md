@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.3
+
+- Fix encoding issue in `save()`
+
 ## 2.8.2
 
 - Add support to run r applications with plumber and shiny
