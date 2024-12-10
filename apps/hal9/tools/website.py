@@ -1,9 +1,8 @@
 import hal9 as h9
 import openai
 import os
-import json
 
-def build_website(prompt):
+def website_generator(prompt):
   """
   Builds or modifies a website based on user description or a change request
     'prompt' with user change or requirements
@@ -40,3 +39,23 @@ def build_website(prompt):
   summary = h9.complete(completion, messages, show = False)
   print(summary)
   return summary
+
+website_generator_description = {
+    "type": "function",
+    "function": {
+        "name": "website_generator",
+        "description": "This function creates or modifies a website based on a user's description or change requests. It dynamically generates HTML, CSS, JavaScript, and other web assets as specified in the input prompt. The function maintains a stateful interaction, allowing for iterative website building and modification.",
+        "strict": True,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "prompt": {
+                    "type": "string",
+                    "description": "A user-provided description of the website requirements or specific modification requests.",
+                },
+            },
+            "required": ["prompt"],
+            "additionalProperties": False,
+        },
+    },
+}
