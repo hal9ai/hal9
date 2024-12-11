@@ -1,4 +1,4 @@
-from openai import OpenAI
+from groq import Groq
 
 system_prompt = """
 Only reply with website urls that best match the task from the user prompt.
@@ -6,8 +6,8 @@ If you don't know a website use https://www.google.com/search?q=query and
 replace query with a reasonable search query for the user task
 """
 
-client = OpenAI(
-    base_url="http://localhost:5000/proxy/server=https://api.groq.com/openai/v1",
+client = Groq(
+    base_url= "https://api.hal9.com/proxy/server=https://api.groq.com/",
     api_key = "h9"
 )
 

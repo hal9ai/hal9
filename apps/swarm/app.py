@@ -45,9 +45,9 @@ receptionist = Agent(
 )
 
 client = OpenAI(
-    base_url="http://localhost:5000/proxy/server=https://api.anthropic.com/v1/messages",
-    api_key = "h9"
-) 
+    base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
+    api_key = "h9" 
+)
 swarm = Swarm(client = client)
 
 messages = h9.load('messages', [])

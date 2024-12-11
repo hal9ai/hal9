@@ -9,7 +9,7 @@ Parameters:
     'prompt' = with user change or requirements
   """
   client = openai.AzureOpenAI(
-    azure_endpoint = 'http://localhost:5000/proxy/server=https://openai-hal9.openai.azure.com/',
+    azure_endpoint = 'https://api.hal9.com/proxy/server=https://openai-hal9.openai.azure.com/',
     api_key = 'h1',
     api_version = '2023-05-15'
   )

@@ -17,10 +17,10 @@ from tools.image_analyzer import image_analyzer
 
 MODEL = "llama3-groq-70b-8192-tool-use-preview"
 def run(messages, tools):
-  client = OpenAI(
-    base_url="http://localhost:5000/proxy/server=https://api.groq.com/openai/v1",
+  client = Groq(
+    base_url= "https://api.hal9.com/proxy/server=https://api.groq.com/",
     api_key = "h9"
-  )
+)
   
   return client.chat.completions.create(
     model = MODEL,

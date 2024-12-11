@@ -8,7 +8,7 @@ Parameters:
     'prompt' = description of what the user wants to analyze in the image. If the user does not specify, it should default to "What's in this image?"
 """
     client = openai.AzureOpenAI(
-        azure_endpoint = 'http://localhost:5000/proxy/server=https://openai-hal9.openai.azure.com/',
+        azure_endpoint = 'https://api.hal9.com/proxy/server=https://openai-hal9.openai.azure.com/',
         api_key = 'h1',
         api_version = '2023-05-15'
     )

@@ -1,4 +1,4 @@
-from openai import OpenAI
+from groq import Groq
 import os
 import hal9 as h9
 import json
@@ -15,10 +15,10 @@ def hal9_reply(prompt):
     {"role": "user", "content": prompt}
   ]
 
-  client = OpenAI(
-    base_url="http://localhost:5000/proxy/server=https://api.groq.com/openai/v1",
+  client = Groq(
+    base_url= "https://api.hal9.com/proxy/server=https://api.groq.com/",
     api_key = "h9"
-    )
+  )
   
   stream = client.chat.completions.create(
     model = "llama3-70b-8192", 
