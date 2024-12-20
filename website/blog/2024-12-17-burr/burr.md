@@ -40,7 +40,7 @@ When you pair Burr with Hal9’s powerful AI deployment platform, you unlock a s
 
 ## Example: Burr on Hal9
 
-Let's walk through how to build a simple weather chatbot on hal9 using Burr. This chatbot can interact with external tools to provide precise and relevant responses to user queries.
+Let's walk through how to build a simple weather chatbot on Hal9 using Burr. This chatbot can interact with external tools to provide precise and relevant responses to user queries.
 
 ### 1. Set Up Burr
 
@@ -227,7 +227,7 @@ You’ll generate a graphical representation of the workflow, similar to this:
 This feature is invaluable for debugging, optimizing workflows, or simply understanding how your chatbot processes user queries.
 
 
-### 4. Deploy to hal9
+### 4. Deploy to Hal9
 As mentioned earlier, deployment can often be one of the trickiest parts of building a chatbot. But Hal9 eliminates this complexity. With Hal9’s platform, deploying your Burr-powered chatbot is as simple as running a single command in your terminal:
 
 ```bash
