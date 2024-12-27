@@ -4,11 +4,12 @@
 [![Hal9 PyPi Downloads](https://img.shields.io/pypi/dm/hal9?label=PyPI)](https://pypistats.org/packages/hal9)
 [![GitHub star chart](https://img.shields.io/github/stars/hal9ai/hal9?style=flat-square)](https://star-history.com/#hal9ai/hal9)
 
-Create and deploy generative ([LLMs](https://github.com/Hannibal046/Awesome-LLM) and [diffusers](https://github.com/huggingface/diffusers)) applications (chatbots and APIs) in seconds.
-- **Open:** Use any model ([OpenAI](https://platform.openai.com/docs/api-reference/introduction), [Llama](https://ai.meta.com/blog/5-steps-to-getting-started-with-llama-2/), [Groq](https://docs.api.groq.com/md/tutorials/python.groqapi.html), [MidJourney](https://docs.imagineapi.dev/en)) and any library like ([LangChain](https://python.langchain.com/v0.1/docs/get_started/quickstart/), [DSPy](https://dspy-docs.vercel.app/docs/quick-start/installation)).
+Create and deploy generative ([LLMs](https://github.com/Hannibal046/Awesome-LLM) and [diffusers](https://github.com/huggingface/diffusers)) applications (chatbots, agents, APIs, apps) in seconds.
+- **Flexible:** Use any library ([LangChain](https://python.langchain.com/v0.1/docs/get_started/quickstart/), [DSPy](https://dspy-docs.vercel.app/docs/quick-start/installation)), and any model ([OpenAI](https://platform.openai.com/docs/api-reference/introduction), [Llama](https://ai.meta.com/blog/5-steps-to-getting-started-with-llama-2/), [Groq](https://docs.api.groq.com/md/tutorials/python.groqapi.html), [MidJourney](https://docs.imagineapi.dev/en)).
 - **Intuitive:** No need to learn app frameworks ([Flask](https://flask.palletsprojects.com/en/3.0.x/quickstart/)), simply use `input()` and `print()`, or write file to disk.
-- **Scalable:** Engineers can integrate your app with scalable technologies ([Docker](https://www.docker.com/), [Kubernetes](https://kubernetes.io/), etc)
+- **Scalable:** Designed to integrate your app with scalable technologies ([Docker](https://www.docker.com/), [Kubernetes](https://kubernetes.io/), etc).
 - **Powerful:** Using an OS process (stdin, stdout, files) as our app contract, enables long-running agents, multiple programming languages, and complex system dependencies.
+- **Open:** The code behind [hal9](https://hal9.com/apps/hal9), is also open source and open for contributions under at [apps/hal9](https://github.com/hal9ai/hal9/tree/main/apps/hal9).
 
 Focus on AI (RAG, fine-tuning, alignment, training) and skip engineering tasks (frontend development, backend integration, deployment, operations).
 
@@ -79,7 +80,7 @@ You can then run your project as follows:
 hal9 run chatbot
 ```
 
-If you customized your template with `--template` make sure to set the correct key, for example, if you are using the OpenAI emplate use for Linux or macOS:
+If you customized your template with `--template` make sure to set the correct key, for example, if you are using the OpenAI template use for Linux or macOS:
 
 ```bash
 export OPENAI_KEY=YOUR_OPENAI_KEY.
@@ -89,6 +90,7 @@ For Windows use:
 ```bash
 set OPENAI_KEY=YOUR_OPENAI_KEY.
 ```
+
 For more information on obtaining and using your OpenAI API key, please refer to the [OpenAI API Key documentation](https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key).
 
 
@@ -113,3 +115,11 @@ hal9 deploy chatbot --target hal9
 Each command is tasked with preparing the deployment of your project folder. For example, `--target docker` should create a `Dockerfile` file that gets this project ready to run in cloud containers.
 
 For personal use, `--target hal9` supports a free tier at `hal9.com`; enterprise support is also available to deploy with `--target hal9 --url hal9.yourcompany.com`
+
+## Contributing
+
+Apart from deploying your apps directly on [hal9.com](https://hal9.com), you can collaborate with our community by contributing new ones to the [/apps](https://github.com/hal9ai/hal9/tree/main/apps/hal9) directory in this repository. Additionally, you can improve Hal9’s core capabilities by refining the code in the [apps/hal9](https://github.com/hal9ai/hal9/tree/main/apps/hal9) folder.
+
+The `hal9` Python package is located in the [/python](https://github.com/hal9ai/hal9/tree/main/python) directory, while the documentation website resides under [/website](https://github.com/hal9ai/hal9/tree/main/website). We encourage contributors to focus on enhancing apps first before proposing more complex changes.
+
+Keep in mind that the philosophy of the `hal9` package is to remain a lightweight wrapper around `input()` and `print()`. The Python community already offers many excellent frameworks, and we aim to encourage their use rather than creating another one.
