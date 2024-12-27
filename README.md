@@ -4,11 +4,11 @@
 [![Hal9 PyPi Downloads](https://img.shields.io/pypi/dm/hal9?label=PyPI)](https://pypistats.org/packages/hal9)
 [![GitHub star chart](https://img.shields.io/github/stars/hal9ai/hal9?style=flat-square)](https://star-history.com/#hal9ai/hal9)
 
-Create and deploy generative ([LLMs](https://github.com/Hannibal046/Awesome-LLM) and [diffusers](https://github.com/huggingface/diffusers)) applications (chatbots, agents, APIs, apps) in seconds.
+Hal9 is a deployment platform purpose-built for generative AI, enabling you to create and deploy generative ([LLMs](https://github.com/Hannibal046/Awesome-LLM) and [diffusers](https://github.com/huggingface/diffusers)) applications (chatbots, agents, APIs, apps) in seconds.
 - **Flexible:** Use any library ([LangChain](https://python.langchain.com/v0.1/docs/get_started/quickstart/), [DSPy](https://dspy-docs.vercel.app/docs/quick-start/installation)), and any model ([OpenAI](https://platform.openai.com/docs/api-reference/introduction), [Llama](https://ai.meta.com/blog/5-steps-to-getting-started-with-llama-2/), [Groq](https://docs.api.groq.com/md/tutorials/python.groqapi.html), [MidJourney](https://docs.imagineapi.dev/en)).
 - **Intuitive:** No need to learn app frameworks ([Flask](https://flask.palletsprojects.com/en/3.0.x/quickstart/)), simply use `input()` and `print()`, or write file to disk.
 - **Scalable:** Designed to integrate your app with scalable technologies ([Docker](https://www.docker.com/), [Kubernetes](https://kubernetes.io/), etc).
-- **Powerful:** Using an OS process (stdin, stdout, files) as our app contract, enables long-running agents, multiple programming languages, and complex system dependencies.
+- **Powerful:** Using an OS process (stdin, stdout, files) as our app contract, enables long-running agents, multiple programming languages, complex system dependencies, and running arbitrary code in a secure Kubernetes pod.
 - **Open:** The code behind [hal9](https://hal9.com/apps/hal9), is also open source and open for contributions under at [apps/hal9](https://github.com/hal9ai/hal9/tree/main/apps/hal9).
 
 Focus on AI (RAG, fine-tuning, alignment, training) and skip engineering tasks (frontend development, backend integration, deployment, operations).
@@ -68,7 +68,7 @@ h9.complete(completions, messages = messages)
 h9.save("messages", messages, hidden = True)
 ```
 
-The [Learn](https://hal9.com/docs/learn) section explain in detail how this code works, but will provide a quick overview. The `hal9` package contains a helper functions to simplify your generative AI code. You can choose to not use `hal9` at all and use `input()` and `print()` statements yourself, or even sue tools like `langchain`. The `h9.load()` and `h9.save()` functions load and save data across chat sessions, our platform is stateless by default. The `h9.input()` function is a slim wrapper over `input()` that also stores the user input in the `messages`. Then `h9.complete()` is a helper function to help parse the completion results and save the result in `messages`. That's about it!
+The [learn code](https://hal9.com/docs/learn/code) section explains in detail how this code works, but will provide a quick overview. The `hal9` package contains a helper functions to simplify your generative AI code. You can choose to not use `hal9` at all and use `input()` and `print()` statements yourself, or even sue tools like `langchain`. The `h9.load()` and `h9.save()` functions load and save data across chat sessions, our platform is stateless by default. The `h9.input()` function is a slim wrapper over `input()` that also stores the user input in the `messages`. Then `h9.complete()` is a helper function to help parse the completion results and save the result in `messages`. That's about it!
 
 ## Development
 
