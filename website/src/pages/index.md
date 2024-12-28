@@ -1,11 +1,11 @@
 import { Floating } from '../components/floating.jsx';
 
-# [Hal9](/): Effortlessly create AI coworkers
+# [Hal9](/): Create and Share Powerful AIs
 
-Our documentation can help you learn how to use and create coworkers using our [Hal9](learn/hal9/explore), using [code](learn/code) and important [Generative AI](learn/genai) concepts relevant in generative AI solutions.
+Learn how to use and create AIs from simple templates built from the user interface, to complex ones created from templates and code.
 
 <div class="FloatingWrapper">
-  <Floating title="Learn" href="/docs/learn/hal9/explore">Learn how to use and create coworkers using our [product](learn/hal9/explore), [code](learn/code) and important [Generative AI](learn/genai) concepts relevant in generative AI solutions.</Floating>
-  <Floating title="Reference" href="/docs/reference/code">Reference a comprehensive list of developer functions to code sophisticated generative AI solutions.</Floating>
-  <Floating title="News" href="https://hal9.com/news">Get updates on the latest product and code updates, subscribe for email updates.</Floating>
+  <Floating title="Users" href="/docs/learn/hal9">Learn how to use existing AIs, and create new ones from the [user interface](learn/hal9).</Floating>
+  <Floating title="Developers" href="/docs/learn/code">Learn how to create complex AIs from [code](learn/code) and stay up to date with our technical [blog](blog).</Floating>
+  <Floating title="Concepts" href="/docs/learn/code">Learn important [AI concepts](learn/genai) relevant to generative AI.</Floating>
 </div>

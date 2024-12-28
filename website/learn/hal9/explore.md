@@ -4,15 +4,15 @@ sidebar_position: 1
 
 import ThemedImage from '../../src/components/themedimg.jsx'
 
-# Exploring Coworkers
+# Exploring AIs
 
 There are several community examples you can use at work or use as inspiration to create your own. To explore them, use the sidebar "explore" tab.
 
 <center><a href="/explore"><ThemedImage src="hal9-explore" /></a></center>
 
-## Hal9 AI Coworker
+## Hal9 AI
 
-We recommend trying first the Hal9 AI Coworker which was created by the Hal9 team and showcases many features you may want to replicate in your own AI coworkers.
+We recommend trying first the Hal9 AI which was created by the Hal9 team and showcases many features you may want to replicate in your own AIs.
 
 <center><a href="/explore"><ThemedImage src="hal9-explore-hal9" /></a></center>
 
@@ -25,4 +25,4 @@ Some of the features this chatbot supports includes:
 - Understanding documents.
 - Answering questions about Hal9.
 
-The code for Hal9's AI coworker is open-source under an MIT license and available for your technical team, see [github.com/hal9ai/hal9/tree/main/apps/hal9](https://github.com/hal9ai/hal9/tree/main/apps/hal9).
+The code for Hal9's AI is open-source under an MIT license and available for your technical team, see [github.com/hal9ai/hal9/tree/main/apps/hal9](https://github.com/hal9ai/hal9/tree/main/apps/hal9).

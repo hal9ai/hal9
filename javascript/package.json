@@ -2,7 +2,7 @@
   "name": "hal9",
   "version": "2.1.2",
   "license": "MIT",
-  "description": "Hal9: Create and Share Generative Apps",
+  "description": "Hal9: Create and Share Powerful AIs",
   "main": "dist/hal9.js",
   "repository": "https://github.com/hal9ai/hal9",
   "author": "Hal9 Inc",

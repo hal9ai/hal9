@@ -33,7 +33,7 @@ completion = OpenAI().chat.completions.create(
 print(completion.choices[0].message.content)
 ```
 
-However, the previous code will forget messages and take too long to display an answer. We can improve this using the memory and streaming concepts from the [building coworkers](create.md) section:
+However, the previous code will forget messages and take too long to display an answer. We can improve this using the memory and streaming concepts from the [building AIs](create.md) section:
 
 ```python
 import hal9 as h9

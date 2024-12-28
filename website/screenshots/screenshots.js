@@ -20,8 +20,8 @@ const actions = [
   { query: '.driver-popover-next-btn', screenshot: 'hal9-create-message',     waitfor: '#create-welcome'},
   { query: '.driver-popover-next-btn', screenshot: 'hal9-create-create',      waitfor: '#create-create'},
 
-  // Coworkers
-  { query: '.driver-popover-next-btn', screenshot: 'hal9-coworkers',          waitfor: '#sidebar-coworkers'},
+  // AIs
+  { query: '.driver-popover-next-btn', screenshot: 'hal9-ais',                waitfor: '#sidebar-ais'},
 ];
 
 async function performActions(page, actions, suffix) {

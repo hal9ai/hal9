@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Building Coworkers
+# Building AIs
 
 ChatGPT popularized the chat interface as the application interface to interoperate with [LLMs](../genai/llm), tools like MidJourney have also popularized through their use of Discord.
 

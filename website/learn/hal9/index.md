@@ -1,15 +1,17 @@
 import ThemedImage from '../../src/components/themedimg.jsx'
 
-# Hal9: Create and Share AI Coworkers
+# Hal9: Create and Share Powerful AIs
 
-Hal9 is a platform to effortlessly create and share AI coworkers. As opposed to chatbots, AI coworkers are productivity-focused chatbots that go beyond generic information available in services like ChatGPT, Gemini, Claude and the like.
+Hal9 is a platform designed to simplify the creation and sharing of powerful AIs. Unlike traditional chatbots, Hal9 enables you to go beyond basic chat interfaces and the generic capabilities offered by services like ChatGPT, Gemini, or Claude.
 
-An AI coworker is able to connect to private enterprise datasets, integrate to enterprise communication services, build enterprise applications, and is extensible by developers with powerful open-source libraries. Therefore, AI coworkers must run securely in your own cloud to prevent sharing any private resources with anyone, including Hal9.
+While your AI can include a chat interface when needed, it can also take other forms, such as APIs or applications for tasks like image uploads, providing unmatched flexibility.
 
-Hal9's user interface is a web application that showcases the main use cases on its sidebar to explore existing coworkers, create new coworkers, share coworkers and integrate them with communication tools like Slack.
+With Hal9, your AI can securely connect to private enterprise datasets, integrate seamlessly with enterprise communication tools, build robust applications, and leverage powerful open-source libraries for customization. To ensure data security, your AI operates exclusively within your own cloud environment, eliminating the risk of exposing private resources—even to Hal9 itself.
+
+The Hal9 interface is a user-friendly web application. Its intuitive sidebar allows you to explore existing AIs, create new ones, share your work, and integrate AIs with tools like Slack, making it easy to bring your ideas to life and streamline communication workflows.
 
 <center><a href="explore"><ThemedImage src="hal9-start" /></a></center>
 
-Hal9's developer interface consists of a powerful open-source library which enables developers to build AI coworkers of arbitrary complexity. Developers can write and modify code from Hal9's user interface or deploy from other developer services like GitHub.
+Hal9's developer interface offers a robust open-source library, allowing developers to build AIs of any complexity. Developers can write and modify code directly within Hal9’s user interface or deploy from external services like GitHub.
 
-This enables business users to rapidly create AI coworkers and for developers to enhance them with arbitrary complexity that fulfills the business user needs.
+This flexibility empowers business users to quickly create AIs tailored to their needs, while developers can easily enhance and scale these AIs with advanced features, ensuring they meet the specific requirements of the business.

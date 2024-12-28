@@ -4,16 +4,16 @@
 [![Hal9 PyPi Downloads](https://img.shields.io/pypi/dm/hal9?label=PyPI)](https://pypistats.org/packages/hal9)
 [![GitHub star chart](https://img.shields.io/github/stars/hal9ai/hal9?style=flat-square)](https://star-history.com/#hal9ai/hal9)
 
-Hal9 is a deployment platform purpose-built for generative AI, enabling you to create and deploy generative ([LLMs](https://github.com/Hannibal046/Awesome-LLM) and [diffusers](https://github.com/huggingface/diffusers)) applications (chatbots, agents, APIs, apps) in seconds.
+Hal9 is a deployment platform purpose-built for generative AI, enabling you to create and deploy generative ([LLMs](https://github.com/Hannibal046/Awesome-LLM) and [diffusers](https://github.com/huggingface/diffusers)) applications (chatbots, agents, APIs, and apps). Key features:
 - **Flexible:** Use any library ([LangChain](https://python.langchain.com/v0.1/docs/get_started/quickstart/), [DSPy](https://dspy-docs.vercel.app/docs/quick-start/installation)), and any model ([OpenAI](https://platform.openai.com/docs/api-reference/introduction), [Llama](https://ai.meta.com/blog/5-steps-to-getting-started-with-llama-2/), [Groq](https://docs.api.groq.com/md/tutorials/python.groqapi.html), [MidJourney](https://docs.imagineapi.dev/en)).
 - **Intuitive:** No need to learn app frameworks ([Flask](https://flask.palletsprojects.com/en/3.0.x/quickstart/)), simply use `input()` and `print()`, or write file to disk.
 - **Scalable:** Designed to integrate your app with scalable technologies ([Docker](https://www.docker.com/), [Kubernetes](https://kubernetes.io/), etc).
-- **Powerful:** Using an OS process (stdin, stdout, files) as our app contract, enables long-running agents, multiple programming languages, complex system dependencies, and running arbitrary code in a secure Kubernetes pod.
+- **Powerful:** Support for long-running agents, multiple programming languages, complex system dependencies, and running arbitrary code in a secure Kubernetes pods.
 - **Open:** The code behind [hal9](https://hal9.com/apps/hal9), is also open source and open for contributions under at [apps/hal9](https://github.com/hal9ai/hal9/tree/main/apps/hal9).
 
 Focus on AI (RAG, fine-tuning, alignment, training) and skip engineering tasks (frontend development, backend integration, deployment, operations).
 
-## Getting started
+## Getting Started
 
 Create and share a chatbot in seconds as follows:
 

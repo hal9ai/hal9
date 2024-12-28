@@ -8,8 +8,8 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Hal9: Create AI Coworkers',
-  tagline: 'Hal9 provides enterprise-ready, secure, customizable, model-agnostic AI coworkers powered by the best AI libraries.',
+  title: 'Hal9: Create and Share Powerful AIs',
+  tagline: 'Hal9 provides enterprise-ready, secure, customizable, model-agnostic AIs powered by the best AI libraries.',
   favicon: 'img/favicon.ico',
   url: 'https://hal9.com',
   baseUrl: '/docs/',
@@ -91,15 +91,11 @@ const config = {
             position: 'left',
           },
           */
-          {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Learn',
-          },
+          { to: '/learn/hal9', label: 'Users', position: 'left' },
+          { to: '/learn/code', label: 'Developers', position: 'left' },
+          { to: '/learn/genai', label: 'Concepts', position: 'left' },
           { to: '/reference/code', label: 'Reference', position: 'left' },
           { to: '/blog', label: 'Blog', position: 'left' },
-          { to: 'https://hal9.com/news', label: 'News', position: 'left' },
           {
             href: 'https://github.com/hal9ai/hal9',
             className: 'github-link',
