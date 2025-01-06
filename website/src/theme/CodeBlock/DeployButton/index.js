@@ -9,7 +9,7 @@ export default function DeployButton({code, className}) {
   const [isCopied, setIsCopied] = useState(false);
   const copyTimeout = useRef(undefined);
   const handleCopyCode = useCallback(() => {
-    window.open("/deploy?code=" + encodeURIComponent(code));
+    window.open("/devs?code=" + encodeURIComponent(code));
     setIsCopied(true);
     copyTimeout.current = window.setTimeout(() => {
       setIsCopied(false);

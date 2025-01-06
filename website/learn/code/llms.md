@@ -18,7 +18,7 @@ OPENAI_API_KEY=YOURAPIKEY python
 
 Followed by the following code:
 
-```python
+```python deploy
 import os
 from openai import OpenAI
 
@@ -35,7 +35,7 @@ print(completion.choices[0].message.content)
 
 However, the previous code will forget messages and take too long to display an answer. We can improve this using the memory and streaming concepts from the [building AIs](create.md) section:
 
-```python
+```python deploy
 import hal9 as h9
 from openai import OpenAI
 
@@ -62,7 +62,7 @@ h9.save("messages", messages, hidden = True)
 
 You can also make use of any other LLM and even open source LLMs. The following example makes use of Groq and Meta's Llama LLM. One advantage of using Groq over OpenAI is that their system is optimized for speed, so expect this code to run much faster:
 
-```python
+```python deploy
 import hal9 as h9
 from groq import Groq
 

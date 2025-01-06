@@ -10,7 +10,7 @@ Hal9 simplifies the process of setting up tools with `describe()` which describe
 
 The following code shows how to define a `calculate` function to help LLMs execute arithmetic operations, notice that the comment in the function is used as part of the description so it's imperative 
 
-```python
+```python deploy
 import hal9 as h9
 from openai import OpenAI
 

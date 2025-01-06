@@ -10,7 +10,7 @@ From an application development perspective, the simplest chat interface we can 
 
 For example, the following Python code generates a chatbot that replies "Echo" to whatever the input is. Arguably this is the simplest chatbot we can create.
 
-```python
+```python deploy
 echo = input()
 print(f"Echo: {echo}")
 ```
@@ -36,7 +36,7 @@ The stateful method is easy to implement by storing data in-memory, but it will 
 
 To make your chatbot behave correctly even after it restarts, we can store the conversation messages to files. You can use any library to store and load files, but we recommend the `hal9` package convenience functions to `save` and `load` files with ease:
 
-```python
+```python deploy
 from openai import OpenAI
 import hal9 as h9
 
@@ -73,7 +73,7 @@ Hal9 encourages to attach files in a chat as URL links. For example, users can r
 
 To help assist with processing links and attachments, Hal9 provides an `input` function which extracts the text contents of a URL directly as text to easily support managing uploads.
 
-```python
+```python deploy
 import hal9 as h9
 
 contents = h9.input('Enter a URL: ')

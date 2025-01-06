@@ -19,7 +19,7 @@ Beside chatbots, Hal9 can also deploy and run other content types like images, s
 
 Web Applications (Web Apps) are applications that provide endpoints for us to use with a web browser (Chrome, Safari, Firefox, etc).
 
-```python
+```python deploy
 import streamlit as st
 import random
 
@@ -40,7 +40,7 @@ hal9 deploy webapp --type streamlit
 
 Web APIs are applications that are designed for other computer programs or services to interoperate with, if you wanted to enable other web apps to use your previous app, you would do this as follows:
 
-```python
+```python deploy
 from fastapi import FastAPI
 import random
 

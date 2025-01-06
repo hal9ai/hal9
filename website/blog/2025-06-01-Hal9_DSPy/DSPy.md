@@ -23,7 +23,7 @@ At the heart of DSPy are **signatures**, which specify what an LLM should do in 
 
 ```python
 'sentence -> sentiment: bool'
-'document -> summary
+'document -> summary'
 ```
 
 This high-level abstraction allows you to focus on the desired behavior rather than the exact phrasing of the prompt. The power of signatures lies in their simplicity and adaptability, which make them an excellent tool for developers who want to interact with LLMs without needing to know the intricacies of prompt engineering. With DSPy, you can specify what you want—whether it’s summarizing a document or extracting sentiment—and let the framework handle the underlying complexity.

@@ -48,6 +48,7 @@ export default function CodeBlockString({
   });
   const showLineNumbers =
     showLineNumbersProp ?? containsLineNumbers(metastring);
+  const deploy = metastring?.includes('deploy');
   return (
     <Container
       as="div"
@@ -94,7 +95,7 @@ export default function CodeBlockString({
               isEnabled={wordWrap.isEnabled}
             />
           )}
-          {language == 'python' ? (<DeployButton className={styles.codeButton} code={code} />) : (<CopyButton className={styles.codeButton} code={code} />)}
+          {deploy ? (<DeployButton className={styles.codeButton} code={code} />) : (<CopyButton className={styles.codeButton} code={code} />)}
         </div>
       </div>
     </Container>

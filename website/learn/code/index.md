@@ -37,7 +37,7 @@ As easy as that you have created your first chatbot!
 The code inside `/chatbot/app.py` contains a "Hello World" chatbot that reads the user prompt and echos the result back:
 
 
-```python
+```python deploy
 prompt = input()
 print(f"Echo: {prompt}")
 ```
@@ -55,7 +55,7 @@ hal9 create chatbot-groq --template groq
 
 A template provides ready to use code with specific technologies and use cases. Is very popular to use OpenAI's ChatGPT-like template with `--template openai`, the code generated will look as follows:
 
-```python
+```python deploy
 import hal9 as h9
 from openai import OpenAI
 

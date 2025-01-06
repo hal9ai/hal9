@@ -8,7 +8,7 @@ To generate images, you can use [stable diffusion](../genai/sd.md) techniques wi
 
 ## Flux
 
-```python
+```python deploy
 import os
 import requests
 import replicate
