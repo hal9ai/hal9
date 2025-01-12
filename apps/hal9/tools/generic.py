@@ -5,16 +5,17 @@ def answer_generic_question(user_input):
     # load messages
     messages = load_messages(file_path="./.storage/.generic_agent_messages.json")
     messages = insert_message(messages, "user", user_input)
-    response = Groq().chat.completions.create(
+    stream = Groq().chat.completions.create(
         model = "llama3-70b-8192",
         messages = messages,
         temperature = 0,
-        seed = 1)
+        seed = 1,
+        stream = True)
 
-    text_response = response.choices[0].message.content
+    text_response = stream_print(stream)
     messages = insert_message(messages, "assistant", text_response)
     save_messages(messages, file_path="./.storage/.generic_agent_messages.json")
-    stream_print(text_response)
+    
     return text_response
 
 answer_generic_question_description = {

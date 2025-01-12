@@ -1,4 +1,3 @@
-from utils import stream_print
 import pandas as pd
 from utils import generate_response, load_messages, insert_message, execute_function, save_messages, insert_tool_message
 import traceback
@@ -202,7 +201,7 @@ def fix_python_code(csv_path, code):
         return f"An error has occurred again -> {last_line} ... Complete traceback: {tb}"
         
 def final_response(final_message):
-    stream_print(final_message)
+    print(final_message)
     return final_message
 
 ########################### Descriptions ########################## 

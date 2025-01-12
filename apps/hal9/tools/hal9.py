@@ -3,14 +3,14 @@ from groq import Groq
 from utils import stream_print
 
 def answer_hal9_questions(user_input):
-    response = Groq().chat.completions.create(
-     model = "llama3-70b-8192",
-     messages = [{"role": "system", "content": DATA["hal9"]},{"role": "user", "content": user_input}],
-    temperature = 0,
-    seed = 1)
+    stream = Groq().chat.completions.create(
+        model = "llama3-70b-8192",
+        messages = [{"role": "system", "content": DATA["hal9"]},{"role": "user", "content": user_input}],
+        temperature = 0,
+        seed = 1,
+        stream = True)
 
-    text_response = response.choices[0].message.content
-    stream_print(text_response)
+    text_response = stream_print(stream)
     return text_response
 
 answer_hal9_questions_description = {

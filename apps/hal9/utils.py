@@ -179,10 +179,13 @@ def execute_function(model_response, functions):
             print(f"Error executing function '{function_name}': {e}")
             raise
 
-def stream_print(text: str):
-       for char in text:
-        print(char, end="", flush=True)
-        time.sleep(0.02)
+def stream_print(stream):
+    content = ""
+    for chunk in stream:
+      if len(chunk.choices) > 0 and chunk.choices[0].delta.content is not None: 
+        print(chunk.choices[0].delta.content, end="")
+        content += chunk.choices[0].delta.content
+    return content
 
 def insert_tool_message(messages, model_response, tool_result):
     tool_calls = model_response.choices[0].message.tool_calls

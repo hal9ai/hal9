@@ -1,4 +1,3 @@
-from utils import stream_print
 import pandas as pd
 from utils import generate_response, load_messages, insert_message, execute_function, save_messages, insert_tool_message, generate_embeddings
 from sklearn.metrics.pairwise import cosine_similarity
@@ -130,7 +129,7 @@ def random_pick_chunks(num_chunks, file_to_filter=None):
     return selected_chunks.to_dict(orient='records')
 
 def final_response(final_message):
-    stream_print(final_message)
+    print(final_message)
     return final_message
 
 ########################### Descriptions ########################## 

@@ -30,7 +30,7 @@ f"""The following Python code needs to be fixed. It should create a interactive 
 def debug_code(python_code):
     try:
         exec(python_code)
-        return "Streamlit app generated and running properly", "", ""
+        return "About to show your app...", "", ""
     except Exception as e:
         tb = traceback.format_exc()
         relevant_error_info = tb.splitlines()
@@ -64,7 +64,7 @@ def streamlit_generator(prompt):
     tries = 0
     while tries < max_tries:
         result, error, complete_traceback = debug_code(streamlit_code)
-        if result == "Streamlit app generated and running properly":
+        if result == "About to show your app...":
             save_python_code(streamlit_code)
             messages = insert_message(messages, "assistant", streamlit_code)
             save_messages(messages, file_path="./.storage/.streamlit_messages.json")
