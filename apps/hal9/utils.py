@@ -90,7 +90,7 @@ def generate_response(
         "n": n
     }
 
-    if tools is not None:
+    if tools is not None and not client_type == "groq":
         payload["parallel_tool_calls"] = parallel_tool_calls
 
     # Generate the response using the client's completion API.
@@ -179,11 +179,12 @@ def execute_function(model_response, functions):
             print(f"Error executing function '{function_name}': {e}")
             raise
 
-def stream_print(stream):
+def stream_print(stream, show = True):
     content = ""
     for chunk in stream:
       if len(chunk.choices) > 0 and chunk.choices[0].delta.content is not None: 
-        print(chunk.choices[0].delta.content, end="")
+        if show:
+            print(chunk.choices[0].delta.content, end="")
         content += chunk.choices[0].delta.content
     return content
 
