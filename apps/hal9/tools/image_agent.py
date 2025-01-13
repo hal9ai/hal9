@@ -63,7 +63,7 @@ def generate_description(image_path):
     except Exception as e: 
         return (f"Couldn't describe that image. -> Error: {e}")
     
-    return description
+    return description.replace("{", "").replace("}", "")
 
 def image_generator(prompt, filename):
     try:
