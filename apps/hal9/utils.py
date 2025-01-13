@@ -3,7 +3,6 @@ import os
 import urllib.parse
 import urllib.request
 import requests
-import time
 from typing import Literal, List, Dict, Any, Union, Optional
 from clients import openai_client, azure_openai_client
 from groq import Groq
@@ -90,7 +89,7 @@ def generate_response(
         "n": n
     }
 
-    if tools is not None and not client_type == "groq":
+    if tools is not None:
         payload["parallel_tool_calls"] = parallel_tool_calls
 
     # Generate the response using the client's completion API.
@@ -105,9 +104,6 @@ def load_messages(file_path="./.storage/.messages.json") -> List[Dict[str, Any]]
     Returns:
         List[Dict[str, Any]]: A list of messages if the file exists and is valid.
     """
-    # Create the .storage directory if it doesn't exist
-    if not os.path.exists("./.storage"):
-        os.makedirs("./.storage")
     if not os.path.exists(file_path):
         return []
     else :
@@ -124,9 +120,6 @@ def save_messages(messages: List[Dict[str, Any]], file_path="./.storage/.message
         messages (List[Dict[str, Any]]): A list of messages to be saved.
     """
 
-    # Create the .storage directory if it doesn't exist
-    if not os.path.exists("./.storage"):
-        os.makedirs("./.storage")
     with open(file_path, "w", encoding="utf-8") as file:
         json.dump(messages, file, ensure_ascii=False, indent=4)
 
@@ -219,9 +212,6 @@ def is_url(prompt):
   return all([result.scheme, result.netloc])
 
 def download_file(url):
-    # Create the .storage directory if it doesn't exist
-    if not os.path.exists("./.storage"):
-        os.makedirs("./.storage")
     filename = url.split("/")[-1]
     modified_filename = f"./.storage/.{filename}"
     
@@ -283,9 +273,6 @@ def process_chunk(chunk_info):
     }
 
 def generate_text_embeddings_parquet(url, model="text-embedding-3-small", client_type="azure", n_words=300, overlap=0, max_threads=8):
-    # Create the .storage directory if it doesn't exist
-    if not os.path.exists("./.storage"):
-        os.makedirs("./.storage")
     # Download and read the PDF
     response = requests.get(url)
     pdf_document = fitz.open(stream=BytesIO(response.content))
