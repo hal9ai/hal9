@@ -5,6 +5,7 @@ import json
 import hal9 as h9
 import shutil
 import time
+import re
 
 from sitefind import site_find
 from siteuse import site_use
@@ -38,7 +39,13 @@ async def main():
   await page.setUserAgent(custom_user_agent)
 
   prompt = h9.input()
-  site = site_find(prompt)
+
+  original_url_match = re.search(r"https?://\S+|\b\S+\.com\b", prompt)
+  if original_url_match:
+    site = original_url_match.group(0)
+    prompt = prompt.replace(site, "<URL>", 1)
+  else:
+    site = site_find(prompt)
 
   await page.goto(site)
   elements = await extract_elements(page)

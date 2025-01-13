@@ -35,7 +35,9 @@
         let selector = currentElement.tagName.toLowerCase();
         
         if (currentElement.className) {
-          selector += '.' + currentElement.className.trim().split(/\s+/).join('.');
+          selector += '.' + currentElement.className.trim().split(/\s+/).map(e => {
+            return e.replace(/([:.[\]#,+~*'"()\\\/=])/g, '\\$1');
+          }).join('.');
         }
         
         path.unshift(selector);
