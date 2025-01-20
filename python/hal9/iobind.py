@@ -4,7 +4,6 @@ from pathlib import Path
 from hal9.urls import url_contents
 import pickle
 import tempfile
-import sys
 import shutil
 
 input_original = input
@@ -19,27 +18,38 @@ def add_extension(name, contents):
 
   if not extension:
     contents_type = str(type(contents))
-    if isinstance(contents, dict) or isinstance(contents, list) or isinstance(contents, str):
+    if isinstance(contents, (dict, list, str)):
       name = name + ".json"
+    elif isinstance(contents, bytes):
+      name = name + ".txt"
     elif contents_type == "<class 'PIL.Image.Image'>":
       name = name + ".jpg"
     else:
       name = name + ".pkl"
   return name
-
 def find_extension(file_path):
-  if Path(file_path + '.json').exists() or get_hidden(Path(file_path + '.json')).exists():
-    return Path(file_path + '.json')
-  return Path(file_path + '.pkl')
+  possible_extensions = ['.json', '.pkl', '.txt']
+  base_path = Path(file_path)
 
-def get_hidden(file_path):
-    directory = file_path.parent
-    file_name = file_path.name
-    hidden_file_name = "." + file_name
-    hidden_path = directory / hidden_file_name
+  # Check if the file exists as provided
+  if base_path.exists():
+    return base_path
+
+  # Try known extensions
+  for ext in possible_extensions:
+    path_with_ext = base_path.with_suffix(ext)
+    if path_with_ext.exists():
+      return path_with_ext
+
+  # Try hidden versions
+  for ext in possible_extensions:
+    hidden_path = base_path.parent / f".{base_path.name}{ext}"
     if hidden_path.exists():
-        return hidden_path
-    return file_path
+      return hidden_path
+
+  # Default to hidden `.pkl`
+  hidden_default = base_path.parent / f".{base_path.name}.pkl"
+  return hidden_default if hidden_default.exists() else base_path
 
 def ensure_storage():
   if not os.path.exists('.storage'):
@@ -48,30 +58,22 @@ def ensure_storage():
 def load(name, default):
   ensure_storage()
 
-  file_path = ".storage/" + name
-  file_path = find_extension(file_path)
-  file_path = get_hidden(file_path)
-
+  file_path = find_extension(Path(".storage") / name)
   extension = get_extension(file_path)
 
-  if not extension:
-    extension = "pkl"
-
   if file_path.exists():
-    if (extension == "json"):
-      contents = json.loads(file_path.read_text())
-    elif (extension == "pkl"):
+    if extension == "json":
+      with open(file_path, 'r') as file:
+        return json.load(file)
+    elif extension == "pkl":
       with open(file_path, 'rb') as file:
-        contents = pickle.load(file)
-    else:
-      with open(file_path, 'rb') as file:
-        contents = file.read()
-  else:
-    contents = default
+        return pickle.load(file)
+    elif extension == "txt":
+      with open(file_path, 'r') as file:
+        return file.read()
+  return default
 
-  return contents
-
-def save(name, contents = None, hidden = False, files = None, encoding = None):
+def save(name, contents=None, hidden=False, files=None, encoding=None):
   ensure_storage()
   
   if not isinstance(name, str):
@@ -82,10 +84,10 @@ def save(name, contents = None, hidden = False, files = None, encoding = None):
 
   if files is None:
     target_path = './.storage'
-    files = { name: contents }
+    files = {name: contents}
   else:
     target_path = tempfile.mkdtemp()
-    if not contents is None:
+    if contents is not None:
       files[name] = contents
 
   asset_files = []
@@ -110,7 +112,7 @@ def save(name, contents = None, hidden = False, files = None, encoding = None):
       temp_path = Path(tempfile.mkdtemp()) / name
       contents.save(temp_path, format="JPEG")
       shutil.copy(temp_path, file_path)
-    elif isinstance(contents, str):
+    elif extension == "txt":
       file_path.write_text(contents, encoding=encoding)
     elif contents is None:
       raise Exception(f"Can't save empty contents for {name}")
@@ -128,7 +130,7 @@ def ready():
   with open(".storage/.output", 'w') as file:
     file.write("")
 
-def input(prompt = "", extract = False, messages = []):
+def input(prompt="", extract=False, messages=[]):
   global input_first
   if not input_first:
     ready()
@@ -139,7 +141,7 @@ def input(prompt = "", extract = False, messages = []):
   prompt = prompt.replace('\f', '\n')
 
   if extract:
-    prompt = url_contents(text)
+    prompt = url_contents(prompt)
 
   messages.append({"role": "user", "content": prompt})
   return prompt

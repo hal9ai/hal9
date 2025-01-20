@@ -1,4 +1,7 @@
 # Changelog
+## 2.8.4
+- Handle files with/without extension more robustly. 
+- txt files support
 
 ## 2.8.3
 
