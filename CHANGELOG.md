@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.4
+
+- Add `access` parameter to `save()` to share files
+
 ## 2.8.3
 
 - Fix encoding issue in `save()`

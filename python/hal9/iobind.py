@@ -41,14 +41,24 @@ def get_hidden(file_path):
         return hidden_path
     return file_path
 
+allowed_access_types = ["storage", "shared", "user"]
+
 def ensure_storage():
-  if not os.path.exists('.storage'):
-    os.mkdir('.storage')
+  for access_type in allowed_access_types:
+    folder_name = f".{access_type}"
+    if not os.path.exists(folder_name):
+      os.mkdir(folder_name)
 
-def load(name, default):
+def validate_storage(access):
+  if access not in allowed_access_types:
+     raise ValueError(f"Invalid storage access: '{access}'")
+  return f".{access}"
+
+def load(name, default, access = "storage"):
   ensure_storage()
+  storage_path = validate_storage(access)
 
-  file_path = ".storage/" + name
+  file_path = f"{storage_path}/{name}"
   file_path = find_extension(file_path)
   file_path = get_hidden(file_path)
 
@@ -71,9 +81,10 @@ def load(name, default):
 
   return contents
 
-def save(name, contents = None, hidden = False, files = None, encoding = None):
+def save(name, contents = None, hidden = False, files = None, encoding = None, access = "storage"):
   ensure_storage()
-  
+  storage_path = validate_storage(access)
+
   if not isinstance(name, str):
     raise Exception(f"The name parameter in save() must be a string, got {str(type(name))}")
 
@@ -81,7 +92,7 @@ def save(name, contents = None, hidden = False, files = None, encoding = None):
     name = "." + name
 
   if files is None:
-    target_path = './.storage'
+    target_path = f"./{storage_path}"
     files = { name: contents }
   else:
     target_path = tempfile.mkdtemp()
@@ -117,15 +128,15 @@ def save(name, contents = None, hidden = False, files = None, encoding = None):
     else:
       raise Exception(f"Don't know how to save {extension} for {contents_type}")
 
-  if target_path != './.storage':
+  if target_path != f"./{storage_path}":
     asset_definition = json.dumps({
       "name": name,
       "files": [str(file) for file in asset_files]
     }, indent=2)
-    Path('./.storage/' + name + '.asset').write_text(asset_definition)
+    Path(f"./{storage_path}/{name}.asset").write_text(asset_definition)
 
 def ready():
-  with open(".storage/.output", 'w') as file:
+  with open(f"{storage_path}/.output", 'w') as file:
     file.write("")
 
 def input(prompt = "", extract = False, messages = []):
