@@ -83,45 +83,76 @@ def split_text(text, n_words=300, overlap=0):
 
 #### **Step 2: Embedding Generation**
 
-Once we’ve split the document into chunks, the next step is generating embeddings for each chunk of text. This allows the model to efficiently retrieve relevant passages when answering questions about the document.
+We use a custom retriever class that integrates with a vectorizer leveraging Hal9's proxy for OpenAI to generate embeddings, storing them in a FAISS index for efficient retrieval.
+
+The CustomOpenAIVectorizer is used to generate embeddings for document chunks by calling the Hal9-proxied OpenAI API. This vectorizer batches requests to optimize processing time. After generating embeddings, we store them in a FAISS index, either updating or creating a new one based on the provided configuration.
+
+The Hal9_FaissRM class handles both embedding generation and indexing. It ensures that the embeddings are properly stored and can be quickly retrieved using FAISS, which optimizes search efficiency during querying.
 
 ```python
-def generate_embeddings(texts):
-    embeddings = []
-    for text in texts:
-        response = openai_client.embeddings.create(input=text, model="text-embedding-3-small")
-        embeddings.append(response.data[0].embedding)
-    return np.array(embeddings)
+from custom_dspy import CustomOpenAIVectorizer, Hal9_FaissRM
+
+# Initialize the OpenAI client with the Hal9 proxy
+openai_client = OpenAI(
+    base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
+    api_key="hal9"
+)
+
+# Create the vectorizer with the custom OpenAI client
+vectorizer = CustomOpenAIVectorizer(openai_client=openai_client)
+
+# Initialize FaissRM
+frm = Hal9_FaissRM(document_chunks = chunks, vectorizer = vectorizer, update = True)
 ```
 
-#### **Step 3: Setting Up the RAG Module**
+#### **Step 3: Setting Up the RAG Module and Response Signature**
 
-Now, we can define the **RAG (Retrieval-Augmented Generation)** module, which will handle the process of searching through document chunks and generating responses. In this example, we'll use a simple Chain of Thought model to handle question-answering based on document context.
+First, the signature is defined for the answer generation process, where the context (document passages) and the question are input fields, and the generated detailed answer is the output.
+
+The RAG module consists of two key components: a retriever to fetch the relevant passages based on the question and a Chain of Thought model for generating detailed answers. The retriever fetches context, and the Chain of Thought model generates the final answer by combining the context with the question.
 
 ```python
-class RAG(dspy.Module):
-    def __init__(self):
-        self.respond = dspy.ChainOfThought('context, question -> response')
+# DSPy Signature
+class GenerateAnswer(dspy.Signature):
+    context = dspy.InputField(desc="Context passages or facts")
+    question = dspy.InputField()
+    answer = dspy.OutputField(desc="Detailed and long answer generated referenced on passages")
 
-    def forward(self, question, search):
-        context = search(question).passages
-        return self.respond(context=context, question=question)
+# RAG module definition
+class RAG(dspy.Module):
+    def __init__(self, num_passages=5):
+        super().__init__()
+        self.retrieve = dspy.Retrieve(k=num_passages)
+        self.generate_answer = dspy.ChainOfThought(GenerateAnswer)
+
+    def forward(self, question):
+        context = self.retrieve(question).passages
+        prediction = self.generate_answer(context=context, question=question)
+        return prediction
 ```
 
 #### **Step 4: Generate a Response**
 
-Finally, we bring everything together into a working example. The user provides a prompt (e.g., a question), and the chatbot uses the RAG system to retrieve relevant document chunks and generate a coherent response:
+Now, we integrate the components into a working example. The user provides a prompt (e.g., a question), and the system uses the updated RAG (Retrieval-Augmented Generation) module to retrieve relevant document chunks and generate a coherent response.
 
 ```python
-embedder = dspy.Embedder(generate_embeddings)
-search = dspy.retrievers.Embeddings(embedder=embedder, corpus=chunks, k=5)
+# Configure DSPy
+lm = dspy.LM('openai/gpt-4-turbo', api_key='hal9', api_base='https://api.hal9.com/proxy/server=https://api.openai.com/v1/')
+frm = Hal9_FaissRM(document_chunks=chunks, vectorizer=vectorizer)
+dspy.configure(lm=lm, rm=frm)
+
+# Initialize RAG and generate a response
 rag = RAG()
-response = rag(question=prompt, search=search)
+response = rag(question=prompt)
+print(response.answer)
 ```
+In this flow, DSPy is configured with an OpenAI model and a retrieval module based on the Hal9_FaissRM retriever, which utilizes the Hal9 proxy for embedding generation and FAISS for efficient document chunk retrieval. The RAG module then uses this setup to generate the final answer based on the provided question.
 
 ### **Check the Results**
 
 Curious about how it performs? Try the PDF-interacting chatbot yourself! Upload a PDF or provide a link, and see how it answers questions based on the document's content. [Click here to test the chatbot](https://hal9.com/luis/dspy).
+
+Check out the full code on GitHub: [Hal9 DSPy Repository](https://github.com/LuisGuillen03/Hal9_DSPy).
 
 <center><a href="https://hal9.com/luis/dspy"><ThemedImage src="dspy"/></a></center>
 
