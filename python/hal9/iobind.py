@@ -136,7 +136,7 @@ def save(name, contents = None, hidden = False, files = None, encoding = None, a
     Path(f"./{storage_path}/{name}.asset").write_text(asset_definition)
 
 def ready():
-  with open(f"{storage_path}/.output", 'w') as file:
+  with open(f".storage/.output", 'w') as file:
     file.write("")
 
 def input(prompt = "", extract = False, messages = []):

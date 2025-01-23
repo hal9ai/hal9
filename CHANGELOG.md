@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.5
+
+- Fix regression in `ready()` function
+
 ## 2.8.4
 
 - Add `access` parameter to `save()` to share files
