@@ -2,7 +2,7 @@ import subprocess
 from pathlib import Path
 import time
 
-def run(source_path: Path, port :str):
+def run(source_path: Path, port :str, params :str):
   image_directory = source_path.parent
   image_name = source_path.name
 

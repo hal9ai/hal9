@@ -36,18 +36,20 @@ def create(path :str, template :str):
 @click.command()
 @click.argument('path')
 @click.option('--source', default=None, help='Main source file')
-@click.option('--runtime', default=None, help='Runtime to use')
+@click.option('--type', default=None, help='Type of runtime to use')
 @click.option('--port', default="8080", help='Port to use, optional')
-def run(path :str, source :str = "app.py", runtime :str = "type", port :str = "8080"):
+@click.option('--params', default=None, help='Params to use, optional')
+def run(path :str, source :str = "app.py", type :str = "type", port :str = "8080", params :str = None):
   """
   Run Project
 
   --path: The path to the project. Required argument.
   --source: The main source file to run. Defaults to 'app.py'.
-  --runtime: The type of content to run. Defaults to 'python'.
+  --type: The type of content to run. Defaults to 'python'.
   --port: The port to use when content requires one. Defaults to '8080'.
+  --params: An optional JSON string with additional parameters.
   """
-  api_run(path, source, runtime, port)
+  api_run(path, source, type, port, params)
 
 @click.command()
 @click.argument('path')

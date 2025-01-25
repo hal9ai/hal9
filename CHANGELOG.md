@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.8.6
+
+- Renamed `--runtime` to `--type` in `hal9 run`
+- Added support for `--params` in `hal9 run`
+
 ## 2.8.5
 
 - Fix regression in `ready()` function

@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 
-def run(source_path :Path, port :str):
+def run(source_path :Path, port :str, params :str):
   rprofile_content = f"""
 options(shiny.port = {port})
 """

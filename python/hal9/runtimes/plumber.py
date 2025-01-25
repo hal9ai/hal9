@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 
-def run(source_path :Path, port :str):
+def run(source_path :Path, port :str, params :str):
   code = f"library(plumber);pr_run(pr('{source_path}'), port={port})"
   command = ['Rscript', '-e', code]
   with subprocess.Popen(command) as proc:

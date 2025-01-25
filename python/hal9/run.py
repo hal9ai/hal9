@@ -17,7 +17,7 @@ runtime_types = {
   "plumber": run_plumber,
 }
 
-def run(path :str, source :str = "app.py", runtime :str = "python", port :str = "8080") -> str:
+def run(path :str, source :str = "app.py", type :str = "python", port :str = "8080", params :str = None) -> str:
   """Run an application
 
   Parameters
@@ -26,8 +26,10 @@ def run(path :str, source :str = "app.py", runtime :str = "python", port :str = 
           Path to the application.
   source : str 
           The main file to run. Defaults to 'app.py'.
-  runtime : str 
-          The runtime to use to run the source. Defaults to 'python'.
+  type : str 
+          The type of runtime to use to run the source. Defaults to 'python'.
+  params : str 
+          An optional JSON string with a dictionary of additional parameters.
   """
 
   source_path = Path(path) / source
@@ -37,10 +39,10 @@ def run(path :str, source :str = "app.py", runtime :str = "python", port :str = 
     return
 
   try:
-    if runtime in runtime_types:
-      runtime_types[runtime](source_path, port)
+    if type in runtime_types:
+      runtime_types[type](source_path, port, params)
     else:
-      print(f"Unsupported runtime: {runtime}")
+      print(f"Unsupported runtime: {type}")
   except Exception as e:
     print(f"An error occurred while running {source}: {e}")
 
