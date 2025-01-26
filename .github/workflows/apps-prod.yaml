@@ -46,5 +46,7 @@ jobs:
             hal9 deploy apps/openai --name openai --access public --title OpenAI --description "Makes use of OpenAI O1";
           elif [[ "$file" == apps/swarm/* ]]; then
             hal9 deploy apps/swarm --name swarm --access public --title Swarm --description "Makes use of OpenAI Swarm";
+          elif [[ "$file" == apps/deepseek/* ]]; then
+            hal9 deploy apps/deepseek --name deepseek --access public --title DeepSeek --description "Makes use of DeepSeek";
           fi
         done
