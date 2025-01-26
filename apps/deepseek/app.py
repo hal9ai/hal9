@@ -1,7 +1,7 @@
 from openai import OpenAI
 import hal9 as h9
 
-client = OpenAI(api_key = "placeholder", base_url = "https://api.hal9.com/proxy/server=https://api.deepseek.com")
+client = OpenAI(api_key = "anykey", base_url = "https://api.hal9.com/proxy/server=https://api.deepseek.com")
 
 messages = h9.load("messages", [ {"role": "system", "content": "You are a helpful assistant"} ])
 messages.append({"role": "user", "content": input()})
