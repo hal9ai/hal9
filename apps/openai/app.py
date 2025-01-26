@@ -2,20 +2,21 @@ import os
 from openai import OpenAI
 import hal9 as h9
 
+client = OpenAI(base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/", api_key = "placeholder")
+
 messages = h9.load("messages", [])
-client = OpenAI(
-    base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
-    api_key = "hal9"
-)
+messages.append({"role": "user", "content": input()})
 
-
-completion = client.chat.completions.create(
-  model = "o1-preview",
-  messages = [
-    {"role": "user", "content": input()},
-  ]
- )
+completion = client.chat.completions.create(model = "o1-preview", messages = messages, stream = True)
 
 h9.save("messages", messages, hidden = True)
 
-print(completion.choices[0].message.content)
+response = ""
+for chunk in completion:
+  if chunk.choices and chunk.choices[0].delta and chunk.choices[0].delta.content:
+    content = chunk.choices[0].delta.content
+    print(content, end="")
+    response += content
+
+messages.append({"role": "assistant", "content": response})
+h9.save("messages", messages, hidden = True)
