@@ -2,7 +2,7 @@ from openai import OpenAI
 
 client = OpenAI(
   api_key="hal9",
-  base_url="http://localhost:5000/proxy/server=https://api.deepseek.com")
+  base_url="https://api.hal9.com/proxy/server=https://api.deepseek.com")
 
 stream = client.chat.completions.create(
     model="deepseek-reasoner",
