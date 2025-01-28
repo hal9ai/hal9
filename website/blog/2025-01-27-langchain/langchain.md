@@ -1,6 +1,6 @@
 ---
-slug: Hal9-DSpy
-title: "Creating a PDF Chatbot with LangChain and Hal9: A Step-by-Step Guide" 
+slug: langchain
+title: "PDF Chatbot with LangChain and Hal9: A Step-by-Step Guide" 
 authors: [luis]
 tags: [LangChain, RAG, PDF]
 ---

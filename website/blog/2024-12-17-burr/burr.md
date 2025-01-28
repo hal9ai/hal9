@@ -1,6 +1,6 @@
 ---
 slug: burr
-title: "Building Smarter Chatbots on Hal9 with Burr: A Step-by-Step Guide" 
+title: "Smarter Chatbots on Hal9 with Burr: A Step-by-Step Guide" 
 authors: [diego]
 tags: [Dragworks, AI, Hal9]
 ---

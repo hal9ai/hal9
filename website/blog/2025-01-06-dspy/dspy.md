@@ -1,6 +1,6 @@
 ---
-slug: Hal9-DSpy
-title: "Building a PDF Chat Agent with DSPy and Hal9" 
+slug: dspy
+title: "PDF Chat Agent with DSPy and Hal9" 
 authors: [luis]
 tags: [DSPy, RAG, Chain of Thought]
 ---
