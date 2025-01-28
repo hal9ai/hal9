@@ -6,7 +6,7 @@ from pathlib import Path
 import time
 import base64
 import json
-import base64
+import codecs
 import mimetypes
 
 def file_to_dataurl(file_path):
@@ -46,6 +46,11 @@ def create_deployment(path :str) -> str:
     
     return zip_path
 
+def is_utf16(filename):
+    with open(filename, 'rb') as f:
+        start = f.read(2)
+        return start in [b'\xff\xfe', b'\xfe\xff']
+
 def read_files(path :str, exclude :str = None):
     files_dict = {}
     for root, dirs, files in os.walk(path):
@@ -55,9 +60,17 @@ def read_files(path :str, exclude :str = None):
                 continue
             relative_path = os.path.relpath(os.path.join(root, file), path)
             with open(os.path.join(root, file), 'rb') as f:
-                encoded_content = base64.b64encode(f.read()).decode('utf-8')
-                files_dict[relative_path] = encoded_content
-    
+                decoded = None
+                if (is_utf16(os.path.join(root, file))): 
+                    content = f.read().decode('utf-16') # human-readable string, e.g. annotated-types==0.7.0\r\ ...
+                    b64_bytes = base64.b64encode(codecs.encode(content)) # base64-encoded byte string, e.g. b'YW5ub3RhdGVkLXR5cGVzPT0wL ...
+                    b64_str = codecs.decode(b64_bytes) # base64-encoded string, e.g. 'YW5ub3RhdGVkLXR5cGVzPT0wL ...
+                    decoded = b64_str
+                else: 
+                    decoded = base64.b64encode(f.read()).decode('utf-8')
+                    
+            files_dict[relative_path] = decoded
+                    
     return files_dict
 
 def request_deploy(path :str, url :str, name :str, typename :str, data :str, access :str, main :str, title :str, description :str) -> str:
