@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.7
+
+- Improve speed rendering image by avoiding to take screenshot again
+
 ## 2.8.6
 
 - Renamed `--runtime` to `--type` in `hal9 run`
