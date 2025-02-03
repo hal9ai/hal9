@@ -26,7 +26,7 @@ jobs:
       uses: tj-actions/changed-files@v45
       with:
         since_last_remote_commit: true
-    - name: Print changed files outputs
+    - name: Print changed-files outputs
       run: echo "${{ toJson(steps.changed-files.outputs) }}"
 
     - name: Deploy changed apps
