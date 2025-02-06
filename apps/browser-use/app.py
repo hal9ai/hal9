@@ -6,6 +6,9 @@ import sys
 import base64 as b64
 import os
 import shutil
+import numpy as np
+import cv2
+import pyautogui
 
 from dotenv import load_dotenv
 
@@ -20,7 +23,8 @@ load_dotenv()
 response= subprocess.call(["playwright", "install"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 if response != 0: sys.exit("Couldn't install playwright!")
 
-dir = '/tmp/browser-use/'
+#dir = '/tmp/browser-use/'
+dir = './output-files/'
 if os.path.exists(dir):
     shutil.rmtree(dir)
 os.makedirs(dir)
@@ -40,11 +44,11 @@ class Save_Files(SystemPrompt):
 10. IMPORTANT FOR FILES YOU ARE ASKED TO CREATE:
 - When you are asked to create a file, save it making use of the save_path you are given.
 - You may be asked to create different types of files: text files, screenshots, and recordings.
-- Screenshots should be saved as png.
-- Recordings should be saved as mp4.
+- Screenshots should be saved as .png.
+- Recordings should be saved as .avi.
 - When asked to save content to a text file, make use of the function save_to_text_file.
-- When asked to save a screenshot you have taken, make use of the function save_to_png.
-- When asked to save a recording you have produced, make use of the function save_to_mp4.
+- When asked to create a screenshot, make use of the function create_png.
+- When asked to create a screen recording, make use of the function create_avi.
 
 11. GENERAL RULE REGARDING SUBTASKS:
 - When you are given a task involving several subtasks, and one of the subtasks fails, assess whether the other ones are dependent on its success.
@@ -58,21 +62,36 @@ class Save_Files(SystemPrompt):
 controller = Controller()
 
 @controller.action('Save to text file') 
-def save_to_text_file(text_content: str, save_path: str = '/tmp/browser-use/multimodel.txt'):
+def save_to_text_file(text_content: str, save_path: str = './output-files/text.txt'):
     with open(save_path, 'w') as f: 
         f.write(text_content)
     return ActionResult(extracted_content = f'Text {text_content} written to {save_path}.')
 
-@controller.action('Save screenshot to png') 
-def save_to_png(description: str, screenshot: bytes, save_path: str = '/tmp/browser-use/screenshot.png'):
-    with open(save_path, 'wb') as f: 
-        f.write(screenshot)
+@controller.action('Create screenshot') 
+def save_to_png(description: str, save_path: str = './output-files/screenshot.png'):
+    pyautogui.screenshot(save_path)
     return ActionResult(extracted_content = f'Screenshot for {description} written to {save_path}.')
 
-@controller.action('Save recording to mp4') 
-def save_to_mp4(description: str, recording: bytes, save_path: str = '/tmp/browser-use/recording.mp4'):
-    with open(save_path, 'wb') as f: 
-        f.write(recording)
+@controller.action('Create recording') 
+def save_to_avi(description: str, save_path: str = './output-files/recording.avi'):
+    resolution = (1920, 1080)
+    codec = cv2.VideoWriter_fourcc(*"XVID")
+    fps = 10.0 
+
+    out = cv2.VideoWriter(save_path, codec, fps, resolution)
+    cv2.namedWindow("Live", cv2.WINDOW_NORMAL)
+    cv2.resizeWindow("Live", 480, 270)
+
+    remaining =  1 * int(fps)
+    while (remaining > 0):
+        img = pyautogui.screenshot()
+        frame = np.array(img)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        out.write(frame)
+        remaining -= 1
+    
+    out.release()
+    cv2.destroyAllWindows()
     return ActionResult(extracted_content = f'Recording for {description} written to {save_path}.')
 
 llm = ChatOpenAI(
@@ -82,9 +101,9 @@ llm = ChatOpenAI(
 )
 
 async def run(agent):
-    print("\n\n\n\n 🌍🌎🌏n\n") 
-    print("Working! \n")
-    print("Here you can see what I'm doing. When I'm done, I'll provide the answers to all your questions in order.\n\n\n\n")
+    print("🌍🌎🌏") 
+    print("Working!")
+    print("Here you can see what I'm doing. When I'm done, I'll provide the answers to all your questions in order.")
     history = await agent.run()
     return history
 

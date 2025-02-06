@@ -1,2 +1,5 @@
 browser-use
 playwright
+opencv-python
+Pillow
+pyautogui
