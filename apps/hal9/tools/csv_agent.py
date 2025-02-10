@@ -201,7 +201,6 @@ def fix_python_code(csv_path, code):
         return f"An error has occurred again -> {last_line} ... Complete traceback: {tb}"
         
 def final_response(final_message):
-    print(final_message)
     return final_message
 
 ########################### Descriptions ########################## 

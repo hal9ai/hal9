@@ -129,7 +129,6 @@ def random_pick_chunks(num_chunks, file_to_filter=None):
     return selected_chunks.to_dict(orient='records')
 
 def final_response(final_message):
-    print(final_message)
     return final_message
 
 ########################### Descriptions ########################## 

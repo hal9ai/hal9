@@ -37,7 +37,6 @@ def website_generator(prompt):
   messages.append({"role": "user", "content": "briefly describe what was accomplished"})
   completion = client.chat.completions.create(model = "gpt-4", messages = messages)
   summary = h9.complete(completion, messages, show = False)
-  print(summary)
   return summary
 
 website_generator_description = {
