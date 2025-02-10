@@ -8,22 +8,31 @@ import os
 import shutil
 import numpy as np
 import cv2
+
+# 
+# tested on Linux - MacOS users will need to find out what works there
+response= subprocess.call(["xhost", "+local:"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+if response != 0: sys.exit("Couldn't authorize local users to access screen.")
+
 import pyautogui
 
 from dotenv import load_dotenv
 
 from langchain_openai import ChatOpenAI
 
-from browser_use import Agent, SystemPrompt, ActionResult
+from browser_use import Agent, Browser, SystemPrompt, ActionResult
 from browser_use.agent.service import Agent
 from browser_use.controller.service import Controller
+from browser_use.browser.context import BrowserContextConfig, BrowserContext
 
 load_dotenv()
 
 response= subprocess.call(["playwright", "install"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 if response != 0: sys.exit("Couldn't install playwright!")
 
-#dir = '/tmp/browser-use/'
+browserWidth = 1280
+browserHeight = 1100
+
 dir = './output-files/'
 if os.path.exists(dir):
     shutil.rmtree(dir)
@@ -69,7 +78,8 @@ def save_to_text_file(text_content: str, save_path: str = './output-files/text.t
 
 @controller.action('Create screenshot') 
 def save_to_png(description: str, save_path: str = './output-files/screenshot.png'):
-    pyautogui.screenshot(save_path)
+    # matches --window-position=0,0 from browser config
+    pyautogui.screenshot(save_path, region=(0, 0, browserWidth, browserHeight))
     return ActionResult(extracted_content = f'Screenshot for {description} written to {save_path}.')
 
 @controller.action('Create recording') 
@@ -84,7 +94,7 @@ def save_to_avi(description: str, save_path: str = './output-files/recording.avi
 
     remaining =  1 * int(fps)
     while (remaining > 0):
-        img = pyautogui.screenshot()
+        img = pyautogui.screenshot(region=(0, 0, browserWidth, browserHeight))
         frame = np.array(img)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         out.write(frame)
@@ -100,6 +110,17 @@ llm = ChatOpenAI(
     api_key = "hal9"
 )
 
+config = BrowserContextConfig(
+    browser_window_size = {'width': browserWidth, 'height': browserHeight},
+    # for available options see
+    # https://github.com/browser-use/browser-use/blob/5d1197e5d3b8b7d191aac638b052007882504040/browser_use/browser/browser.py#L178
+    extra_chromium_args = ['--window-position=0,0'],
+)
+
+browser = Browser()
+context = BrowserContext(browser=browser, config=config)
+
+
 async def run(agent):
     print("🌍🌎🌏") 
     print("Working!")
@@ -112,6 +133,7 @@ async def main():
     agent = Agent(
         controller = controller,
         system_prompt_class = Save_Files,
+        browser_context=context,
         task = prompt,
         llm = llm,
         save_conversation_path="logs/conversation.json" 
