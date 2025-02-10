@@ -1,8 +1,4 @@
-
 def solve_math_problem(steps_explanation, code_solution):
-  print("Steps:\n")
-  print(steps_explanation)
-  print("\n\nPython Code:\n")
   exec(code_solution)
   return f"Steps:\n{steps_explanation}\n\n\nPython Code: {code_solution}"
 

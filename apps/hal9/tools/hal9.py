@@ -9,8 +9,7 @@ def answer_hal9_questions(user_input):
         temperature = 0,
         seed = 1,)
 
-    text_response = print(response.choices[0].message.content)
-    return text_response
+    return response.choices[0].message.content
 
 answer_hal9_questions_description = {
     "type": "function",

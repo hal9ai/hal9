@@ -80,7 +80,6 @@ def image_generator(prompt, filename):
 
     generated_description = add_images_descriptions(f".storage/{filename}")
     
-    print(generated_description)
     return f"The image generated is: {generated_description} \n\n Saved in path: '.storage/{filename}'"
 
 def image_analyzer(image_path, prompt):
@@ -100,7 +99,7 @@ def image_analyzer(image_path, prompt):
             }
         ],
     )
-    print(response.choices[0].message.content)
+
     return response.choices[0].message.content
 
 def edition_canny_model(image_path, modified_description, filename):
@@ -129,7 +128,7 @@ def edition_canny_model(image_path, modified_description, filename):
     shutil.copy(filename, f".storage/{filename}")
 
     generated_description = add_images_descriptions(f".storage/{filename}")
-    print(generated_description)
+
     return f"The image generated is: {generated_description} \n\n Saved in path: '.storage/{filename}'"
   
 def edition_depth_model(image_path, modified_description, filename):
@@ -157,7 +156,7 @@ def edition_depth_model(image_path, modified_description, filename):
     shutil.copy(filename, f".storage/{filename}")
 
     generated_description = add_images_descriptions(f".storage/{filename}")
-    print(generated_description)
+
     return f"The image generated is: {generated_description} \n\n Saved in path: '.storage/{filename}'"
 
 def generate_image_variation(image_path, filename):
@@ -187,7 +186,7 @@ def generate_image_variation(image_path, filename):
     shutil.copy(filename, f".storage/{filename}")
 
     generated_description = add_images_descriptions(f".storage/{filename}")
-    print(generated_description)
+
     return f"The image generated is: {generated_description} \n\n Saved in path: '.storage/{filename}'"
 
 ########################### Descriptions ########################## 

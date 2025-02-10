@@ -68,13 +68,11 @@ def streamlit_generator(prompt):
             save_python_code(streamlit_code)
             messages = insert_message(messages, "assistant", streamlit_code)
             save_messages(messages, file_path="./.storage/.streamlit_messages.json")
-            print(result)
             return result
         else:
             streamlit_code = fix_code(prompt, error, complete_traceback, streamlit_code)
         tries += 1
 
-    print("Unable to generate an app that fulfills your request without errors.")
     return "Unable to generate an app that fulfills your request without errors."
     
 streamlit_generator_description = {
