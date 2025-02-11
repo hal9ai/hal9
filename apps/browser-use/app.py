@@ -9,18 +9,19 @@ import shutil
 import numpy as np
 import cv2
 
-# 
+# grant display access permission needed for screenshot
 # tested on Linux - MacOS users will need to find out what works there
 response= subprocess.call(["xhost", "+local:"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 if response != 0: sys.exit("Couldn't authorize local users to access screen.")
 
-import pyautogui
+# import pyautogui
 
 from dotenv import load_dotenv
 
 from langchain_openai import ChatOpenAI
 
-from browser_use import Agent, Browser, BrowserConfig, SystemPrompt, ActionResult
+from browser_use import Agent, Browser, SystemPrompt, ActionResult
+from browser_use.browser.context import BrowserContextConfig, BrowserContext
 from browser_use.agent.service import Agent
 from browser_use.controller.service import Controller
 
@@ -77,8 +78,14 @@ def save_to_text_file(text_content: str, save_path: str = './output-files/text.t
 
 @controller.action('Create screenshot') 
 def save_to_png(description: str, save_path: str = './output-files/screenshot.png'):
-    # matches --window-position=0,0 from browser config
-    pyautogui.screenshot(save_path, region=(0, 0, browserWidth, browserHeight))
+    # pyautogui.screenshot(save_path, region=(0, 0, browserWidth, browserHeight))
+    # use newly available functionality from PR
+    # https://github.com/browser-use/browser-use/pull/369/commits/beeac16dc60074dc14026274a2fb4d00743c64d8#diff-02d6625e62a1cd7252a850b065c545a42620cf0aebfc595ccbe51f065aee9947
+    # instead
+    screenshot = context.take_screenshot()
+    decoded = b64.b64decode('utf-8')
+    with open(save_path, 'wb') as f: 
+        f.write(decoded)
     return ActionResult(extracted_content = f'Screenshot for {description} written to {save_path}.')
 
 @controller.action('Create recording') 
@@ -93,8 +100,10 @@ def save_to_avi(description: str, save_path: str = './output-files/recording.avi
 
     remaining =  1 * int(fps)
     while (remaining > 0):
-        img = pyautogui.screenshot(region=(0, 0, browserWidth, browserHeight))
-        frame = np.array(img)
+        # img = pyautogui.screenshot(region=(0, 0, browserWidth, browserHeight))
+        screenshot = context.take_screenshot()
+        decoded = b64.b64decode('utf-8')
+        frame = np.array(decoded)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         out.write(frame)
         remaining -= 1
@@ -109,13 +118,22 @@ llm = ChatOpenAI(
     api_key = "hal9"
 )
 
-browser = Browser(
+""" browser = Browser(
 	config=BrowserConfig(
 		# for available options see
         # https://github.com/browser-use/browser-use/blob/5d1197e5d3b8b7d191aac638b052007882504040/browser_use/browser/browser.py#L178
         extra_chromium_args = [f'--window-position=0,0, --window-size={browserWidth},{browserHeight}'],
 	)
+) """
+
+config = BrowserContextConfig(
+    browser_window_size = {'width': browserWidth, 'height': browserHeight},
+    save_recording_path = "./output-files/",
 )
+
+browser = Browser()
+context = BrowserContext(browser = browser, config = config)
+
 
 async def run(agent):
     print("🌍🌎🌏") 
@@ -127,7 +145,7 @@ async def run(agent):
 async def main():
     prompt = h9.input()
     agent = Agent(
-        browser = browser,
+        browser_context = context,
         controller = controller,
         system_prompt_class = Save_Files,
         task = prompt,
