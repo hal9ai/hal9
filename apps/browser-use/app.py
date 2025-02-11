@@ -20,18 +20,17 @@ from dotenv import load_dotenv
 
 from langchain_openai import ChatOpenAI
 
-from browser_use import Agent, Browser, SystemPrompt, ActionResult
+from browser_use import Agent, Browser, BrowserConfig, SystemPrompt, ActionResult
 from browser_use.agent.service import Agent
 from browser_use.controller.service import Controller
-from browser_use.browser.context import BrowserContextConfig, BrowserContext
 
 load_dotenv()
 
 response= subprocess.call(["playwright", "install"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 if response != 0: sys.exit("Couldn't install playwright!")
 
-browserWidth = 1280
-browserHeight = 1100
+browserWidth = 640
+browserHeight = 360
 
 dir = './output-files/'
 if os.path.exists(dir):
@@ -110,16 +109,13 @@ llm = ChatOpenAI(
     api_key = "hal9"
 )
 
-config = BrowserContextConfig(
-    browser_window_size = {'width': browserWidth, 'height': browserHeight},
-    # for available options see
-    # https://github.com/browser-use/browser-use/blob/5d1197e5d3b8b7d191aac638b052007882504040/browser_use/browser/browser.py#L178
-    extra_chromium_args = ['--window-position=0,0'],
+browser = Browser(
+	config=BrowserConfig(
+		# for available options see
+        # https://github.com/browser-use/browser-use/blob/5d1197e5d3b8b7d191aac638b052007882504040/browser_use/browser/browser.py#L178
+        extra_chromium_args = [f'--window-position=0,0, --window-size={browserWidth},{browserHeight}'],
+	)
 )
-
-browser = Browser()
-context = BrowserContext(browser=browser, config=config)
-
 
 async def run(agent):
     print("🌍🌎🌏") 
@@ -131,9 +127,9 @@ async def run(agent):
 async def main():
     prompt = h9.input()
     agent = Agent(
+        browser = browser,
         controller = controller,
         system_prompt_class = Save_Files,
-        browser_context=context,
         task = prompt,
         llm = llm,
         save_conversation_path="logs/conversation.json" 
