@@ -8,6 +8,8 @@ import os
 import shutil
 import numpy as np
 import cv2
+from PIL import Image
+from io import BytesIO
 
 # grant display access permission needed for screenshot
 # tested on Linux - MacOS users will need to find out what works there
@@ -65,7 +67,7 @@ class Save_Files(SystemPrompt):
   In other words, ONLY EVER skip a subtask if its requirements are not given.
 """
 
-        # Make sure to use this pattern otherwise the exiting rules will be lost
+        # Make sure to use this pattern otherwise the existing rules will be lost
         return f'{existing_rules}\n{new_rules}'
 
 controller = Controller()
@@ -77,19 +79,32 @@ def save_to_text_file(text_content: str, save_path: str = './output-files/text.t
     return ActionResult(extracted_content = f'Text {text_content} written to {save_path}.')
 
 @controller.action('Create screenshot') 
-def save_to_png(description: str, save_path: str = './output-files/screenshot.png'):
+async def save_to_png(description: str, save_path: str = './output-files/screenshot.png'):
     # pyautogui.screenshot(save_path, region=(0, 0, browserWidth, browserHeight))
-    # use newly available functionality from PR
-    # https://github.com/browser-use/browser-use/pull/369/commits/beeac16dc60074dc14026274a2fb4d00743c64d8#diff-02d6625e62a1cd7252a850b065c545a42620cf0aebfc595ccbe51f065aee9947
-    # instead
-    screenshot = context.take_screenshot()
-    decoded = b64.b64decode('utf-8')
-    with open(save_path, 'wb') as f: 
-        f.write(decoded)
+    screenshot = await context.take_screenshot()
+    # should also work since b64decode also takes ascii text
+    decoded_bytes = b64.b64decode(screenshot, validate = True)
+    # decoded = b64.b64decode(screenshot.encode(), validate = True)
+    decoded_str = decoded_bytes.decode()
+
+    # debug
+    with open('./output-files/screenshot1.png', 'w') as f: 
+        f.write(screenshot)
+    with open('./output-files/screenshot2.png', 'wb') as f: 
+        f.write(decoded_bytes)
+    with open('./output-files/screenshot3.png', 'wb') as f: 
+        f.write(decoded_str)
+
+    print(screenshot)
+    print()
+    print(decoded_bytes)
+    print()
+    print(decoded_str)
+
     return ActionResult(extracted_content = f'Screenshot for {description} written to {save_path}.')
 
 @controller.action('Create recording') 
-def save_to_avi(description: str, save_path: str = './output-files/recording.avi'):
+async def save_to_avi(description: str, save_path: str = './output-files/recording.avi'):
     resolution = (1920, 1080)
     codec = cv2.VideoWriter_fourcc(*"XVID")
     fps = 10.0 
@@ -101,7 +116,7 @@ def save_to_avi(description: str, save_path: str = './output-files/recording.avi
     remaining =  1 * int(fps)
     while (remaining > 0):
         # img = pyautogui.screenshot(region=(0, 0, browserWidth, browserHeight))
-        screenshot = context.take_screenshot()
+        screenshot = await context.take_screenshot()
         decoded = b64.b64decode('utf-8')
         frame = np.array(decoded)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
