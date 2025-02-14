@@ -46,7 +46,7 @@ def run(path :str, source :str = "app.py", type :str = "python", port :str = "80
   except Exception as e:
     print(f"An error occurred while running {source}: {e}")
 
-def run_describe():
+def describe_runtimes():
   keys = list(runtime_types.keys())
   return {
     'runtimes': keys

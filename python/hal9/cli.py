@@ -2,7 +2,8 @@ import click
 from collections import OrderedDict
 from hal9.create import create as api_create
 from hal9.run import run as api_run
-from hal9.run import run_describe as api_run_describe
+from hal9.run import describe_runtimes as api_run_describe_runtimes
+from hal9.describe import describe_content as api_run_describe_content
 from hal9.deploy import deploy as api_deploy
 import datetime
 import os
@@ -81,14 +82,21 @@ def deploy(path :str, target :str, url :str, name :str, typename :str, data :str
   api_deploy(path, target, url, name, typename, data, access, main, title, description)
 
 @click.command()
-@click.argument('command')
-def describe(command :str = "runtime"):
+@click.option('--runtime', '-r', is_flag=True, help='Describe the runtimes')
+@click.option('--content', '-c', is_flag=True, help='Describe the contents')
+@click.argument('path', required=False, default=".")
+def describe(path: str, runtime :bool, content :bool):
   """
   Describe Command
 
-  --command: Describes commands. Defaults to 'run'.
+  --path: The path to describe, defaults to current path.
+  --runtime: Describes the available runtimes.
+  --content: Describes the content in the path.
   """
-  print(json.dumps(api_run_describe()))
+  if runtime:
+    print(json.dumps(api_run_describe_runtimes()))
+  elif content:
+    print(json.dumps(api_run_describe_content(path)))
 
 cli.add_command(create)
 cli.add_command(run)

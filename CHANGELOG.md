@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.8.8
+
+- Support `describe` for `--content`
+- Support `describe` for `--runtime`
+
 ## 2.8.7
 
 - Improve speed rendering image by avoiding to take screenshot again
