@@ -2,5 +2,4 @@ browser-use
 playwright
 opencv-python
 Pillow
-#pyautogui
-#browser-use@git+https://github.com/skeydan/browser-use
+pyautogui # temporarily use pyautogui until https://github.com/browser-use/browser-use/issues/714 has been solved
