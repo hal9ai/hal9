@@ -4,6 +4,17 @@ from clients import openai_client
 import time
 import sys
 import io
+import subprocess
+import venv
+import os
+
+env_dir = "toolenv"
+
+def run_in_new_process(python_code):
+    python_executable = os.path.join(env_dir, 'bin', 'python') if sys.platform != 'win32' else os.path.join(env_dir, 'Scripts', 'python.exe')
+    
+    result = subprocess.run([python_executable, "-c", python_code], capture_output=True, text=True)
+    return result.stdout, result.stderr
 
 def fix_code(chat_input, error, complete_traceback, python_code):
     stream = openai_client.chat.completions.create(
@@ -11,6 +22,10 @@ def fix_code(chat_input, error, complete_traceback, python_code):
       messages = [
         {"role": "user", "content": 
 f"""The following Python code needs to be fixed. It should fulfill this user request: '{chat_input}', return the fixed code as fenced code block with triple backticks (```) as ```python```
+
+If the problem is related to missing python packages: print a requirements.txt file with the missing packages in a code block fenced code block with triple backticks (```) as ```requirements```
+
+If a file is generated for the user, it must be stored in './.storage/'.
 
 ### Error encountered:
 
@@ -26,19 +41,29 @@ f"""The following Python code needs to be fixed. It should fulfill this user req
 """
     },]
   )
-    return extract_code_block(stream.choices[0].message.content, "python")
+    return extract_code_block(stream.choices[0].message.content, "python"), extract_code_block(stream.choices[0].message.content, "requirements")
+
+def install_packages(package_list: str):
+    packages = [pkg.strip() for pkg in package_list.split("\n") if pkg.strip()]
+    
+    pip_executable = os.path.join(env_dir, 'bin', 'pip') if sys.platform != 'win32' else os.path.join(env_dir, 'Scripts', 'pip.exe')
+
+    for package in packages:
+        result = subprocess.run([pip_executable, "install", package], capture_output=True, text=True)
+        
+        if result.returncode == 0:
+            return f"Successfully installed {package}"
+        else:
+            return f"Failed to install {package}: {result.stderr}"
 
 def debug_code(python_code):
     try:
-        context = {}
-        timestamp = int(time.time())
-        with open(f"script_{timestamp}.txt", "w") as file:
-            file.write(python_code)
-        stdout_backup = sys.stdout
-        sys.stdout = io.StringIO()
-        exec(python_code, context)
-        output = sys.stdout.getvalue()
-        sys.stdout = stdout_backup
+        output, stderr = run_in_new_process(python_code)
+        if stderr:
+            raise Exception(stderr)
+        if output and ("An error occurred" in output or "Failed to import modules" in output):
+            raise Exception(output)
+
         return f"Code Works properly: result of the execution: {output}", "", ""
     except Exception as e:
         tb = traceback.format_exc()
@@ -51,8 +76,11 @@ def python_execution(prompt):
     # load messages
     messages = []
 
+    if not os.path.exists(env_dir):
+        venv.create(env_dir, with_pip=True)
+
     if len(messages) < 1:
-        messages = insert_message(messages, "system", f"This Python generation system creates scripts from user prompts, including necessary imports; always include a print message indicating the process finished or the output. If a file is generated, it must be stored in './.storage/'. Return the code as a fenced block using triple backticks (```python```).")
+        messages = insert_message(messages, "system", f"This Python generation system creates scripts from user prompts, including necessary imports; always include a print message indicating the process finished or the output. If a file is generated for the user, it must be stored in './.storage/'. Return the code as a fenced block using triple backticks (```python```).")
     messages = insert_message(messages, "user", f"Generates an app that fullfills this user request -> {prompt}")
     model_response = generate_response("openai", "gpt-4-turbo", messages) 
     response_content = model_response.choices[0].message.content
@@ -66,7 +94,10 @@ def python_execution(prompt):
             messages = insert_message(messages, "assistant", generated_code)
             return f"{result} ... This is the final code generated -> {generated_code}"
         else:
-            generated_code = fix_code(prompt, error, complete_traceback, generated_code)
+            generated_code, missing_packages = fix_code(prompt, error, complete_traceback, generated_code)
+
+            if missing_packages:
+                install_packages(missing_packages)
         tries += 1
 
     return f"Unable to generate an app that fulfills your request without errors. -> this was the final code obtained {generated_code} and the error found -> {error}"
