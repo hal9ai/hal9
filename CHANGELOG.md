@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.9
+
+- Support rendering stl, obj, gltf and step files
+
 ## 2.8.8
 
 - Support `describe` for `--content`

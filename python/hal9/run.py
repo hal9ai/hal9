@@ -5,6 +5,7 @@ from hal9.runtimes.python import run as run_python
 from hal9.runtimes.chainlit import run as run_chainlit
 from hal9.runtimes.r import run as run_r
 from hal9.runtimes.plumber import run as run_plumber
+from hal9.runtimes.threed import run as run_3d
 
 runtime_types = {
   "python": run_python,
@@ -15,6 +16,11 @@ runtime_types = {
   "r": run_r,
   "shiny": run_r,
   "plumber": run_plumber,
+  "stl": run_3d,
+  "gltf": run_3d,
+  "step": run_3d,
+  "obj": run_3d,
+  "stl": run_3d,
 }
 
 def run(path :str, source :str = "app.py", type :str = "python", port :str = "8080", params :str = None) -> str:
