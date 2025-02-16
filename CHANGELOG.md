@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.11
+
+- Support opening stl, obj, gltf and step files 
+
 ## 2.8.10
 
 - Support downloading stl, obj, gltf and step files
