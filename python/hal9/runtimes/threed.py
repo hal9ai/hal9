@@ -13,7 +13,7 @@ def run(source_path: Path, port :str, params :str):
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/online-3d-viewer@0.15.0/build/engine/o3dv.min.js"></script>
 </head>
 <body>
-  <a id="open-link" href="{model_name}" target="_blank" rel="noopener noreferrer">Open {image_name}</a>
+  <a id="open-link" href="{model_name}" target="_blank" rel="noopener noreferrer">Open {model_name}</a>
   <div class="online_3d_viewer" style="width: 100%; height: 100%;" model="{model_name}"></div>
   <script>window.addEventListener ('load', () => {{ OV.Init3DViewerElements (); }});</script>
   <script>
