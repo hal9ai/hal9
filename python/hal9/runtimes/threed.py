@@ -19,8 +19,8 @@ def run(source_path: Path, port :str, params :str):
   <script>
     document.addEventListener("DOMContentLoaded", function () {{
       const link = document.getElementById("open-link");
-      const currentPageUrl = window.location.href + '/{model_name}'; 
-      link.href = `https://3dviewer.net/#model=${{encodeURIComponent(currentPageUrl)}}`;
+      const currentPageUrl = window.location.href + '{model_name}'; 
+      link.href = `https://3dviewer.net/#model=${{currentPageUrl}}`;
     }});
   </script>
 </body>

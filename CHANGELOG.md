@@ -2,6 +2,10 @@
 
 ## 2.8.12
 
+- Fix edit link to stl, obj, gltf and step files 
+
+## 2.8.12
+
 - Minor fix to stl, obj, gltf and step files 
 
 ## 2.8.11
