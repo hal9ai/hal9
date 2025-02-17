@@ -180,8 +180,7 @@ async def main():
         save_conversation_path="logs/conversation.json" 
     )
     history = await run(agent)
-    # restore after reverting to take_screenshot()
-    # await browser.close()
+    await browser.close()
 
 asyncio.run(main())
 
