@@ -1,35 +1,39 @@
+# import hal9
 import hal9 as h9
 
+# import Python packages
 import subprocess
 import asyncio
 import sys
-import base64 as b64
 import os
 import shutil
 import numpy as np
 import cv2
-
-# grant display access permission needed for screenshot
-# tested on Linux - MacOS users will need to find out what works there
-response= subprocess.call(["xhost", "+local:"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-if response != 0: sys.exit("Couldn't authorize local users to access screen.")
-
-# temporarily use pyautogui until https://github.com/browser-use/browser-use/issues/714 has been solved
-import pyautogui
-
 from dotenv import load_dotenv
 
+# use OpenAI as LLM
 from langchain_openai import ChatOpenAI
 
+# browser-use imports
 from browser_use import Agent, Browser, BrowserConfig, SystemPrompt, ActionResult
 from browser_use.browser.context import BrowserContextConfig, BrowserContext
 from browser_use.agent.service import Agent
 from browser_use.controller.service import Controller
 
-load_dotenv()
+# temporarily use pyautogui until https://github.com/browser-use/browser-use/issues/714 has been solved
+import pyautogui# grant display access permission needed for screenshot
+# will be needed when switching to BrowserContext.take_screenshot()  
+# import base64 as b64
+
+# tested on Linux - MacOS users will need to find out what works there
+response= subprocess.call(["xhost", "+local:"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+if response != 0: sys.exit("Couldn't authorize local users to access screen.")
 
 response = subprocess.call(["playwright", "install"], stdout = subprocess.DEVNULL, stderr = subprocess.STDOUT)
 if response != 0: sys.exit("Couldn't install playwright!")
+
+# not required for this use case
+# load_dotenv()
 
 # use these when reverting to BrowserContext.take_screenshot()
 #browserWidth = 640
@@ -42,7 +46,7 @@ if os.path.exists(dir):
     shutil.rmtree(dir)
 os.makedirs(dir)
 
-class Save_Files(SystemPrompt):
+class CustomPrompt(SystemPrompt):
     def important_rules(self) -> str:
         # Get existing rules from parent class
         existing_rules = super().important_rules()

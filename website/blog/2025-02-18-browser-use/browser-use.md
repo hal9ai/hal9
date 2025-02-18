@@ -43,5 +43,109 @@ For the remaining two, the outcomes are not exactly satifying. The iframe source
 
 Both of these are problems with the LLM, not with browser-use. In fact, both have happened to me during experimentation; below, I'll show you how I try to address them. "Try to address", since this run evidently proves unsuccessful in that respect; in most other runs though, the customisation you'll see below _did_ work. It's just a fact that usage of LLMs always results in some degree of indeterminism.
 
-Now, let's step through the code. I'm not going to comment on every detail, focusing on the "main plot" instead. In some cases, code comments will provide further detail, or refer to restrictions or "nice-to-knows".
+Now, let's step through the code. I'm not going to comment on every detail, but focus on the "main plot" instead. In some cases, code comments will provide further detail, refer to restrictions, or give pointers to related materials.
 
+Here, first, are the imports.
+
+``` python
+# import hal9
+import hal9 as h9
+
+# import Python packages
+import subprocess
+import asyncio
+import sys
+import os
+import shutil
+import numpy as np
+import cv2
+from dotenv import load_dotenv
+
+# use OpenAI as LLM
+from langchain_openai import ChatOpenAI
+
+# browser-use imports
+from browser_use import Agent, Browser, BrowserConfig, SystemPrompt, ActionResult
+from browser_use.browser.context import BrowserContextConfig, BrowserContext
+from browser_use.agent.service import Agent
+from browser_use.controller.service import Controller
+
+# temporarily use pyautogui until https://github.com/browser-use/browser-use/issues/714 has been solved
+import pyautogui# grant display access permission needed for screenshot
+# will be needed when switching to BrowserContext.take_screenshot()  
+# import base64 as b64
+```
+
+Next, finish setup. The second step is required, since browser-use utilises [playwright](https://playwright.dev/), a framework for automated web testing.
+The first is about authorizing the application user to access the screen, such that screenshots may be taken. On Linux, this is required; if you use MacOS or Windows, you will have to test, and possibly find out how to grant that permission.
+
+``` python
+# tested on Linux - users of other OSes will need to find out
+# whether it's required, and what works there
+response= subprocess.call(["xhost", "+local:"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+if response != 0: sys.exit("Couldn't authorize local users to access screen.")
+
+response = subprocess.call(["playwright", "install"], stdout = subprocess.DEVNULL, stderr = subprocess.STDOUT)
+if response != 0: sys.exit("Couldn't install playwright!")
+
+```
+
+Set a few variables. The browser size variables will be commented on shortly.
+
+``` python
+# use these when reverting to BrowserContext.take_screenshot()
+#browserWidth = 640
+#browserHeight = 360
+browserWidth = 2560
+browserHeight = 1440
+
+dir = './output-files/'
+if os.path.exists(dir):
+    shutil.rmtree(dir)
+os.makedirs(dir)
+```
+
+Now, we come to the fun stuff. There are two types of customization I have made use of. The first is extending the system prompt. browser-use comes with a detailed system prompt, encompassing, among others, rules for website navigation, image processing, and response format. We can conveniently extend the SystemPrompt class, adding our own rules.
+
+Here, I'm adding three rules, one related to custom functionality, and two that are based on issues I encountered during experimentation. 
+
+The latter two are rules 9 and 11. One thing that happened to me was being left with a link, not an answer. Having added rule 9, I never ran into this anymore. However, the rule was also meant to ensure I get what I want, when I ask about website integration (the iframe code). Specifically, I added "EXACTLY" to the phrase that, before, was about completeness only. And sometimes, this _did_ work out; in others, it did not.
+
+The other one turned out essential for getting this to work. Initially, when the bot had exceeded the (configurable) number of tries to achieve a goal, it would simply give up on the whole task &mdash; irrespectively of whether remaining subtasks were dependent on that one or not. After adding rule 11, this did not happen anymore.
+
+Rule 10 is different. I want to have screenshots taken, and a movie recorded; to that purpose, I provide functions that implement the desired functionality. In such a case, we need to inform the LLM explicitly which function to utilise.
+
+``` python
+class CustomPrompt(SystemPrompt):
+    def important_rules(self) -> str:
+        # Get existing rules from parent class
+        existing_rules = super().important_rules()
+
+        # Add your custom rules
+        new_rules = """
+9. IMPORTANT FOR TEXTUAL ANSWERS:
+- Make sure you answer a question EXACTLY and COMPLETELY.
+  For example, if you are asked to enumerate a list of entities fulfilling some condition, list each and any of them.
+  Always do actually provide the information you are asked for - never just post a link instead.
+
+10. IMPORTANT FOR FILES YOU ARE ASKED TO CREATE:
+- When you are asked to create a file, save it making use of the save_path you are given.
+- You may be asked to create different types of files: text files, screenshots, and recordings.
+- Screenshots should be saved as .png.
+- Recordings should be saved as .avi.
+- When asked to save content to a text file, make use of the function save_to_text_file.
+- When asked to create a screenshot, make use of the function create_png.
+- When asked to create a screen recording, make use of the function create_avi.
+
+11. GENERAL RULE REGARDING SUBTASKS:
+- When you are given a task involving several subtasks, and one of the subtasks fails, assess whether the other ones are dependent on its success.
+  Do this for each subtask individually. If a subtask can be addressed without that prior one having been successfully, ALWAYS execute it.
+  In other words, ONLY EVER skip a subtask if its requirements are not given.
+"""
+
+        # Make sure to use this pattern otherwise the existing rules will be lost
+        return f'{existing_rules}\n{new_rules}'
+```
+
+The second customization in my code is, as you may already have expected by now, an extension adding screenshotting and screen-recording facilities.
+Such extensions, you'll see, are equally straightforwardly incorporated into browser-use.
