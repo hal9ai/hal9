@@ -30,11 +30,11 @@ def shiny_generator(prompt):
     messages = load_messages(file_path="./.storage/.shiny_messages.json")
 
     if len(messages) < 1:
-        messages = insert_message(messages, "system", f"""This is a R Shiny generator system that automates the creation of R shiny apps based on user prompts. It interprets natural language queries, and the response is an complete python script with the including imports for a interactive R Shiny app, return the code as fenced code block with triple backticks (```) as ```python```""")
+        messages = insert_message(messages, "system", f"""This is a R Shiny generator system that automates the creation of R shiny apps based on user prompts. It interprets natural language queries, and the response is an complete R script with the including imports for a interactive R Shiny app, return the code as fenced code block with triple backticks (```) as ```r```""")
     messages = insert_message(messages, "user", f"Generates an app that fullfills this user request -> {prompt}")
     model_response = generate_response("openai", "gpt-4-turbo", messages) 
     response_content = model_response.choices[0].message.content
-    shiny_code = extract_code_block(response_content, "python")
+    shiny_code = extract_code_block(response_content, "r")
     
     save_shiny_code(shiny_code)
     messages = insert_message(messages, "assistant", shiny_code)
