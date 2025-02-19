@@ -115,6 +115,7 @@ async def save_to_png(description: str, save_path: str = './output-files/screens
     """
     return ActionResult(extracted_content = f'Screenshot for {description} written to {save_path}.')
 
+# following https://www.geeksforgeeks.org/create-a-screen-recorder-using-python/
 @controller.action('Create recording') 
 async def save_to_avi(description: str, save_path: str = './output-files/recording.avi'):
     resolution = (browserWidth, browserHeight)
