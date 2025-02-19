@@ -1,8 +1,8 @@
 ---
 slug: Hal9-browseruse
-title: "tbd" 
+title: "Making the Web Fun Again: With Browser Use and Hal9" 
 authors: [sigrid]
-tags: [tbd]
+tags: [Browser Automation, AI Browser, Generative AI]
 ---
 
 There just never is enough time. At work, there isn't; there's just always more you'd like (or have to) do than fits in a working day. And in private life, there most definitely isn't, either; no wonder utopians have always dreamt of equally distributed, socially just, and diligently optimised labour that would leave a bigger share to spare time than current societies do.
