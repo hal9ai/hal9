@@ -1,6 +1,6 @@
 ---
 slug: Hal9-browseruse
-title: "Making the Web Fun Again: With Browser Use and Hal9" 
+title: "And the Web is Fun Again: With Browser Use and Hal9" 
 authors: [sigrid]
 tags: [Browser Automation, AI Browser, Generative AI]
 ---
