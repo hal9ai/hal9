@@ -1,0 +1,5 @@
+browser-use
+playwright
+opencv-python
+Pillow
+pyautogui # temporarily use pyautogui until https://github.com/browser-use/browser-use/issues/714 has been solved
