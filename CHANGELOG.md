@@ -1,6 +1,10 @@
 # Changelog
 
-## 2.8.12
+## 2.8.14
+
+- Support describing app.R files
+
+## 2.8.13
 
 - Fix edit link to stl, obj, gltf and step files 
 

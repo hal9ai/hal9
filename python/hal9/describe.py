@@ -1,28 +1,33 @@
 import os
 
+type_checks = {
+  'fastapi': {
+    'files': ['app.py', 'main.py'],
+    'contents': ['import FastAPI', 'import Flask']
+  },
+  'shiny': {
+    'files': ['app.R'],
+    'contents': ['library(shiny)']
+  }
+}
+
 def describe_content(target_path):
   result = {'type': ''}
-  
-  if os.path.isfile(target_path) and target_path.endswith('.py'):
-    python_files = [os.path.basename(target_path)]
-    folder = os.path.dirname(target_path) or '.'
+    
+  if os.path.isfile(target_path):
+      all_files = [target_path]
+  elif os.path.isdir(target_path):
+      all_files = os.listdir(target_path)
   else:
-    folder = target_path
-    python_files = [f for f in os.listdir(folder) if f.endswith('.py')]
+      return result
   
-  target_file = None
-  
-  if 'app.py' in python_files:
-    target_file = 'app.py'
-  elif 'main.py' in python_files:
-    target_file = 'main.py'
-  elif len(python_files) == 1:
-    target_file = python_files[0]
-  
-  if target_file:
-    with open(os.path.join(folder, target_file), 'r', encoding='utf-8') as file:
-      content = file.read()
-      if 'import FastAPI' in content or 'import Flask' in content:
-        result['type'] = 'fastapi'
-  
+  for type_name, criteria in type_checks.items():
+    for target_file in criteria['files']:
+      if target_file in all_files:
+        with open(os.path.join(target_path, target_file), 'r', encoding='utf-8') as file:
+          content = file.read()
+          if any(keyword in content for keyword in criteria['contents']):
+            result['type'] = type_name
+            break
+
   return result

@@ -6,6 +6,7 @@ from tools.image_agent import images_management_system, images_management_system
 from tools.hal9 import answer_hal9_questions_description, answer_hal9_questions
 from tools.text_agent import analyze_text_file_description, analyze_text_file
 from tools.streamlit import streamlit_generator, streamlit_generator_description
+from tools.shiny import shiny_generator, shiny_generator_description
 from tools.fastapi import fastapi_generator, fastapi_generator_description
 from tools.other_tools import final_response_description, final_response
 from tools.python_execution import python_execution_description ,python_execution
@@ -14,8 +15,8 @@ from tools.python_execution import python_execution_description ,python_executio
 messages = load_messages()
 
 # load tools
-tools_descriptions = [python_execution_description, final_response_description, solve_math_problem_description, answer_generic_question_description, analyze_csv_description, images_management_system_description, answer_hal9_questions_description, analyze_text_file_description, fastapi_generator_description, streamlit_generator_description]
-tools_functions = [python_execution, final_response, solve_math_problem, answer_generic_question, analyze_csv, images_management_system, answer_hal9_questions, analyze_text_file, fastapi_generator, streamlit_generator]
+tools_descriptions = [python_execution_description, final_response_description, solve_math_problem_description, answer_generic_question_description, analyze_csv_description, images_management_system_description, answer_hal9_questions_description, analyze_text_file_description, fastapi_generator_description, streamlit_generator_description, shiny_generator_description]
+tools_functions = [python_execution, final_response, solve_math_problem, answer_generic_question, analyze_csv, images_management_system, answer_hal9_questions, analyze_text_file, fastapi_generator, streamlit_generator, shiny_generator]
 
 if len(messages) < 1:
     messages = insert_message(messages, "system", "You are Hal9, a helpful and highly capable AI assistant. Your primary responsibility is to analyze user questions and select the most appropriate tool to provide precise, relevant, and actionable responses. Always prioritize using the right tool to ensure efficiency and clarity in your answers. If a tool is needed, follow these steps: 1. Identify the best tool for the task. 2. Execute the tool and process its response. 3. If the tool provides a valid result, return it to the user. 4. If the tool fails, do NOT retry with the same tool. Instead, explain the failure and suggest improvements in the prompt or alternative approaches.")
