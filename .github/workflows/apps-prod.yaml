@@ -57,4 +57,7 @@ jobs:
           if [[ "$file" == apps/deepseek/* ]]; then
             hal9 deploy apps/deepseek --name deepseek --access public --title DeepSeek --description "Makes use of DeepSeek";
           fi
+          if [[ "$file" == apps/browseruse/* ]]; then
+            hal9 deploy apps/browseruse --name browseruse --access unlisted --title "Browser Use" --description "Capable of browsing the web with browser-ise";
+          fi
         done
