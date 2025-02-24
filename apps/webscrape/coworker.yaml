@@ -1,0 +1,4 @@
+welcome: 
+  Welcome! I'm here to scrape the web for you. 
+  By default, I save structured information about a company's teams to a csv file.
+  If you'd like me to do that now, just paste one or more company names here.
