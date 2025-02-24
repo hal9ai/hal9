@@ -20,9 +20,6 @@ from browser_use.controller.service import Controller
 response = subprocess.call(["playwright", "install"], stdout = subprocess.DEVNULL, stderr = subprocess.STDOUT)
 if response != 0: sys.exit("Couldn't install playwright!")
 
-browserWidth = 1280
-browserHeight = 720
-
 dir = './output-files/'
 if os.path.exists(dir):
     shutil.rmtree(dir)
@@ -58,10 +55,11 @@ llm = ChatOpenAI(
     api_key = "hal9"
 )
 
-browser = Browser()
+browser = Browser(
+    config = BrowserConfig(headless =  True)
+)
 
 config = BrowserContextConfig(
-    browser_window_size = {'width': browserWidth, 'height': browserHeight},
     save_recording_path = "./output-files/",
 )
 
