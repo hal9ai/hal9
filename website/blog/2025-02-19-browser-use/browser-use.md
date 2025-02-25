@@ -5,13 +5,15 @@ authors: [sigrid]
 tags: [Browser Automation, AI Browser, Generative AI]
 ---
 
+import ThemedImage from '../../src/components/themedimg.jsx'
+
 There just never is enough time. At work, there isn't; there's just always more you'd like (or have to) do than fits in a working day. And in private life, there most definitely isn't, either; no wonder utopians have always dreamt of equally distributed, socially just, and diligently optimised labour that would leave a bigger share to spare time than current societies do.
 
 One important part of freeing up time is automation. At Hal9, we care not just about creative, domain-adaptable solutions, but thought- and careful (not just "intelligent"!) automation, as well. Not everything should be automated; and even when full automation is desirable, we may have expectations the automated workflow must fulfill. For example, we may require auditing; we'd thus need every decision the algorithm makes, every decision it takes, documented. But that may not be our only demand. There likely are decisions _we_ want to make; for example, how cookie consent forms should be handled. In a nutshell, our "sourcerer's appentice" the AI, while useful, should always stay under control, and be just as transparent as we require. 
 
 Enter [browser-use](https://github.com/browser-use/browser-use), a well-crafted, configurable, highly customisable and extensible browser automation tool. In this post, we'd like to show an example of how it nicely integrates with Hal9, addresses exigencies such as as those mentioned above, and may easily be extended. You'll also see its attempts (sometimes successful, sometimes not) to reach a goal in a different way, once some previous strategy has failed. And when it's finished, it automatically creates an animated gif showing you how it proceeded.
 
-<center style="display: none;"><ThemedImage src="agent-history-preview"/></center>
+<center style={{display: 'none'}}><ThemedImage src="agent-history-preview"/></center>
 [![Animated gif illustrating all major steps browser-use has gone through](agent-history.gif)](https://hal9.com/apps/browseruse)
 
 To start, I am going to tell you what I asked it to do, and display a few screenshots to illustrate its behavior; then, we'll go through the code. Besides what's necessary to execute a task, our sample use case also entails custom configuration as well as custom functionality, designed to offer a peek into what is possible (and maybe, inspiring you to experiment with browser-use and its Hal 9 integration for your own interests or demands).
