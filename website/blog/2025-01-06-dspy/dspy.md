@@ -3,6 +3,7 @@ slug: dspy
 title: "PDF Chat Agent with DSPy and Hal9" 
 authors: [luis]
 tags: [DSPy, RAG, Chain of Thought]
+image: https://hal9.com/docs/screenshots/dspy-light.png
 ---
 
 import ThemedImage from '../../src/components/themedimg.jsx'

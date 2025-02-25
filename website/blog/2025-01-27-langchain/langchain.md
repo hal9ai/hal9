@@ -3,6 +3,7 @@ slug: langchain
 title: "PDF Chatbot with LangChain and Hal9: A Step-by-Step Guide" 
 authors: [luis]
 tags: [LangChain, RAG, PDF]
+image: https://hal9.com/docs/screenshots/langchain-light.png
 ---
 
 import ThemedImage from '../../src/components/themedimg.jsx'

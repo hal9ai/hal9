@@ -3,6 +3,7 @@ slug: burr
 title: "Smarter Chatbots on Hal9 with Burr: A Step-by-Step Guide" 
 authors: [diego]
 tags: [Dragworks, AI, Hal9]
+image: https://hal9.com/docs/screenshots/blog-burr-agent-light.png
 ---
 
 import ThemedImage from '../../src/components/themedimg.jsx'

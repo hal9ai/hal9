@@ -5,6 +5,7 @@ authors: [karan]
 tags: [Swarm, OpenAI]
 description: "Explore the integration of OpenAI Swarm with Hal9 to
 unlock innovative AI capabilities" 
+image: https://hal9.com/docs/screenshots/blog-movie-recommendations-light.png
 ---
 
 <head>

@@ -3,6 +3,7 @@ slug: txt-to-sql
 title: "Bridging the gap: How Text-to-SQL is Changing Database Queries" 
 authors: [diego]
 tags: [SQL, LLMs]
+image: https://hal9.com/docs/screenshots/blog-baseball-agent-light.png
 ---
 
 import ThemedImage from '../../src/components/themedimg.jsx'

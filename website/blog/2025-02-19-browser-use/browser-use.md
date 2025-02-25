@@ -1,9 +1,9 @@
 ---
-slug: browseruse
+slug: browser-use
 title: "And the Web is Fun Again: With Browser Use and Hal9" 
 authors: [sigrid]
 tags: [Browser Automation, AI Browser, Generative AI]
-image: https://hal9.com/docs/screenshots/agent-history-preview-light.png
+image: https://hal9.com/docs/screenshots/blog-browseruse.png
 ---
 
 import ThemedImage from '../../src/components/themedimg.jsx'

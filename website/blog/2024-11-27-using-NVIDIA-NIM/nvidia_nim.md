@@ -3,6 +3,7 @@ slug: nvidia-nim
 title: "Using NVIDIA NIM to Spot AI-Generated Images" 
 authors: [diego]
 tags: [NVIDIA, NIM, AI Detection]
+image: https://hal9.com/docs/screenshots/blog-nvidia-nim-light.png
 ---
 
 <head>
