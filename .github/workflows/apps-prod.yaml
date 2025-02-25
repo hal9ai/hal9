@@ -60,4 +60,7 @@ jobs:
           if [[ "$file" == apps/browseruse/* ]]; then
             hal9 deploy apps/browseruse --name browseruse --access unlisted --title "Browser Use" --description "Capable of browsing the web with browser-ise";
           fi
+          if [[ "$file" == apps/webscrape/* ]]; then
+            hal9 deploy apps/webscrape --name webscrape --access unlisted --title "Webscrape to CSV" --description "Webscrape and store results in CSV";
+          fi
         done
