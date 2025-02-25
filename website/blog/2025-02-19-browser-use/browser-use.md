@@ -11,6 +11,7 @@ One important part of freeing up time is automation. At Hal9, we care not just a
 
 Enter [browser-use](https://github.com/browser-use/browser-use), a well-crafted, configurable, highly customisable and extensible browser automation tool. In this post, we'd like to show an example of how it nicely integrates with Hal9, addresses exigencies such as as those mentioned above, and may easily be extended. You'll also see its attempts (sometimes successful, sometimes not) to reach a goal in a different way, once some previous strategy has failed. And when it's finished, it automatically creates an animated gif showing you how it proceeded.
 
+<center style="display: none;"><ThemedImage src="agent-history-preview"/></center>
 [![Animated gif illustrating all major steps browser-use has gone through](agent-history.gif)](https://hal9.com/apps/browseruse)
 
 To start, I am going to tell you what I asked it to do, and display a few screenshots to illustrate its behavior; then, we'll go through the code. Besides what's necessary to execute a task, our sample use case also entails custom configuration as well as custom functionality, designed to offer a peek into what is possible (and maybe, inspiring you to experiment with browser-use and its Hal 9 integration for your own interests or demands).
