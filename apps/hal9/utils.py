@@ -13,6 +13,7 @@ import pandas as pd
 from concurrent.futures import ThreadPoolExecutor
 import ast
 import re
+import hal9 as h9
 
 # Define the allowed client types.
 ClientType = Literal["openai", "azure", "groq"]
@@ -45,13 +46,7 @@ def generate_response(
     messages: List[Dict[str, Any]],
     tools: Optional[List] = None,
     tool_choice: Optional[str] = None,
-    parallel_tool_calls: Optional[bool] = True,
-    temperature: Optional[float] = None,
     seed: Optional[int] = None,
-    top_p: Optional[float] = None,
-    frequency_penalty: Optional[float] = None,
-    max_completion_tokens: Optional[int] = None,
-    n: int = 1
 ) -> Dict[str, Any]:
     """
     Generates a response using the appropriate client based on the specified type.
@@ -81,16 +76,9 @@ def generate_response(
         "messages": messages,
         "tools": tools,
         "tool_choice": tool_choice,
-        "temperature": temperature,
         "seed": seed,
-        "top_p": top_p,
-        "frequency_penalty": frequency_penalty,
-        "max_tokens": max_completion_tokens,
-        "n": n
     }
 
-    if tools is not None:
-        payload["parallel_tool_calls"] = parallel_tool_calls
 
     # Generate the response using the client's completion API.
     response = client.chat.completions.create(**payload)
@@ -130,7 +118,9 @@ def insert_message(messages , role, content, tool_call_id=None):
         messages.append({"role": role, "content": content})
     return messages
 
-def execute_function(model_response, functions):
+def execute_function(model_response, functions, debug_mode=True):
+    if debug_mode:
+        h9.event("Executing Tool", model_response.choices[0].message.tool_calls[0].function.name)
     # Extract the message from the response.
     try:
         response_message = model_response.choices[0].message
@@ -181,7 +171,7 @@ def stream_print(stream, show = True):
         content += chunk.choices[0].delta.content
     return content
 
-def insert_tool_message(messages, model_response, tool_result):
+def insert_tool_message(messages, model_response, tool_result, debug_mode=True):
     tool_calls = model_response.choices[0].message.tool_calls
 
     if tool_calls:
@@ -206,6 +196,9 @@ def insert_tool_message(messages, model_response, tool_result):
             "content": tool_content,
             "tool_call_id": tool_call.id
         })
+
+        if debug_mode:
+            h9.event("Tool Result", tool_content)
 
 def is_url(prompt):
   result = urllib.parse.urlparse(prompt)

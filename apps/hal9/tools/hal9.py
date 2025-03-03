@@ -1,6 +1,5 @@
 from data import DATA
 from groq import Groq
-from utils import stream_print
 
 def answer_hal9_questions(user_input):
     response = Groq().chat.completions.create(
