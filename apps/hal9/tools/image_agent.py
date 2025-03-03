@@ -370,7 +370,7 @@ Effective Tool Usage Recommendations:
 """)
     messages = insert_message(messages, "user", f"Fullfill this request -> {user_query}, \n\n Current available images are:{formatted_descriptions}")
 
-    response = generate_response("openai", "gpt-4-turbo", messages, tools_descriptions, tool_choice = "required", parallel_tool_calls=False)
+    response = generate_response("openai", "o3-mini", messages, tools_descriptions, tool_choice = "required")
     tool_result = execute_function(response, tools_functions)
     insert_tool_message(messages, response, tool_result)
     save_messages(messages, file_path="./.storage/.text_agent_messages.json")
