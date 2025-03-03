@@ -1,12 +1,11 @@
 from utils import generate_response, insert_message, extract_code_block
 import traceback
 from clients import openai_client
-import time
 import sys
-import io
 import subprocess
 import venv
 import os
+import hal9 as h9
 
 env_dir = "toolenv"
 
@@ -82,7 +81,7 @@ def python_execution(prompt):
     if len(messages) < 1:
         messages = insert_message(messages, "system", f"This Python generation system creates scripts from user prompts, including necessary imports; always include a print message indicating the process finished or the output. If a file is generated for the user, it must be stored in './.storage/'. Return the code as a fenced block using triple backticks (```python```).")
     messages = insert_message(messages, "user", f"Generates an app that fullfills this user request -> {prompt}")
-    model_response = generate_response("openai", "gpt-4-turbo", messages) 
+    model_response = generate_response("openai", "o3-mini", messages) 
     response_content = model_response.choices[0].message.content
     generated_code = extract_code_block(response_content, "python")
     # Debug and fix the code if needed
@@ -94,9 +93,10 @@ def python_execution(prompt):
             messages = insert_message(messages, "assistant", generated_code)
             return f"{result} ... This is the final code generated -> {generated_code}"
         else:
+            h9.event("Python Execution Error", error)
             generated_code, missing_packages = fix_code(prompt, error, complete_traceback, generated_code)
-
             if missing_packages:
+                h9.event("Missing packages", missing_packages)
                 install_packages(missing_packages)
         tries += 1
 
