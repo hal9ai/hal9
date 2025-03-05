@@ -7,7 +7,8 @@ import asyncio
 import sys
 import os
 import shutil
-import csv
+import json
+import pandas as pd
 
 # use OpenAI as LLM
 from langchain_openai import ChatOpenAI
@@ -35,12 +36,11 @@ class CustomPrompt(SystemPrompt):
         # Add your custom rules
         new_rules = """
 11. ON SAVING TO CSV:
-- When you are tasked to append information to a csv file, make use of the function save_to_csv.
-- This function expects the data to write to be a list of a list of strings. 
-  Here the outer list is a list of people, and each inner list holds the individual features, represented as strings.
+- When you are tasked to write or append information to a csv file, make use of the function save_to_csv.
+- All columns must contain a simple piece of information, not ever a composition (e.g., no nested data types, no JSON objects!)
 12. DEFAULT TASK:
-- Your default task is to extract information on company staff, and append that to a file called '.user/people.csv'.
-- important: ONLY use the company's website to obtain employee information,
+- Your default task is to extract information on company staff, and write/append that to a file called '.user/people.csv'.
+- Important: ONLY use the company's website to obtain employee information,
   NOT any other web pages the company or its employees might appear on.
   E.g., do NOT!!! look for GitHub contributors to a company's organization instead!
 - The csv file should have a header with column names. When you initially create the csv to append to,
@@ -67,22 +67,14 @@ controller = Controller()
 
 
 @controller.action('On saving information to csv')
-def save_to_csv(rows: list[list[str]]):
-    fields = ['company name', 'team', 'job title', 'full name', 'GitHub', 'LinkedIn'] 
-    # tbd remove
-    people = [["Hal9","Science","Science","Anchit Sadana","",""],["Hal9","Science","Science","Brenda Lambert","",""],["Hal9","Science","Science","Diego Arceo","","https://www.linkedin.com/in/diego-arceo-felix/"],["Hal9","Advisor","Advisor","Gant Laborde","","https://www.linkedin.com/in/gant-laborde/"],["Hal9","Engineering","Engineering","Greg Eden","",""],["Hal9","Engineering","Engineering","Iñaki Hernández","","https://www.linkedin.com/in/javier-i%C3%B1aki-hern%C3%A1ndez-esquivel-805743219/"],["Hal9","Engineering","Engineering","Javier Luraschi","","https://www.linkedin.com/in/javierluraschi/"],["Hal9","Advisor","Advisor","Jenna Watson-Brawn","",""],["Hal9","Advisor","Advisor","Johnson Apacible","","https://www.linkedin.com/in/apacible-8888/"],["Hal9","Advisor","Advisor","Juraj Slugen","","https://www.linkedin.com/in/juraj-s-8a404717/"],["Hal9","Engineering","Engineering","Karla J","","https://www.linkedin.com/in/karla-jurado-2331ab184/"],["Hal9","Science","Science","Kevin Kuo","","https://www.linkedin.com/in/kevinykuo/"],["Hal9","Science","Science","Luis Guillen","","https://www.linkedin.com/in/luis-alejandro-guillen-alvarez-10aa58215/"],["Hal9","Operations","Operations","Pedro Luraschi","","https://www.linkedin.com/in/poraschi/"],["Hal9","Legal","Legal","Robert Chang","","https://www.linkedin.com/in/robert-chang-4b455314/"],["Hal9","Engineering","Engineering","Sigrid Keydana","","https://www.linkedin.com/in/sigrid-keydana/"],["Hal9","Engineering","Engineering","Yuichiro Tachibana","","https://www.linkedin.com/in/whitphx/"],["Hal9","Advisor","Advisor","Dave Hurst","","https://www.linkedin.com/in/davehurst/"]]
-    
-    if not os.path.exists(csv_file):
-      with open(csv_file, 'w') as file:
-          writer = csv.writer(file)
-          writer.writerow(fields)
+def save_to_csv(json: str):
+  if not os.path.exists(csv_file):
+    with open(csv_file, 'w') as f:
+      pd.read_json(json).to_csv(f)
+  else:
+    with open(csv_file, 'a') as f:
+      pd.read_json(json).to_csv(f)
 
-    with open(csv_file, 'a') as file:
-          writer = csv.writer(file)
-          writer.writerows(rows)
-
-    return ActionResult(extracted_content=f'Staff information appended to {csv_file}.')
-    
 llm = ChatOpenAI(
     model="gpt-4o",
     base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
