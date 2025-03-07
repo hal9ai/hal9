@@ -9,6 +9,9 @@ import os
 import shutil
 import json
 import pandas as pd
+import re
+from io import StringIO
+
 
 # use OpenAI as LLM
 from langchain_openai import ChatOpenAI
@@ -36,23 +39,32 @@ class CustomPrompt(SystemPrompt):
         # Add your custom rules
         new_rules = """
 11. ON SAVING TO CSV:
-- When you are tasked to write or append information to a csv file, make use of the function save_to_csv.
-- All columns must contain a simple piece of information, not ever a composition (e.g., no nested data types, no JSON objects!)
+- When you are tasked to write or append information to a csv file, make use of the function save_to_csv(list_of_json_objects).
+- Its argument is to be passed as a list of strings, where each string can be parsed as a json object.
+- For scalar property values, put them inside a single-item vector. 
 12. DEFAULT TASK:
-- Your default task is to extract information on company staff, and write/append that to a file called '.user/people.csv'.
-- Important: ONLY use the company's website to obtain employee information,
-  NOT any other web pages the company or its employees might appear on.
-  E.g., do NOT!!! look for GitHub contributors to a company's organization instead!
+- Your default task is to extract information on company staff, and append that to a file called '.user/people.csv'.
 - The csv file should have a header with column names. When you initially create the csv to append to,
   create it with the following column names:
-    - company name
+    - company_name
     - team
-    - job title
-    - full name
-    - link to GitHub repository
-    - link to LinkedIn profile
+    - job_title
+    - full_name
+    - github_link
+    - linkedin_link 
 - For each and any of these columns, ONLY use information that is available on the COMPANY website.
   If a piece is not, leave the column EMPTY for that row.
+- Make use of the function save_to_csv(list_of_json_objects).
+- To this function, pass a list of strings, where each string is a json object representing a single person.
+  For property values inside this json object that are scalar values (like strings), put them inside a vector.
+  For example, the function call could look like this:
+  save_to_csv(
+    [
+      "{\"company_name\": [\"Hal9\"], \"team\": [\"Science\"], \"job_title\": [\"\"], \"full_name\": [\"Anchit Sadana\"], \"github_link\": [\"\"], \"linkedin_link\": [\"\"]}",
+      "{\"company_name\": [\"Hal9\"], \"team\": [\"Science\"], \"job_title\": [\"\"], \"full_name\": [\"Brenda Lambert\"], \"github_link\": [\"\"], \"linkedin_link\": [\"\"]}",
+    ]
+  )
+  Note how the company name \"Hal9\", for example, is surrounded by brackets. Do this for all scalar values.
 - The default task is to be completed whenever the USER PROMPT CONTAINS ONE OR MORE COMPANY NAMES. 
   For example, if the user enters 'Hal9, Posit' you should extract information about staff at both Hal9 and Posit,
   and append that to '.user/people.csv'.
@@ -65,15 +77,30 @@ class CustomPrompt(SystemPrompt):
 
 controller = Controller()
 
+def replacetext(filename, search_text,replace_text): 
+    with open(filename,'r+') as f:
+        file = f.read() 
+        file = re.sub(search_text, replace_text, file, flags=re.MULTILINE) 
+        f.seek(0) 
+        f.write(file) 
+        f.truncate() 
+    return True
 
-@controller.action('On saving information to csv')
-def save_to_csv(json: str):
+def save_to_csv(list_of_json_objects: list[str]):
   if not os.path.exists(csv_file):
     with open(csv_file, 'w') as f:
-      pd.read_json(json).to_csv(f)
+      for _, person in enumerate(list_of_json_objects):
+        pd.read_json(StringIO(person)).to_csv(f)
+        # js = json.load(person)
+        # pd.DataFrame({'count': js}).to_csv(f)
   else:
     with open(csv_file, 'a') as f:
-      pd.read_json(json).to_csv(f)
+      for _, person in enumerate(list_of_json_objects):
+        pd.read_json(StringIO(person)).to_csv(f)
+          # js = json.loads(person)
+          # pd.DataFrame({'count': js}).to_csv(f)
+
+  return replacetext(csv_file,"^0?,","")
 
 llm = ChatOpenAI(
     model="gpt-4o",
