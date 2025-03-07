@@ -90,17 +90,13 @@ def save_to_csv(list_of_json_objects: list[str]):
     with open(csv_file, 'w') as f:
       for _, person in enumerate(list_of_json_objects):
         pd.read_json(StringIO(person)).to_csv(f)
-        # js = json.load(person)
-        # pd.DataFrame({'count': js}).to_csv(f)
   else:
     with open(csv_file, 'a') as f:
       for _, person in enumerate(list_of_json_objects):
         pd.read_json(StringIO(person)).to_csv(f)
-          # js = json.loads(person)
-          # pd.DataFrame({'count': js}).to_csv(f)
 
   replacetext(csv_file,"^0?,","")
-  return ActionResult(extracted_content = f'Staff information appended to {save_path}.')
+  return ActionResult(extracted_content = f'Staff information appended to {csv_file}.')
 
 llm = ChatOpenAI(
     model="gpt-4o",
