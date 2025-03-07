@@ -84,7 +84,6 @@ def replacetext(filename, search_text,replace_text):
         f.seek(0) 
         f.write(file) 
         f.truncate() 
-    return True
 
 def save_to_csv(list_of_json_objects: list[str]):
   if not os.path.exists(csv_file):
@@ -100,7 +99,8 @@ def save_to_csv(list_of_json_objects: list[str]):
           # js = json.loads(person)
           # pd.DataFrame({'count': js}).to_csv(f)
 
-  return replacetext(csv_file,"^0?,","")
+  replacetext(csv_file,"^0?,","")
+  return ActionResult(extracted_content = f'Staff information appended to {save_path}.')
 
 llm = ChatOpenAI(
     model="gpt-4o",
