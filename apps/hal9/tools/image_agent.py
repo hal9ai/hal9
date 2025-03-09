@@ -1,5 +1,5 @@
 import shutil
-import replicate
+from replicate import Client
 from utils import generate_response, load_messages, insert_message, execute_function, save_messages, insert_tool_message, load_json_file
 from PIL import Image
 from io import BytesIO
@@ -8,6 +8,8 @@ import os
 import base64
 from mimetypes import guess_type
 import json
+
+replicate = Client(api_token="any", base_url="http://localhost:5000/proxy/server=https://api.replicate.com")
 
 ########################### Functions ##########################
 
