@@ -3,7 +3,7 @@ from replicate import Client
 from utils import generate_response, load_messages, insert_message, execute_function, save_messages, insert_tool_message, load_json_file
 from PIL import Image
 from io import BytesIO
-from clients import azure_openai_client
+from clients import openai_client
 import os
 import base64
 from mimetypes import guess_type
@@ -86,7 +86,7 @@ def image_generator(prompt, filename):
 
 def image_analyzer(image_path, prompt):
     image_url = generate_img_url(image_path)
-    response = azure_openai_client.chat.completions.create(
+    response = openai_client.chat.completions.create(
         model="gpt-4o",
         messages=[
             {

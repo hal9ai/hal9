@@ -4,9 +4,9 @@ import urllib.parse
 import urllib.request
 import requests
 from typing import Literal, List, Dict, Any, Union, Optional
-from clients import openai_client, azure_openai_client
+from clients import openai_client
 from groq import Groq
-from openai import AzureOpenAI, OpenAI
+from openai import OpenAI
 import fitz
 from io import BytesIO
 import pandas as pd
@@ -16,25 +16,23 @@ import re
 import hal9 as h9
 
 # Define the allowed client types.
-ClientType = Literal["openai", "azure", "groq"]
+ClientType = Literal["openai", "groq"]
 
-def get_client(client_type: ClientType) -> Union[OpenAI, AzureOpenAI, Groq]:
+def get_client(client_type: ClientType) -> Union[OpenAI, Groq]:
     """
     Returns the appropriate client instance based on the given type.
 
     Parameters:
-        client_type (ClientType): The type of client ("openai", "azure", "groq").
+        client_type (ClientType): The type of client ("openai", "groq").
 
     Returns:
-        Union[openai_client, azure_openai_client, Groq]: An instance of the selected client.
+        Union[openai_client, Groq]: An instance of the selected client.
     
     Raises:
         ValueError: If the provided client type is not supported.
     """
     if client_type == "openai":
         return openai_client
-    elif client_type == "azure":
-        return azure_openai_client
     elif client_type == "groq":
         return Groq()
     else:
@@ -52,7 +50,7 @@ def generate_response(
     Generates a response using the appropriate client based on the specified type.
 
     Parameters:
-        client_type (ClientType): The type of client ("openai", "azure", "groq").
+        client_type (ClientType): The type of client ("openai", "groq").
         model (str): The model to use for generating the response.
         messages (List[Dict[str, Any]]): List of messages to provide as context.
         tools (Optional[List]): Available tools for the model. Default is None.
@@ -265,7 +263,7 @@ def process_chunk(chunk_info):
         "page": page_num + 1  # Page numbers start from 1
     }
 
-def generate_text_embeddings_parquet(url, model="text-embedding-3-small", client_type="azure", n_words=300, overlap=0, max_threads=8):
+def generate_text_embeddings_parquet(url, model="text-embedding-3-small", client_type="openai", n_words=300, overlap=0, max_threads=8):
     # Download and read the PDF
     response = requests.get(url)
     pdf_document = fitz.open(stream=BytesIO(response.content))

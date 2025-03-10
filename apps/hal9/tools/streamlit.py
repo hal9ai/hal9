@@ -48,7 +48,7 @@ def copy_files(source_dir, destination_dir):
     for item in os.listdir(source_dir):
         source_path = os.path.join(source_dir, item)
         if os.path.isfile(source_path):
-            if item.endswith('.py'):
+            if item.startswith(".") or item.endswith(".py"):
                 continue
             else:
                 destination_path = os.path.join(destination_dir, item)
