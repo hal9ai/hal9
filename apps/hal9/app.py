@@ -42,7 +42,8 @@ else:
     h9.event("User Prompt", f"{user_input}")
     user_input = user_input.replace("\f", "\n")
     available_files = os.listdir("./.storage/")
-    messages = insert_message(messages, "user", f"Use all the neccesary tools to fullfill this request: {user_input} -> your available files: {available_files}")
+    filtered_available_files = [f for f in available_files if f != ".events" and not f.startswith(".messages")]
+    messages = insert_message(messages, "user", f"Use all the neccesary tools to fullfill this request: {user_input} -> Could be helpful this available files: {filtered_available_files}")
     steps = 0
     max_steps = 6
     while steps < max_steps:
