@@ -4,8 +4,7 @@ import urllib.parse
 import urllib.request
 import requests
 from typing import Literal, List, Dict, Any, Union, Optional
-from clients import openai_client
-from groq import Groq
+from clients import openai_client, groq_client
 from openai import OpenAI
 import fitz
 from io import BytesIO
@@ -15,10 +14,10 @@ import ast
 import re
 import hal9 as h9
 
-# Define the allowed client types.
+# Define the allowed client types.  
 ClientType = Literal["openai", "groq"]
 
-def get_client(client_type: ClientType) -> Union[OpenAI, Groq]:
+def get_client(client_type: ClientType) -> OpenAI:
     """
     Returns the appropriate client instance based on the given type.
 
@@ -26,7 +25,7 @@ def get_client(client_type: ClientType) -> Union[OpenAI, Groq]:
         client_type (ClientType): The type of client ("openai", "groq").
 
     Returns:
-        Union[openai_client, Groq]: An instance of the selected client.
+        Union[openai_client, groq_client]: An instance of the selected client.
     
     Raises:
         ValueError: If the provided client type is not supported.
@@ -34,7 +33,7 @@ def get_client(client_type: ClientType) -> Union[OpenAI, Groq]:
     if client_type == "openai":
         return openai_client
     elif client_type == "groq":
-        return Groq()
+        return groq_client
     else:
         raise ValueError(f"Unsupported client type: {client_type}")
 
