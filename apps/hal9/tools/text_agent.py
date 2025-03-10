@@ -324,7 +324,7 @@ def analyze_text_file(user_query):
     steps = 0
     max_steps = 10
     while steps < max_steps:
-        response = generate_response("openai", "gpt-4-turbo", messages, tools_descriptions, tool_choice = "required", parallel_tool_calls=False)
+        response = generate_response("openai", "o3-mini", messages, tools_descriptions, tool_choice = "required")
         tool_result = execute_function(response, tools_functions)
         insert_tool_message(messages, response, tool_result)
         save_messages(messages, file_path="./.storage/.text_agent_messages.json")

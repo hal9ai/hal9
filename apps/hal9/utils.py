@@ -4,38 +4,36 @@ import urllib.parse
 import urllib.request
 import requests
 from typing import Literal, List, Dict, Any, Union, Optional
-from clients import openai_client, azure_openai_client
-from groq import Groq
-from openai import AzureOpenAI, OpenAI
+from clients import openai_client, groq_client
+from openai import OpenAI
 import fitz
 from io import BytesIO
 import pandas as pd
 from concurrent.futures import ThreadPoolExecutor
 import ast
 import re
+import hal9 as h9
 
-# Define the allowed client types.
-ClientType = Literal["openai", "azure", "groq"]
+# Define the allowed client types.  
+ClientType = Literal["openai", "groq"]
 
-def get_client(client_type: ClientType) -> Union[OpenAI, AzureOpenAI, Groq]:
+def get_client(client_type: ClientType) -> OpenAI:
     """
     Returns the appropriate client instance based on the given type.
 
     Parameters:
-        client_type (ClientType): The type of client ("openai", "azure", "groq").
+        client_type (ClientType): The type of client ("openai", "groq").
 
     Returns:
-        Union[openai_client, azure_openai_client, Groq]: An instance of the selected client.
+        Union[openai_client, groq_client]: An instance of the selected client.
     
     Raises:
         ValueError: If the provided client type is not supported.
     """
     if client_type == "openai":
         return openai_client
-    elif client_type == "azure":
-        return azure_openai_client
     elif client_type == "groq":
-        return Groq()
+        return groq_client
     else:
         raise ValueError(f"Unsupported client type: {client_type}")
 
@@ -45,19 +43,13 @@ def generate_response(
     messages: List[Dict[str, Any]],
     tools: Optional[List] = None,
     tool_choice: Optional[str] = None,
-    parallel_tool_calls: Optional[bool] = True,
-    temperature: Optional[float] = None,
     seed: Optional[int] = None,
-    top_p: Optional[float] = None,
-    frequency_penalty: Optional[float] = None,
-    max_completion_tokens: Optional[int] = None,
-    n: int = 1
 ) -> Dict[str, Any]:
     """
     Generates a response using the appropriate client based on the specified type.
 
     Parameters:
-        client_type (ClientType): The type of client ("openai", "azure", "groq").
+        client_type (ClientType): The type of client ("openai", "groq").
         model (str): The model to use for generating the response.
         messages (List[Dict[str, Any]]): List of messages to provide as context.
         tools (Optional[List]): Available tools for the model. Default is None.
@@ -81,16 +73,9 @@ def generate_response(
         "messages": messages,
         "tools": tools,
         "tool_choice": tool_choice,
-        "temperature": temperature,
         "seed": seed,
-        "top_p": top_p,
-        "frequency_penalty": frequency_penalty,
-        "max_tokens": max_completion_tokens,
-        "n": n
     }
 
-    if tools is not None:
-        payload["parallel_tool_calls"] = parallel_tool_calls
 
     # Generate the response using the client's completion API.
     response = client.chat.completions.create(**payload)
@@ -130,7 +115,9 @@ def insert_message(messages , role, content, tool_call_id=None):
         messages.append({"role": role, "content": content})
     return messages
 
-def execute_function(model_response, functions):
+def execute_function(model_response, functions, debug_mode=True):
+    if debug_mode:
+        h9.event("Executing Tool", model_response.choices[0].message.tool_calls[0].function.name)
     # Extract the message from the response.
     try:
         response_message = model_response.choices[0].message
@@ -181,7 +168,7 @@ def stream_print(stream, show = True):
         content += chunk.choices[0].delta.content
     return content
 
-def insert_tool_message(messages, model_response, tool_result):
+def insert_tool_message(messages, model_response, tool_result, debug_mode=True):
     tool_calls = model_response.choices[0].message.tool_calls
 
     if tool_calls:
@@ -206,6 +193,9 @@ def insert_tool_message(messages, model_response, tool_result):
             "content": tool_content,
             "tool_call_id": tool_call.id
         })
+
+        if debug_mode:
+            h9.event("Tool Result", tool_content)
 
 def is_url(prompt):
   result = urllib.parse.urlparse(prompt)
@@ -272,7 +262,7 @@ def process_chunk(chunk_info):
         "page": page_num + 1  # Page numbers start from 1
     }
 
-def generate_text_embeddings_parquet(url, model="text-embedding-3-small", client_type="azure", n_words=300, overlap=0, max_threads=8):
+def generate_text_embeddings_parquet(url, model="text-embedding-3-small", client_type="openai", n_words=300, overlap=0, max_threads=8):
     # Download and read the PDF
     response = requests.get(url)
     pdf_document = fitz.open(stream=BytesIO(response.content))
