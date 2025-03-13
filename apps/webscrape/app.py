@@ -72,7 +72,7 @@ def save_to_csv(json: str, save_path: str = '.user/staff.csv'):
 llm = ChatOpenAI(
     model = "gpt-4o",
     base_url = "https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
-    api_key = "hal9"
+    api_key = os.environ['HAL9_TOKEN']
 )
 
 browser = Browser(

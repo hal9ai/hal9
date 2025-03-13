@@ -71,6 +71,7 @@ With the tools ready, it’s time to define the chatbot’s logic. Burr allows y
 import hal9 as h9
 import json
 from openai import OpenAI
+import os
 
 from burr.core import ApplicationBuilder, State, default, expr
 from burr.core.action import action
@@ -80,7 +81,7 @@ from weather_utils import *
 
 client = OpenAI(
     base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
-    api_key = "h9" 
+    api_key = os.environ['HAL9_TOKEN']
 )
 
 ## Burr actions are encapsulated, stateless operations triggered by state 

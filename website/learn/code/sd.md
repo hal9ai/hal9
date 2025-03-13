@@ -17,7 +17,7 @@ from PIL import Image
 from io import BytesIO
 import shutil
 
-replicate = Client(api_token="any", base_url="https://api.hal9.com/proxy/server=https://api.replicate.com")
+replicate = Client(api_token=os.environ['HAL9_TOKEN'], base_url="https://api.hal9.com/proxy/server=https://api.replicate.com")
 
 def flux_image(prompt, filename):
   output = replicate.run("black-forest-labs/flux-dev", input={"prompt": prompt})

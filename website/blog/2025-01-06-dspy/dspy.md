@@ -92,11 +92,12 @@ The Hal9_FaissRM class handles both embedding generation and indexing. It ensure
 
 ```python
 from custom_dspy import CustomOpenAIVectorizer, Hal9_FaissRM
+import os
 
 # Initialize the OpenAI client with the Hal9 proxy
 openai_client = OpenAI(
     base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
-    api_key="hal9"
+    api_key=os.environ['HAL9_TOKEN']
 )
 
 # Create the vectorizer with the custom OpenAI client
@@ -138,7 +139,7 @@ Now, we integrate the components into a working example. The user provides a pro
 
 ```python
 # Configure DSPy
-lm = dspy.LM('openai/gpt-4-turbo', api_key='hal9', api_base='https://api.hal9.com/proxy/server=https://api.openai.com/v1/')
+lm = dspy.LM('openai/gpt-4-turbo', api_key=os.environ['HAL9_TOKEN'], api_base='https://api.hal9.com/proxy/server=https://api.openai.com/v1/')
 frm = Hal9_FaissRM(document_chunks=chunks, vectorizer=vectorizer)
 dspy.configure(lm=lm, rm=frm)
 

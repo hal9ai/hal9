@@ -9,7 +9,7 @@ import base64
 from mimetypes import guess_type
 import json
 
-replicate = Client(api_token="any", base_url="https://api.hal9.com/proxy/server=https://api.replicate.com")
+replicate = Client(api_token=os.environ['HAL9_TOKEN'], base_url="https://api.hal9.com/proxy/server=https://api.replicate.com")
 
 ########################### Functions ##########################
 

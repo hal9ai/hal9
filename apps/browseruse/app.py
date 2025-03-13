@@ -52,7 +52,7 @@ def save_to_text_file(text_content: str, save_path: str = './output-files/text.t
 llm = ChatOpenAI(
     model = "gpt-4o",
     base_url = "https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
-    api_key = "hal9"
+    api_key = os.environ['HAL9_TOKEN']
 )
 
 browser = Browser(

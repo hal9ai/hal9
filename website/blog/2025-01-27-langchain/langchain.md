@@ -59,7 +59,7 @@ To enable efficient retrieval of relevant information, document content is trans
 When a user submits a query, Chroma performs a similarity search across the stored embeddings to identify the most relevant document sections. The results are then formatted into a cohesive context that the chatbot can use to generate accurate and context-aware responses.
 
 ```python
-embeddings = OpenAIEmbeddings(openai_api_base="https://api.hal9.com/proxy/server=https://api.openai.com/v1", api_key="hal9", model="text-embedding-3-large")
+embeddings = OpenAIEmbeddings(openai_api_base="https://api.hal9.com/proxy/server=https://api.openai.com/v1", api_key=os.environ['HAL9_TOKEN'], model="text-embedding-3-large")
 
 db = Chroma.from_documents(documents, embeddings)
 
@@ -76,12 +76,12 @@ In the code example below, we demonstrate how to configure the ChatOpenAI class 
 
 ```python
 # Configure the model with Hal9's API and desired provider
-llm = ChatOpenAI(base_url="https://api.hal9.com/proxy/server=https://api.groq.com/openai/v1", api_key="h9", model="llama3-8b-8192")
+llm = ChatOpenAI(base_url="https://api.hal9.com/proxy/server=https://api.groq.com/openai/v1", api_key=os.environ['HAL9_TOKEN'], model="llama3-8b-8192")
 response = llm.invoke(messages)  # Generate a response using Groq + LLaMA
 
 # To switch to OpenAI GPT-4 or DeepSeek R1, change the base_url and model parameters
-llm = ChatOpenAI(base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/", api_key="h9", model="gpt-4-turbo")
-llm = ChatOpenAI(base_url="https://api.hal9.com/proxy/server=https://api.deepseek.com", api_key="h9", model="deepseek-reasoner")
+llm = ChatOpenAI(base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/", api_key=os.environ['HAL9_TOKEN'], model="gpt-4-turbo")
+llm = ChatOpenAI(base_url="https://api.hal9.com/proxy/server=https://api.deepseek.com", api_key=os.environ['HAL9_TOKEN'], model="deepseek-reasoner")
 ```
 
 ### **5. Message History Management and Persistence**
