@@ -34,6 +34,11 @@ jobs:
         ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
         HAL9_TOKEN: ${{ secrets.HAL9_TOKEN_DEVEL }}
       run: |
+        if echo "${ALL_CHANGED_FILES}" | grep -q "apps/hal9/"; then
+          echo "apps/hal9 changed"
+          hal9 deploy apps/hal9 --name hal9 --access public --url https://api.devel.hal9.com --title Hal9 --description "Conversations and content creation";
+        fi
+
         for file in ${ALL_CHANGED_FILES}; do
           echo "$file was changed"
           if [[ "$file" == apps/flux/* ]]; then
@@ -41,9 +46,6 @@ jobs:
           fi
           if [[ "$file" == apps/echo/* ]]; then
             hal9 deploy apps/echo --name ECHO --access public --url https://api.devel.hal9.com --title Echo --description "Echoes user input";
-          fi
-          if [[ "$file" == apps/hal9/* ]]; then
-            hal9 deploy apps/hal9 --name hal9 --access public --url https://api.devel.hal9.com --title Hal9 --description "Conversations and content creation";
           fi
           if [[ "$file" == apps/browser/* ]]; then
             hal9 deploy apps/browser --name browser --access unlisted --url https://api.devel.hal9.com --title Browser --description "Capable of browsing the web";
