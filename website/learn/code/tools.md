@@ -13,6 +13,7 @@ The following code shows how to define a `calculate` function to help LLMs execu
 ```python deploy
 import hal9 as h9
 from openai import OpenAI
+import os
 
 def calculate(expression):
   """
@@ -25,7 +26,7 @@ def calculate(expression):
 messages = h9.load("messages", [])
 prompt = h9.input(messages = messages)
 
-completion = OpenAI().chat.completions.create(
+completion = client.chat.completions.create(
   model = "gpt-4",
   messages = messages,
   functions = h9.describe([ multiply ]),

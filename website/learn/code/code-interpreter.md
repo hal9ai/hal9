@@ -17,16 +17,21 @@ import hal9 as h9
 import os
 from openai import OpenAI
 
-completion = OpenAI().chat.completions.create(
+client = openai_client = OpenAI(
+  base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
+  api_key=os.environ['HAL9_TOKEN']
+)
+
+completion = client.chat.completions.create(
   model = "gpt-4",
   messages = [
-    {"role": "system", "content": "Only reply with plain Python code use no markdown"},
+    {"role": "system", "content": "Only reply with plain Python code that uses print(), use no markdown"},
     {"role": "user", "content": input()},
   ]
  )
 
-code = h9.extract(completion.choices[0].message.content)
-print(exec(code))
+code = completion.choices[0].message.content
+exec(code)
 ```
 
 LLMs are not really that good at doing math; however, with the help of this code interpreter, we can run complex calculations that are impossible to run using only a LLM
@@ -45,7 +50,12 @@ url = ""
 csv = pd.read_csv(url)
 headers = csv.head(1)
 
-completion = OpenAI().chat.completions.create(
+client = openai_client = OpenAI(
+  base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
+  api_key=os.environ['HAL9_TOKEN']
+)
+
+completion = client.chat.completions.create(
   model = "gpt-4",
   messages = [
     {"role": "system", "content": f"""
@@ -75,6 +85,11 @@ import os
 import hal9 as h9
 from openai import OpenAI
 
+client = OpenAI(
+  base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
+  api_key=os.environ['HAL9_TOKEN']
+)
+
 messages = h9.load("messages", [{ "role": "system", "content": """
   Always reply with a single page HTML markdown block (which can use JavaScript,
   CSS, etc) that fulfills the user request
@@ -82,7 +97,7 @@ messages = h9.load("messages", [{ "role": "system", "content": """
 
 messages.append({"role": "user", "content": input()})
 
-completion = OpenAI().chat.completions.create(
+completion = client.chat.completions.create(
   model = "gpt-4",
   messages = messages,
   temperature = 0,
@@ -104,6 +119,7 @@ Instead of building web applications, you can build data analytics apps that que
 ```python deploy
 import hal9 as h9
 from openai import OpenAI
+import os
 
 messages = h9.load("messages", [{ "role": "system", "content": """
   Only reply with plain Python code.
@@ -112,7 +128,12 @@ messages = h9.load("messages", [{ "role": "system", "content": """
 
 messages.append({"role": "user", "content": input()})
 
-completion = OpenAI().chat.completions.create(
+client = OpenAI(
+  base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
+  api_key=os.environ['HAL9_TOKEN']
+)
+
+completion = client.chat.completions.create(
   model = "gpt-4",
   messages = messages
 )
