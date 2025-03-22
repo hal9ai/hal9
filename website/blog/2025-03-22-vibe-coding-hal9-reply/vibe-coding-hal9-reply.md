@@ -3,7 +3,7 @@ slug: vibe-coding-hal9-reply
 title: "Vibe Coding a Product in 6 Days" 
 authors: [javier]
 tags: [Vibe Coding, Chrome Extension, Generative AI]
-image: https://hal9.com/docs/blog/2025-03-22-vibe-coding-hal9-reply/hal9-reply-install.png
+image: https://hal9.com/docs/assets/images/hal9-reply-install-a201b47aa1b31342ddc0d48bf279ce2f.png
 ---
 
 import ThemedImage from '../../src/components/themedimg.jsx'
