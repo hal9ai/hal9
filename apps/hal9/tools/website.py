@@ -1,17 +1,14 @@
 import hal9 as h9
-import openai
 import os
+
+from clients import openai_client
 
 def website_generator(prompt):
   """
   Builds or modifies a website based on user description or a change request
     'prompt' with user change or requirements
   """
-  client = openai.AzureOpenAI(
-    azure_endpoint = 'https://openai-hal9.openai.azure.com/',
-    api_key = os.environ['OPENAI_AZURE'],
-    api_version = '2023-05-15',
-  )
+  client = openai_client
 
   system = """You can build html applications for user requests. Your replies can include markdown code blocks but they must include a filename parameter after the language. For example,
   ```javascript filename=code.js
