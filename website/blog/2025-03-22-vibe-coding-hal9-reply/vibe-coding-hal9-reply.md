@@ -10,13 +10,13 @@ import ThemedImage from '../../src/components/themedimg.jsx'
 
 # Vibe Coding a Product in 6 Days
 
-Recently, we launched [Hal9 Reply](https://hal9.com/reply), a [Chrome extension](https://chromewebstore.google.com/detail/hal9/ggaifmgpepafggafpbkhnoceiabomjfe) powered by the [Hal9 Platform](https://hal9.com/platform). Want to know how we pulled off the product, website, and marketing in just 6 days?
+Recently, we launched [Hal9 Reply](https://hal9.com/reply), a [Chrome extension](https://chromewebstore.google.com/detail/hal9/ggaifmgpepafggafpbkhnoceiabomjfe) powered by the [Hal9 Platform](https://hal9.com/platform). Curious how we built the product, website, and marketing in just six days?
 
 [![](hal9-reply-final.gif)](https://hal9.com/reply)
 
-The answer is **vibe coding**—a fast, AI-driven approach we like to call **the cocaine of prompt engineering**. Oh, and by the way, this blog post was vibe coded too. Let me walk you through how we did it.
+The answer? **vibe coding**——a fast, AI-driven method we jokingly call **the cocaine of prompt engineering**. Bonus: this blog post was vibe coded too. Let me walk you through it.
 
-How do we know it took exactly 6 days? The Hal9 team, especially the founders, tracks every minute using Clockify. We start the timer when a task begins and stop it when it’s done. That’s how we clocked 16 hours building the extension, 16 hours on the website, and 14 hours on marketing efforts like the [Product Hunt](https://www.producthunt.com/products/hal9-reply) launch and [Hal9's LinkedIn](https://www.linkedin.com/company/hal9) posts.
+How do we know it took exactly six days? The Hal9 team, especially the founders, track every minute using Clockify: We start the timer when a task begins and stop it when it’s done. That’s how we clocked 16 hours building the extension, 16 hours on the website, and 14 hours on marketing efforts like the [Product Hunt](https://www.producthunt.com/products/hal9-reply) launch and [Hal9's LinkedIn](https://www.linkedin.com/company/hal9) posts.
 
 ![Vibe Coding Time Tracking](vibe-coding-time.png)
 
@@ -28,7 +28,7 @@ Our journey started with a simple idea: build something for social media manager
 
 > What are the work tasks that people have to do in social media and hate?
 
-The response from Grok ([see transcript here](https://grok.com/share/bGVnYWN5_bd187078-f43d-465c-a6ea-1f7428fc44a7)) sparked the idea. Social media managers drown in repetitive engagement tasks—responding to comments, messages, and mentions. They hate the grind, especially when overwhelmed. That’s when it hit me: a Chrome extension to lighten the load.
+The response from Grok ([see transcript here](https://grok.com/share/bGVnYWN5_bd187078-f43d-465c-a6ea-1f7428fc44a7)), sparked the idea. Social media managers drown in repetitive engagement tasks—responding to comments, messages, and mentions. They hate the grind, especially when overwhelmed. That’s when it hit me: a Chrome extension to lighten the load.
 
 [![](vibe-coding-market-research.png)](https://grok.com/share/bGVnYWN5_bd187078-f43d-465c-a6ea-1f7428fc44a7)
 
@@ -50,7 +50,7 @@ The development process was iterative—errors like “Extension context invalid
 
 The next 12 hours went into testing and refinement. We tested completion across multiple websites, fixed issues as they came up, and polished the UX to perfection. Highlights include a slick animation and a breathing effect during text completion. The result? A flawless product, now live in our [Hal9 GitHub](https://github.com/hal9ai/hal9) repo.
 
-Total time: 14 hours. The outcome: an extremely polished final product! But wait, backend missing and we have only 2 hours left!
+Total time: 14 hours, resulting in an extremely polished final product. But hold on—the backend was still missing, and we had just two hours left!
 
 [![](vibe-coding-hal9-reply-final.png)](https://hal9.com/reply)
 
@@ -79,7 +79,7 @@ async function completeText(text) {
 }
 ````
 
-But the initial replies? Not great. The page context was too long, and the bot struggled to respond accurately. The fix? A quick vibe-code session with a simple RAG (Retrieval Augmented Generation) approach. RAG boosts AI performance using targeted Python code. No need to dig through [Hal9’s docs](https://hal9.com/docs)—we used this prompt instead:
+But the initial replies? The page context was too long, and the bot struggled to respond accurately. The fix? A quick vibe-code session with a simple RAG (Retrieval Augmented Generation—a method to boost AI accuracy with targeted data retrieval) approach. RAG enhances AI performance using focused Python code. No need to dig through Hal9’s docs—we used this prompt instead:
 
 > Create a Hal9 chatbot in Python that takes a page context as input, asks OpenAI to identify the last user comment in that context, then calls OpenAI again to generate a reply to it.
 
@@ -87,7 +87,7 @@ But the initial replies? Not great. The page context was too long, and the bot s
 
 The generated code was solid, but we wanted speed. So, we swapped OpenAI for [Groq](https://groq.com/)—yes, with a Q. Groq’s custom AI chip delivers faster LLMs. Here’s the final code:
 
-The final code looks as follows. Feel free to click the "deploy" button in the code and push it to Hal9 for you to try, it's that easy.
+Here’s the final code. Feel free to click the 'deploy' button and push it to Hal9 to try it—it’s that easy.
 
 ``````python deploy
 import os
@@ -120,8 +120,7 @@ messages.append({ "role": "user", "content": "Given the last comment, what's a r
 
 completion = client.chat.completions.create(model = model, messages = messages)
 
-resposne = completion.choices[0].message.content
-print(f"{resposne}")
+print(completion.choices[0].message.content)
 ``````
 
 ## Vibe Coding the Website
@@ -130,9 +129,9 @@ For the website, I wanted something epic—an homage to HAL 9000 from *2001: A S
 
 > Create a single page HTML file with a super cool 3D background built on three.js
 
-The process was iterative brilliance ([check the evidence](https://grok.com/share/bGVnYWN5_d237e77d-0e60-4db0-ae35-3837cfdaa807)). Grok spat out a Three.js setup with a flat donut (not a torus), orbiting particles, and custom shaders for pulsating glow. That shader magic—pumping out a gradient from black edges to a vibrant `#da4266` would’ve taken me 4-8 hours alone, at least! With Grok I nailed it in minutes.
+The process was iterative brilliance ([check the evidence](https://grok.com/share/bGVnYWN5_d237e77d-0e60-4db0-ae35-3837cfdaa807)). Grok spat out a Three.js setup with a flat donut (not a torus), orbiting particles, and custom shaders for pulsating glow. That shader magic—pumping out a gradient from black edges to a vibrant `#da4266` would’ve taken me 4-8 hours alone, at least! With Grok, I nailed it in minutes.
 
-With Grok we hit a Content Security Policy error blocking Three.js, but Hal9’s platform saved the day, letting me finalize it there.
+With Grok, we hit a Content Security Policy error blocking Three.js, but Hal9’s platform saved the day by letting me finalize it there.
 
 [![Vibe Coding 3D Shaders](vibe-coding-3d-shaders.gif)](https://hal9.com/apps/vibe-code-website)
 
@@ -169,7 +168,7 @@ The voice-over came from [ElevenLabs](https://elevenlabs.io/) with this prompt:
 
 > British accent female with upbeat happy and fast voice, a bit sassy
 
-We screencammed the animated website, layered in the voice-over and music, and that became our launch video. From there, vibe coding carried us through the launch. Grok whipped up a Product Hunt page draft, we used Hal9 Reply to respond to early feedback, and I churned out LinkedIn and Twitter posts.
+We screencammed the animated website, layered in the voice-over and music, and that became our launch video. From there, vibe coding carried us through the launch. Grok whipped up a Product Hunt page draft, then we used Hal9 Reply to respond to early feedback, and I churned out LinkedIn and Twitter posts.
 
 The final touch? This blog post. I started with a rough draft, fed it to Grok with “Polish this and fill in the TODOs” and iterated until it flowed.
 
