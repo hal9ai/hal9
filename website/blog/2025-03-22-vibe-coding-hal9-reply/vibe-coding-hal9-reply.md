@@ -85,7 +85,7 @@ But the initial replies? The page context was too long, and the bot struggled to
 
 ![](vibe-coding-chatbot-backend.png)
 
-The generated code was solid, but we wanted speed. So, we swapped OpenAI for [Groq](https://groq.com/)—yes, with a Q. Groq’s custom AI chip delivers faster LLMs. Here’s the final code:
+The generated code was solid, but we wanted speed. So, we swapped OpenAI for [Groq](https://groq.com/)—yes, with a Q. Groq’s custom AI chip delivers faster LLMs.
 
 Here’s the final code. Feel free to click the 'deploy' button and push it to Hal9 to try it—it’s that easy.
 
@@ -125,11 +125,11 @@ print(completion.choices[0].message.content)
 
 ## Vibe Coding the Website
 
-For the website, I wanted something epic—an homage to HAL 9000 from *2001: A Space Odyssey*. Picture a 3D background with a glowing, pulsating donut shape and orbiting particles. But with only 6 days, building that from scratch was out of the question. So, I turned to Grok with this prompt:
+For the website, I wanted something epic—an homage to HAL 9000 from *2001: A Space Odyssey*. Picture a 3D background with a glowing, pulsating Hal9000-like shape. But with only 6 days, building that from scratch was out of the question. So, I turned to Grok with this prompt:
 
 > Create a single page HTML file with a super cool 3D background built on three.js
 
-The process was iterative brilliance ([check the evidence](https://grok.com/share/bGVnYWN5_d237e77d-0e60-4db0-ae35-3837cfdaa807)). Grok spat out a Three.js setup with a flat donut (not a torus), orbiting particles, and custom shaders for pulsating glow. That shader magic—pumping out a gradient from black edges to a vibrant `#da4266` would’ve taken me 4-8 hours alone, at least! With Grok, I nailed it in minutes.
+The process was iterative brilliance ([check the evidence](https://grok.com/share/bGVnYWN5_d237e77d-0e60-4db0-ae35-3837cfdaa807)). Grok spat out a Three.js setup with a flat donut (not a torus) and custom shaders for pulsating glow. That shader magic—pumping out a gradient from black edges to a vibrant raspberry color would’ve taken me 4-8 hours alone, at least! With Grok, I nailed it in minutes.
 
 With Grok, we hit a Content Security Policy error blocking Three.js, but Hal9’s platform saved the day by letting me finalize it there.
 
