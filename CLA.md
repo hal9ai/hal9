@@ -1,14 +1,10 @@
 # Contributor License Agreement
 
-based on the
-
 ## Individual Contributor Exclusive License Agreement
 
-## (including the Traditional Patent License OPTION)
+Thank you for your interest in contributing to Hal9 Inc's open source GitHub repo ("We" or "Us").
 
-Thank you for your interest in contributing to Hal9 Inc's Hal9 Open Source ("We" or "Us").
-
-The purpose of this contributor agreement ("Agreement") is to clarify and document the rights granted by contributors to Us. To make this document effective, please follow the instructions at \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_.
+The purpose of this contributor agreement ("Agreement") is to clarify and document the rights granted by contributors to Us.
 
 ### 0\. Preamble
 
@@ -143,7 +139,3 @@ Address:
 #### Recreate this Contributor License Agreement
 
 [https://contributoragreements.org/u2s/2tf7zjhn1c](https://contributoragreements.org/u2s/2tf7zjhn1c)
-
-[](https://contributoragreements.org/u2s/2tf7zjhn1c)
-
-[](https://contributoragreements.org/u2s/2tf7zjhn1c)
