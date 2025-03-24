@@ -1,12 +1,13 @@
 ---
 sidebar_position: 4
+sidebar_label: "Enterprise"
 ---
 
 import ThemedImage from '../../src/components/themedimg.jsx'
 
 # Hal9 Enterprise
 
-## Overview
+## Generative AI for the Modern Enterprise
 
 In today’s fast-paced digital landscape, enterprises require AI platforms that are not only powerful but also adaptable to diverse operational needs. Hal9 Enterprise meets this demand with a Kubernetes-based architecture that supports deployment flexibility, from public clouds to on-premise hardware. Designed to handle millions of users, it offers a comprehensive solution for generative AI applications, ensuring scalability, security, and compliance are never compromised. This section outlines the platform’s core capabilities and why it’s the ideal choice for forward-thinking organizations.
 
