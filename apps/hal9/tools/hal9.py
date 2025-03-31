@@ -1,8 +1,9 @@
 from data import DATA
 from groq import Groq
+import os
 
 def answer_hal9_questions(user_input):
-    response = Groq().chat.completions.create(
+    response = Groq(api_key=os.environ['HAL9_TOKEN']).chat.completions.create(
         model = "llama3-70b-8192",
         messages = [{"role": "system", "content": DATA["hal9"]},{"role": "user", "content": user_input}],
         temperature = 0,
