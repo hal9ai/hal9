@@ -9,7 +9,7 @@ on:
       - apps/**
 
 jobs:
-  devel:
+  prod:
     runs-on: ubuntu-latest
     steps:
     - name: Set up Python 3.10
