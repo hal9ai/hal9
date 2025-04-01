@@ -19,7 +19,11 @@ if response != 0: sys.exit("Couldn't install playwright!")
 
 # openai client setup
 from openai import OpenAI
-client = OpenAI(base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/", api_key = os.environ['HAL9_TOKEN'])
+# client = OpenAI(base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/", api_key = os.environ['HAL9_TOKEN'])
+# for local use
+client = OpenAI(base_url="http://localhost:5000/proxy/server=https://api.openai.com/v1/", api_key = os.environ['HAL9_TOKEN'])
+# for devel
+# client = OpenAI(base_url="https://devel.hal9.com/proxy/server=https://api.openai.com/v1/", api_key = os.environ['HAL9_TOKEN'])
 
 # csv file location
 file_path = '.user/staff.csv'
@@ -122,7 +126,7 @@ async def run(agent, browser):
     return history
 
 # openai task
-openai_prompt = "tbd"  
+openai_prompt = "Transform to csv the following JSON:\n"  
 
 async def main():
     # ask browseruse to extract staff information
@@ -138,7 +142,7 @@ async def main():
     result = run(agent, browser).final_result()
 
     # ask openai to generate a csv file from this
-    csv_prompt = openai_prompt + "\n" + result
+    csv_prompt = openai_prompt + result
 
     messages = h9.load("messages", [])
     messages.append({"role": "user", "content": csv_prompt})
