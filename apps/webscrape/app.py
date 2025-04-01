@@ -6,10 +6,7 @@ import subprocess
 import asyncio
 import sys
 import os
-import shutil
-import json
-import pandas as pd
-
+import csv
 # browser-use imports and setup
 from browser_use import Agent, Browser, BrowserConfig, SystemPrompt, ActionResult
 from browser_use.browser.context import BrowserContextConfig, BrowserContext
@@ -25,10 +22,8 @@ from openai import OpenAI
 client = OpenAI(base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/", api_key = os.environ['HAL9_TOKEN'])
 
 # csv file location
-dir = '.user'
-if (os.path.exists(dir) == False):
-    os.makedirs(dir)
-csv_file = "staff.csv"
+file_path = '.user/staff.csv'
+os.makedirs(os.path.dirname(file_path), exist_ok = True)
 
 # custom configure browseruse
 class CustomPrompt(SystemPrompt):
@@ -52,8 +47,43 @@ class CustomPrompt(SystemPrompt):
     - link to LinkedIn profile (only if mentioned on the page)
     - For each and any of these items, only use information that is available directly on the company website. If a piece is not, set it to an empty string.
 12. RETURN FORMAT
-- The extracted information shall be passed back as a list of JSON objects. Here is an example:
-
+- The extracted information shall be passed back as a JSON object, where the company name is the top-level JSON key. Here is an example:
+    {
+        "company123":
+        {
+            "Ana Ramírez":
+            {
+                "team": "teamZ",
+                "job_title": "pos77",
+                "github_link": "http://github.com/ana123",
+                "linkedin_link": "" 
+            },
+            "Julieta Álvarez":
+            {
+                "team": "teamH",
+                "job_title": "pos11",
+                "github_link": "http://github.com/ja7777",
+                "linkedin_link": "https://www.linkedin.com/in/julietaalvarez" 
+            },
+            "Julieta Álvarez":
+            {
+                "team": "teamA",
+                "job_title": "pos11",
+                "github_link": "http://github.com/ja8888",
+                "linkedin_link": ""
+            }     
+        },
+        "company789":
+            {
+            "Santiago Botero":
+                {
+                "team": "teamY",
+                "job_title": "pos1",
+                "github_link": "http://github.com/botero11111",
+                "linkedin_link": "" 
+                }
+            }
+        }
 13. OVERALL WORKFLOW
 - The DEFAULT TASK is to be completed whenever the user prompt contains one or more company names. 
   For example, if the user enters 'Hal9, Posit' you should extract information about staff at Hal9 and Posit.
@@ -66,7 +96,14 @@ class CustomPrompt(SystemPrompt):
 controller = Controller()
 
 def append_csv(data):
-    # tbd create or append to file
+    if os.path.exists(file_path):
+        with open(file_path, 'a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(data)
+    else:
+        with open(file_path, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(data)
 
 llm = ChatOpenAI(
     model = "gpt-4o",
