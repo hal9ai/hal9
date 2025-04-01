@@ -17,21 +17,24 @@ type_checks = {
 
 def describe_content(target_path):
   result = {'type': ''}
-    
-  if os.path.isfile(target_path):
-      all_files = [target_path]
-  elif os.path.isdir(target_path):
-      all_files = os.listdir(target_path)
-  else:
-      return result
   
+  if os.path.isfile(target_path):
+    all_files = [os.path.basename(target_path)]  # Just the filename
+    base_path = os.path.dirname(target_path) or '.'  # Directory containing the file, or current dir if none
+  elif os.path.isdir(target_path):
+    all_files = os.listdir(target_path)
+    base_path = target_path
+  else:
+    return result
+
   for type_name, criteria in type_checks.items():
     for target_file in criteria['files']:
       if target_file in all_files:
-        with open(os.path.join(target_path, target_file), 'r', encoding='utf-8') as file:
+        file_path = os.path.join(base_path, target_file)
+        with open(file_path, 'r', encoding='utf-8') as file:
           content = file.read()
           if any(keyword in content for keyword in criteria['contents']):
             result['type'] = type_name
             break
-
+            
   return result

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.16
+
+- Support describing single files
+
 ## 2.8.15
 
 - Support describing python files using streamlit
