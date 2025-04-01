@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.15
+
+- Support describing python files using streamlit
+
 ## 2.8.14
 
 - Support describing app.R files

@@ -8,6 +8,10 @@ type_checks = {
   'shiny': {
     'files': ['app.R'],
     'contents': ['library(shiny)']
+  },
+  'streamlit': {
+    'files': ['app.py', 'main.py'],
+    'contents': ['import streamlit']
   }
 }
 
