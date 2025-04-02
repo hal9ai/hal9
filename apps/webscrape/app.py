@@ -18,12 +18,13 @@ response = subprocess.call(["playwright", "install"], stdout = subprocess.DEVNUL
 if response != 0: sys.exit("Couldn't install playwright!")
 
 # openai client setup
+api_key = os.environ['HAL9_TOKEN']
+server_prod = "https://api.hal9.com/proxy/server=https://api.openai.com/v1/"
+server_devel = "https://devel.hal9.com/proxy/server=https://api.openai.com/v1/"
+server_local = "http://localhost:5000/proxy/server=https://api.openai.com/v1/"
+
 from openai import OpenAI
-# client = OpenAI(base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/", api_key = os.environ['HAL9_TOKEN'])
-# for local use
-client = OpenAI(base_url="http://localhost:5000/proxy/server=https://api.openai.com/v1/", api_key = os.environ['HAL9_TOKEN'])
-# for devel
-# client = OpenAI(base_url="https://devel.hal9.com/proxy/server=https://api.openai.com/v1/", api_key = os.environ['HAL9_TOKEN'])
+client = OpenAI(base_url = server_local, api_key = api_key)
 
 # csv file location
 file_path = '.user/staff.csv'
@@ -111,8 +112,8 @@ def append_csv(data):
 
 llm = ChatOpenAI(
     model = "gpt-4o",
-    base_url = "https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
-    api_key = os.environ['HAL9_TOKEN']
+    base_url = server_local,
+    api_key = api_key
 )
 
 browser = Browser(
@@ -139,10 +140,10 @@ async def main():
         llm = llm,
         save_conversation_path="logs/conversation.json" 
     )
-    result = run(agent, browser).final_result()
+    result = (await run(agent, browser)).final_result()
 
     # ask openai to generate a csv file from this
-    csv_prompt = openai_prompt + result
+    csv_prompt = openai_prompt + str(result)
 
     messages = h9.load("messages", [])
     messages.append({"role": "user", "content": csv_prompt})
@@ -157,7 +158,7 @@ async def main():
 
     # append to existing csv file
     append_csv(response)
-    print(os.path.join("Staff information saved at: ", dir, csv_file))
+    print(os.path.join("Staff information saved at: " + file_path))
 
 asyncio.run(main())
 
