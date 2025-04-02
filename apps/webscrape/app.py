@@ -22,8 +22,6 @@ api_key = os.environ['HAL9_TOKEN']
 server_prod = "https://api.hal9.com/proxy/server=https://api.openai.com/v1/"
 server_devel = "https://devel.hal9.com/proxy/server=https://api.openai.com/v1/"
 server_local = "http://localhost:5000/proxy/server=https://api.openai.com/v1/"
-#server_local = "http://localhost:5000/proxy/server=https://api.x.ai/v1"
-#server_local = "http://localhost:5000/proxy/server=http://api.hal9.com/proxy/server=https://api.groq.com/openai/v1"
 
 
 from openai import OpenAI
@@ -43,7 +41,6 @@ class CustomPrompt(SystemPrompt):
         new_rules = """
 10. DEFAULT TASK:
 - Your default task is to find out who works at a company (to be specified by the user).
-- ONLY use the company's website to obtain employee information
   We are especially interested in the following pieces of information:
     - company name
     - team/department
@@ -114,13 +111,7 @@ llm = ChatOpenAI(
     base_url = server_local,
     api_key = api_key
 )
-""" 
-llm = ChatOpenAI(
-    model = "grok-2-1212",
-    base_url = server_local,
-    api_key = api_key
-)
- """
+
 browser = Browser(
     config = BrowserConfig(headless = True)
 )
