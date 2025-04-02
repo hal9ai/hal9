@@ -22,6 +22,9 @@ api_key = os.environ['HAL9_TOKEN']
 server_prod = "https://api.hal9.com/proxy/server=https://api.openai.com/v1/"
 server_devel = "https://devel.hal9.com/proxy/server=https://api.openai.com/v1/"
 server_local = "http://localhost:5000/proxy/server=https://api.openai.com/v1/"
+#server_local = "http://localhost:5000/proxy/server=https://api.x.ai/v1"
+#server_local = "http://localhost:5000/proxy/server=http://api.hal9.com/proxy/server=https://api.groq.com/openai/v1"
+
 
 from openai import OpenAI
 client = OpenAI(base_url = server_local, api_key = api_key)
@@ -38,21 +41,17 @@ class CustomPrompt(SystemPrompt):
 
         # Add your custom rules
         new_rules = """
-11. DEFAULT TASK:
-- Your default task is to extract information on company staff.
-- ONLY use the company's website to obtain employee information,
-  NOT any other web pages the company or its employees might appear on.
-  E.g., do NOT!!! look for GitHub contributors to a company's organization instead!
-  We are interested in the following pieces of information:
+10. DEFAULT TASK:
+- Your default task is to find out who works at a company (to be specified by the user).
+- ONLY use the company's website to obtain employee information
+  We are especially interested in the following pieces of information:
     - company name
     - team/department
     - job title
     - full name
-    - link to GitHub repository (only if mentioned on the page)
-    - link to LinkedIn profile (only if mentioned on the page)
-    - For each and any of these items, only use information that is available directly on the company website. If a piece is not, set it to an empty string.
-12. RETURN FORMAT
-- The extracted information shall be passed back as a JSON object, where the company name is the top-level JSON key. Here is an example:
+11. RETURN FORMAT
+- The extracted information shall be passed back as a JSON object.
+- Use the company name as the top-level JSON key. Here is an example:
     {
         "company123":
         {
@@ -89,7 +88,7 @@ class CustomPrompt(SystemPrompt):
                 }
             }
         }
-13. OVERALL WORKFLOW
+12. OVERALL WORKFLOW
 - The DEFAULT TASK is to be completed whenever the user prompt contains one or more company names. 
   For example, if the user enters 'Hal9, Posit' you should extract information about staff at Hal9 and Posit.
 - If the user asks you explicitly for something else, just do what you are asked to do.
@@ -115,7 +114,13 @@ llm = ChatOpenAI(
     base_url = server_local,
     api_key = api_key
 )
-
+""" 
+llm = ChatOpenAI(
+    model = "grok-2-1212",
+    base_url = server_local,
+    api_key = api_key
+)
+ """
 browser = Browser(
     config = BrowserConfig(headless = True)
 )
@@ -126,9 +131,20 @@ async def run(agent, browser):
     await browser.close()
     return history
 
-# openai task
-openai_prompt = "Transform to csv the following JSON:\n"  
+# openai prompt
+openai_prompt = """
+You are given a JSON object that reports information about people that work at a company (or several companies).
+Transform it to csv. The csv file shall have the following columns:
 
+- company_name
+- team
+- job_title
+- full_name
+- github_link
+- linkedin_link
+
+Leave empty any information you are not given.
+"""
 async def main():
     # ask browseruse to extract staff information
     prompt = h9.input()
