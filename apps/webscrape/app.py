@@ -32,6 +32,25 @@ file_path = '.user/staff.csv'
 os.makedirs(os.path.dirname(file_path), exist_ok = True)
 
 # custom configure browseruse
+user_input = '''
+I want to know who works at a certain company. Concretely, I want to know:
+ - the name
+ - the team they're in
+ - their job title
+ - the url of their github repository (if available)
+ - the url of their linkedin profile (if available)
+want you to gather that information directly from the company's website, for example, from a webpage called "teams".
+I want you to report back that information as a list of JSON objects, where every object has the following keys:
+ - full_name
+ - team
+ - job_title
+ - github_link
+ - linkedin_link
+Insert an empty string as a value if a piece of information is not available.
+
+This is the company I want to know their peope of: 
+'''
+
 class CustomPrompt(SystemPrompt):
     def important_rules(self) -> str:
         # Get existing rules from parent class
@@ -40,54 +59,20 @@ class CustomPrompt(SystemPrompt):
         # Add your custom rules
         new_rules = """
 10. DEFAULT TASK:
-- Your default task is to find out who works at a company (to be specified by the user).
-  We are especially interested in the following pieces of information:
-    - company name
-    - team/department
-    - job title
-    - full name
-11. RETURN FORMAT
-- The extracted information shall be passed back as a JSON object.
-- Use the company name as the top-level JSON key. Here is an example:
-    {
-        "company123":
-        {
-            "Ana Ramírez":
-            {
-                "team": "teamZ",
-                "job_title": "pos77",
-                "github_link": "http://github.com/ana123",
-                "linkedin_link": "" 
-            },
-            "Julieta Álvarez":
-            {
-                "team": "teamH",
-                "job_title": "pos11",
-                "github_link": "http://github.com/ja7777",
-                "linkedin_link": "https://www.linkedin.com/in/julietaalvarez" 
-            },
-            "Julieta Álvarez":
-            {
-                "team": "teamA",
-                "job_title": "pos11",
-                "github_link": "http://github.com/ja8888",
-                "linkedin_link": ""
-            }     
-        },
-        "company789":
-            {
-            "Santiago Botero":
-                {
-                "team": "teamY",
-                "job_title": "pos1",
-                "github_link": "http://github.com/botero11111",
-                "linkedin_link": "" 
-                }
-            }
-        }
-12. OVERALL WORKFLOW
-- The DEFAULT TASK is to be completed whenever the user prompt contains one or more company names. 
-  For example, if the user enters 'Hal9, Posit' you should extract information about staff at Hal9 and Posit.
+- Your default task is to extract information on company staff, and report that back to to the user in JSON format.
+- ONLY use the company's website to obtain employee information, NOT any other web pages the company or its employees might appear on.
+  E.g., do NOT!!! look for GitHub contributors to a company's organization instead!
+- Report back ONLY employee information, not anything else.
+  E.g., do NOT gather information about the company's products!
+- Employees may be found, for example, in a section called "teams" or "people".
+- The JSON object shall have the following keys for every person who works there:
+    - full_name
+    - team
+    - job_title
+    - github_link
+    - linkedin_link
+- For each and any of these keys, report an empty string if the information is not available.
+- The default task is to be completed whenever the user prompt is a company name (for example, "Hal 9").
 - If the user asks you explicitly for something else, just do what you are asked to do.
 """
 
@@ -138,11 +123,11 @@ Leave empty any information you are not given.
 """
 async def main():
     # ask browseruse to extract staff information
-    prompt = h9.input()
+    prompt = user_input + h9.input()
     agent = Agent(
         browser = browser,
         controller = controller,
-        system_prompt_class = CustomPrompt,
+        # system_prompt_class = CustomPrompt,
         task = prompt,
         llm = llm,
         save_conversation_path="logs/conversation.json" 
