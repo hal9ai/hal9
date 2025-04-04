@@ -7,52 +7,25 @@ import asyncio
 import sys
 import os
 import csv
+
 # browser-use imports and setup
 from browser_use import Agent, Browser, BrowserConfig, SystemPrompt, ActionResult
 from browser_use.browser.context import BrowserContextConfig, BrowserContext
 from browser_use.agent.service import Agent
-from browser_use.controller.service import Controller
 from langchain_openai import ChatOpenAI
+
+# import openai
+from openai import OpenAI
 
 response = subprocess.call(["playwright", "install"], stdout = subprocess.DEVNULL, stderr = subprocess.STDOUT)
 if response != 0: sys.exit("Couldn't install playwright!")
 
-# openai client setup
-api_key = os.environ['HAL9_TOKEN']
-server_prod = "https://api.hal9.com/proxy/server=https://api.openai.com/v1/"
-server_devel = "https://devel.hal9.com/proxy/server=https://api.openai.com/v1/"
-server_local = "http://localhost:5000/proxy/server=https://api.openai.com/v1/"
+# utility functions and variables
+__location__ = os.path.realpath(
+    os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
-
-from openai import OpenAI
-client = OpenAI(base_url = server_local, api_key = api_key)
-
-# csv file location
 file_path = '.user/staff.csv'
 os.makedirs(os.path.dirname(file_path), exist_ok = True)
-
-# browseruse instruction (prompt preamble)
-task_def = '''
-I want to know who works at a certain company. Concretely, I want to know:
- - the name
- - the team they're in
- - their job title
- - the url of their github repository (if available)
- - the url of their linkedin profile (if available)
-want you to gather that information directly from the company's website, for example, from a webpage called "teams".
-I want you to report back that information as a list of JSON objects, where every object has the following keys:
- - full_name
- - team
- - job_title
- - github_link
- - linkedin_link
-Insert an empty string as a value if a piece of information is not available.
-
-This is the company I want to know their people of: 
-
-'''
-
-controller = Controller()
 
 def append_csv(data):
     if os.path.exists(file_path):
@@ -63,6 +36,21 @@ def append_csv(data):
         with open(file_path, 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(data)
+
+# browser-use config
+with open(os.path.join(__location__, 'browseruse_prompt.md'), 'r') as f:
+    browseruse_prompt = f.read()
+
+# openai config
+api_key = os.environ['HAL9_TOKEN']
+server_prod = "https://api.hal9.com/proxy/server=https://api.openai.com/v1/"
+server_devel = "https://devel.hal9.com/proxy/server=https://api.openai.com/v1/"
+server_local = "http://localhost:5000/proxy/server=https://api.openai.com/v1/"
+
+with open(os.path.join(__location__, 'openai_prompt.md'), 'r') as f:
+    openai_prompt = f.read()
+
+client = OpenAI(base_url = server_local, api_key = api_key)
 
 llm = ChatOpenAI(
     model = "gpt-4o",
@@ -80,41 +68,12 @@ async def run(agent, browser):
     await browser.close()
     return history
 
-# openai prompt
-openai_prompt = """
-You are given a JSON object that contains information about people that work at a company.
-Transform it to csv. 
-
-Start immediately with the header (no additional comments or preambles). The header shall have the following columns:
-
-- company_name
-- team
-- job_title
-- full_name
-- github_link
-- linkedin_link
-
-All items are plain-text strings. Separate them by commas; don't insert any additional parentheses. Don't use markdown.
-
-Leave empty any information you are not given. Do NOT
-
-Here is an example:
-
-company_name, team, job_title, full_name, github_link, linkedin_link
-SomeComp, Data Science, Junior Data Scientist, Julio Álvarez, https://www.github.com/juli, 
-SomeComp, Data Science, Team Lead, Julieta Marquez, https://www.github.com/julieta7777, https://www.linkedin.com/in/julieta-marquez-2330ob184/
-SomeComp, Legal, Advisor, João Souza, , 
-SomeComp, Accounting, , Davide Romano, , https://www.linkedin.com/in/davide-romano-2331ob184/]
-
-"""
 async def main():
     # ask browseruse to extract staff information
     user_input = h9.input()
-    prompt = task_def + user_input
+    prompt = browseruse_prompt + user_input
     agent = Agent(
         browser = browser,
-        controller = controller,
-        # system_prompt_class = CustomPrompt,
         task = prompt,
         llm = llm,
         save_conversation_path="logs/conversation.json" 
