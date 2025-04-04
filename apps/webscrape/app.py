@@ -31,8 +31,8 @@ client = OpenAI(base_url = server_local, api_key = api_key)
 file_path = '.user/staff.csv'
 os.makedirs(os.path.dirname(file_path), exist_ok = True)
 
-# custom configure browseruse
-user_input = '''
+# browseruse instruction (prompt preamble)
+task_def = '''
 I want to know who works at a certain company. Concretely, I want to know:
  - the name
  - the team they're in
@@ -48,36 +48,9 @@ I want you to report back that information as a list of JSON objects, where ever
  - linkedin_link
 Insert an empty string as a value if a piece of information is not available.
 
-This is the company I want to know their peope of: 
+This is the company I want to know their people of: 
+
 '''
-
-class CustomPrompt(SystemPrompt):
-    def important_rules(self) -> str:
-        # Get existing rules from parent class
-        existing_rules = super().important_rules()
-
-        # Add your custom rules
-        new_rules = """
-10. DEFAULT TASK:
-- Your default task is to extract information on company staff, and report that back to to the user in JSON format.
-- ONLY use the company's website to obtain employee information, NOT any other web pages the company or its employees might appear on.
-  E.g., do NOT!!! look for GitHub contributors to a company's organization instead!
-- Report back ONLY employee information, not anything else.
-  E.g., do NOT gather information about the company's products!
-- Employees may be found, for example, in a section called "teams" or "people".
-- The JSON object shall have the following keys for every person who works there:
-    - full_name
-    - team
-    - job_title
-    - github_link
-    - linkedin_link
-- For each and any of these keys, report an empty string if the information is not available.
-- The default task is to be completed whenever the user prompt is a company name (for example, "Hal 9").
-- If the user asks you explicitly for something else, just do what you are asked to do.
-"""
-
-        # Make sure to use this pattern otherwise the existing rules will be lost
-        return f'{existing_rules}\n{new_rules}'
 
 controller = Controller()
 
@@ -109,8 +82,10 @@ async def run(agent, browser):
 
 # openai prompt
 openai_prompt = """
-You are given a JSON object that reports information about people that work at a company (or several companies).
-Transform it to csv. The csv file shall have the following columns:
+You are given a JSON object that contains information about people that work at a company.
+Transform it to csv. 
+
+Start immediately with the header (no additional comments or preambles). The header shall have the following columns:
 
 - company_name
 - team
@@ -119,11 +94,23 @@ Transform it to csv. The csv file shall have the following columns:
 - github_link
 - linkedin_link
 
-Leave empty any information you are not given.
+All items are plain-text strings. Separate them by commas; don't insert any additional parentheses. Don't use markdown.
+
+Leave empty any information you are not given. Do NOT
+
+Here is an example:
+
+company_name, team, job_title, full_name, github_link, linkedin_link
+SomeComp, Data Science, Junior Data Scientist, Julio Álvarez, https://www.github.com/juli, 
+SomeComp, Data Science, Team Lead, Julieta Marquez, https://www.github.com/julieta7777, https://www.linkedin.com/in/julieta-marquez-2330ob184/
+SomeComp, Legal, Advisor, João Souza, , 
+SomeComp, Accounting, , Davide Romano, , https://www.linkedin.com/in/davide-romano-2331ob184/]
+
 """
 async def main():
     # ask browseruse to extract staff information
-    prompt = user_input + h9.input()
+    user_input = h9.input()
+    prompt = task_def + user_input
     agent = Agent(
         browser = browser,
         controller = controller,
@@ -135,12 +122,23 @@ async def main():
     result = (await run(agent, browser)).final_result()
 
     # ask openai to generate a csv file from this
-    csv_prompt = openai_prompt + str(result)
+    csv_prompt = openai_prompt
+    + """
+
+    This is the company it's about:
+    """
+    + user_input
+    + """
+    
+    And this is the JSON: 
+    
+    """
+    + result
 
     messages = h9.load("messages", [])
     messages.append({"role": "user", "content": csv_prompt})
     completion = client.chat.completions.create(model = "o1-preview", messages = messages, stream = True)
-    h9.save("messages", messages, hidden = True) # needed???
+    h9.save("messages", messages, hidden = True)
     response = ""
     for chunk in completion:
         if chunk.choices and chunk.choices[0].delta and chunk.choices[0].delta.content:
