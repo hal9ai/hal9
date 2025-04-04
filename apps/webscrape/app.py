@@ -122,18 +122,7 @@ async def main():
     result = (await run(agent, browser)).final_result()
 
     # ask openai to generate a csv file from this
-    csv_prompt = openai_prompt
-    + """
-
-    This is the company it's about:
-    """
-    + user_input
-    + """
-    
-    And this is the JSON: 
-    
-    """
-    + result
+    csv_prompt = openai_prompt + "This is the company it's about: " + user_input + "And this is the JSON: "  + result
 
     messages = h9.load("messages", [])
     messages.append({"role": "user", "content": csv_prompt})
