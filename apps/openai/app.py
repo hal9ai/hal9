@@ -2,7 +2,11 @@ import os
 from openai import OpenAI
 import hal9 as h9
 
-client = OpenAI(base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/", api_key = os.environ['HAL9_TOKEN'])
+# client = OpenAI(base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/", api_key = os.environ['HAL9_TOKEN'])
+# for local use
+client = OpenAI(base_url="http://localhost:5000/proxy/server=https://api.openai.com/v1/", api_key = os.environ['HAL9_TOKEN'])
+# for devel
+# client = OpenAI(base_url="https://devel.hal9.com/proxy/server=https://api.openai.com/v1/", api_key = os.environ['HAL9_TOKEN'])
 
 messages = h9.load("messages", [])
 messages.append({"role": "user", "content": input()})
