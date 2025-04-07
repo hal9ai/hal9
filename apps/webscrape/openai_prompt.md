@@ -9,13 +9,14 @@ Start immediately with the header (no additional comments or preambles). The hea
 - full_name
 - github_link
 - linkedin_link
+- EOL
 
 Leave empty any information you are not given. 
 
 Here is an example:
 
-company_name, team, job_title, full_name, github_link, linkedin_link
-SomeComp, Data Science, Junior Data Scientist, Julio Álvarez, https://www.github.com/juli, 
-SomeComp, Data Science, Team Lead, Julieta Marquez, https://www.github.com/julieta7777, https://www.linkedin.com/in/julieta-marquez-2330ob184/
-SomeComp, Legal, Advisor, João Souza, , 
-SomeComp, Accounting, , Davide Romano, , https://www.linkedin.com/in/davide-romano-2331ob184/
+company_name, team, job_title, full_name, github_link, linkedin_link, EOL
+SomeComp, Data Science, Junior Data Scientist, Julio Álvarez, https://www.github.com/juli, EOL
+SomeComp, Data Science, Team Lead, Julieta Marquez, https://www.github.com/julieta7777, https://www.linkedin.com/in/julieta-marquez-2330ob184/, EOL
+SomeComp, Legal, Advisor, João Souza, , , EOL
+SomeComp, Accounting, , Davide Romano, , https://www.linkedin.com/in/davide-romano-2331ob184/, EOL

@@ -23,14 +23,16 @@ if response != 0: sys.exit("Couldn't install playwright!")
 # utility functions and variables
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
+EOL = "eol"
 
 file_path = '.user/staff.csv'
 os.makedirs(os.path.dirname(file_path), exist_ok = True)
 
 def append_csv(data):
+    data = data.split(EOL)
     if os.path.exists(file_path):
         with open(file_path, 'a', newline='') as file:
-            writer = csv.writer(file)
+            writer = csv.writer(file)  
             writer.writerow(data)
     else:
         with open(file_path, 'w', newline='') as file:
@@ -81,7 +83,11 @@ async def main():
     result = (await run(agent, browser)).final_result()
 
     # ask openai to generate a csv file from this
-    csv_prompt = openai_prompt + "This is the company it's about: " + user_input + "And this is the JSON: "  + result
+    # csv_prompt = openai_prompt + "This is the company it's about: " + user_input + ". And this is the JSON: " + result  + ". And this is the value to be written into the EOL column: " + EOL
+    csv_prompt = openai_prompt +\
+        "This is the company it's about: " + user_input +\
+             ". And this is the JSON: " + result  +\
+                 ". And this is the value to be written into the EOL column: " + EOL
 
     messages = h9.load("messages", [])
     messages.append({"role": "user", "content": csv_prompt})
@@ -93,7 +99,6 @@ async def main():
             content = chunk.choices[0].delta.content
             print(content, end="")
             response += content
-
     # append to existing csv file
     append_csv(response)
     print(os.path.join("Staff information saved at: " + file_path))
