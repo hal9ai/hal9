@@ -10,8 +10,7 @@ import csv
 import re
 
 # browser-use imports and setup
-from browser_use import Agent, Browser, BrowserConfig, Controller, SystemPrompt, ActionResult
-from browser_use.browser.context import BrowserContextConfig, BrowserContext
+from browser_use import Agent, Browser, BrowserConfig
 from browser_use.agent.service import Agent
 from langchain_openai import ChatOpenAI
 
