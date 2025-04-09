@@ -5,7 +5,7 @@ I want to know who works at a certain company. Concretely, I want to know:
  - the url of their github repository (if available)
  - the url of their linkedin profile (if available)
 
-I want you to gather that information directly from the company's website, for example, from a webpage called "teams".
+I want you to gather that information directly from the company's website, for example, from a webpage called "teams". To find the url for the company's website, use duckduckgo.com as your search engine.
 I.e., do NOT EVER go to LinkedIn or GitHub themselves!
 
 I want you to report back that information as a list of JSON objects, where every object has the following keys:
