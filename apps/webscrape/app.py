@@ -7,10 +7,10 @@ import asyncio
 import sys
 import os
 import csv
+import re
 
 # browser-use imports and setup
-from browser_use import Agent, Browser, BrowserConfig, SystemPrompt, ActionResult
-from browser_use.browser.context import BrowserContextConfig, BrowserContext
+from browser_use import Agent, Browser, BrowserConfig
 from browser_use.agent.service import Agent
 from langchain_openai import ChatOpenAI
 
@@ -23,19 +23,30 @@ if response != 0: sys.exit("Couldn't install playwright!")
 # utility functions and variables
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
+EOL = "eol"
 
 file_path = '.user/staff.csv'
 os.makedirs(os.path.dirname(file_path), exist_ok = True)
 
 def append_csv(data):
+    splitter = re.compile(f"\s*{re.escape(EOL)}\s*\n?", re.IGNORECASE)
+    rows = [row.strip() for row in re.split(splitter, data) if row.strip()]
+
+    processed_rows = []
+    for row in rows:
+        fields = [field.strip() for field in row.split(',')]
+        processed_rows.append(fields) 
+        
     if os.path.exists(file_path):
         with open(file_path, 'a', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(data)
+            writer = csv.writer(file)  
+            for row in processed_rows:
+                writer.writerow(row)
     else:
         with open(file_path, 'w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(data)
+            writer = csv.writer(file)  
+            for row in processed_rows:
+                writer.writerow(row)
 
 # browser-use config
 with open(os.path.join(__location__, 'browseruse_prompt.md'), 'r') as f:
@@ -81,7 +92,10 @@ async def main():
     result = (await run(agent, browser)).final_result()
 
     # ask openai to generate a csv file from this
-    csv_prompt = openai_prompt + "This is the company it's about: " + user_input + "And this is the JSON: "  + result
+    csv_prompt = openai_prompt +\
+        "This is the company it's about: " + user_input +\
+             ". And this is the JSON: " + result  +\
+                 ". And this is the value to be written into the EOL column: " + EOL
 
     messages = h9.load("messages", [])
     messages.append({"role": "user", "content": csv_prompt})
@@ -91,13 +105,10 @@ async def main():
     for chunk in completion:
         if chunk.choices and chunk.choices[0].delta and chunk.choices[0].delta.content:
             content = chunk.choices[0].delta.content
-            print(content, end="")
+            print(content, end = "")
             response += content
-
     # append to existing csv file
     append_csv(response)
-    print(os.path.join("Staff information saved at: " + file_path))
-
 asyncio.run(main())
 
 
