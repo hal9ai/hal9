@@ -112,7 +112,7 @@ streamlit_generator_description = {
     "type": "function",
     "function": {
         "name": "streamlit_generator",
-        "description": "Generates a complete Python Streamlit app based on user-provided natural language prompts. It automates the creation of interactive applications that requires interactions (This tool do not interact with files uploaded)",
+        "description": "Generates or changes a complete Python Streamlit app based on user-provided natural language prompts. It automates the creation or modification of interactive applications that requires interactions (This tool do not interact with files uploaded)",
         "strict": True,
         "parameters": {
             "type": "object",
