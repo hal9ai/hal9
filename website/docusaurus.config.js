@@ -16,18 +16,6 @@ const config = {
   organizationName: 'hal9ai',
   projectName: 'hal9',
   plugins: [
-    'docusaurus-plugin-sass',
-    [
-      '@docusaurus/plugin-client-redirects',
-      {
-        redirects: [
-          {
-            to: '/docs/learn/interface',
-            from: '/docs',
-          },
-        ],
-      },
-    ],
   ],
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -62,8 +50,6 @@ const config = {
         },
       }),
     ],
-  ],
-  plugins: [
   ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
