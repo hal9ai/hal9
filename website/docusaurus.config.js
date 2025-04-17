@@ -22,7 +22,7 @@ const config = {
       {
         redirects: [
           {
-            to: '/docs/learn/hal9',
+            to: '/docs/learn/interface',
             from: '/docs',
           },
         ],
@@ -64,11 +64,6 @@ const config = {
     ],
   ],
   plugins: [
-    ['@docusaurus/plugin-content-docs', {
-      id: 'reference',
-      path: 'reference',
-      routeBasePath: 'reference',
-    }]
   ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -91,10 +86,11 @@ const config = {
             position: 'left',
           },
           */
-          { to: '/learn/hal9', label: 'Users', position: 'left' },
+          { to: '/learn/interface', label: 'Users', position: 'left' },
           { to: '/learn/code', label: 'Developers', position: 'left' },
           { to: '/learn/genai', label: 'Concepts', position: 'left' },
-          { to: '/reference/code', label: 'Reference', position: 'left' },
+          { to: '/learn/enterprise', label: 'Enterprise', position: 'left' },
+          
           { to: '/blog', label: 'Blog', position: 'left' },
           {
             href: 'https://github.com/hal9ai/hal9',
