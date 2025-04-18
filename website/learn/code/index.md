@@ -1,4 +1,4 @@
-# [Hal9](https://hal9.com/): Create and Share Generative Apps
+# Developers
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Hal9 PyPi Downloads](https://img.shields.io/pypi/dm/hal9?label=PyPI)](https://pypistats.org/packages/hal9)

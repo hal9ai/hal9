@@ -1,4 +1,4 @@
-# Generative AI
+# Concepts
 
 Generative Artificial Intelligence (**GenAI**) is a version of Artificial Intelligence (**AI**) that is good at generating content: text, images, sounds, videos, code, etc.
 

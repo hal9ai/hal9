@@ -1,6 +1,6 @@
 import ThemedImage from '../../src/components/themedimg.jsx'
 
-# Hal9: Create and Share Powerful AIs
+# User Interface
 
 Hal9 is a platform designed to simplify the creation and sharing of powerful AIs. Unlike traditional chatbots, Hal9 enables you to go beyond basic chat interfaces and the generic capabilities offered by services like ChatGPT, Gemini, or Claude.
 

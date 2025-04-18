@@ -1,6 +1,6 @@
 import { Floating } from '../components/floating.jsx';
 
-# [Hal9](/): Create and Share Powerful AIs
+# Create and Share Powerful AIs
 
 Learn how to use and create AIs from simple templates built from the user interface, to complex ones created from templates and code.
 

@@ -5,7 +5,7 @@ sidebar_label: "Enterprise"
 
 import ThemedImage from '../../src/components/themedimg.jsx'
 
-# Hal9 Enterprise
+# Enterprise
 
 ## Generative AI for the Modern Enterprise
 

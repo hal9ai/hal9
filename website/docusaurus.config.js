@@ -8,7 +8,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Hal9: Create and Share Powerful AIs',
+  title: 'Hal9',
   tagline: 'Hal9 provides enterprise-ready, secure, customizable, model-agnostic AIs powered by the best AI libraries.',
   favicon: 'img/favicon.ico',
   url: 'https://hal9.com',
