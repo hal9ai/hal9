@@ -1,2 +1,2 @@
-browser-use git+https://github.com/browser-use/browser-use.git@main
+browser-use git+https://github.com/browser-use/browser-use.git@56084d42631fcf5976fe7fbbc042aa85b38d5afd
 playwright
