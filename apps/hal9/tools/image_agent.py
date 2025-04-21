@@ -1,40 +1,17 @@
 import shutil
 from replicate import Client
-from utils import generate_response, load_messages, insert_message, execute_function, save_messages, insert_tool_message, load_json_file
+from utils import generate_response, load_messages, insert_message, execute_function, save_messages, insert_tool_message, load_json_file, add_images_descriptions
 from PIL import Image
 from io import BytesIO
 from clients import openai_client
 import os
 import base64
 from mimetypes import guess_type
-import json
 
 replicate = Client(api_token=os.environ['HAL9_TOKEN'], base_url="https://api.hal9.com/proxy/server=https://api.replicate.com")
 
 ########################### Functions ##########################
 
-def add_images_descriptions(image_path):
-    description = generate_description(image_path)
-
-    file_name = './.storage/.images_description.json'
-
-    if os.path.exists(file_name):
-        with open(file_name, 'r') as file:
-            data = json.load(file)
-    else:
-        data = []
-
-    new_record = {
-        "image_path": image_path,
-        "image_description": description
-    }
-
-    data.append(new_record)
-
-    with open(file_name, 'w') as file:
-        json.dump(data, file, indent=4)
-
-    return description
 
 def generate_img_url(image_path):
     mime_type, _ = guess_type(image_path)
@@ -45,27 +22,6 @@ def generate_img_url(image_path):
         base64_encoded_data = base64.b64encode(image_file.read()).decode('utf-8')
 
     return f"data:{mime_type};base64,{base64_encoded_data}"
-
-def generate_description(image_path):
-    try:
-        file_input = open(image_path, 'rb')
-        input = {
-            "image": file_input,
-            "prompt": """Generate a detailed image prompt that includes all specific visual details in the image. This should include precise descriptions of colors, textures, lighting, positions of all elements, proportions, background details, 
-            foreground details, and any unique stylistic choices. Ensure the description is exhaustive enough to allow an artist or AI to recreate the image accurately without visual reference."""
-        }
-
-        description = ""
-        for event in replicate.stream(
-            "yorickvp/llava-13b:80537f9eead1a5bfa72d5ac6ea6414379be41d4d4f6679fd776e9535d1eb58bb",
-            input=input
-        ):
-          description+=event.data
-        file_input.close()
-    except Exception as e: 
-        return (f"Couldn't describe that image. -> Error: {e}")
-    
-    return description.replace("{", "").replace("}", "")
 
 def image_generator(prompt, filename):
     try:
