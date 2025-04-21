@@ -1,9 +1,8 @@
 import json
 import os
 import urllib.parse
-import urllib.request
 import requests
-from typing import Literal, List, Dict, Any, Union, Optional
+from typing import Literal, List, Dict, Any, Optional
 from clients import openai_client, groq_client
 from openai import OpenAI
 import fitz
@@ -13,8 +12,9 @@ from concurrent.futures import ThreadPoolExecutor
 import ast
 import re
 import hal9 as h9
+from replicate import Client
 
-# Define the allowed client types.  
+# Define the allowed client types.
 ClientType = Literal["openai", "groq"]
 
 def get_client(client_type: ClientType) -> OpenAI:
@@ -262,41 +262,46 @@ def process_chunk(chunk_info):
         "page": page_num + 1  # Page numbers start from 1
     }
 
-def generate_text_embeddings_parquet(url, model="text-embedding-3-small", client_type="openai", n_words=300, overlap=0, max_threads=8):
-    # Download and read the PDF
-    response = requests.get(url)
-    pdf_document = fitz.open(stream=BytesIO(response.content))
-    
-    # Prepare chunk info for parallel processing
-    chunk_info_list = []
-    for page_num in range(len(pdf_document)):
-        page = pdf_document[page_num]
-        page_text = page.get_text()
+def generate_text_embeddings_parquet(
+    url,
+    model="text-embedding-3-small",
+    client_type="openai",
+    n_words=300,
+    overlap=0,
+    max_threads=8,
+    storage_path="./.storage/.text_files.parquet"
+):
+    # Download PDF
+    resp = requests.get(url)
+    doc = fitz.open(stream=BytesIO(resp.content))
 
-        # Split the page text into chunks
-        text_chunks = split_text(page_text, n_words=n_words, overlap=overlap)
+    # Prepare chunks
+    tasks = []
+    for i in range(len(doc)):
+        text = doc[i].get_text()
+        for chunk in split_text(text, n_words=n_words, overlap=overlap):
+            tasks.append((chunk, i, model, client_type))
+    doc.close()
 
-        # Add chunk info to the list
-        for chunk in text_chunks:
-            chunk_info_list.append((chunk, page_num, model, client_type))
+    # Process in parallel
+    rows = list(ThreadPoolExecutor(max_threads).map(process_chunk, tasks))
 
-    pdf_document.close()
+    # Build new DataFrame
+    df_new = pd.DataFrame(rows)
+    df_new['chunk_id'] = range(len(df_new))
+    df_new['filename'] = os.path.basename(url)
 
-    # Process chunks in parallel
-    rows = []
-    with ThreadPoolExecutor(max_threads) as executor:
-        for result in executor.map(process_chunk, chunk_info_list):
-            rows.append(result)
+    os.makedirs(os.path.dirname(storage_path), exist_ok=True)
 
-    # Create the DataFrame
-    df = pd.DataFrame(rows)
+    # Load existing and append
+    if os.path.exists(storage_path):
+        df_old = pd.read_parquet(storage_path, engine="pyarrow")
+        df = pd.concat([df_old, df_new], ignore_index=True)
+    else:
+        df = df_new
 
-    # Add a global chunk ID column
-    df['chunk_id'] = range(len(df))
-    df['filename'] = '.' + url.split("/")[-1]
-
-    # Save as Parquet
-    df.to_parquet("./.storage/.text_files.parquet", engine="pyarrow", index=False)
+    # Save all
+    df.to_parquet(storage_path, engine="pyarrow", index=False)
 
 def load_json_file(json_path):
     if os.path.exists(json_path):
@@ -308,3 +313,75 @@ def extract_code_block(code: str, language: str) -> str:
     pattern = rf"```{language}\n(.*?)```"
     match = re.search(pattern, code, re.DOTALL)
     return match.group(1) if match else ""
+
+
+def is_url_list(prompt):
+    urls_list = prompt.split(",")
+    for url in urls_list:
+        result = urllib.parse.urlparse(url.strip())
+        if not all([result.scheme, result.netloc]):
+            return False
+    return True
+
+def add_images_descriptions(image_path):
+    description = generate_description(image_path)
+
+    file_name = './.storage/.images_description.json'
+
+    if os.path.exists(file_name):
+        with open(file_name, 'r') as file:
+            data = json.load(file)
+    else:
+        data = []
+
+    new_record = {
+        "image_path": image_path,
+        "image_description": description
+    }
+
+    data.append(new_record)
+
+    with open(file_name, 'w') as file:
+        json.dump(data, file, indent=4)
+
+    return description
+
+replicate = Client(api_token=os.environ['HAL9_TOKEN'], base_url="https://api.hal9.com/proxy/server=https://api.replicate.com")
+
+def generate_description(image_path):
+    try:
+        file_input = open(image_path, 'rb')
+        input = {
+            "image": file_input,
+            "prompt": """Generate a detailed image prompt that includes all specific visual details in the image. This should include precise descriptions of colors, textures, lighting, positions of all elements, proportions, background details, 
+            foreground details, and any unique stylistic choices. Ensure the description is exhaustive enough to allow an artist or AI to recreate the image accurately without visual reference."""
+        }
+
+        description = ""
+        for event in replicate.stream(
+            "yorickvp/llava-13b:80537f9eead1a5bfa72d5ac6ea6414379be41d4d4f6679fd776e9535d1eb58bb",
+            input=input
+        ):
+          description+=event.data
+        file_input.close()
+    except Exception as e: 
+        return (f"Couldn't describe that image. -> Error: {e}")
+    
+    return description.replace("{", "").replace("}", "")
+
+def process_url(url, messages):
+    h9.event("Uploaded File", f"{url}")
+    filename = url.split("/")[-1]
+    file_extension = filename.split(".")[-1] if "." in filename else "No extension"
+
+    download_file(url)
+    messages = insert_message(messages, "system", f"Consider use the file available at path: './.storage/.{filename}' for the following questions.")
+    messages = insert_message(messages, "assistant", f"I'm ready to answer questions about your file: {filename}")
+
+    if file_extension.lower() == "pdf":
+        generate_text_embeddings_parquet(url)
+    elif file_extension.lower() in ['jpg', 'jpeg', 'png', 'webp']:
+        add_images_descriptions(f"./.storage/.{filename}")
+
+    print(f"I'm ready to answer questions about your file: {filename}")
+    return messages

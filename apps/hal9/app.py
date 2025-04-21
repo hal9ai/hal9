@@ -1,8 +1,8 @@
-from utils import generate_response, load_messages, insert_message, execute_function, save_messages, insert_tool_message, is_url, download_file, generate_text_embeddings_parquet
+from utils import generate_response, load_messages, insert_message, execute_function, save_messages, insert_tool_message, is_url, is_url_list, process_url
 from tools.calculator import solve_math_problem_description, solve_math_problem
 from tools.generic import answer_generic_question_description, answer_generic_question
 from tools.csv_agent import analyze_csv_description, analyze_csv
-from tools.image_agent import images_management_system, images_management_system_description, add_images_descriptions
+from tools.image_agent import images_management_system, images_management_system_description
 from tools.hal9 import answer_hal9_questions_description, answer_hal9_questions
 from tools.text_agent import analyze_text_file_description, analyze_text_file
 from tools.streamlit import streamlit_generator, streamlit_generator_description
@@ -16,6 +16,7 @@ import os
 
 # load messages
 messages = load_messages()
+print(messages)
 
 # load tools
 tools_descriptions = [python_execution_description, final_response_description, solve_math_problem_description, answer_generic_question_description, analyze_csv_description, images_management_system_description, answer_hal9_questions_description, analyze_text_file_description, fastapi_generator_description, streamlit_generator_description, shiny_generator_description, website_generator_description]
@@ -27,18 +28,15 @@ if len(messages) < 1:
                                for the task. 2. Execute the tool and process its response. 3. If the tool provides a valid result, return it to the user. 4. If the tool fails, do NOT retry with the same tool. Instead, 
                                explain the failure and suggest improvements in the prompt or alternative approaches.""")
 user_input = input()
-if is_url(user_input):
-    h9.event("Uploaded File", f"{user_input}")
-    filename = user_input.split("/")[-1]
-    file_extension = filename.split(".")[-1] if "." in filename else "No extension"
-    download_file(user_input)
-    messages = insert_message(messages, "system", f"Consider use the file available at path: './.storage/.{filename}' for the following questions.")
-    messages = insert_message(messages, "assistant", f"I'm ready to answer questions about your file: {filename}")
-    if file_extension.lower() == "pdf":
-        generate_text_embeddings_parquet(user_input)
-    if file_extension.lower() in ['jpg', 'jpeg', 'png','webp']:
-        add_images_descriptions(f"./.storage/.{filename}")
-    print(f"I'm ready to answer questions about your file: {filename}")
+print(user_input)
+
+if is_url(user_input) or is_url_list(user_input):
+    if is_url_list(user_input):
+        for url in user_input.split(","):
+            url = url.strip()
+            messages = process_url(url, messages)
+    else:
+        messages = process_url(user_input.strip(), messages)
 else:
     h9.event("User Prompt", f"{user_input}")
     user_input = user_input.replace("\f", "\n")
@@ -58,3 +56,4 @@ else:
             break
     if max_steps == steps:
         print("Unable to generate a satisfactory response on time")
+print("\n\nMensajes finales:\n\n", messages)
