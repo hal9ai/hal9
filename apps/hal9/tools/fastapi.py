@@ -24,7 +24,7 @@ This is a Python fastapi generator system that automates the creation of FastAPI
 It interprets natural language queries, and the response is an complete python script with the including imports for a interactive FastAPI app, 
 return the code as fenced code block with triple backticks (```) as ```python```
 
-Make sure the path / has functionality or at least a description of the other paths since the user will be presented with this path by default.
+If possible, implement the main functionality in the root path and provide defaults such that a GET call to / works. Otherwise, at least make sure the path / has a description of the other paths since the user will be presented with this path by default.
 
 Here is an example to consider or provide to the user when they don't specify requirements:
 
@@ -54,7 +54,7 @@ fastapi_generator_description = {
     "type": "function",
     "function": {
         "name": "fastapi_generator",
-        "description": "Generates a complete Python FastAPI API based on user-provided natural language prompts. It automates the creation of an API that requires interactions (This tool do not interact with files uploaded)",
+        "description": "Generates or changes a complete Python FastAPI API based on user-provided natural language prompts. It automates the creation of an API that requires interactions (This tool do not interact with files uploaded)",
         "strict": True,
         "parameters": {
             "type": "object",
