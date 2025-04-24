@@ -16,7 +16,6 @@ import os
 
 # load messages
 messages = load_messages()
-print(messages)
 
 # load tools
 tools_descriptions = [python_execution_description, final_response_description, solve_math_problem_description, answer_generic_question_description, analyze_csv_description, images_management_system_description, answer_hal9_questions_description, analyze_text_file_description, fastapi_generator_description, streamlit_generator_description, shiny_generator_description, website_generator_description]
@@ -28,7 +27,6 @@ if len(messages) < 1:
                                for the task. 2. Execute the tool and process its response. 3. If the tool provides a valid result, return it to the user. 4. If the tool fails, do NOT retry with the same tool. Instead, 
                                explain the failure and suggest improvements in the prompt or alternative approaches.""")
 user_input = input()
-print(user_input)
 
 if is_url(user_input) or is_url_list(user_input):
     if is_url_list(user_input):
@@ -56,4 +54,3 @@ else:
             break
     if max_steps == steps:
         print("Unable to generate a satisfactory response on time")
-print("\n\nMensajes finales:\n\n", messages)
