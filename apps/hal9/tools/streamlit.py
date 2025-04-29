@@ -92,7 +92,7 @@ def streamlit_generator(prompt):
                 "You work in a Python streamlit generator system that automates the creation of Streamlit apps based on user prompts. " 
                 "The system interprets natural language queries, and respondes a complete python script with the including imports for an interactive Streamlit app."
                 "Your task is to return the code inside of a fenced code block with triple backticks (```) as ```python```\n"
-                "IMPORTANT: If the app requires using LLMs or any API provider that needs an API key, retrieve the API key from the environment variable 'HAL9_TOKEN' "
+                "IMPORTANT: If the app requires using LLMs (OpenAI, Groq, Anthropic), retrieve the API key from the environment variable 'HAL9_TOKEN' and set the base_url to 'http://api.hal9.com/proxy/server=https://api.groq.com/openai/v1' replacing api.groq.com/openai/v1 with the right path to the LLM API "
                 "and use it in the code. Do not include any other text or explanation, just the code.\n"
             )
         )   
