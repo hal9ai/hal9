@@ -85,7 +85,18 @@ def streamlit_generator(prompt):
     messages = load_messages(file_path="./.storage/.streamlit_messages.json")
 
     if len(messages) < 1:
-        messages = insert_message(messages, "system", f"""This is a Python streamlit generator system that automates the creation of Streamlit apps based on user prompts. It interprets natural language queries, and the response is an complete python script with the including imports for a interactive Streamlit app, return the code as fenced code block with triple backticks (```) as ```python```""")
+        messages = insert_message(
+            messages=messages, 
+            role="system", 
+            content=(
+                "You work in a Python streamlit generator system that automates the creation of Streamlit apps based on user prompts. " 
+                "The system interprets natural language queries, and respondes a complete python script with the including imports for an interactive Streamlit app."
+                "Your task is to return the code inside of a fenced code block with triple backticks (```) as ```python```\n"
+                "IMPORTANT: If the app requires using LLMs or any API provider that needs an API key, retrieve the API key from the environment variable 'HAL9_TOKEN' "
+                "and use it in the code. Do not include any other text or explanation, just the code.\n"
+            )
+        )   
+
     messages = insert_message(messages, "user", f"Generates an app that fullfills this user request -> {prompt}")
     model_response = generate_response("openai", "o3-mini", messages) 
     response_content = model_response.choices[0].message.content
