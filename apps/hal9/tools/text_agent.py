@@ -77,7 +77,7 @@ def retrieve_chunks_by_index(chunk_ids, file_to_filter=None):
 
 def similarity_search(input_text, top_n="5", file_to_filter=None):
     # Generate the embedding from the input text
-    query_embedding = generate_embeddings(text=input_text, model="text-embedding-3-small", client_type="azure")
+    query_embedding = generate_embeddings(text=input_text, model="text-embedding-3-small", client_type="openai")
     
     # Convert `top_n` from string to integer
     top_n = int(top_n)
