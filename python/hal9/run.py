@@ -12,6 +12,7 @@ runtime_types = {
   "image": run_image,
   "jpg": run_image,
   "png": run_image,
+  "jpeg": run_image,
   "chainlit": run_chainlit,
   "r": run_r,
   "shiny": run_r,
