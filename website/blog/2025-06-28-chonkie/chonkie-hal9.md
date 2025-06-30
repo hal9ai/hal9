@@ -9,10 +9,10 @@ image: https://hal9.com/docs/screenshots/blog-baseball-agent-light.png
 import ThemedImage from '../../src/components/themedimg.jsx'
 
 ## Introduction  
-In the fast-paced world of Retrieval-Augmented Generation (RAG) applications, preprocessing text into meaningful, manageable chunks is a critical yet often cumbersome task. Enter **Chonkie**, a lightweight, lightning-fast, and feature-rich chunking library designed to simplify this process. Paired with **Hal9**, a powerful platform for deploying AI-powered solutions, Chonkie becomes an even more formidable tool for building efficient, scalable, and production-ready AI applications. In this blog post, we’ll dive into what Chonkie is, explore its use cases, and demonstrate how Hal9 complements it to create seamless, high-performance RAG pipelines.  
+In the fast-paced world of Retrieval-Augmented Generation (RAG) applications, preprocessing text into meaningful, manageable chunks is a critical yet often cumbersome task. Enter [Chonkie](https://chonkie.ai/?ref=hal9), a lightweight, lightning-fast, and feature-rich chunking library designed to simplify this process. Paired with [Hal9](https://hal9.com/), a powerful platform for deploying AI-powered solutions, Chonkie becomes an even more formidable tool for building efficient, scalable, and production-ready AI applications. In this blog post, we’ll dive into what Chonkie is, explore its use cases, and demonstrate how Hal9 complements it to create seamless, high-performance RAG pipelines.  
 
 ## What is Chonkie?  
-Chonkie is an open-source, YC-backed semantic chunking library and cloud service tailored for RAG and AI applications that tackles the complexity of text preprocessing with elegance and efficiency. Its core mission is to make the process of breaking down large texts into smaller, meaningful pieces—simple, fast, and flexible.  
+[Chonkie](https://chonkie.ai/?ref=hal9) is an open-source, YC-backed semantic chunking library and cloud service tailored for RAG and AI applications that tackles the complexity of text preprocessing with elegance and efficiency. Its core mission is to make the process of breaking down large texts into smaller, meaningful pieces—simple, fast, and flexible.  
 
 ### Key Features of Chonkie  
 - **Lightweight**: At just 9.7MB for its base installation, Chonkie minimizes bloat while delivering robust functionality.  
@@ -44,7 +44,7 @@ Chonkie is a versatile tool that powers a wide range of RAG and AI applications.
 By integrating with vector databases and embedding strategies, Chonkie ensures that your data is AI-ready, making it a go-to solution for developers building intelligent, scalable applications.  
 
 ## How Hal9 Complements Chonkie  
-While Chonkie excels at preprocessing and chunking, **Hal9** takes the baton to streamline deployment, scaling, and visualization of AI applications. Hal9 is a user-friendly platform designed to make AI solutions production-ready with minimal friction. Together, Chonkie and Hal9 form a powerful duo for building robust RAG pipelines.  
+While Chonkie excels at preprocessing and chunking, Hal9 takes the baton to streamline deployment, scaling, and visualization of AI applications. Hal9 is a user-friendly platform designed to make AI solutions production-ready with minimal friction. Together, Chonkie and Hal9 form a powerful duo for building robust RAG pipelines.  
 
 ### The Hal9 Advantage  
 - **Seamless Deployment**: Hal9 simplifies the transition from development to production with a single command, ensuring your Chonkie-powered applications are live in seconds.  
@@ -57,6 +57,8 @@ To illustrate Chonkie’s capabilities, we built a streamlit app deployed on Hal
 
 ### Streamlit App for Chunking Visualization
 The Streamlit app provides an interactive interface to test Chonkie’s chunking strategies. Users can select a chunker (e.g., RecursiveChunker, SentenceChunker, TokenChunker, or SemanticChunker), adjust chunk size and overlap, and input text either manually or by uploading a file (e.g., .txt, .md, or .pdf). The app processes the text using Chonkie’s API and displays the resulting chunks, allowing users to download them as a .txt file. 
+
+<center><a href="https://hal9.com/brenda/chonkie_demo">[Chonkie’s Text Chunking Unleashed with Streamlit on Hal9](streamlit.png)</a></center>
 
 This app demonstrates Chonkie’s API ease of use and flexibility, allowing developers to experiment with different chunking strategies and see immediate results. You can try it out anc check the code on Hal9’s platform at [Chonkie - Streamlit App](https://hal9.com/brenda/chonkie_demo).
 
@@ -111,7 +113,7 @@ def split_text(text, n_words=300, overlap=30):
 
 The Chonkie-powered chatbot consistently provided more relevant and accurate responses, especially for complex queries requiring precise context retrieval. For example, when asked about specific patent details, the Chonkie chatbot retrieved more relevant passages, reducing hallucinations and improving answer quality.
 
-![Chonkie-powered chatbot in Hal9](imagen.png)
+<center><a href="https://hal9.com/brenda/patentpal_chonkie">[Chonkie-powered chatbot in Hal9](imagen.png)</a></center>
 
 Explore the Chonkie-powered chatbot on Hal9 at [PatentPal with Chonkie](https://hal9.com/brenda/patentpal_chonkie) and compare it to the standard version at [PatentPal](https://hal9.com/brenda/patentpal) to experience the difference.
 
