@@ -58,7 +58,8 @@ To illustrate Chonkie’s capabilities, we built a streamlit app deployed on Hal
 ### Streamlit App for Chunking Visualization
 The Streamlit app provides an interactive interface to test Chonkie’s chunking strategies. Users can select a chunker (e.g., RecursiveChunker, SentenceChunker, TokenChunker, or SemanticChunker), adjust chunk size and overlap, and input text either manually or by uploading a file (e.g., .txt, .md, or .pdf). The app processes the text using Chonkie’s API and displays the resulting chunks, allowing users to download them as a .txt file. 
 
-<center><a href="https://hal9.com/brenda/chonkie_demo">[Chonkie’s Text Chunking Unleashed with Streamlit on Hal9](streamlit.png)</a></center>
+[![Chonkie’s Text Chunking Unleashed with Streamlit on Hal9](streamlit.png)](https://hal9.com/brenda/chonkie_demo)
+
 
 This app demonstrates Chonkie’s API ease of use and flexibility, allowing developers to experiment with different chunking strategies and see immediate results. You can try it out anc check the code on Hal9’s platform at [Chonkie - Streamlit App](https://hal9.com/brenda/chonkie_demo).
 
@@ -113,7 +114,7 @@ def split_text(text, n_words=300, overlap=30):
 
 The Chonkie-powered chatbot consistently provided more relevant and accurate responses, especially for complex queries requiring precise context retrieval. For example, when asked about specific patent details, the Chonkie chatbot retrieved more relevant passages, reducing hallucinations and improving answer quality.
 
-<center><a href="https://hal9.com/brenda/patentpal_chonkie">[Chonkie-powered chatbot in Hal9](imagen.png)</a></center>
+<center><a href="https://hal9.com/brenda/patentpal_chonkie"><ThemedImage src="blog-chonkie"/></a></center>
 
 Explore the Chonkie-powered chatbot on Hal9 at [PatentPal with Chonkie](https://hal9.com/brenda/patentpal_chonkie) and compare it to the standard version at [PatentPal](https://hal9.com/brenda/patentpal) to experience the difference.
 
