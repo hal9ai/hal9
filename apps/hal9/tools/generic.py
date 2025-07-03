@@ -5,7 +5,7 @@ def answer_generic_question(user_input):
     messages = load_messages(file_path="./.storage/.generic_agent_messages.json")
     messages = insert_message(messages, "user", user_input)
     response = groq_client.chat.completions.create(
-        model="llama3-8b-8192",
+        model="llama-3.1-8b-instant",
         messages=messages,
         temperature=0,
         seed=1
