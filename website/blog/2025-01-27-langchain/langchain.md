@@ -76,7 +76,7 @@ In the code example below, we demonstrate how to configure the ChatOpenAI class 
 
 ```python
 # Configure the model with Hal9's API and desired provider
-llm = ChatOpenAI(base_url="https://api.hal9.com/proxy/server=https://api.groq.com/openai/v1", api_key=os.environ['HAL9_TOKEN'], model="llama3-8b-8192")
+llm = ChatOpenAI(base_url="https://api.hal9.com/proxy/server=https://api.groq.com/openai/v1", api_key=os.environ['HAL9_TOKEN'], model="llama-3.1-8b-instant")
 response = llm.invoke(messages)  # Generate a response using Groq + LLaMA
 
 # To switch to OpenAI GPT-4 or DeepSeek R1, change the base_url and model parameters
