@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.17
+
+- Support returning deployment url in deploy()
+
 ## 2.8.16
 
 - Support describing single files

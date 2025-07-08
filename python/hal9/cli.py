@@ -79,7 +79,7 @@ def deploy(path :str, target :str, url :str, name :str, typename :str, data :str
   if (name is None):
     name = f'{os.path.basename(path)}-{int(datetime.datetime.now().timestamp() * 1000)}'
 
-  api_deploy(path, target, url, name, typename, data, access, main, title, description)
+  return api_deploy(path, target, url, name, typename, data, access, main, title, description)
 
 @click.command()
 @click.option('--runtime', '-r', is_flag=True, help='Describe the runtimes')
