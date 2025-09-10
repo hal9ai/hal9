@@ -1,10 +1,10 @@
-# [Hal9 Platform](https://hal9.com/): Create and Share AI Apps
+# [Hal9](https://hal9.com): Create and Share AI Apps
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Hal9 PyPi Downloads](https://img.shields.io/pypi/dm/hal9?label=PyPI)](https://pypistats.org/packages/hal9)
 [![GitHub star chart](https://img.shields.io/github/stars/hal9ai/hal9?style=flat-square)](https://star-history.com/#hal9ai/hal9)
 
-Hal9 is a company on a [mission](https://hal9.com/mission) to help people profit from AI, starting with startup founders. [Hal9's Startup Plan](https://hal9.com/plans) builds AI-powered MVPs for founders in 30 days, including *Hal9 Onboarding* (design, development, infrastructure, and maintenance) and *Hal9 Platform* (compute, storage, LLMs). Additionally, the Hal9 Platform offers free and developer plans, with all code designed to run on any compute infrastructure, ensuring your applications remain free from vendor lock-in.
+[Hal9](https://hal9.com) is a company on a [mission](https://hal9.com/mission) to help people profit from AI, starting with startup founders. [Hal9's Startup Plan](https://hal9.com/plans) builds AI-powered MVPs for founders in 30 days, including Hal9 Onboarding (design, development, infrastructure, and maintenance) and [Hal9 Platform](https://hal9.com/platform) (compute, storage, LLMs). Additionally, the Hal9 Platform offers free and developer plans, with all code designed to run on any compute infrastructure, ensuring your applications remain free from vendor lock-in.
 
 Hal9 Platform is purpose-built for generative AI, enabling you to create and deploy generative ([LLMs](https://github.com/Hannibal046/Awesome-LLM) and [diffusers](https://github.com/huggingface/diffusers)) applications (chatbots, agents, APIs, and apps). Key features:
 - **Flexible:** Use any library ([LangChain](https://python.langchain.com/v0.1/docs/get_started/quickstart/), [DSPy](https://dspy-docs.vercel.app/docs/quick-start/installation)), and any model ([OpenAI](https://platform.openai.com/docs/api-reference/introduction), [Llama](https://ai.meta.com/blog/5-steps-to-getting-started-with-llama-2/), [Groq](https://docs.api.groq.com/md/tutorials/python.groqapi.html), [MidJourney](https://docs.imagineapi.dev/en)).
