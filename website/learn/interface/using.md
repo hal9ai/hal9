@@ -6,7 +6,7 @@ import ThemedImage from '../../src/components/themedimg.jsx'
 
 # Using AIs
 
-The most common interface to interact with your AI is through a chat session. This chat session opens by default whenever you open an AI in Hal9.
+The most common interface to interact with your AI is through a chat session. This chat session opens by default whenever you open an AI in Hal9 Platform.
 
 Notice that AIs will greet you with a customized message chosen by the author of the AI.
 
@@ -16,7 +16,7 @@ Notice that AIs will greet you with a customized message chosen by the author of
 
 You can input prompts (send messages) to your AI using the bottom textbox from the chat interface. The nature of the inputs are dependent on what kind of AIs you are using.
 
-Hal9's AI supports a broad range of tasks from answering generic questions, to generating images and processing documents and numerical datasets. However, other ones might be specialized in specific tasks or data sources.
+AI's created with Hal9 Platform support a broad range of tasks from answering generic questions, to generating images and processing documents and numerical datasets. However, other ones might be specialized in specific tasks or data sources.
 
 <center><a href="/apps/hal9"><ThemedImage src="hal9-chat-textarea" /></a></center>
 

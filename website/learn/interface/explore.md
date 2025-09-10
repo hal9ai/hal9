@@ -12,7 +12,7 @@ There are several community examples you can use at work or use as inspiration t
 
 ## Hal9 AI
 
-We recommend trying first the Hal9 AI which was created by the Hal9 team and showcases many features you may want to replicate in your own AIs.
+We recommend trying first the [Hal9 AI](https://hal9.com/apps/hal9) which was created by the Hal9 team and showcases many features you may want to replicate in your own AIs.
 
 <center><a href="/explore"><ThemedImage src="hal9-explore-hal9" /></a></center>
 
@@ -25,4 +25,4 @@ Some of the features this chatbot supports includes:
 - Understanding documents.
 - Answering questions about Hal9.
 
-The code for Hal9's AI is open-source under an MIT license and available for your technical team, see [github.com/hal9ai/hal9/tree/main/apps/hal9](https://github.com/hal9ai/hal9/tree/main/apps/hal9).
+The code for Hal9 AI is open-source under an MIT license and available for your technical team, see [github.com/hal9ai/hal9/tree/main/apps/hal9](https://github.com/hal9ai/hal9/tree/main/apps/hal9).

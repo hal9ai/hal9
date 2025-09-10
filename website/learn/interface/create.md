@@ -6,7 +6,7 @@ import ThemedImage from '../../src/components/themedimg.jsx'
 
 # Creating AIs
 
-You can create an AI with Hal9 in just a few seconds. The first step is to use the sidebar and click "create".
+You can create an AI with Hal9 Platform's user interface in just a few seconds. The first step is to use the sidebar and click "create".
 
 <center><a href="/create"><ThemedImage src="hal9-create" /></a></center>
 
