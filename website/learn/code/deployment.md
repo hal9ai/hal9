@@ -6,7 +6,7 @@ sidebar_position: 80
 
 ## Chatbots
 
-To explicitly deploy a chatbot to Hal9 one can use the Hal9 Command Line Interface (**CLI**) as follows:
+Developers can deploy a chatbot to Hal9 using the Hal9 Command Line Interface (**CLI**) as follows:
 
 ```bash
 pip install hal9
@@ -15,7 +15,7 @@ hal9 create chatbot
 hal9 deploy chatbot
 ```
 
-Beside chatbots, Hal9 can also deploy and run other content types like images, static websites, Streamlit data apps, web APIs, or you can even send a pull request to [Hal9's GitHub](https://github.com/hal9ai/hal9) project to extend this to any other content type.
+Beside chatbots, you can also deploy and run other content types like images, static websites, Streamlit data apps, web APIs, or you can even send a pull request to [Hal9's GitHub](https://github.com/hal9ai/hal9) project to extend this to any other content type.
 
 ## Data Apps
 
