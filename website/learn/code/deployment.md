@@ -44,6 +44,9 @@ Web APIs are applications that are designed for other computer programs or servi
 
 Always ensure any API's root path `@app.get("/")` function is kept, because Hal9 Web APIs use this endpoint to check the application's status.
 
+Hal9 is able to run Python FastAPI or Flask apps.
+
+### Fast API
 ```python deploy
 from fastapi import FastAPI
 import random
@@ -59,11 +62,35 @@ async def roll():
     return f"You rolled a {random.randint(1, 6)}!"
 ```
 
+### Flask API
+```python deploy
+from flask import Flask, jsonify, request
+from asgiref.wsgi import WsgiToAsgi # WSGI compatible with Hal9 launcher
+import random
+
+flaskapp = Flask(__name__)
+
+@flaskapp.route("/", methods=['GET'])
+def read_root():
+    return jsonify({"success": True})
+
+@flaskapp.route("/roll", methods=['GET'])
+def roll():
+  return f"You rolled a {random.randint(1, 6)}!"
+
+app = WsgiToAsgi(flaskapp)
+```
+
 When a chatbot generates an API, Hal9 automatically deploys and embeds the API endpoint; however, if you have to manually deploy an API you can accomplish this as follows:
 
 ```bash
 pip install hal9
 
+# flask api app creation
 hal9 create webapi --type flask
 hal9 deploy webapi --type flask
+
+# fast api app creation
+hal9 create webapi --type fastapi
+hal9 deploy webapi --type fastapi
 ```
