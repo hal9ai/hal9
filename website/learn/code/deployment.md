@@ -42,7 +42,7 @@ hal9 deploy webapp --type streamlit
 
 Web APIs are applications that are designed for other computer programs or services to interoperate with, if you wanted to enable other web apps to use your previous app, you would do this as follows:
 
-Always ensure the `@app.get("/")` function is kept, because Hal9 Web APIs use this endpoint to check the app status.
+Always ensure any API's root path `@app.get("/")` function is kept, because Hal9 Web APIs use this endpoint to check the application's status.
 
 ```python deploy
 from fastapi import FastAPI
@@ -51,6 +51,10 @@ import random
 app = FastAPI()
 
 @app.get("/")
+def read_root():
+    return {"success": True}
+
+@app.get("/roll")
 async def roll():
     return f"You rolled a {random.randint(1, 6)}!"
 ```
