@@ -94,3 +94,17 @@ hal9 deploy webapi --type flask
 hal9 create webapi --type fastapi
 hal9 deploy webapi --type fastapi
 ```
+
+### Customize your application Hal9.yaml
+
+Create Hal9.yaml file in your Hal9 application
+
+#### Any app 
+
+`terminatems: <time-in-miliseconds>` set a pod living in the background for "x" time use this
+
+#### Chatbot
+`welcome: <welcome-message>` chatbot welcome message
+`color: <hex-color>` chatbot color
+
+
