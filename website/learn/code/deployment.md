@@ -107,4 +107,47 @@ Create Hal9.yaml file in your Hal9 application
 `welcome: <welcome-message>` chatbot welcome message
 `color: <hex-color>` chatbot color
 
+### Deploy an Application from a Docker Image
 
+You can deploy an application directly from a Docker image that exposes any API.
+
+Your Docker image must include a root endpoint defined like:
+```python
+@app.get("/")
+```
+Hal9 uses this endpoint to verify that your application is healthy and running.
+
+Applications deployed from Docker images meet the following conditions:
+
+- The pod will always run in the background.
+
+- Resource limits and requests are enforced automatically by Hal9.
+
+- This feature is available only to Pro and Enterprise users.
+
+#### Application Resource Limits (Top Limits)
+
+Every Docker-based application can use up to the following maximum resources:
+
+- CPU: Up to the power of one full processor
+
+- Memory: Up to 4 GB of RAM
+
+- Storage: Up to 10 GB of temporary working space
+
+To deploy one, create a **hal9.yaml** file with the following content
+ 
+```yaml
+docker: <your-public-docker-image>
+```
+And then deploy with:
+```sh
+hal9 deploy . --name <your-app-name> --type docker
+```
+> Note:
+> When deploying your application, make sure the application name does **not** include special characters or numbers. Use only lowercase letters and hyphens.
+
+After deploying, you can access your application at:
+```sh
+hal9.com/<your-username>/<your-app-name>
+```
