@@ -212,6 +212,15 @@ async def geocode(
         )
 ```
 
+A frontend call to this backend could look like this:
+
+```bash
+curl -X POST "https://api.hal9.com/proxy?server=https%3A//api.hal9.com/u8jejs/googlemaps/proxy/geocode&service=googleapis" \
+-H "Authorization: Bearer ${HAL9_TOKEN}" \
+-H "Content-Type: application/json"  \
+-d '{"address": "Ferrals-les-Montagnes,France"}'
+```
+
 In sum, when coding your backend, you do not need to hardcode authorization information - but you _do_ need to know how to correctly authenticate with the external service.
 
 ## Indicate a Time Until Which to Reuse Cached Responses
