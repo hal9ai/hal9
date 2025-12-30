@@ -95,6 +95,8 @@ hal9 deploy webapi --type fastapi
 
 By way of illustration, here you see a simple backend that, when we call its `call-openai` endpoint passing a prompt and a model, will issue a call to OpenAI and send the LLM's response back to the client:
 
+### Example: External Service: OpenAI
+
 ```python
 from fastapi import FastAPI, HTTPException, Header
 from pydantic import BaseModel
@@ -112,9 +114,11 @@ def root():
     return {"success": True}
     
 @app.post("/ask-openai")
-async def ask_openai(request: OpenaiRequest, authorization: str = Header(...) ):         
+async def ask_openai(request: OpenaiRequest, authorization: str = Header(...) ):   
+    # your OpenAI key, in the format you then have to use in the call to OpenAI
+    # format is: authorization: Bearer <key>
     try:
-        api_key = authorization.split(" ")[1]
+        openai_key = authorization.split(" ")[1]
     except IndexError:
         raise HTTPException(
             status_code=401,
@@ -124,7 +128,7 @@ async def ask_openai(request: OpenaiRequest, authorization: str = Header(...) ):
         from openai import OpenAI
         client = OpenAI(
             base_url=openai_url,
-            api_key=api_key 
+            api_key=openai_key 
         )
         response = client.chat.completions.create(
             model=request.model,
@@ -139,7 +143,7 @@ async def ask_openai(request: OpenaiRequest, authorization: str = Header(...) ):
         )     
 ```
 
-In this code, note how the `api_key` extracted from the `authorization` header is _not_ your Hal9 token, but the OpenAI token sent by the Hal9 proxy. A client call could look like this (we use `curl` for simplicity):
+In this code, note how the `openai_key` extracted from the `authorization` header is _not_ your Hal9 token, but the OpenAI token sent by the Hal9 proxy. A client call could look like this (we use `curl` for simplicity):
 
 ```bash
 HAL9_TOKEN=<yourtoken>
@@ -158,6 +162,57 @@ In the URL, pay attention to the following constituents:
 3. Your frontend authenticates to your backend using the Hal9 token.
 
 This workflow completely liberates your code (frontend _and_ backend) from hardcoding authorization information for external providers. 
+
+Here is an example where the provider is not an LLM.
+
+### Example: External Service: Google Maps (Geocoding)
+
+In this example, your backend retrieves information from one of the many Google APIS, namely, the geocoding endpoint in Maps. Again, the proxy sends the authorization key required; but there are two aspect deserving attention here:
+1. For most Google APIs, the header to be used is named `x-goog-api-key`. In consequence, the proxy sends your backend the key in that same form. This will happen in general: The proxy sends you the token in a header named just like the one you will need to use in the external call. Anthropic, for instance, expects an `x-api-key`, and this is what you'll get from Hal9.
+2. However, here we have a special case. Authentication in a geocoding request does not rely on a header, but on a query parameter, of name `key`. The proxy only knows you'll call some Google API, but not which one - so you'll still receive the key in the usual header, but have to pack it as a query parameter in your geocoding request.
+
+```python
+from fastapi import FastAPI, HTTPException, Header
+from pydantic import BaseModel
+import requests
+
+app = FastAPI()
+
+class GeocodingRequest(BaseModel):
+    address: str  
+
+@app.get("/")
+def root():
+    return {"success": True}
+    
+@app.post("/geocode")
+async def geocode(
+    data: GeocodingRequest,
+    # Google APIS in general ask for a header named x-goog-api-key,
+    # so this is the form in which the proxy sends the key ...
+    x_goog_api_key: str = Header(..., alias="x-goog-api-key")
+):
+    try:
+        # ... BUT the geocoding endpoint needs to receive a query parameter named key instead
+        geocoding_url = f"https://maps.googleapis.com/maps/api/geocode/json?address={data.address}&key={x_goog_api_key}"
+        
+        response = requests.get(geocoding_url)
+        if response.status_code != 200:
+            raise HTTPException(
+                status_code=502,
+                detail=f"Geocoding error: {response.text}"
+            )
+
+        return response.json()
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error: {str(e)}"
+        )
+```
+
+In sum, when coding your backend, you do not need to hardcode authorization information - but you _do_ need to know how to correctly authenticate with the external service.
 
 ## Indicate a Time Until Which to Reuse Cached Responses
 
@@ -190,4 +245,3 @@ The solution here is to use another proxy parameter, `invalidate` (standalone or
 1. Initially, you append only `cache=` to your query.
 2. In follow-up calls, you append both `cache=` _and_ `invalidate`, indicating that yes, you'd like the result to be cached (in case the artifact is already available), but no, you do not want to retrieve anything from cache yourself. 
 3. Every time, you check whether the desired result is there already. If yes, you stop polling, leaving intact the last cached response.
-
