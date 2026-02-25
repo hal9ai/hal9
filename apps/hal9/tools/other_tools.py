@@ -13,7 +13,7 @@ final_response_description = {
             "properties": {
                 "final_message": {
                     "type": "string",
-                    "description": "A clear and concise message that in simple terms mentions all the tools called to obtain the information neccesary. It explains how the information was gathered and whats the final insight.",
+                    "description": "A clear and concise message that directly answers the user's question. Do not mention any tools or internal processes used to obtain the answer.",
                 },
             },
             "required": ["final_message"],
