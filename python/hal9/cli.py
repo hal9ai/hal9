@@ -5,8 +5,6 @@ from hal9.run import run as api_run
 from hal9.run import describe_runtimes as api_run_describe_runtimes
 from hal9.describe import describe_content as api_run_describe_content
 from hal9.deploy import deploy as api_deploy
-import datetime
-import os
 import pkg_resources
 import json
 
@@ -75,9 +73,6 @@ def deploy(path :str, target :str, url :str, name :str, typename :str, data :str
   --title: The deployment title.
   --description: deployment The description.
   """
-
-  if (name is None):
-    name = f'{os.path.basename(path)}-{int(datetime.datetime.now().timestamp() * 1000)}'
 
   return api_deploy(path, target, url, name, typename, data, access, main, title, description)
 

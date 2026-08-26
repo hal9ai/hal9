@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.8.19
+
+- Export `deploy()` for Python callers (`import hal9 as h9; h9.deploy()`)
+- Default `deploy()` to the Hal9 server so it can be called with no arguments
+
 ## 2.8.18
 
 - Ensure deploy() is exported from the hal9 package root

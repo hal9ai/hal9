@@ -32,6 +32,15 @@ Notice that `deploy` needs a `HAL9_TOKEN` environment variable with an API token
 ```bash
 HAL9_TOKEN=H9YOURTOKEN hal9 deploy chatbot --name my_first_chatbot
 ```
+
+You can also deploy from Python:
+
+```python
+import hal9 as h9
+
+h9.deploy("chatbot")
+```
+
 As easy as that you have created your first chatbot!
 
 ![alt text](image-2.png)

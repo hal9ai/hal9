@@ -15,6 +15,14 @@ hal9 create chatbot
 hal9 deploy chatbot
 ```
 
+You can also deploy from Python:
+
+```python
+import hal9 as h9
+
+h9.deploy()
+```
+
 Beside chatbots, you can also deploy and run other content types like images, static websites, Streamlit data apps, web APIs, or you can even send a pull request to [Hal9's GitHub](https://github.com/hal9ai/hal9) project to extend this to any other content type.
 
 ## Data Apps

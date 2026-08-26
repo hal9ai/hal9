@@ -91,11 +91,8 @@ def request_deploy(path :str, url :str, name :str, typename :str, data :str, acc
     return response_data['url']
 
 def deploy(path :str, url :str, name :str, typename :str, data :str, access :str, main :str, title :str, description :str) -> str:
-    if 'HAL9_TOKEN' in os.environ:
-        hal9_token = os.environ['HAL9_TOKEN']
-    else:
-        exit(f'HAL9_TOKEN environment variable missing, see https://hal9.com/devs')
-        # hal9_token = browser_login()
+    if 'HAL9_TOKEN' not in os.environ:
+        raise Exception('HAL9_TOKEN environment variable missing, see https://hal9.com/devs')
 
     return request_deploy(path, url, name, typename, data, access, main, title, description)
 
