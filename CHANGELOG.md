@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.18
+
+- Ensure deploy() is exported from the hal9 package root
+
 ## 2.8.17
 
 - Support returning deployment url in deploy()
