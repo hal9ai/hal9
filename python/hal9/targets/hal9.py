@@ -87,7 +87,6 @@ def request_deploy(path :str, url :str, name :str, typename :str, data :str, acc
         response.raise_for_status()
 
     response_data = response.json()
-    print(response_data['url'])
     return response_data['url']
 
 def deploy(path :str, url :str, name :str, typename :str, data :str, access :str, main :str, title :str, description :str) -> str:

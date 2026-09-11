@@ -74,7 +74,10 @@ def deploy(path :str, target :str, url :str, name :str, typename :str, data :str
   --description: deployment The description.
   """
 
-  return api_deploy(path, target, url, name, typename, data, access, main, title, description)
+  deployed_url = api_deploy(path, target, url, name, typename, data, access, main, title, description)
+  if deployed_url:
+    click.echo(deployed_url)
+  return deployed_url
 
 @click.command()
 @click.option('--runtime', '-r', is_flag=True, help='Describe the runtimes')

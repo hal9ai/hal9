@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.8.22
+
+- Return the deployment URL from `deploy()` without printing it
+
 ## 2.8.19
 
 - Export `deploy()` for Python callers (`import hal9 as h9; h9.deploy()`)

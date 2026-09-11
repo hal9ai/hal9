@@ -10,7 +10,7 @@ import hal9 as h9
 def test_deploy_is_exported():
   assert callable(h9.deploy)
 
-def test_deploy_to_hal9_server():
+def test_deploy_to_hal9_server(capsys):
   with tempfile.TemporaryDirectory() as path:
     with open(os.path.join(path, "app.py"), "w") as f:
       f.write("print('hello')\n")
@@ -24,6 +24,7 @@ def test_deploy_to_hal9_server():
         url = h9.deploy(path, name="test-app")
 
     assert url == "https://hal9.com/apps/test"
+    assert "https://hal9.com/apps/test" not in capsys.readouterr().out
     mock_post.assert_called_once()
     assert mock_post.call_args.args[0] == "https://api.hal9.com/api/v1/assets/upload"
     assert mock_post.call_args.kwargs["headers"]["ApiKey"] == "test-token"
