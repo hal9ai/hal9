@@ -63,3 +63,5 @@ for filename, content in files.items():
   with open(file_path, 'w', encoding='utf-8') as file:
     file.write(content)
 ````
+
+When you deploy this app to [Cloudish](https://cloudish.ai), attach a persistent volume and keep `.storage` on it so generated files survive restarts. See [Deployment](deployment.md).

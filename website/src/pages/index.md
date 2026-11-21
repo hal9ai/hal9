@@ -1,11 +1,11 @@
 import { Floating } from '../components/floating.jsx';
 
-# Create and Share Powerful AIs
+# Build AI Apps in Python
 
-Learn how to use and create AIs from simple templates built from the user interface, to complex ones created from templates and code.
+Hal9 Platform has evolved into [Cloudish](https://cloudish.ai). The `hal9` Python package remains the lightweight way to write generative AI apps with `input()` and `print()`; deploy them to Cloudish with the help of your AI coding agent.
 
 <div class="FloatingWrapper">
-  <Floating title="Users" href="/docs/learn/interface">Learn how to use existing AIs, and create new ones from the [user interface](learn/interface).</Floating>
-  <Floating title="Developers" href="/docs/learn/code">Learn how to create complex AIs from [code](learn/code) and stay up to date with our technical [blog](blog).</Floating>
-  <Floating title="Concepts" href="/docs/learn/code">Learn important [AI concepts](learn/genai) relevant to generative AI.</Floating>
+  <Floating title="Developers" href="/docs/learn/code">Learn how to build AIs from [code](learn/code), then deploy them to [Cloudish](https://cloudish.ai).</Floating>
+  <Floating title="Concepts" href="/docs/learn/genai">Learn important [AI concepts](learn/genai) relevant to generative AI.</Floating>
+  <Floating title="Enterprise" href="/docs/learn/enterprise">Learn about [Hal9 Enterprise](learn/enterprise) and Kubernetes-based deployments.</Floating>
 </div>

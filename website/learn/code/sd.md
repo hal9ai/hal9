@@ -8,7 +8,7 @@ To generate images, you can use [stable diffusion](../genai/sd.md) techniques wi
 
 ## Flux
 
-```python deploy
+```python
 import os
 import requests
 from replicate import Client
@@ -17,7 +17,7 @@ from PIL import Image
 from io import BytesIO
 import shutil
 
-replicate = Client(api_token=os.environ['HAL9_TOKEN'], base_url="https://api.hal9.com/proxy/server=https://api.replicate.com")
+replicate = Client(api_token=os.environ['REPLICATE_API_TOKEN'])
 
 def flux_image(prompt, filename):
   output = replicate.run("black-forest-labs/flux-dev", input={"prompt": prompt})
@@ -33,4 +33,10 @@ prompt = input()
 flux_image(prompt, "hal9-flux.jpg")
 ```
 
-You can try this from [hal9.com/apps/flux](https://hal9.com/apps/flux).
+Set your Replicate token before running:
+
+```bash
+export REPLICATE_API_TOKEN=YOUR_REPLICATE_TOKEN
+```
+
+When you deploy this app to Cloudish, add `REPLICATE_API_TOKEN` as a secret and attach a volume if you want the generated images to survive restarts. See [Deployment](deployment.md).

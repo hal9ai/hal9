@@ -2,26 +2,40 @@
 sidebar_position: 80
 ---
 
-# Deploying GitHub
+# Deploying from GitHub
 
-You can deploy from GitHub to Hal9 using GitHub Actions as follows.
+Cloudish builds containers from a `Dockerfile` or source folder server-side, so you can deploy straight from a GitHub repository. The easiest path is to ask your AI coding agent to set it up:
 
-## Prepare your Repo
+> Add a GitHub Actions workflow that deploys this repository to cloudish.ai whenever `main` changes. Read the current deployment API at https://cloudish.ai/skill.md, store the Cloudish API key in a repository secret named `CLOUDISH_API_KEY`, and fail the workflow if the build fails.
 
-First create a GitHub and copy all the files into GitHub.
+If you prefer to write the workflow yourself, the steps are the same as a manual deployment: create a build context, upload it to Cloudish, and poll the build until it succeeds.
 
-## Retrieve Hal9 Token
+## Prepare your repository
 
-- Go to https://hal9.com/devs and retrieve your token
-- Go to your GitHub repo page and click "Settings", then "Secrets and Vartiables", "Actions" and click "New repository secret"
-- Name the secret "HAL9_TOKEN" and asssign the token generated in https://hal9.com/devs, save the secret.
+First, create a GitHub repository and copy your project files into it. The repository needs a `Dockerfile` at its root that installs your dependencies and listens on `0.0.0.0`.
 
-## Deployment File
+You also need a Cloudish API key. Ask your agent to create one, or call the API once:
 
-Create a file similar to the one bellow and save it inside your repo under `.github/workflows/hal9.yaml`. Make sure to customize the `hal9 deploy` command in the file correctly, see [Deploying Assets](deployment.md) section.
+```bash
+curl -sS -X POST https://cloudish.ai/api/v1/keys \
+  -H "content-type: application/json" \
+  -d '{"alias": "my-github-app", "agent": "github-actions"}'
+```
+
+Store the returned `key` as a repository secret:
+
+- Go to your GitHub repository, then **Settings**, **Secrets and variables**, **Actions**.
+- Click **New repository secret**.
+- Name it `CLOUDISH_API_KEY` and paste the key.
+
+Never commit the key to the repository.
+
+## Deployment workflow
+
+Create `.github/workflows/cloudish.yaml`:
 
 ```yaml
-name: Hal9
+name: Deploy to Cloudish
 
 on:
   push:
@@ -29,19 +43,59 @@ on:
       - main
 
 jobs:
-  devel:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v1
-      with:
-        python-version: '3.10'
-    - name: Install Hal9
-      run: pip install hal9
-    - uses: actions/checkout@v1
-    - name: Deploy changed apps
-      env:
-        HAL9_TOKEN: ${{ secrets.HAL9_TOKEN }}
-      run: |
-        hal9 deploy . --name mygithub --access unlisted --title MyGithub --description "MyGithub Content";
+      - uses: actions/checkout@v4
+
+      - name: Build context and deploy
+        env:
+          CLOUDISH_API_KEY: ${{ secrets.CLOUDISH_API_KEY }}
+        run: |
+          tar --exclude='.env*' --exclude='.git' --exclude='.storage' -czf context.tar.gz .
+
+          response=$(curl -sS -X POST https://cloudish.ai/api/v1/projects \
+            -H "Authorization: Bearer ${CLOUDISH_API_KEY}" \
+            -F "name=my-app" -F "port=8080" -F "context=@context.tar.gz")
+
+          echo "${response}"
+          build_id=$(echo "${response}" | jq -r '.build.id')
+
+          if [ "${build_id}" = "null" ]; then
+            echo "Deployment request did not return a build id"
+            exit 1
+          fi
+
+          while true; do
+            result=$(curl -sS "https://cloudish.ai/api/v1/images/builds/${build_id}" \
+              -H "Authorization: Bearer ${CLOUDISH_API_KEY}")
+            status=$(echo "${result}" | jq -r '.build.status')
+            echo "Build ${build_id}: ${status}"
+
+            if [ "${status}" = "null" ]; then
+              echo "${result}"
+              exit 1
+            fi
+
+            case "${status}" in
+              succeeded)
+                echo "${result}"
+                break
+                ;;
+              failed)
+                echo "${result}" | jq -r '.build.error'
+                echo "${result}" | jq -r '.build.logs' | tail -50
+                exit 1
+                ;;
+              *)
+                sleep 10
+                ;;
+            esac
+          done
 ```
+
+The build context excludes `.env*`, `.git`, and `.storage` so credentials and local data are not uploaded. Provide real credentials as Cloudish secrets instead; see [Deployment](deployment.md).
+
+:::note
+Older workflows used `HAL9_TOKEN` and `hal9 deploy` to publish to Hal9 Platform. That platform is now read-only and no longer accepts deployments; migrate those workflows to Cloudish.
+:::

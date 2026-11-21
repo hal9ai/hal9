@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Disable deployment to the Hal9 Platform, which is now read-only; `deploy()` and `hal9 deploy` now point to Cloudish instead
+
 ## 2.8.22
 
 - Return the deployment URL from `deploy()` without printing it
