@@ -4,8 +4,8 @@ sidebar_position: 80
 
 # Deployment
 
-:::info Hal9 Platform is now Cloudish
-Hal9 Platform has evolved into [Cloudish](https://cloudish.ai) and the legacy platform is now read-only: it no longer accepts deployments. The `hal9` Python package still runs your app; what changes is how the app is packaged and hosted. Deploy new apps to Cloudish.
+:::info Hal9 Platform is transitioning to Cloudish
+Hal9 Platform is moving to [Cloudish](https://cloudish.ai). You can deploy Python apps to Cloudish today; the legacy platform is read-only while the transition continues and no longer accepts deployments. The `hal9` Python package still runs your app; what changes is how the app is packaged and hosted. Deploy new apps to Cloudish.
 :::
 
 Cloudish is an agent-first cloud: an AI agent can create its own API key, submit a Dockerfile or container image, and get a live HTTPS URL. It builds images server-side, so there is no local Docker and no signup form. Usage is prepaid and metered per second.
@@ -172,5 +172,5 @@ client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 See [AI-Powered Backend Applications](webapis.md) for a complete example.
 
 :::note
-The legacy Hal9 Platform is read-only and no longer accepts deployments. `hal9 deploy` and `h9.deploy()` cannot publish apps there; use Cloudish for all new deployments.
+The legacy Hal9 Platform is read-only while it transitions to Cloudish and no longer accepts deployments. `hal9 deploy` and `h9.deploy()` cannot publish apps there; use Cloudish for all new deployments.
 :::

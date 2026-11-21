@@ -1,7 +1,7 @@
 # Reference Functions
 
 :::note
-`deploy()` targeted the legacy Hal9 Platform, which is now read-only. Use [Cloudish](https://cloudish.ai) for deployments; see [Deployment](deployment.md).
+`deploy()` targeted the legacy Hal9 Platform, which is read-only while it transitions to Cloudish. Use [Cloudish](https://cloudish.ai) for deployments; see [Deployment](deployment.md).
 :::
 
 ## Code

@@ -57,9 +57,9 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       announcementBar: {
-        id: 'hal9-platform-is-now-cloudish',
+        id: 'hal9-platform-transitioning-to-cloudish',
         content:
-          'Hal9 Platform is now Cloudish. <a href="https://cloudish.ai">Deploy your Python apps to Cloudish →</a>',
+          'Hal9 Platform is transitioning to Cloudish. <a href="https://cloudish.ai">Deploy your Python apps to Cloudish →</a>',
         backgroundColor: '#f4f4f5',
         textColor: '#1f2937',
         isCloseable: true,

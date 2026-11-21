@@ -97,5 +97,5 @@ jobs:
 The build context excludes `.env*`, `.git`, and `.storage` so credentials and local data are not uploaded. Provide real credentials as Cloudish secrets instead; see [Deployment](deployment.md).
 
 :::note
-Older workflows used `HAL9_TOKEN` and `hal9 deploy` to publish to Hal9 Platform. That platform is now read-only and no longer accepts deployments; migrate those workflows to Cloudish.
+Older workflows used `HAL9_TOKEN` and `hal9 deploy` to publish to Hal9 Platform. That platform is read-only while it transitions to Cloudish and no longer accepts deployments; migrate those workflows to Cloudish.
 :::

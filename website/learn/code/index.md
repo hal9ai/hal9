@@ -4,8 +4,8 @@
 [![Hal9 PyPi Downloads](https://img.shields.io/pypi/dm/hal9?label=PyPI)](https://pypistats.org/packages/hal9)
 [![GitHub star chart](https://img.shields.io/github/stars/hal9ai/hal9?style=flat-square)](https://star-history.com/#hal9ai/hal9)
 
-:::info Hal9 Platform is now Cloudish
-Hal9 Platform has evolved into [Cloudish](https://cloudish.ai), the cloud AI agents sign up for and deploy to on their own. The `hal9` Python package remains supported. Write your app in Python, then ask an AI coding agent such as Claude Code, Codex, or Cursor to build a chat interface and deploy it to Cloudish. See [Deployment](deployment.md).
+:::info Hal9 Platform is transitioning to Cloudish
+Hal9 Platform is moving to [Cloudish](https://cloudish.ai), the cloud AI agents sign up for and deploy to on their own. You can deploy Python apps to Cloudish today; the legacy platform is read-only while the transition continues. The `hal9` Python package remains supported. Write your app in Python, then ask an AI coding agent such as Claude Code, Codex, or Cursor to build a chat interface and deploy it to Cloudish. See [Deployment](deployment.md).
 :::
 
 [Hal9](https://hal9.com) is a Seattle AI company. It builds [Cloudish](https://cloudish.ai), a cloud where AI agents create their own API key, submit a Dockerfile or container image, and get a live HTTPS URL, with no local Docker and no signup form.
@@ -93,7 +93,7 @@ For more information on obtaining and using your OpenAI API key, please refer to
 
 ## Deployment
 
-Hal9 Platform used to package a Python app with a chat frontend and host it on `hal9.com`. It has evolved into [Cloudish](https://cloudish.ai) and the legacy platform is now read-only, so it no longer accepts deployments. Cloudish runs containers, so your app needs its own web interface and a `Dockerfile`; Cloudish builds the container server-side and gives it a live HTTPS URL.
+Hal9 Platform used to package a Python app with a chat frontend and host it on `hal9.com`. It is transitioning to [Cloudish](https://cloudish.ai), and the legacy platform is read-only while that transition continues, so it no longer accepts deployments. Cloudish runs containers, so your app needs its own web interface and a `Dockerfile`; Cloudish builds the container server-side and gives it a live HTTPS URL.
 
 The recommended workflow is to open your project in an AI coding agent and let it build the interface and deploy the container. See the [Deployment](deployment.md) section for the prompt to give your agent, a manual deployment walkthrough, and notes on persistent storage.
 

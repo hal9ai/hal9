@@ -71,7 +71,7 @@ from openai import OpenAI
 client = OpenAI(api_key = os.environ["OPENAI_API_KEY"])
 ```
 
-Never hardcode a key in code that you make public. The legacy Hal9 Platform provided a proxy that managed provider keys with a `HAL9_TOKEN`; the legacy platform is now read-only. New apps should use provider API keys and Cloudish secrets.
+Never hardcode a key in code that you make public. The legacy Hal9 Platform provided a proxy that managed provider keys with a `HAL9_TOKEN`; the legacy platform is read-only while it transitions to Cloudish. New apps should use provider API keys and Cloudish secrets.
 
 ## Groq
 

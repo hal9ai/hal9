@@ -6,8 +6,8 @@ sidebar_position: 80
 
 With `hal9`, you can build **cost- and performance-optimized backend applications** that use generative AI and popular API services to provide customized data and resources to callers such as websites or batch jobs.
 
-:::info Hal9 Platform is now Cloudish
-New backends should deploy to [Cloudish](https://cloudish.ai) as containers. The legacy Hal9 proxy and `HAL9_TOKEN` are part of the legacy Hal9 Platform, which is now read-only; use provider API keys with Cloudish secrets instead.
+:::info Hal9 Platform is transitioning to Cloudish
+New backends should deploy to [Cloudish](https://cloudish.ai) as containers. The legacy Hal9 proxy and `HAL9_TOKEN` belong to the legacy Hal9 Platform, which is read-only while it transitions; use provider API keys with Cloudish secrets instead.
 :::
 
 ## What: Architecture/Purpose
@@ -173,4 +173,4 @@ Ask your AI coding agent to build the `Dockerfile` and deploy it, or follow the 
 
 ## Legacy Hal9 Platform
 
-Older Hal9 backends routed provider calls through `https://api.hal9.com/proxy/...` and authenticated callers with `HAL9_TOKEN`. That proxy belongs to the legacy Hal9 Platform, which is now read-only. For new apps, call providers directly with your own keys stored in Cloudish secrets.
+Older Hal9 backends routed provider calls through `https://api.hal9.com/proxy/...` and authenticated callers with `HAL9_TOKEN`. That proxy belongs to the legacy Hal9 Platform, which is read-only while it transitions to Cloudish. For new apps, call providers directly with your own keys stored in Cloudish secrets.

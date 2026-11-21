@@ -4,7 +4,7 @@
 [![Hal9 PyPi Downloads](https://img.shields.io/pypi/dm/hal9?label=PyPI)](https://pypistats.org/packages/hal9)
 [![GitHub star chart](https://img.shields.io/github/stars/hal9ai/hal9?style=flat-square)](https://star-history.com/#hal9ai/hal9)
 
-> **Hal9 Platform is now Cloudish.** Hal9 Platform has evolved into [Cloudish](https://cloudish.ai), the cloud AI agents sign up for and deploy to on their own. The `hal9` Python package remains supported: keep writing your app in Python with `input()` and `print()` (or the `hal9` helpers), then ask an AI coding agent such as Claude Code, Codex, or Cursor to build a chat interface and deploy it to Cloudish.
+> **Hal9 Platform is transitioning to Cloudish.** Hal9 Platform is moving to [Cloudish](https://cloudish.ai), the cloud AI agents sign up for and deploy to on their own. You can deploy Python apps to Cloudish today; the legacy platform is read-only while the transition continues. The `hal9` Python package remains supported: keep writing your app in Python with `input()` and `print()` (or the `hal9` helpers), then ask an AI coding agent such as Claude Code, Codex, or Cursor to build a chat interface and deploy it to Cloudish.
 
 [Hal9](https://hal9.com) is a Seattle AI company. It builds [Cloudish](https://cloudish.ai), a cloud where AI agents create their own API key, submit a Dockerfile or container image, and get a live HTTPS URL, with no local Docker and no signup form. This repository contains the open-source `hal9` Python package, its JavaScript counterpart, and example apps.
 
@@ -91,7 +91,7 @@ This command is just a convenience wrapper around running the code yourself with
 
 ## Deployment
 
-Hal9 Platform used to package a Python app with a chat frontend and host it on `hal9.com`. Hal9 Platform has evolved into [Cloudish](https://cloudish.ai). Cloudish runs containers, so your app needs its own web interface and a `Dockerfile`; Cloudish builds the container server-side and gives it a live HTTPS URL.
+Hal9 Platform used to package a Python app with a chat frontend and host it on `hal9.com`. It is transitioning to [Cloudish](https://cloudish.ai), and the legacy platform is read-only while that transition continues. Cloudish runs containers, so your app needs its own web interface and a `Dockerfile`; Cloudish builds the container server-side and gives it a live HTTPS URL.
 
 You don't have to write that interface yourself. Open your project in Claude Code, Codex, Cursor, or another coding agent and ask:
 
@@ -109,9 +109,9 @@ See [Deployment](https://hal9.com/docs/learn/code/deployment) in the docs for mo
 
 ### Legacy Hal9 Platform
 
-Hal9 Platform is read-only. It no longer accepts new deployments, so `hal9 deploy` and `h9.deploy()` cannot publish apps there. Deploy to Cloudish instead.
+The legacy Hal9 Platform is read-only while it transitions to Cloudish. It no longer accepts new deployments, so `hal9 deploy` and `h9.deploy()` cannot publish apps there. Deploy to Cloudish instead.
 
-## Migrating from Hal9 Platform
+## Transitioning from Hal9 Platform
 
 - **Apps:** Ask your coding agent to add a chat frontend, a server, and a `Dockerfile`, then deploy the container to Cloudish. The Python logic in `app.py` stays the same.
 - **Deployment:** `hal9 deploy` no longer works because the legacy platform is read-only. Cloudish uses its own API key, which your agent can create automatically.
