@@ -8,7 +8,6 @@ include = ["templates/openai/app.py", "templates/docker/Dockerfile"]
 
 [tool.poetry.dependencies]
 python = ">=3.8"
-requests = "^2.28.2"
 configparser = "7.1.0"
 
 click = "^8.1.7"

@@ -11,7 +11,6 @@ import {
 import {Highlight} from 'prism-react-renderer';
 import Line from '@theme/CodeBlock/Line';
 import CopyButton from '@theme/CodeBlock/CopyButton';
-import DeployButton from '@theme/CodeBlock/DeployButton';
 import WordWrapButton from '@theme/CodeBlock/WordWrapButton';
 import Container from '@theme/CodeBlock/Container';
 import styles from './styles.module.css';
@@ -48,7 +47,6 @@ export default function CodeBlockString({
   });
   const showLineNumbers =
     showLineNumbersProp ?? containsLineNumbers(metastring);
-  const deploy = metastring?.includes('deploy');
   return (
     <Container
       as="div"
@@ -95,7 +93,7 @@ export default function CodeBlockString({
               isEnabled={wordWrap.isEnabled}
             />
           )}
-          {deploy ? (<DeployButton className={styles.codeButton} code={code} />) : (<CopyButton className={styles.codeButton} code={code} />)}
+          <CopyButton className={styles.codeButton} code={code} />
         </div>
       </div>
     </Container>

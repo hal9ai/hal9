@@ -34,11 +34,11 @@ def create(path :str, template :str):
 
 @click.command()
 @click.argument('path')
-@click.option('--source', default=None, help='Main source file')
-@click.option('--type', default=None, help='Type of runtime to use')
+@click.option('--source', default="app.py", help='Main source file')
+@click.option('--type', default="python", help='Type of runtime to use')
 @click.option('--port', default="8080", help='Port to use, optional')
 @click.option('--params', default=None, help='Params to use, optional')
-def run(path :str, source :str = "app.py", type :str = "type", port :str = "8080", params :str = None):
+def run(path :str, source :str = "app.py", type :str = "python", port :str = "8080", params :str = None):
   """
   Run Project
 
@@ -52,8 +52,8 @@ def run(path :str, source :str = "app.py", type :str = "type", port :str = "8080
 
 @click.command()
 @click.argument('path')
-@click.option('--target', default="hal9", help='Deployment target')
-@click.option('--url', default="https://api.hal9.com", help='Deployment url')
+@click.option('--target', default="hal9", help='Deployment target (the legacy hal9 target is read-only)')
+@click.option('--url', default="https://api.hal9.com", help='Legacy deployment url')
 @click.option('--name', default=None, help='Deployment name')
 @click.option('--type', '-t', 'typename', default='ability', help='Deployment content')
 @click.option('--data', '-d', 'data', default=None, help='Deployment data path')
@@ -65,8 +65,11 @@ def deploy(path :str, target :str, url :str, name :str, typename :str, data :str
   """
   Deploy Project
 
+  Deployment to the legacy Hal9 Platform is disabled because the platform is
+  read-only. Deploy apps to Cloudish instead: https://cloudish.ai.
+
   --path: The path to the project. Required argument.
-  --url: The server url to deploy to. Defaults to https://api.hal9.com.
+  --url: The legacy server url to deploy to. Defaults to https://api.hal9.com.
   --name: The deployment name.
   --type: The type of content to deploy. Defaults to (chatbot) ability.
   --main: The main file deploy. Defaults to 'app.py'.
@@ -74,7 +77,11 @@ def deploy(path :str, target :str, url :str, name :str, typename :str, data :str
   --description: deployment The description.
   """
 
-  deployed_url = api_deploy(path, target, url, name, typename, data, access, main, title, description)
+  try:
+    deployed_url = api_deploy(path, target, url, name, typename, data, access, main, title, description)
+  except Exception as e:
+    raise click.ClickException(str(e))
+
   if deployed_url:
     click.echo(deployed_url)
   return deployed_url

@@ -10,17 +10,12 @@ This section will describe some of the possible use cases.
 
 ## Computing
 
-The first approach to using code from and LLM is to run it to compute complex answers, we can accomplish this as follows:
+The first approach to using code from an LLM is to run it to compute complex answers, we can accomplish this as follows:
 
-```python deploy
-import hal9 as h9
-import os
+```python
 from openai import OpenAI
 
-client = openai_client = OpenAI(
-  base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
-  api_key=os.environ['HAL9_TOKEN']
-)
+client = OpenAI()
 
 completion = client.chat.completions.create(
   model = "gpt-4",
@@ -40,9 +35,8 @@ LLMs are not really that good at doing math; however, with the help of this code
 
 We can take this a step further and make use of external data sources to compute even more complex questions. Let's use an spreadsheet file in CSV format to extract the headers, ask the LLM to compute a query that answers the user question, and run the results:
 
-```python deploy
+```python
 import hal9 as h9
-import os
 from openai import OpenAI
 import pandas as pd
 
@@ -50,10 +44,7 @@ url = ""
 csv = pd.read_csv(url)
 headers = csv.head(1)
 
-client = openai_client = OpenAI(
-  base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
-  api_key=os.environ['HAL9_TOKEN']
-)
+client = OpenAI()
 
 completion = client.chat.completions.create(
   model = "gpt-4",
@@ -69,8 +60,8 @@ completion = client.chat.completions.create(
   ]
  )
 
-code = h9.extract(completion.choices[0].message.content)
-print(exec(code))
+code = h9.extract(completion.choices[0].message.content, "python")
+exec(code)
 ```
 
 ## Web Apps
@@ -79,16 +70,11 @@ Taking this approach even further, instead of relying on `print` to communicate 
 
 We will ask the LLM to generate a web application:
 
-```python deploy
-import openai
-import os
+```python
 import hal9 as h9
 from openai import OpenAI
 
-client = OpenAI(
-  base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
-  api_key=os.environ['HAL9_TOKEN']
-)
+client = OpenAI()
 
 messages = h9.load("messages", [{ "role": "system", "content": """
   Always reply with a single page HTML markdown block (which can use JavaScript,
@@ -116,10 +102,9 @@ h9.save("app.html", code)
 
 Instead of building web applications, you can build data analytics apps that query databases and display charts as follows:
 
-```python deploy
+```python
 import hal9 as h9
 from openai import OpenAI
-import os
 
 messages = h9.load("messages", [{ "role": "system", "content": """
   Only reply with plain Python code.
@@ -128,10 +113,7 @@ messages = h9.load("messages", [{ "role": "system", "content": """
 
 messages.append({"role": "user", "content": input()})
 
-client = OpenAI(
-  base_url="https://api.hal9.com/proxy/server=https://api.openai.com/v1/",
-  api_key=os.environ['HAL9_TOKEN']
-)
+client = OpenAI()
 
 completion = client.chat.completions.create(
   model = "gpt-4",
@@ -146,8 +128,10 @@ code = h9.extract(response, "python")
 h9.save("app.py", code)
 ```
 
-Hal9 will embed and run this application automatically for you. But if you are working in your own computer you can run the generated application as follows:
+If you are working on your own computer, you can run the generated application as follows:
 
 ```bash
 streamlit run app.py
 ```
+
+To share it, package the app as a container and deploy it to [Cloudish](https://cloudish.ai); see [Deployment](deployment.md).
